@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/base/features.py",
+      "target_function": "create",
+      "related_classes": [
+        "Count"
+      ],
+      "candidate_test_file": "tests/backends/mysql/test_operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls create, order_by, annotate."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, order_by, annotate."
+    ],
+    "expected_failure": "While commit [0ddb4ebf] removes ORDER BY when Meta.ordering is used it still does populates GROUP BY with Meta.ordering fields thus leads to wrong aggregation.",
+    "relevant_source_files": [
+      "django/db/backends/base/features.py",
+      "django/db/backends/mysql/features.py",
+      "django/db/backends/oracle/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/mysql/test_features.py",
+      "tests/backends/mysql/test_operations.py",
+      "tests/backends/oracle/test_operations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestGroupByOrdering(SimpleTestCase):\n    def test_group_by_excludes_meta_ordering_repro(self):\n        # Create some data\n        Person.objects.create(name='Alice', age=30)\n        Person.objects.create(name='Bob', age=30)\n        Person.objects.create(name='Charlie', age=25)\n\n        # Perform aggregation query\n        result = Person.objects.values('age').annotate(count=models.Count('id')).order_by()\n\n        # Assert that the GROUP BY clause does not include the ordering field 'name'\n        query_str = str(result.query)\n        self.assertNotIn('GROUP BY `person`.`name`', query_str)\n        self.assertIn('GROUP BY `person`.`age`', query_str)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create",
+        "order_by",
+        "annotate"
+      ],
+      "classes": [
+        "Count"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/mysql/test_operations.py",
+      "target_source_file": "django/db/backends/base/features.py",
+      "test_visible_functions": [
+        "create",
+        "order_by",
+        "annotate"
+      ],
+      "test_visible_classes": [
+        "Count"
+      ]
+    }
+  }
+]

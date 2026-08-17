@@ -1,0 +1,95 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:hist",
+        "target_function verified to exist in source_file",
+        "target_function 'hist' not in AST top_level_functions for lib/matplotlib/axes/_axes.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "lib/matplotlib/axes/_axes.py",
+          "target_function": "hist",
+          "related_classes": [
+            "Axes"
+          ],
+          "candidate_test_file": "lib/matplotlib/tests/test_axes.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "import numpy as np",
+          "import matplotlib.pyplot as plt",
+          "from matplotlib.axes import Axes",
+          "scale = 1.2",
+          "test_random = np.random.randn(100000) * scale"
+        ],
+        "execution_stimulus": [
+          "fig, ax = plt.subplots(1, 2, figsize=(20, 10))",
+          "hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')",
+          "hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')",
+          "plt.show()"
+        ],
+        "expected_failure": "The density values for the histogram with histtype='step' do not match the density values for the histogram with histtype='bar'.",
+        "relevant_source_files": [
+          "lib/matplotlib/pyplot.py",
+          "lib/matplotlib/axes/_axes.py",
+          "lib/matplotlib/figure.py"
+        ],
+        "relevant_test_files": [
+          "lib/matplotlib/tests/test_figure.py",
+          "lib/matplotlib/tests/test_pyplot.py",
+          "lib/matplotlib/tests/test_subplots.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_histogram_density_issue():\n    import numpy as np\n    import matplotlib.pyplot as plt\n    scale = 1.2\n    test_random = np.random.randn(100000) * scale\n    fig, ax = plt.subplots(1, 2, figsize=(20, 10))\n    hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')\n    hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')\n    assert not np.allclose(hist_bar[0], hist_step[0])"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "hist"
+          ],
+          "classes": [
+            "Axes"
+          ]
+        },
+        "oracle_hints": [
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

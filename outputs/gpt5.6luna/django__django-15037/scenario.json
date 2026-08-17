@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/commands/inspectdb.py",
+      "target_function": "foo",
+      "related_classes": [
+        "UTs",
+        "Command"
+      ],
+      "candidate_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where foo can be called.",
+      "Use the generated reproduction path that calls foo, handle."
+    ],
+    "execution_stimulus": [
+      "Call foo with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: foo, handle."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/core/management/commands/inspectdb.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "tests/sitemaps_tests/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.management.commands.inspectdb import Command\n\nclass TestInspectDBCommand(TestCase):\n    def test_foreign_key_to_specific_field_repro(self):\n        command = Command()\n        # Simulate the database schema as per the issue description\n        # Assuming inspectdb generates models based on the provided schema\n        # We need to assert that the generated model for 'bar' has a ForeignKey to 'foo(other_id)'\n        output = command.handle()\n        # Expected model definition for 'bar' with ForeignKey to 'foo(other_id)'\n        expected_output = \"other_id = models.ForeignKey('Foo', db_column='other_id', on_delete=models.CASCADE)\"\n        self.assertIn(expected_output, output)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "foo",
+        "handle"
+      ],
+      "classes": [
+        "UTs",
+        "Command"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "target_source_file": "django/core/management/commands/inspectdb.py",
+      "test_visible_functions": [
+        "foo",
+        "handle"
+      ],
+      "test_visible_classes": [
+        "Command"
+      ]
+    }
+  }
+]

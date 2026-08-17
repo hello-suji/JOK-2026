@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-10973",
+    "model_patch": "--- a/tests/backends/postgres/test_client.py\n+++ b/tests/backends/postgres/test_client.py\n@@ -0,0 +1,20 @@\n+from unittest import mock\n+\n+from django.db.backends.postgresql.client import DatabaseClient\n+\n+class DummyConnection:\n+    settings_dict = {\n+        'NAME': 'dbname',\n+        'USER': 'dbuser',\n+        'PASSWORD': 'secret',\n+        'HOST': 'localhost',\n+        'PORT': '5432',\n+        'OPTIONS': {},\n+    }\n+\n+def test_postgres_runshell_passes_password_through_subprocess_env_repro():\n+    client = DatabaseClient(DummyConnection())\n+    with mock.patch('subprocess.run') as run:\n+        client.runshell([])\n+    env = run.call_args.kwargs.get('env')\n+    assert env['PGPASSWORD'] == 'secret'\n",
+    "patch_sha256": "70f8c621ebc176b8d6ed857f2b39d76240fcccd6860ee909067ec1a2182cbc04"
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-7393",
+    "model_patch": "--- a/xarray/tests/test_dataset.py\n+++ b/xarray/tests/test_dataset.py\n@@ -6896,3 +6896,9 @@\n         ),\n     ):\n         ds.transpose([\"y\", \"x\"])  # type: ignore\n+\n+def test_stack_dtype_change_repro():\n+    ds = xr.Dataset(coords={'a': np.array([0], dtype='i4')})\n+    assert ds['a'].values.dtype == ds.stack(b=('a',))['a'].values.dtype\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(ds) != 'False'\n",
+    "patch_sha256": "e1815c687c354cb47073710b2fd429452ba95d42408837303f26bf70387db4c8"
+  }
+]

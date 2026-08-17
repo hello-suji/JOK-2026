@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13551",
+    "model_patch": "--- a/tests/auth_tests/test_tokens.py\n+++ b/tests/auth_tests/test_tokens.py\n@@ -110,3 +110,13 @@\n         legacy_token = p_old_generator.make_token(user)\n         self.assertIs(p_old_generator.check_token(user, legacy_token), True)\n         self.assertIs(p_new_generator.check_token(user, legacy_token), True)\n+\n+from django.test import TestCase, SimpleTestCase\n+class TestTokenRejectionAfterEmailChange(TestCase):\n+    def test_token_rejection_after_email_change_repro(self):\n+        user = User.objects.create_user(username='testuser', email='test@example.com', password='testpass')\n+        token_generator = PasswordResetTokenGenerator()\n+        token = token_generator.make_token(user)\n+        user.email = 'newemail@example.com'\n+        user.save()\n+        self.assertFalse(token_generator.check_token(user, token))\n",
+    "patch_sha256": "0c72c691c81bb12310c49bd1b2625f52f0a978ac968ad9ee6b530e08b9a052f0"
+  }
+]

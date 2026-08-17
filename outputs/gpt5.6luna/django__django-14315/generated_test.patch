@@ -1,0 +1,15 @@
+--- a/tests/backends/base/test_base.py
++++ b/tests/backends/base/test_base.py
+@@ -127,3 +127,12 @@
+         self.assertFalse(wrapper.called)
+         self.assertEqual(connection.execute_wrappers, [])
+         self.assertEqual(connections['other'].execute_wrappers, [])
++
++from django.test import TestCase, SimpleTestCase
++from django.db.backends.postgresql.base import DatabaseWrapper
++
++class TestPostgreSQLRunShell(TestCase):
++    def test_runshell_env_repro(self):
++        db_wrapper = DatabaseWrapper({})
++        env = db_wrapper.runshell_env()
++        self.assertIsNot(env, {})

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-22865",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1392,3 +1392,22 @@\n\n     assert ax.get_xlim() == (1e-1, 1e2)\n     assert fig2.axes[0].get_xlim() == (0, 1)\n+\n+@check_figures_equal(extensions=[\"png\"])\n+def test_colorbar_edges_with_extend_both_repro(fig_test, fig_ref):\n+    import matplotlib.colors as mcolors\n+\n+    my_cmap = mpl.cm.viridis\n+    bounds = np.arange(10)\n+    nb_colors = len(bounds) + 1\n+    colors = my_cmap(np.linspace(100, 255, nb_colors).astype(int))\n+    my_cmap, my_norm = mcolors.from_levels_and_colors(bounds, colors, extend='both')\n+\n+    ax_test = fig_test.add_subplot()\n+    cb_test = fig_test.colorbar(mpl.cm.ScalarMappable(norm=my_norm, cmap=my_cmap), ax=ax_test, drawedges=True, extend='both')\n+\n+    ax_ref = fig_ref.add_subplot()\n+    cb_ref = fig_ref.colorbar(mpl.cm.ScalarMappable(norm=my_norm, cmap=my_cmap), ax=ax_ref, drawedges=True, extend='both')\n+\n+    assert len(cb_test.ax.lines) == len(cb_ref.ax.lines)\n+    assert cb_test.ax.lines[0].get_visible() and cb_test.ax.lines[-1].get_visible()\n",
+    "patch_sha256": "2fa0994569bfb9c1ea8c78e7c55db341a73ec213ea771d43943dd04475923662"
+  }
+]

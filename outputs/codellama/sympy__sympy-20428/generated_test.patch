@@ -1,0 +1,18 @@
+--- a/sympy/polys/tests/test_densearith.py
++++ b/sympy/polys/tests/test_densearith.py
+@@ -981,3 +981,15 @@
+     assert dmp_expand(([[1], [2], [3]], [[1], [2]], [[7], [5], [4], [3]]), 1, ZZ) == \
+         dmp_mul([[1], [2], [3]], dmp_mul([[1], [2]], [[7], [5], [
+                 4], [3]], 1, ZZ), 1, ZZ)
++
++from sympy import symbols, Poly, sympify
++from sympy.polys.polytools import terms_gcd
++
++def test_terms_gcd_zero_division_error_repro():
++    x = symbols('x')
++    f = Poly(sympify('-117968192370600*18**(1/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) - 15720318185*2**(2/3)*3**(1/3)*(24201 + 253*sqrt(9165))**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) + 15720318185*12**(1/3)*(24201 + 253*sqrt(9165))**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3)) + 117968192370600*2**(1/3)*3**(2/3)/(217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3))'), x)
++    J, result = terms_gcd(f.rep)
++    assert J == (217603955769048*(24201 + 253*sqrt(9165))**(1/3) + 2273005839412*sqrt(9165)*(24201 + 253*sqrt(9165))**(1/3))
++    assert result == Poly(0, x, domain='EX')
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(f) != "Poly(0, x, domain='EX')\nFalse\n0\nTrue"

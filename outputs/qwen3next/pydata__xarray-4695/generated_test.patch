@@ -1,0 +1,14 @@
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -7015,3 +7015,11 @@
+     x0 = DataArray(np.array([object()]))
+     x1 = deepcopy(x0)
+     assert x0.values[0] is not x1.values[0]
++
++def test_loc_with_method_dimension_repro():
++    empty = np.zeros((2,2))
++    D2 = xr.DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})
++    result = D2.loc[dict(dim1='x', method='a')]
++    assert result.values.tolist() == [[0.0, 0.0]]
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.'

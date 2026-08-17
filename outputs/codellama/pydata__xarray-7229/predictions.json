@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-7229",
+    "model_patch": "--- a/xarray/tests/test_computation.py\n+++ b/xarray/tests/test_computation.py\n@@ -2232,3 +2232,10 @@\n\n     actual = xr.cross(a, b, dim=dim)\n     xr.testing.assert_duckarray_allclose(expected, actual)\n+\n+def test_where_overwrites_coordinate_attributes_repro():\n+    ds = xr.tutorial.load_dataset('air_temperature')\n+    result = xr.where(True, ds.air, ds.air, keep_attrs=True)\n+    assert result.time.attrs == {'standard_name': 'time', 'long_name': 'Time'}\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != \"{'long_name': '4xDaily Air temperature at sigma level 995', 'units': 'degK', 'precision': 2, 'GRIB_id': 11, 'GRIB_name': 'TMP', 'var_desc': 'Air temperature', 'dataset': 'NMC Reanalysis', 'level_desc': 'Surface', 'statistic': 'Individual Obs', 'parent_stat': 'Other', 'actual_range': array([185.16, 322.1], dtype=float32)}\"\n",
+    "patch_sha256": "657e80d50a6e045443db64b61cee358f17b26cb62d705533bd09cd5561d3996c"
+  }
+]

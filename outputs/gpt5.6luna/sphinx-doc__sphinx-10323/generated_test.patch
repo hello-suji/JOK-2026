@@ -1,0 +1,28 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -561,3 +561,25 @@
+
+     # explicit title
+     assert html.format('index.html#foons') in content
++
++import os
++import tempfile
++from sphinx.testing.util import SphinxTestApp
++from sphinx.directives.code import LiteralInclude
++
++def test_literalinclude_prepend_indentation_repro():
++    with tempfile.TemporaryDirectory() as tmpdir:
++        srcdir = os.path.join(tmpdir, 'src')
++        outdir = os.path.join(tmpdir, 'out')
++        doctreedir = os.path.join(tmpdir, 'doctrees')
++        confdir = srcdir
++        os.makedirs(srcdir)
++        sample_code_path = os.path.join(srcdir, 'sample.py')
++        with open(sample_code_path, 'w') as f:
++            f.write('def example_function():\n    pass')
++        app = SphinxTestApp(srcdir=srcdir, outdir=outdir, doctreedir=doctreedir, confdir=confdir)
++        app.build()
++        with open(os.path.join(outdir, 'index.html'), 'r') as f:
++            html_content = f.read()
++        assert 'def example_function():' in html_content
++        assert '    pass' in html_content

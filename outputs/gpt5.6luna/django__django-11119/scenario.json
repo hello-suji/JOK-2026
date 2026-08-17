@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/template/engine.py",
+      "target_function": "render_to_string",
+      "related_classes": [
+        "Engine"
+      ],
+      "candidate_test_file": "tests/template_tests/test_engine.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.template import Engine",
+      "engine = Engine(autoescape=False)",
+      "Use the generated reproduction path that calls render_to_string."
+    ],
+    "execution_stimulus": [
+      "result = engine.render_to_string('template.html', {'var': '<script>'})",
+      "Execute the focused target API path: render_to_string."
+    ],
+    "expected_failure": "The result will be autoescaped, producing '&lt;script&gt;' instead of '<script>'.",
+    "relevant_source_files": [
+      "django/template/engine.py",
+      "django/template/context.py",
+      "django/contrib/admin/checks.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_tests/test_context.py",
+      "tests/template_tests/test_engine.py",
+      "tests/template_tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestRenderToStringAutoescape(SimpleTestCase):\n    def test_render_to_string_autoescape_false_repro(self):\n        engine = Engine(autoescape=False)\n        result = engine.render_to_string('template.html', {'var': '<script>'})\n        self.assertEqual(result, '<script>')\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(result) != '&lt;script&gt;'"
+      },
+      {
+        "language": "python",
+        "code": "def test_render_to_string_autoescape_false():\n    from django.template import Engine\n    engine = Engine(autoescape=False)\n    result = engine.render_to_string('template.html', {'var': '<script>'})\n    assert result == '&lt;script&gt;'"
+      }
+    ],
+    "expected_outputs": [
+      "<script>"
+    ],
+    "actual_outputs": [
+      "&lt;script&gt;"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "render_to_string"
+      ],
+      "classes": [
+        "Engine"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/template_tests/test_engine.py",
+      "target_source_file": "django/template/engine.py",
+      "test_visible_functions": [
+        "render_to_string"
+      ],
+      "test_visible_classes": [
+        "Engine"
+      ]
+    }
+  }
+]

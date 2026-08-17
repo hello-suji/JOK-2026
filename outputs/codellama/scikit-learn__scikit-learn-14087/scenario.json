@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/linear_model/logistic.py",
+      "target_function": "fit",
+      "related_classes": [
+        "LogisticRegressionCV"
+      ],
+      "candidate_test_file": "sklearn/linear_model/tests/test_logistic.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import necessary modules: sys, sklearn, numpy",
+      "Set random seed for reproducibility",
+      "Generate random data for X and y",
+      "Use the generated reproduction path that calls fit, normal, sign, seed."
+    ],
+    "execution_stimulus": [
+      "Create an instance of LogisticRegressionCV with cv=5, solver='saga', tol=1e-2, refit=False",
+      "Call the fit method on the instance with X and y",
+      "Execute the focused target API path: fit, normal, sign, seed."
+    ],
+    "expected_failure": "IndexError: too many indices for array",
+    "relevant_source_files": [
+      "sklearn/linear_model/logistic.py",
+      "sklearn/cluster/k_means_.py",
+      "sklearn/cluster/mean_shift_.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/linear_model/tests/test_logistic.py",
+      "sklearn/linear_model/tests/test_sgd.py",
+      "sklearn/linear_model/tests/test_passive_aggressive.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_LogisticRegressionCV_fit_refit_false_repro():\n    np.random.seed(29)\n    X = np.random.normal(size=(1000, 3))\n    beta = np.random.normal(size=3)\n    intercept = np.random.normal(size=None)\n    y = np.sign(intercept + X @ beta)\n    \n    model = LogisticRegressionCV(cv=5, solver='saga', tol=1e-2, refit=False)\n    model.fit(X, y)\n    assert hasattr(model, 'scores_')\n    assert isinstance(model.scores_, dict)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(model) != 'IndexError: too many indices for array'"
+      },
+      {
+        "language": "python",
+        "code": "def test_LogisticRegressionCV_fit_refit_false():\n    import numpy as np\n    from sklearn.linear_model import LogisticRegressionCV\n    \n    np.random.seed(29)\n    X = np.random.normal(size=(1000, 3))\n    beta = np.random.normal(size=3)\n    intercept = np.random.normal(size=None)\n    y = np.sign(intercept + X @ beta)\n    \n    model = LogisticRegressionCV(cv=5, solver='saga', tol=1e-2, refit=False)\n    try:\n        model.fit(X, y)\n    except IndexError as e:\n        assert str(e) == 'too many indices for array'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "IndexError: too many indices for array"
+    ],
+    "error_keywords": [
+      "IndexError",
+      "too many indices for array"
+    ],
+    "identifiers": {
+      "functions": [
+        "LogisticRegressionCV.fit",
+        "fit",
+        "normal",
+        "sign",
+        "seed",
+        "hasattr",
+        "isinstance"
+      ],
+      "classes": [
+        "LogisticRegressionCV"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/linear_model/tests/test_logistic.py",
+      "target_source_file": "sklearn/linear_model/logistic.py",
+      "test_visible_functions": [
+        "fit",
+        "normal",
+        "sign",
+        "seed",
+        "hasattr",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "LogisticRegressionCV"
+      ]
+    }
+  }
+]

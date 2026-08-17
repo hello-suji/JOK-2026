@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/simplify/simplify.py",
+      "target_function": "posify",
+      "related_classes": [
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/simplify/tests/test_simplify.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Symbol",
+      "x = Symbol('x', finite=True)",
+      "Use the generated reproduction path that calls posify."
+    ],
+    "execution_stimulus": [
+      "xp, _ = posify(x)",
+      "Execute the focused target API path: posify."
+    ],
+    "expected_failure": "The finite assumption is removed from the symbol after posify, resulting in xp.is_finite being None instead of True.",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/simplify/simplify.py",
+      "sympy/printing/pretty/pretty_symbology.py"
+    ],
+    "relevant_test_files": [
+      "sympy/simplify/tests/test_simplify.py",
+      "sympy/core/tests/test_symbol.py",
+      "sympy/core/tests/test_assumptions.py",
+      "sympy/printing/pretty/tests/test_pretty.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Symbol, posify\n\ndef test_posify_preserves_finite_assumption_repro():\n    x = Symbol('x', finite=True)\n    xp, _ = posify(x)\n    assert xp.is_finite is True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(x) != 'None'"
+      },
+      {
+        "language": "python",
+        "code": "def test_posify_preserves_finite_assumption():\n    from sympy import Symbol, posify\n    x = Symbol('x', finite=True)\n    xp, _ = posify(x)\n    assert xp.is_finite is True"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "None"
+    ],
+    "error_keywords": [
+      "is_finite",
+      "None"
+    ],
+    "identifiers": {
+      "functions": [
+        "posify"
+      ],
+      "classes": [
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/simplify/tests/test_simplify.py",
+      "target_source_file": "sympy/simplify/simplify.py",
+      "test_visible_functions": [
+        "posify"
+      ],
+      "test_visible_classes": [
+        "Symbol"
+      ]
+    }
+  }
+]

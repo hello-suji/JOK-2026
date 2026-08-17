@@ -1,0 +1,16 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -206,3 +206,13 @@
+         )
+         template = engine.get_template("hello.html")
+         self.assertEqual(template.render({"name": "Joe"}), "Hello Joe!\n")
++
++from django.apps.registry import Apps
++
++class TestClearCacheBehavior(TemplateStringsTests):
++    def test_get_swappable_settings_name_cache_cleared_repro(self):
++        apps = Apps()
++        original_cache = apps.get_swappable_settings_name('auth.User')
++        apps.clear_cache()
++        cleared_cache = apps.get_swappable_settings_name('auth.User')
++        self.assertNotEqual(original_cache, cleared_cache)

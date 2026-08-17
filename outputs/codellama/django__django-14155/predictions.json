@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14155",
+    "model_patch": "--- a/tests/sitemaps_tests/urls/__init__.py\n+++ b/tests/sitemaps_tests/urls/__init__.py\n@@ -0,0 +1,15 @@\n+\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.urls.resolvers import ResolverMatch\n+from functools import partial\n+\n+class TestResolverMatchRepr(TestCase):\n+    def test_repr_with_partial_function_repro(self):\n+        def sample_view(request): pass\n+        view_func = partial(sample_view, arg1='value')\n+        resolver_match = ResolverMatch(view_func, [], {})\n+        repr_output = repr(resolver_match)\n+        self.assertNotIn('functools.partial', repr_output)\n+        self.assertIn('sample_view', repr_output)\n+        self.assertIn(\"arg1='value'\", repr_output)\n",
+    "patch_sha256": "890930b08655bbb1887f196bbf14039a2e5389731e376da36ea74a1e86670eec"
+  }
+]

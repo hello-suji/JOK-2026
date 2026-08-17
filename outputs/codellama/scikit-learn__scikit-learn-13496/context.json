@@ -1,0 +1,545 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13496",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "3aefc834dce72e850bff48689bea3c7dff5f3fad",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/ensemble/forest.py",
+      "score": 30,
+      "matched_identifiers": [
+        "BaseForest",
+        "RandomForestClassifier",
+        "__init__",
+        "baseforest",
+        "bool",
+        "default"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "class_match:BaseForest",
+        "class_match:RandomForestClassifier",
+        "stem_in_issue_text:forest",
+        "source_content_tokens:__init__,baseforest,bool,default,ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BaseForest": "class BaseForest(BaseEnsemble, MultiOutputMixin, metaclass=ABCMeta):\n    \"\"\"Base class for forests of trees.\n\n    Warning: This class should not be used directly. Use derived classes\n    instead.\n    \"\"\"\n\n    @abstractmethod\n    def __init__(self,\n                 base_estimator,\n                 n_estimators=100,\n                 estimator_params=tuple(),\n                 bootstrap=False,\n                 oob_score=False,\n                 n_jobs=None,",
+        "RandomForestClassifier": "class RandomForestClassifier(ForestClassifier):\n    \"\"\"A random forest classifier.\n\n    A random forest is a meta estimator that fits a number of decision tree\n    classifiers on various sub-samples of the dataset and uses averaging to\n    improve the predictive accuracy and control over-fitting.\n    The sub-sample size is always the same as the original\n    input sample size but the samples are drawn with replacement if\n    `bootstrap=True` (default).\n\n    Read more in the :ref:`User Guide <forest>`.\n\n    Parameters\n    ----------\n    n_estimators : integer, optional (default=10)",
+        "__init__": "    def __init__(self,\n                 n_estimators='warn',\n                 max_depth=5,\n                 min_samples_split=2,\n                 min_samples_leaf=1,\n                 min_weight_fraction_leaf=0.,\n                 max_leaf_nodes=None,\n                 min_impurity_decrease=0.,\n                 min_impurity_split=None,\n                 sparse_output=True,\n                 n_jobs=None,\n                 random_state=None,\n                 verbose=0,\n                 warm_start=False):\n        super().__init__("
+      },
+      "top_level_functions": [
+        "BaseForest.apply",
+        "BaseForest.decision_path",
+        "BaseForest.fit",
+        "BaseForest.feature_importances_",
+        "ForestClassifier.predict",
+        "ForestClassifier.predict_proba",
+        "ForestClassifier.predict_log_proba",
+        "ForestRegressor.predict",
+        "RandomTreesEmbedding.fit",
+        "RandomTreesEmbedding.fit_transform",
+        "RandomTreesEmbedding.transform"
+      ]
+    },
+    {
+      "path": "sklearn/ensemble/bagging.py",
+      "score": 26,
+      "matched_identifiers": [
+        "BaseBagging",
+        "__init__",
+        "basebagging",
+        "bool",
+        "default"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "class_match:BaseBagging",
+        "stem_in_issue_text:bagging",
+        "source_content_tokens:__init__,basebagging,bool,default,ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BaseBagging": "class BaseBagging(BaseEnsemble, metaclass=ABCMeta):\n    \"\"\"Base class for Bagging meta-estimator.\n\n    Warning: This class should not be used directly. Use derived classes\n    instead.\n    \"\"\"\n\n    @abstractmethod\n    def __init__(self,\n                 base_estimator=None,\n                 n_estimators=10,\n                 max_samples=1.0,\n                 max_features=1.0,\n                 bootstrap=True,\n                 bootstrap_features=False,",
+        "__init__": "    def __init__(self,\n                 base_estimator=None,\n                 n_estimators=10,\n                 max_samples=1.0,\n                 max_features=1.0,\n                 bootstrap=True,\n                 bootstrap_features=False,\n                 oob_score=False,\n                 warm_start=False,\n                 n_jobs=None,\n                 random_state=None,\n                 verbose=0):\n        super().__init__(\n            base_estimator,\n            n_estimators=n_estimators,"
+      },
+      "top_level_functions": [
+        "BaseBagging.fit",
+        "BaseBagging.estimators_samples_",
+        "BaggingClassifier.predict",
+        "BaggingClassifier.predict_proba",
+        "BaggingClassifier.predict_log_proba",
+        "BaggingClassifier.decision_function",
+        "BaggingRegressor.predict"
+      ]
+    },
+    {
+      "path": "sklearn/ensemble/iforest.py",
+      "score": 25,
+      "matched_identifiers": [
+        "IsolationForest",
+        "__init__",
+        "basebagging",
+        "bool",
+        "default"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "class_match:IsolationForest",
+        "source_content_tokens:__init__,basebagging,bool,default,ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "IsolationForest": "class IsolationForest(BaseBagging, OutlierMixin):\n    \"\"\"Isolation Forest Algorithm\n\n    Return the anomaly score of each sample using the IsolationForest algorithm\n\n    The IsolationForest 'isolates' observations by randomly selecting a feature\n    and then randomly selecting a split value between the maximum and minimum\n    values of the selected feature.\n\n    Since recursive partitioning can be represented by a tree structure, the\n    number of splittings required to isolate a sample is equivalent to the path\n    length from the root node to the terminating node.\n\n    This path length, averaged over a forest of such random trees, is a\n    measure of normality and our decision function.",
+        "__init__": "    def __init__(self,\n                 n_estimators=100,\n                 max_samples=\"auto\",\n                 contamination=\"legacy\",\n                 max_features=1.,\n                 bootstrap=False,\n                 n_jobs=None,\n                 behaviour='old',\n                 random_state=None,\n                 verbose=0):\n        super().__init__(\n            base_estimator=ExtraTreeRegressor(\n                max_features=1,\n                splitter='random',\n                random_state=random_state),"
+      },
+      "top_level_functions": [
+        "IsolationForest.fit",
+        "IsolationForest.predict",
+        "IsolationForest.decision_function",
+        "IsolationForest.score_samples",
+        "IsolationForest.threshold_"
+      ]
+    },
+    {
+      "path": "sklearn/utils/__init__.py",
+      "score": 24,
+      "matched_identifiers": [
+        "__init__",
+        "bool",
+        "default",
+        "example"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "path_contains_function:__init__",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__init__,bool,default,example,init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, **kwargs):\n        super().__init__(kwargs)\n\n    def __setattr__(self, key, value):\n        self[key] = value\n\n    def __dir__(self):\n        return self.keys()\n\n    def __getattr__(self, key):\n        try:\n            return self[key]\n        except KeyError:\n            raise AttributeError(key)\n"
+      },
+      "top_level_functions": [
+        "safe_mask",
+        "axis0_safe_slice",
+        "safe_indexing",
+        "resample",
+        "shuffle",
+        "safe_sqr",
+        "gen_batches",
+        "gen_even_slices",
+        "tosequence",
+        "indices_to_mask",
+        "get_chunk_n_rows",
+        "is_scalar_nan"
+      ]
+    },
+    {
+      "path": "sklearn/ensemble/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "__init__",
+        "default",
+        "ensemble",
+        "estimators"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "stem_in_issue_text:base",
+        "source_content_tokens:__init__,default,ensemble,estimators,init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, base_estimator, n_estimators=10,\n                 estimator_params=tuple()):\n        # Set parameters\n        self.base_estimator = base_estimator\n        self.n_estimators = n_estimators\n        self.estimator_params = estimator_params\n\n        # Don't instantiate estimators now! Parameters of base_estimator might\n        # still change. Eg., when grid-searching with the nested object syntax.\n        # self.estimators_ needs to be filled by the derived classes in fit.\n\n    def _validate_estimator(self, default=None):\n        \"\"\"Check the estimator and the n_estimator attribute, set the\n        `base_estimator_` attribute.\"\"\"\n        if not isinstance(self.n_estimators, (numbers.Integral, np.integer)):"
+      },
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/ensemble/tests/test_forest.py",
+      "score": 49,
+      "matched_identifiers": [
+        "BaseForest",
+        "IsolationForest",
+        "RandomForestClassifier",
+        "__init__"
+      ],
+      "reasons": [
+        "test_function_match:__init__",
+        "test_path_related_to_class:IsolationForest",
+        "test_path_related_to_class:BaseForest",
+        "test_path_related_to_class:RandomForestClassifier",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/ensemble/tests",
+        "test_name_matches_source_stem:forest",
+        "token_overlap:ensemble,forest,sklearn",
+        "internal_name_overlap:random",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/ensemble/tests/test_iforest.py",
+      "score": 46,
+      "matched_identifiers": [
+        "BaseForest",
+        "IsolationForest",
+        "RandomForestClassifier"
+      ],
+      "reasons": [
+        "test_path_related_to_class:IsolationForest",
+        "test_path_related_to_class:BaseForest",
+        "test_path_related_to_class:RandomForestClassifier",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/ensemble/tests",
+        "test_name_matches_source_stem:iforest",
+        "token_overlap:ensemble,forest,iforest,sklearn",
+        "internal_name_overlap:forest",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/ensemble/tests/test_base.py",
+      "score": 39,
+      "matched_identifiers": [
+        "BaseBagging",
+        "BaseForest"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseForest",
+        "test_path_related_to_class:BaseBagging",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/ensemble/tests",
+        "test_name_matches_source_stem:base",
+        "token_overlap:ensemble,sklearn",
+        "internal_name_overlap:random",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/ensemble/tests/test_bagging.py",
+      "score": 38,
+      "matched_identifiers": [
+        "BaseBagging"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseBagging",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/ensemble/tests",
+        "test_name_matches_source_stem:bagging",
+        "token_overlap:bagging,ensemble,sklearn",
+        "internal_name_overlap:classifier",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/ensemble/tests/__init__.py",
+      "score": 36,
+      "matched_identifiers": [
+        "__init__"
+      ],
+      "reasons": [
+        "test_path_contains_function:__init__",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/ensemble/tests",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:ensemble,init,sklearn",
+        "explicit_source_area_match:sklearn/ensemble"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/ensemble/tests/test_iforest.py:pytest_import_or_conftest",
+      "sklearn/ensemble/tests/test_iforest.py:unittest_or_django_test_import",
+      "sklearn/ensemble/tests/test_iforest.py:top_level_test_functions",
+      "sklearn/ensemble/tests/test_forest.py:pytest_import_or_conftest",
+      "sklearn/ensemble/tests/test_forest.py:top_level_test_functions",
+      "sklearn/ensemble/tests/test_base.py:top_level_test_functions",
+      "sklearn/ensemble/tests/test_bagging.py:pytest_import_or_conftest",
+      "sklearn/ensemble/tests/test_bagging.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 747,
+  "indexed_test_file_count": 196,
+  "available_imports": {
+    "sklearn": [
+      "AdaBoostClassifier",
+      "AdaBoostRegressor",
+      "BaggingClassifier",
+      "BaggingRegressor",
+      "BaseEnsemble",
+      "DataConversionWarning",
+      "ExtraTreesClassifier",
+      "ExtraTreesRegressor",
+      "GradientBoostingClassifier",
+      "GradientBoostingRegressor",
+      "IsolationForest",
+      "Memory",
+      "Parallel",
+      "RandomForestClassifier",
+      "RandomForestRegressor",
+      "RandomTreesEmbedding",
+      "Sequence",
+      "VotingClassifier",
+      "_joblib",
+      "as_float_array",
+      "assert_all_finite",
+      "bagging",
+      "check_X_y",
+      "check_array",
+      "check_consistent_length",
+      "check_random_state",
+      "check_scalar",
+      "check_symmetric",
+      "column_or_1d",
+      "compute_class_weight",
+      "compute_sample_weight",
+      "config_context",
+      "cpu_count",
+      "delayed",
+      "deprecated",
+      "effective_n_jobs",
+      "forest",
+      "get_config",
+      "gradient_boosting",
+      "hash",
+      "indexable",
+      "indices_to_mask",
+      "issparse",
+      "murmurhash3_32",
+      "parallel_backend",
+      "partial_dependence",
+      "register_parallel_backend",
+      "resample",
+      "safe_indexing",
+      "set_config",
+      "setup_module",
+      "shuffle",
+      "weight_boosting"
+    ],
+    "sklearn.ensemble.base": [
+      "BaseEnsemble",
+      "_partition_estimators",
+      "_set_random_states"
+    ],
+    "sklearn.ensemble.iforest": [
+      "IsolationForest",
+      "_average_path_length"
+    ],
+    "sklearn.ensemble.forest": [
+      "BaseForest",
+      "ExtraTreesClassifier",
+      "ExtraTreesRegressor",
+      "ForestClassifier",
+      "ForestRegressor",
+      "RandomForestClassifier",
+      "RandomForestRegressor",
+      "RandomTreesEmbedding",
+      "_accumulate_prediction",
+      "_generate_sample_indices",
+      "_generate_unsampled_indices",
+      "_parallel_build_trees"
+    ],
+    "sklearn.ensemble.bagging": [
+      "BaggingClassifier",
+      "BaggingRegressor",
+      "BaseBagging",
+      "_generate_bagging_indices",
+      "_generate_indices",
+      "_parallel_build_estimators",
+      "_parallel_decision_function",
+      "_parallel_predict_log_proba",
+      "_parallel_predict_proba",
+      "_parallel_predict_regression"
+    ],
+    "sklearn.utils": [
+      "Bunch",
+      "Memory",
+      "Parallel",
+      "axis0_safe_slice",
+      "gen_batches",
+      "gen_even_slices",
+      "get_chunk_n_rows",
+      "indices_to_mask",
+      "is_scalar_nan",
+      "resample",
+      "safe_indexing",
+      "safe_mask",
+      "safe_sqr",
+      "shuffle",
+      "tosequence"
+    ],
+    "sklearn.ensemble.tests.test_iforest": [
+      "test_behaviour_param",
+      "test_deprecation",
+      "test_iforest",
+      "test_iforest_average_path_length",
+      "test_iforest_chunks_works1",
+      "test_iforest_chunks_works2",
+      "test_iforest_error",
+      "test_iforest_parallel_regression",
+      "test_iforest_performance",
+      "test_iforest_sparse",
+      "test_iforest_subsampled_features",
+      "test_iforest_works",
+      "test_max_samples_attribute",
+      "test_max_samples_consistency",
+      "test_recalculate_max_depth",
+      "test_score_samples"
+    ],
+    "sklearn.ensemble.tests.test_forest": [
+      "MyBackend",
+      "check_1d_input",
+      "check_boston_criterion",
+      "check_class_weight_balanced_and_bootstrap_multi_output",
+      "check_class_weight_errors",
+      "check_class_weights",
+      "check_classes_shape",
+      "check_classification_toy",
+      "check_decision_path",
+      "check_gridsearch",
+      "check_importances",
+      "check_iris_criterion",
+      "check_max_leaf_nodes_max_depth",
+      "check_memory_layout",
+      "check_min_samples_leaf",
+      "check_min_samples_split",
+      "check_min_weight_fraction_leaf",
+      "check_multioutput",
+      "check_oob_score",
+      "check_oob_score_raise_error",
+      "check_parallel",
+      "check_pickle",
+      "check_probability",
+      "check_regressor_attributes",
+      "check_sparse_input",
+      "check_unfitted_feature_importances",
+      "check_warm_start",
+      "check_warm_start_clear",
+      "check_warm_start_equal_n_estimators",
+      "check_warm_start_oob",
+      "check_warm_start_smaller_n_estimators",
+      "test_1d_input",
+      "test_backend_respected",
+      "test_boston",
+      "test_class_weight_balanced_and_bootstrap_multi_output",
+      "test_class_weight_errors",
+      "test_class_weights",
+      "test_classes_shape",
+      "test_classification_toy",
+      "test_decision_path",
+      "test_distribution",
+      "test_dtype_convert",
+      "test_gridsearch",
+      "test_importances",
+      "test_importances_asymptotic",
+      "test_iris",
+      "test_max_leaf_nodes_max_depth",
+      "test_memory_layout",
+      "test_min_impurity_decrease",
+      "test_min_impurity_split",
+      "test_min_samples_leaf",
+      "test_min_samples_split",
+      "test_min_weight_fraction_leaf",
+      "test_multi_target",
+      "test_multioutput",
+      "test_multioutput_string",
+      "test_nestimators_future_warning",
+      "test_oob_score_classifiers",
+      "test_oob_score_raise_error",
+      "test_oob_score_regressors",
+      "test_parallel",
+      "test_parallel_train",
+      "test_pickle",
+      "test_probability",
+      "test_random_hasher",
+      "test_random_hasher_sparse_data",
+      "test_random_trees_dense_equal",
+      "test_random_trees_dense_type",
+      "test_regressor_attributes",
+      "test_sparse_input",
+      "test_unfitted_feature_importances",
+      "test_warm_start",
+      "test_warm_start_clear",
+      "test_warm_start_equal_n_estimators",
+      "test_warm_start_oob",
+      "test_warm_start_smaller_n_estimators"
+    ],
+    "sklearn.ensemble.tests.test_base": [
+      "test_base",
+      "test_base_not_int_n_estimators",
+      "test_base_zero_n_estimators",
+      "test_set_random_states"
+    ],
+    "sklearn.ensemble.tests.test_bagging": [
+      "DummySizeEstimator",
+      "DummyZeroEstimator",
+      "replace",
+      "test_bagging_classifier_with_missing_inputs",
+      "test_bagging_regressor_with_missing_inputs",
+      "test_bagging_sample_weight_unsupported_but_passed",
+      "test_bagging_small_max_features",
+      "test_bagging_with_pipeline",
+      "test_base_estimator",
+      "test_bootstrap_features",
+      "test_bootstrap_samples",
+      "test_classification",
+      "test_error",
+      "test_estimators_samples",
+      "test_estimators_samples_deterministic",
+      "test_gridsearch",
+      "test_max_samples_consistency",
+      "test_oob_score_classification",
+      "test_oob_score_consistency",
+      "test_oob_score_regression",
+      "test_oob_score_removed_on_warm_start",
+      "test_parallel_classification",
+      "test_parallel_regression",
+      "test_probability",
+      "test_regression",
+      "test_set_oob_score_label_encoding",
+      "test_single_estimator",
+      "test_sparse_classification",
+      "test_sparse_regression",
+      "test_warm_start",
+      "test_warm_start_equal_n_estimators",
+      "test_warm_start_equivalence",
+      "test_warm_start_smaller_n_estimators",
+      "test_warm_start_with_oob_score_fails"
+    ]
+  },
+  "test_example_snippet": "def test_classification_toy(name):\n    check_classification_toy(name)\n\n\ndef check_iris_criterion(name, criterion):\n    # Check consistency on dataset iris.\n    ForestClassifier = FOREST_CLASSIFIERS[name]\n\n    clf = ForestClassifier(n_estimators=10, criterion=criterion,\n                           random_state=1)\n    clf.fit(iris.data, iris.target)\n    score = clf.score(iris.data, iris.target)\n    assert_greater(score, 0.9, \"Failed with criterion %s and score = %f\"\n                               % (criterion, score))\n\n    clf = ForestClassifier(n_estimators=10, criterion=criterion,\n                           max_features=2, random_state=1)\n    clf.fit(iris.data, iris.target)\n    score = clf.score(iris.data, iris.target)\n    assert_greater(score, 0.5, \"Failed with criterion %s and score = %f\"\n                               % (criterion, score))\n\n\n@pytest.mark.parametrize('name', FOREST_CLASSIFIERS)\n@pytest.mark.parametrize('criterion', (\"gini\", \"entropy\"))\ndef test_iris(name, criterion):\n    check_iris_criterion(name, criterion)\n\n\ndef check_boston_criterion(name, criterion):\n    # Check consistency on dataset boston house prices.\n    ForestRegressor = FOREST_REGRESSORS[name]\n\n    clf = ForestRegressor(n_estimators=5, criterion=criterion,\n                          random_state=1)",
+  "conftest_fixtures": {}
+}

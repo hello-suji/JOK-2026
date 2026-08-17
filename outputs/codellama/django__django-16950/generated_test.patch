@@ -1,0 +1,47 @@
+--- a/tests/admin_inlines/admin.py
++++ b/tests/admin_inlines/admin.py
+@@ -466,3 +466,44 @@
+ site3.register(SomeParentModel, inlines=[ChildHiddenFieldInFieldsGroupStackedInline])
+ site4 = admin.AdminSite(name="stacked_inline_hidden_field_on_single_line_admin")
+ site4.register(SomeParentModel, inlines=[ChildHiddenFieldOnSingleLineStackedInline])
++
++from django.test import TestCase, SimpleTestCase
++import uuid
++from django.contrib.admin import register
++from django.contrib.admin.options import ModelAdmin, StackedInline
++from django.db.models import BigAutoField, CharField, ForeignKey, UUIDField
++from django.db.models import Model
++
++
++class UUIDModel(Model):
++    pkid = BigAutoField(primary_key=True, editable=False)
++    id = UUIDField(default=uuid.uuid4, unique=True, editable=False)
++
++
++class SubThing(UUIDModel):
++    name = CharField(max_length=100)
++    thing = ForeignKey('Thing', related_name='subthings', on_delete=models.CASCADE)
++
++
++class SubThingInline(StackedInline):
++    model = SubThing
++    extra = 1
++
++
++class Thing(UUIDModel):
++    name = CharField(max_length=100)
++
++
++@register(Thing)
++class ThingAdmin(ModelAdmin):
++    inlines = [SubThingInline]
++
++
++class TestThingAdmin(TestCase):
++    def test_adding_subthing_repro(self):
++        # Create a Thing instance
++        thing = Thing.objects.create(name='Main Thing')
++        # Add a SubThing instance
++        subthing = SubThing.objects.create(name='Sub Thing', thing=thing)
++        # Assert that the subthing is correctly linked to the thing
++        self.assertIn(subthing, thing.subthings.all())

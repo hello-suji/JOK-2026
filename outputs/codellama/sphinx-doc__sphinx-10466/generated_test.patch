@@ -1,0 +1,19 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -561,3 +561,16 @@
+
+     # explicit title
+     assert html.format('index.html#foons') in content
++
++import unittest
++from sphinx.builders.gettext import Message
++
++class TestMessageLocations(unittest.TestCase):
++    def test_unique_locations_repro(self):
++        """Ensure Message locations are unique."""
++        msg = Message('msgid', 'msgstr')
++        msg.add_location('../../manual/render/shader_nodes/vector/vector_rotate.rst:38')
++        msg.add_location('../../manual/modeling/hair.rst:0')
++        msg.add_location('../../manual/modeling/hair.rst:0')
++        msg.add_location('../../manual/modeling/hair.rst:0')
++        self.assertEqual(len(msg.locations), 2)

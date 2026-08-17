@@ -1,0 +1,17 @@
+--- a/astropy/units/tests/test_quantity_decorator.py
++++ b/astropy/units/tests/test_quantity_decorator.py
+@@ -327,3 +327,14 @@
+
+     with pytest.raises(TypeError):
+         x, y = myfunc_args(None, None)
++
++def test_quantity_input_decorator_with_none_return_repro():
++    class PoC(object):
++        @u.quantity_input
++        def __init__(self, voltage: u.V) -> None:
++            pass
++
++    poc = PoC(1.*u.V)
++    assert poc is not None
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(poc) != "AttributeError: 'NoneType' object has no attribute 'to'"

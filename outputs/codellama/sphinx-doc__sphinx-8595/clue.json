@@ -1,0 +1,49 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8595",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "**Expected behavior**",
+    "No entries should be shown because `__all__` is empty."
+  ],
+  "repro_conditions": [
+    "**To Reproduce**",
+    "# example.py",
+    ".. automodule:: example"
+  ],
+  "environment": [
+    "- OS: Mac",
+    "- Python version: 3.9.1",
+    "- Sphinx version: HEAD of 3.x"
+  ],
+  "identifiers": {
+    "functions": [
+      "bar",
+      "baz",
+      "foo"
+    ],
+    "classes": [],
+    "files": [
+      "example.py"
+    ],
+    "exceptions": []
+  },
+  "raw_issue_text": "autodoc: empty __all__ attribute is ignored\n**Describe the bug**\nautodoc: empty `__all__` attribute is ignored\n\n**To Reproduce**\n```\n# example.py\n__all__ = []\n\n\ndef foo():\n    \"docstring\"\n\n\ndef bar():\n    \"docstring\"\n\n\ndef baz():\n    \"docstring\"\n```\n```\n# index.rst\n.. automodule:: example\n   :members:\n```\n\nAll foo, bar, and baz are shown.\n\n**Expected behavior**\nNo entries should be shown because `__all__` is empty.\n\n**Your project**\nNo\n\n**Screenshots**\nNo\n\n**Environment info**\n- OS: Mac\n- Python version: 3.9.1\n- Sphinx version: HEAD of 3.x\n- Sphinx extensions: sphinx.ext.autodoc\n- Extra tools: No\n\n**Additional context**\nNo",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "# example.py\n__all__ = []\n\n\ndef foo():\n    \"docstring\"\n\n\ndef bar():\n    \"docstring\"\n\n\ndef baz():\n    \"docstring\"",
+      "context_before": "**To Reproduce**",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "# index.rst\n.. automodule:: example\n   :members:",
+      "context_before": "```",
+      "is_system_or_output": true
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

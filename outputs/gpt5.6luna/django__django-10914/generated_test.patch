@@ -1,0 +1,24 @@
+--- a/tests/staticfiles_tests/test_storage.py
++++ b/tests/staticfiles_tests/test_storage.py
+@@ -597,3 +597,21 @@
+                 content = relfile.read()
+                 self.assertIn(b'foo.57a5cb9ba68d.png', content)
+                 self.assertIn(b'xyz.57a5cb9ba68d.png', content)
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.core.files.storage import FileSystemStorage
++from django.core.files.uploadedfile import TemporaryUploadedFile
++import os
++
++class TestFileUploadPermissions(TestCase):
++    def test_default_file_permissions_repro(self):
++        fs = FileSystemStorage()
++        temp_file = TemporaryUploadedFile('temp.txt', 'text/plain', 100, 'utf-8')
++        temp_file.write(b'test content')
++        temp_file.seek(0)
++        name = fs.save('test.txt', temp_file)
++        file_path = fs.path(name)
++        # Check the file permissions
++        permissions = oct(os.stat(file_path).st_mode)[-3:]
++        self.assertEqual(permissions, '644')

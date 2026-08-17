@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "AutodocDirective",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, prepare_docstring, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, prepare_docstring, join, makedirs."
+    ],
+    "expected_failure": "Currently, if I'm using autodoc, the `:private-members:` option does not allow specification of which private members to document. The current behavior is to document all private members, but what if I would only like to document 1 or 2?",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "doc/usage/extensions/example_google.py",
+      "doc/usage/extensions/example_numpy.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-setup/doc/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc import DocumenterBridge\nfrom sphinx.ext.autodoc.directive import AutodocDirective\nfrom sphinx.util.docstrings import prepare_docstring\n\ndef test_private_members_specific_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = outdir = doctreedir = tmpdir\n        buildername = 'html'\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write('test module\\n============\\n.. automodule:: example_module\\n   :private-members:')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n        assert 'private_function' in app.env.domains['py'].data['objects']"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "prepare_docstring",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "AutodocDirective",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "tempfile",
+        "prepare_docstring",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "AutodocDirective",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

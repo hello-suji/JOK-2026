@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/serializers/base.py",
+      "target_function": "build_instance",
+      "related_classes": [
+        "Book",
+        "Author"
+      ],
+      "candidate_test_file": "tests/serializers/models/base.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.core.management import call_command",
+      "from django.test import TestCase",
+      "from testbug.models import Book, Author",
+      "author = Author.objects.create(title='John Doe')",
+      "book = Book.objects.create(title='Sample Book', author=author)",
+      "Use the generated reproduction path that calls serializers, create, deserialize.",
+      "Use the generated reproduction path that calls build_instance, serialize, serializers, create."
+    ],
+    "execution_stimulus": [
+      "call_command('loaddata', 'books.json', database='other')",
+      "Execute the focused target API path: serializers, create, deserialize.",
+      "Execute the focused target API path: build_instance, serialize, serializers, create."
+    ],
+    "expected_failure": "loaddata command fails with KeyError when using a non-default database",
+    "relevant_source_files": [
+      "django/core/serializers/base.py",
+      "django/contrib/auth/models.py",
+      "django/contrib/contenttypes/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/serializers/models/base.py",
+      "tests/serializers/models/natural.py",
+      "tests/fixtures/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "books.json"
+      ],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_loaddata_non_default_db_failure():\n    from django.core.management import call_command\n    from django.test import TestCase\n    from testbug.models import Book, Author\n    author = Author.objects.create(title='John Doe')\n    book = Book.objects.create(title='Sample Book', author=author)\n    with open('books.json') as f:\n        try:\n            call_command('loaddata', f, database='other')\n        except KeyError as e:\n            assert str(e) == \"'title'\", 'Expected KeyError with message \"'title'\"'"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.serializers.models.base import Book, Author\nfrom django.core import serializers\n\nclass TestBuildInstance(TestCase):\n    def test_build_instance_no_key_error_repro(self):\n        author = Author.objects.create(name='John Doe')\n        book_data = {'fields': {'title': 'Sample Book', 'author': author.pk}, 'model': 'serializers.book'}\n        deserialized_objects = list(serializers.deserialize('python', [book_data]))\n        self.assertEqual(len(deserialized_objects), 1)\n        self.assertIsInstance(deserialized_objects[0].object, Book)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(deserialized_objects) != \"'title'\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "'title'"
+    ],
+    "error_keywords": [
+      "KeyError"
+    ],
+    "identifiers": {
+      "functions": [
+        "build_instance",
+        "serializers",
+        "create",
+        "deserialize",
+        "serialize"
+      ],
+      "classes": [
+        "Book",
+        "Author"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/serializers/models/base.py",
+      "target_source_file": "django/core/serializers/base.py",
+      "test_visible_functions": [
+        "build_instance",
+        "serialize",
+        "serializers",
+        "create",
+        "deserialize"
+      ],
+      "test_visible_classes": [
+        "Book",
+        "Author"
+      ]
+    }
+  }
+]

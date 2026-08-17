@@ -1,0 +1,19 @@
+--- a/tests/admin_widgets/test_autocomplete_widget.py
++++ b/tests/admin_widgets/test_autocomplete_widget.py
+@@ -195,3 +195,16 @@
+                         AutocompleteSelect(rel, admin.site).media._js,
+                         list(expected_files),
+                     )
++
++from django.contrib import admin
++from django.test import TestCase
++from django.utils.translation import gettext_lazy as _
++
++class TestCustomEmptyLabel(TestCase):
++    def test_custom_empty_label_repro(self):
++        ma = MyModelAdmin(MyModel, admin.site)
++        field = MyModel._meta.get_field('related_model')
++        formfield = ma.formfield_for_foreignkey(field, request=None)
++        self.assertEqual(formfield.empty_label, _('Select related model'))
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(formfield) != "_('None')"

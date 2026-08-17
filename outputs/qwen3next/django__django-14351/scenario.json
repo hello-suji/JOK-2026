@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/utils.py",
+      "target_function": "filter",
+      "related_classes": [
+        "BaseTable",
+        "PropertyGroup",
+        "PropertyGroupQuerySet",
+        "Q"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __or__ can be called.",
+      "Use the generated reproduction path that calls filter."
+    ],
+    "execution_stimulus": [
+      "Call __or__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: filter."
+    ],
+    "expected_failure": "Q object __or__ appears to get all dunder related's default columns and queryset raises ProgrammingError.",
+    "relevant_source_files": [
+      "django/db/backends/utils.py",
+      "django/db/utils.py",
+      "django/db/models/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/backends/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestQObjectOrBehavior(SimpleTestCase):\n    def test_q_object_or_behavior_repro(self):\n        q1 = Q(agent__property_groups__id__in=[1])\n        q2 = Q(agent__property_groups__in=[1])\n        combined_q = q1 | q2\n        try:\n            # This should raise ProgrammingError in the buggy version\n            Author.objects.filter(combined_q)\n        except Exception as e:\n            self.assertNotIsInstance(e, ProgrammingError)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ProgrammingError"
+    ],
+    "identifiers": {
+      "functions": [
+        "agent_groups",
+        "annotate",
+        "distinct",
+        "execute",
+        "frozenset",
+        "pprint",
+        "py",
+        "values_list",
+        "with_traceback",
+        "yep_yep",
+        "filter"
+      ],
+      "classes": [
+        "BaseTable",
+        "PropertyGroup",
+        "PropertyGroupQuerySet",
+        "RelatedExact",
+        "WhereNode",
+        "Q"
+      ],
+      "files": [
+        "6/site-packages/django/db/backends/utils.py",
+        "6/site-packages/django/db/utils.py",
+        "app/test/compiler.py",
+        "django/db/models/sql/query.py"
+      ],
+      "exceptions": [
+        "ProgrammingError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/backends/utils.py",
+      "test_visible_functions": [
+        "filter"
+      ],
+      "test_visible_classes": [
+        "Q"
+      ]
+    }
+  }
+]

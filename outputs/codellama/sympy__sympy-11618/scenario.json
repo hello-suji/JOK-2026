@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/geometry/point.py",
+      "target_function": "distance",
+      "related_classes": [
+        "Point"
+      ],
+      "candidate_test_file": "sympy/geometry/tests/test_point.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy.geometry import Point",
+      "Use the generated reproduction path that calls distance, sqrt."
+    ],
+    "execution_stimulus": [
+      "p1 = Point(2, 0)",
+      "p2 = Point(1, 0, 2)",
+      "result = p1.distance(p2)",
+      "Execute the focused target API path: distance, sqrt."
+    ],
+    "expected_failure": "The distance calculation ignores the third dimension, resulting in an incorrect distance of 1 instead of sqrt(5)",
+    "relevant_source_files": [
+      "sympy/geometry/point.py",
+      "sympy/geometry/line.py",
+      "sympy/geometry/line3d.py"
+    ],
+    "relevant_test_files": [
+      "sympy/geometry/tests/test_point.py",
+      "sympy/geometry/tests/test_line.py",
+      "sympy/geometry/tests/test_plane.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_distance_considers_third_dimension_repro():\n    p1 = Point(2, 0)\n    p2 = Point(1, 0, 2)\n    result = p1.distance(p2)\n    assert result != 1\n    assert result == sqrt(5)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != '1'"
+      },
+      {
+        "language": "python",
+        "code": "def test_distance_ignores_third_dimension():\n    from sympy.geometry import Point\n    p1 = Point(2, 0)\n    p2 = Point(1, 0, 2)\n    result = p1.distance(p2)\n    assert result == 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "1"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "distance",
+        "sqrt"
+      ],
+      "classes": [
+        "Point"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/geometry/tests/test_point.py",
+      "target_source_file": "sympy/geometry/point.py",
+      "test_visible_functions": [
+        "distance",
+        "sqrt"
+      ],
+      "test_visible_classes": [
+        "Point"
+      ]
+    }
+  }
+]

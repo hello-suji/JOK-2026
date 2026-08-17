@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/environment/adapters/toctree.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Sphinx",
+        "TocTree",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_environment_toctree.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, join, makedirs, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, join, makedirs, build."
+    ],
+    "expected_failure": "The following directive should be possible and do not rise errors:",
+    "relevant_source_files": [
+      "sphinx/environment/adapters/toctree.py",
+      "sphinx/environment/collectors/toctree.py",
+      "sphinx/ext/autodoc/directive.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_environment_toctree.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/test_build_html.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "* :ref:`genindex`\n* :ref:`modindex`\n* :ref:`search`"
+      },
+      {
+        "language": "python",
+        "code": ".. toctree::\n   :maxdepth: 1\n   :caption: Indices and tables\n\n   genindex \n   modindex\n   search"
+      },
+      {
+        "language": "python",
+        "code": "$ make html\n...\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'genindex'\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'modindex'\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'search'\n..."
+      },
+      {
+        "language": "python",
+        "code": "def test_toctree_with_special_indices_repro():\n    import tempfile\n    import os\n    from sphinx.application import Sphinx\n    from sphinx.environment.adapters.toctree import TocTree\n\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = srcdir\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        buildername = 'html'\n\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write('.. toctree::\\n   :maxdepth: 2\\n\\n   special_index\\n')\n        with open(os.path.join(srcdir, 'special_index.rst'), 'w') as f:\n            f.write('Special Index\\n===============\\n\\nThis is a special index page.')\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n\n        toctree_adapter = TocTree(app.env)\n        entries = toctree_adapter.get_toc_for('index', app.builder)\n\n        assert len(entries) == 1, 'There should be one entry in the toctree.'\n        assert entries[0][1] == 'special_index', 'The entry should point to special_index.'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build",
+        "get_toc_for"
+      ],
+      "classes": [
+        "Sphinx",
+        "TocTree",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_environment_toctree.py",
+      "target_source_file": "sphinx/environment/adapters/toctree.py",
+      "test_visible_functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build",
+        "get_toc_for"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "TocTree",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

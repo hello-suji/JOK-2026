@@ -1,0 +1,457 @@
+{
+  "instance_id": "django__django-13807",
+  "repo": "django/django",
+  "base_commit": "89fc144dedc737a79929231438f035b1d4a993c9",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/backends/sqlite3/base.py",
+      "score": 44,
+      "matched_identifiers": [
+        "7/site-packages/django/db/backends/sqlite3/base.py",
+        "backends",
+        "base",
+        "check",
+        "execute",
+        "foreign"
+      ],
+      "reasons": [
+        "function_match:execute",
+        "explicit_file_path_hint:7/site-packages/django/db/backends/sqlite3/base.py",
+        "path_contains_class:SQLite",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,base,check,foreign,foreign_key_check"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "execute": "    def execute(self, query, params=None):\n        if params is None:\n            return Database.Cursor.execute(self, query)\n        query = self.convert_query(query)\n        return Database.Cursor.execute(self, query, params)\n\n    def executemany(self, query, param_list):\n        query = self.convert_query(query)\n        return Database.Cursor.executemany(self, query, param_list)\n\n    def convert_query(self, query):\n        return FORMAT_QMARK_REGEX.sub('?', query).replace('%%', '%')\n\n\ndef _sqlite_datetime_parse(dt, tzname=None, conn_tzname=None):"
+      },
+      "top_level_functions": [
+        "decoder",
+        "none_guard",
+        "list_aggregate",
+        "check_sqlite_version",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.close",
+        "DatabaseWrapper.disable_constraint_checking",
+        "DatabaseWrapper.enable_constraint_checking",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.is_in_memory_db",
+        "SQLiteCursorWrapper.execute",
+        "SQLiteCursorWrapper.executemany",
+        "SQLiteCursorWrapper.convert_query"
+      ]
+    },
+    {
+      "path": "django/db/backends/utils.py",
+      "score": 42,
+      "matched_identifiers": [
+        "7/site-packages/django/db/backends/utils.py",
+        "backends",
+        "base",
+        "check",
+        "execute",
+        "list"
+      ],
+      "reasons": [
+        "function_match:execute",
+        "explicit_file_path_hint:7/site-packages/django/db/backends/utils.py",
+        "stem_in_issue_text:utils",
+        "source_content_tokens:backends,base,check,list,site"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "execute": "    def execute(self, sql, params=None):\n        with self.debug_sql(sql, params, use_last_executed_query=True):\n            return super().execute(sql, params)\n\n    def executemany(self, sql, param_list):\n        with self.debug_sql(sql, param_list, many=True):\n            return super().executemany(sql, param_list)\n\n    @contextmanager\n    def debug_sql(self, sql=None, params=None, use_last_executed_query=False, many=False):\n        start = time.monotonic()\n        try:\n            yield\n        finally:\n            stop = time.monotonic()"
+      },
+      "top_level_functions": [
+        "CursorWrapper.callproc",
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "CursorDebugWrapper.execute",
+        "CursorDebugWrapper.executemany",
+        "CursorDebugWrapper.debug_sql",
+        "typecast_date",
+        "typecast_time",
+        "typecast_timestamp",
+        "split_identifier",
+        "truncate_name",
+        "names_digest",
+        "format_number",
+        "strip_quotes"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/django/db/backends/sqlite3/base.py",
+        "base",
+        "check",
+        "execute",
+        "list",
+        "order"
+      ],
+      "reasons": [
+        "function_match:execute",
+        "file_hint_match:7/site-packages/django/db/backends/sqlite3/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:base,check,list,order,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "execute": "    def execute(self, *args, **options):\n        \"\"\"\n        Try to execute this command, performing system checks if needed (as\n        controlled by the ``requires_system_checks`` attribute, except if\n        force-skipped).\n        \"\"\"\n        if options['force_color'] and options['no_color']:\n            raise CommandError(\"The --no-color and --force-color options can't be used together.\")\n        if options['force_color']:\n            self.style = color_style(force_color=True)\n        elif options['no_color']:\n            self.style = no_style()\n            self.stderr.style_func = None\n        if options.get('stdout'):\n            self.stdout = OutputWrapper(options['stdout'])",
+        "check": "    def check(self, app_configs=None, tags=None, display_num_errors=False,\n              include_deployment_checks=False, fail_level=checks.ERROR,\n              databases=None):\n        \"\"\"\n        Use the system check framework to validate entire Django project.\n        Raise CommandError for any serious message (error or critical errors).\n        If there are only light messages (like warnings), print them to stderr\n        and don't raise an exception.\n        \"\"\"\n        all_issues = checks.run_checks(\n            app_configs=app_configs,\n            tags=tags,\n            include_deployment_checks=include_deployment_checks,\n            databases=databases,\n        )"
+      },
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    },
+    {
+      "path": "django/db/backends/mysql/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/django/db/backends/sqlite3/base.py",
+        "backends",
+        "base",
+        "check",
+        "execute",
+        "foreign"
+      ],
+      "reasons": [
+        "function_match:execute",
+        "file_hint_match:7/site-packages/django/db/backends/sqlite3/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,base,check,foreign,foreign_key_check"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "execute": "    def execute(self, query, args=None):\n        try:\n            # args is None means no string interpolation\n            return self.cursor.execute(query, args)\n        except Database.OperationalError as e:\n            # Map some error codes to IntegrityError, since they seem to be\n            # misclassified and Django would prefer the more logical place.\n            if e.args[0] in self.codes_for_integrityerror:\n                raise IntegrityError(*tuple(e.args))\n            raise\n\n    def executemany(self, query, args):\n        try:\n            return self.cursor.executemany(query, args)\n        except Database.OperationalError as e:"
+      },
+      "top_level_functions": [
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.disable_constraint_checking",
+        "DatabaseWrapper.enable_constraint_checking",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.display_name",
+        "DatabaseWrapper.data_type_check_constraints",
+        "DatabaseWrapper.mysql_server_data",
+        "DatabaseWrapper.mysql_server_info",
+        "DatabaseWrapper.mysql_version",
+        "DatabaseWrapper.mysql_is_mariadb",
+        "DatabaseWrapper.sql_mode"
+      ]
+    },
+    {
+      "path": "django/db/backends/oracle/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/django/db/backends/sqlite3/base.py",
+        "backends",
+        "base",
+        "check",
+        "execute",
+        "list"
+      ],
+      "reasons": [
+        "function_match:execute",
+        "file_hint_match:7/site-packages/django/db/backends/sqlite3/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,base,check,list,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "execute": "    def execute(self, query, params=None):\n        query, params = self._fix_for_params(query, params, unify_by_values=True)\n        self._guess_input_sizes([params])\n        with wrap_oracle_errors():\n            return self.cursor.execute(query, self._param_generator(params))\n\n    def executemany(self, query, params=None):\n        if not params:\n            # No params given, nothing to do\n            return None\n        # uniform treatment for sequences and iterables\n        params_iter = iter(params)\n        query, firstparams = self._fix_for_params(query, next(params_iter))\n        # we build a list of formatted params; as we're going to traverse it\n        # more than once, we can't make it lazy by using a generator"
+      },
+      "top_level_functions": [
+        "wrap_oracle_errors",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.cx_oracle_version",
+        "DatabaseWrapper.oracle_version",
+        "VariableWrapper.bind_parameter",
+        "FormatStylePlaceholderCursor.execute",
+        "FormatStylePlaceholderCursor.executemany",
+        "FormatStylePlaceholderCursor.close",
+        "FormatStylePlaceholderCursor.var",
+        "FormatStylePlaceholderCursor.arrayvar"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/sqlite/test_introspection.py",
+      "score": 9,
+      "matched_identifiers": [
+        "SQLite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SQLite",
+        "token_overlap:backends,lite,sqlite",
+        "internal_name_overlap:check",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/sqlite/test_operations.py",
+      "score": 9,
+      "matched_identifiers": [
+        "SQLite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SQLite",
+        "token_overlap:backends,lite,sqlite",
+        "internal_name_overlap:lite",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/sqlite/tests.py",
+      "score": 9,
+      "matched_identifiers": [
+        "SQLite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SQLite",
+        "token_overlap:backends,lite,sqlite",
+        "internal_name_overlap:check",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_base.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:backends",
+        "internal_name_overlap:execute",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/sqlite/test_creation.py",
+      "score": 7,
+      "matched_identifiers": [
+        "SQLite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SQLite",
+        "token_overlap:backends,lite,sqlite",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/backends/base/test_base.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/tests.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/tests.py:testcase_class:Tests",
+      "tests/backends/sqlite/test_introspection.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/test_creation.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/test_creation.py:testcase_class:TestDbSignatureTests",
+      "tests/backends/sqlite/test_operations.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2692,
+  "indexed_test_file_count": 1830,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.backends.base.test_base": [
+      "DatabaseWrapperTests",
+      "ExecuteWrapperTests"
+    ],
+    "tests.backends.sqlite.tests": [
+      "EscapingChecks",
+      "EscapingChecksDebug",
+      "LastExecutedQueryTest",
+      "SchemaTests",
+      "Tests",
+      "ThreadSharing"
+    ],
+    "tests.backends.sqlite.test_introspection": [
+      "IntrospectionTests",
+      "ParsingTests"
+    ],
+    "tests.backends.sqlite.test_creation": [
+      "TestDbSignatureTests"
+    ],
+    "tests.backends.sqlite.test_operations": [
+      "SQLiteOperationsTests"
+    ],
+    "django.db": [
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.db.backends.utils": [
+      "CursorDebugWrapper",
+      "CursorWrapper",
+      "format_number",
+      "names_digest",
+      "split_identifier",
+      "strip_quotes",
+      "truncate_name",
+      "typecast_date",
+      "typecast_time",
+      "typecast_timestamp"
+    ],
+    "django.db.backends.oracle.base": [
+      "DatabaseWrapper",
+      "FormatStylePlaceholderCursor",
+      "OracleParam",
+      "VariableWrapper",
+      "_UninitializedOperatorsDescriptor",
+      "_setup_environment",
+      "wrap_oracle_errors"
+    ],
+    "django.db.backends.sqlite3.base": [
+      "DatabaseWrapper",
+      "SQLiteCursorWrapper",
+      "_sqlite_date_trunc",
+      "_sqlite_datetime_cast_date",
+      "_sqlite_datetime_cast_time",
+      "_sqlite_datetime_extract",
+      "_sqlite_datetime_parse",
+      "_sqlite_datetime_trunc",
+      "_sqlite_format_dtdelta",
+      "_sqlite_lpad",
+      "_sqlite_regexp",
+      "_sqlite_rpad",
+      "_sqlite_time_diff",
+      "_sqlite_time_extract",
+      "_sqlite_time_trunc",
+      "_sqlite_timestamp_diff",
+      "check_sqlite_version",
+      "decoder",
+      "list_aggregate",
+      "none_guard"
+    ],
+    "django.db.backends.mysql.base": [
+      "CursorWrapper",
+      "DatabaseWrapper"
+    ]
+  },
+  "test_example_snippet": "    def test_get_primary_key_column(self):\n        \"\"\"\n        Get the primary key column regardless of whether or not it has\n        quotation.\n        \"\"\"\n        testable_column_strings = (\n            ('id', 'id'), ('[id]', 'id'), ('`id`', 'id'), ('\"id\"', 'id'),\n            ('[id col]', 'id col'), ('`id col`', 'id col'), ('\"id col\"', 'id col')\n        )\n        with connection.cursor() as cursor:\n            for column, expected_string in testable_column_strings:\n                sql = 'CREATE TABLE test_primary (%s int PRIMARY KEY NOT NULL)' % column\n                with self.subTest(column=column):\n                    try:\n                        cursor.execute(sql)\n                        field = connection.introspection.get_primary_key_column(cursor, 'test_primary')\n                        self.assertEqual(field, expected_string)\n                    finally:\n                        cursor.execute('DROP TABLE test_primary')\n\n\n@unittest.skipUnless(connection.vendor == 'sqlite', 'SQLite tests')\nclass ParsingTests(TestCase):\n    def parse_definition(self, sql, columns):\n        \"\"\"Parse a column or constraint definition.\"\"\"\n        statement = sqlparse.parse(sql)[0]\n        tokens = (token for token in statement.flatten() if not token.is_whitespace)\n        with connection.cursor():\n            return connection.introspection._parse_column_or_constraint_definition(tokens, set(columns))\n\n    def assertConstraint(self, constraint_details, cols, unique=False, check=False):\n        self.assertEqual(constraint_details, {\n            'unique': unique,\n            'columns': cols,\n            'primary_key': False,",
+  "conftest_fixtures": {}
+}

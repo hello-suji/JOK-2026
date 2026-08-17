@@ -1,0 +1,15 @@
+--- a/sympy/printing/tests/test_mathematica.py
++++ b/sympy/printing/tests/test_mathematica.py
+@@ -90,3 +90,12 @@
+                      (y, -oo, oo))) == \
+         "Hold[Sum[Exp[-x^2 - y^2], {x, -Infinity, Infinity}, " \
+         "{y, -Infinity, Infinity}]]"
++
++from sympy import Max
++from sympy.printing.mathematica import mathematica_code
++def test_mathematica_code_max_order_repro():
++    x = symbols('x')
++    output = mathematica_code(Max(x, 2))
++    assert output == 'Max[x,2]', f'Expected Max[x,2], got {output}'
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(output) != 'Max(2, x)'

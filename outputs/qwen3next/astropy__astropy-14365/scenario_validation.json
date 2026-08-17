@@ -1,0 +1,96 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "reproduction_code references target_function:read",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "astropy/io/ascii/basic.py",
+          "target_function": "read",
+          "related_classes": [
+            "Table"
+          ],
+          "candidate_test_file": "astropy/io/ascii/tests/test_c_reader.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "import os",
+          "from astropy.table import Table",
+          "qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'",
+          "with open('test.qdp', 'w') as f: f.write(qdp_content)"
+        ],
+        "execution_stimulus": [
+          "table = Table.read('test.qdp', format='ascii.qdp')"
+        ],
+        "expected_failure": "Raises ValueError: Unrecognized QDP line: read serr 1 2",
+        "relevant_source_files": [
+          "astropy/table/table.py",
+          "astropy/io/fits/file.py",
+          "astropy/io/votable/tree.py"
+        ],
+        "relevant_test_files": [
+          "astropy/io/votable/tests/tree_test.py",
+          "astropy/io/ascii/tests/test_cds_header_from_readme.py",
+          "astropy/io/fits/tests/test_table.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_qdp_case_insensitivity():\n    import os\n    from astropy.table import Table\n    qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'\n    with open('test.qdp', 'w') as f:\n        f.write(qdp_content)\n    try:\n        table = Table.read('test.qdp', format='ascii.qdp')\n    except ValueError as e:\n        assert str(e) == 'Unrecognized QDP line: read serr 1 2'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: Unrecognized QDP line: read serr 1 2"
+        ],
+        "error_keywords": [
+          "ValueError",
+          "Unrecognized QDP line"
+        ],
+        "identifiers": {
+          "functions": [
+            "read"
+          ],
+          "classes": [
+            "Table"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "issue_repro_code",
+          "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "issue_repro_code"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

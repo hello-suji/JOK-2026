@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/io/fits/card.py",
+      "target_function": "_format_float",
+      "related_classes": [
+        "Card",
+        "VerifyWarning",
+        "Header"
+      ],
+      "candidate_test_file": "astropy/io/fits/tests/test_convenience.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _format_float can be called.",
+      "Use the generated reproduction path that calls fits.",
+      "Use the generated reproduction path that calls _format_float, getheader, fits."
+    ],
+    "execution_stimulus": [
+      "Call _format_float with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: fits.",
+      "Execute the focused target API path: _format_float, getheader, fits."
+    ],
+    "expected_failure": "It seems to me that before doing `f\"{value:.16G}\"`, we should attempt to use the string representation provided by Python (in other words `str(value)`), and we should only attempt to format it ourselves if the resulting string does not fit in 20 characters. However, since this is fairly deep in the `io.fits.Card` code, it's possible this would have side-effects that I am not aware of.",
+    "relevant_source_files": [
+      "astropy/io/fits/card.py",
+      "astropy/io/fits/convenience.py",
+      "astropy/io/fits/verify.py"
+    ],
+    "relevant_test_files": [
+      "astropy/io/fits/tests/test_convenience.py",
+      "astropy/coordinates/tests/test_representation.py",
+      "astropy/coordinates/tests/test_representation_arithmetic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from astropy.io import fits\nhdr = fits.getheader('test.fits')\nc = hdr.cards['ESO IFM CL RADIUS']\n\n>>> repr(c)\n('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\n\n>>> str(c)\n'HIERARCH ESO IFM CL RADIUS = 0.009125 / [m] radius arround actuator to avoid    '"
+      },
+      {
+        "language": "python",
+        "code": "new_c = fits.Card(f'HIERARCH {c.keyword}', c.value, c.comment)\nWARNING: VerifyWarning: Card is too long, comment will be truncated. [astropy.io.fits.card]\n\n>>> repr(new_c)\n\"('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\"\n\n>>> str(new_c)\n'HIERARCH ESO IFM CL RADIUS = 0.009124999999999999 / [m] radius arround actuator '"
+      },
+      {
+        "language": "python",
+        "code": "def test_card_format_float_issue_14508_repro():\n    from astropy.io import fits\n    hdr = fits.Header()\n    hdr['ESO IFM CL RADIUS'] = (0.009125, '[m] radius around actuator to avoid')\n    c = hdr.cards['ESO IFM CL RADIUS']\n    new_c = fits.Card(f'HIERARCH {c.keyword}', c.value, c.comment)\n    assert new_c.value == 0.009125\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(new_c) != \"from astropy.io import fits\\nhdr = fits.getheader('test.fits')\\nc = hdr.cards['ESO IFM CL RADIUS']\\n\\n('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\\n\\n'HIERARCH ESO IFM CL RADIUS = 0.009125 / [m] radius arround actuator to avoid    '\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "from astropy.io import fits\nhdr = fits.getheader('test.fits')\nc = hdr.cards['ESO IFM CL RADIUS']\n\n('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\n\n'HIERARCH ESO IFM CL RADIUS = 0.009125 / [m] radius arround actuator to avoid    '",
+      "new_c = fits.Card(f'HIERARCH {c.keyword}', c.value, c.comment)\nWARNING: VerifyWarning: Card is too long, comment will be truncated. [astropy.io.fits.card]\n\n\"('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\"\n\n'HIERARCH ESO IFM CL RADIUS = 0.009124999999999999 / [m] radius arround actuator '"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_format_float",
+        "getheader",
+        "fits"
+      ],
+      "classes": [
+        "Card",
+        "VerifyWarning",
+        "Header"
+      ],
+      "files": [
+        "astropy/io/fits/card.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "astropy/io/fits/tests/test_convenience.py",
+      "target_source_file": "astropy/io/fits/card.py",
+      "test_visible_functions": [
+        "_format_float",
+        "getheader",
+        "fits"
+      ],
+      "test_visible_classes": [
+        "Card",
+        "Header"
+      ]
+    }
+  }
+]

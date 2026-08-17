@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/skipping.py",
+      "target_function": "pytest_runtest_makereport",
+      "related_classes": [],
+      "candidate_test_file": "doc/en/example/assertion/test_failures.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import pytest module",
+      "Define a test function with @pytest.mark.skip decorator",
+      "Use the generated reproduction path that calls pytest_runtest_makereport, makepyfile, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest with -rs and --runxfail flags",
+      "Execute the focused target API path: pytest_runtest_makereport, makepyfile, runpytest."
+    ],
+    "expected_failure": "The skip location reported points to src/_pytest/skipping.py instead of the test file",
+    "relevant_source_files": [
+      "src/_pytest/skipping.py",
+      "doc/en/conf.py",
+      "doc/en/example/assertion/failure_demo.py"
+    ],
+    "relevant_test_files": [
+      "doc/en/example/assertion/test_failures.py",
+      "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import pytest\nfrom _pytest.skipping import pytest_runtest_makereport\n\ndef test_pytest_runtest_makereport_skip_location_repro(testdir):\n    testdir.makepyfile('''\nimport pytest\n\n@pytest.mark.skip\ndef test_example_repro():\n    assert 0\n''')\n    result = testdir.runpytest()\n    report = pytest_runtest_makereport(result)\n    assert 'src/_pytest/skipping.py' not in report.longreprtext\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(report) != 'SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip'"
+      },
+      {
+        "language": "python",
+        "code": "import pytest\n\ndef test_skip_location():\n    @pytest.mark.skip\n    def test_example():\n        assert 0\n    result = pytest.main(['-rs', '--runxfail', __file__])\n    assert 'src/_pytest/skipping.py' in result.stdout.str()"
+      }
+    ],
+    "expected_outputs": [
+      "SKIPPED [1] test_failures.py:4: unconditional skip"
+    ],
+    "actual_outputs": [
+      "SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "pytest_runtest_makereport",
+        "makepyfile",
+        "runpytest"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "doc/en/example/assertion/test_failures.py",
+      "target_source_file": "src/_pytest/skipping.py",
+      "test_visible_functions": [
+        "pytest_runtest_makereport",
+        "makepyfile",
+        "runpytest"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

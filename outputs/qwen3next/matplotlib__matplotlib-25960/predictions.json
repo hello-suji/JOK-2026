@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-25960",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1611,3 +1611,14 @@\n     fig = plt.figure(layout=mpl.layout_engine.ConstrainedLayoutEngine(**params))\n     with pytest.warns(PendingDeprecationWarning, match=\"will be deprecated\"):\n         assert fig.get_constrained_layout_pads() == expected\n+\n+import matplotlib.pyplot as plt\n+\n+def test_subfigures_wspace_hspace_repro():\n+    fig = plt.figure()\n+    subfigs = fig.subfigures(2, 2, wspace=0, hspace=0)\n+    for subfig in subfigs.flat:\n+        ax = subfig.subplots()\n+        ax.plot([1, 2])\n+    assert len(subfigs) == 4\n+    assert all(isinstance(subfig, plt.Figure) for subfig in subfigs)\n",
+    "patch_sha256": "5b4f5da0010cc9e730fff7bbd3abc7f81a87d2ca51826a99e40ae2864155924a"
+  }
+]

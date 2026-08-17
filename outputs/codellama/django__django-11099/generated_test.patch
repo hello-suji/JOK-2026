@@ -1,0 +1,19 @@
+--- a/tests/auth_tests/test_validators.py
++++ b/tests/auth_tests/test_validators.py
+@@ -259,3 +259,16 @@
+             with self.subTest(invalid=invalid):
+                 with self.assertRaises(ValidationError):
+                     v(invalid)
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.contrib.auth.validators import ASCIIUsernameValidator
++from django.core.exceptions import ValidationError
++
++class TestASCIIUsernameValidator(TestCase):
++    def test_valid_username_repro(self):
++        validator = ASCIIUsernameValidator()
++        try:
++            validator('validusername')
++        except ValidationError:
++            assert False, 'Valid username raised ValidationError unexpectedly'

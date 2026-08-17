@@ -1,0 +1,35 @@
+--- a/tests/model_fields/models.py
++++ b/tests/model_fields/models.py
+@@ -393,3 +393,32 @@
+
+ class UUIDGrandchild(UUIDChild):
+     pass
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.auth.models import User, Permission
++from django.contrib.contenttypes.models import ContentType
++from django.contrib.auth.admin import UserAdmin
++from django.contrib import admin
++from django.contrib.admin.options import TabularInline
++from django.db.models.fields.related import ManyToManyField
++
++
++class ReportPhotoInlineModelAdmin(TabularInline):
++    model = User.groups.through
++    extra = 1
++
++
++class TestAdminInlines(TestCase):
++    def setUp(self):
++        self.user = User.objects.create_user(username='viewuser', password='password')
++        content_type = ContentType.objects.get_for_model(User)
++        view_permission = Permission.objects.get(codename='view_user', content_type=content_type)
++        self.user.user_permissions.add(view_permission)
++        self.user.save()
++        self.site = admin.AdminSite()
++        self.user_admin = UserAdmin(User, self.site)
++        self.user_admin.inlines = [ReportPhotoInlineModelAdmin]
++
++    def test_view_only_user_cannot_edit_m2m_inlines_repro(self):
++        request = self.client.get('/admin/auth/user/%s/change/' % self.user.pk)
++        self.assertNotContains(request, 'id_groups-0-TOTAL_FORMS')

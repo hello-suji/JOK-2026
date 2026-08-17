@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-10323",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -561,3 +561,25 @@\n\n     # explicit title\n     assert html.format('index.html#foons') in content\n+\n+import os\n+import tempfile\n+from sphinx.testing.util import SphinxTestApp\n+from sphinx.directives.code import LiteralInclude\n+\n+def test_literalinclude_prepend_indentation_repro():\n+    with tempfile.TemporaryDirectory() as tmpdir:\n+        srcdir = os.path.join(tmpdir, 'src')\n+        outdir = os.path.join(tmpdir, 'out')\n+        doctreedir = os.path.join(tmpdir, 'doctrees')\n+        confdir = srcdir\n+        os.makedirs(srcdir)\n+        sample_code_path = os.path.join(srcdir, 'sample.py')\n+        with open(sample_code_path, 'w') as f:\n+            f.write('def example_function():\\n    pass')\n+        app = SphinxTestApp(srcdir=srcdir, outdir=outdir, doctreedir=doctreedir, confdir=confdir)\n+        app.build()\n+        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n+            html_content = f.read()\n+        assert 'def example_function():' in html_content\n+        assert '    pass' in html_content\n",
+    "patch_sha256": "cb544452b94fde8dbab8d9905fdb22fb21823163d160f3eedf8d009e953ac33a"
+  }
+]

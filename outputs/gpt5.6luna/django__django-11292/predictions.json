@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11292",
+    "model_patch": "--- a/tests/migrations/migrations_test_apps/unspecified_app_with_conflict/__init__.py\n+++ b/tests/migrations/migrations_test_apps/unspecified_app_with_conflict/__init__.py\n@@ -0,0 +1,22 @@\n+\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from django.core.management import call_command\n+\n+class TestManagementCommandSkipChecks(TestCase):\n+    def test_skip_checks_execution_repro(self):\n+        # Mocking a command that would perform checks\n+        class MockCommand:\n+            checks_executed = True\n+\n+            def execute(self, *args, **options):\n+                if options.get('skip_checks'):\n+                    self.checks_executed = False\n+\n+        # Register the mock command\n+        mock_command = MockCommand()\n+        call_command('check_command', skip_checks=True, command=mock_command)\n+\n+        # Verify that checks were not executed\n+        self.assertFalse(mock_command.checks_executed)\n",
+    "patch_sha256": "ff9e989e5203e85a789fc178cfac10a38eb43f4802bb19deb3da7a3842bfacc9"
+  }
+]

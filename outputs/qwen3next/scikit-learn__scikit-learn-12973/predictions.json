@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-12973",
+    "model_patch": "--- a/sklearn/linear_model/tests/test_least_angle.py\n+++ b/sklearn/linear_model/tests/test_least_angle.py\n@@ -686,3 +686,15 @@\n\n     assert_array_almost_equal(r2, skl_betas2, decimal=12)\n     ###########################################################################\n+\n+from sklearn.linear_model.least_angle import LassoLarsIC\n+\n+def test_lassolarsic_copy_x_behavior_repro():\n+    # Now there are two values (potentially contradicting each other) for copy_X and each one is used once. Therefore\n+    X = np.array([[1, 2], [3, 4]])\n+    y = np.array([1, 2])\n+    model = LassoLarsIC(copy_X=True)\n+    model.fit(X, y)\n+    assert model.copy_X == True\n+    model.fit(X, y, copy_X=False)\n+    assert model.copy_X == False\n",
+    "patch_sha256": "944a9b41536daba934a3ce2c9841941f6774c5d799cedf0d8952c2e59be65653"
+  }
+]

@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/io/fits/convenience.py",
+      "target_function": "printdiff",
+      "related_classes": [
+        "Absolute",
+        "BinTableHDU",
+        "Column",
+        "FITSDiff"
+      ],
+      "candidate_test_file": "astropy/io/fits/tests/test_table.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where printdiff can be called.",
+      "Use the generated reproduction path that calls from_columns, printdiff, writeto, fits."
+    ],
+    "execution_stimulus": [
+      "Call printdiff with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: from_columns, printdiff, writeto, fits."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "astropy/io/fits/convenience.py",
+      "astropy/io/fits/hdu/table.py",
+      "astropy/io/fits/column.py"
+    ],
+    "relevant_test_files": [
+      "astropy/io/fits/tests/test_table.py",
+      "astropy/io/fits/tests/test_convenience.py",
+      "astropy/io/votable/tests/table_test.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from astropy.io import fits\n\ndef test_fitsdiff_identical_files_repro():\n    \"\"\"\n    Regression test for https://github.com/astropy/astropy/issues/14539\n\n    Ensure that FITSDiff does not report differences when comparing identical files.\n    \"\"\"\n    col = fits.Column('a', format='QD', array=[[0], [0, 0]])\n    hdu = fits.BinTableHDU.from_columns([col])\n    hdu.writeto('diffbug.fits', overwrite=True)\n\n    diff = fits.FITSDiff('diffbug.fits', 'diffbug.fits')\n    assert diff.identical, 'Files should be identical'\n    fits.printdiff('diffbug.fits', 'diffbug.fits')"
+      },
+      {
+        "language": "python",
+        "code": "from astropy.io import fits\ncol = fits.Column('a', format='QD', array=[[0], [0, 0]])\nhdu = fits.BinTableHDU.from_columns([col])\nhdu.writeto('diffbug.fits', overwrite=True)\n\nprint(fits.FITSDiff('diffbug.fits', 'diffbug.fits').identical)\nfits.printdiff('diffbug.fits', 'diffbug.fits')"
+      },
+      {
+        "language": "False",
+        "code": "fitsdiff: 5.2.1\n a: diffbug.fits\n b: diffbug.fits\n Maximum number of different data values to be reported: 10\n Relative tolerance: 0.0, Absolute tolerance: 0.0\nExtension HDU 1:\n   Data contains differences:\n     Column a data differs in row 0:\n     1 different table data element(s) found (50.00% different)."
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "element",
+        "from_columns",
+        "printdiff",
+        "writeto",
+        "fits"
+      ],
+      "classes": [
+        "Absolute",
+        "BinTableHDU",
+        "Column",
+        "Data",
+        "Extension",
+        "FITSDiff",
+        "Maximum",
+        "Relative",
+        "VLAs"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "astropy/io/fits/tests/test_table.py",
+      "target_source_file": "astropy/io/fits/convenience.py",
+      "test_visible_functions": [
+        "from_columns",
+        "printdiff",
+        "writeto",
+        "fits"
+      ],
+      "test_visible_classes": [
+        "BinTableHDU",
+        "Column",
+        "FITSDiff"
+      ]
+    }
+  }
+]

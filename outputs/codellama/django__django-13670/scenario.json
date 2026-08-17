@@ -1,0 +1,266 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import datetime",
+      "from django.utils import dateformat",
+      "test_date = datetime.datetime(123, 4, 5, 6, 7)",
+      "Use the generated reproduction path that calls date, datetime, y."
+    ],
+    "execution_stimulus": [
+      "formatted_date = dateformat.format(test_date, 'y')",
+      "Execute the focused target API path: date, datetime, y."
+    ],
+    "expected_failure": "The test should fail because the output is '3' instead of '23'.",
+    "relevant_source_files": [
+      "django/utils/datetime_safe.py",
+      "django/utils/dateformat.py",
+      "django/contrib/gis/gdal/geometries.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_datetime_safe.py",
+      "tests/utils_tests/test_dateformat.py",
+      "tests/datetimes/tests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestDateFormatYearBefore1000(SimpleTestCase):\n    def test_dateformat_y_before_1000_repro(self):\n        test_date = datetime(123, 4, 5, 6, 7)\n        formatted_date = dateformat.format(test_date, 'y')\n        self.assertEqual(formatted_date, '23')\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(formatted_date) != '3'"
+      },
+      {
+        "language": "python",
+        "code": "def test_dateformat_y_before_1000():\n    import datetime\n    from django.utils import dateformat\n    test_date = datetime.datetime(123, 4, 5, 6, 7)\n    formatted_date = dateformat.format(test_date, 'y')\n    assert formatted_date == '3'"
+      }
+    ],
+    "expected_outputs": [
+      "23"
+    ],
+    "actual_outputs": [
+      "3"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "y",
+        "date",
+        "datetime"
+      ],
+      "classes": [
+        "DateFormat"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateformat.py",
+      "target_source_file": "django/utils/dateformat.py",
+      "test_visible_functions": [
+        "date",
+        "datetime",
+        "y"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import datetime",
+      "from django.utils import dateformat",
+      "test_date = datetime.datetime(99, 4, 5, 6, 7)",
+      "Use the generated reproduction path that calls date, datetime, y."
+    ],
+    "execution_stimulus": [
+      "formatted_date = dateformat.format(test_date, 'y')",
+      "Execute the focused target API path: date, datetime, y."
+    ],
+    "expected_failure": "The test should fail because the output is '9' instead of '99'.",
+    "relevant_source_files": [
+      "django/utils/datetime_safe.py",
+      "django/utils/dateformat.py",
+      "django/contrib/gis/gdal/geometries.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_datetime_safe.py",
+      "tests/utils_tests/test_dateformat.py",
+      "tests/datetimes/tests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestDateFormatYearBefore1000(SimpleTestCase):\n    def test_dateformat_y_before_1000_repro(self):\n        test_date = datetime(123, 4, 5, 6, 7)\n        formatted_date = dateformat.format(test_date, 'y')\n        self.assertEqual(formatted_date, '23')\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(formatted_date) != '3'"
+      },
+      {
+        "language": "python",
+        "code": "def test_dateformat_y_before_100():\n    import datetime\n    from django.utils import dateformat\n    test_date = datetime.datetime(99, 4, 5, 6, 7)\n    formatted_date = dateformat.format(test_date, 'y')\n    assert formatted_date == '9'"
+      }
+    ],
+    "expected_outputs": [
+      "99"
+    ],
+    "actual_outputs": [
+      "9"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "y",
+        "date",
+        "datetime"
+      ],
+      "classes": [
+        "DateFormat"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateformat.py",
+      "target_source_file": "django/utils/dateformat.py",
+      "test_visible_functions": [
+        "date",
+        "datetime",
+        "y"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import datetime",
+      "from django.utils import dateformat",
+      "test_date = datetime.datetime(9, 4, 5, 6, 7)",
+      "Use the generated reproduction path that calls date, datetime, y."
+    ],
+    "execution_stimulus": [
+      "formatted_date = dateformat.format(test_date, 'y')",
+      "Execute the focused target API path: date, datetime, y."
+    ],
+    "expected_failure": "The test should fail because the output is '9' instead of '09'.",
+    "relevant_source_files": [
+      "django/utils/datetime_safe.py",
+      "django/utils/dateformat.py",
+      "django/contrib/gis/gdal/geometries.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_datetime_safe.py",
+      "tests/utils_tests/test_dateformat.py",
+      "tests/datetimes/tests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestDateFormatYearBefore1000(SimpleTestCase):\n    def test_dateformat_y_before_1000_repro(self):\n        test_date = datetime(123, 4, 5, 6, 7)\n        formatted_date = dateformat.format(test_date, 'y')\n        self.assertEqual(formatted_date, '23')\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(formatted_date) != '3'"
+      },
+      {
+        "language": "python",
+        "code": "def test_dateformat_y_before_10():\n    import datetime\n    from django.utils import dateformat\n    test_date = datetime.datetime(9, 4, 5, 6, 7)\n    formatted_date = dateformat.format(test_date, 'y')\n    assert formatted_date == '9'"
+      }
+    ],
+    "expected_outputs": [
+      "09"
+    ],
+    "actual_outputs": [
+      "9"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "y",
+        "date",
+        "datetime"
+      ],
+      "classes": [
+        "DateFormat"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateformat.py",
+      "target_source_file": "django/utils/dateformat.py",
+      "test_visible_functions": [
+        "date",
+        "datetime",
+        "y"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

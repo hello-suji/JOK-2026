@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-7606",
+    "model_patch": "--- a/astropy/units/tests/test_deprecated.py\n+++ b/astropy/units/tests/test_deprecated.py\n@@ -58,3 +58,9 @@\n     assert required_by_vounit.nsolMass not in u.solMass.find_equivalent_units()\n     assert required_by_vounit.nsolRad not in u.solRad.find_equivalent_units()\n     assert required_by_vounit.nsolLum not in u.solLum.find_equivalent_units()\n+\n+def test_unrecognized_unit_equality_with_none_repro():\n+    x = u.Unit('asdf', parse_strict='silent')\n+    assert x == None is False\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(x) != 'TypeError: None is not a valid Unit'\n",
+    "patch_sha256": "212c391f2189cb65b13f75ac34e28688a0787f4b8ac57277e44b9d6f2d2cdf27"
+  }
+]

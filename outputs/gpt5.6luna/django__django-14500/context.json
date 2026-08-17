@@ -1,0 +1,378 @@
+{
+  "instance_id": "django__django-14500",
+  "repo": "django/django",
+  "base_commit": "8c3bd0b708b488a1f6e8bd8cc6b96569904605be",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/migrations/executor.py",
+      "score": 21,
+      "matched_identifiers": [
+        "MigrationExecutor",
+        "description",
+        "migration",
+        "migrationexecutor",
+        "migrations"
+      ],
+      "reasons": [
+        "class_match:MigrationExecutor",
+        "stem_in_issue_text:executor",
+        "source_content_tokens:description,migration,migrationexecutor,migrations,replaced"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "MigrationExecutor": "class MigrationExecutor:\n    \"\"\"\n    End-to-end migration execution - load migrations and run them up or down\n    to a specified set of targets.\n    \"\"\"\n\n    def __init__(self, connection, progress_callback=None):\n        self.connection = connection\n        self.loader = MigrationLoader(self.connection)\n        self.recorder = MigrationRecorder(self.connection)\n        self.progress_callback = progress_callback\n\n    def migration_plan(self, targets, clean_start=False):\n        \"\"\"\n        Given a set of targets, return a list of (Migration instance, backwards?)."
+      },
+      "top_level_functions": [
+        "MigrationExecutor.migration_plan",
+        "MigrationExecutor.migrate",
+        "MigrationExecutor.apply_migration",
+        "MigrationExecutor.record_migration",
+        "MigrationExecutor.unapply_migration",
+        "MigrationExecutor.check_replacements",
+        "MigrationExecutor.detect_soft_applied"
+      ]
+    },
+    {
+      "path": "django/db/migrations/graph.py",
+      "score": 14,
+      "matched_identifiers": [
+        "marked",
+        "migration",
+        "migrations",
+        "replaced"
+      ],
+      "reasons": [
+        "source_content_tokens:marked,migration,migrations,replaced,squash"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Node.add_child",
+        "Node.add_parent",
+        "DummyNode.raise_error",
+        "MigrationGraph.add_node",
+        "MigrationGraph.add_dummy_node",
+        "MigrationGraph.add_dependency",
+        "MigrationGraph.remove_replaced_nodes",
+        "MigrationGraph.remove_replacement_node",
+        "MigrationGraph.validate_consistency",
+        "MigrationGraph.forwards_plan",
+        "MigrationGraph.backwards_plan",
+        "MigrationGraph.iterative_dfs",
+        "MigrationGraph.root_nodes",
+        "MigrationGraph.leaf_nodes",
+        "MigrationGraph.ensure_not_cyclic",
+        "MigrationGraph.make_state"
+      ]
+    },
+    {
+      "path": "django/db/migrations/loader.py",
+      "score": 14,
+      "matched_identifiers": [
+        "marked",
+        "migration",
+        "migrations",
+        "replaced"
+      ],
+      "reasons": [
+        "source_content_tokens:marked,migration,migrations,replaced,squash"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MigrationLoader.migrations_module",
+        "MigrationLoader.load_disk",
+        "MigrationLoader.get_migration",
+        "MigrationLoader.get_migration_by_prefix",
+        "MigrationLoader.check_key",
+        "MigrationLoader.add_internal_dependencies",
+        "MigrationLoader.add_external_dependencies",
+        "MigrationLoader.build_graph",
+        "MigrationLoader.check_consistent_history",
+        "MigrationLoader.detect_conflicts",
+        "MigrationLoader.project_state",
+        "MigrationLoader.collect_sql"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 12,
+      "matched_identifiers": [
+        "around",
+        "description",
+        "migration",
+        "migrationexecutor"
+      ],
+      "reasons": [
+        "source_content_tokens:around,description,migration,migrationexecutor,migrations"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/migrate.py",
+      "score": 10,
+      "matched_identifiers": [
+        "migration",
+        "migrationexecutor",
+        "migrations",
+        "unapplied"
+      ],
+      "reasons": [
+        "source_content_tokens:migration,migrationexecutor,migrations,unapplied,unapplying"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle",
+        "Command.migration_progress_callback",
+        "Command.sync_apps",
+        "Command.describe_operation"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/migrations/test_executor.py",
+      "score": 15,
+      "matched_identifiers": [
+        "MigrationExecutor"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationExecutor",
+        "test_name_matches_source_stem:executor",
+        "token_overlap:executor,migration,migrations",
+        "internal_name_overlap:loader",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_graph.py",
+      "score": 15,
+      "matched_identifiers": [
+        "MigrationExecutor"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationExecutor",
+        "test_name_matches_source_stem:graph",
+        "token_overlap:graph,migration,migrations",
+        "internal_name_overlap:graph",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_loader.py",
+      "score": 15,
+      "matched_identifiers": [
+        "MigrationExecutor"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationExecutor",
+        "test_name_matches_source_stem:loader",
+        "token_overlap:loader,migration,migrations",
+        "internal_name_overlap:loader",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_base.py",
+      "score": 12,
+      "matched_identifiers": [
+        "MigrationExecutor"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationExecutor",
+        "test_name_matches_source_stem:base",
+        "token_overlap:migration,migrations",
+        "internal_name_overlap:migration",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_commands.py",
+      "score": 9,
+      "matched_identifiers": [
+        "MigrationExecutor"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationExecutor",
+        "token_overlap:commands,migration,migrations",
+        "internal_name_overlap:migration",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/migrations/test_commands.py:unittest_or_django_test_import",
+      "tests/migrations/test_executor.py:unittest_or_django_test_import",
+      "tests/migrations/test_base.py:unittest_or_django_test_import",
+      "tests/migrations/test_graph.py:unittest_or_django_test_import",
+      "tests/migrations/test_loader.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2695,
+  "indexed_test_file_count": 1833,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.migrations.test_commands": [
+      "AppLabelErrorTests",
+      "MakeMigrationsTests",
+      "MigrateTests",
+      "SquashMigrationsTests"
+    ],
+    "tests.migrations.test_executor": [
+      "ExecutorTests",
+      "ExecutorUnitTests",
+      "FakeLoader",
+      "FakeMigration"
+    ],
+    "tests.migrations.test_base": [
+      "MigrationTestBase",
+      "OperationTestBase"
+    ],
+    "tests.migrations.test_graph": [
+      "GraphTests",
+      "NodeTests"
+    ],
+    "tests.migrations.test_loader": [
+      "LoaderTests",
+      "PycLoaderTests",
+      "RecorderTests"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.migrate": [
+      "Command"
+    ],
+    "django.db.migrations.loader": [
+      "MigrationLoader"
+    ],
+    "django.db.migrations.graph": [
+      "DummyNode",
+      "MigrationGraph",
+      "Node"
+    ],
+    "django.db.migrations.executor": [
+      "MigrationExecutor"
+    ]
+  },
+  "test_example_snippet": "    def test_run(self):\n        \"\"\"\n        Tests running a simple set of migrations.\n        \"\"\"\n        executor = MigrationExecutor(connection)\n        # Let's look at the plan first and make sure it's up to scratch\n        plan = executor.migration_plan([(\"migrations\", \"0002_second\")])\n        self.assertEqual(\n            plan,\n            [\n                (executor.loader.graph.nodes[\"migrations\", \"0001_initial\"], False),\n                (executor.loader.graph.nodes[\"migrations\", \"0002_second\"], False),\n            ],\n        )\n        # Were the tables there before?\n        self.assertTableNotExists(\"migrations_author\")\n        self.assertTableNotExists(\"migrations_book\")\n        # Alright, let's try running it\n        executor.migrate([(\"migrations\", \"0002_second\")])\n        # Are the tables there now?\n        self.assertTableExists(\"migrations_author\")\n        self.assertTableExists(\"migrations_book\")\n        # Rebuild the graph to reflect the new DB state\n        executor.loader.build_graph()\n        # Alright, let's undo what we did\n        plan = executor.migration_plan([(\"migrations\", None)])\n        self.assertEqual(\n            plan,\n            [\n                (executor.loader.graph.nodes[\"migrations\", \"0002_second\"], True),\n                (executor.loader.graph.nodes[\"migrations\", \"0001_initial\"], True),\n            ],\n        )\n        executor.migrate([(\"migrations\", None)])\n        # Are the tables gone?",
+  "conftest_fixtures": {}
+}

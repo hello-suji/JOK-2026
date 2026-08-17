@@ -1,0 +1,12 @@
+
+
+from django.http.response import HttpResponse
+from django.db.models.fields import BinaryField
+from django.test import TestCase
+from io import BytesIO
+
+class TestBinaryFieldInHttpResponse(TestCase):
+    def test_http_response_with_binary_field_repro(self):
+        binary_data = BinaryField()
+        response = HttpResponse(content=BytesIO(b'Test data'), content_type='application/octet-stream')
+        self.assertEqual(response.content, b'Test data')

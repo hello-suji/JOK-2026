@@ -1,0 +1,14 @@
+--- a/tests/custom_pk/fields.py
++++ b/tests/custom_pk/fields.py
+@@ -58,3 +58,11 @@
+         if isinstance(value, MyWrapper):
+             return str(value)
+         return value
++
++from django.test import TestCase
++from tests.custom_pk.fields import AutoModel, MyWrapper
++
++class TestAutoModelCreation(TestCase):
++    def test_create_returns_wrapped_id_repro(self):
++        instance = AutoModel.objects.create()
++        self.assertIsInstance(instance.id, MyWrapper)

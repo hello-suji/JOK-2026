@@ -1,0 +1,533 @@
+{
+  "instance_id": "django__django-10914",
+  "repo": "django/django",
+  "base_commit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/files/storage.py",
+      "score": 21,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "built",
+        "built-in",
+        "default",
+        "file_upload_permission"
+      ],
+      "reasons": [
+        "class_match:FileSystemStorage",
+        "stem_in_issue_text:storage",
+        "source_content_tokens:built,built-in,default,file_upload_permission,file_upload_permissions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "FileSystemStorage": "class FileSystemStorage(Storage):\n    \"\"\"\n    Standard filesystem storage\n    \"\"\"\n    # The combination of O_CREAT and O_EXCL makes os.open() raise OSError if\n    # the file already exists before it's opened.\n    OS_OPEN_FLAGS = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, 'O_BINARY', 0)\n\n    def __init__(self, location=None, base_url=None, file_permissions_mode=None,\n                 directory_permissions_mode=None):\n        self._location = location\n        self._base_url = base_url\n        self._file_permissions_mode = file_permissions_mode\n        self._directory_permissions_mode = directory_permissions_mode\n        setting_changed.connect(self._clear_cached_properties)"
+      },
+      "top_level_functions": [
+        "Storage.open",
+        "Storage.save",
+        "Storage.get_valid_name",
+        "Storage.get_available_name",
+        "Storage.generate_filename",
+        "Storage.path",
+        "Storage.delete",
+        "Storage.exists",
+        "Storage.listdir",
+        "Storage.size",
+        "Storage.url",
+        "Storage.get_accessed_time",
+        "Storage.get_created_time",
+        "Storage.get_modified_time",
+        "FileSystemStorage.base_location",
+        "FileSystemStorage.location",
+        "FileSystemStorage.base_url",
+        "FileSystemStorage.file_permissions_mode",
+        "FileSystemStorage.directory_permissions_mode",
+        "FileSystemStorage.delete",
+        "FileSystemStorage.exists",
+        "FileSystemStorage.listdir",
+        "FileSystemStorage.path",
+        "FileSystemStorage.size",
+        "FileSystemStorage.url",
+        "FileSystemStorage.get_accessed_time",
+        "FileSystemStorage.get_created_time",
+        "FileSystemStorage.get_modified_time",
+        "get_storage_class"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "built",
+        "default",
+        "depends",
+        "file_upload_handlers"
+      ],
+      "reasons": [
+        "source_content_tokens:built,default,depends,file_upload_handlers,file_upload_permission"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "consistent",
+        "default",
+        "description",
+        "existing"
+      ],
+      "reasons": [
+        "source_content_tokens:consistent,default,description,existing,explicitly"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines",
+        "ModelAdmin.get_paginator"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/backends.py",
+      "score": 16,
+      "matched_identifiers": [
+        "built",
+        "built-in",
+        "default",
+        "existing"
+      ],
+      "reasons": [
+        "source_content_tokens:built,built-in,default,existing,found"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ModelBackend.authenticate",
+        "ModelBackend.user_can_authenticate",
+        "ModelBackend.get_user_permissions",
+        "ModelBackend.get_group_permissions",
+        "ModelBackend.get_all_permissions",
+        "ModelBackend.has_perm",
+        "ModelBackend.has_module_perms",
+        "ModelBackend.get_user",
+        "AllowAllUsersModelBackend.user_can_authenticate",
+        "RemoteUserBackend.authenticate",
+        "RemoteUserBackend.clean_username",
+        "RemoteUserBackend.configure_user",
+        "AllowAllUsersRemoteUserBackend.user_can_authenticate"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/hashers.py",
+      "score": 16,
+      "matched_identifiers": [
+        "configured",
+        "default",
+        "depends",
+        "implementation"
+      ],
+      "reasons": [
+        "source_content_tokens:configured,default,depends,implementation,issues"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_password_usable",
+        "check_password",
+        "make_password",
+        "get_hashers",
+        "get_hashers_by_algorithm",
+        "reset_hashers",
+        "get_hasher",
+        "identify_hasher",
+        "mask_hash",
+        "BasePasswordHasher.salt",
+        "BasePasswordHasher.verify",
+        "BasePasswordHasher.encode",
+        "BasePasswordHasher.safe_summary",
+        "BasePasswordHasher.must_update",
+        "BasePasswordHasher.harden_runtime",
+        "PBKDF2PasswordHasher.encode",
+        "PBKDF2PasswordHasher.verify",
+        "PBKDF2PasswordHasher.safe_summary",
+        "PBKDF2PasswordHasher.must_update",
+        "PBKDF2PasswordHasher.harden_runtime",
+        "Argon2PasswordHasher.encode",
+        "Argon2PasswordHasher.verify",
+        "Argon2PasswordHasher.safe_summary",
+        "Argon2PasswordHasher.must_update",
+        "Argon2PasswordHasher.harden_runtime",
+        "BCryptSHA256PasswordHasher.salt",
+        "BCryptSHA256PasswordHasher.encode",
+        "BCryptSHA256PasswordHasher.verify",
+        "BCryptSHA256PasswordHasher.safe_summary",
+        "BCryptSHA256PasswordHasher.must_update",
+        "BCryptSHA256PasswordHasher.harden_runtime",
+        "SHA1PasswordHasher.encode",
+        "SHA1PasswordHasher.verify",
+        "SHA1PasswordHasher.safe_summary",
+        "SHA1PasswordHasher.harden_runtime",
+        "MD5PasswordHasher.encode",
+        "MD5PasswordHasher.verify",
+        "MD5PasswordHasher.safe_summary",
+        "MD5PasswordHasher.harden_runtime",
+        "UnsaltedSHA1PasswordHasher.salt"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/staticfiles_tests/test_storage.py",
+      "score": 20,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TemporaryUploadedFile",
+        "test_path_related_to_class:MemoryUploadedFile",
+        "test_path_related_to_class:NamedTemporaryFile",
+        "test_path_related_to_class:FileSystemStorage",
+        "test_name_matches_source_stem:storage",
+        "token_overlap:storage",
+        "internal_name_overlap:storage",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/storage.py",
+      "score": 19,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TemporaryUploadedFile",
+        "test_path_related_to_class:MemoryUploadedFile",
+        "test_path_related_to_class:NamedTemporaryFile",
+        "test_path_related_to_class:FileSystemStorage",
+        "test_name_matches_source_stem:storage",
+        "token_overlap:storage",
+        "internal_name_overlap:storage",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/file_storage/test_generate_filename.py",
+      "score": 14,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TemporaryUploadedFile",
+        "test_path_related_to_class:MemoryUploadedFile",
+        "test_path_related_to_class:NamedTemporaryFile",
+        "test_path_related_to_class:FileSystemStorage",
+        "token_overlap:storage",
+        "internal_name_overlap:storage",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/file_storage/tests.py",
+      "score": 14,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TemporaryUploadedFile",
+        "test_path_related_to_class:MemoryUploadedFile",
+        "test_path_related_to_class:NamedTemporaryFile",
+        "test_path_related_to_class:FileSystemStorage",
+        "token_overlap:storage",
+        "internal_name_overlap:system",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/file_storage/models.py",
+      "score": 13,
+      "matched_identifiers": [
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TemporaryUploadedFile",
+        "test_path_related_to_class:MemoryUploadedFile",
+        "test_path_related_to_class:NamedTemporaryFile",
+        "test_path_related_to_class:FileSystemStorage",
+        "token_overlap:storage",
+        "internal_name_overlap:storage",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/staticfiles_tests/test_storage.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCachedStaticFilesStorageDeprecation",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionCachedStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionHashedFilesCache",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionManifestStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionSimpleStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestExtraPatternsStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestHashedFiles",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestStaticFilePermissions",
+      "tests/file_storage/tests.py:unittest_or_django_test_import",
+      "tests/file_storage/tests.py:testcase_class:ContentFileStorageTestCase",
+      "tests/file_storage/tests.py:testcase_class:FileLikeObjectTestCase",
+      "tests/file_storage/test_generate_filename.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2535,
+  "indexed_test_file_count": 1707,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango31Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.staticfiles_tests.storage": [
+      "DummyStorage",
+      "ExtraPatternsStorage",
+      "NeverCopyRemoteStorage",
+      "PathNotImplementedStorage",
+      "QueryStringStorage",
+      "SimpleStorage"
+    ],
+    "tests.staticfiles_tests.test_storage": [
+      "CustomStaticFilesStorage",
+      "TestCachedStaticFilesStorageDeprecation",
+      "TestCollectionCachedStorage",
+      "TestCollectionHashedFilesCache",
+      "TestCollectionManifestStorage",
+      "TestCollectionSimpleStorage",
+      "TestExtraPatternsStorage",
+      "TestHashedFiles",
+      "TestStaticFilePermissions",
+      "hashed_file_path"
+    ],
+    "tests.file_storage.tests": [
+      "ContentFileStorageTestCase",
+      "CustomStorage",
+      "CustomStorageTests",
+      "DiscardingFalseContentStorage",
+      "DiscardingFalseContentStorageTests",
+      "FileFieldStorageTests",
+      "FileLikeObjectTestCase",
+      "FileSaveRaceConditionTest",
+      "FileStoragePathParsing",
+      "FileStoragePermissions",
+      "FileStorageTests",
+      "FileSystemStorageTests",
+      "GetStorageClassTests",
+      "OverwritingStorage",
+      "OverwritingStorageTests",
+      "SlowFile"
+    ],
+    "tests.file_storage.test_generate_filename": [
+      "AWSS3Storage",
+      "GenerateFilenameStorageTests"
+    ],
+    "tests.file_storage.models": [
+      "CustomValidNameStorage",
+      "Storage"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth.backends": [
+      "AllowAllUsersModelBackend",
+      "AllowAllUsersRemoteUserBackend",
+      "ModelBackend",
+      "RemoteUserBackend"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.hashers": [
+      "Argon2PasswordHasher",
+      "BCryptPasswordHasher",
+      "BCryptSHA256PasswordHasher",
+      "BasePasswordHasher",
+      "CryptPasswordHasher",
+      "MD5PasswordHasher",
+      "PBKDF2PasswordHasher",
+      "PBKDF2SHA1PasswordHasher",
+      "SHA1PasswordHasher",
+      "UnsaltedMD5PasswordHasher",
+      "UnsaltedSHA1PasswordHasher",
+      "check_password",
+      "get_hasher",
+      "get_hashers",
+      "get_hashers_by_algorithm",
+      "identify_hasher",
+      "is_password_usable",
+      "make_password",
+      "mask_hash",
+      "reset_hashers"
+    ],
+    "django.core.files.storage": [
+      "DefaultStorage",
+      "FileSystemStorage",
+      "Storage",
+      "get_storage_class"
+    ],
+    "django.core": [
+      "File"
+    ],
+    "django.core.files.uploadedfile": [
+      "InMemoryUploadedFile",
+      "SimpleUploadedFile",
+      "TemporaryUploadedFile",
+      "UploadedFile"
+    ]
+  },
+  "test_example_snippet": "class TestHashedFiles:\n    hashed_file_path = hashed_file_path\n\n    def setUp(self):\n        self._max_post_process_passes = storage.staticfiles_storage.max_post_process_passes\n        super().setUp()\n\n    def tearDown(self):\n        # Clear hashed files to avoid side effects among tests.\n        storage.staticfiles_storage.hashed_files.clear()\n        storage.staticfiles_storage.max_post_process_passes = self._max_post_process_passes\n\n    def assertPostCondition(self):\n        \"\"\"\n        Assert post conditions for a test are met. Must be manually called at\n        the end of each test.\n        \"\"\"\n        pass\n\n    def test_template_tag_return(self):\n        self.assertStaticRaises(ValueError, \"does/not/exist.png\", \"/static/does/not/exist.png\")\n        self.assertStaticRenders(\"test/file.txt\", \"/static/test/file.dad0999e4f8f.txt\")\n        self.assertStaticRenders(\"test/file.txt\", \"/static/test/file.dad0999e4f8f.txt\", asvar=True)\n        self.assertStaticRenders(\"cached/styles.css\", \"/static/cached/styles.5e0040571e1a.css\")\n        self.assertStaticRenders(\"path/\", \"/static/path/\")\n        self.assertStaticRenders(\"path/?query\", \"/static/path/?query\")\n        self.assertPostCondition()\n\n    def test_template_tag_simple_content(self):\n        relpath = self.hashed_file_path(\"cached/styles.css\")\n        self.assertEqual(relpath, \"cached/styles.5e0040571e1a.css\")\n        with storage.staticfiles_storage.open(relpath) as relfile:\n            content = relfile.read()\n            self.assertNotIn(b\"cached/other.css\", content)\n            self.assertIn(b\"other.d41d8cd98f00.css\", content)",
+  "conftest_fixtures": {}
+}

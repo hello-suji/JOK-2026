@@ -1,0 +1,13 @@
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -6369,3 +6369,10 @@
+
+     assert np.allclose(bins, nanbins)
+     assert np.allclose(edges, nanedges)
++
++import numpy as np
++import matplotlib.pyplot as plt
++
++def test_hist_range_density_bug_repro():
++    _, bins, _ = plt.hist(np.random.rand(10), 'auto', range=(0, 1), density=True)
++    assert np.all(bins >= 0) and np.all(bins <= 1), 'Bins do not respect the specified range (0, 1) when density=True.'

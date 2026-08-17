@@ -1,0 +1,81 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/pretty/pretty_symbology.py",
+      "target_function": "symbols",
+      "related_classes": [
+        "Matrix"
+      ],
+      "candidate_test_file": "sympy/printing/pretty/tests/test_pretty.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls symbols, pprint."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, pprint."
+    ],
+    "expected_failure": "pprint unicode does not format subscripts on Greek letters",
+    "relevant_source_files": [
+      "sympy/printing/pretty/pretty_symbology.py",
+      "sympy/printing/pretty/pretty.py",
+      "sympy/utilities/iterables.py"
+    ],
+    "relevant_test_files": [
+      "sympy/printing/pretty/tests/test_pretty.py",
+      "sympy/printing/pretty/tests/__init__.py",
+      "sympy/printing/tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_pretty_unicode_subscripts_on_greek_letters_repro():\n    from sympy import symbols\n    from sympy.printing import pprint\n    t0, t1, t2, w0 = symbols('t0 t1 t2 w0')\n    omega0 = symbols('omega0')\n    matrix = Matrix([[-t0*w0, -t1*w0, -t2*w0]])\n    expected_output = '[ -t₀⋅ω₀  -t₁⋅ω₀  -t₂⋅ω₀]'\n    actual_output = pprint(matrix, use_unicode=True, output=str)\n    assert actual_output.strip() != expected_output"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "symbols",
+        "pprint"
+      ],
+      "classes": [
+        "Matrix"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/pretty/tests/test_pretty.py",
+      "target_source_file": "sympy/printing/pretty/pretty_symbology.py",
+      "test_visible_functions": [
+        "symbols",
+        "pprint"
+      ],
+      "test_visible_classes": [
+        "Matrix"
+      ]
+    }
+  }
+]

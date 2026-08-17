@@ -1,0 +1,20 @@
+--- a/tests/template_tests/syntax_tests/i18n/test_filters.py
++++ b/tests/template_tests/syntax_tests/i18n/test_filters.py
+@@ -45,3 +45,17 @@
+             'it: Italian/italiano/italsky bidi=False; '
+             'fr: French/français/francouzsky bidi=False; '
+         )
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import Avg, Sum
++from django.contrib.auth.models import User
++
++class TestAggregationSupport(TestCase):
++    def setUp(self):
++        User.objects.create(username='user1', first_name='John', last_name='Doe')
++        User.objects.create(username='user2', first_name='Jane', last_name='Doe')
++        User.objects.create(username='user3', first_name='John', last_name='Smith')
++
++    def test_avg_with_distinct_repro(self):
++        avg_first_name_length = User.objects.aggregate(avg_length=Avg('first_name__length', distinct=True))['avg_length']
++        self.assertIsNotNone(avg_first_name_length)

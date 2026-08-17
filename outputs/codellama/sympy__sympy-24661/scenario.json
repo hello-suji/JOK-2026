@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/parsing/sympy_parser.py",
+      "target_function": "parse_expr",
+      "related_classes": [
+        "Lt"
+      ],
+      "candidate_test_file": "sympy/parsing/tests/test_sympy_parser.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import sympy",
+      "from sympy import parse_expr, Lt",
+      "Use the generated reproduction path that calls parse_expr."
+    ],
+    "execution_stimulus": [
+      "result = parse_expr('1 < 2', evaluate=False)",
+      "Execute the focused target API path: parse_expr."
+    ],
+    "expected_failure": "The result is evaluated to True instead of returning the unevaluated Lt object.",
+    "relevant_source_files": [
+      "sympy/parsing/sympy_parser.py",
+      "sympy/concrete/delta.py",
+      "sympy/functions/special/delta_functions.py"
+    ],
+    "relevant_test_files": [
+      "sympy/parsing/tests/test_sympy_parser.py",
+      "sympy/functions/special/tests/test_delta_functions.py",
+      "sympy/physics/control/tests/test_lti.py",
+      "sympy/parsing/tests/test_ast_parser.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_parse_expr_unevaluated_inequality_repro():\n    from sympy import parse_expr, Lt\n    result = parse_expr('1 < 2', evaluate=False)\n    assert result == Lt(1, 2)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      },
+      {
+        "language": "python",
+        "code": "def test_parse_expr_unevaluated_inequality():\n    from sympy import parse_expr, Lt\n    result = parse_expr('1 < 2', evaluate=False)\n    assert result == Lt(1, 2)"
+      }
+    ],
+    "expected_outputs": [
+      "1 < 2"
+    ],
+    "actual_outputs": [
+      "True"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_expr"
+      ],
+      "classes": [
+        "Lt"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/parsing/tests/test_sympy_parser.py",
+      "target_source_file": "sympy/parsing/sympy_parser.py",
+      "test_visible_functions": [
+        "parse_expr"
+      ],
+      "test_visible_classes": [
+        "Lt"
+      ]
+    }
+  }
+]

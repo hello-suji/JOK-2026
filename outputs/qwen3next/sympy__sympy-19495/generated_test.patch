@@ -1,0 +1,16 @@
+--- a/sympy/sets/tests/test_sets.py
++++ b/sympy/sets/tests/test_sets.py
+@@ -1581,3 +1581,13 @@
+     assert len(DisjointUnion(FiniteSet(3, 5, 7, 9), FiniteSet(x, y, z))) == 7
+     assert len(DisjointUnion(S.EmptySet, S.EmptySet, FiniteSet(x, y, z), S.EmptySet)) == 3
+     raises(ValueError, lambda: len(DisjointUnion(Interval(0, 1), S.EmptySet)))
++
++from sympy import Symbol, Rational, pi, asin, imageset, S, ConditionSet, Contains, Interval
++
++def test_imageset_subs_conditionset_repro():
++    y, n = Symbol('y'), Symbol('n')
++    img_set = imageset(Lambda(n, 2*n*pi + asin(y)), S.Integers)
++    cond_set = ConditionSet(Symbol('x'), Contains(y, Interval(-1, 1)), img_set)
++    substituted_set = cond_set.subs(y, Rational(1, 3))
++    expected_set = ConditionSet(Symbol('x'), Contains(Rational(1, 3), Interval(-1, 1)), imageset(Lambda(n, 2*n*pi + asin(Rational(1, 3))), S.Integers))
++    assert substituted_set == expected_set

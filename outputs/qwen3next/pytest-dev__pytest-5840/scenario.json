@@ -1,0 +1,297 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/python.py",
+      "target_function": "collect",
+      "related_classes": [
+        "PyCollector",
+        "PIsys"
+      ],
+      "candidate_test_file": "testing/python/collect.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Install pytest version 5.1.2",
+      "Navigate to directory C:\\Azure\\KMS\\ComponentTest\\Python",
+      "Ensure conftest.py exists in C:\\Azure\\KMS\\ComponentTest\\Python\\pisys",
+      "Use the generated reproduction path that calls textwrap, mkdir, write_text, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest --collect-only .\\PIsys -m smoke",
+      "Execute the focused target API path: textwrap, mkdir, write_text, runpytest."
+    ],
+    "expected_failure": "ModuleNotFoundError: No module named 'python'",
+    "relevant_source_files": [
+      "src/_pytest/python.py",
+      "testing/python/collect.py",
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/collect.py",
+      "testing/test_capture.py",
+      "testing/example_scripts/config/collect_pytest_prefix/conftest.py",
+      "testing/example_scripts/config/collect_pytest_prefix/test_foo.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import textwrap\ndef test_import_error_on_conftest_collection_repro(testdir):\n    # Create a temporary directory structure to mimic the issue\n    p = testdir.mkdir('PIsys')\n    p.join('conftest.py').write_text(textwrap.dedent('''\n        import python\n    '''), 'utf-8')\n    result = testdir.runpytest('--collect-only', 'PIsys', '-m', 'smoke')\n    assert 'ModuleNotFoundError: No module named' not in result.stderr.str()\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"ModuleNotFoundError: No module named 'python'\""
+      },
+      {
+        "language": "python",
+        "code": "import pytest\n\ndef test_import_error_on_conftest_collection():\n    result = pytest.main(['--collect-only', '.\\PIsys', '-m', 'smoke'])\n    assert result == 4"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ModuleNotFoundError: No module named 'python'"
+    ],
+    "error_keywords": [
+      "ImportError",
+      "ModuleNotFoundError"
+    ],
+    "identifiers": {
+      "functions": [
+        "collect",
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "classes": [
+        "PyCollector",
+        "PIsys"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/collect.py",
+      "target_source_file": "src/_pytest/python.py",
+      "test_visible_functions": [
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "test_visible_classes": [
+        "PIsys"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/python.py",
+      "target_function": "textwrap",
+      "related_classes": [
+        "FunctionMixin",
+        "PIsys"
+      ],
+      "candidate_test_file": "testing/python/collect.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Install pytest version 5.1.2",
+      "Create a test file with a function in C:\\Azure\\KMS\\ComponentTest\\Python\\pisys",
+      "Use the generated reproduction path that calls textwrap, mkdir, write_text, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest .\\PIsys -m smoke",
+      "Execute the focused target API path: textwrap, mkdir, write_text, runpytest."
+    ],
+    "expected_failure": "ModuleNotFoundError: No module named 'python'",
+    "relevant_source_files": [
+      "src/_pytest/python.py",
+      "testing/python/collect.py",
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/collect.py",
+      "testing/test_capture.py",
+      "testing/example_scripts/config/collect_pytest_prefix/conftest.py",
+      "testing/example_scripts/config/collect_pytest_prefix/test_foo.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import textwrap\ndef test_import_error_on_conftest_collection_repro(testdir):\n    # Create a temporary directory structure to mimic the issue\n    p = testdir.mkdir('PIsys')\n    p.join('conftest.py').write_text(textwrap.dedent('''\n        import python\n    '''), 'utf-8')\n    result = testdir.runpytest('--collect-only', 'PIsys', '-m', 'smoke')\n    assert 'ModuleNotFoundError: No module named' not in result.stderr.str()\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"ModuleNotFoundError: No module named 'python'\""
+      },
+      {
+        "language": "python",
+        "code": "import pytest\n\ndef test_module_not_found_error():\n    result = pytest.main(['.\\PIsys', '-m', 'smoke'])\n    assert result == 4"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ModuleNotFoundError: No module named 'python'"
+    ],
+    "error_keywords": [
+      "ImportError",
+      "ModuleNotFoundError"
+    ],
+    "identifiers": {
+      "functions": [
+        "newinstance",
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "classes": [
+        "FunctionMixin",
+        "PIsys"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/collect.py",
+      "target_source_file": "src/_pytest/python.py",
+      "test_visible_functions": [
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "test_visible_classes": [
+        "PIsys"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/python.py",
+      "target_function": "textwrap",
+      "related_classes": [
+        "PIsys"
+      ],
+      "candidate_test_file": "testing/python/collect.py",
+      "confidence": "low"
+    },
+    "setup_steps": [
+      "Install pytest version 5.1.2",
+      "Ensure conftest.py has incorrect casing in its path",
+      "Use the generated reproduction path that calls textwrap, mkdir, write_text, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest --collect-only .\\PIsys -m smoke",
+      "Execute the focused target API path: textwrap, mkdir, write_text, runpytest."
+    ],
+    "expected_failure": "ModuleNotFoundError: No module named 'python'",
+    "relevant_source_files": [
+      "src/_pytest/python.py",
+      "testing/python/collect.py",
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/collect.py",
+      "testing/test_capture.py",
+      "testing/example_scripts/config/collect_pytest_prefix/conftest.py",
+      "testing/example_scripts/config/collect_pytest_prefix/test_foo.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import textwrap\ndef test_import_error_on_conftest_collection_repro(testdir):\n    # Create a temporary directory structure to mimic the issue\n    p = testdir.mkdir('PIsys')\n    p.join('conftest.py').write_text(textwrap.dedent('''\n        import python\n    '''), 'utf-8')\n    result = testdir.runpytest('--collect-only', 'PIsys', '-m', 'smoke')\n    assert 'ModuleNotFoundError: No module named' not in result.stderr.str()\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"ModuleNotFoundError: No module named 'python'\""
+      },
+      {
+        "language": "python",
+        "code": "import pytest\n\ndef test_case_sensitive_import_error():\n    result = pytest.main(['--collect-only', '.\\PIsys', '-m', 'smoke'])\n    assert result == 4"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ModuleNotFoundError: No module named 'python'"
+    ],
+    "error_keywords": [
+      "ImportError",
+      "ModuleNotFoundError"
+    ],
+    "identifiers": {
+      "functions": [
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "classes": [
+        "PIsys"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/collect.py",
+      "target_source_file": "src/_pytest/python.py",
+      "test_visible_functions": [
+        "textwrap",
+        "mkdir",
+        "write_text",
+        "runpytest",
+        "dedent",
+        "join"
+      ],
+      "test_visible_classes": [
+        "PIsys"
+      ]
+    }
+  }
+]

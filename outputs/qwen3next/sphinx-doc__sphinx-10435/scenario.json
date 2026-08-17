@@ -1,0 +1,118 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "foo",
+      "related_classes": [
+        "Inline",
+        "LaTeX",
+        "PYGZdq",
+        "PyObject",
+        "LaTeXTranslator",
+        "SphinxTestApp"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where foo can be called.",
+      "Use the generated reproduction path that calls path, build, text.",
+      "Use the generated reproduction path that calls foo, python, path, build."
+    ],
+    "execution_stimulus": [
+      "Call foo with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: path, build, text.",
+      "Execute the focused target API path: foo, python, path, build."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/writers/latex.py",
+      "sphinx/builders/latex/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "Inline \\sphinxcode{\\sphinxupquote{ <--- this produces a space in output\n\\PYG{k}{def} \\PYG{n+nf}{foo}\\PYG{p}{(}\\PYG{l+m+mi}{1} \\PYG{o}{+} \\PYG{l+m+mi}{2} \\PYG{o}{+} \\PYG{k+kc}{None} \\PYG{o}{+} \\PYG{l+s+s2}{\\PYGZdq{}}\\PYG{l+s+s2}{abc}\\PYG{l+s+s2}{\\PYGZdq{}}\\PYG{p}{)}\\PYG{p}{:} \\PYG{k}{pass} <-- here also\n}} code block"
+      },
+      {
+        "language": "python",
+        "code": "Inline \\sphinxcode{\\sphinxupquote{%\n\\PYG{k}{def} \\PYG{n+nf}{foo}\\PYG{p}{(}\\PYG{l+m+mi}{1} \\PYG{o}{+} \\PYG{l+m+mi}{2} \\PYG{o}{+} \\PYG{k+kc}{None} \\PYG{o}{+} \\PYG{l+s+s2}{\\PYGZdq{}}\\PYG{l+s+s2}{abc}\\PYG{l+s+s2}{\\PYGZdq{}}\\PYG{p}{)}\\PYG{p}{:} \\PYG{k}{pass}%\n}} code block"
+      },
+      {
+        "language": "python",
+        "code": ".. role:: python(code)\n   :language: python\n   :class: highlight\n\nInline :python:`def foo(1 + 2 + None + \"abc\"): pass` code block\n\n.. code-block:: python\n\n   def foo(1 + 2 + None + \"abc\"): pass"
+      },
+      {
+        "language": "python",
+        "code": "from sphinx.domains.python import PyObject\nfrom sphinx.writers.latex import LaTeXTranslator\nfrom sphinx.testing.util import SphinxTestApp\nfrom sphinx.testing.path import path\n\ndef test_latex_code_highlighting_repro():\n    srcdir = path(__file__).parent / 'roots' / 'test-domain-python'\n    app = SphinxTestApp(srcdir=srcdir, buildername='latex')\n    app.build()\n    latex_output = (app.outdir / 'Python.tex').text()\n    assert '\\texttt{def foo():}' in latex_output\n    assert '\\texttt{class Inline:}' in latex_output\n    assert '\\texttt{class LaTeX:}' in latex_output\n    assert '\\texttt{class PYGZdq:}' in latex_output"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "foo",
+        "python",
+        "path",
+        "build",
+        "text"
+      ],
+      "classes": [
+        "Inline",
+        "LaTeX",
+        "PYGZdq",
+        "PyObject",
+        "LaTeXTranslator",
+        "SphinxTestApp"
+      ],
+      "files": [
+        "test_build_latex.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "foo",
+        "python",
+        "path",
+        "build",
+        "text"
+      ],
+      "test_visible_classes": [
+        "Inline",
+        "LaTeX",
+        "PYGZdq",
+        "PyObject",
+        "LaTeXTranslator",
+        "SphinxTestApp"
+      ]
+    }
+  }
+]

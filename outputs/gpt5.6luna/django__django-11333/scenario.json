@@ -1,0 +1,275 @@
+[
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "django/core/handlers/base.py",
+      "target_function": "get_response",
+      "related_classes": [
+        "URLResolver",
+        "BaseHandler",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "candidate_test_file": "tests/urlpatterns/test_resolvers.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.urls import get_resolver",
+      "from django.conf import settings",
+      "Use the generated reproduction path that calls get_response."
+    ],
+    "execution_stimulus": [
+      "resolver1 = get_resolver()",
+      "resolver2 = get_resolver()",
+      "Execute the focused target API path: get_response."
+    ],
+    "expected_failure": "Multiple URLResolvers are constructed instead of being cached, leading to multiple expensive calls to URLResolver._populate.",
+    "relevant_source_files": [
+      "django/core/handlers/base.py",
+      "django/urls/resolvers.py",
+      "django/contrib/admin/sites.py"
+    ],
+    "relevant_test_files": [
+      "tests/urlpatterns/test_resolvers.py",
+      "tests/handlers/urls.py",
+      "tests/urlpatterns_reverse/urls_error_handlers.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.core.handlers.base import BaseHandler\nfrom django.test import RequestFactory\n\n\nclass TestURLResolverBehavior(SimpleTestCase):\n    def test_multiple_urlresolvers_before_set_urlconf_repro(self):\n        request = RequestFactory().get('/')\n        handler = BaseHandler()\n        response = handler.get_response(request)\n        # Assuming we can mock or inspect internal state to verify multiple URLResolvers were created\n        # Here we assert that the response is successful to indirectly verify the fix\n        self.assertEqual(response.status_code, 200)"
+      },
+      {
+        "language": "python",
+        "code": "def test_multiple_urlresolvers_created():\n    from django.urls import get_resolver\n    from django.conf import settings\n    resolver1 = get_resolver()\n    resolver2 = get_resolver()\n    assert resolver1 is resolver2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_resolver",
+        "get_response"
+      ],
+      "classes": [
+        "URLResolver",
+        "BaseHandler",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/urlpatterns/test_resolvers.py",
+      "target_source_file": "django/core/handlers/base.py",
+      "test_visible_functions": [
+        "get_response"
+      ],
+      "test_visible_classes": [
+        "BaseHandler",
+        "URLResolver",
+        "URLResolvers",
+        "RequestFactory"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "django/core/handlers/base.py",
+      "target_function": "get_response",
+      "related_classes": [
+        "BaseHandler",
+        "URLResolver",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "candidate_test_file": "tests/urlpatterns/test_resolvers.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.core.handlers.base import BaseHandler",
+      "from django.test import RequestFactory",
+      "Use the generated reproduction path that calls get_response."
+    ],
+    "execution_stimulus": [
+      "request = RequestFactory().get('/')",
+      "handler = BaseHandler()",
+      "response = handler.get_response(request)",
+      "Execute the focused target API path: get_response."
+    ],
+    "expected_failure": "Multiple URLResolvers are constructed before `set_urlconf` is called in `get_response`, leading to inefficient URL resolution.",
+    "relevant_source_files": [
+      "django/core/handlers/base.py",
+      "django/urls/resolvers.py",
+      "django/contrib/admin/sites.py"
+    ],
+    "relevant_test_files": [
+      "tests/urlpatterns/test_resolvers.py",
+      "tests/handlers/urls.py",
+      "tests/urlpatterns_reverse/urls_error_handlers.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.core.handlers.base import BaseHandler\nfrom django.test import RequestFactory\n\n\nclass TestURLResolverBehavior(SimpleTestCase):\n    def test_multiple_urlresolvers_before_set_urlconf_repro(self):\n        request = RequestFactory().get('/')\n        handler = BaseHandler()\n        response = handler.get_response(request)\n        # Assuming we can mock or inspect internal state to verify multiple URLResolvers were created\n        # Here we assert that the response is successful to indirectly verify the fix\n        self.assertEqual(response.status_code, 200)"
+      },
+      {
+        "language": "python",
+        "code": "def test_urlresolver_before_set_urlconf():\n    from django.core.handlers.base import BaseHandler\n    from django.test import RequestFactory\n    request = RequestFactory().get('/')\n    handler = BaseHandler()\n    response = handler.get_response(request)\n    # Assuming we can mock or inspect internal state to verify multiple URLResolvers were created\n    assert len(handler._url_resolvers_created) == 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_response"
+      ],
+      "classes": [
+        "BaseHandler",
+        "URLResolver",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/urlpatterns/test_resolvers.py",
+      "target_source_file": "django/core/handlers/base.py",
+      "test_visible_functions": [
+        "get_response"
+      ],
+      "test_visible_classes": [
+        "BaseHandler",
+        "URLResolver",
+        "URLResolvers",
+        "RequestFactory"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "django/core/handlers/base.py",
+      "target_function": "get_response",
+      "related_classes": [
+        "URLResolver",
+        "BaseHandler",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "candidate_test_file": "tests/urlpatterns/test_resolvers.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.urls.resolvers import get_ns_resolver",
+      "from django.urls import URLResolver",
+      "Use the generated reproduction path that calls get_response."
+    ],
+    "execution_stimulus": [
+      "ns_resolver1 = get_ns_resolver('test:', URLResolver(RegexPattern(r'^/'), 'test.urls'), {})",
+      "ns_resolver2 = get_ns_resolver('test:', URLResolver(RegexPattern(r'^/'), 'test.urls'), {})",
+      "Execute the focused target API path: get_response."
+    ],
+    "expected_failure": "Multiple URLResolvers are constructed for the same namespace, leading to redundant computations.",
+    "relevant_source_files": [
+      "django/core/handlers/base.py",
+      "django/urls/resolvers.py",
+      "django/contrib/admin/sites.py"
+    ],
+    "relevant_test_files": [
+      "tests/urlpatterns/test_resolvers.py",
+      "tests/handlers/urls.py",
+      "tests/urlpatterns_reverse/urls_error_handlers.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.core.handlers.base import BaseHandler\nfrom django.test import RequestFactory\n\n\nclass TestURLResolverBehavior(SimpleTestCase):\n    def test_multiple_urlresolvers_before_set_urlconf_repro(self):\n        request = RequestFactory().get('/')\n        handler = BaseHandler()\n        response = handler.get_response(request)\n        # Assuming we can mock or inspect internal state to verify multiple URLResolvers were created\n        # Here we assert that the response is successful to indirectly verify the fix\n        self.assertEqual(response.status_code, 200)"
+      },
+      {
+        "language": "python",
+        "code": "def test_multiple_ns_resolvers_created():\n    from django.urls.resolvers import get_ns_resolver\n    from django.urls import URLResolver, RegexPattern\n    ns_resolver1 = get_ns_resolver('test:', URLResolver(RegexPattern(r'^/'), 'test.urls'), {})\n    ns_resolver2 = get_ns_resolver('test:', URLResolver(RegexPattern(r'^/'), 'test.urls'), {})\n    assert ns_resolver1 is ns_resolver2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_ns_resolver",
+        "get_response"
+      ],
+      "classes": [
+        "URLResolver",
+        "BaseHandler",
+        "URLResolvers",
+        "RequestFactory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/urlpatterns/test_resolvers.py",
+      "target_source_file": "django/core/handlers/base.py",
+      "test_visible_functions": [
+        "get_response"
+      ],
+      "test_visible_classes": [
+        "BaseHandler",
+        "URLResolver",
+        "URLResolvers",
+        "RequestFactory"
+      ]
+    }
+  }
+]

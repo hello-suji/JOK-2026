@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-16597",
+    "model_patch": "--- a/sympy/core/tests/test_symbol.py\n+++ b/sympy/core/tests/test_symbol.py\n@@ -382,3 +382,10 @@\n     assert disambiguate(*t7) == (y*y_1, y_1)\n     assert disambiguate(Dummy('x_1'), Dummy('x_1')\n         ) == (x_1, Symbol('x_1_1'))\n+\n+def test_even_symbol_is_finite_repro():\n+    m = Symbol('m', even=True)\n+    result = m.is_finite\n+    assert result is True\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(m) != 'None'\n",
+    "patch_sha256": "39b3a13f38ac5a883328139f53b0b1386cff1c0f06e82819e7bb41cf14de76f1"
+  }
+]

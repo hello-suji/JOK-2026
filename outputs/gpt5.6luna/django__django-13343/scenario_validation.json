@@ -1,0 +1,117 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:deconstruct",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/db/models/fields/files.py",
+          "target_function": "deconstruct",
+          "related_classes": [
+            "FileField",
+            "ImageField"
+          ],
+          "candidate_test_file": "tests/migrations/test_deprecated_fields.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.db import models",
+          "from django.core.files.storage import FileSystemStorage",
+          "def get_storage(): return FileSystemStorage(location='/tmp')",
+          "file_field = models.FileField(storage=get_storage)"
+        ],
+        "execution_stimulus": [
+          "name, path, args, kwargs = file_field.deconstruct()"
+        ],
+        "expected_failure": "The callable 'get_storage' is evaluated during deconstruction, resulting in the actual storage instance being inlined instead of the callable reference.",
+        "relevant_source_files": [
+          "django/db/models/fields/files.py",
+          "django/forms/fields.py",
+          "django/core/files/storage.py"
+        ],
+        "relevant_test_files": [
+          "tests/invalid_models_tests/test_custom_fields.py",
+          "tests/invalid_models_tests/test_deprecated_fields.py",
+          "tests/invalid_models_tests/test_ordinary_fields.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_filefield_deconstruct_callable_storage():\n    from django.db import models\n    from django.core.files.storage import FileSystemStorage\n    def get_storage(): return FileSystemStorage(location='/tmp')\n    file_field = models.FileField(storage=get_storage)\n    name, path, args, kwargs = file_field.deconstruct()\n    assert 'storage' in kwargs and callable(kwargs['storage'])"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "deconstruct"
+          ],
+          "classes": [
+            "FileField"
+          ]
+        },
+        "oracle_hints": [
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S2",
+      "score": 1.0,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:deconstruct",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

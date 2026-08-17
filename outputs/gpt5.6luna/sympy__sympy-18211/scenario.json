@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/sets/conditionset.py",
+      "target_function": "solveset",
+      "related_classes": [
+        "ConditionSet",
+        "Eq",
+        "Reals"
+      ],
+      "candidate_test_file": "sympy/sets/tests/test_conditionset.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where solveset can be called.",
+      "Use the generated reproduction path that calls symbols, cos, sin, solveset.",
+      "Use the generated reproduction path that calls cos, sin, symbols, solveset."
+    ],
+    "execution_stimulus": [
+      "Call solveset with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, cos, sin, solveset.",
+      "Execute the focused target API path: cos, sin, symbols, solveset."
+    ],
+    "expected_failure": "`solveset` raises `NotImplementedError` instead of returning `ConditionSet`",
+    "relevant_source_files": [
+      "sympy/sets/conditionset.py",
+      "sympy/assumptions/handlers/sets.py",
+      "sympy/core/symbol.py"
+    ],
+    "relevant_test_files": [
+      "sympy/sets/tests/test_conditionset.py",
+      "sympy/sets/tests/test_fancysets.py",
+      "sympy/sets/tests/test_sets.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "julia",
+        "code": "In [10]: Eq(n*cos(n) - 3*sin(n), 0).as_set()                                                                                                                  \n---------------------------------------------------------------------------\nNotImplementedError"
+      },
+      {
+        "language": "julia",
+        "code": "In [11]: ConditionSet(n, Eq(n*cos(n) - 3*sin(n), 0), Reals)                                                                                                   \nOut[11]: {n | n ∊ ℝ ∧ n⋅cos(n) - 3⋅sin(n) = 0}"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Eq, cos, sin, Reals\nfrom sympy.sets import ConditionSet\n\ndef test_solveset_notimplemented_conditionset_repro():\n    n = symbols('n')\n    equation = Eq(n*cos(n) - 3*sin(n), 0)\n    expected_result = ConditionSet(n, equation, Reals)\n    assert solveset(equation, n, domain=Reals) == expected_result"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NotImplementedError"
+    ],
+    "identifiers": {
+      "functions": [
+        "as_set",
+        "cos",
+        "sin",
+        "symbols",
+        "solveset"
+      ],
+      "classes": [
+        "ConditionSet",
+        "Eq",
+        "Reals"
+      ],
+      "files": [],
+      "exceptions": [
+        "NotImplementedError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/sets/tests/test_conditionset.py",
+      "target_source_file": "sympy/sets/conditionset.py",
+      "test_visible_functions": [
+        "cos",
+        "sin",
+        "symbols",
+        "solveset"
+      ],
+      "test_visible_classes": [
+        "ConditionSet",
+        "Eq",
+        "Reals"
+      ]
+    }
+  }
+]

@@ -1,0 +1,22 @@
+--- a/tests/admin_default_site/sites.py
++++ b/tests/admin_default_site/sites.py
+@@ -3,3 +3,19 @@
+
+ class CustomAdminSite(admin.AdminSite):
+     pass
++
++from django.test import TestCase
++from django.http import HttpRequest
++from django.contrib.admin.sites import catch_all_view
++from django.conf import settings
++
++class TestCatchAllView(TestCase):
++    def test_catch_all_view_with_force_script_name_repro(self):
++        original_script_name = settings.FORCE_SCRIPT_NAME
++        settings.FORCE_SCRIPT_NAME = '/forced-script'
++        request = HttpRequest()
++        request.path_info = '/some-path/'
++        request.path = '/forced-script/some-path/'
++        response = catch_all_view(request)
++        self.assertEqual(response.url, '/forced-script/some-path/')
++        settings.FORCE_SCRIPT_NAME = original_script_name

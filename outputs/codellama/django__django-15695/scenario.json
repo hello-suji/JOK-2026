@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "database_forwards",
+      "related_classes": [
+        "OperationTestBase",
+        "OperationTests",
+        "PostgreSQL",
+        "RenameIndex"
+      ],
+      "candidate_test_file": "tests/custom_migration_operations/more_operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where database_forwards can be called.",
+      "Use the generated reproduction path that calls database_backwards, database_forwards, schema_editor, migrations."
+    ],
+    "execution_stimulus": [
+      "Call database_forwards with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: database_backwards, database_forwards, schema_editor, migrations."
+    ],
+    "expected_failure": "django.db.utils.ProgrammingError: relation \"new_pony_test_idx\" already exists",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/contrib/postgres/operations.py",
+      "django/db/migrations/operations/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_migration_operations/more_operations.py",
+      "tests/custom_migration_operations/operations.py",
+      "tests/backends/postgresql/test_operations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.operations.models import RenameIndex\nfrom django.db import migrations\nfrom django.db import connection\n\nclass TestRenameIndexBehavior(TestCase):\n    def test_rename_index_crash_repro(self):\n        # Setup the initial state with an unnamed index\n        original_name = connection.introspection.get_indexes_from_table('pony')[0]['name']\n        rename_op = RenameIndex(model_name='pony', old_name=original_name, new_name='new_pony_test_idx')\n        schema_editor = connection.schema_editor()\n        \n        # Apply the rename operation\n        rename_op.database_forwards('app', schema_editor, None, None)\n        \n        # Reverse the rename operation\n        rename_op.database_backwards('app', schema_editor, None, None)\n        \n        # Re-apply the rename operation again\n        rename_op.database_forwards('app', schema_editor, None, None)\n        \n        # Check that the index has been restored to the new name\n        self.assertTrue(connection.introspection.index_name_exists('pony', 'new_pony_test_idx'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ProgrammingError"
+    ],
+    "identifiers": {
+      "functions": [
+        "assertIndexNameExists",
+        "assertNumQueries",
+        "database_backwards",
+        "database_forwards",
+        "deconstruct",
+        "schema_editor",
+        "migrations",
+        "connection",
+        "index_name_exists",
+        "get_indexes_from_table"
+      ],
+      "classes": [
+        "OperationTestBase",
+        "OperationTests",
+        "PostgreSQL",
+        "RenameIndex"
+      ],
+      "files": [
+        "tests/migrations/test_operations.py"
+      ],
+      "exceptions": [
+        "ProgrammingError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/custom_migration_operations/more_operations.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [
+        "database_backwards",
+        "database_forwards",
+        "schema_editor",
+        "migrations",
+        "connection",
+        "index_name_exists",
+        "get_indexes_from_table"
+      ],
+      "test_visible_classes": [
+        "RenameIndex"
+      ]
+    }
+  }
+]

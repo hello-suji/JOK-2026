@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11400",
+    "model_patch": "--- a/tests/admin_changelist/admin.py\n+++ b/tests/admin_changelist/admin.py\n@@ -147,3 +147,18 @@\n     def age_display(self, obj):\n         return obj.age\n     age_display.empty_value_display = '&dagger;'\n+\n+from django.contrib.admin.filters import RelatedFieldListFilter, RelatedOnlyFieldListFilter\n+from django.contrib.admin.options import ModelAdmin\n+from django.test import TestCase\n+\n+class TestRelatedFieldListFilter(TestCase):\n+    def test_related_field_list_filter_repro(self):\n+        ma = ModelAdmin(Book, None)\n+        request = self.client.get('/admin/')\n+        field_path = 'author'\n+        model_admin = ModelAdmin(Author, None)\n+        list_filter = RelatedFieldListFilter.create(\n+            field_path, request, {}, model_admin, model_admin.model, model_admin.model._meta.get_field(field_path)\n+        )\n+        self.assertIsNotNone(list_filter)\n",
+    "patch_sha256": "980ca6cd5861b4013feb496578551c2b0b8fa0dfee63b39bede05bc1c58474af"
+  }
+]

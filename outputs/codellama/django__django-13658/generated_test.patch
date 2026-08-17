@@ -1,0 +1,18 @@
+--- a/tests/admin_scripts/complex_app/management/commands/__init__.py
++++ b/tests/admin_scripts/complex_app/management/commands/__init__.py
+@@ -0,0 +1,15 @@
++
++
++from django.test import TestCase, SimpleTestCase
++import sys
++import re
++from django.core.management import ManagementUtility
++
++
++class TestManagementUtility(TestCase):
++    def test_prog_name_usage_repro(self):
++        # Simulate an incorrect sys.argv[0]
++        utility = ManagementUtility(['incorrect_script.py', 'help'])
++        help_text = utility.main_help_text()
++        self.assertIn('incorrect_script.py', help_text)
++        self.assertNotIn('python -m django', help_text)

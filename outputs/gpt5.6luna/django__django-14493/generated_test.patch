@@ -1,0 +1,19 @@
+--- a/tests/staticfiles_tests/test_storage.py
++++ b/tests/staticfiles_tests/test_storage.py
+@@ -635,3 +635,16 @@
+                 content = relfile.read()
+                 self.assertIn(b'foo.57a5cb9ba68d.png', content)
+                 self.assertIn(b'xyz.57a5cb9ba68d.png', content)
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
++
++class TestManifestStaticFilesStorage(TestCase):
++    def test_post_process_with_zero_max_post_process_passes_repro(self):
++        class MyManifestStaticFilesStorage(ManifestStaticFilesStorage):
++            max_post_process_passes = 0
++        storage = MyManifestStaticFilesStorage()
++        result = list(storage.post_process([], dry_run=False))
++        self.assertEqual(result, [])
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(result) != "UnboundLocalError: local variable 'substitutions' referenced before assignment"

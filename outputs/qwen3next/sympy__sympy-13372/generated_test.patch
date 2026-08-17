@@ -1,0 +1,15 @@
+--- a/sympy/core/tests/test_evalf.py
++++ b/sympy/core/tests/test_evalf.py
+@@ -511,3 +511,12 @@
+     eq = x*Max(y, -1.1)
+     assert nfloat(eq) == eq
+     assert Max(y, 4).n() == Max(4.0, y)
++
++from sympy import symbols, Mul, Max
++
++def test_evalf_max_in_multiplication_repro():
++    x, y = symbols('x y')
++    result = Mul(Max(0, y), x, evaluate=False).evalf()
++    assert result != 'x*Max(0, y)'
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'x*Max(0, y)\nTraceback (most recent call last):\nFile "./sympy/core/evalf.py", line 1285, in evalf\nrf = evalf_table[x.func]\nKeyError: Max\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\nFile "<stdin>", line 1, in <module>\nFile "./sympy/core/evalf.py", line 1394, in evalf\nresult = evalf(self, prec + 4, options)\nFile "./sympy/core/evalf.py", line 1286, in evalf\nr = rf(x, prec, options)\nFile "./sympy/core/evalf.py", line 538, in evalf_mul\narg = evalf(arg, prec, options)\nFile "./sympy/core/evalf.py", line 1308, in evalf\nr = re, im, reprec, imprec\nUnboundLocalError: local variable \'reprec\' referenced before assignment'

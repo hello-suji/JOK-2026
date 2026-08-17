@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14309",
+    "model_patch": "--- a/astropy/io/fits/tests/test_table.py\n+++ b/astropy/io/fits/tests/test_table.py\n@@ -3944,3 +3944,19 @@\n\n     with pytest.warns(UnitsWarning):\n         Table.read(path, unit_parse_strict=\"warn\")\n+\n+import io\n+from astropy.io.registry import identify_format\n+from astropy.table import Table\n+\n+class TestIdentifyFormat(TestTableFunctions):\n+    def test_identify_format_with_invalid_filepath_repro(self):\n+        \"\"\"\n+        Regression test for https://github.com/astropy/astropy/issues/14309\n+\n+        Ensure that identify_format does not raise IndexError when given a filepath without a FITS extension.\n+        \"\"\"\n+        fmts = identify_format(\"write\", Table, \"bububu.ecsv\", None, [], {})\n+        assert fmts is not None\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(fmts) != 'IndexError: tuple index out of range'\n",
+    "patch_sha256": "b4ebdb792e118ebc27f0a82c35584d87195b14114fcd66b57a13dfd5773cc728"
+  }
+]

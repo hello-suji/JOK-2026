@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "django/core/management/__init__.py",
+      "target_function": "call_command",
+      "related_classes": [
+        "MockCommand"
+      ],
+      "candidate_test_file": "tests/migrations/migrations_test_apps/unspecified_app_with_conflict/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls call_command, get.",
+      "Use the generated reproduction path that calls call_command."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: call_command, get.",
+      "Execute the focused target API path: call_command."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/core/management/__init__.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/options.py",
+      "django/contrib/auth/management/commands/createsuperuser.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/migrations_test_apps/unspecified_app_with_conflict/__init__.py",
+      "tests/apps/default_config_app/__init__.py",
+      "tests/migrations/migrations_test_apps/conflicting_app_with_dependencies/__init__.py",
+      "tests/migrations/migrations_test_apps/conflicting_app_with_dependencies/migrations/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.management import call_command\n\nclass TestManagementCommandSkipChecks(TestCase):\n    def test_skip_checks_execution_repro(self):\n        # Mocking a command that would perform checks\n        class MockCommand:\n            checks_executed = True\n\n            def execute(self, *args, **options):\n                if options.get('skip_checks'):\n                    self.checks_executed = False\n\n        # Register the mock command\n        mock_command = MockCommand()\n        call_command('check_command', skip_checks=True, command=mock_command)\n\n        # Verify that checks were not executed\n        self.assertFalse(mock_command.checks_executed)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "call_command"
+      ],
+      "classes": [
+        "MockCommand"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/migrations_test_apps/unspecified_app_with_conflict/__init__.py",
+      "target_source_file": "django/core/management/__init__.py",
+      "test_visible_functions": [
+        "call_command"
+      ],
+      "test_visible_classes": [
+        "MockCommand"
+      ]
+    }
+  }
+]

@@ -1,0 +1,13 @@
+--- a/sympy/parsing/tests/test_sympy_parser.py
++++ b/sympy/parsing/tests/test_sympy_parser.py
+@@ -359,3 +359,10 @@
+     raises(ValueError, lambda: parse_expr('x', {'': 1}))
+     data = {'some_parameter': None}
+     assert parse_expr('some_parameter is None', data) is True
++
++def test_parse_expr_unevaluated_inequality_repro():
++    from sympy import parse_expr, Lt
++    result = parse_expr('1 < 2', evaluate=False)
++    assert result == Lt(1, 2)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'True'

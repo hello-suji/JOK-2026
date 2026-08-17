@@ -1,0 +1,28 @@
+{
+  "instance_id": "pallets__flask-5014",
+  "observed_behavior": [
+    "It would be helpful if a `ValueError` was raised when trying to do that."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "Things do not work correctly if a Blueprint is given an empty name (e.g. #4944).",
+    "It would be helpful if a `ValueError` was raised when trying to do that."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": [
+      "ValueError"
+    ]
+  },
+  "raw_issue_text": "Require a non-empty name for Blueprints\nThings do not work correctly if a Blueprint is given an empty name (e.g. #4944).\nIt would be helpful if a `ValueError` was raised when trying to do that.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [
+    "ValueError"
+  ],
+  "fault_locations": []
+}

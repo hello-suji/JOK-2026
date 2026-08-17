@@ -1,0 +1,29 @@
+{
+  "instance_id": "sympy__sympy-19637",
+  "observed_behavior": [
+    "// UnboundLocalError: local variable 'kern' referenced before assignment"
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "from sympy.core.sympify import kernS"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "kernS"
+    ],
+    "classes": [],
+    "files": [],
+    "exceptions": [
+      "UnboundLocalError"
+    ]
+  },
+  "raw_issue_text": "kernS: 'kern' referenced before assignment\nfrom sympy.core.sympify import kernS\n\ntext = \"(2*x)/(x-1)\"\nexpr = kernS(text)  \n//  hit = kern in s\n// UnboundLocalError: local variable 'kern' referenced before assignment",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [
+    "UnboundLocalError"
+  ],
+  "fault_locations": []
+}

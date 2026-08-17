@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/sqlite3/operations.py",
+      "target_function": "get_context_data",
+      "related_classes": [
+        "OfferView",
+        "SQLite",
+        "SimpleLazyObject",
+        "TemplateView",
+        "User",
+        "RequestFactory"
+      ],
+      "candidate_test_file": "tests/generic_views/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where get_context_data can be called.",
+      "Use the generated reproduction path that calls get_object_or_404, get, create_user, get_context_data.",
+      "Use the generated reproduction path that calls get, get_context_data, get_object_or_404, create_user."
+    ],
+    "execution_stimulus": [
+      "Call get_context_data with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_object_or_404, get, create_user, get_context_data.",
+      "Execute the focused target API path: get, get_context_data, get_object_or_404, create_user."
+    ],
+    "expected_failure": "TemplateView.get_context_data()'s kwargs returns SimpleLazyObjects that causes a crash when filtering.",
+    "relevant_source_files": [
+      "django/db/backends/sqlite3/operations.py",
+      "django/views/generic/base.py",
+      "django/contrib/admindocs/urls.py"
+    ],
+    "relevant_test_files": [
+      "tests/generic_views/test_base.py",
+      "tests/backends/sqlite/test_operations.py",
+      "tests/generic_views/views.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.shortcuts import get_object_or_404\nfrom django.views.generic.base import TemplateView\nfrom django.utils.functional import SimpleLazyObject\nfrom django.contrib.auth.models import User  # Assuming User model for Account model placeholder\n\nclass TestOfferView(TemplateView):\n    template_name = \"offers/offer.html\"\n\n    def get_context_data(self, **kwargs):\n        offer_slug = kwargs.get(\"offer_slug\", \"\")\n        offer = get_object_or_404(User, username=offer_slug)\n        return {\"offer\": offer, \"offer_slug\": offer_slug}\n\nclass TestOfferViewIntegration(SimpleTestCase):\n    def setUp(self):\n        self.user = User.objects.create_user(username='testuser')\n        self.factory = RequestFactory()\n\n    def test_get_context_data_with_simplelazyobject_repro(self):\n        request = self.factory.get('/offer/')\n        view = TestOfferView()\n        context = view.get_context_data(offer_slug=SimpleLazyObject(lambda: self.user.username))\n        self.assertEqual(context['offer'], self.user)\n        self.assertEqual(context['offer_slug'], self.user.username)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "as_view",
+        "get_context_data",
+        "get_object_or_404",
+        "path",
+        "create_user"
+      ],
+      "classes": [
+        "OfferView",
+        "SQLite",
+        "SimpleLazyObject",
+        "SimpleLazyObjects",
+        "TemplateView",
+        "User",
+        "RequestFactory"
+      ],
+      "files": [
+        "django/db/backends/sqlite3/operations.py",
+        "urls.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/generic_views/test_base.py",
+      "target_source_file": "django/db/backends/sqlite3/operations.py",
+      "test_visible_functions": [
+        "get",
+        "get_context_data",
+        "get_object_or_404",
+        "create_user"
+      ],
+      "test_visible_classes": [
+        "OfferView",
+        "SimpleLazyObject",
+        "TemplateView",
+        "User",
+        "RequestFactory"
+      ]
+    }
+  }
+]

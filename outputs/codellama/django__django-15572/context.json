@@ -1,0 +1,452 @@
+{
+  "instance_id": "django__django-15572",
+  "repo": "django/django",
+  "base_commit": "0b31e024873681e187b574fe1c4afe5e48aeeecf",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/template/autoreload.py",
+      "score": 42,
+      "matched_identifiers": [
+        "dirs",
+        "django/template/autoreload.py",
+        "filter",
+        "reload",
+        "template_changed",
+        "templates"
+      ],
+      "reasons": [
+        "function_match:template_changed",
+        "explicit_file_path_hint:django/template/autoreload.py",
+        "stem_in_issue_text:autoreload",
+        "source_content_tokens:dirs,filter,reload,templates,autoreload"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "template_changed": "def template_changed(sender, file_path, **kwargs):\n    if file_path.suffix == \".py\":\n        return\n    for template_dir in get_template_directories():\n        if template_dir in file_path.parents:\n            reset_loaders()\n            return True"
+      },
+      "top_level_functions": [
+        "get_template_directories",
+        "reset_loaders",
+        "watch_for_template_changes",
+        "template_changed"
+      ]
+    },
+    {
+      "path": "django/utils/autoreload.py",
+      "score": 27,
+      "matched_identifiers": [
+        "dirs",
+        "django/template/autoreload.py",
+        "else",
+        "filter",
+        "https"
+      ],
+      "reasons": [
+        "file_hint_match:django/template/autoreload.py",
+        "stem_in_issue_text:autoreload",
+        "source_content_tokens:dirs,else,filter,https,reload"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_django_module",
+        "is_django_path",
+        "check_errors",
+        "raise_last_exception",
+        "ensure_echo_on",
+        "iter_all_python_module_files",
+        "iter_modules_and_files",
+        "common_roots",
+        "sys_path_directories",
+        "get_child_arguments",
+        "trigger_reload",
+        "restart_with_reloader",
+        "BaseReloader.watch_dir",
+        "BaseReloader.watched_files",
+        "BaseReloader.wait_for_apps_ready",
+        "BaseReloader.run",
+        "BaseReloader.run_loop",
+        "BaseReloader.tick",
+        "BaseReloader.check_availability",
+        "BaseReloader.notify_file_changed",
+        "BaseReloader.should_stop",
+        "BaseReloader.stop",
+        "StatReloader.tick",
+        "StatReloader.snapshot_files",
+        "StatReloader.check_availability",
+        "WatchmanReloader.client",
+        "WatchmanReloader.watched_roots",
+        "WatchmanReloader.update_watches",
+        "WatchmanReloader.request_processed",
+        "WatchmanReloader.tick",
+        "WatchmanReloader.stop",
+        "WatchmanReloader.check_server_status",
+        "WatchmanReloader.check_availability",
+        "get_reloader",
+        "start_django",
+        "run_with_reloader"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 17,
+      "matched_identifiers": [
+        "anything",
+        "else",
+        "filter",
+        "split"
+      ],
+      "reasons": [
+        "stem_in_issue_text:main",
+        "source_content_tokens:anything,else,filter,split,always"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/forms.py",
+      "score": 17,
+      "matched_identifiers": [
+        "else",
+        "filter",
+        "https",
+        "split"
+      ],
+      "reasons": [
+        "stem_in_issue_text:forms",
+        "source_content_tokens:else,filter,https,split,change"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ReadOnlyPasswordHashWidget.get_context",
+        "ReadOnlyPasswordHashWidget.id_for_label",
+        "UsernameField.to_python",
+        "UsernameField.widget_attrs",
+        "UserCreationForm.clean_password2",
+        "UserCreationForm.save",
+        "AuthenticationForm.clean",
+        "AuthenticationForm.confirm_login_allowed",
+        "AuthenticationForm.get_user",
+        "AuthenticationForm.get_invalid_login_error",
+        "PasswordResetForm.send_mail",
+        "PasswordResetForm.get_users",
+        "PasswordResetForm.save",
+        "SetPasswordForm.clean_new_password2",
+        "SetPasswordForm.save",
+        "PasswordChangeForm.clean_old_password",
+        "AdminPasswordChangeForm.clean_password2",
+        "AdminPasswordChangeForm.save",
+        "AdminPasswordChangeForm.changed_data"
+      ]
+    },
+    {
+      "path": "django/core/management/templates.py",
+      "score": 17,
+      "matched_identifiers": [
+        "dirs",
+        "else",
+        "https",
+        "split"
+      ],
+      "reasons": [
+        "stem_in_issue_text:templates",
+        "source_content_tokens:dirs,else,https,split,templates"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TemplateCommand.add_arguments",
+        "TemplateCommand.handle",
+        "TemplateCommand.handle_template",
+        "TemplateCommand.validate_name",
+        "TemplateCommand.download",
+        "TemplateCommand.splitext",
+        "TemplateCommand.extract",
+        "TemplateCommand.is_url",
+        "TemplateCommand.apply_umask",
+        "TemplateCommand.make_writeable"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/test_templates.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:auth,template,templates",
+        "internal_name_overlap:auth",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:template",
+        "internal_name_overlap:templates",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_inlines/test_templates.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:template,templates",
+        "internal_name_overlap:templates",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/check_framework/test_templates.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:template,templates",
+        "internal_name_overlap:templates",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_forms.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:auth,forms",
+        "internal_name_overlap:changed",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/template"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/check_framework/test_templates.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_templates.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:testcase_class:TestDataMixin",
+      "tests/admin_inlines/test_templates.py:unittest_or_django_test_import",
+      "tests/admin_inlines/test_templates.py:testcase_class:TestTemplates"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2743,
+  "indexed_test_file_count": 1876,
+  "available_imports": {
+    "django": [
+      "Context",
+      "ContextPopException",
+      "Engine",
+      "EngineHandler",
+      "Library",
+      "Node",
+      "NodeList",
+      "Origin",
+      "RequestContext",
+      "Template",
+      "TemplateDoesNotExist",
+      "TemplateSyntaxError",
+      "Variable",
+      "VariableDoesNotExist",
+      "autoreload",
+      "engines",
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.check_framework.test_templates": [
+      "CheckTemplateSettingsAppDirsTest",
+      "CheckTemplateStringIfInvalidTest",
+      "CheckTemplateTagLibrariesWithSameName"
+    ],
+    "tests.auth_tests.test_templates": [
+      "AuthTemplateTests"
+    ],
+    "tests.auth_tests.test_forms": [
+      "AdminPasswordChangeFormTest",
+      "AuthenticationFormTest",
+      "PasswordChangeFormTest",
+      "PasswordResetFormTest",
+      "ReadOnlyPasswordHashTest",
+      "SetPasswordFormTest",
+      "TestDataMixin",
+      "UserChangeFormTest",
+      "UserCreationFormTest"
+    ],
+    "tests.admin_inlines.test_templates": [
+      "TestTemplates"
+    ],
+    "django.utils.autoreload": [
+      "BaseReloader",
+      "StatReloader",
+      "WatchmanReloader",
+      "WatchmanUnavailable",
+      "check_errors",
+      "common_roots",
+      "ensure_echo_on",
+      "get_child_arguments",
+      "get_reloader",
+      "is_django_module",
+      "is_django_path",
+      "iter_all_python_module_files",
+      "iter_modules_and_files",
+      "raise_last_exception",
+      "restart_with_reloader",
+      "run_with_reloader",
+      "start_django",
+      "sys_path_directories",
+      "trigger_reload"
+    ],
+    "django.template.autoreload": [
+      "get_template_directories",
+      "reset_loaders",
+      "template_changed",
+      "watch_for_template_changes"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth.forms": [
+      "AdminPasswordChangeForm",
+      "AuthenticationForm",
+      "PasswordChangeForm",
+      "PasswordResetForm",
+      "ReadOnlyPasswordHashField",
+      "ReadOnlyPasswordHashWidget",
+      "SetPasswordForm",
+      "UserChangeForm",
+      "UserCreationForm",
+      "UsernameField",
+      "_unicode_ci_compare"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.templates": [
+      "TemplateCommand"
+    ]
+  },
+  "test_example_snippet": "    def test_password_reset_view(self):\n        response = PasswordResetView.as_view(success_url=\"dummy/\")(self.request)\n        self.assertContains(\n            response, \"<title>Password reset | Django site admin</title>\"\n        )\n        self.assertContains(response, \"<h1>Password reset</h1>\")\n\n    def test_password_reset_done_view(self):\n        response = PasswordResetDoneView.as_view()(self.request)\n        self.assertContains(\n            response, \"<title>Password reset sent | Django site admin</title>\"\n        )\n        self.assertContains(response, \"<h1>Password reset sent</h1>\")\n\n    def test_password_reset_confirm_view_invalid_token(self):\n        # PasswordResetConfirmView invalid token\n        client = PasswordResetConfirmClient()\n        url = reverse(\n            \"password_reset_confirm\", kwargs={\"uidb64\": \"Bad\", \"token\": \"Bad-Token\"}\n        )\n        response = client.get(url)\n        self.assertContains(\n            response, \"<title>Password reset unsuccessful | Django site admin</title>\"\n        )\n        self.assertContains(response, \"<h1>Password reset unsuccessful</h1>\")\n\n    def test_password_reset_confirm_view_valid_token(self):\n        # PasswordResetConfirmView valid token\n        client = PasswordResetConfirmClient()\n        default_token_generator = PasswordResetTokenGenerator()\n        token = default_token_generator.make_token(self.user)\n        uidb64 = urlsafe_base64_encode(str(self.user.pk).encode())\n        url = reverse(\n            \"password_reset_confirm\", kwargs={\"uidb64\": uidb64, \"token\": token}\n        )",
+  "conftest_fixtures": {}
+}

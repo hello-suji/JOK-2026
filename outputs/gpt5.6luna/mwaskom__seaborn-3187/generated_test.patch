@@ -1,0 +1,24 @@
+--- a/tests/_core/test_plot.py
++++ b/tests/_core/test_plot.py
+@@ -2057,3 +2057,21 @@
+     def test_default_repr_gate(self):
+
+         assert repr(Default()) == "<default>"
++
++import seaborn as sns
++import seaborn.objects as so
++
++def test_legend_large_range_values_repro():
++    penguins = sns.load_dataset("penguins")
++    penguins["body_mass_mg"] = penguins["body_mass_g"] * 1000
++    plot = (
++        so.Plot(
++            penguins, x="bill_length_mm", y="bill_depth_mm",
++            color="species", pointsize="body_mass_mg",
++        )
++        .add(so.Dot())
++    )
++    ax = plot.plot()
++    legend = ax.get_legend()
++    # Check if the legend labels contain the correct offset
++    assert any('1e6' in label.get_text() for label in legend.get_texts())

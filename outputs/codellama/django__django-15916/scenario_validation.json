@@ -1,0 +1,95 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:modelform_factory",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/forms/models.py",
+          "target_function": "modelform_factory",
+          "related_classes": [
+            "MyForm",
+            "FactoryForm"
+          ],
+          "candidate_test_file": "tests/forms_tests/field_tests/__init__.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django import forms",
+          "from django.db import models",
+          "from django.forms.models import modelform_factory",
+          "class MyModel(models.Model): active = models.BooleanField(); name = models.CharField(max_length=64, blank=True, null=True)",
+          "def all_required(field, **kwargs): formfield = field.formfield(**kwargs); formfield.required = True; return formfield",
+          "class MyForm(forms.ModelForm): formfield_callback = all_required; class Meta: model = MyModel; fields = '__all__'"
+        ],
+        "execution_stimulus": [
+          "FactoryForm = modelform_factory(MyModel, form=MyForm)"
+        ],
+        "expected_failure": "The fields in FactoryForm are not required, even though the formfield_callback in MyForm specifies that they should be.",
+        "relevant_source_files": [
+          "django/db/models/fields/__init__.py",
+          "django/forms/models.py",
+          "django/forms/fields.py"
+        ],
+        "relevant_test_files": [
+          "tests/forms_tests/field_tests/__init__.py",
+          "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py",
+          "tests/forms_tests/field_tests/filepathfield_test_dir/c/__init__.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_modelform_factory_uses_formfield_callback():\n    from django import forms\n    from django.db import models\n    from django.forms.models import modelform_factory\n    class MyModel(models.Model): active = models.BooleanField(); name = models.CharField(max_length=64, blank=True, null=True)\n    def all_required(field, **kwargs): formfield = field.formfield(**kwargs); formfield.required = True; return formfield\n    class MyForm(forms.ModelForm): formfield_callback = all_required; class Meta: model = MyModel; fields = '__all__'\n    FactoryForm = modelform_factory(MyModel, form=MyForm)\n    assert not FactoryForm.base_fields['active'].required, 'Field active should be required'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "modelform_factory"
+          ],
+          "classes": [
+            "MyForm",
+            "FactoryForm"
+          ]
+        },
+        "oracle_hints": [
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

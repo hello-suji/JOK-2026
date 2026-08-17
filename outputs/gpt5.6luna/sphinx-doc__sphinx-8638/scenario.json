@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Bar",
+        "Foo",
+        "SimpleHTTPServer",
+        "Sphinx"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls unittest, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, build."
+    ],
+    "expected_failure": "There is no reason that a `limit` variable on some class of some database-oriented subpackage autolink to the `limit` variable on some class of some config-related subpackage (this is what occurred in my codebase, which is private at least while in development. I cannot provide anything except a heavily censored screenshot, as I do not know of a way to trick the referencing heuristic to cause a link to occur in an demo repo).",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/application.py",
+      "sphinx/builders/html/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "$ git clone https://github.com/13steinj/sphinx-issue-examples/\n$ cd sphinx-issue-examples\n$ git checkout referenced_variables\n$ cd docs\n$ make html\n$ cd _build/html && python -m SimpleHTTPServer 8008"
+      },
+      {
+        "language": "python",
+        "code": "import unittest\nclass TestVariableLinking(unittest.TestCase):\n    def test_variable_linking_repro(self):\n        \"\"\"Ensure that instance variables do not incorrectly link to each other.\"\"\"\n        from sphinx.application import Sphinx\n\n        srcdir = 'tests/roots/test-ext-autodoc/target'\n        confdir = srcdir\n        outdir = '_build/html'\n        doctreedir = '_build/doctrees'\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, 'html')\n        app.build()\n\n        bar_instance_vars = app.env.domains['py'].data['objects']['bar']\n        foo_instance_vars = app.env.domains['py'].data['objects']['foo']\n\n        self.assertNotEqual(bar_instance_vars, foo_instance_vars)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "unittest",
+        "build"
+      ],
+      "classes": [
+        "Bar",
+        "Foo",
+        "SimpleHTTPServer",
+        "Sphinx"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Bar",
+        "Foo",
+        "Sphinx"
+      ]
+    }
+  }
+]

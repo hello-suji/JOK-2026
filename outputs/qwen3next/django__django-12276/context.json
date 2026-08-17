@@ -1,0 +1,468 @@
+{
+  "instance_id": "django__django-12276",
+  "repo": "django/django",
+  "base_commit": "53d8646f799de7f92ab9defe9dc56c6125448102",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/forms/widgets.py",
+      "score": 50,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput",
+        "attribute",
+        "clearablefileinput",
+        "display",
+        "django/forms/widgets.py",
+        "element",
+        "use_required_attribute"
+      ],
+      "reasons": [
+        "function_match:use_required_attribute",
+        "class_match:FileInput",
+        "class_match:ClearableFileInput",
+        "explicit_file_path_hint:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attribute,clearablefileinput,display,element,exists"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "FileInput": "class FileInput(Input):\n    input_type = 'file'\n    needs_multipart_form = True\n    template_name = 'django/forms/widgets/file.html'\n\n    def format_value(self, value):\n        \"\"\"File input never renders a value.\"\"\"\n        return\n\n    def value_from_datadict(self, data, files, name):\n        \"File widgets take data from FILES, not POST\"\n        return files.get(name)\n\n    def value_omitted_from_data(self, data, files, name):\n        return name not in files",
+        "ClearableFileInput": "class ClearableFileInput(FileInput):\n    clear_checkbox_label = _('Clear')\n    initial_text = _('Currently')\n    input_text = _('Change')\n    template_name = 'django/forms/widgets/clearable_file_input.html'\n\n    def clear_checkbox_name(self, name):\n        \"\"\"\n        Given the name of the file input, return the name of the clear checkbox\n        input.\n        \"\"\"\n        return name + '-clear'\n\n    def clear_checkbox_id(self, name):\n        \"\"\"",
+        "use_required_attribute": "    def use_required_attribute(self, initial):\n        # Don't use the 'required' attribute because browser validation would\n        # require all checkboxes to be checked instead of at least one.\n        return False\n\n    def value_omitted_from_data(self, data, files, name):\n        # HTML checkboxes don't appear in POST data if not checked, so it's\n        # never known if the value is actually omitted.\n        return False\n\n    def id_for_label(self, id_, index=None):\n        \"\"\"\"\n        Don't include for=\"field_0\" in <label> because clicking such a label\n        would toggle the first checkbox.\n        \"\"\""
+      },
+      "top_level_functions": [
+        "Media.render",
+        "Media.render_js",
+        "Media.render_css",
+        "Media.absolute_path",
+        "Media.merge",
+        "media_property",
+        "Widget.is_hidden",
+        "Widget.subwidgets",
+        "Widget.format_value",
+        "Widget.get_context",
+        "Widget.render",
+        "Widget.build_attrs",
+        "Widget.value_from_datadict",
+        "Widget.value_omitted_from_data",
+        "Widget.id_for_label",
+        "Widget.use_required_attribute",
+        "Input.get_context",
+        "PasswordInput.get_context",
+        "MultipleHiddenInput.get_context",
+        "MultipleHiddenInput.value_from_datadict",
+        "MultipleHiddenInput.format_value",
+        "FileInput.format_value",
+        "FileInput.value_from_datadict",
+        "FileInput.value_omitted_from_data",
+        "ClearableFileInput.clear_checkbox_name",
+        "ClearableFileInput.clear_checkbox_id",
+        "ClearableFileInput.is_initial",
+        "ClearableFileInput.format_value",
+        "ClearableFileInput.get_context",
+        "ClearableFileInput.value_from_datadict",
+        "ClearableFileInput.use_required_attribute",
+        "ClearableFileInput.value_omitted_from_data",
+        "DateTimeBaseInput.format_value",
+        "boolean_check",
+        "CheckboxInput.format_value",
+        "CheckboxInput.get_context",
+        "CheckboxInput.value_from_datadict",
+        "CheckboxInput.value_omitted_from_data",
+        "ChoiceWidget.subwidgets",
+        "ChoiceWidget.options"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/widgets.py",
+      "score": 27,
+      "matched_identifiers": [
+        "attribute",
+        "clearablefileinput",
+        "display",
+        "django/forms/widgets.py",
+        "fileinput"
+      ],
+      "reasons": [
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attribute,clearablefileinput,display,fileinput,forms"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FilteredSelectMultiple.media",
+        "FilteredSelectMultiple.get_context",
+        "AdminSplitDateTime.get_context",
+        "url_params_from_lookup_dict",
+        "ForeignKeyRawIdWidget.get_context",
+        "ForeignKeyRawIdWidget.base_url_parameters",
+        "ForeignKeyRawIdWidget.url_parameters",
+        "ForeignKeyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.get_context",
+        "ManyToManyRawIdWidget.url_parameters",
+        "ManyToManyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.value_from_datadict",
+        "ManyToManyRawIdWidget.format_value",
+        "RelatedFieldWidgetWrapper.is_hidden",
+        "RelatedFieldWidgetWrapper.media",
+        "RelatedFieldWidgetWrapper.get_related_url",
+        "RelatedFieldWidgetWrapper.get_context",
+        "RelatedFieldWidgetWrapper.value_from_datadict",
+        "RelatedFieldWidgetWrapper.value_omitted_from_data",
+        "RelatedFieldWidgetWrapper.id_for_label",
+        "AdminURLFieldWidget.get_context",
+        "AutocompleteMixin.get_url",
+        "AutocompleteMixin.build_attrs",
+        "AutocompleteMixin.optgroups",
+        "AutocompleteMixin.media"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/admin/widgets.py",
+      "score": 21,
+      "matched_identifiers": [
+        "attribute",
+        "display",
+        "django/forms/widgets.py",
+        "forms",
+        "instance"
+      ],
+      "reasons": [
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attribute,display,forms,instance,widgets"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "OpenLayersWidget.get_context",
+        "OpenLayersWidget.map_options"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/forms/widgets.py",
+      "score": 21,
+      "matched_identifiers": [
+        "display",
+        "django/forms/widgets.py",
+        "forms",
+        "https",
+        "instance"
+      ],
+      "reasons": [
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:display,forms,https,instance,widgets"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseGeometryWidget.serialize",
+        "BaseGeometryWidget.deserialize",
+        "BaseGeometryWidget.get_context",
+        "OpenLayersWidget.serialize",
+        "OpenLayersWidget.deserialize"
+      ]
+    },
+    {
+      "path": "django/forms/forms.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "display",
+        "fileinput",
+        "forms"
+      ],
+      "reasons": [
+        "stem_in_issue_text:forms",
+        "source_content_tokens:attribute,display,fileinput,forms,initial"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseForm.order_fields",
+        "BaseForm.errors",
+        "BaseForm.is_valid",
+        "BaseForm.add_prefix",
+        "BaseForm.add_initial_prefix",
+        "BaseForm.as_table",
+        "BaseForm.as_ul",
+        "BaseForm.as_p",
+        "BaseForm.non_field_errors",
+        "BaseForm.add_error",
+        "BaseForm.has_error",
+        "BaseForm.full_clean",
+        "BaseForm.clean",
+        "BaseForm.has_changed",
+        "BaseForm.changed_data",
+        "BaseForm.media",
+        "BaseForm.is_multipart",
+        "BaseForm.hidden_fields",
+        "BaseForm.visible_fields",
+        "BaseForm.get_initial_for_field"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/staticfiles_tests/test_forms.py",
+      "score": 17,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileInput",
+        "test_path_related_to_class:ClearableFileInput",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:forms",
+        "internal_name_overlap:forms",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_clearablefileinput.py",
+      "score": 15,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileInput",
+        "test_path_related_to_class:ClearableFileInput",
+        "token_overlap:clearable,forms,input",
+        "internal_name_overlap:attribute",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_input_formats.py",
+      "score": 13,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileInput",
+        "test_path_related_to_class:ClearableFileInput",
+        "token_overlap:forms,input",
+        "internal_name_overlap:input",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_checkboxinput.py",
+      "score": 13,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileInput",
+        "test_path_related_to_class:ClearableFileInput",
+        "token_overlap:forms,input",
+        "internal_name_overlap:input",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_dateinput.py",
+      "score": 13,
+      "matched_identifiers": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileInput",
+        "test_path_related_to_class:ClearableFileInput",
+        "token_overlap:forms,input",
+        "internal_name_overlap:input",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/staticfiles_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_forms.py:testcase_class:StaticFilesFormsMediaTestCase",
+      "tests/forms_tests/widget_tests/test_dateinput.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_input_formats.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2588,
+  "indexed_test_file_count": 1753,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.staticfiles_tests.test_forms": [
+      "StaticFilesFormsMediaTestCase",
+      "StaticTestStorage"
+    ],
+    "tests.forms_tests.widget_tests.test_clearablefileinput": [
+      "ClearableFileInputTest",
+      "FakeFieldFile"
+    ],
+    "tests.forms_tests.widget_tests.test_dateinput": [
+      "DateInputTest"
+    ],
+    "tests.forms_tests.widget_tests.test_checkboxinput": [
+      "CheckboxInputTest"
+    ],
+    "tests.forms_tests.tests.test_input_formats": [
+      "CustomDateInputFormatsTests",
+      "CustomDateTimeInputFormatsTests",
+      "CustomTimeInputFormatsTests",
+      "LocalizedDateTests",
+      "LocalizedDateTimeTests",
+      "LocalizedTimeTests",
+      "SimpleDateFormatTests",
+      "SimpleDateTimeFormatTests",
+      "SimpleTimeFormatTests"
+    ],
+    "django.forms.widgets": [
+      "CheckboxInput",
+      "CheckboxSelectMultiple",
+      "ChoiceWidget",
+      "ClearableFileInput",
+      "DateInput",
+      "DateTimeBaseInput",
+      "DateTimeInput",
+      "EmailInput",
+      "FileInput",
+      "HiddenInput",
+      "Input",
+      "Media",
+      "MediaDefiningClass",
+      "MediaOrderConflictWarning",
+      "MultiWidget",
+      "MultipleHiddenInput",
+      "NullBooleanSelect",
+      "NumberInput",
+      "PasswordInput",
+      "RadioSelect",
+      "Select",
+      "SelectDateWidget",
+      "SelectMultiple",
+      "SplitDateTimeWidget",
+      "SplitHiddenDateTimeWidget",
+      "TextInput",
+      "Textarea",
+      "TimeInput",
+      "URLInput",
+      "Widget",
+      "boolean_check",
+      "media_property"
+    ],
+    "django.forms.forms": [
+      "BaseForm",
+      "DeclarativeFieldsMetaclass",
+      "Form"
+    ],
+    "django.contrib.admin.widgets": [
+      "AdminBigIntegerFieldWidget",
+      "AdminDateWidget",
+      "AdminEmailInputWidget",
+      "AdminFileWidget",
+      "AdminIntegerFieldWidget",
+      "AdminRadioSelect",
+      "AdminSplitDateTime",
+      "AdminTextInputWidget",
+      "AdminTextareaWidget",
+      "AdminTimeWidget",
+      "AdminURLFieldWidget",
+      "AdminUUIDInputWidget",
+      "AutocompleteMixin",
+      "AutocompleteSelect",
+      "AutocompleteSelectMultiple",
+      "FilteredSelectMultiple",
+      "ForeignKeyRawIdWidget",
+      "ManyToManyRawIdWidget",
+      "RelatedFieldWidgetWrapper",
+      "url_params_from_lookup_dict"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.forms.widgets": [
+      "BaseGeometryWidget",
+      "OSMWidget",
+      "OpenLayersWidget"
+    ],
+    "django.contrib.gis": [
+      "AdminSite",
+      "BaseGeometryWidget",
+      "GeoModelAdmin",
+      "GeometryCollectionField",
+      "GeometryField",
+      "HORIZONTAL",
+      "LineStringField",
+      "ModelAdmin",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "OSMGeoAdmin",
+      "OSMWidget",
+      "OpenLayersWidget",
+      "PointField",
+      "PolygonField",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.admin.widgets": [
+      "OpenLayersWidget"
+    ]
+  },
+  "test_example_snippet": "    def test_absolute_url(self):\n        m = Media(\n            css={'all': ('path/to/css1', '/path/to/css2')},\n            js=(\n                '/path/to/js1',\n                'http://media.other.com/path/to/js2',\n                'https://secure.other.com/path/to/js3',\n                static('relative/path/to/js4'),\n            ),\n        )\n        self.assertEqual(\n            str(m),\n            \"\"\"<link href=\"https://example.com/assets/path/to/css1\" type=\"text/css\" media=\"all\" rel=\"stylesheet\">\n<link href=\"/path/to/css2\" type=\"text/css\" media=\"all\" rel=\"stylesheet\">\n<script src=\"/path/to/js1\"></script>\n<script src=\"http://media.other.com/path/to/js2\"></script>\n<script src=\"https://secure.other.com/path/to/js3\"></script>\n<script src=\"https://example.com/assets/relative/path/to/js4\"></script>\"\"\"\n        )",
+  "conftest_fixtures": {}
+}

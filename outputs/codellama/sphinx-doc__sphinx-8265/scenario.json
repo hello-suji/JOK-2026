@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/cmd/build.py",
+      "target_function": "add_lines",
+      "related_classes": [
+        "BasePlotter",
+        "GoogleDocstring",
+        "Documenter",
+        "AutodocDirective",
+        "MethodDocumenter",
+        "FunctionDocumenter"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where add_lines can be called.",
+      "Use the generated reproduction path that calls add_lines, unittest, tempfile, prepare_docstring."
+    ],
+    "execution_stimulus": [
+      "Call add_lines with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_lines, unittest, tempfile, prepare_docstring."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/cmd/build.py",
+      "sphinx/domains/python.py",
+      "sphinx/ext/napoleon/docstring.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nimport tempfile\nfrom sphinx.ext.napoleon.docstring import GoogleDocstring\nfrom sphinx.ext.autodoc import Documenter\nfrom sphinx.ext.autodoc.directive import AutodocDirective\nfrom sphinx.ext.autodoc import MethodDocumenter\nfrom sphinx.ext.autodoc import FunctionDocumenter\nfrom sphinx.util.docstrings import prepare_docstring\nfrom pyvista.plotting.plotter import BasePlotter\n\nclass TestAddLinesDocstring(unittest.TestCase):\n    def test_add_lines_default_args_repro(self):\n        \"\"\"Ensure default arguments in add_lines are correctly rendered.\"\"\"\n        base_plotter = BasePlotter()\n        docstring = \"\"\"Method docstring.\n\n        Parameters:\n            lines (list): Lines to add.\n            color (tuple): Color of the lines.\n            width (int): Width of the lines.\n            label (str): Label for the lines.\n            name (str): Name of the lines.\n        \"\"\"\n        documenter = MethodDocumenter(base_plotter.add_lines)\n        documenter.parse_name('add_lines', 'pyvista.plotting.plotter.BasePlotter')\n        documenter.options = {'members': True}\n        documenter.docstrings = prepare_docstring(docstring.split('\\n'))\n        documenter.document(['add_lines'], None)\n        rendered_docstring = documenter.directive.result\n        # Check if the default values are correctly rendered\n        assert 'color=(1, 1, 1)' in rendered_docstring\n        assert 'width=5' in rendered_docstring"
+      },
+      {
+        "language": "python",
+        "code": "FROM python:3.7-slim\nRUN apt update; apt install -y git make python3-vtk7\nRUN git clone https://github.com/tkoyama010/pyvista.git\nWORKDIR /pyvista\nRUN git checkout patch-1\nRUN pip install . \nRUN pip install -r requirements_docs.txt\nRUN (cd docs; make html)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add_lines",
+        "unittest",
+        "tempfile",
+        "prepare_docstring",
+        "parse_name",
+        "document",
+        "split"
+      ],
+      "classes": [
+        "BasePlotter",
+        "GoogleDocstring",
+        "Documenter",
+        "AutodocDirective",
+        "MethodDocumenter",
+        "FunctionDocumenter"
+      ],
+      "files": [
+        "requirements_docs.txt"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/cmd/build.py",
+      "test_visible_functions": [
+        "add_lines",
+        "unittest",
+        "tempfile",
+        "prepare_docstring",
+        "parse_name",
+        "document",
+        "split"
+      ],
+      "test_visible_classes": [
+        "BasePlotter",
+        "GoogleDocstring",
+        "Documenter",
+        "AutodocDirective",
+        "MethodDocumenter",
+        "FunctionDocumenter"
+      ]
+    }
+  }
+]

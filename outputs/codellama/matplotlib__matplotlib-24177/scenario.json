@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/axes/_axes.py",
+      "target_function": "hist",
+      "related_classes": [
+        "Axes"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_axes.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import numpy as np",
+      "import matplotlib.pyplot as plt",
+      "from matplotlib.axes import Axes",
+      "scale = 1.2",
+      "test_random = np.random.randn(100000) * scale",
+      "Use the generated reproduction path that calls hist, randn, subplots, plt."
+    ],
+    "execution_stimulus": [
+      "fig, ax = plt.subplots(1, 2, figsize=(20, 10))",
+      "hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')",
+      "hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')",
+      "plt.show()",
+      "Execute the focused target API path: hist, randn, subplots, plt."
+    ],
+    "expected_failure": "The density values for the histogram with histtype='step' do not match the density values for the histogram with histtype='bar'.",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/axes/_axes.py",
+      "lib/matplotlib/figure.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_axes.py",
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nimport matplotlib.pyplot as plt\ndef test_histogram_density_issue_repro():\n    scale = 1.2\n    test_random = np.random.randn(100000) * scale\n    fig, ax = plt.subplots(1, 2, figsize=(20, 10))\n    hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')\n    hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')\n    assert len(hist_bar[0]) == 100\n    assert len(hist_step[0]) == 100"
+      },
+      {
+        "language": "python",
+        "code": "def test_histogram_density_issue():\n    import numpy as np\n    import matplotlib.pyplot as plt\n    scale = 1.2\n    test_random = np.random.randn(100000) * scale\n    fig, ax = plt.subplots(1, 2, figsize=(20, 10))\n    hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')\n    hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')\n    assert not np.allclose(hist_bar[0], hist_step[0])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "hist",
+        "randn",
+        "subplots",
+        "plt"
+      ],
+      "classes": [
+        "Axes"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_axes.py",
+      "target_source_file": "lib/matplotlib/axes/_axes.py",
+      "test_visible_functions": [
+        "hist",
+        "randn",
+        "subplots",
+        "plt"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

@@ -1,0 +1,116 @@
+{
+  "instance_id": "matplotlib__matplotlib-23476",
+  "observed_behavior": [
+    "When a figure is unpickled, it's dpi is doubled. This behaviour happens every time and if done in a loop it can cause an `OverflowError`.",
+    "### Actual outcome",
+    "Traceback (most recent call last):",
+    "OverflowError: signed integer is greater than maximum"
+  ],
+  "expected_behavior": [
+    "return fig2, fig2.dpi",
+    "### Expected outcome"
+  ],
+  "repro_conditions": [
+    "When a figure is unpickled, it's dpi is doubled. This behaviour happens every time and if done in a loop it can cause an `OverflowError`.",
+    "if __name__ == '__main__':",
+    "File \"/Users/wsykala/projects/matplotlib/example.py\", line 34, in <module>",
+    "File \"/Users/wsykala/projects/matplotlib/example.py\", line 30, in run",
+    "File \"/Users/wsykala/projects/matplotlib/example.py\", line 20, in dump_load_get_dpi"
+  ],
+  "environment": [
+    "print('Matplotlib ver:', matplotlib.__version__)",
+    "print('Python ver:', platform.python_version())",
+    "MacOSX",
+    "Platform: macOS-12.4-arm64-arm-64bit",
+    "Python ver: 3.9.12",
+    "File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/backends/backend_macosx.py\", line 32, in __init__",
+    "_macosx.FigureCanvas.__init__(self, width, height)",
+    "This seems to happen only on M1 MacBooks and the version of python doesn't matter.",
+    "### Matplotlib Version",
+    "### Python version",
+    "### Jupyter version"
+  ],
+  "identifiers": {
+    "functions": [
+      "__init__",
+      "dump",
+      "dump_load_get_dpi",
+      "figure",
+      "linspace",
+      "load",
+      "python_version",
+      "run",
+      "sin",
+      "system"
+    ],
+    "classes": [
+      "Darwin",
+      "FigureCanvas",
+      "MacBooks",
+      "MacOSX",
+      "Platform",
+      "Release",
+      "System"
+    ],
+    "files": [
+      "9/site-packages/matplotlib/backend_bases.py",
+      "9/site-packages/matplotlib/backends/backend_macosx.py",
+      "9/site-packages/matplotlib/figure.py",
+      "Users/wsykala/projects/matplotlib/example.py"
+    ],
+    "exceptions": [
+      "OverflowError"
+    ]
+  },
+  "raw_issue_text": "[Bug]: DPI of a figure is doubled after unpickling on M1 Mac\n### Bug summary\n\nWhen a figure is unpickled, it's dpi is doubled. This behaviour happens every time and if done in a loop it can cause an `OverflowError`.\n\n### Code for reproduction\n\n```python\nimport numpy as np\nimport matplotlib\nimport matplotlib.pyplot as plt\nimport pickle\nimport platform\n\nprint(matplotlib.get_backend())\nprint('Matplotlib ver:', matplotlib.__version__)\nprint('Platform:', platform.platform())\nprint('System:', platform.system())\nprint('Release:', platform.release())\nprint('Python ver:', platform.python_version())\n\n\ndef dump_load_get_dpi(fig):\n    with open('sinus.pickle','wb') as file:\n        pickle.dump(fig, file)\n\n    with open('sinus.pickle', 'rb') as blob:\n        fig2 = pickle.load(blob)\n    return fig2, fig2.dpi\n\n\ndef run():\n    fig = plt.figure()\n    x = np.linspace(0,2*np.pi)\n    y = np.sin(x)\n\n    for i in range(32):\n        print(f'{i}: {fig.dpi}')\n        fig, dpi = dump_load_get_dpi(fig)\n\n\nif __name__ == '__main__':\n    run()\n```\n\n\n### Actual outcome\n\n```\nMacOSX\nMatplotlib ver: 3.5.2\nPlatform: macOS-12.4-arm64-arm-64bit\nSystem: Darwin\nRelease: 21.5.0\nPython ver: 3.9.12\n0: 200.0\n1: 400.0\n2: 800.0\n3: 1600.0\n4: 3200.0\n5: 6400.0\n6: 12800.0\n7: 25600.0\n8: 51200.0\n9: 102400.0\n10: 204800.0\n11: 409600.0\n12: 819200.0\n13: 1638400.0\n14: 3276800.0\n15: 6553600.0\n16: 13107200.0\n17: 26214400.0\n18: 52428800.0\n19: 104857600.0\n20: 209715200.0\n21: 419430400.0\nTraceback (most recent call last):\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 34, in <module>\n    run()\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 30, in run\n    fig, dpi = dump_load_get_dpi(fig)\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 20, in dump_load_get_dpi\n    fig2 = pickle.load(blob)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/figure.py\", line 2911, in __setstate__\n    mgr = plt._backend_mod.new_figure_manager_given_figure(num, self)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/backend_bases.py\", line 3499, in new_figure_manager_given_figure\n    canvas = cls.FigureCanvas(figure)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/backends/backend_macosx.py\", line 32, in __init__\n    _macosx.FigureCanvas.__init__(self, width, height)\nOverflowError: signed integer is greater than maximum\n```\n\n### Expected outcome\n\n```\nMacOSX\nMatplotlib ver: 3.5.2\nPlatform: macOS-12.4-arm64-arm-64bit\nSystem: Darwin\nRelease: 21.5.0\nPython ver: 3.9.12\n0: 200.0\n1: 200.0\n2: 200.0\n3: 200.0\n4: 200.0\n5: 200.0\n6: 200.0\n7: 200.0\n8: 200.0\n9: 200.0\n10: 200.0\n11: 200.0\n12: 200.0\n13: 200.0\n14: 200.0\n15: 200.0\n16: 200.0\n17: 200.0\n18: 200.0\n19: 200.0\n20: 200.0\n21: 200.0\n22: 200.0\n```\n\n### Additional information\n\nThis seems to happen only on M1 MacBooks and the version of python doesn't matter.\n\n### Operating system\n\nOS/X\n\n### Matplotlib Version\n\n3.5.2\n\n### Matplotlib Backend\n\nMacOSX\n\n### Python version\n\n3.9.12\n\n### Jupyter version\n\n_No response_\n\n### Installation\n\npip",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "import numpy as np\nimport matplotlib\nimport matplotlib.pyplot as plt\nimport pickle\nimport platform\n\nprint(matplotlib.get_backend())\nprint('Matplotlib ver:', matplotlib.__version__)\nprint('Platform:', platform.platform())\nprint('System:', platform.system())\nprint('Release:', platform.release())\nprint('Python ver:', platform.python_version())\n\n\ndef dump_load_get_dpi(fig):\n    with open('sinus.pickle','wb') as file:\n        pickle.dump(fig, file)\n\n    with open('sinus.pickle', 'rb') as blob:\n        fig2 = pickle.load(blob)\n    return fig2, fig2.dpi\n\n\ndef run():\n    fig = plt.figure()\n    x = np.linspace(0,2*np.pi)\n    y = np.sin(x)\n\n    for i in range(32):\n        print(f'{i}: {fig.dpi}')\n        fig, dpi = dump_load_get_dpi(fig)\n\n\nif __name__ == '__main__':\n    run()",
+      "context_before": "### Code for reproduction",
+      "is_system_or_output": false
+    },
+    {
+      "language": "MacOSX",
+      "code": "Matplotlib ver: 3.5.2\nPlatform: macOS-12.4-arm64-arm-64bit\nSystem: Darwin\nRelease: 21.5.0\nPython ver: 3.9.12\n0: 200.0\n1: 400.0\n2: 800.0\n3: 1600.0\n4: 3200.0\n5: 6400.0\n6: 12800.0\n7: 25600.0\n8: 51200.0\n9: 102400.0\n10: 204800.0\n11: 409600.0\n12: 819200.0\n13: 1638400.0\n14: 3276800.0\n15: 6553600.0\n16: 13107200.0\n17: 26214400.0\n18: 52428800.0\n19: 104857600.0\n20: 209715200.0\n21: 419430400.0\nTraceback (most recent call last):\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 34, in <module>\n    run()\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 30, in run\n    fig, dpi = dump_load_get_dpi(fig)\n  File \"/Users/wsykala/projects/matplotlib/example.py\", line 20, in dump_load_get_dpi\n    fig2 = pickle.load(blob)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/figure.py\", line 2911, in __setstate__\n    mgr = plt._backend_mod.new_figure_manager_given_figure(num, self)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/backend_bases.py\", line 3499, in new_figure_manager_given_figure\n    canvas = cls.FigureCanvas(figure)\n  File \"/Users/wsykala/miniconda3/envs/playground/lib/python3.9/site-packages/matplotlib/backends/backend_macosx.py\", line 32, in __init__\n    _macosx.FigureCanvas.__init__(self, width, height)\nOverflowError: signed integer is greater than maximum",
+      "context_before": "### Actual outcome",
+      "is_system_or_output": false
+    },
+    {
+      "language": "MacOSX",
+      "code": "Matplotlib ver: 3.5.2\nPlatform: macOS-12.4-arm64-arm-64bit\nSystem: Darwin\nRelease: 21.5.0\nPython ver: 3.9.12\n0: 200.0\n1: 200.0\n2: 200.0\n3: 200.0\n4: 200.0\n5: 200.0\n6: 200.0\n7: 200.0\n8: 200.0\n9: 200.0\n10: 200.0\n11: 200.0\n12: 200.0\n13: 200.0\n14: 200.0\n15: 200.0\n16: 200.0\n17: 200.0\n18: 200.0\n19: 200.0\n20: 200.0\n21: 200.0\n22: 200.0",
+      "context_before": "### Expected outcome",
+      "is_system_or_output": true
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [
+    "OverflowError: signed integer is greater than maximum"
+  ],
+  "error_keywords": [
+    "OverflowError"
+  ],
+  "fault_locations": [
+    {
+      "file_path": "/Users/wsykala/projects/matplotlib/example.py",
+      "line_no": 34,
+      "function_name": "<module>",
+      "source": "traceback",
+      "confidence": "high"
+    },
+    {
+      "file_path": "/Users/wsykala/projects/matplotlib/example.py",
+      "line_no": 30,
+      "function_name": "run",
+      "source": "traceback",
+      "confidence": "high"
+    },
+    {
+      "file_path": "/Users/wsykala/projects/matplotlib/example.py",
+      "line_no": 20,
+      "function_name": "dump_load_get_dpi",
+      "source": "traceback",
+      "confidence": "high"
+    }
+  ]
+}

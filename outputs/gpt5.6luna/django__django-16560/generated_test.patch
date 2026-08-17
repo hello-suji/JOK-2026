@@ -1,0 +1,17 @@
+--- a/tests/validation/test_constraints.py
++++ b/tests/validation/test_constraints.py
+@@ -93,3 +93,14 @@
+         UniqueConstraintConditionProduct.objects.create(name="product")
+         product = UniqueConstraintConditionProduct(name="product")
+         product.full_clean(validate_constraints=False)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models.constraints import BaseConstraint
++
++class TestBaseConstraintValidation(TestCase):
++    def test_validate_without_custom_code_repro(self):
++        constraint = BaseConstraint(name='test_constraint')
++        try:
++            constraint.validate(None)
++        except ValidationError as e:
++            self.assertIsNone(e.code)

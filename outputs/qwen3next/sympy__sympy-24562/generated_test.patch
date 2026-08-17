@@ -1,0 +1,11 @@
+--- a/sympy/core/tests/test_expr_gate.py
++++ b/sympy/core/tests/test_expr_gate.py
+@@ -2248,3 +2248,8 @@
+     assert '{:+3.0f}'.format(S(3)) == ' +3'
+     assert '{:23.20f}'.format(pi) == ' 3.14159265358979323846'
+     assert '{:50.48f}'.format(exp(sin(1))) == '2.319776824715853173956590377503266813254904772376'
++
++from sympy import Rational
++
++def test_rational_calc_value_error_repro():
++    assert Rational('0.5', '100') == Rational(1, 200)

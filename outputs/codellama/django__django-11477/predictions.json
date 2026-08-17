@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11477",
+    "model_patch": "--- a/tests/queries/test_query.py\n+++ b/tests/queries/test_query.py\n@@ -106,3 +106,12 @@\n         self.assertIsInstance(b_isnull, RelatedIsNull)\n         self.assertIsInstance(b_isnull.lhs, SimpleCol)\n         self.assertEqual(b_isnull.lhs.target, ObjectC._meta.get_field('objectb'))\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.urls.resolvers import translate_url\n+\n+class TestUrlTranslation(SimpleTestCase):\n+    def test_translate_url_with_missing_optional_args_repro(self):\n+        url_pattern = '/path/(?P<opt_param>\\w+)?'\n+        result = translate_url(url_pattern, {})\n+        self.assertEqual(result, '/path/')\n",
+    "patch_sha256": "d41572d008d646d92051ca432e65c31fcf8e4e8ab6ea7bbecc5e01e8f16ba9dc"
+  }
+]

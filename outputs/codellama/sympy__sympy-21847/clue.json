@@ -1,0 +1,46 @@
+{
+  "instance_id": "sympy__sympy-21847",
+  "observed_behavior": [
+    "itermonomials returns incorrect monomials when using min_degrees argument",
+    "`itermonomials` returns incorrect monomials when using optional `min_degrees` argument",
+    "The code returns `[x3**3, x2**3, x1**3]`, when it _should_ also return monomials such as `x1*x2**2, x2*x3**2, etc...` that also have total degree of 3. This behaviour is inconsistent with the documentation that states that"
+  ],
+  "expected_behavior": [
+    "itermonomials returns incorrect monomials when using min_degrees argument",
+    "`itermonomials` returns incorrect monomials when using optional `min_degrees` argument",
+    "The code returns `[x3**3, x2**3, x1**3]`, when it _should_ also return monomials such as `x1*x2**2, x2*x3**2, etc...` that also have total degree of 3. This behaviour is inconsistent with the documentation that states that",
+    "> A generator of all monomials `monom` is returned, such that either `min_degree <= total_degree(monom) <= max_degree`..."
+  ],
+  "repro_conditions": [
+    "itermonomials returns incorrect monomials when using min_degrees argument",
+    "`itermonomials` returns incorrect monomials when using optional `min_degrees` argument",
+    "For example, the following code introduces three symbolic variables and generates monomials with max and min degree of 3:",
+    "The code returns `[x3**3, x2**3, x1**3]`, when it _should_ also return monomials such as `x1*x2**2, x2*x3**2, etc...` that also have total degree of 3. This behaviour is inconsistent with the documentation that states that",
+    "The monomials are also missing when `max_degrees` is increased above `min_degrees`."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "itermonomials",
+      "monomial_key",
+      "symbols",
+      "total_degree"
+    ],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "itermonomials returns incorrect monomials when using min_degrees argument\n`itermonomials` returns incorrect monomials when using optional `min_degrees` argument\n\nFor example, the following code introduces three symbolic variables and generates monomials with max and min degree of 3:\n\n\n```\nimport sympy as sp\nfrom sympy.polys.orderings import monomial_key\n\nx1, x2, x3 = sp.symbols('x1, x2, x3')\nstates = [x1, x2, x3]\nmax_degrees = 3\nmin_degrees = 3\nmonomials = sorted(sp.itermonomials(states, max_degrees, min_degrees=min_degrees), \n                   key=monomial_key('grlex', states))\nprint(monomials)\n```\nThe code returns `[x3**3, x2**3, x1**3]`, when it _should_ also return monomials such as `x1*x2**2, x2*x3**2, etc...` that also have total degree of 3. This behaviour is inconsistent with the documentation that states that \n\n> A generator of all monomials `monom` is returned, such that either `min_degree <= total_degree(monom) <= max_degree`...\n\nThe monomials are also missing when `max_degrees` is increased above `min_degrees`.",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "import sympy as sp\nfrom sympy.polys.orderings import monomial_key\n\nx1, x2, x3 = sp.symbols('x1, x2, x3')\nstates = [x1, x2, x3]\nmax_degrees = 3\nmin_degrees = 3\nmonomials = sorted(sp.itermonomials(states, max_degrees, min_degrees=min_degrees), \n                   key=monomial_key('grlex', states))\nprint(monomials)",
+      "context_before": "For example, the following code introduces three symbolic variables and generates monomials with max and min degree of 3:",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

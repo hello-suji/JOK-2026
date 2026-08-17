@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/ddl_references.py",
+      "target_function": "models",
+      "related_classes": [
+        "Index"
+      ],
+      "candidate_test_file": "tests/backends/mysql/test_schema.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls models, schema_editor, sql_create_index."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: models, schema_editor, sql_create_index."
+    ],
+    "expected_failure": "Unfortunately in the fix in #30903 it was assumed that the col_suffixes passed to django.db.backends.ddl_references.Columns would be empty for ascending order but instead it will contain empty strings and thus causing this bug. See: ​https://github.com/django/django/blob/master/django/db/backends/ddl_references.py#L87",
+    "relevant_source_files": [
+      "django/db/backends/ddl_references.py",
+      "django/contrib/auth/backends.py",
+      "django/contrib/contenttypes/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/mysql/test_schema.py",
+      "tests/auth_tests/test_auth_backends.py",
+      "tests/backends/base/test_schema.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models.indexes import Index\nfrom django.db import models\n\nclass TestIndexCreation(TestCase):\n    def test_index_creation_whitespace_repro(self):\n        index = Index(fields=['-name'], name='idx')\n        editor = connection.schema_editor()\n        sql = editor.sql_create_index(None, index)\n        self.assertIn('CREATE INDEX `idx` ON `schema_author` (`name` DESC)', sql)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "models",
+        "schema_editor",
+        "sql_create_index"
+      ],
+      "classes": [
+        "Index"
+      ],
+      "files": [
+        "django/db/backends/ddl_references.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/mysql/test_schema.py",
+      "target_source_file": "django/db/backends/ddl_references.py",
+      "test_visible_functions": [
+        "models",
+        "schema_editor",
+        "sql_create_index"
+      ],
+      "test_visible_classes": [
+        "Index"
+      ]
+    }
+  }
+]

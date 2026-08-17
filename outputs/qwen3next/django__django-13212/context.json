@@ -1,0 +1,437 @@
+{
+  "instance_id": "django__django-13212",
+  "repo": "django/django",
+  "base_commit": "f4e93919e4608cfc50849a1f764fd856e0917401",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/mail/message.py",
+      "score": 17,
+      "matched_identifiers": [
+        "email",
+        "example",
+        "include",
+        "message"
+      ],
+      "reasons": [
+        "stem_in_issue_text:message",
+        "source_content_tokens:email,example,include,message,override"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "message": "    def message(self):\n        encoding = self.encoding or settings.DEFAULT_CHARSET\n        msg = SafeMIMEText(self.body, self.content_subtype, encoding)\n        msg = self._create_message(msg)\n        msg['Subject'] = self.subject\n        msg['From'] = self.extra_headers.get('From', self.from_email)\n        self._set_list_header_if_not_empty(msg, 'To', self.to)\n        self._set_list_header_if_not_empty(msg, 'Cc', self.cc)\n        self._set_list_header_if_not_empty(msg, 'Reply-To', self.reply_to)\n\n        # Email header names are case-insensitive (RFC 2045), so we have to\n        # accommodate that when doing comparisons.\n        header_names = [key.lower() for key in self.extra_headers]\n        if 'date' not in header_names:\n            # formatdate() uses stdlib methods to format the date, which use"
+      },
+      "top_level_functions": [
+        "forbid_multi_line_headers",
+        "sanitize_address",
+        "MIMEMixin.as_string",
+        "MIMEMixin.as_bytes",
+        "SafeMIMEText.set_payload",
+        "EmailMessage.get_connection",
+        "EmailMessage.message",
+        "EmailMessage.recipients",
+        "EmailMessage.send",
+        "EmailMessage.attach",
+        "EmailMessage.attach_file",
+        "EmailMultiAlternatives.attach_alternative"
+      ]
+    },
+    {
+      "path": "django/core/validators.py",
+      "score": 17,
+      "matched_identifiers": [
+        "email",
+        "example",
+        "https",
+        "validationerror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:validators",
+        "source_content_tokens:validationerror,email,example,https,include"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "validate_integer",
+        "EmailValidator.domain_whitelist",
+        "EmailValidator.validate_domain_part",
+        "validate_ipv4_address",
+        "validate_ipv6_address",
+        "validate_ipv46_address",
+        "ip_address_validators",
+        "int_list_validator",
+        "BaseValidator.compare",
+        "BaseValidator.clean",
+        "MaxValueValidator.compare",
+        "MinValueValidator.compare",
+        "MinLengthValidator.compare",
+        "MinLengthValidator.clean",
+        "MaxLengthValidator.compare",
+        "MaxLengthValidator.clean",
+        "get_available_image_extensions",
+        "validate_image_file_extension"
+      ]
+    },
+    {
+      "path": "django/utils/http.py",
+      "score": 17,
+      "matched_identifiers": [
+        "email",
+        "example",
+        "https",
+        "include"
+      ],
+      "reasons": [
+        "stem_in_issue_text:http",
+        "source_content_tokens:email,example,https,include,making"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "urlquote",
+        "urlquote_plus",
+        "urlunquote",
+        "urlunquote_plus",
+        "urlencode",
+        "http_date",
+        "parse_http_date",
+        "parse_http_date_safe",
+        "base36_to_int",
+        "int_to_base36",
+        "urlsafe_base64_encode",
+        "urlsafe_base64_decode",
+        "parse_etags",
+        "quote_etag",
+        "is_same_domain",
+        "url_has_allowed_host_and_scheme",
+        "is_safe_url",
+        "limited_parse_qsl",
+        "escape_leading_slashes"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "built",
+        "custom",
+        "djangoproject",
+        "email"
+      ],
+      "reasons": [
+        "source_content_tokens:built,custom,djangoproject,email,example"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/filters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "custom",
+        "example",
+        "include",
+        "validationerror"
+      ],
+      "reasons": [
+        "source_content_tokens:validationerror,custom,example,include,matches"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ListFilter.has_output",
+        "ListFilter.choices",
+        "ListFilter.queryset",
+        "ListFilter.expected_parameters",
+        "SimpleListFilter.has_output",
+        "SimpleListFilter.value",
+        "SimpleListFilter.lookups",
+        "SimpleListFilter.expected_parameters",
+        "SimpleListFilter.choices",
+        "FieldListFilter.has_output",
+        "FieldListFilter.queryset",
+        "FieldListFilter.register",
+        "FieldListFilter.create",
+        "RelatedFieldListFilter.include_empty_choice",
+        "RelatedFieldListFilter.has_output",
+        "RelatedFieldListFilter.expected_parameters",
+        "RelatedFieldListFilter.field_admin_ordering",
+        "RelatedFieldListFilter.field_choices",
+        "RelatedFieldListFilter.choices",
+        "BooleanFieldListFilter.expected_parameters",
+        "BooleanFieldListFilter.choices",
+        "ChoicesFieldListFilter.expected_parameters",
+        "ChoicesFieldListFilter.choices",
+        "DateFieldListFilter.expected_parameters",
+        "DateFieldListFilter.choices",
+        "AllValuesFieldListFilter.expected_parameters",
+        "AllValuesFieldListFilter.choices",
+        "RelatedOnlyFieldListFilter.field_choices",
+        "EmptyFieldListFilter.queryset",
+        "EmptyFieldListFilter.expected_parameters",
+        "EmptyFieldListFilter.choices"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_scripts/test_django_admin_py.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_http.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:filters",
+        "token_overlap:filters",
+        "internal_name_overlap:filters",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_http.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_http.py:unittest_or_django_test_import",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_http.py:unittest_or_django_test_import",
+      "tests/admin_scripts/test_django_admin_py.py:unittest_or_django_test_import",
+      "tests/template_tests/syntax_tests/i18n/test_filters.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2668,
+  "indexed_test_file_count": 1809,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango40Warning",
+      "URLValidator",
+      "ValidationError",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.sitemaps_tests.test_http": [
+      "HTTPSitemapTests"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_http": [
+      "Base36IntTests",
+      "ETagProcessingTests",
+      "EscapeLeadingSlashesTests",
+      "HttpDateProcessingTests",
+      "IsSafeURLTests",
+      "IsSameDomainTests",
+      "URLEncodeTests",
+      "URLQuoteTests",
+      "URLSafeBase64Tests"
+    ],
+    "tests.admin_scripts.test_django_admin_py": [
+      "DeprecationTests"
+    ],
+    "tests.template_tests.syntax_tests.i18n.test_filters": [
+      "I18nFiltersTests"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.utils.http": [
+      "_url_has_allowed_host_and_scheme",
+      "_urlparse",
+      "_urlsplit",
+      "base36_to_int",
+      "escape_leading_slashes",
+      "http_date",
+      "int_to_base36",
+      "is_safe_url",
+      "is_same_domain",
+      "limited_parse_qsl",
+      "parse_etags",
+      "parse_http_date",
+      "parse_http_date_safe",
+      "quote_etag",
+      "url_has_allowed_host_and_scheme",
+      "urlencode",
+      "urlquote",
+      "urlquote_plus",
+      "urlsafe_base64_decode",
+      "urlsafe_base64_encode",
+      "urlunquote",
+      "urlunquote_plus"
+    ],
+    "django.core.validators": [
+      "BaseValidator",
+      "DecimalValidator",
+      "EmailValidator",
+      "FileExtensionValidator",
+      "MaxLengthValidator",
+      "MaxValueValidator",
+      "MinLengthValidator",
+      "MinValueValidator",
+      "ProhibitNullCharactersValidator",
+      "RegexValidator",
+      "URLValidator",
+      "get_available_image_extensions",
+      "int_list_validator",
+      "ip_address_validators",
+      "validate_image_file_extension",
+      "validate_integer",
+      "validate_ipv46_address",
+      "validate_ipv4_address",
+      "validate_ipv6_address"
+    ],
+    "django.contrib.admin.filters": [
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "ListFilter",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.core.mail.message": [
+      "BadHeaderError",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "MIMEMixin",
+      "SafeMIMEMessage",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "sanitize_address"
+    ],
+    "django.core.mail": [
+      "get_connection",
+      "mail_admins",
+      "mail_managers",
+      "send_mail",
+      "send_mass_mail"
+    ],
+    "django.core": [
+      "BadHeaderError",
+      "CachedDnsName",
+      "DEFAULT_ATTACHMENT_MIME_TYPE",
+      "DNS_NAME",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "get_connection",
+      "import_string",
+      "mail_admins",
+      "mail_managers",
+      "make_msgid",
+      "send_mail",
+      "send_mass_mail",
+      "settings"
+    ]
+  },
+  "test_example_snippet": "    def test_django_admin_py_deprecated(self):\n        _, err = self._run_test(['-Wd', self.django_admin_py, '--version'])\n        self.assertIn(self.DEPRECATION_MESSAGE, err)\n\n    def test_main_not_deprecated(self):\n        _, err = self._run_test(['-Wd', '-m', 'django', '--version'])\n        self.assertNotIn(self.DEPRECATION_MESSAGE, err)\n\n    def test_django_admin_py_equivalent_main(self):\n        django_admin_py_out, _ = self._run_test([self.django_admin_py, '--version'])\n        django_out, _ = self._run_test(['-m', 'django', '--version'])\n        self.assertEqual(django_admin_py_out, django_out)",
+  "conftest_fixtures": {}
+}

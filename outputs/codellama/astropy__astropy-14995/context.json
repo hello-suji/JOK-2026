@@ -1,0 +1,514 @@
+{
+  "instance_id": "astropy__astropy-14995",
+  "repo": "astropy/astropy",
+  "base_commit": "b16c7d12ccbc7b2d20364b89fb44285bcbfede54",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/nddata/nddata.py",
+      "score": 22,
+      "matched_identifiers": [
+        "array",
+        "mask",
+        "type",
+        "typeerror"
+      ],
+      "reasons": [
+        "function_match:mask",
+        "stem_in_issue_text:nddata",
+        "source_content_tokens:array,mask,type,typeerror,behavior"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "mask": "    def mask(self, value):\n        self._mask = value\n\n    @property\n    def unit(self):\n        \"\"\"\n        `~astropy.units.Unit` : Unit for the dataset, if any.\n        \"\"\"\n        return self._unit\n\n    @property\n    def wcs(self):\n        \"\"\"\n        any type : A world coordinate system (WCS) for the dataset, if any.\n        \"\"\""
+      },
+      "top_level_functions": [
+        "NDData.data",
+        "NDData.mask",
+        "NDData.unit",
+        "NDData.wcs",
+        "NDData.psf",
+        "NDData.uncertainty"
+      ]
+    },
+    {
+      "path": "astropy/convolution/core.py",
+      "score": 21,
+      "matched_identifiers": [
+        "array",
+        "multiply",
+        "type",
+        "typeerror"
+      ],
+      "reasons": [
+        "function_match:array",
+        "source_content_tokens:array,multiply,type,typeerror,arithmetic"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "array": "    def array(self):\n        \"\"\"\n        Filter kernel array.\n        \"\"\"\n        return self._array\n\n    def __add__(self, kernel):\n        \"\"\"\n        Add two filter kernels.\n        \"\"\"\n        return kernel_arithmetics(self, kernel, \"add\")\n\n    def __sub__(self, kernel):\n        \"\"\"\n        Subtract two filter kernels."
+      },
+      "top_level_functions": [
+        "Kernel.truncation",
+        "Kernel.is_bool",
+        "Kernel.model",
+        "Kernel.dimension",
+        "Kernel.center",
+        "Kernel.normalize",
+        "Kernel.shape",
+        "Kernel.separable",
+        "Kernel.array",
+        "kernel_arithmetics"
+      ]
+    },
+    {
+      "path": "astropy/convolution/kernels.py",
+      "score": 21,
+      "matched_identifiers": [
+        "array",
+        "constant",
+        "type",
+        "typeerror"
+      ],
+      "reasons": [
+        "function_match:array",
+        "source_content_tokens:array,constant,type,typeerror,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "array": "    def array(self, array):\n        \"\"\"\n        Filter kernel array setter.\n        \"\"\"\n        if isinstance(array, np.ndarray):\n            self._array = array.astype(np.float64)\n        elif isinstance(array, list):\n            self._array = np.array(array, dtype=np.float64)\n        else:\n            raise TypeError(\"Must be list or array.\")\n\n        # Check if array is odd in all axes\n        if has_even_axis(self):\n            raise KernelSizeError(\"Kernel size must be odd in all axes.\")\n"
+      },
+      "top_level_functions": [
+        "CustomKernel.array"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/column.py",
+      "score": 21,
+      "matched_identifiers": [
+        "array",
+        "bitwise",
+        "handle",
+        "itself"
+      ],
+      "reasons": [
+        "function_match:array",
+        "source_content_tokens:array,bitwise,handle,itself,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "array": "    def array(self):\n        try:\n            del self.__dict__[\"array\"]\n        except KeyError:\n            pass\n\n        self._parent_fits_rec = None\n\n    @ColumnAttribute(\"TTYPE\")\n    def name(col, name):\n        if name is None:\n            # Allow None to indicate deleting the name, or to just indicate an\n            # unspecified name (when creating a new Column).\n            return\n"
+      },
+      "top_level_functions": [
+        "_BaseColumnFormat.dtype",
+        "_BaseColumnFormat.from_column_format",
+        "_ColumnFormat.from_recformat",
+        "_ColumnFormat.recformat",
+        "_ColumnFormat.canonical",
+        "_AsciiColumnFormat.from_column_format",
+        "_AsciiColumnFormat.from_recformat",
+        "_AsciiColumnFormat.recformat",
+        "_AsciiColumnFormat.canonical",
+        "_FormatX.tform",
+        "_FormatP.from_tform",
+        "_FormatP.tform",
+        "Column.array",
+        "Column.name",
+        "Column.coord_type",
+        "Column.coord_unit",
+        "Column.coord_ref_point",
+        "Column.coord_ref_value",
+        "Column.coord_inc",
+        "Column.time_ref_pos",
+        "Column.ascii",
+        "Column.dtype",
+        "Column.copy",
+        "ColDefs.dtype",
+        "ColDefs.names",
+        "ColDefs.formats",
+        "ColDefs.add_col",
+        "ColDefs.del_col",
+        "ColDefs.change_attrib",
+        "ColDefs.change_name",
+        "ColDefs.change_unit",
+        "ColDefs.info",
+        "_AsciiColDefs.dtype",
+        "_AsciiColDefs.spans",
+        "_AsciiColDefs.add_col",
+        "_AsciiColDefs.del_col",
+        "_VLF.tolist",
+        "python_to_tdisp"
+      ]
+    },
+    {
+      "path": "astropy/nddata/compat.py",
+      "score": 21,
+      "matched_identifiers": [
+        "array",
+        "handle",
+        "mask",
+        "type"
+      ],
+      "reasons": [
+        "function_match:mask",
+        "source_content_tokens:array,handle,mask,type,typeerror"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "mask": "    def mask(self, value):\n        # Check that value is not either type of null mask.\n        if (value is not None) and (value is not np.ma.nomask):\n            mask = np.array(value, dtype=np.bool_, copy=False)\n            if mask.shape != self.data.shape:\n                raise ValueError(\n                    f\"dimensions of mask {mask.shape} and data {self.data.shape} do not match\"\n                )\n            else:\n                self._mask = mask\n        else:\n            # internal representation should be one numpy understands\n            self._mask = np.ma.nomask\n\n    @property"
+      },
+      "top_level_functions": [
+        "NDDataArray.uncertainty",
+        "NDDataArray.unit",
+        "NDDataArray.mask",
+        "NDDataArray.shape",
+        "NDDataArray.size",
+        "NDDataArray.dtype",
+        "NDDataArray.ndim",
+        "NDDataArray.flags",
+        "NDDataArray.convert_unit_to"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/nddata/tests/test_nddata_base.py",
+      "score": 41,
+      "matched_identifiers": [
+        "NDDataRef",
+        "mask"
+      ],
+      "reasons": [
+        "test_function_match:mask",
+        "test_path_related_to_class:NDDataRef",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/nddata/tests",
+        "test_name_matches_source_stem:nddata",
+        "token_overlap:data,nddata",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/nddata"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/nddata/tests/test_bitmask.py",
+      "score": 36,
+      "matched_identifiers": [
+        "NDDataRef",
+        "mask"
+      ],
+      "reasons": [
+        "test_path_contains_function:mask",
+        "test_path_related_to_class:NDDataRef",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/nddata/tests",
+        "token_overlap:data,mask,nddata",
+        "internal_name_overlap:type",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/nddata"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/nddata/tests/test_compat.py",
+      "score": 36,
+      "matched_identifiers": [
+        "NDDataRef"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDDataRef",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/nddata/tests",
+        "test_name_matches_source_stem:compat",
+        "token_overlap:data,nddata",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/nddata"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/nddata/tests/test_nddata.py",
+      "score": 36,
+      "matched_identifiers": [
+        "NDDataRef"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDDataRef",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/nddata/tests",
+        "test_name_matches_source_stem:nddata",
+        "token_overlap:data,nddata",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/nddata"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/convolution/tests/test_convolve_nddata.py",
+      "score": 32,
+      "matched_identifiers": [
+        "NDDataRef"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDDataRef",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/convolution/tests",
+        "test_name_matches_source_stem:nddata",
+        "token_overlap:convolution,data,nddata",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "astropy/nddata/tests/test_bitmask.py:pytest_import_or_conftest",
+      "astropy/nddata/tests/test_bitmask.py:top_level_test_functions",
+      "astropy/nddata/tests/test_compat.py:pytest_import_or_conftest",
+      "astropy/nddata/tests/test_compat.py:top_level_test_functions",
+      "astropy/nddata/tests/test_nddata.py:pytest_import_or_conftest",
+      "astropy/nddata/tests/test_nddata.py:top_level_test_functions",
+      "astropy/nddata/tests/test_nddata.py:testcase_class:TestMetaNDData",
+      "astropy/nddata/tests/test_nddata_base.py:top_level_test_functions",
+      "astropy/convolution/tests/test_convolve_nddata.py:pytest_import_or_conftest",
+      "astropy/convolution/tests/test_convolve_nddata.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 899,
+  "indexed_test_file_count": 411,
+  "available_imports": {
+    "astropy": [
+      "Conf",
+      "Path",
+      "ScienceState",
+      "TestRunner",
+      "__module_type__",
+      "__version__",
+      "_config",
+      "_get_bibtex",
+      "_init_log",
+      "_initialize_astropy",
+      "_teardown_log",
+      "astronomical_constants",
+      "base_constants_version",
+      "convolve",
+      "convolve_fft",
+      "convolve_models",
+      "convolve_models_fft",
+      "find_api_page",
+      "interpolate_replace_nans",
+      "online_help",
+      "physical_constants"
+    ],
+    "astropy.convolution.core": [
+      "Kernel",
+      "Kernel1D",
+      "Kernel2D",
+      "kernel_arithmetics"
+    ],
+    "astropy.convolution.kernels": [
+      "AiryDisk2DKernel",
+      "Box1DKernel",
+      "Box2DKernel",
+      "CustomKernel",
+      "Gaussian1DKernel",
+      "Gaussian2DKernel",
+      "Model1DKernel",
+      "Model2DKernel",
+      "Moffat2DKernel",
+      "RickerWavelet1DKernel",
+      "RickerWavelet2DKernel",
+      "Ring2DKernel",
+      "Tophat2DKernel",
+      "Trapezoid1DKernel",
+      "TrapezoidDisk2DKernel",
+      "_round_up_to_odd_integer"
+    ],
+    "astropy.nddata.compat": [
+      "NDDataArray"
+    ],
+    "astropy.nddata": [
+      "Conf"
+    ],
+    "astropy.nddata.nddata": [
+      "NDData"
+    ],
+    "astropy.nddata.nddata_withmixins": [
+      "NDDataRef"
+    ],
+    "astropy.nddata.tests.test_bitmask": [
+      "test_basic_map",
+      "test_bitfield_must_be_integer_check",
+      "test_bitfield_to_boolean_mask",
+      "test_bitflag",
+      "test_bitflag_docs2",
+      "test_bitflag_not_int_flag",
+      "test_bitflag_not_pow2",
+      "test_extend_map",
+      "test_extend_map_redefine_flag",
+      "test_interpret_None_or_str_and_flip_incompatibility",
+      "test_interpret_allow_single_value_str_nonflags",
+      "test_interpret_bad_str_syntax",
+      "test_interpret_duplicate_flag_warning",
+      "test_interpret_non_flag",
+      "test_interpret_none_bit_flags_as_None",
+      "test_interpret_valid_int_bit_flags",
+      "test_interpret_valid_mnemonic_bit_flags",
+      "test_interpret_valid_str_bit_flags",
+      "test_interpret_wrong_flag_type",
+      "test_interpret_wrong_string_int_format",
+      "test_is_bit_flag",
+      "test_is_int",
+      "test_map_access_undefined_flag",
+      "test_map_add_flags",
+      "test_map_cant_modify_version",
+      "test_map_delete_flag",
+      "test_map_not_bit_flag",
+      "test_map_not_int_flag",
+      "test_map_redefine_flag",
+      "test_map_repr",
+      "test_nonint_is_not_an_int",
+      "test_nonpositive_not_a_bit_flag"
+    ],
+    "astropy.nddata.tests.test_compat": [
+      "SubNDData",
+      "test_convert_unit_to",
+      "test_init_of_subclass_in_convert_unit_to",
+      "test_nddata_conversion",
+      "test_nddata_flags_init_without_np_array",
+      "test_nddata_flags_invalid_shape",
+      "test_nddata_parameters",
+      "test_nddata_simple",
+      "test_nddataarray_from_nddata",
+      "test_nddataarray_from_nddataarray",
+      "test_nddataarray_has_attributes_of_old_nddata"
+    ],
+    "astropy.nddata.tests.test_nddata": [
+      "BadNDDataSubclass",
+      "FakeNumpyArray",
+      "MinimalUncertainty",
+      "NDDataCustomWCS",
+      "TestMetaNDData",
+      "test_arithmetic_not_supported",
+      "test_collapse",
+      "test_mask_setter",
+      "test_nddata_empty",
+      "test_nddata_init_data_fail",
+      "test_nddata_init_data_fakes",
+      "test_nddata_init_data_masked_quantity",
+      "test_nddata_init_data_maskedarray",
+      "test_nddata_init_data_ndarray",
+      "test_nddata_init_data_nddata",
+      "test_nddata_init_data_nddata_subclass",
+      "test_nddata_init_data_nonarray",
+      "test_nddata_init_data_quantity",
+      "test_nddata_init_with_low_level_wcs",
+      "test_nddata_repr",
+      "test_nddata_str",
+      "test_nddata_wcs_setter_error_cases",
+      "test_nddata_wcs_setter_with_low_level_wcs",
+      "test_overriden_wcs",
+      "test_param_mask",
+      "test_param_meta",
+      "test_param_uncertainty",
+      "test_param_unit",
+      "test_param_wcs",
+      "test_pickle_nddata_with_uncertainty",
+      "test_pickle_nddata_without_uncertainty",
+      "test_pickle_uncertainty_only",
+      "test_slicing_not_supported",
+      "test_uncertainty_setter"
+    ],
+    "astropy.nddata.tests.test_nddata_base": [
+      "MinimalSubclass",
+      "MinimalSubclassNoPSF",
+      "test_nddata_base_subclass",
+      "test_omitting_psf_is_ok"
+    ],
+    "astropy.convolution.tests.test_convolve_nddata": [
+      "test_basic_nddata",
+      "test_masked_nddata"
+    ],
+    "astropy.io.fits": [
+      "Conf"
+    ],
+    "astropy.io": [
+      "CompImageSection",
+      "FITS_rec",
+      "FITS_record",
+      "GroupData",
+      "Header",
+      "Section",
+      "VerifyError",
+      "_config",
+      "card",
+      "column",
+      "convenience",
+      "hdu",
+      "open"
+    ],
+    "astropy.io.fits.column": [
+      "ColDefs",
+      "Column",
+      "ColumnAttribute",
+      "Delayed",
+      "_AsciiColDefs",
+      "_AsciiColumnFormat",
+      "_BaseColumnFormat",
+      "_ColumnFormat",
+      "_FormatP",
+      "_FormatQ",
+      "_FormatX",
+      "_VLF",
+      "_cmp_recformats",
+      "_convert_ascii_format",
+      "_convert_fits2record",
+      "_convert_format",
+      "_convert_record2fits",
+      "_dtype_to_recformat",
+      "_fortran_to_python_format",
+      "_get_index",
+      "_makep",
+      "_parse_ascii_tformat",
+      "_parse_tdim",
+      "_parse_tdisp_format",
+      "_parse_tformat",
+      "_scalar_to_format",
+      "_unwrapx",
+      "_wrapx",
+      "python_to_tdisp"
+    ]
+  },
+  "test_example_snippet": "def test_nddata_base_subclass():\n    a = MinimalSubclass()\n    assert a.meta is None\n    assert a.data is None\n    assert a.mask is None\n    assert a.unit is None\n    assert a.wcs is None\n    assert a.uncertainty is None\n    assert a.psf is None\n\n\ndef test_omitting_psf_is_ok():\n    # Make sure that psf does not need to be overridden when creating a subclass\n    b = MinimalSubclassNoPSF()\n    assert b.psf is None",
+  "conftest_fixtures": {
+    "astropy/conftest.py": [
+      "ignore_matplotlibrc",
+      "fast_thread_switching"
+    ]
+  }
+}

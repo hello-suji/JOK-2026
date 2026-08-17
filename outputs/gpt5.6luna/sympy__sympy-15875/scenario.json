@@ -1,0 +1,276 @@
+[
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "sympy/simplify/simplify.py",
+      "target_function": "simplify",
+      "related_classes": [
+        "Add",
+        "I"
+      ],
+      "candidate_test_file": "sympy/simplify/tests/test_simplify.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import I, Add",
+      "e = -2*I + (1 + I)**2",
+      "Use the generated reproduction path that calls simplify."
+    ],
+    "execution_stimulus": [
+      "result = e.is_zero",
+      "simplified_result = simplify(e).is_zero",
+      "Execute the focused target API path: simplify."
+    ],
+    "expected_failure": "The test should fail because `e.is_zero` incorrectly returns `False` instead of `None` or `True`.",
+    "relevant_source_files": [
+      "sympy/simplify/simplify.py",
+      "sympy/core/add.py",
+      "sympy/core/expr.py"
+    ],
+    "relevant_test_files": [
+      "sympy/simplify/tests/test_simplify.py",
+      "sympy/simplify/tests/test_cse.py",
+      "sympy/simplify/tests/test_hyperexpand.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_is_zero_incorrect_on_complex_integer():\n    from sympy import I, simplify\n    e = -2*I + (1 + I)**2\n    result = e.is_zero\n    simplified_result = simplify(e).is_zero\n    assert result is not False or simplified_result is not True"
+      },
+      {
+        "language": "python",
+        "code": "def test_simplify_is_zero_incorrect_on_complex_integer_repro():\n    from sympy import I, simplify\n    e = -2*I + (1 + I)**2\n    result = simplify(e).is_zero\n    assert result is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "False",
+      "True"
+    ],
+    "error_keywords": [
+      "is_zero",
+      "incorrect",
+      "complex integer"
+    ],
+    "identifiers": {
+      "functions": [
+        "simplify"
+      ],
+      "classes": [
+        "Add",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/simplify/tests/test_simplify.py",
+      "target_source_file": "sympy/simplify/simplify.py",
+      "test_visible_functions": [
+        "simplify"
+      ],
+      "test_visible_classes": [
+        "I"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "sympy/simplify/simplify.py",
+      "target_function": "simplify",
+      "related_classes": [
+        "Add",
+        "I"
+      ],
+      "candidate_test_file": "sympy/simplify/tests/test_simplify.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import I",
+      "e = -2*I + (1 + I)**2",
+      "Use the generated reproduction path that calls simplify."
+    ],
+    "execution_stimulus": [
+      "result = simplify(e).is_zero",
+      "Execute the focused target API path: simplify."
+    ],
+    "expected_failure": "The test should fail because `simplify(e).is_zero` incorrectly returns `True` instead of `None`.",
+    "relevant_source_files": [
+      "sympy/simplify/simplify.py",
+      "sympy/core/add.py",
+      "sympy/core/expr.py"
+    ],
+    "relevant_test_files": [
+      "sympy/simplify/tests/test_simplify.py",
+      "sympy/simplify/tests/test_cse.py",
+      "sympy/simplify/tests/test_hyperexpand.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_simplify_is_zero_incorrect_on_complex_integer():\n    from sympy import I, simplify\n    e = -2*I + (1 + I)**2\n    result = simplify(e).is_zero\n    assert result is not True"
+      },
+      {
+        "language": "python",
+        "code": "def test_simplify_is_zero_incorrect_on_complex_integer_repro():\n    from sympy import I, simplify\n    e = -2*I + (1 + I)**2\n    result = simplify(e).is_zero\n    assert result is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      }
+    ],
+    "expected_outputs": [
+      "None"
+    ],
+    "actual_outputs": [
+      "True"
+    ],
+    "error_keywords": [
+      "simplify",
+      "is_zero",
+      "incorrect",
+      "complex integer"
+    ],
+    "identifiers": {
+      "functions": [
+        "simplify"
+      ],
+      "classes": [
+        "Add",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/simplify/tests/test_simplify.py",
+      "target_source_file": "sympy/simplify/simplify.py",
+      "test_visible_functions": [
+        "simplify"
+      ],
+      "test_visible_classes": [
+        "I"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "sympy/simplify/simplify.py",
+      "target_function": "simplify",
+      "related_classes": [
+        "Add",
+        "I"
+      ],
+      "candidate_test_file": "sympy/simplify/tests/test_simplify.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import I",
+      "e = -2*I + (1 + I)**2",
+      "Use the generated reproduction path that calls simplify."
+    ],
+    "execution_stimulus": [
+      "result = e.is_zero",
+      "Execute the focused target API path: simplify."
+    ],
+    "expected_failure": "The test should fail because `e.is_zero` incorrectly returns `False` instead of `None`.",
+    "relevant_source_files": [
+      "sympy/simplify/simplify.py",
+      "sympy/core/add.py",
+      "sympy/core/expr.py"
+    ],
+    "relevant_test_files": [
+      "sympy/simplify/tests/test_simplify.py",
+      "sympy/simplify/tests/test_cse.py",
+      "sympy/simplify/tests/test_hyperexpand.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_expr_is_zero_incorrect_on_complex_integer():\n    from sympy import I\n    e = -2*I + (1 + I)**2\n    result = e.is_zero\n    assert result is not False"
+      },
+      {
+        "language": "python",
+        "code": "def test_simplify_is_zero_incorrect_on_complex_integer_repro():\n    from sympy import I, simplify\n    e = -2*I + (1 + I)**2\n    result = simplify(e).is_zero\n    assert result is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      }
+    ],
+    "expected_outputs": [
+      "None"
+    ],
+    "actual_outputs": [
+      "False"
+    ],
+    "error_keywords": [
+      "Expr.is_zero",
+      "incorrect",
+      "complex integer"
+    ],
+    "identifiers": {
+      "functions": [
+        "is_zero",
+        "simplify"
+      ],
+      "classes": [
+        "Add",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/simplify/tests/test_simplify.py",
+      "target_source_file": "sympy/simplify/simplify.py",
+      "test_visible_functions": [
+        "simplify"
+      ],
+      "test_visible_classes": [
+        "I"
+      ]
+    }
+  }
+]

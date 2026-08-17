@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "add_q",
+      "related_classes": [
+        "QuerySet",
+        "Query",
+        "Q"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db.models import Q",
+      "from bug.app.models import Foo, Bar, Baz, Qux",
+      "Foo.objects.create(qux=Qux.objects.create())",
+      "Bar.objects.create(foo=Foo.objects.first(), another_foo=Foo.objects.first(), baz=Baz.objects.create())",
+      "Use the generated reproduction path that calls add_q, combine."
+    ],
+    "execution_stimulus": [
+      "qs1 = Bar.objects.filter(foo__qux__bazes__isnull=False)",
+      "qs2 = Bar.objects.filter(another_foo__qux__bazes__isnull=False)",
+      "combined_qs = qs1 | qs2",
+      "Execute the focused target API path: add_q, combine."
+    ],
+    "expected_failure": "AssertionError is raised due to intersecting keys and values in change_map",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/auth/models.py",
+      "django/db/migrations/operations/models.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/queryset_pickle/models.py",
+      "tests/raw_query/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.db.models import Q\nfrom django.db.models.sql.query import Query\n\n\nclass TestQueryCombineMethod(TestCase):\n    def test_query_combine_method_repro(self):\n        query1 = Query(None)\n        query1.add_q(Q(name='Alice'))\n        query2 = Query(None)\n        query2.add_q(Q(name='Bob'))\n        combined_query = query1.combine(query2, connector=Query.OR)\n        self.assertEqual(combined_query.where.connector, Query.OR)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(combined_query) != 'AssertionError'"
+      },
+      {
+        "language": "python",
+        "code": "def test_query_change_aliases_assertion_error():\n    from django.db.models import Q\n    from bug.app.models import Foo, Bar, Baz, Qux\n    Foo.objects.create(qux=Qux.objects.create())\n    Bar.objects.create(foo=Foo.objects.first(), another_foo=Foo.objects.first(), baz=Baz.objects.create())\n    qs1 = Bar.objects.filter(foo__qux__bazes__isnull=False)\n    qs2 = Bar.objects.filter(another_foo__qux__bazes__isnull=False)\n    try:\n        combined_qs = qs1 | qs2\n    except AssertionError as e:\n        assert str(e) == ''\n    else:\n        assert False, 'AssertionError was not raised'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AssertionError"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "combine",
+        "add_q"
+      ],
+      "classes": [
+        "QuerySet",
+        "Query",
+        "Q"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "add_q",
+        "combine"
+      ],
+      "test_visible_classes": [
+        "Q",
+        "Query"
+      ]
+    }
+  }
+]

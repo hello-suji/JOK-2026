@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-16595",
+    "model_patch": "--- a/tests/migrations/test_optimizer.py\n+++ b/tests/migrations/test_optimizer.py\n@@ -1152,3 +1152,15 @@\n                 ),\n             ]\n         )\n+\n+class TestMigrationOptimizer(OptimizerTests):\n+    def test_optimizer_does_not_reduce_multiple_alterfield_repro(self):\n+        operations = [\n+            migrations.AddField(model_name='book', name='title', field=models.CharField(max_length=256, null=True)),\n+            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True)),\n+            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help')),\n+            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help', default=None))\n+        ]\n+        optimizer = MigrationOptimizer()\n+        optimized_operations = optimizer.optimize(operations, 'app_label')\n+        self.assertEqual(len(optimized_operations), 4)\n",
+    "patch_sha256": "8b8d114798163d92ba9540e1d2867209f93962a5e742aa7954443cac083e2847"
+  }
+]

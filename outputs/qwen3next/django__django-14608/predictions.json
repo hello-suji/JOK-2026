@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14608",
+    "model_patch": "--- a/tests/forms_tests/tests/test_formsets.py\n+++ b/tests/forms_tests/tests/test_formsets.py\n@@ -1482,3 +1482,18 @@\n         expected_errors = [{'votes': ['This field is required.']}, {'votes': ['This field is required.']}]\n         self.assertEqual(formset1._errors, expected_errors)\n         self.assertEqual(formset2._errors, expected_errors)\n+\n+from django.forms.formsets import formset_factory\n+from django.forms import Form\n+from django.forms.utils import ErrorList\n+\n+class TestFormsetErrorClass(FormsFormsetTestCase):\n+    def test_nonform_css_class_in_formset_errors_repro(self):\n+        class SimpleForm(Form):\n+            pass\n+\n+        FormSet = formset_factory(SimpleForm)\n+        formset = FormSet()\n+        formset.non_form_errors().append('Non-form error')\n+        errors = formset.errors\n+        self.assertTrue(any(isinstance(error, ErrorList) and 'nonform' in error.as_text() for error in errors))\n",
+    "patch_sha256": "af24010692d5610341fd48e15e1340dde54baef362b0c921b677453809438310"
+  }
+]

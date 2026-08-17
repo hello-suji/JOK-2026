@@ -1,0 +1,47 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -461,3 +461,44 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++import tempfile
++import os
++from sphinx.application import Sphinx
++from sphinx.domains.python import PyFunction
++
++class TestParamRendering(unittest.TestCase):
++    def test_param_dict_str_str_rendering_repro(self):
++        srcdir = tempfile.mkdtemp()
++        confdir = srcdir
++        outdir = tempfile.mkdtemp()
++        doctreedir = tempfile.mkdtemp()
++        buildername = 'html'
++
++        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
++            f.write('''
++.. autofunction:: my_module.my_function
++''')
++
++        with open(os.path.join(srcdir, 'my_module.py'), 'w') as f:
++            f.write('''
++def my_function(opc_meta):
++    """
++    :param dict(str, str) opc_meta: (optional)
++    """
++    pass
++''')
++
++        with open(os.path.join(confdir, 'conf.py'), 'w') as f:
++            f.write('''
++extensions = ['sphinx.ext.autodoc']
++''')
++
++        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++        app.build()
++
++        with open(os.path.join(outdir, 'index.html'), 'r') as f:
++            html_content = f.read()
++
++        self.assertIn('opc_meta (dict(str, str))', html_content)

@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/models.py",
+      "target_function": "modelform_factory",
+      "related_classes": [
+        "MyForm",
+        "FactoryForm",
+        "ModelForm",
+        "User",
+        "Meta",
+        "FormClass"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django import forms",
+      "from django.db import models",
+      "from django.forms.models import modelform_factory",
+      "class MyModel(models.Model): active = models.BooleanField(); name = models.CharField(max_length=64, blank=True, null=True)",
+      "def all_required(field, **kwargs): formfield = field.formfield(**kwargs); formfield.required = True; return formfield",
+      "class MyForm(forms.ModelForm): formfield_callback = all_required; class Meta: model = MyModel; fields = '__all__'",
+      "Use the generated reproduction path that calls all_required, formfield, modelform_factory."
+    ],
+    "execution_stimulus": [
+      "FactoryForm = modelform_factory(MyModel, form=MyForm)",
+      "Execute the focused target API path: all_required, formfield, modelform_factory."
+    ],
+    "expected_failure": "The fields in FactoryForm are not required, even though the formfield_callback in MyForm specifies that they should be.",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/forms/models.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/c/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.forms.models import modelform_factory\nfrom django.contrib.auth.models import User\n\ndef all_required(field, **kwargs):\n    formfield = field.formfield(**kwargs)\n    formfield.required = True\n    return formfield\n\nclass MyForm(forms.ModelForm):\n    formfield_callback = all_required\n\n    class Meta:\n        model = User\n        fields = '__all__'\n\nclass FactoryForm(MyForm):\n    pass\n\ndef test_modelform_factory_with_callback_repro():\n    FormClass = modelform_factory(User, form=FactoryForm)\n    form = FormClass()\n    for field in form.fields.values():\n        assert field.required"
+      },
+      {
+        "language": "python",
+        "code": "def test_modelform_factory_uses_formfield_callback():\n    from django import forms\n    from django.db import models\n    from django.forms.models import modelform_factory\n    class MyModel(models.Model): active = models.BooleanField(); name = models.CharField(max_length=64, blank=True, null=True)\n    def all_required(field, **kwargs): formfield = field.formfield(**kwargs); formfield.required = True; return formfield\n    class MyForm(forms.ModelForm): formfield_callback = all_required; class Meta: model = MyModel; fields = '__all__'\n    FactoryForm = modelform_factory(MyModel, form=MyForm)\n    assert not FactoryForm.base_fields['active'].required, 'Field active should be required'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "modelform_factory",
+        "all_required",
+        "formfield"
+      ],
+      "classes": [
+        "MyForm",
+        "FactoryForm",
+        "ModelForm",
+        "User",
+        "Meta",
+        "FormClass"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "target_source_file": "django/forms/models.py",
+      "test_visible_functions": [
+        "all_required",
+        "formfield",
+        "modelform_factory"
+      ],
+      "test_visible_classes": [
+        "FactoryForm",
+        "ModelForm",
+        "MyForm",
+        "User",
+        "Meta",
+        "FormClass"
+      ]
+    }
+  }
+]

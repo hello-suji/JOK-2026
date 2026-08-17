@@ -1,0 +1,336 @@
+{
+  "instance_id": "django__django-15741",
+  "repo": "django/django",
+  "base_commit": "8c0886b068ba4e224dd78104b93c9638b860b398",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/conf/__init__.py",
+      "score": 18,
+      "matched_identifiers": [
+        "allow",
+        "attribute",
+        "fixing",
+        "typeerror"
+      ],
+      "reasons": [
+        "path_contains_function:_",
+        "source_content_tokens:typeerror,allow,attribute,fixing,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "LazySettings.configure",
+        "LazySettings.configured",
+        "LazySettings.USE_L10N",
+        "Settings.is_overridden",
+        "UserSettingsHolder.is_overridden"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 18,
+      "matched_identifiers": [
+        "allow",
+        "filter",
+        "format",
+        "formats"
+      ],
+      "reasons": [
+        "path_contains_function:_",
+        "source_content_tokens:allow,filter,format,formats,parameter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/base_user.py",
+      "score": 18,
+      "matched_identifiers": [
+        "allow",
+        "attribute",
+        "format",
+        "formats"
+      ],
+      "reasons": [
+        "path_contains_function:_",
+        "source_content_tokens:allow,attribute,format,formats,getattr"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseUserManager.normalize_email",
+        "BaseUserManager.make_random_password",
+        "BaseUserManager.get_by_natural_key",
+        "AbstractBaseUser.save",
+        "AbstractBaseUser.get_username",
+        "AbstractBaseUser.clean",
+        "AbstractBaseUser.natural_key",
+        "AbstractBaseUser.is_anonymous",
+        "AbstractBaseUser.is_authenticated",
+        "AbstractBaseUser.set_password",
+        "AbstractBaseUser.check_password",
+        "AbstractBaseUser.set_unusable_password",
+        "AbstractBaseUser.has_usable_password",
+        "AbstractBaseUser.get_session_auth_hash",
+        "AbstractBaseUser.get_email_field_name",
+        "AbstractBaseUser.normalize_username"
+      ]
+    },
+    {
+      "path": "django/core/management/__init__.py",
+      "score": 18,
+      "matched_identifiers": [
+        "allow",
+        "attribute",
+        "filter",
+        "typeerror"
+      ],
+      "reasons": [
+        "path_contains_function:_",
+        "source_content_tokens:typeerror,allow,attribute,filter,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "find_commands",
+        "load_command_class",
+        "get_commands",
+        "call_command",
+        "ManagementUtility.main_help_text",
+        "ManagementUtility.fetch_command",
+        "ManagementUtility.autocomplete",
+        "ManagementUtility.execute",
+        "execute_from_command_line"
+      ]
+    },
+    {
+      "path": "django/core/serializers/xml_serializer.py",
+      "score": 18,
+      "matched_identifiers": [
+        "attribute",
+        "fails",
+        "format",
+        "typeerror"
+      ],
+      "reasons": [
+        "path_contains_function:_",
+        "source_content_tokens:typeerror,attribute,fails,format,getattr"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Serializer.indent",
+        "Serializer.start_serialization",
+        "Serializer.end_serialization",
+        "Serializer.start_object",
+        "Serializer.end_object",
+        "Serializer.handle_field",
+        "Serializer.handle_fk_field",
+        "Serializer.handle_m2m_field",
+        "getInnerText",
+        "DefusedExpatParser.start_doctype_decl",
+        "DefusedExpatParser.entity_decl",
+        "DefusedExpatParser.unparsed_entity_decl",
+        "DefusedExpatParser.external_entity_ref_handler",
+        "DefusedExpatParser.reset"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/user_commands/management/__init__.py",
+      "score": 13,
+      "matched_identifiers": [
+        "_"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init,management,user",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/__init__.py",
+      "score": 13,
+      "matched_identifiers": [
+        "_"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init,management,user",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/no_config_app/__init__.py",
+      "score": 12,
+      "matched_identifiers": [
+        "_"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/one_config_app/__init__.py",
+      "score": 12,
+      "matched_identifiers": [
+        "_"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_configs_app/__init__.py",
+      "score": 12,
+      "matched_identifiers": [
+        "_"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2749,
+  "indexed_test_file_count": 1882,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango50Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.auth.base_user": [
+      "AbstractBaseUser",
+      "BaseUserManager"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.core.serializers.xml_serializer": [
+      "DTDForbidden",
+      "DefusedExpatParser",
+      "DefusedXmlException",
+      "Deserializer",
+      "EntitiesForbidden",
+      "ExternalReferenceForbidden",
+      "Serializer",
+      "getInnerText"
+    ],
+    "django.core.serializers": [
+      "BadSerializer",
+      "_load_serializers",
+      "deserialize",
+      "get_deserializer",
+      "get_public_serializer_formats",
+      "get_serializer",
+      "get_serializer_formats",
+      "register_serializer",
+      "serialize",
+      "sort_dependencies",
+      "unregister_serializer"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "SerializerDoesNotExist",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

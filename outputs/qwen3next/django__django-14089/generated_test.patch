@@ -1,0 +1,11 @@
+--- a/tests/utils_tests/test_datastructures.py
++++ b/tests/utils_tests/test_datastructures.py
+@@ -335,3 +335,8 @@
+         with self.assertRaisesMessage(TypeError, msg):
+             self.dict1['New Key'] = 1
+         self.assertEqual(len(self.dict1), 2)
++
++def test_orderedset_reversible_repro(self):
++        s = OrderedSet([1, 2, 3])
++        reversed_s = list(reversed(s))
++        self.assertEqual(reversed_s, [3, 2, 1])

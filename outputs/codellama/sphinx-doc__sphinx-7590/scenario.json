@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/cpp.py",
+      "target_function": "describe_signature",
+      "related_classes": [
+        "Invalid",
+        "UDLs"
+      ],
+      "candidate_test_file": "tests/test_domain_cpp.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls describe_signature."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: describe_signature."
+    ],
+    "expected_failure": "causes the following error:",
+    "relevant_source_files": [
+      "sphinx/domains/cpp.py",
+      "doc/usage/extensions/example_google.py",
+      "doc/usage/extensions/example_numpy.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_domain_cpp.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "tests/test_application.py",
+      "tests/test_ext_intersphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_describe_signature_with_invalid_definition_repro():\n    from sphinx.domains.cpp import describe_signature\n    \n    invalid_definition = 'constexpr auto units::si::planck_constant = 6.62607015e-34q_J * 1q_s'\n    result = describe_signature(invalid_definition)\n    assert result == ('', '', '')\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'WARNING: Invalid definition: Expected end of definition. [error at 58]'"
+      },
+      {
+        "language": "cpp",
+        "code": "namespace units::si {\n\ninline constexpr auto planck_constant = 6.62607015e-34q_J * 1q_s;\n\n}"
+      },
+      {
+        "language": "python",
+        "code": "WARNING: Invalid definition: Expected end of definition. [error at 58]\n[build]   constexpr auto units::si::planck_constant = 6.62607015e-34q_J * 1q_s\n[build]   ----------------------------------------------------------^"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "describe_signature"
+      ],
+      "classes": [
+        "Invalid",
+        "UDLs"
+      ],
+      "files": [
+        "sphinx/domains/cpp.py",
+        "x/sphinx/domains/cpp.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_domain_cpp.py",
+      "target_source_file": "sphinx/domains/cpp.py",
+      "test_visible_functions": [
+        "describe_signature"
+      ],
+      "test_visible_classes": [
+        "Invalid"
+      ]
+    }
+  }
+]

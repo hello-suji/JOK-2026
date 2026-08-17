@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-17655",
+    "model_patch": "--- a/sympy/physics/vector/tests/test_point.py\n+++ b/sympy/physics/vector/tests/test_point.py\n@@ -126,3 +126,13 @@\n     assert p.partial_velocity(N, u1) == A.x\n     assert p.partial_velocity(N, u1, u2) == (A.x, N.y)\n     raises(ValueError, lambda: p.partial_velocity(A, u1))\n+\n+from sympy import Point, sympify\n+\n+def test_point_multiplication_order_repro():\n+    point1 = Point(0, 0)\n+    point2 = Point(1, 1)\n+    result = point1 + sympify(2.0) * point2\n+    assert result == Point(2, 2)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(point2) != \"GeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object\"\n",
+    "patch_sha256": "43d4bed7b9347898761c0af73c5e4bb6352d9332d4236c1a89040ef01f7dce78"
+  }
+]

@@ -1,0 +1,85 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/mlab.py",
+      "target_function": "flattop",
+      "related_classes": [],
+      "candidate_test_file": "lib/matplotlib/tests/test_mlab.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where flattop can be called.",
+      "Use the generated reproduction path that calls flattop, signal, abs."
+    ],
+    "execution_stimulus": [
+      "Call flattop with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: flattop, signal, abs."
+    ],
+    "expected_failure": "The `np.abs` is not needed, and give wrong result for window with negative value, such as `flattop`.",
+    "relevant_source_files": [
+      "lib/matplotlib/mlab.py",
+      "doc/conf.py",
+      "examples/lines_bars_and_markers/psd_demo.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_mlab.py",
+      "lib/matplotlib/tests/tinypages/conf.py",
+      "examples/text_labels_and_annotations/usetex_baseline_test.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nfrom scipy import signal\n\ndef test_flattop_window_correction_repro():\n    window = signal.windows.flattop(512)\n    result = np.abs(window).sum()**2 - window.sum()**2\n    assert result != 0  # This should fail on pre-patch code\n    assert result == 0  # This should pass on post-patch code"
+      },
+      {
+        "language": "python",
+        "code": "import numpy as np\nfrom scipy import signal\nwindow = signal.windows.flattop(512)\nprint(np.abs(window).sum()**2-window.sum()**2)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "flattop",
+        "signal",
+        "abs"
+      ],
+      "classes": [],
+      "files": [
+        "lib/matplotlib/mlab.py",
+        "scipy/signal/_spectral_py.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_mlab.py",
+      "target_source_file": "lib/matplotlib/mlab.py",
+      "test_visible_functions": [
+        "flattop",
+        "signal",
+        "abs"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

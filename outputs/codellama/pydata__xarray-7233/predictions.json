@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-7233",
+    "model_patch": "--- a/xarray/tests/test_coarsen.py\n+++ b/xarray/tests/test_coarsen.py\n@@ -318,3 +318,10 @@\n\n     with pytest.raises(ValueError):\n         ds.coarsen(time=12).construct(time=(\"bar\",))\n+\n+def test_coarsen_construct_demotes_coordinates_repro():\n+    da = xr.DataArray(np.arange(24), dims=[\"time\"])\n+    da = da.assign_coords(day=365 * da)\n+    ds = da.to_dataset(name=\"T\")\n+    result = ds.coarsen(time=12).construct(time=(\"year\", \"month\"))\n+    assert 'day' in result.coords\n",
+    "patch_sha256": "87b308c1b01d1f5c387385acea1a3846596480664f45c2d391c637595a3a0f86"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13439",
+  "observed_behavior": [
+    "With the new indexing support `pipe[:len(pipe)]` raises an error."
+  ],
+  "expected_behavior": [
+    "Pipeline should implement __len__"
+  ],
+  "repro_conditions": [
+    "#### Steps/Code to Reproduce",
+    "X, y = samples_generator.make_classification("
+  ],
+  "environment": [
+    "#### Versions",
+    "python: 3.6.7 | packaged by conda-forge | (default, Feb 19 2019, 18:37:23)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]",
+    "macros: HAVE_CBLAS=None",
+    "Python deps:"
+  ],
+  "identifiers": {
+    "functions": [
+      "make_classification"
+    ],
+    "classes": [
+      "Clang",
+      "Compatible",
+      "Cython",
+      "Darwin",
+      "Feb",
+      "Pipeline",
+      "SelectKBest",
+      "System"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Pipeline should implement __len__\n#### Description\n\nWith the new indexing support `pipe[:len(pipe)]` raises an error.\n\n#### Steps/Code to Reproduce\n\n```python\nfrom sklearn import svm\nfrom sklearn.datasets import samples_generator\nfrom sklearn.feature_selection import SelectKBest\nfrom sklearn.feature_selection import f_regression\nfrom sklearn.pipeline import Pipeline\n\n# generate some data to play with\nX, y = samples_generator.make_classification(\n    n_informative=5, n_redundant=0, random_state=42)\n\nanova_filter = SelectKBest(f_regression, k=5)\nclf = svm.SVC(kernel='linear')\npipe = Pipeline([('anova', anova_filter), ('svc', clf)])\n\nlen(pipe)\n```\n\n#### Versions\n\n```\nSystem:\n    python: 3.6.7 | packaged by conda-forge | (default, Feb 19 2019, 18:37:23)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]\nexecutable: /Users/krisz/.conda/envs/arrow36/bin/python\n   machine: Darwin-18.2.0-x86_64-i386-64bit\n\nBLAS:\n    macros: HAVE_CBLAS=None\n  lib_dirs: /Users/krisz/.conda/envs/arrow36/lib\ncblas_libs: openblas, openblas\n\nPython deps:\n       pip: 19.0.3\nsetuptools: 40.8.0\n   sklearn: 0.21.dev0\n     numpy: 1.16.2\n     scipy: 1.2.1\n    Cython: 0.29.6\n    pandas: 0.24.1\n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "from sklearn import svm\nfrom sklearn.datasets import samples_generator\nfrom sklearn.feature_selection import SelectKBest\nfrom sklearn.feature_selection import f_regression\nfrom sklearn.pipeline import Pipeline\n\n# generate some data to play with\nX, y = samples_generator.make_classification(\n    n_informative=5, n_redundant=0, random_state=42)\n\nanova_filter = SelectKBest(f_regression, k=5)\nclf = svm.SVC(kernel='linear')\npipe = Pipeline([('anova', anova_filter), ('svc', clf)])\n\nlen(pipe)",
+      "context_before": "#### Steps/Code to Reproduce",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "System:\n    python: 3.6.7 | packaged by conda-forge | (default, Feb 19 2019, 18:37:23)  [GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE_401/final)]\nexecutable: /Users/krisz/.conda/envs/arrow36/bin/python\n   machine: Darwin-18.2.0-x86_64-i386-64bit\n\nBLAS:\n    macros: HAVE_CBLAS=None\n  lib_dirs: /Users/krisz/.conda/envs/arrow36/lib\ncblas_libs: openblas, openblas\n\nPython deps:\n       pip: 19.0.3\nsetuptools: 40.8.0\n   sklearn: 0.21.dev0\n     numpy: 1.16.2\n     scipy: 1.2.1\n    Cython: 0.29.6\n    pandas: 0.24.1",
+      "context_before": "#### Versions",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

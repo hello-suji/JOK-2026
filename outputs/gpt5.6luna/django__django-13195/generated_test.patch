@@ -1,0 +1,16 @@
+--- a/tests/sitemaps_tests/test_http.py
++++ b/tests/sitemaps_tests/test_http.py
+@@ -270,3 +270,13 @@
+
+ </urlset>"""
+         self.assertXMLEqual(response.content.decode(), expected_content)
++
++from django.http.response import HttpResponse
++
++class TestDeleteCookieBehavior(SitemapTestsBase):
++    def test_delete_cookie_preserves_samesite_repro(self):
++        response = HttpResponse()
++        response.set_cookie('messages', 'value', samesite='None', secure=True)
++        response.delete_cookie('messages')
++        self.assertIn('SameSite=None', response.cookies['messages'].output())
++        self.assertTrue(response.cookies['messages']['secure'])

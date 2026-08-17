@@ -1,0 +1,13 @@
+--- a/testing/test_warning_types.py
++++ b/testing/test_warning_types.py
+@@ -36,3 +36,10 @@
+     )
+     result = pytester.runpytest()
+     result.stdout.fnmatch_lines(["E       pytest.PytestWarning: some warning"])
++
++import logging
++
++def test_caplog_clear_issue_repro(caplog):
++    logging.warning('test')
++    caplog.clear()
++    assert caplog.get_records('call') == []

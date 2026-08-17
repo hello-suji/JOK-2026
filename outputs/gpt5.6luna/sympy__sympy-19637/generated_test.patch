@@ -1,0 +1,16 @@
+--- a/sympy/core/tests/test_sympify.py
++++ b/sympy/core/tests/test_sympify.py
+@@ -763,3 +763,13 @@
+     raises(SympifyError, lambda: sympify(numpy.array([1]), strict=True))
+     raises(SympifyError, lambda: sympify(z1, strict=True))
+     raises(SympifyError, lambda: sympify(z2, strict=True))
++
++import re
++from sympy.core.sympify import kernS
++from sympy.abc import x
++def test_kernS_unbound_local_error_repro():
++    text = "(2*x)/(x-1)"
++    expr = kernS(text)
++    assert expr == (2*x)/(x-1)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(expr) != "UnboundLocalError: local variable 'kern' referenced before assignment"

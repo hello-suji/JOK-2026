@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "union",
+      "related_classes": [
+        "ArticleAdmin",
+        "ArticleForm",
+        "ManyToManyField",
+        "QuerySet"
+      ],
+      "candidate_test_file": "tests/model_forms/test_modelchoicefield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where none can be called.",
+      "Use the generated reproduction path that calls union, create, order_by, filter."
+    ],
+    "execution_stimulus": [
+      "Call none with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: union, create, order_by, filter."
+    ],
+    "expected_failure": "QuerySet.none() on combined queries returns all results.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/forms/models.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_forms/test_modelchoicefield.py",
+      "tests/forms_tests/models.py",
+      "tests/model_fields/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestQuerySetUnionBehavior(TestCase):\n    def test_union_of_queries_repro(self):\n        # Create articles\n        article1 = Article.objects.create(title='Article 1')\n        article2 = Article.objects.create(title='Article 2')\n        article3 = Article.objects.create(title='Article 3')\n\n        # Create querysets\n        queryset1 = Article.objects.filter(title__startswith='A').order_by('id')\n        queryset2 = Article.objects.filter(id__in=[article2.id, article3.id]).order_by('id')\n\n        # Perform union\n        result_queryset = queryset1.union(queryset2).order_by('id')\n\n        # Expected result\n        expected_ids = [article1.id, article2.id, article3.id]\n\n        # Assert the result\n        self.assertEqual(list(result_queryset.values_list('id', flat=True)), expected_ids)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "none",
+        "union",
+        "create",
+        "order_by",
+        "filter",
+        "values_list"
+      ],
+      "classes": [
+        "ArticleAdmin",
+        "ArticleForm",
+        "ManyToManyField",
+        "ModelAdmin",
+        "ModelForm",
+        "ModelMultipleChoiceField",
+        "QuerySet"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_forms/test_modelchoicefield.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "union",
+        "create",
+        "order_by",
+        "filter",
+        "values_list"
+      ],
+      "test_visible_classes": [
+        "QuerySet"
+      ]
+    }
+  }
+]

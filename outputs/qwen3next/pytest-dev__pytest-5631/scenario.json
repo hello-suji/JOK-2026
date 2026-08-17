@@ -1,0 +1,66 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/compat.py",
+      "target_function": "num_mock_patch_args",
+      "related_classes": [],
+      "candidate_test_file": "testing/test_monkeypatch.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import necessary modules including unittest.mock and numpy.",
+      "Define a function to be patched with an array."
+    ],
+    "execution_stimulus": [
+      "Apply the patch decorator to the function with an array as the new value.",
+      "Collect the tests using pytest."
+    ],
+    "expected_failure": "ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all().",
+    "relevant_source_files": [
+      "src/_pytest/compat.py",
+      "src/_pytest/python.py",
+      "src/_pytest/config/__init__.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/show_fixtures_per_test.py",
+      "testing/example_scripts/collect/collect_init_tests/tests/__init__.py",
+      "doc/en/example/fixtures/test_fixtures_order.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nfrom unittest.mock import patch\ndef test_value_error_on_array_patch():\n    @patch(target='math.sqrt', new=np.array([-5.5, 3.0]))\n    def test_dummy():\n        pass\n    try:\n        import pytest\n        pytest.collect_file(test_dummy)\n    except ValueError as e:\n        assert str(e) == 'The truth value of an array with more than one element is ambiguous. Use a.any() or a.all().'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()."
+    ],
+    "error_keywords": [
+      "ValueError",
+      "truth value of an array"
+    ],
+    "identifiers": {
+      "functions": [
+        "num_mock_patch_args"
+      ],
+      "classes": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  }
+]

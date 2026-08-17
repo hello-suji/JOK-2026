@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-13453",
+    "model_patch": "--- a/astropy/io/ascii/tests/test_html.py\n+++ b/astropy/io/ascii/tests/test_html.py\n@@ -728,3 +728,14 @@\n                 '</table>']\n     dat = Table.read(table_in, format='ascii.html')\n     assert np.all(dat['col1'] == ['Δ', 'Δ'])\n+\n+def test_html_format_issue_repro():\n+    t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))\n+    tc = t.copy()\n+    with StringIO() as sp:\n+        tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})\n+        html_output = sp.getvalue()\n+    assert '<td>1.23875234858e-24</td>' not in html_output\n+    assert '<td>1.24e-24</td>' in html_output\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(html_output) != '<td>1.23875234858e-24</td>'\n",
+    "patch_sha256": "a183c88dfac180ec8943cf0d2d7cb18b945313235554e01b935257550896df5f"
+  }
+]

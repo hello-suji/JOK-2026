@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13343",
+    "model_patch": "--- a/tests/migrations/test_deprecated_fields.py\n+++ b/tests/migrations/test_deprecated_fields.py\n@@ -20,3 +20,16 @@\n         call_command(\"migrate\", \"migrations\", \"zero\", verbosity=0)\n         # Make sure it's all gone\n         self.assertTableNotExists(\"migrations_ipaddressfield\")\n+\n+import re\n+from django.db import models\n+from django.core.files.storage import FileSystemStorage\n+\n+class TestFileFieldDeconstructCallableStorage(MigrationTestBase):\n+    def test_filefield_deconstruct_callable_storage_repro(self):\n+        def get_storage():\n+            return FileSystemStorage(location='/tmp')\n+        file_field = models.FileField(storage=get_storage)\n+        name, path, args, kwargs = file_field.deconstruct()\n+        self.assertIn('storage', kwargs)\n+        self.assertTrue(callable(kwargs['storage']))\n",
+    "patch_sha256": "02ec282fa759f8f5e98ba2e237d427635869c6de0a0490fc290cdc83a74b9dc6"
+  }
+]

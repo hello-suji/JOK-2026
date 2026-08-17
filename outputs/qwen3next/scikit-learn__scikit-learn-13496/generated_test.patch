@@ -1,0 +1,22 @@
+--- a/sklearn/ensemble/tests/test_forest.py
++++ b/sklearn/ensemble/tests/test_forest.py
+@@ -1359,3 +1359,19 @@
+     # Try to fit and predict.
+     clf.fit(X, y)
+     clf.predict(X)
++
++def test_isolation_forest_warm_start_repro():
++    from sklearn.ensemble import IsolationForest
++
++    # Initialize IsolationForest without warm_start
++    iso_forest = IsolationForest(n_estimators=10, random_state=42)
++    iso_forest.fit(np.random.rand(100, 2))
++    initial_n_estimators = len(iso_forest.estimators_)
++
++    # Enable warm_start and add more estimators
++    iso_forest.set_params(warm_start=True, n_estimators=20)
++    iso_forest.fit(np.random.rand(100, 2))
++    updated_n_estimators = len(iso_forest.estimators_)
++
++    # Assert that the number of estimators has increased
++    assert updated_n_estimators == 20

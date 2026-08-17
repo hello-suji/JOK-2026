@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-23824",
+    "model_patch": "--- a/sympy/physics/hep/tests/test_gamma_matrices.py\n+++ b/sympy/physics/hep/tests/test_gamma_matrices.py\n@@ -399,3 +399,16 @@\n     t = ps*ps*ps*ps*ps*ps*ps*ps\n     r = gamma_trace(t)\n     assert r.equals(4*p2*p2*p2*p2)\n+\n+from sympy.physics.hep.gamma_matrices import GammaMatrix as G, kahane_simplify\n+from sympy.physics.hep.gamma_matrices import tensor_indices, LorentzIndex\n+\n+def test_kahane_leading_gamma_matrix_bug_repro():\n+    mu, nu, rho, sigma = tensor_indices('mu, nu, rho, sigma', LorentzIndex)\n+    t1 = G(mu)*G(-mu)*G(rho)*G(sigma)\n+    r1 = kahane_simplify(t1)\n+    t2 = G(rho)*G(sigma)*G(mu)*G(-mu)\n+    r2 = kahane_simplify(t2)\n+    assert r2.equals(4*G(rho)*G(sigma))\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(r2) != '4*GammaMatrix(sigma)*GammaMatrix(rho)'\n",
+    "patch_sha256": "46d907e44660733815b43ff37f658f0176fb82d9eccfb0c7eec64a81ee7da509"
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/sqlite3/base.py",
+      "target_function": "execute",
+      "related_classes": [
+        "AccessToken",
+        "AddField",
+        "OneToOneField",
+        "Model",
+        "BigIntegerField",
+        "SQLite"
+      ],
+      "candidate_test_file": "tests/backends/sqlite/test_operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where execute can be called.",
+      "Use the generated reproduction path that calls connection, database_forwards, cursor, execute.",
+      "Use the generated reproduction path that calls execute, connection, database_forwards, cursor."
+    ],
+    "execution_stimulus": [
+      "Call execute with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: connection, database_forwards, cursor, execute.",
+      "Execute the focused target API path: execute, connection, database_forwards, cursor."
+    ],
+    "expected_failure": "This new sqlite3 error has cropped up between building django-oauth-toolkit between Django 4.0 and main branch for migrations.AddField of a OneToOneField (see ​https://github.com/jazzband/django-oauth-toolkit/issues/1064):",
+    "relevant_source_files": [
+      "django/db/backends/sqlite3/base.py",
+      "django/core/management/base.py",
+      "django/db/backends/mysql/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/sqlite/test_operations.py",
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/backends/sqlite/test_features.py",
+      "tests/backends/sqlite/test_functions.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db import connection\nfrom django.db.migrations.operations.fields import AddField\nfrom django.db.models.fields.related import OneToOneField\nfrom django.db.models import Model\nfrom django.db.models.fields import BigIntegerField\nfrom django.test import TestCase\n\nclass TestSQLiteUniqueColumnAddition(TestCase):\n    def test_add_unique_nullable_onetoone_field_repro(self):\n        # Create a temporary table to simulate the scenario\n        with connection.cursor() as cursor:\n            cursor.execute('CREATE TABLE oauth2_provider_accesstoken (id INTEGER PRIMARY KEY)')\n        \n        # Define the model operation\n        operation = AddField(\n            model_name='accesstoken',\n            name='new_field',\n            field=OneToOneField('self', null=True, unique=True),\n        )\n        \n        # Apply the operation\n        operation.database_forwards('oauth2_provider', schema_editor=connection.schema_editor(), from_state=None, to_state=None)\n        \n        # Verify the column was added correctly\n        with connection.cursor() as cursor:\n            cursor.execute('PRAGMA table_info(oauth2_provider_accesstoken)')\n            columns = cursor.fetchall()\n            column_names = [column[1] for column in columns]\n            self.assertIn('new_field_id', column_names)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OperationalError"
+    ],
+    "identifiers": {
+      "functions": [
+        "convert_query",
+        "execute",
+        "connection",
+        "database_forwards",
+        "cursor",
+        "fetchall",
+        "schema_editor"
+      ],
+      "classes": [
+        "AccessToken",
+        "AddField",
+        "OneToOneField",
+        "SQLite",
+        "SQLiteCursorWrapper",
+        "Model",
+        "BigIntegerField"
+      ],
+      "files": [],
+      "exceptions": [
+        "OperationalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/sqlite/test_operations.py",
+      "target_source_file": "django/db/backends/sqlite3/base.py",
+      "test_visible_functions": [
+        "execute",
+        "connection",
+        "database_forwards",
+        "cursor",
+        "fetchall",
+        "schema_editor"
+      ],
+      "test_visible_classes": [
+        "AccessToken",
+        "AddField",
+        "OneToOneField",
+        "SQLite",
+        "Model",
+        "BigIntegerField"
+      ]
+    }
+  }
+]

@@ -1,0 +1,16 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -164,3 +164,13 @@
+     def test_debug_default_template_loaders_gate(self):
+         engine = DjangoTemplates({'DIRS': [], 'APP_DIRS': True, 'NAME': 'django', 'OPTIONS': {}})
+         self.assertEqual(engine.engine.loaders, self.default_loaders)
++
++import re
++from django.core.paginator import Paginator
++
++class TestPaginatorIteration(TemplateStringsTests):
++    def test_paginator_iter_repro(self):
++        paginator = Paginator(range(1, 101), 10)
++        pages = list(paginator)
++        self.assertEqual(len(pages), 10)
++        self.assertEqual([page.number for page in pages], list(range(1, 11)))

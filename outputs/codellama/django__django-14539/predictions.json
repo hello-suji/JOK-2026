@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14539",
+    "model_patch": "--- a/tests/template_backends/test_django.py\n+++ b/tests/template_backends/test_django.py\n@@ -177,3 +177,10 @@\n         })\n         template = engine.get_template('hello.html')\n         self.assertEqual(template.render({'name': 'Joe'}), 'Hello Joe!\\n')\n+\n+from django.utils.html import urlize\n+\n+class TestUrlizeFunction(TemplateStringsTests):\n+    def test_urlize_with_html_escaped_string_and_trailing_punctuation_repro(self):\n+        result = urlize('Search for google.com/?q=1&lt! and see.')\n+        self.assertEqual(result, 'Search for <a href=\"http://google.com/?q=1%3C\">google.com/?q=1&lt</a>! and see.')\n",
+    "patch_sha256": "bbf9cb5166481240d0b8e103bf32e854899491514bd66de62ed949894750b99c"
+  }
+]

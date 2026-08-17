@@ -1,0 +1,548 @@
+{
+  "instance_id": "pytest-dev__pytest-10356",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "3c1534944cbd34e8a41bc9e76818018fadefc9a1",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/compat.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attempt",
+        "base",
+        "number",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:compat",
+        "source_content_tokens:base,number,type,attempt,attribute"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "legacy_path",
+        "is_generator",
+        "iscoroutinefunction",
+        "is_async_function",
+        "getlocation",
+        "num_mock_patch_args",
+        "getfuncargnames",
+        "get_default_arg_names",
+        "ascii_escaped",
+        "get_real_func",
+        "get_real_method",
+        "getimfunc",
+        "safe_getattr",
+        "safe_isclass",
+        "assert_never"
+      ]
+    },
+    {
+      "path": "src/_pytest/main.py",
+      "score": 17,
+      "matched_identifiers": [
+        "base",
+        "expect",
+        "markers",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:main",
+        "source_content_tokens:base,expect,markers,type,actually"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "validate_basetemp",
+        "wrap_session",
+        "pytest_cmdline_main",
+        "pytest_collection",
+        "pytest_runtestloop",
+        "pytest_ignore_collect",
+        "pytest_collection_modifyitems",
+        "Session.from_config",
+        "Session.startpath",
+        "Session.pytest_collectstart",
+        "Session.pytest_runtest_logreport",
+        "Session.isinitpath",
+        "Session.gethookproxy",
+        "Session.perform_collect",
+        "Session.collect",
+        "Session.genitems",
+        "search_pypath",
+        "resolve_collection_argument"
+      ]
+    },
+    {
+      "path": "src/_pytest/python.py",
+      "score": 17,
+      "matched_identifiers": [
+        "base",
+        "expect",
+        "markers",
+        "number"
+      ],
+      "reasons": [
+        "stem_in_issue_text:python",
+        "source_content_tokens:base,expect,markers,number,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_generate_tests",
+        "pytest_configure",
+        "async_warn_and_skip",
+        "pytest_pyfunc_call",
+        "pytest_collect_file",
+        "path_matches_patterns",
+        "pytest_pycollect_makemodule",
+        "pytest_pycollect_makeitem",
+        "PyobjMixin.module",
+        "PyobjMixin.cls",
+        "PyobjMixin.instance",
+        "PyobjMixin.obj",
+        "PyobjMixin.getmodpath",
+        "PyobjMixin.reportinfo",
+        "PyCollector.funcnamefilter",
+        "PyCollector.isnosetest",
+        "PyCollector.classnamefilter",
+        "PyCollector.istestfunction",
+        "PyCollector.istestclass",
+        "PyCollector.collect",
+        "Module.collect",
+        "Package.setup",
+        "Package.gethookproxy",
+        "Package.isinitpath",
+        "Package.collect",
+        "Class.from_parent",
+        "Class.newinstance",
+        "Class.collect",
+        "hasinit",
+        "hasnew",
+        "IdMaker.make_unique_parameterset_ids",
+        "CallSpec2.setmulti",
+        "CallSpec2.getparam",
+        "CallSpec2.id",
+        "Metafunc.parametrize",
+        "show_fixtures_per_test",
+        "showfixtures",
+        "write_docstring"
+      ]
+    },
+    {
+      "path": "src/_pytest/terminal.py",
+      "score": 17,
+      "matched_identifiers": [
+        "base",
+        "expect",
+        "pytestmark",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:terminal",
+        "source_content_tokens:base,expect,pytestmark,type,attribute"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "getreportopt",
+        "pytest_report_teststatus",
+        "WarningReport.get_location",
+        "TerminalReporter.verbosity",
+        "TerminalReporter.showheader",
+        "TerminalReporter.no_header",
+        "TerminalReporter.no_summary",
+        "TerminalReporter.showfspath",
+        "TerminalReporter.showlongtestinfo",
+        "TerminalReporter.hasopt",
+        "TerminalReporter.write_fspath_result",
+        "TerminalReporter.write_ensure_prefix",
+        "TerminalReporter.ensure_newline",
+        "TerminalReporter.write",
+        "TerminalReporter.flush",
+        "TerminalReporter.write_line",
+        "TerminalReporter.rewrite",
+        "TerminalReporter.write_sep",
+        "TerminalReporter.section",
+        "TerminalReporter.line",
+        "TerminalReporter.pytest_internalerror",
+        "TerminalReporter.pytest_warning_recorded",
+        "TerminalReporter.pytest_plugin_registered",
+        "TerminalReporter.pytest_deselected",
+        "TerminalReporter.pytest_runtest_logstart",
+        "TerminalReporter.pytest_runtest_logreport",
+        "TerminalReporter.pytest_runtest_logfinish",
+        "TerminalReporter.pytest_collection",
+        "TerminalReporter.pytest_collectreport",
+        "TerminalReporter.report_collect",
+        "TerminalReporter.pytest_sessionstart",
+        "TerminalReporter.pytest_report_header",
+        "TerminalReporter.pytest_collection_finish",
+        "TerminalReporter.pytest_sessionfinish",
+        "TerminalReporter.pytest_terminal_summary",
+        "TerminalReporter.pytest_keyboard_interrupt",
+        "TerminalReporter.pytest_unconfigure",
+        "TerminalReporter.getreports"
+      ]
+    },
+    {
+      "path": "doc/en/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "base",
+        "changelog",
+        "description",
+        "dings"
+      ],
+      "reasons": [
+        "source_content_tokens:base,changelog,description,dings,expect"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "configure_logging",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/test_terminal.py",
+      "score": 11,
+      "matched_identifiers": [
+        "TestDings"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestDings",
+        "test_name_matches_source_stem:terminal",
+        "token_overlap:terminal",
+        "internal_name_overlap:pytest",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/nonpython/conftest.py",
+      "score": 9,
+      "matched_identifiers": [
+        "TestDings"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestDings",
+        "same_module_area:doc",
+        "token_overlap:python",
+        "internal_name_overlap:pytest",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_compat.py",
+      "score": 9,
+      "matched_identifiers": [
+        "TestDings"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestDings",
+        "test_name_matches_source_stem:compat",
+        "internal_name_overlap:getattr",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_main.py",
+      "score": 9,
+      "matched_identifiers": [
+        "TestDings"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestDings",
+        "test_name_matches_source_stem:main",
+        "token_overlap:main",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_python_path.py",
+      "score": 9,
+      "matched_identifiers": [
+        "TestDings"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestDings",
+        "test_name_matches_source_stem:python",
+        "token_overlap:python",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "testing/test_terminal.py:pytest_import_or_conftest",
+      "testing/test_terminal.py:top_level_test_functions",
+      "testing/test_terminal.py:testcase_class:TestClassicOutputStyle",
+      "testing/test_terminal.py:testcase_class:TestCodeHighlight",
+      "testing/test_terminal.py:testcase_class:TestCollectonly",
+      "testing/test_terminal.py:testcase_class:TestFixtureReporting",
+      "testing/test_terminal.py:testcase_class:TestGenericReporting",
+      "testing/test_terminal.py:testcase_class:TestProgressOutputStyle",
+      "testing/test_terminal.py:testcase_class:TestProgressWithTeardown",
+      "testing/test_terminal.py:testcase_class:TestTerminal",
+      "testing/test_terminal.py:testcase_class:TestTerminalFunctional",
+      "testing/test_compat.py:pytest_import_or_conftest",
+      "testing/test_compat.py:top_level_test_functions",
+      "testing/test_main.py:pytest_import_or_conftest",
+      "testing/test_main.py:top_level_test_functions",
+      "testing/test_main.py:testcase_class:TestResolveCollectionArgument",
+      "testing/test_python_path.py:pytest_import_or_conftest",
+      "testing/test_python_path.py:top_level_test_functions",
+      "doc/en/example/nonpython/conftest.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 244,
+  "indexed_test_file_count": 130,
+  "available_imports": {
+    "testing.test_terminal": [
+      "Option",
+      "TestClassicOutputStyle",
+      "TestCodeHighlight",
+      "TestCollectonly",
+      "TestFixtureReporting",
+      "TestGenericReporting",
+      "TestProgressOutputStyle",
+      "TestProgressWithTeardown",
+      "TestTerminal",
+      "TestTerminalFunctional",
+      "option",
+      "test_collecterror",
+      "test_color_no",
+      "test_color_yes",
+      "test_color_yes_collection_on_non_atty",
+      "test_fail_extra_reporting",
+      "test_fail_reporting_on_pass",
+      "test_fdopen_kept_alive_issue124",
+      "test_format_session_duration",
+      "test_format_trimmed",
+      "test_getreportopt",
+      "test_line_with_reprcrash",
+      "test_no_summary_collecterror",
+      "test_pass_extra_reporting",
+      "test_pass_output_reporting",
+      "test_pass_reporting_on_fail",
+      "test_plugin_nameversion",
+      "test_raw_skip_reason_skipped",
+      "test_raw_skip_reason_xfail",
+      "test_skip_counting_towards_summary",
+      "test_skip_reasons_folding",
+      "test_summary_stats",
+      "test_tbstyle_native_setup_error",
+      "test_tbstyle_short",
+      "test_terminal_no_summary_warnings_header_once",
+      "test_terminal_summary",
+      "test_terminal_summary_warnings_are_displayed",
+      "test_terminal_summary_warnings_header_once",
+      "test_terminalreporter_reportopt_addopts",
+      "test_traceconfig",
+      "test_via_exec",
+      "tr"
+    ],
+    "testing.test_compat": [
+      "ErrorsHelper",
+      "test_assert_never_enum",
+      "test_assert_never_literal",
+      "test_assert_never_union",
+      "test_cached_property",
+      "test_get_real_func",
+      "test_get_real_func_partial",
+      "test_helper_failures",
+      "test_is_generator",
+      "test_is_generator_async_gen_syntax",
+      "test_is_generator_async_syntax",
+      "test_is_generator_asyncio",
+      "test_real_func_loop_limit",
+      "test_safe_getattr",
+      "test_safe_isclass"
+    ],
+    "testing.test_main": [
+      "TestResolveCollectionArgument",
+      "test_module_full_path_without_drive",
+      "test_validate_basetemp_fails",
+      "test_validate_basetemp_integration",
+      "test_validate_basetemp_ok",
+      "test_wrap_session_exit_sessionfinish",
+      "test_wrap_session_notify_exception"
+    ],
+    "testing.test_python_path": [
+      "file_structure",
+      "test_clean_up",
+      "test_module_not_found",
+      "test_no_ini",
+      "test_one_dir",
+      "test_two_dirs"
+    ],
+    "src._pytest.terminal": [
+      "MoreQuietAction",
+      "TerminalReporter",
+      "WarningReport",
+      "_folded_skips",
+      "_format_trimmed",
+      "_get_line_with_reprcrash_message",
+      "_get_node_id_with_markup",
+      "_get_raw_skip_reason",
+      "_plugin_nameversions",
+      "format_session_duration",
+      "getreportopt",
+      "pluralize",
+      "pytest_addoption",
+      "pytest_configure",
+      "pytest_report_teststatus"
+    ],
+    "src._pytest.python": [
+      "CallSpec2",
+      "Class",
+      "Function",
+      "FunctionDefinition",
+      "IdMaker",
+      "InstanceDummy",
+      "Metafunc",
+      "Module",
+      "Package",
+      "PyCollector",
+      "PyobjMixin",
+      "_EmptyClass",
+      "__getattr__",
+      "_ascii_escaped_by_config",
+      "_call_with_optional_argument",
+      "_find_parametrized_scope",
+      "_get_first_non_fixture_func",
+      "_pretty_fixture_path",
+      "_show_fixtures_per_test",
+      "_showfixtures_main",
+      "async_warn_and_skip",
+      "hasinit",
+      "hasnew",
+      "path_matches_patterns",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collect_file",
+      "pytest_configure",
+      "pytest_generate_tests",
+      "pytest_pycollect_makeitem",
+      "pytest_pycollect_makemodule",
+      "pytest_pyfunc_call",
+      "show_fixtures_per_test",
+      "showfixtures",
+      "write_docstring"
+    ],
+    "src._pytest.compat": [
+      "NotSetType",
+      "_PytestWrapper",
+      "_bytes_to_ascii",
+      "_format_args",
+      "_translate_non_printable",
+      "ascii_escaped",
+      "assert_never",
+      "get_default_arg_names",
+      "get_real_func",
+      "get_real_method",
+      "getfuncargnames",
+      "getimfunc",
+      "getlocation",
+      "is_async_function",
+      "is_generator",
+      "iscoroutinefunction",
+      "legacy_path",
+      "num_mock_patch_args",
+      "safe_getattr",
+      "safe_isclass"
+    ],
+    "src._pytest.main": [
+      "FSHookProxy",
+      "Failed",
+      "Interrupted",
+      "Session",
+      "_bestrelpath_cache",
+      "_in_venv",
+      "_main",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collection",
+      "pytest_collection_modifyitems",
+      "pytest_ignore_collect",
+      "pytest_runtestloop",
+      "resolve_collection_argument",
+      "search_pypath",
+      "validate_basetemp",
+      "wrap_session"
+    ],
+    "src": [
+      "__version__",
+      "version_tuple"
+    ],
+    "testing.example_scripts.dataclasses.test_compare_initvar": [
+      "Foo",
+      "test_demonstrate"
+    ],
+    "testing.example_scripts.unittest.test_setup_skip_module": [
+      "Base",
+      "setUpModule"
+    ],
+    "testing.example_scripts.unittest.test_setup_skip_class": [
+      "Base",
+      "Test"
+    ],
+    "testing.example_scripts.unittest.test_setup_skip": [
+      "Base",
+      "Test"
+    ],
+    "doc.en.conf": [
+      "configure_logging",
+      "setup"
+    ],
+    "doc.en.example.nonpython.conftest": [
+      "YamlException",
+      "YamlFile",
+      "YamlItem",
+      "pytest_collect_file"
+    ]
+  },
+  "test_example_snippet": "class TestTerminal:\n    def test_pass_skip_fail(self, pytester: Pytester, option) -> None:\n        pytester.makepyfile(\n            \"\"\"\n            import pytest\n            def test_ok():\n                pass\n            def test_skip():\n                pytest.skip(\"xx\")\n            def test_func():\n                assert 0\n        \"\"\"\n        )\n        result = pytester.runpytest(*option.args)\n        if option.verbosity > 0:\n            result.stdout.fnmatch_lines(\n                [\n                    \"*test_pass_skip_fail.py::test_ok PASS*\",\n                    \"*test_pass_skip_fail.py::test_skip SKIP*\",\n                    \"*test_pass_skip_fail.py::test_func FAIL*\",\n                ]\n            )\n        elif option.verbosity == 0:\n            result.stdout.fnmatch_lines([\"*test_pass_skip_fail.py .sF*\"])\n        else:\n            result.stdout.fnmatch_lines([\".sF*\"])\n        result.stdout.fnmatch_lines(\n            [\"    def test_func():\", \">       assert 0\", \"E       assert 0\"]\n        )\n\n    def test_internalerror(self, pytester: Pytester, linecomp) -> None:\n        modcol = pytester.getmodulecol(\"def test_one(): pass\")\n        rep = TerminalReporter(modcol.config, file=linecomp.stringio)\n        with pytest.raises(ValueError) as excinfo:\n            raise ValueError(\"hello\")",
+  "conftest_fixtures": {
+    "testing/conftest.py": [
+      "tw_mock",
+      "dummy_yaml_custom_test",
+      "pytester",
+      "color_mapping",
+      "mock_timing",
+      "restore_tracing"
+    ]
+  }
+}

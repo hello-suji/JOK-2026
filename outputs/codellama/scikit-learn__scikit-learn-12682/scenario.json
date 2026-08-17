@@ -1,0 +1,70 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/decomposition/dict_learning.py",
+      "target_function": "SparseCoder.fit",
+      "related_classes": [
+        "SparseCoder",
+        "Lasso"
+      ],
+      "candidate_test_file": "sklearn/decomposition/tests/test_dict_learning.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import numpy as np",
+      "from sklearn.decomposition import SparseCoder",
+      "X = np.random.rand(10, 5)"
+    ],
+    "execution_stimulus": [
+      "coder = SparseCoder(algorithm='lasso_cd')",
+      "coder.fit(X)"
+    ],
+    "expected_failure": "The test should raise a ConvergenceWarning because the Lasso solver does not converge within the default max_iter=1000.",
+    "relevant_source_files": [
+      "examples/decomposition/plot_sparse_coding.py",
+      "sklearn/decomposition/dict_learning.py",
+      "sklearn/linear_model/coordinate_descent.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/decomposition/tests/test_sparse_pca.py",
+      "sklearn/decomposition/tests/test_dict_learning.py",
+      "sklearn/linear_model/tests/test_sparse_coordinate_descent.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_sparse_coder_convergence_warning():\n    import numpy as np\n    from sklearn.decomposition import SparseCoder\n    from sklearn.exceptions import ConvergenceWarning\n    import warnings\n    X = np.random.rand(10, 5)\n    coder = SparseCoder(algorithm='lasso_cd')\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter('always')\n        coder.fit(X)\n        assert len(w) > 0\n        assert issubclass(w[-1].category, ConvergenceWarning)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ConvergenceWarning"
+    ],
+    "identifiers": {
+      "functions": [
+        "SparseCoder.fit"
+      ],
+      "classes": [
+        "SparseCoder",
+        "Lasso"
+      ]
+    },
+    "oracle_hints": [
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected"
+  }
+]

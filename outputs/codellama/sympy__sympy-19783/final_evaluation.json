@@ -1,0 +1,14 @@
+{
+  "instance_id": "sympy__sympy-19783",
+  "final_score": 1.0,
+  "before_patch": {
+    "sympy__sympy-19783::qwen_external_sync": "FAILED"
+  },
+  "after_patch": {
+    "sympy__sympy-19783::qwen_external_sync": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "95e239c897cdff56b6f129edac82fbcf283eb5449d24ce083dfcce568aa49811",
+  "resolved": true
+}

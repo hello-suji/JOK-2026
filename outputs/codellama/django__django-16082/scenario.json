@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/expressions.py",
+      "target_function": "resolve_expression",
+      "related_classes": [
+        "DecimalField",
+        "IntegerField",
+        "Value",
+        "Mod"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/test_checks.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls resolve_expression."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: resolve_expression."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/expressions.py",
+      "django/db/models/functions/math.py",
+      "django/db/models/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_checks.py",
+      "tests/contenttypes_tests/test_checks.py",
+      "tests/queries/test_query.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import DecimalField, IntegerField, Value\nfrom django.db.models.expressions import Mod\n\nclass TestModOperatorOutputField(TestCase):\n    def test_mod_operator_with_different_types_repro(self):\n        decimal_value = Value(3.5, output_field=DecimalField())\n        integer_value = Value(2, output_field=IntegerField())\n        mod_expression = Mod(decimal_value, integer_value)\n        result = mod_expression.resolve_expression(None).output_field\n        self.assertIsInstance(result, DecimalField)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "resolve_expression"
+      ],
+      "classes": [
+        "DecimalField",
+        "IntegerField",
+        "Value",
+        "Mod"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/contenttypes_tests/test_checks.py",
+      "target_source_file": "django/db/models/expressions.py",
+      "test_visible_functions": [
+        "resolve_expression"
+      ],
+      "test_visible_classes": [
+        "DecimalField",
+        "IntegerField",
+        "Value",
+        "Mod"
+      ]
+    }
+  }
+]

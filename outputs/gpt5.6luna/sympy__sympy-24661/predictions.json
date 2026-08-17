@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-24661",
+    "model_patch": "--- a/sympy/parsing/tests/test_sympy_parser.py\n+++ b/sympy/parsing/tests/test_sympy_parser.py\n@@ -359,3 +359,10 @@\n     raises(ValueError, lambda: parse_expr('x', {'': 1}))\n     data = {'some_parameter': None}\n     assert parse_expr('some_parameter is None', data) is True\n+\n+def test_parse_expr_unevaluated_inequality_repro():\n+    from sympy import parse_expr, Lt\n+    result = parse_expr('1 < 2', evaluate=False)\n+    assert result == Lt(1, 2)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != 'True'\n",
+    "patch_sha256": "00985a4d3f1406ee4aa4a0b4424eeaa9d2f4e0ff61293f7b5f4a7ca46d1ec2d4"
+  }
+]

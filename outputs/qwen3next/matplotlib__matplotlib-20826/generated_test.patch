@@ -1,0 +1,20 @@
+--- a/lib/matplotlib/tests/test_subplots.py
++++ b/lib/matplotlib/tests/test_subplots.py
+@@ -212,3 +212,17 @@
+ def test_subplot_factory_reapplication_gate():
+     assert maxes.subplot_class_factory(maxes.Axes) is maxes.Subplot
+     assert maxes.subplot_class_factory(maxes.Subplot) is maxes.Subplot
++
++def test_shared_axes_clear_bug_repro():
++    fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)
++    x = np.arange(0.0, 2*np.pi, 0.01)
++    y = np.sin(x)
++    for ax in axes.flatten():
++        ax.clear()
++        ax.plot(x, y)
++    # Check if ticks are visible on the top and right side of each subplot
++    for ax in axes.flatten():
++        assert not ax.xaxis.get_ticklabels(which='top')[0].get_visible()
++        assert not ax.yaxis.get_ticklabels(which='right')[0].get_visible()
++        assert not ax.xaxis.get_ticks_position() == 'both'
++        assert not ax.yaxis.get_ticks_position() == 'both'

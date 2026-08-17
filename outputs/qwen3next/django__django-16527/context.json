@@ -1,0 +1,364 @@
+{
+  "instance_id": "django__django-16527",
+  "repo": "django/django",
+  "base_commit": "bd366ca2aeffa869b7dbc0b0aa01caea75e6dc31",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/templatetags/admin_modify.py",
+      "score": 37,
+      "matched_identifiers": [
+        "admin",
+        "django/contrib/admin/templatetags/admin_modify.py",
+        "has_add_permission",
+        "permission",
+        "save"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:django/contrib/admin/templatetags/admin_modify.py",
+        "stem_in_issue_text:admin_modify",
+        "source_content_tokens:admin,has_add_permission,permission,save,save_as_new"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "prepopulated_fields_js",
+        "prepopulated_fields_js_tag",
+        "submit_row",
+        "submit_row_tag",
+        "change_form_object_tools_tag",
+        "cell_count"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/admin.py",
+      "score": 17,
+      "matched_identifiers": [
+        "admin",
+        "contrib",
+        "has_add_permission",
+        "permission"
+      ],
+      "reasons": [
+        "stem_in_issue_text:admin",
+        "source_content_tokens:admin,contrib,has_add_permission,permission,save"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GroupAdmin.formfield_for_manytomany",
+        "UserAdmin.get_fieldsets",
+        "UserAdmin.get_form",
+        "UserAdmin.get_urls",
+        "UserAdmin.lookup_allowed",
+        "UserAdmin.add_view",
+        "UserAdmin.user_change_password",
+        "UserAdmin.response_add"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "admin",
+        "contrib",
+        "permission",
+        "save"
+      ],
+      "reasons": [
+        "source_content_tokens:admin,contrib,permission,save,project"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/actions.py",
+      "score": 16,
+      "matched_identifiers": [
+        "admin",
+        "contrib",
+        "permission",
+        "show"
+      ],
+      "reasons": [
+        "source_content_tokens:admin,contrib,permission,show,change"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "delete_selected"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/checks.py",
+      "score": 16,
+      "matched_identifiers": [
+        "admin",
+        "contrib",
+        "permission",
+        "save"
+      ],
+      "reasons": [
+        "source_content_tokens:admin,contrib,permission,save,show"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_admin_app",
+        "check_dependencies",
+        "BaseModelAdminChecks.check",
+        "ModelAdminChecks.check",
+        "InlineModelAdminChecks.check",
+        "must_be",
+        "must_inherit_from",
+        "refer_to_missing_field"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/test_checks.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:auth,checks",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_views/test_actions.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:actions",
+        "token_overlap:actions",
+        "internal_name_overlap:actions",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/test_checks.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/modeladmin/test_actions.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:actions",
+        "token_overlap:actions",
+        "internal_name_overlap:global",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/modeladmin/test_checks.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks",
+        "internal_name_overlap:actions",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/contenttypes_tests/test_checks.py:unittest_or_django_test_import",
+      "tests/modeladmin/test_checks.py:unittest_or_django_test_import",
+      "tests/modeladmin/test_checks.py:testcase_class:CheckTestCase",
+      "tests/modeladmin/test_actions.py:unittest_or_django_test_import",
+      "tests/admin_views/test_actions.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_checks.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2746,
+  "indexed_test_file_count": 1875,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango51Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.contenttypes_tests.test_checks": [
+      "GenericForeignKeyTests",
+      "GenericRelationTests",
+      "ModelCheckTests"
+    ],
+    "tests.modeladmin.test_checks": [
+      "ActionsCheckTests",
+      "AutocompleteFieldsTests",
+      "CheckTestCase",
+      "DateHierarchyCheckTests",
+      "ExtraCheckTests",
+      "FieldsCheckTests",
+      "FieldsetsCheckTests",
+      "FilterHorizontalCheckTests",
+      "FilterVerticalCheckTests",
+      "FkNameCheckTests",
+      "FormCheckTests",
+      "FormsetCheckTests",
+      "InlinesCheckTests",
+      "ListDisplayEditableTests",
+      "ListDisplayLinksCheckTests",
+      "ListDisplayTests",
+      "ListFilterTests",
+      "ListMaxShowAllCheckTests",
+      "ListPerPageCheckTests",
+      "ListSelectRelatedCheckTests",
+      "MaxNumCheckTests",
+      "MinNumCheckTests",
+      "OrderingCheckTests",
+      "PrepopulatedFieldsCheckTests",
+      "RadioFieldsCheckTests",
+      "RawIdCheckTests",
+      "SaveAsCheckTests",
+      "SaveOnTopCheckTests",
+      "SearchFieldsCheckTests"
+    ],
+    "tests.modeladmin.test_actions": [
+      "AdminActionsTests"
+    ],
+    "tests.admin_views.test_actions": [
+      "AdminActionsPermissionTests",
+      "AdminActionsTest"
+    ],
+    "tests.auth_tests.test_checks": [
+      "ModelsPermissionsChecksTests",
+      "UserModelChecksTests"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin.actions": [
+      "delete_selected"
+    ],
+    "django.contrib.admin.checks": [
+      "BaseModelAdminChecks",
+      "InlineModelAdminChecks",
+      "ModelAdminChecks",
+      "_contains_subclass",
+      "_issubclass",
+      "check_admin_app",
+      "check_dependencies",
+      "must_be",
+      "must_inherit_from",
+      "refer_to_missing_field"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth.admin": [
+      "GroupAdmin",
+      "UserAdmin"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.admin.templatetags.admin_modify": [
+      "cell_count",
+      "change_form_object_tools_tag",
+      "prepopulated_fields_js",
+      "prepopulated_fields_js_tag",
+      "submit_row",
+      "submit_row_tag"
+    ]
+  },
+  "test_example_snippet": "    def test_required_fields_is_list(self):\n        \"\"\"REQUIRED_FIELDS should be a list.\"\"\"\n\n        class CustomUserNonListRequiredFields(AbstractBaseUser):\n            username = models.CharField(max_length=30, unique=True)\n            date_of_birth = models.DateField()\n\n            USERNAME_FIELD = \"username\"\n            REQUIRED_FIELDS = \"date_of_birth\"\n\n        errors = checks.run_checks(app_configs=self.apps.get_app_configs())\n        self.assertEqual(\n            errors,\n            [\n                checks.Error(\n                    \"'REQUIRED_FIELDS' must be a list or tuple.\",\n                    obj=CustomUserNonListRequiredFields,\n                    id=\"auth.E001\",\n                ),\n            ],\n        )\n\n    @override_settings(AUTH_USER_MODEL=\"auth_tests.CustomUserBadRequiredFields\")\n    def test_username_not_in_required_fields(self):\n        \"\"\"USERNAME_FIELD should not appear in REQUIRED_FIELDS.\"\"\"\n\n        class CustomUserBadRequiredFields(AbstractBaseUser):\n            username = models.CharField(max_length=30, unique=True)\n            date_of_birth = models.DateField()\n\n            USERNAME_FIELD = \"username\"\n            REQUIRED_FIELDS = [\"username\", \"date_of_birth\"]\n\n        errors = checks.run_checks(self.apps.get_app_configs())\n        self.assertEqual(",
+  "conftest_fixtures": {}
+}

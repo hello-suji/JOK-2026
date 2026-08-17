@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-16766",
+    "model_patch": "--- a/sympy/printing/tests/test_pycode.py\n+++ b/sympy/printing/tests/test_pycode.py\n@@ -96,3 +96,10 @@\n     n = NumPyPrinter()\n\n     assert n._print_seq(range(2)) == '(0, 1,)'\n+\n+from sympy import IndexedBase\n+from sympy.printing.pycode import pycode\n+\n+def test_PythonCodePrinter_Indexed_repro():\n+    p = IndexedBase(\"p\")\n+    assert pycode(p[0]) == 'p[0]'\n",
+    "patch_sha256": "2d27a19ab08a9081aa847e0574c4f26759038f1355805fac4b1ff40e1059d031"
+  }
+]

@@ -1,0 +1,497 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8475",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "3ea1ec84cc610f7a9f4f6b354e264565254923ff",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "sphinx/builders/linkcheck.py",
+      "score": 17,
+      "matched_identifiers": [
+        "broken",
+        "detail",
+        "except",
+        "exception"
+      ],
+      "reasons": [
+        "stem_in_issue_text:linkcheck",
+        "source_content_tokens:broken,detail,except,exception,handle"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AnchorCheckParser.handle_starttag",
+        "check_anchor",
+        "CheckExternalLinksBuilder.init",
+        "CheckExternalLinksBuilder.check_thread",
+        "CheckExternalLinksBuilder.process_result",
+        "CheckExternalLinksBuilder.get_target_uri",
+        "CheckExternalLinksBuilder.get_outdated_docs",
+        "CheckExternalLinksBuilder.prepare_writing",
+        "CheckExternalLinksBuilder.write_doc",
+        "CheckExternalLinksBuilder.write_entry",
+        "CheckExternalLinksBuilder.write_linkstat",
+        "CheckExternalLinksBuilder.finish",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/application.py",
+      "score": 16,
+      "matched_identifiers": [
+        "detail",
+        "enter",
+        "except",
+        "exception"
+      ],
+      "reasons": [
+        "source_content_tokens:detail,enter,except,exception,feature"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Sphinx.preload_builder",
+        "Sphinx.create_builder",
+        "Sphinx.build",
+        "Sphinx.setup_extension",
+        "Sphinx.require_sphinx",
+        "Sphinx.connect",
+        "Sphinx.disconnect",
+        "Sphinx.emit",
+        "Sphinx.emit_firstresult",
+        "Sphinx.add_builder",
+        "Sphinx.add_config_value",
+        "Sphinx.add_event",
+        "Sphinx.set_translator",
+        "Sphinx.add_node",
+        "Sphinx.add_enumerable_node",
+        "Sphinx.add_directive",
+        "Sphinx.add_role",
+        "Sphinx.add_generic_role",
+        "Sphinx.add_domain",
+        "Sphinx.add_directive_to_domain",
+        "Sphinx.add_role_to_domain",
+        "Sphinx.add_index_to_domain",
+        "Sphinx.add_object_type",
+        "Sphinx.add_crossref_type",
+        "Sphinx.add_transform",
+        "Sphinx.add_post_transform",
+        "Sphinx.add_javascript",
+        "Sphinx.add_js_file",
+        "Sphinx.add_css_file",
+        "Sphinx.add_stylesheet",
+        "Sphinx.add_latex_package",
+        "Sphinx.add_lexer",
+        "Sphinx.add_autodocumenter",
+        "Sphinx.add_autodoc_attrgetter",
+        "Sphinx.add_search_language",
+        "Sphinx.add_source_suffix",
+        "Sphinx.add_source_parser",
+        "Sphinx.add_env_collector",
+        "Sphinx.add_html_theme",
+        "Sphinx.add_html_math_renderer"
+      ]
+    },
+    {
+      "path": "sphinx/builders/epub3.py",
+      "score": 16,
+      "matched_identifiers": [
+        "detail",
+        "except",
+        "exception",
+        "handle"
+      ],
+      "reasons": [
+        "source_content_tokens:detail,except,exception,handle,ignored"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Epub3Builder.handle_finish",
+        "Epub3Builder.validate_config_value",
+        "Epub3Builder.content_metadata",
+        "Epub3Builder.prepare_writing",
+        "Epub3Builder.build_navlist",
+        "Epub3Builder.navigation_doc_metadata",
+        "Epub3Builder.build_navigation_doc",
+        "validate_config_values",
+        "convert_epub_css_files",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/html/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "broken",
+        "detail",
+        "except",
+        "exception"
+      ],
+      "reasons": [
+        "source_content_tokens:broken,detail,except,exception,fallback"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_stable_hash",
+        "BuildInfo.load",
+        "BuildInfo.dump",
+        "StandaloneHTMLBuilder.init",
+        "StandaloneHTMLBuilder.create_build_info",
+        "StandaloneHTMLBuilder.get_theme_config",
+        "StandaloneHTMLBuilder.init_templates",
+        "StandaloneHTMLBuilder.init_highlighter",
+        "StandaloneHTMLBuilder.init_css_files",
+        "StandaloneHTMLBuilder.add_css_file",
+        "StandaloneHTMLBuilder.init_js_files",
+        "StandaloneHTMLBuilder.add_js_file",
+        "StandaloneHTMLBuilder.default_translator_class",
+        "StandaloneHTMLBuilder.math_renderer_name",
+        "StandaloneHTMLBuilder.get_outdated_docs",
+        "StandaloneHTMLBuilder.get_asset_paths",
+        "StandaloneHTMLBuilder.render_partial",
+        "StandaloneHTMLBuilder.prepare_writing",
+        "StandaloneHTMLBuilder.get_doc_context",
+        "StandaloneHTMLBuilder.write_doc",
+        "StandaloneHTMLBuilder.write_doc_serialized",
+        "StandaloneHTMLBuilder.finish",
+        "StandaloneHTMLBuilder.gen_indices",
+        "StandaloneHTMLBuilder.gen_pages_from_extensions",
+        "StandaloneHTMLBuilder.gen_additional_pages",
+        "StandaloneHTMLBuilder.write_genindex",
+        "StandaloneHTMLBuilder.write_domain_indices",
+        "StandaloneHTMLBuilder.copy_image_files",
+        "StandaloneHTMLBuilder.copy_download_files",
+        "StandaloneHTMLBuilder.create_pygments_style_file",
+        "StandaloneHTMLBuilder.copy_translation_js",
+        "StandaloneHTMLBuilder.copy_stemmer_js",
+        "StandaloneHTMLBuilder.copy_theme_static_files",
+        "StandaloneHTMLBuilder.copy_html_static_files",
+        "StandaloneHTMLBuilder.copy_html_logo",
+        "StandaloneHTMLBuilder.copy_html_favicon",
+        "StandaloneHTMLBuilder.copy_static_files",
+        "StandaloneHTMLBuilder.copy_extra_files",
+        "StandaloneHTMLBuilder.write_buildinfo",
+        "StandaloneHTMLBuilder.cleanup"
+      ]
+    },
+    {
+      "path": "sphinx/cmd/build.py",
+      "score": 16,
+      "matched_identifiers": [
+        "detail",
+        "except",
+        "exception",
+        "handle"
+      ],
+      "reasons": [
+        "source_content_tokens:detail,except,exception,handle,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "handle_exception",
+        "jobs_argument",
+        "get_parser",
+        "make_main",
+        "build_main",
+        "main"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/test_build_linkcheck.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "test_name_matches_source_stem:linkcheck",
+        "token_overlap:build,linkcheck",
+        "internal_name_overlap:redirects",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:sphinx/builders"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_ext_intersphinx.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:sphinx",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_build_dirhtml.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "token_overlap:build,html",
+        "internal_name_overlap:html",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:sphinx/builders"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/test_build_linkcheck.py:pytest_import_or_conftest",
+      "tests/test_build_linkcheck.py:top_level_test_functions",
+      "tests/test_ext_intersphinx.py:pytest_import_or_conftest",
+      "tests/test_ext_intersphinx.py:unittest_or_django_test_import",
+      "tests/test_ext_intersphinx.py:top_level_test_functions",
+      "tests/test_ext_intersphinx.py:testcase_class:TestStripBasicAuth",
+      "tests/test_build_dirhtml.py:pytest_import_or_conftest",
+      "tests/test_build_dirhtml.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 524,
+  "indexed_test_file_count": 330,
+  "available_imports": {
+    "tests.test_build_linkcheck": [
+      "HeadersDumperHandler",
+      "OKHandler",
+      "make_redirect_handler",
+      "test_anchors_ignored",
+      "test_auth_header_no_match",
+      "test_auth_header_uses_first_match",
+      "test_connect_to_selfsigned_fails",
+      "test_connect_to_selfsigned_nonexistent_cert_file",
+      "test_connect_to_selfsigned_with_requests_env_var",
+      "test_connect_to_selfsigned_with_tls_cacerts",
+      "test_connect_to_selfsigned_with_tls_verify_false",
+      "test_defaults",
+      "test_defaults_json",
+      "test_follows_redirects_on_GET",
+      "test_follows_redirects_on_HEAD",
+      "test_invalid_ssl",
+      "test_linkcheck_request_headers",
+      "test_linkcheck_request_headers_default",
+      "test_linkcheck_request_headers_no_slash",
+      "test_raises_for_invalid_status"
+    ],
+    "tests.test_ext_intersphinx": [
+      "TestStripBasicAuth",
+      "fake_node",
+      "reference_check",
+      "test_fetch_inventory_redirection",
+      "test_getsafeurl_authed",
+      "test_getsafeurl_authed_having_port",
+      "test_getsafeurl_unauthed",
+      "test_inspect_main_file",
+      "test_inspect_main_noargs",
+      "test_inspect_main_url",
+      "test_inventory_not_having_version",
+      "test_load_mappings_fallback",
+      "test_load_mappings_warnings",
+      "test_missing_reference",
+      "test_missing_reference_cppdomain",
+      "test_missing_reference_jsdomain",
+      "test_missing_reference_pydomain",
+      "test_missing_reference_stddomain"
+    ],
+    "tests.test_build_dirhtml": [
+      "test_dirhtml"
+    ],
+    "sphinx.application": [
+      "Sphinx",
+      "TemplateBridge"
+    ],
+    "sphinx": [
+      "Any",
+      "BuildEnvironment",
+      "BuildPhase",
+      "CONFIG_CHANGED_REASON",
+      "CONFIG_OK",
+      "CatalogInfo",
+      "CatalogRepository",
+      "Config",
+      "Dict",
+      "EventManager",
+      "ImageAdapter",
+      "Iterable",
+      "List",
+      "Node",
+      "PIPE",
+      "ParallelTasks",
+      "RemovedInNextVersionWarning",
+      "SEP",
+      "Sequence",
+      "SerialTasks",
+      "Set",
+      "SphinxError",
+      "Tags",
+      "Tuple",
+      "Union",
+      "__",
+      "bold",
+      "directives",
+      "docname_to_domain",
+      "ensuredir",
+      "import_object",
+      "logging",
+      "make_chunks",
+      "nodes",
+      "parallel_available",
+      "path",
+      "progress_message",
+      "read_doc",
+      "relative_uri",
+      "relpath",
+      "roles",
+      "rst",
+      "sphinx_domains",
+      "status_iterator"
+    ],
+    "sphinx.builders.epub3": [
+      "Epub3Builder",
+      "convert_epub_css_files",
+      "setup",
+      "validate_config_values"
+    ],
+    "sphinx.builders.linkcheck": [
+      "AnchorCheckParser",
+      "CheckExternalLinksBuilder",
+      "check_anchor",
+      "setup"
+    ],
+    "sphinx.builders": [
+      "Any",
+      "Builder",
+      "Config",
+      "ConfigError",
+      "DOTFILES",
+      "Dict",
+      "DocTreeInput",
+      "Domain",
+      "ENUM",
+      "HTMLThemeFactory",
+      "HTMLTranslator",
+      "HTMLWriter",
+      "IO",
+      "ImageAdapter",
+      "Index",
+      "IndexEntries",
+      "IndexEntry",
+      "InventoryFile",
+      "Iterable",
+      "Iterator",
+      "List",
+      "Matcher",
+      "Node",
+      "OptionParser",
+      "PygmentsBridge",
+      "RemovedInSphinx40Warning",
+      "Set",
+      "Sphinx",
+      "StringOutput",
+      "Tags",
+      "ThemeError",
+      "TocTree",
+      "Tuple",
+      "_",
+      "__",
+      "__display_version__",
+      "copy_asset",
+      "copyfile",
+      "ensuredir",
+      "format_date",
+      "is_html5_writer_available",
+      "js_index",
+      "logging",
+      "md5",
+      "movefile",
+      "new_document",
+      "nodes",
+      "os_path",
+      "package_dir",
+      "path",
+      "patmatch",
+      "progress_message",
+      "publish_parts",
+      "quote",
+      "relative_path",
+      "relative_uri",
+      "status_iterator"
+    ],
+    "sphinx.cmd.build": [
+      "build_main",
+      "get_parser",
+      "handle_exception",
+      "jobs_argument",
+      "main",
+      "make_main"
+    ],
+    "sphinx.builders.html": [
+      "BuildInfo",
+      "JavaScript",
+      "StandaloneHTMLBuilder",
+      "Stylesheet",
+      "convert_html_css_files",
+      "convert_html_js_files",
+      "get_stable_hash",
+      "setup",
+      "setup_js_tag_helper",
+      "validate_html_extra_path",
+      "validate_html_favicon",
+      "validate_html_logo",
+      "validate_html_static_path",
+      "validate_math_renderer"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.example.sphinx": [
+      "DummyClass"
+    ]
+  },
+  "test_example_snippet": "def test_defaults(app):\n    app.builder.build_all()\n\n    assert (app.outdir / 'output.txt').exists()\n    content = (app.outdir / 'output.txt').read_text()\n\n    print(content)\n    # looking for '#top' and '#does-not-exist' not found should fail\n    assert \"Anchor 'top' not found\" in content\n    assert \"Anchor 'does-not-exist' not found\" in content\n    # looking for non-existent URL should fail\n    assert \" Max retries exceeded with url: /doesnotexist\" in content\n    # images should fail\n    assert \"Not Found for url: https://www.google.com/image.png\" in content\n    assert \"Not Found for url: https://www.google.com/image2.png\" in content\n    # looking for local file should fail\n    assert \"[broken] path/to/notfound\" in content\n    assert len(content.splitlines()) == 6\n\n\n@pytest.mark.sphinx('linkcheck', testroot='linkcheck', freshenv=True)\ndef test_defaults_json(app):\n    app.builder.build_all()\n\n    assert (app.outdir / 'output.json').exists()\n    content = (app.outdir / 'output.json').read_text()\n    print(content)\n\n    rows = [json.loads(x) for x in content.splitlines()]\n    row = rows[0]\n    for attr in [\"filename\", \"lineno\", \"status\", \"code\", \"uri\",\n                 \"info\"]:\n        assert attr in row\n\n    assert len(content.splitlines()) == 10",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

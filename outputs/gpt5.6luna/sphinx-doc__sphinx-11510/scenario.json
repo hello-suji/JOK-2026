@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "connect",
+      "related_classes": [
+        "CAP71WjwG2PCT",
+        "Permalink",
+        "Rq",
+        "Sphinx"
+      ],
+      "candidate_test_file": "tests/test_application.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where linkify_issues_in_changelog can be called.",
+      "Use the generated reproduction path that calls connect, setup, path."
+    ],
+    "execution_stimulus": [
+      "Call linkify_issues_in_changelog with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: connect, setup, path."
+    ],
+    "expected_failure": "source-read event does not modify include'd files source",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/application.py",
+      "sphinx/testing/path.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_application.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sphinx.application import Sphinx\nfrom sphinx.testing.path import path\n\ndef test_setup_connects_events_repro():\n    srcdir = path('/path/to/source')\n    outdir = path('/path/to/output')\n    doctreedir = path('/path/to/doctrees')\n    confdir = srcdir\n    app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n    app.connect('source-read', lambda app, docname, source: None)\n    app.setup()\n    assert 'source-read' in app.events.listeners['source-read']"
+      },
+      {
+        "language": "python",
+        "code": "import sys\nimport os\n\nsys.path.insert(0, os.path.abspath('.'))\n\nextensions = [\n        'my-extension'\n]"
+      },
+      {
+        "language": "reStructuredText",
+        "code": "This is a test\n==============\n\n.. include:: something-to-include.rst\n\n&REPLACE_ME;"
+      },
+      {
+        "language": "reStructuredText",
+        "code": "Testing\n=======\n\n&REPLACE_ME;"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "abspath",
+        "connect",
+        "insert",
+        "replace",
+        "setup",
+        "subst_vars_replace",
+        "path"
+      ],
+      "classes": [
+        "CAP71WjwG2PCT",
+        "Permalink",
+        "Rq",
+        "Sphinx",
+        "Xzn9yVQi1PG2"
+      ],
+      "files": [
+        "conf.py",
+        "my-extension.py",
+        "org/yocto-docs/tree/documentation/sphinx/yocto-vars.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_application.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "connect",
+        "setup",
+        "path"
+      ],
+      "test_visible_classes": [
+        "Sphinx"
+      ]
+    }
+  }
+]

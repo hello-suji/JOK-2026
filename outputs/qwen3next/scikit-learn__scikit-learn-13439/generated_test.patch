@@ -1,0 +1,14 @@
+--- a/sklearn/tests/test_pipeline.py
++++ b/sklearn/tests/test_pipeline.py
+@@ -1071,3 +1071,11 @@
+     assert pipeline.memory is None
+
+     shutil.rmtree(cachedir)
++
++def test_pipeline_len_behavior_repro():
++    from sklearn.pipeline import Pipeline
++    from sklearn.feature_selection import SelectKBest, f_regression
++
++    pipe = Pipeline([('selectkbest', SelectKBest(f_regression))])
++    assert hasattr(pipe, '__len__')
++    assert len(pipe) == 1

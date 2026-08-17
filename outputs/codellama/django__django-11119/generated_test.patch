@@ -1,0 +1,15 @@
+--- a/tests/template_tests/test_engine.py
++++ b/tests/template_tests/test_engine.py
+@@ -87,3 +87,12 @@
+
+         template = engine.get_template('priority/foo.html')
+         self.assertEqual(template.render(Context()), 'priority\n')
++
++from django.test import TestCase, SimpleTestCase
++class TestRenderToStringAutoescape(SimpleTestCase):
++    def test_render_to_string_autoescape_false_repro(self):
++        engine = Engine(autoescape=False)
++        result = engine.render_to_string('template.html', {'var': '<script>'})
++        self.assertEqual(result, '<script>')
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(result) != '&lt;script&gt;'

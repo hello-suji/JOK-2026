@@ -1,0 +1,376 @@
+{
+  "instance_id": "django__django-11276",
+  "repo": "django/django",
+  "base_commit": "28d5262fa3315690395f04e3619ed554dbaf725b",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/html.py",
+      "score": 22,
+      "matched_identifiers": [
+        "escape",
+        "html",
+        "import",
+        "than"
+      ],
+      "reasons": [
+        "function_match:escape",
+        "stem_in_issue_text:html",
+        "source_content_tokens:escape,html,import,than,these"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "escape": "def escape(text):\n    \"\"\"\n    Return the given text with ampersands, quotes and angle brackets encoded\n    for use in HTML.\n\n    Always escape input, even if it's already escaped and marked as such.\n    This may result in double-escaping. If this is a concern, use\n    conditional_escape() instead.\n    \"\"\"\n    return mark_safe(html.escape(str(text)))\n\n\n_js_escapes = {\n    ord('\\\\'): '\\\\u005C',\n    ord('\\''): '\\\\u0027',"
+      },
+      "top_level_functions": [
+        "escape",
+        "escapejs",
+        "json_script",
+        "conditional_escape",
+        "format_html",
+        "format_html_join",
+        "linebreaks",
+        "MLStripper.handle_data",
+        "MLStripper.handle_entityref",
+        "MLStripper.handle_charref",
+        "MLStripper.get_data",
+        "strip_tags",
+        "strip_spaces_between_tags",
+        "smart_urlquote",
+        "urlize",
+        "avoid_wrapping",
+        "html_safe"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "html",
+        "import",
+        "rather",
+        "these"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:html,import,rather,these,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admindocs/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "escape",
+        "html",
+        "import",
+        "these"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:escape,html,import,these,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_view_name",
+        "trim_docstring",
+        "parse_docstring",
+        "parse_rst",
+        "create_reference_role",
+        "default_reference_role",
+        "replace_named_groups",
+        "replace_unnamed_groups"
+      ]
+    },
+    {
+      "path": "django/core/files/temp.py",
+      "score": 17,
+      "matched_identifiers": [
+        "available",
+        "html",
+        "import",
+        "utils"
+      ],
+      "reasons": [
+        "stem_in_issue_text:temp",
+        "source_content_tokens:html,import,utils,available,called"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/core/management/templates.py",
+      "score": 17,
+      "matched_identifiers": [
+        "escape",
+        "following",
+        "import",
+        "utils"
+      ],
+      "reasons": [
+        "stem_in_issue_text:templates",
+        "source_content_tokens:escape,import,utils,following,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TemplateCommand.add_arguments",
+        "TemplateCommand.handle",
+        "TemplateCommand.handle_template",
+        "TemplateCommand.validate_name",
+        "TemplateCommand.download",
+        "TemplateCommand.splitext",
+        "TemplateCommand.extract",
+        "TemplateCommand.is_url",
+        "TemplateCommand.make_writeable"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_utils.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:temp",
+        "internal_name_overlap:temp",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_html.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:html",
+        "token_overlap:html",
+        "internal_name_overlap:escape",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_inlines/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/check_framework/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_utils.py:unittest_or_django_test_import",
+      "tests/check_framework/test_templates.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_html.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_html.py:testcase_class:TestUtilsHtml",
+      "tests/auth_tests/test_templates.py:unittest_or_django_test_import",
+      "tests/admin_inlines/test_templates.py:unittest_or_django_test_import",
+      "tests/admin_inlines/test_templates.py:testcase_class:TestTemplates"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2547,
+  "indexed_test_file_count": 1719,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_utils": [
+      "TemplateUtilsTests"
+    ],
+    "tests.check_framework.test_templates": [
+      "CheckTemplateSettingsAppDirsTest",
+      "CheckTemplateStringIfInvalidTest"
+    ],
+    "tests.utils_tests.test_html": [
+      "TestUtilsHtml"
+    ],
+    "tests.auth_tests.test_templates": [
+      "AuthTemplateTests"
+    ],
+    "tests.admin_inlines.test_templates": [
+      "TestTemplates"
+    ],
+    "django.utils.html": [
+      "MLStripper",
+      "_strip_once",
+      "avoid_wrapping",
+      "conditional_escape",
+      "escape",
+      "escapejs",
+      "format_html",
+      "format_html_join",
+      "html_safe",
+      "json_script",
+      "linebreaks",
+      "smart_urlquote",
+      "strip_spaces_between_tags",
+      "strip_tags",
+      "urlize"
+    ],
+    "django.contrib.admindocs.utils": [
+      "create_reference_role",
+      "default_reference_role",
+      "get_view_name",
+      "parse_docstring",
+      "parse_rst",
+      "replace_named_groups",
+      "replace_unnamed_groups",
+      "trim_docstring"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "File",
+      "ImproperlyConfigured",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.templates": [
+      "TemplateCommand"
+    ]
+  },
+  "test_example_snippet": "    def test_backend_import_error(self):\n        \"\"\"\n        Failing to import a backend keeps raising the original import error\n        (#24265).\n        \"\"\"\n        with self.assertRaisesMessage(ImportError, \"No module named 'raise\"):\n            engines.all()\n        with self.assertRaisesMessage(ImportError, \"No module named 'raise\"):\n            engines.all()\n\n    @override_settings(TEMPLATES=[{\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        # Incorrect: APP_DIRS and loaders are mutually incompatible.\n        'APP_DIRS': True,\n        'OPTIONS': {'loaders': []},\n    }])\n    def test_backend_improperly_configured(self):\n        \"\"\"\n        Failing to initialize a backend keeps raising the original exception\n        (#24265).\n        \"\"\"\n        msg = 'app_dirs must not be set when loaders is defined.'\n        with self.assertRaisesMessage(ImproperlyConfigured, msg):\n            engines.all()\n        with self.assertRaisesMessage(ImproperlyConfigured, msg):\n            engines.all()\n\n    @override_settings(TEMPLATES=[{\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n    }, {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n    }])\n    def test_backend_names_must_be_unique(self):\n        msg = (\n            \"Template engine aliases aren't unique, duplicates: django. Set \"",
+  "conftest_fixtures": {}
+}

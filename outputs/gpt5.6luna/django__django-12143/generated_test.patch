@@ -1,0 +1,16 @@
+--- a/tests/template_tests/filter_tests/test_autoescape.py
++++ b/tests/template_tests/filter_tests/test_autoescape.py
+@@ -27,3 +27,13 @@
+     def test_autoescape_stringfilter04_gate(self):
+         output = self.engine.render_to_string('autoescape-stringfilter04', {'safe': SafeClass()})
+         self.assertEqual(output, 'You &gt; me')
++
++import re
++
++class TestAdminFormsetPrefixRegex(AutoescapeStringfilterTests):
++    def test_regex_with_special_characters_repro(self):
++        # Regression focus: Possible data loss in admin changeform view when using regex special characters in formset prefix
++        prefix = 'special*prefix'
++        pk_name = 'id'
++        pk_pattern = re.compile(r'{}-\d+-{}$'.format(prefix, pk_name))
++        self.assertTrue(pk_pattern.match('special*prefix-1-id'))

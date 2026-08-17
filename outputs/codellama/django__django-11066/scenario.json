@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/contenttypes/management/__init__.py",
+      "target_function": "_rename",
+      "related_classes": [
+        "RenameContentType",
+        "RenameModel",
+        "ContentType"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/operations_migrations/0002_rename_foo.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where _rename can be called.",
+      "Use the generated reproduction path that calls _rename, call_command, exists, filter."
+    ],
+    "execution_stimulus": [
+      "Call _rename with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _rename, call_command, exists, filter."
+    ],
+    "expected_failure": "For some background, we run a dynamic database router and have no \"real\" databases configured in the settings file, just a default sqlite3 backend which is never actually generated or used. We forked the migrate.py management command and modified it to accept a dictionary containing database connection parameters as the --database argument.",
+    "relevant_source_files": [
+      "django/contrib/contenttypes/management/__init__.py",
+      "django/core/management/commands/migrate.py",
+      "django/contrib/auth/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/contenttypes_tests/operations_migrations/0002_rename_foo.py",
+      "tests/contenttypes_tests/__init__.py",
+      "tests/contenttypes_tests/operations_migrations/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.test import TestCase\nfrom django.core.management import call_command\nfrom django.contrib.contenttypes.models import ContentType\n\nclass TestRenameModel(TestCase):\n    def test_rename_model_success_repro(self):\n        # Run the migrate command to trigger the rename operation.\n        call_command('migrate')\n        # Check that the ContentType has been renamed successfully.\n        content_type_exists = ContentType.objects.filter(model='new_model_name').exists()\n        self.assertTrue(content_type_exists)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(content_type_exists) != 'OperationalError: no such table: django_content_types'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OperationalError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_rename",
+        "atomic",
+        "save",
+        "call_command",
+        "exists",
+        "filter"
+      ],
+      "classes": [
+        "RenameContentType",
+        "RenameModel",
+        "ContentType"
+      ],
+      "files": [
+        "django/contrib/contenttypes/management/__init__.py",
+        "dynamic_db_router/router.py",
+        "migrate.py"
+      ],
+      "exceptions": [
+        "OperationalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/contenttypes_tests/operations_migrations/0002_rename_foo.py",
+      "target_source_file": "django/contrib/contenttypes/management/__init__.py",
+      "test_visible_functions": [
+        "_rename",
+        "call_command",
+        "exists",
+        "filter"
+      ],
+      "test_visible_classes": [
+        "RenameModel",
+        "ContentType"
+      ]
+    }
+  }
+]

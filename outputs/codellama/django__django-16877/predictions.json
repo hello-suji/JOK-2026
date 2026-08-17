@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-16877",
+    "model_patch": "--- a/tests/template_tests/syntax_tests/i18n/test_filters.py\n+++ b/tests/template_tests/syntax_tests/i18n/test_filters.py\n@@ -59,3 +59,13 @@\n             \"it: Italian/italiano/italsky bidi=False; \"\n             \"fr: French/français/francouzsky bidi=False; \",\n         )\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.template import Template, Context\n+\n+class TestEscapeseqFilter(TestCase):\n+    def test_escapeseq_filter_repro(self):\n+        template = Template(\"{{ some_list|escapeseq|join:\",\" }}\")\n+        context = Context({'some_list': ['<script>', '&copy;', '\"test\"']})\n+        output = template.render(context)\n+        self.assertEqual(output, \"&lt;script&gt;,&amp;copy;,&quot;test&quot;\")\n",
+    "patch_sha256": "9f2b0a848e3a198358c42484aca9958fbb6cfe6ced9fd0b6b051bdf3b486a5ee"
+  }
+]

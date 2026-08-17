@@ -1,0 +1,332 @@
+{
+  "instance_id": "django__django-15103",
+  "repo": "django/django",
+  "base_commit": "dd528cb2cefc0db8b91a7ff0a2bc87305b976597",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/conf/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "need",
+        "script",
+        "template"
+      ],
+      "reasons": [
+        "source_content_tokens:need,script,template,argument,break"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "LazySettings.configure",
+        "LazySettings.configured",
+        "LazySettings.USE_L10N",
+        "Settings.is_overridden",
+        "UserSettingsHolder.is_overridden"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "need",
+        "optional",
+        "script",
+        "template"
+      ],
+      "reasons": [
+        "source_content_tokens:need,script,template,optional,otherwise"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/helpers.py",
+      "score": 16,
+      "matched_identifiers": [
+        "break",
+        "need",
+        "script",
+        "template"
+      ],
+      "reasons": [
+        "source_content_tokens:need,script,template,break,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AdminForm.errors",
+        "AdminForm.non_field_errors",
+        "AdminForm.media",
+        "Fieldset.media",
+        "Fieldline.errors",
+        "AdminField.label_tag",
+        "AdminField.errors",
+        "AdminReadonlyField.label_tag",
+        "AdminReadonlyField.get_admin_url",
+        "AdminReadonlyField.contents",
+        "InlineAdminFormSet.fields",
+        "InlineAdminFormSet.inline_formset_data",
+        "InlineAdminFormSet.forms",
+        "InlineAdminFormSet.non_form_errors",
+        "InlineAdminFormSet.media",
+        "InlineAdminForm.needs_explicit_pk_field",
+        "InlineAdminForm.pk_field",
+        "InlineAdminForm.fk_field",
+        "InlineAdminForm.deletion_field",
+        "InlineAdminForm.ordering_field"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "didn",
+        "need",
+        "script",
+        "template"
+      ],
+      "reasons": [
+        "source_content_tokens:didn,need,script,template,argument"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/sites.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "need",
+        "script",
+        "template"
+      ],
+      "reasons": [
+        "source_content_tokens:need,script,template,argument,optional"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AdminSite.check",
+        "AdminSite.register",
+        "AdminSite.unregister",
+        "AdminSite.is_registered",
+        "AdminSite.add_action",
+        "AdminSite.disable_action",
+        "AdminSite.get_action",
+        "AdminSite.actions",
+        "AdminSite.has_permission",
+        "AdminSite.admin_view",
+        "AdminSite.get_urls",
+        "AdminSite.urls",
+        "AdminSite.each_context",
+        "AdminSite.password_change",
+        "AdminSite.password_change_done",
+        "AdminSite.i18n_javascript",
+        "AdminSite.logout",
+        "AdminSite.login",
+        "AdminSite.autocomplete_view",
+        "AdminSite.catch_all_view",
+        "AdminSite.get_app_list",
+        "AdminSite.index",
+        "AdminSite.app_index"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/apps/no_config_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/one_config_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_configs_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_configs_one_default_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_default_configs_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2723,
+  "indexed_test_file_count": 1858,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango50Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin.helpers": [
+      "ActionForm",
+      "AdminErrorList",
+      "AdminField",
+      "AdminForm",
+      "AdminReadonlyField",
+      "Fieldline",
+      "Fieldset",
+      "InlineAdminForm",
+      "InlineAdminFormSet",
+      "InlineFieldset"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.sites": [
+      "AdminSite",
+      "AlreadyRegistered",
+      "DefaultAdminSite",
+      "NotRegistered"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

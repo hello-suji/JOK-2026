@@ -1,0 +1,17 @@
+--- a/sympy/physics/quantum/tests/test_operator.py
++++ b/sympy/physics/quantum/tests/test_operator.py
+@@ -226,3 +226,14 @@
+     assert diff(d, th) == \
+         DifferentialOperator(Derivative(d.expr, th), f(r, th))
+     assert qapply(d*w) == Wavefunction(3*sin(th), r, (th, 0, pi))
++
++from sympy.physics.quantum.dagger import Dagger
++from sympy.physics.quantum.operator import Operator
++from sympy.physics.quantum import IdentityOperator
++
++def test_dagger_identity_simplification_repro():
++    A = Operator('A')
++    Identity = IdentityOperator()
++    B = Dagger(A)
++    result = B * Identity
++    assert result == Dagger(A)

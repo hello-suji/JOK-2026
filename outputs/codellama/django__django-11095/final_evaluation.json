@@ -1,0 +1,14 @@
+{
+  "instance_id": "django__django-11095",
+  "final_score": 1.0,
+  "before_patch": {
+    "django__django-11095::qwen_external_sync": "FAILED"
+  },
+  "after_patch": {
+    "django__django-11095::qwen_external_sync": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "6a95e0a75c73e85325a1cf8d77abcadba51f3def109576c0a1101e238c22dde9",
+  "resolved": true
+}

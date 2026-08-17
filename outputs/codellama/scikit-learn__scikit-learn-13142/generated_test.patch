@@ -1,0 +1,18 @@
+--- a/sklearn/cluster/tests/test_k_means.py
++++ b/sklearn/cluster/tests/test_k_means.py
+@@ -922,3 +922,15 @@
+     estimator = KMeans(algorithm="elkan", max_iter=1)
+     estimator.fit(np.random.rand(10, 10))
+     assert estimator.n_iter_ == 1
++
++from sklearn.mixture import GaussianMixture
++import numpy
++
++def test_gaussian_mixture_fit_predict_disagreement_repro():
++    X = numpy.random.randn(1000, 5)
++    gm = GaussianMixture(n_components=5, n_init=5)
++    c1 = gm.fit_predict(X)
++    c2 = gm.predict(X)
++    assert_array_equal(c1, c2)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(c2) != 'Traceback (most recent call last):\n  File "test_gm.py", line 17, in <module>\n    assert_array_equal(c1,c2)\n  File "/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py", line 872, in assert_array_equal\n    verbose=verbose, header=\'Arrays are not equal\')\n  File "/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py", line 796, in assert_array_compare\n    raise AssertionError(msg)\nAssertionError:\n\nArrays are not equal\n\n(mismatch 88.6%)'

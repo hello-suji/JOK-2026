@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/options.py",
+      "target_function": "lookup_allowed",
+      "related_classes": [
+        "ModelAdmin",
+        "DisallowedModelAdminLookup"
+      ],
+      "candidate_test_file": "tests/modeladmin/tests.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.admin.options import ModelAdmin",
+      "from django.db import models",
+      "from django.test import TestCase",
+      "class Country(models.Model): name = models.CharField(max_length=256)",
+      "class Place(models.Model): country = models.ForeignKey(Country, models.CASCADE)",
+      "class Restaurant(models.Model): place = models.OneToOneField(Place, models.CASCADE, primary_key=True)",
+      "class Waiter(models.Model): restaurant = models.ForeignKey(Restaurant, models.CASCADE)",
+      "class WaiterAdmin(ModelAdmin): list_filter = ['restaurant__place__country']",
+      "Use the generated reproduction path that calls lookup_allowed."
+    ],
+    "execution_stimulus": [
+      "ma = WaiterAdmin(Waiter, None)",
+      "result = ma.lookup_allowed('restaurant__place__country', 'some_value')",
+      "Execute the focused target API path: lookup_allowed."
+    ],
+    "expected_failure": "The test should raise DisallowedModelAdminLookup because the lookup is incorrectly disallowed.",
+    "relevant_source_files": [
+      "django/contrib/admin/options.py",
+      "django/db/models/fields/related.py",
+      "django/contrib/auth/admin.py"
+    ],
+    "relevant_test_files": [
+      "tests/modeladmin/tests.py",
+      "tests/model_fields/__init__.py",
+      "tests/model_fields/test_foreignkey.py",
+      "tests/model_fields/test_charfield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.admin.options import ModelAdmin\nfrom django.contrib.admin.exceptions import DisallowedModelAdminLookup\nfrom django.test import TestCase\n\nclass TestLookupAllowedForeignPrimary(TestCase):\n    def test_lookup_allowed_foreign_primary_repro(self):\n        ma = ModelAdmin(Restaurant, None)\n        result = ma.lookup_allowed('place__country__name', 'some-value')\n        self.assertFalse(result)"
+      },
+      {
+        "language": "python",
+        "code": "def test_lookup_allowed_foreign_primary():\n    from django.contrib.admin.options import ModelAdmin\n    from django.db import models\n    from django.test import TestCase\n    class Country(models.Model): name = models.CharField(max_length=256)\n    class Place(models.Model): country = models.ForeignKey(Country, models.CASCADE)\n    class Restaurant(models.Model): place = models.OneToOneField(Place, models.CASCADE, primary_key=True)\n    class Waiter(models.Model): restaurant = models.ForeignKey(Restaurant, models.CASCADE)\n    class WaiterAdmin(ModelAdmin): list_filter = ['restaurant__place__country']\n    ma = WaiterAdmin(Waiter, None)\n    with TestCase().assertRaises(DisallowedModelAdminLookup):\n        ma.lookup_allowed('restaurant__place__country', 'some_value')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "DisallowedModelAdminLookup"
+    ],
+    "identifiers": {
+      "functions": [
+        "lookup_allowed"
+      ],
+      "classes": [
+        "ModelAdmin",
+        "DisallowedModelAdminLookup"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/modeladmin/tests.py",
+      "target_source_file": "django/contrib/admin/options.py",
+      "test_visible_functions": [
+        "lookup_allowed"
+      ],
+      "test_visible_classes": [
+        "DisallowedModelAdminLookup",
+        "ModelAdmin"
+      ]
+    }
+  }
+]

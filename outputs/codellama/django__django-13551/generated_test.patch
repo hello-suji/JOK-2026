@@ -1,0 +1,16 @@
+--- a/tests/auth_tests/test_tokens.py
++++ b/tests/auth_tests/test_tokens.py
+@@ -110,3 +110,13 @@
+         legacy_token = p_old_generator.make_token(user)
+         self.assertIs(p_old_generator.check_token(user, legacy_token), True)
+         self.assertIs(p_new_generator.check_token(user, legacy_token), True)
++
++from django.test import TestCase, SimpleTestCase
++class TestTokenRejectionAfterEmailChange(TestCase):
++    def test_token_rejection_after_email_change_repro(self):
++        user = User.objects.create_user(username='testuser', email='test@example.com', password='testpass')
++        token_generator = PasswordResetTokenGenerator()
++        token = token_generator.make_token(user)
++        user.email = 'newemail@example.com'
++        user.save()
++        self.assertFalse(token_generator.check_token(user, token))

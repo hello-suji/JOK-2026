@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pytest-dev__pytest-10051",
+    "model_patch": "--- a/testing/test_warning_types.py\n+++ b/testing/test_warning_types.py\n@@ -36,3 +36,10 @@\n     )\n     result = pytester.runpytest()\n     result.stdout.fnmatch_lines([\"E       pytest.PytestWarning: some warning\"])\n+\n+import logging\n+\n+def test_caplog_clear_issue_repro(caplog):\n+    logging.warning('test')\n+    caplog.clear()\n+    assert caplog.get_records('call') == []\n",
+    "patch_sha256": "87ba2e95efba8094374f598ff2fc5d2a5b06a7b08777b83efce0df2d12cd8689"
+  }
+]

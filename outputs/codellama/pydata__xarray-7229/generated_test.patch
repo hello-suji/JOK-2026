@@ -1,0 +1,13 @@
+--- a/xarray/tests/test_computation.py
++++ b/xarray/tests/test_computation.py
+@@ -2232,3 +2232,10 @@
+
+     actual = xr.cross(a, b, dim=dim)
+     xr.testing.assert_duckarray_allclose(expected, actual)
++
++def test_where_overwrites_coordinate_attributes_repro():
++    ds = xr.tutorial.load_dataset('air_temperature')
++    result = xr.where(True, ds.air, ds.air, keep_attrs=True)
++    assert result.time.attrs == {'standard_name': 'time', 'long_name': 'Time'}
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "{'long_name': '4xDaily Air temperature at sigma level 995', 'units': 'degK', 'precision': 2, 'GRIB_id': 11, 'GRIB_name': 'TMP', 'var_desc': 'Air temperature', 'dataset': 'NMC Reanalysis', 'level_desc': 'Surface', 'statistic': 'Individual Obs', 'parent_stat': 'Other', 'actual_range': array([185.16, 322.1], dtype=float32)}"

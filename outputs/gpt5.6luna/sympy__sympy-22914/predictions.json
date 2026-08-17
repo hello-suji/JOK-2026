@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-22914",
+    "model_patch": "--- a/sympy/printing/tests/test_pycode.py\n+++ b/sympy/printing/tests/test_pycode.py\n@@ -392,3 +392,12 @@\n     assert prntr.doprint(expm1(x)) == 'numpy.expm1(x)'\n     assert prntr.doprint(log1p(x)) == 'numpy.log1p(x)'\n     assert prntr.doprint(cosm1(x)) == 'scipy.special.cosm1(x)'\n+\n+def test_PythonCodePrinter_Min_Max_repro():\n+    from sympy.printing.pycode import PythonCodePrinter\n+    a, b = symbols(\"a b\")\n+    c = Min(a, b)\n+    d = Max(a, b)\n+    printer = PythonCodePrinter()\n+    assert printer.doprint(c) == 'min(a, b)'\n+    assert printer.doprint(d) == 'max(a, b)'\n",
+    "patch_sha256": "2605279de96723d0b0838020e3af99e833e0cbff4bf6dbeefa339f9d231a862e"
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/axis.py",
+      "target_function": "clear",
+      "related_classes": [
+        "Axes"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_subplots.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import necessary modules: import numpy as np; import matplotlib.pyplot as plt",
+      "Create subplots with shared axes: fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)",
+      "Generate data: x = np.arange(0.0, 2*np.pi, 0.01); y = np.sin(x)",
+      "Use the generated reproduction path that calls clear, flatten, plot, sin."
+    ],
+    "execution_stimulus": [
+      "Clear each axis: for ax in axes.flatten(): ax.clear()",
+      "Plot data on each cleared axis: for ax in axes.flatten(): ax.plot(x, y)",
+      "Execute the focused target API path: clear, flatten, plot, sin."
+    ],
+    "expected_failure": "Ticks and tick labels that should be hidden due to shared axes are shown.",
+    "relevant_source_files": [
+      "lib/matplotlib/axis.py",
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/cbook/__init__.py",
+      "lib/matplotlib/figure.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_subplots.py",
+      "lib/matplotlib/tests/test_animation.py",
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_shared_axes_clear_bug_repro():\n    fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)\n    x = np.arange(0.0, 2*np.pi, 0.01)\n    y = np.sin(x)\n    for ax in axes.flatten():\n        ax.clear()\n        ax.plot(x, y)\n    # Check if ticks are visible on the top and right side of each subplot\n    for ax in axes.flatten():\n        assert not ax.xaxis.get_ticklabels(which='top')[0].get_visible()\n        assert not ax.yaxis.get_ticklabels(which='right')[0].get_visible()\n        assert not ax.xaxis.get_ticks_position() == 'both'\n        assert not ax.yaxis.get_ticks_position() == 'both'"
+      },
+      {
+        "language": "python",
+        "code": "def test_shared_axes_clear_bug():\n    import numpy as np\n    import matplotlib.pyplot as plt\n    fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)\n    x = np.arange(0.0, 2*np.pi, 0.01)\n    y = np.sin(x)\n    for ax in axes.flatten():\n        ax.clear()\n        ax.plot(x, y)\n    # Check if ticks are visible on the top and right side of each subplot\n    for ax in axes.flatten():\n        assert not ax.xaxis.get_ticklabels(which='top')\n        assert not ax.yaxis.get_ticklabels(which='right')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clear",
+        "plot",
+        "sin",
+        "subplots",
+        "arange",
+        "get_visible",
+        "get_ticks_position",
+        "get_ticklabels"
+      ],
+      "classes": [
+        "Axes"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_subplots.py",
+      "target_source_file": "lib/matplotlib/axis.py",
+      "test_visible_functions": [
+        "clear",
+        "flatten",
+        "plot",
+        "sin",
+        "subplots",
+        "arange",
+        "get_visible",
+        "get_ticks_position"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

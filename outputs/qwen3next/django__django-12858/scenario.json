@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "order_by",
+      "related_classes": [
+        "ForeignKey",
+        "ContentType",
+        "User"
+      ],
+      "candidate_test_file": "tests/foreign_object/test_forms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where order_by can be called.",
+      "Use the generated reproduction path that calls order_by, values_list, create_user, model_class."
+    ],
+    "execution_stimulus": [
+      "Call order_by with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: order_by, values_list, create_user, model_class."
+    ],
+    "expected_failure": "models.E015 is raised when ordering uses lookups that are not transforms.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/fields/related.py",
+      "django/contrib/admin/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/foreign_object/test_forms.py",
+      "tests/auth_tests/test_forms.py",
+      "tests/admin_views/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.contrib.contenttypes.models import ContentType\nfrom django.contrib.auth.models import User\n\nclass TestOrderingWithForeignKey(TestCase):\n    def test_ordering_with_non_transform_lookup_repro(self):\n        ct = ContentType.objects.first()\n        user = User.objects.create_user(username='testuser')\n        books = ct.model_class().objects.order_by('user__username').values_list('id', flat=True)\n        self.assertQuerysetEqual(books, [])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "SystemCheckError"
+    ],
+    "identifiers": {
+      "functions": [
+        "order_by",
+        "values_list",
+        "create_user",
+        "model_class"
+      ],
+      "classes": [
+        "ForeignKey",
+        "ContentType",
+        "User"
+      ],
+      "files": [
+        "manage.py"
+      ],
+      "exceptions": [
+        "SystemCheckError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/foreign_object/test_forms.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "order_by",
+        "values_list",
+        "create_user",
+        "model_class"
+      ],
+      "test_visible_classes": [
+        "ForeignKey",
+        "ContentType",
+        "User"
+      ]
+    }
+  }
+]

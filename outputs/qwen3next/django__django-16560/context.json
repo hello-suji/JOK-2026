@@ -1,0 +1,490 @@
+{
+  "instance_id": "django__django-16560",
+  "repo": "django/django",
+  "base_commit": "51c9bb7cd16081133af4f0ab6d06572660309730",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/models/constraints.py",
+      "score": 21,
+      "matched_identifiers": [
+        "BaseConstraint",
+        "baseconstraint",
+        "constraint",
+        "constraints",
+        "validationerror"
+      ],
+      "reasons": [
+        "class_match:BaseConstraint",
+        "stem_in_issue_text:constraints",
+        "source_content_tokens:validationerror,baseconstraint,constraint,constraints,message"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BaseConstraint": "class BaseConstraint:\n    default_violation_error_message = _(\"Constraint “%(name)s” is violated.\")\n    violation_error_message = None\n\n    # RemovedInDjango60Warning: When the deprecation ends, replace with:\n    # def __init__(self, *, name, violation_error_message=None):\n    def __init__(self, *args, name=None, violation_error_message=None):\n        # RemovedInDjango60Warning.\n        if name is None and not args:\n            raise TypeError(\n                f\"{self.__class__.__name__}.__init__() missing 1 required keyword-only \"\n                f\"argument: 'name'\"\n            )\n        self.name = name\n        if violation_error_message is not None:"
+      },
+      "top_level_functions": [
+        "BaseConstraint.contains_expressions",
+        "BaseConstraint.constraint_sql",
+        "BaseConstraint.create_sql",
+        "BaseConstraint.remove_sql",
+        "BaseConstraint.validate",
+        "BaseConstraint.get_violation_error_message",
+        "BaseConstraint.deconstruct",
+        "BaseConstraint.clone",
+        "CheckConstraint.constraint_sql",
+        "CheckConstraint.create_sql",
+        "CheckConstraint.remove_sql",
+        "CheckConstraint.validate",
+        "CheckConstraint.deconstruct",
+        "UniqueConstraint.contains_expressions",
+        "UniqueConstraint.constraint_sql",
+        "UniqueConstraint.create_sql",
+        "UniqueConstraint.remove_sql",
+        "UniqueConstraint.deconstruct",
+        "UniqueConstraint.validate"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/forms.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allow",
+        "customize",
+        "easily",
+        "validationerror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:forms",
+        "source_content_tokens:validationerror,allow,customize,easily,forms"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ReadOnlyPasswordHashWidget.get_context",
+        "ReadOnlyPasswordHashWidget.id_for_label",
+        "UsernameField.to_python",
+        "UsernameField.widget_attrs",
+        "BaseUserCreationForm.clean_password2",
+        "BaseUserCreationForm.save",
+        "UserCreationForm.clean_username",
+        "AuthenticationForm.clean",
+        "AuthenticationForm.confirm_login_allowed",
+        "AuthenticationForm.get_user",
+        "AuthenticationForm.get_invalid_login_error",
+        "PasswordResetForm.send_mail",
+        "PasswordResetForm.get_users",
+        "PasswordResetForm.save",
+        "SetPasswordForm.clean_new_password2",
+        "SetPasswordForm.save",
+        "PasswordChangeForm.clean_old_password",
+        "AdminPasswordChangeForm.clean_password2",
+        "AdminPasswordChangeForm.save",
+        "AdminPasswordChangeForm.changed_data"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geoip2/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allow",
+        "customize",
+        "djangoproject",
+        "validationerror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:validationerror,allow,customize,djangoproject,parameter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoIP2.city",
+        "GeoIP2.country_code",
+        "GeoIP2.country_name",
+        "GeoIP2.country",
+        "GeoIP2.coords",
+        "GeoIP2.lon_lat",
+        "GeoIP2.lat_lon",
+        "GeoIP2.geos",
+        "GeoIP2.info",
+        "GeoIP2.open"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/constraints.py",
+      "score": 17,
+      "matched_identifiers": [
+        "baseconstraint",
+        "constraint",
+        "constraints",
+        "validationerror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:constraints",
+        "source_content_tokens:validationerror,baseconstraint,constraint,constraints,message"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ExclusionConstraint.constraint_sql",
+        "ExclusionConstraint.create_sql",
+        "ExclusionConstraint.remove_sql",
+        "ExclusionConstraint.check_supported",
+        "ExclusionConstraint.deconstruct",
+        "ExclusionConstraint.validate"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "catch",
+        "possible",
+        "provide"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:attribute,catch,possible,provide,result"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/postgres_tests/test_constraints.py",
+      "score": 15,
+      "matched_identifiers": [
+        "BaseConstraint"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseConstraint",
+        "test_name_matches_source_stem:constraints",
+        "token_overlap:constraint,constraints,postgres",
+        "internal_name_overlap:constraint",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/validation/test_constraints.py",
+      "score": 13,
+      "matched_identifiers": [
+        "BaseConstraint"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseConstraint",
+        "test_name_matches_source_stem:constraints",
+        "token_overlap:constraint,constraints",
+        "internal_name_overlap:constraint",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_forms.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:auth,forms",
+        "internal_name_overlap:auth",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_base.py",
+      "score": 9,
+      "matched_identifiers": [
+        "BaseConstraint"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseConstraint",
+        "test_name_matches_source_stem:base",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_base.py",
+      "score": 9,
+      "matched_identifiers": [
+        "BaseConstraint"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseConstraint",
+        "test_name_matches_source_stem:base",
+        "token_overlap:forms",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/validation/test_constraints.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:testcase_class:TestDataMixin",
+      "tests/postgres_tests/test_constraints.py:unittest_or_django_test_import",
+      "tests/backends/base/test_base.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_base.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2746,
+  "indexed_test_file_count": 1875,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.validation.test_constraints": [
+      "PerformConstraintChecksTest"
+    ],
+    "tests.validation": [
+      "ValidationAssertions"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "ValidationError",
+      "WidgetTest",
+      "cached_property",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.auth_tests.test_forms": [
+      "AdminPasswordChangeFormTest",
+      "AuthenticationFormTest",
+      "BaseUserCreationFormTest",
+      "PasswordChangeFormTest",
+      "PasswordResetFormTest",
+      "ReadOnlyPasswordHashTest",
+      "SetPasswordFormTest",
+      "TestDataMixin",
+      "UserChangeFormTest",
+      "UserCreationFormTest"
+    ],
+    "tests.postgres_tests.test_constraints": [
+      "ExclusionConstraintTests",
+      "SchemaTests"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests.backends.base.test_base": [
+      "ConnectionHealthChecksTests",
+      "DatabaseWrapperLoggingTests",
+      "DatabaseWrapperTests",
+      "ExecuteWrapperTests",
+      "MultiDatabaseTests"
+    ],
+    "tests.forms_tests.field_tests.test_base": [
+      "BasicFieldsTests",
+      "DisabledFieldTests"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "ForeignObjectRel",
+      "Func",
+      "ImageField",
+      "JSONField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderBy",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RESTRICT",
+      "RestrictedError",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "enums_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.contrib.postgres.constraints": [
+      "ExclusionConstraint",
+      "ExclusionConstraintExpression"
+    ],
+    "django.contrib.auth.forms": [
+      "AdminPasswordChangeForm",
+      "AuthenticationForm",
+      "BaseUserCreationForm",
+      "PasswordChangeForm",
+      "PasswordResetForm",
+      "ReadOnlyPasswordHashField",
+      "ReadOnlyPasswordHashWidget",
+      "SetPasswordForm",
+      "UserChangeForm",
+      "UserCreationForm",
+      "UsernameField",
+      "_unicode_ci_compare"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.gis.geoip2.base": [
+      "GeoIP2",
+      "GeoIP2Exception"
+    ],
+    "django.contrib.gis": [
+      "HAS_GEOIP2"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.db.models.constraints": [
+      "BaseConstraint",
+      "CheckConstraint",
+      "Deferrable",
+      "UniqueConstraint"
+    ]
+  },
+  "test_example_snippet": "    def test_check_constraint_range_value(self):\n        constraint_name = \"ints_between\"\n        self.assertNotIn(\n            constraint_name, self.get_constraints(RangesModel._meta.db_table)\n        )\n        constraint = CheckConstraint(\n            check=Q(ints__contained_by=NumericRange(10, 30)),\n            name=constraint_name,\n        )\n        with connection.schema_editor() as editor:\n            editor.add_constraint(RangesModel, constraint)\n        self.assertIn(constraint_name, self.get_constraints(RangesModel._meta.db_table))\n        with self.assertRaises(IntegrityError), transaction.atomic():\n            RangesModel.objects.create(ints=(20, 50))\n        RangesModel.objects.create(ints=(10, 30))\n\n    def test_check_constraint_array_contains(self):\n        constraint = CheckConstraint(\n            check=Q(field__contains=[1]),\n            name=\"array_contains\",\n        )\n        msg = f\"Constraint “{constraint.name}” is violated.\"\n        with self.assertRaisesMessage(ValidationError, msg):\n            constraint.validate(IntegerArrayModel, IntegerArrayModel())\n        constraint.validate(IntegerArrayModel, IntegerArrayModel(field=[1]))\n\n    def test_check_constraint_array_length(self):\n        constraint = CheckConstraint(\n            check=Q(field__len=1),\n            name=\"array_length\",\n        )\n        msg = f\"Constraint “{constraint.name}” is violated.\"\n        with self.assertRaisesMessage(ValidationError, msg):\n            constraint.validate(IntegerArrayModel, IntegerArrayModel())\n        constraint.validate(IntegerArrayModel, IntegerArrayModel(field=[1]))",
+  "conftest_fixtures": {}
+}

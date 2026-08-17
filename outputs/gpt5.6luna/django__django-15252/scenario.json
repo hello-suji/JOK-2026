@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/recorder.py",
+      "target_function": "ensure_schema",
+      "related_classes": [
+        "MigrationRecorder",
+        "ConnectionRouter",
+        "Router",
+        "ConnectionHandler"
+      ],
+      "candidate_test_file": "tests/backends/oracle/test_creation.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where ensure_schema can be called.",
+      "Use the generated reproduction path that calls allow_migrate, ensure_schema, connections, has_table."
+    ],
+    "execution_stimulus": [
+      "Call ensure_schema with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: allow_migrate, ensure_schema, connections, has_table."
+    ],
+    "expected_failure": "MigrationRecorder does not obey db_router allow_migrate rules",
+    "relevant_source_files": [
+      "django/db/migrations/recorder.py",
+      "django/db/migrations/executor.py",
+      "django/test/runner.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_executor.py",
+      "tests/backends/oracle/test_creation.py",
+      "tests/migrations/test_multidb.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.recorder import MigrationRecorder\nfrom django.db import connections\nfrom django.db.utils import ConnectionRouter\n\nclass TestMigrationRecorder(TestCase):\n    def test_ensure_schema_obey_db_router_rules_repro(self):\n        class Router:\n            def allow_migrate(self, db, app_label, **hints):\n                return db == 'default'\n\n        router = Router()\n        connections['other_db'] = ConnectionHandler({'other_db': {'ENGINE': 'django.db.backends.dummy'}})['other_db']\n        connections['other_db'].router = router\n\n        recorder = MigrationRecorder(connections['other_db'])\n        recorder.ensure_schema()\n\n        self.assertFalse(recorder.has_table())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "allow_migrate",
+        "ensure_schema",
+        "connections",
+        "has_table"
+      ],
+      "classes": [
+        "MigrationRecorder",
+        "ConnectionRouter",
+        "Router",
+        "ConnectionHandler"
+      ],
+      "files": [
+        "django/db/backends/creation.py",
+        "django/db/migrations/executor.py",
+        "django/db/migrations/recorder.py",
+        "django/test/runner.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/oracle/test_creation.py",
+      "target_source_file": "django/db/migrations/recorder.py",
+      "test_visible_functions": [
+        "allow_migrate",
+        "ensure_schema",
+        "connections",
+        "has_table"
+      ],
+      "test_visible_classes": [
+        "MigrationRecorder",
+        "ConnectionRouter",
+        "Router",
+        "ConnectionHandler"
+      ]
+    }
+  }
+]

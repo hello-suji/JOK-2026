@@ -1,0 +1,26 @@
+--- a/tests/postgres_tests/migrations/0002_create_test_models.py
++++ b/tests/postgres_tests/migrations/0002_create_test_models.py
+@@ -311,3 +311,23 @@
+             },
+         ),
+     ]
++
++from django.db.migrations.operations.models import CreateModel, AlterModelOptions
++from django.test import TestCase
++
++class TestSquashMigrationsBehavior(TestCase):
++    def test_alter_model_options_unset_on_squash_repro(self):
++        create_model = CreateModel(
++            name='TestModel',
++            fields=[
++                ('id', models.AutoField(primary_key=True)),
++            ],
++            options={'ordering': ['name']}
++        )
++        alter_model_options = AlterModelOptions(
++            name='TestModel',
++            options={}
++        )
++        new_state = create_model.state_forwards('test_app', create_model.describe_state())
++        alter_model_options.state_forwards('test_app', new_state)
++        self.assertNotIn('ordering', new_state.models['test_app']['testmodel'].options)

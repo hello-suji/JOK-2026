@@ -1,0 +1,11 @@
+--- a/sympy/diffgeom/tests/test_function_diffgeom_book.py
++++ b/sympy/diffgeom/tests/test_function_diffgeom_book.py
+@@ -143,3 +143,8 @@
+     expr = dtheta - WedgeProduct(
+         da, R3_r.dx) - WedgeProduct(db, R3_r.dy) - WedgeProduct(dc, R3_r.dz)
+     assert expr.rcall(R3_r.e_x, R3_r.e_y) == 0
++
++def test_symbols_with_extra_parentheses_creates_functions_repro():
++    q, u = symbols(('q:2', 'u:2'), cls=Function)
++    assert isinstance(q[0], Function)
++    assert isinstance(u[0], Function)

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14034",
+    "model_patch": "--- a/tests/forms_tests/field_tests/test_multivaluefield.py\n+++ b/tests/forms_tests/field_tests/test_multivaluefield.py\n@@ -172,3 +172,34 @@\n         })\n         form.is_valid()\n         self.assertEqual(form.cleaned_data['field1'], 'some text,JP,2007-04-25 06:24:00')\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.forms import Form, CharField, MultiValueField, MultiWidget\n+\n+class MF(MultiValueField):\n+    widget = MultiWidget\n+    def __init__(self):\n+        fields = [\n+            CharField(required=False),\n+            CharField(required=True),\n+        ]\n+        widget = self.widget(widgets=[\n+            f.widget\n+            for f in fields\n+        ], attrs={})\n+        super(MF, self).__init__(\n+            fields=fields,\n+            widget=widget,\n+        )\n+\n+class TestMultiValueFieldRequiredSubField(TestCase):\n+    def test_required_sub_field_validation_repro(self):\n+        class TestForm(Form):\n+            multi_field = MF()\n+\n+        form = TestForm(data={'multi_field_0': '', 'multi_field_1': ''})\n+        self.assertFalse(form.is_valid())\n+        form = TestForm(data={'multi_field_0': 'value1', 'multi_field_1': ''})\n+        self.assertFalse(form.is_valid())\n+        form = TestForm(data={'multi_field_0': '', 'multi_field_1': 'value2'})\n+        self.assertTrue(form.is_valid())\n",
+    "patch_sha256": "5301550b91d11e951cb4129785833753419d99e0d5d18538092136bc0df7f07d"
+  }
+]

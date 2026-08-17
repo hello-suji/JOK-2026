@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "model_patch": "--- a/doc/en/example/assertion/test_failures.py\n+++ b/doc/en/example/assertion/test_failures.py\n@@ -11,3 +11,20 @@\n     result = testdir.runpytest(target, syspathinsert=True)\n     result.stdout.fnmatch_lines([\"*44 failed*\"])\n     assert result.ret != 0\n+\n+import pytest\n+from _pytest.skipping import pytest_runtest_makereport\n+\n+def test_pytest_runtest_makereport_skip_location_repro(testdir):\n+    testdir.makepyfile('''\n+import pytest\n+\n+@pytest.mark.skip\n+def test_example_repro():\n+    assert 0\n+''')\n+    result = testdir.runpytest()\n+    report = pytest_runtest_makereport(result)\n+    assert 'src/_pytest/skipping.py' not in report.longreprtext\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(report) != 'SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip'\n",
+    "patch_sha256": "b25f30468ead1ff4c6c490153f2f14c9d1b413cfa768279a25eca1e6a1d32107"
+  }
+]

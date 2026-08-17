@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15098",
+    "model_patch": "--- a/tests/urlpatterns/path_base64_urls.py\n+++ b/tests/urlpatterns/path_base64_urls.py\n@@ -21,3 +21,21 @@\n     path('base64/<base64:base>/subpatterns/', include(subpatterns)),\n     path('base64/<base64:base>/namespaced/', include((subpatterns, 'namespaced-base64'))),\n ]\n+\n+from django.conf.urls.i18n import i18n_patterns\n+from django.http.response import HttpResponse\n+from django.test import TestCase\n+from django.urls import path\n+\n+def bangiah(request):\n+    return HttpResponse('U!')\n+\n+urlpatterns = i18n_patterns(\n+    path('', bangiah, name='bangiah'),\n+)\n+\n+class TestBangiahWithLocale(TestCase):\n+    def test_bangiah_with_en_latn_us_repro(self):\n+        response = self.client.get('/en-latn-us/')\n+        self.assertEqual(response.status_code, 200)\n+        self.assertEqual(response.content.decode(), 'U!')\n",
+    "patch_sha256": "973da7a690eff45edd76402f0f2fe4e93c874813cd3294544343f07c7346f5fc"
+  }
+]

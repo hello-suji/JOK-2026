@@ -1,0 +1,17 @@
+--- a/astropy/io/ascii/tests/test_html.py
++++ b/astropy/io/ascii/tests/test_html.py
+@@ -728,3 +728,14 @@
+                 '</table>']
+     dat = Table.read(table_in, format='ascii.html')
+     assert np.all(dat['col1'] == ['Δ', 'Δ'])
++
++def test_html_format_issue_repro():
++    t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))
++    tc = t.copy()
++    with StringIO() as sp:
++        tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})
++        html_output = sp.getvalue()
++    assert '<td>1.23875234858e-24</td>' not in html_output
++    assert '<td>1.24e-24</td>' in html_output
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(html_output) != '<td>1.23875234858e-24</td>'

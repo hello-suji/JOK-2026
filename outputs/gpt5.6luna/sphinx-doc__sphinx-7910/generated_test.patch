@@ -1,0 +1,48 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,45 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++class TestDecoratedInitDocumentation(unittest.TestCase):
++    def test_decorated_init_documentation_repro(self):
++        """Ensure that a decorated __init__ method is documented."""
++        from functools import wraps
++        from sphinx.ext.autodoc import DocumenterBridge, FunctionDocumenter
++        from sphinx.testing.util import SphinxTestApp
++        import tempfile
++        import os
++
++        # Define a sample class with a decorated __init__ method
++        class DistributedTrainerReplicated:
++            def __init__(self):
++                """Initialize the trainer."""
++                pass
++
++        def decorator(func):
++            @wraps(func)
++            def wrapper(*args, **kwargs):
++                return func(*args, **kwargs)
++            return wrapper
++
++        # [removed: private attribute assignment — use public API instead]
++
++        # Setup Sphinx application
++        with tempfile.TemporaryDirectory() as srcdir:
++            confdir = srcdir
++            outdir = os.path.join(srcdir, '_build', 'html')
++            doctreedir = os.path.join(srcdir, '_build', 'doctrees')
++            buildername = 'html'
++            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++            app.config.napoleon_include_init_with_doc = True
++            app.build()
++
++            # Check if __init__ is documented
++            bridge = DocumenterBridge(app.env)
++            documenter = FunctionDocumenter(bridge, DistributedTrainerReplicated.__init__, 'method', None, None, None, None)
++            documenter.generate(more_content=None)
++
++            # Assert that the __init__ method is documented
++            self.assertTrue(documenter.directive.result)

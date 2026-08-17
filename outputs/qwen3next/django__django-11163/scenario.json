@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/models.py",
+      "target_function": "model_to_dict",
+      "related_classes": [
+        "User"
+      ],
+      "candidate_test_file": "tests/forms_tests/tests/test_utils.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where model_to_dict can be called.",
+      "Use the generated reproduction path that calls model_to_dict."
+    ],
+    "execution_stimulus": [
+      "Call model_to_dict with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: model_to_dict."
+    ],
+    "expected_failure": "Been called as model_to_dict(instance, fields=[]) function should return empty dict, because no fields were requested. But it returns all fields",
+    "relevant_source_files": [
+      "django/forms/models.py",
+      "django/contrib/admin/utils.py",
+      "django/db/models/sql/compiler.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/forms_tests/tests/test_utils.py",
+      "tests/model_forms/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms.models import model_to_dict\nfrom django.contrib.auth.models import User\n\nclass TestModelToDictBehavior(SimpleTestCase):\n    def test_model_to_dict_with_empty_fields_repro(self):\n        instance = User(username='testuser')\n        result = model_to_dict(instance, fields=[])\n        self.assertEqual(result, {})"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "model_to_dict"
+      ],
+      "classes": [
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/tests/test_utils.py",
+      "target_source_file": "django/forms/models.py",
+      "test_visible_functions": [
+        "model_to_dict"
+      ],
+      "test_visible_classes": [
+        "User"
+      ]
+    }
+  }
+]

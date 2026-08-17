@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/mathematica.py",
+      "target_function": "mathematica_code",
+      "related_classes": [
+        "Max"
+      ],
+      "candidate_test_file": "sympy/printing/tests/test_mathematica.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import symbols, Max",
+      "from sympy.printing.mathematica import mathematica_code",
+      "Use the generated reproduction path that calls mathematica_code, symbols."
+    ],
+    "execution_stimulus": [
+      "x = symbols('x')",
+      "output = mathematica_code(Max(x, 2))",
+      "Execute the focused target API path: mathematica_code, symbols."
+    ],
+    "expected_failure": "The output is 'Max(2, x)' instead of 'Max[x,2]'",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/stats/rv.py",
+      "sympy/printing/mathematica.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_symbol.py",
+      "sympy/stats/tests/test_joint_rv.py",
+      "sympy/printing/tests/test_mathematica.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Max\nfrom sympy.printing.mathematica import mathematica_code\ndef test_mathematica_code_max_order_repro():\n    x = symbols('x')\n    output = mathematica_code(Max(x, 2))\n    assert output == 'Max[x,2]', f'Expected Max[x,2], got {output}'\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(output) != 'Max(2, x)'"
+      },
+      {
+        "language": "python",
+        "code": "def test_mathematica_code_max_order():\n    from sympy import symbols, Max\n    from sympy.printing.mathematica import mathematica_code\n    x = symbols('x')\n    output = mathematica_code(Max(x, 2))\n    assert output == 'Max(2, x)', f'Expected Max[x,2], got {output}'"
+      }
+    ],
+    "expected_outputs": [
+      "Max[x,2]"
+    ],
+    "actual_outputs": [
+      "Max(2, x)"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "mathematica_code",
+        "symbols"
+      ],
+      "classes": [
+        "Max"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/tests/test_mathematica.py",
+      "target_source_file": "sympy/printing/mathematica.py",
+      "test_visible_functions": [
+        "mathematica_code",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Max"
+      ]
+    }
+  }
+]

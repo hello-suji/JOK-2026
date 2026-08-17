@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "requests/api.py",
+      "target_function": "put",
+      "related_classes": [
+        "MagicMock",
+        "PreparedRequest"
+      ],
+      "candidate_test_file": "test_requests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where put can be called.",
+      "Use the generated reproduction path that calls encode, put, prepare, send."
+    ],
+    "execution_stimulus": [
+      "Call put with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: encode, put, prepare, send."
+    ],
+    "expected_failure": "Request with binary payload fails due to calling to_native_string",
+    "relevant_source_files": [
+      "requests/api.py",
+      "requests/sessions.py",
+      "docs/conf.py"
+    ],
+    "relevant_test_files": [
+      "test_requests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from unittest.mock import MagicMock\nfrom requests.models import PreparedRequest\n\ndef test_put_with_binary_payload_repro():\n    session = MagicMock()\n    prepared_request = PreparedRequest()\n    prepared_request.prepare(method='PUT', url='http://httpbin.org/put', data=u\"ööö\".encode(\"utf-8\"))\n    session.send.return_value.status_code = 200\n    response = session.send(prepared_request)\n    assert response.status_code == 200"
+      },
+      {
+        "language": "python",
+        "code": "import requests\nrequests.put(\"http://httpbin.org/put\", data=u\"ööö\".encode(\"utf-8\"))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "put",
+        "prepare",
+        "send"
+      ],
+      "classes": [
+        "MagicMock",
+        "PreparedRequest"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "test_requests.py",
+      "target_source_file": "requests/api.py",
+      "test_visible_functions": [
+        "encode",
+        "put",
+        "prepare",
+        "send"
+      ],
+      "test_visible_classes": [
+        "MagicMock",
+        "PreparedRequest"
+      ]
+    }
+  }
+]

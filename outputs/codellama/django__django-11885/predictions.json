@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11885",
+    "model_patch": "--- a/tests/save_delete_hooks/models.py\n+++ b/tests/save_delete_hooks/models.py\n@@ -29,3 +29,25 @@\n         # Call the \"real\" delete() method\n         super().delete()\n         self.data.append(\"After deletion\")\n+\n+from django.db import models\n+from django.db.models.deletion import Collector\n+from django.contrib.auth.models import User, Group\n+\n+class TestDeleteCascadeCombination(models.TestCase):\n+    def setUp(self):\n+        self.user1 = User.objects.create(username='user1')\n+        self.user2 = User.objects.create(username='user2')\n+        self.group1 = Group.objects.create(name='group1')\n+        self.group2 = Group.objects.create(name='group2')\n+        self.group1.user_set.add(self.user1)\n+        self.group2.user_set.add(self.user2)\n+        self.group1.user_set.add(self.user2)\n+\n+    def test_delete_cascade_combination_repro(self):\n+        collector = Collector(using='default')\n+        collector.collect([self.group1, self.group2])\n+        sqls = collector.sqls\n+        self.assertEqual(len(sqls), 1)\n+        self.assertIn('DELETE FROM auth_user_groups', sqls[0][0])\n+        self.assertIn('WHERE auth_user_groups.group_id IN', sqls[0][0])\n",
+    "patch_sha256": "01d5987e8363dc90c748938af8b1525b266b22014b3530af71ae112f141252d2"
+  }
+]

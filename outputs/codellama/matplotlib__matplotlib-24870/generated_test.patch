@@ -1,0 +1,16 @@
+--- a/lib/matplotlib/tests/test_contour.py
++++ b/lib/matplotlib/tests/test_contour.py
+@@ -693,3 +693,13 @@
+     assert ax.get_children() != orig_children
+     cs.remove()
+     assert ax.get_children() == orig_children
++
++import matplotlib
++matplotlib.use('Agg')
++def test_contour_boolean_array_without_levels_repro():
++    import numpy as np
++    from matplotlib import pyplot as plt
++    ii, jj = np.ogrid[:100, :100]
++    im = (ii+jj) % 20 < 10
++    contours = plt.contour(im)
++    assert len(contours.levels) != 1

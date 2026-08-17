@@ -1,0 +1,474 @@
+{
+  "instance_id": "mwaskom__seaborn-3069",
+  "repo": "mwaskom/seaborn",
+  "base_commit": "54cab15bdacfaa05a88fbc5502a5b322d99f148e",
+  "repo_path": "data/repos/mwaskom__seaborn",
+  "candidate_source_files": [
+    {
+      "path": "seaborn/_core/plot.py",
+      "score": 21,
+      "matched_identifiers": [
+        "Plotter",
+        "_finalize_figure",
+        "figure",
+        "finalize",
+        "nominal"
+      ],
+      "reasons": [
+        "class_match:Plotter",
+        "stem_in_issue_text:plot",
+        "source_content_tokens:_finalize_figure,figure,finalize,nominal,plotter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Plotter": "class Plotter:\n    \"\"\"\n    Engine for compiling a :class:`Plot` spec into a Matplotlib figure.\n\n    This class is not intended to be instantiated directly by users.\n\n    \"\"\"\n    # TODO decide if we ever want these (Plot.plot(debug=True))?\n    _data: PlotData\n    _layers: list[Layer]\n    _figure: Figure\n\n    def __init__(self, pyplot: bool, theme: dict[str, Any]):\n\n        self._pyplot = pyplot",
+        "_finalize_figure": "    def _finalize_figure(self, p: Plot) -> None:\n\n        for sub in self._subplots:\n            ax = sub[\"ax\"]\n            for axis in \"xy\":\n                axis_key = sub[axis]\n\n                # Axis limits\n                if axis_key in p._limits:\n                    convert_units = getattr(ax, f\"{axis}axis\").convert_units\n                    a, b = p._limits[axis_key]\n                    lo = a if a is None else convert_units(a)\n                    hi = b if b is None else convert_units(b)\n                    if isinstance(a, str):\n                        lo = cast(float, lo) - 0.5"
+      },
+      "top_level_functions": [
+        "theme_context",
+        "build_plot_signature",
+        "Plot.on",
+        "Plot.add",
+        "Plot.pair",
+        "Plot.facet",
+        "Plot.scale",
+        "Plot.share",
+        "Plot.limit",
+        "Plot.label",
+        "Plot.layout",
+        "Plot.theme",
+        "Plot.save",
+        "Plot.show",
+        "Plot.plot",
+        "Plotter.save",
+        "Plotter.show"
+      ]
+    },
+    {
+      "path": "seaborn/_core/scales.py",
+      "score": 21,
+      "matched_identifiers": [
+        "Nominal",
+        "actually",
+        "categorical",
+        "figure",
+        "nominal"
+      ],
+      "reasons": [
+        "class_match:Nominal",
+        "stem_in_issue_text:scales",
+        "source_content_tokens:figure,nominal,actually,categorical,exactly"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Nominal": "class Nominal(Scale):\n    \"\"\"\n    A categorical scale without relative importance / magnitude.\n    \"\"\"\n    # Categorical (convert to strings), un-sortable\n\n    values: tuple | str | list | dict | None = None\n    order: list | None = None\n\n    _priority: ClassVar[int] = 3\n\n    def _setup(\n        self, data: Series, prop: Property, axis: Axis | None = None,\n    ) -> Scale:\n"
+      },
+      "top_level_functions": [
+        "Scale.tick",
+        "Scale.label",
+        "Nominal.tick",
+        "Nominal.label",
+        "Continuous.tick",
+        "Continuous.label",
+        "Temporal.tick",
+        "Temporal.label",
+        "PseudoAxis.set_view_interval",
+        "PseudoAxis.get_view_interval",
+        "PseudoAxis.set_data_interval",
+        "PseudoAxis.get_data_interval",
+        "PseudoAxis.get_tick_space",
+        "PseudoAxis.set_major_locator",
+        "PseudoAxis.set_major_formatter",
+        "PseudoAxis.set_minor_locator",
+        "PseudoAxis.set_minor_formatter",
+        "PseudoAxis.set_units",
+        "PseudoAxis.update_units",
+        "PseudoAxis.convert_units",
+        "PseudoAxis.get_scale",
+        "PseudoAxis.get_majorticklocs"
+      ]
+    },
+    {
+      "path": "seaborn/categorical.py",
+      "score": 17,
+      "matched_identifiers": [
+        "active",
+        "figure",
+        "finalize",
+        "plotter"
+      ],
+      "reasons": [
+        "stem_in_issue_text:categorical",
+        "source_content_tokens:figure,finalize,plotter,active,always"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "_CategoricalPlotterNew.cat_axis",
+        "_CategoricalPlotterNew.plot_strips",
+        "_CategoricalPlotterNew.plot_swarms",
+        "_CategoricalPlotter.establish_variables",
+        "_CategoricalPlotter.establish_colors",
+        "_CategoricalPlotter.hue_offsets",
+        "_CategoricalPlotter.nested_width",
+        "_CategoricalPlotter.annotate_axes",
+        "_CategoricalPlotter.add_legend_data",
+        "_BoxPlotter.draw_boxplot",
+        "_BoxPlotter.restyle_boxplot",
+        "_BoxPlotter.plot",
+        "_ViolinPlotter.estimate_densities",
+        "_ViolinPlotter.fit_kde",
+        "_ViolinPlotter.kde_support",
+        "_ViolinPlotter.scale_area",
+        "_ViolinPlotter.scale_width",
+        "_ViolinPlotter.scale_count",
+        "_ViolinPlotter.dwidth",
+        "_ViolinPlotter.draw_violins",
+        "_ViolinPlotter.draw_single_observation",
+        "_ViolinPlotter.draw_box_lines",
+        "_ViolinPlotter.draw_quartiles",
+        "_ViolinPlotter.draw_points",
+        "_ViolinPlotter.draw_stick_lines",
+        "_ViolinPlotter.draw_to_density",
+        "_ViolinPlotter.plot",
+        "_CategoricalStatPlotter.nested_width",
+        "_CategoricalStatPlotter.estimate_statistic",
+        "_CategoricalStatPlotter.draw_confints",
+        "_BarPlotter.draw_bars",
+        "_BarPlotter.plot",
+        "_PointPlotter.hue_offsets",
+        "_PointPlotter.draw_points",
+        "_PointPlotter.plot",
+        "_LVPlotter.draw_letter_value_plot",
+        "_LVPlotter.plot",
+        "boxplot",
+        "violinplot",
+        "boxenplot"
+      ]
+    },
+    {
+      "path": "seaborn/_core/properties.py",
+      "score": 16,
+      "matched_identifiers": [
+        "actually",
+        "always",
+        "categorical",
+        "nominal"
+      ],
+      "reasons": [
+        "source_content_tokens:nominal,actually,always,categorical,drawn"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Property.default_scale",
+        "Property.infer_scale",
+        "Property.get_mapping",
+        "Property.standardize",
+        "IntervalProperty.default_range",
+        "IntervalProperty.infer_scale",
+        "IntervalProperty.get_mapping",
+        "LineWidth.default_range",
+        "EdgeWidth.default_range",
+        "FontSize.default_range",
+        "ObjectProperty.default_scale",
+        "ObjectProperty.infer_scale",
+        "ObjectProperty.get_mapping",
+        "Marker.standardize",
+        "LineStyle.standardize",
+        "Color.standardize",
+        "Color.infer_scale",
+        "Color.get_mapping",
+        "Fill.standardize",
+        "Fill.default_scale",
+        "Fill.infer_scale",
+        "Fill.get_mapping"
+      ]
+    },
+    {
+      "path": "seaborn/_docstrings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "actually",
+        "categorical",
+        "figure",
+        "margin"
+      ],
+      "reasons": [
+        "source_content_tokens:figure,actually,categorical,margin,normal"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DocstringComponents.from_nested_components",
+        "DocstringComponents.from_function_params"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/_core/test_plot.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "test_name_matches_source_stem:plot",
+        "token_overlap:plot",
+        "internal_name_overlap:nominal",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_properties.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "test_name_matches_source_stem:properties",
+        "token_overlap:properties",
+        "internal_name_overlap:nominal",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_scales.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "test_name_matches_source_stem:scales",
+        "token_overlap:scales",
+        "internal_name_overlap:nominal",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_subplots.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "token_overlap:plot",
+        "internal_name_overlap:plot",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_categorical.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:categorical",
+        "token_overlap:categorical",
+        "internal_name_overlap:scales",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:seaborn/_core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/test_categorical.py:pytest_import_or_conftest",
+      "tests/test_categorical.py:testcase_class:TestBarPlotter",
+      "tests/test_categorical.py:testcase_class:TestBeeswarm",
+      "tests/test_categorical.py:testcase_class:TestBoxPlotter",
+      "tests/test_categorical.py:testcase_class:TestBoxenPlotter",
+      "tests/test_categorical.py:testcase_class:TestCatPlot",
+      "tests/test_categorical.py:testcase_class:TestCategoricalPlotter",
+      "tests/test_categorical.py:testcase_class:TestCategoricalPlotterNew",
+      "tests/test_categorical.py:testcase_class:TestCategoricalStatPlotter",
+      "tests/test_categorical.py:testcase_class:TestCountPlot",
+      "tests/test_categorical.py:testcase_class:TestPointPlotter",
+      "tests/test_categorical.py:testcase_class:TestStripPlot",
+      "tests/test_categorical.py:testcase_class:TestSwarmPlot",
+      "tests/test_categorical.py:testcase_class:TestViolinPlotter",
+      "tests/_core/test_subplots.py:pytest_import_or_conftest",
+      "tests/_core/test_subplots.py:testcase_class:TestSpecificationChecks",
+      "tests/_core/test_subplots.py:testcase_class:TestSubplotElements",
+      "tests/_core/test_subplots.py:testcase_class:TestSubplotSpec",
+      "tests/_core/test_scales.py:pytest_import_or_conftest",
+      "tests/_core/test_scales.py:testcase_class:TestContinuous"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 150,
+  "indexed_test_file_count": 39,
+  "available_imports": {
+    "seaborn._docstrings": [
+      "DocstringComponents"
+    ],
+    "seaborn.categorical": [
+      "Beeswarm",
+      "_BarPlotter",
+      "_BoxPlotter",
+      "_CategoricalFacetPlotter",
+      "_CategoricalPlotter",
+      "_CategoricalPlotterNew",
+      "_CategoricalStatPlotter",
+      "_CountPlotter",
+      "_LVPlotter",
+      "_PointPlotter",
+      "_ViolinPlotter",
+      "barplot",
+      "boxenplot",
+      "boxplot",
+      "catplot",
+      "countplot",
+      "pointplot",
+      "stripplot",
+      "swarmplot",
+      "violinplot"
+    ],
+    "seaborn": [
+      "cm",
+      "crayons",
+      "xkcd_rgb"
+    ],
+    "tests.test_categorical": [
+      "CategoricalFixture",
+      "SharedAxesLevelTests",
+      "SharedScatterTests",
+      "TestBarPlotter",
+      "TestBeeswarm",
+      "TestBoxPlotter",
+      "TestBoxenPlotter",
+      "TestCatPlot",
+      "TestCategoricalPlotter",
+      "TestCategoricalPlotterNew",
+      "TestCategoricalStatPlotter",
+      "TestCountPlot",
+      "TestPointPlotter",
+      "TestStripPlot",
+      "TestSwarmPlot",
+      "TestViolinPlotter"
+    ],
+    "tests._core.test_subplots": [
+      "TestSpecificationChecks",
+      "TestSubplotElements",
+      "TestSubplotSpec"
+    ],
+    "tests._core.test_scales": [
+      "TestContinuous",
+      "TestNominal",
+      "TestTemporal"
+    ],
+    "tests._core.test_properties": [
+      "DataFixtures",
+      "IntervalBase",
+      "ObjectPropertyBase",
+      "TestAlpha",
+      "TestColor",
+      "TestCoordinate",
+      "TestEdgeWidth",
+      "TestFill",
+      "TestLineStyle",
+      "TestLineWidth",
+      "TestMarker",
+      "TestPointSize"
+    ],
+    "tests._core.test_plot": [
+      "MockMark",
+      "TestDefaultObject",
+      "TestFacetInterface",
+      "TestInit",
+      "TestLabelVisibility",
+      "TestLayerAddition",
+      "TestLegend",
+      "TestPairInterface",
+      "TestPlotting",
+      "TestScaling",
+      "assert_gridspec_shape"
+    ],
+    "seaborn._core.plot": [
+      "FacetSpec",
+      "Layer",
+      "PairSpec",
+      "Plot",
+      "Plotter",
+      "build_plot_signature",
+      "theme_context"
+    ],
+    "seaborn._core.properties": [
+      "Alpha",
+      "Color",
+      "Coordinate",
+      "EdgeWidth",
+      "Fill",
+      "FontSize",
+      "HorizontalAlignment",
+      "IntervalProperty",
+      "LineStyle",
+      "LineWidth",
+      "Marker",
+      "ObjectProperty",
+      "Offset",
+      "PointSize",
+      "Property",
+      "Stroke",
+      "TextAlignment",
+      "VerticalAlignment"
+    ],
+    "seaborn._core.scales": [
+      "Continuous",
+      "ContinuousBase",
+      "Discrete",
+      "Nominal",
+      "Ordinal",
+      "PseudoAxis",
+      "Scale",
+      "Temporal",
+      "_make_identity_transforms",
+      "_make_log_transforms",
+      "_make_logit_transforms",
+      "_make_power_transforms",
+      "_make_sqrt_transforms",
+      "_make_symlog_transforms"
+    ]
+  },
+  "test_example_snippet": "class TestInit:\n\n    def test_empty(self):\n\n        p = Plot()\n        assert p._data.source_data is None\n        assert p._data.source_vars == {}\n\n    def test_data_only(self, long_df):\n\n        p = Plot(long_df)\n        assert p._data.source_data is long_df\n        assert p._data.source_vars == {}\n\n    def test_df_and_named_variables(self, long_df):\n\n        variables = {\"x\": \"a\", \"y\": \"z\"}\n        p = Plot(long_df, **variables)\n        for var, col in variables.items():\n            assert_vector_equal(p._data.frame[var], long_df[col])\n        assert p._data.source_data is long_df\n        assert p._data.source_vars.keys() == variables.keys()\n\n    def test_df_and_mixed_variables(self, long_df):\n\n        variables = {\"x\": \"a\", \"y\": long_df[\"z\"]}\n        p = Plot(long_df, **variables)\n        for var, col in variables.items():\n            if isinstance(col, str):\n                assert_vector_equal(p._data.frame[var], long_df[col])\n            else:\n                assert_vector_equal(p._data.frame[var], col)\n        assert p._data.source_data is long_df\n        assert p._data.source_vars.keys() == variables.keys()\n",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "close_figs",
+      "random_seed",
+      "rng",
+      "wide_df",
+      "wide_array",
+      "flat_series",
+      "flat_array",
+      "flat_list",
+      "flat_data",
+      "wide_list_of_series",
+      "wide_list_of_arrays",
+      "wide_list_of_lists",
+      "wide_dict_of_series",
+      "wide_dict_of_arrays",
+      "wide_dict_of_lists",
+      "long_df",
+      "long_dict",
+      "repeated_df",
+      "missing_df",
+      "object_df",
+      "null_series"
+    ]
+  }
+}

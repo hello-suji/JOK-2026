@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/physics/hep/gamma_matrices.py",
+      "target_function": "kahane_simplify",
+      "related_classes": [
+        "GammaMatrix",
+        "LorentzIndex",
+        "G",
+        "Gamma_matrices"
+      ],
+      "candidate_test_file": "sympy/physics/hep/tests/test_gamma_matrices.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import sympy and necessary modules from sympy.physics.hep.gamma_matrices",
+      "Define tensor indices mu, nu, rho, sigma using tensor_indices function",
+      "Use the generated reproduction path that calls kahane_simplify, tensor_indices, equals.",
+      "Use the generated reproduction path that calls equals, kahane_simplify, tensor_indices."
+    ],
+    "execution_stimulus": [
+      "Create expression t1 as G(mu)*G(-mu)*G(rho)*G(sigma)",
+      "Apply kahane_simplify to t1 and store result in r1",
+      "Create expression t2 as G(rho)*G(sigma)*G(mu)*G(-mu)",
+      "Apply kahane_simplify to t2 and store result in r2",
+      "Execute the focused target API path: kahane_simplify, tensor_indices, equals.",
+      "Execute the focused target API path: equals, kahane_simplify, tensor_indices."
+    ],
+    "expected_failure": "AssertionError when asserting r2.equals(4*G(rho)*G(sigma))",
+    "relevant_source_files": [
+      "sympy/tensor/tensor.py",
+      "sympy/physics/hep/gamma_matrices.py",
+      "sympy/geometry/line.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/hep/tests/test_gamma_matrices.py",
+      "sympy/tensor/tests/test_tensor.py",
+      "sympy/tensor/tests/test_tensor_element.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_kahane_leading_gamma_matrix_bug():\n    import sympy\n    from sympy.physics.hep.gamma_matrices import GammaMatrix as G, tensor_indices\n    from sympy.physics.hep.gamma_matrices import kahane_simplify\n    mu, nu, rho, sigma = tensor_indices('mu, nu, rho, sigma', LorentzIndex)\n    t1 = G(mu)*G(-mu)*G(rho)*G(sigma)\n    r1 = kahane_simplify(t1)\n    assert r1.equals(4*G(rho)*G(sigma))\n    t2 = G(rho)*G(sigma)*G(mu)*G(-mu)\n    r2 = kahane_simplify(t2)\n    assert r2.equals(4*G(rho)*G(sigma))"
+      },
+      {
+        "language": "python",
+        "code": "from sympy.physics.hep.gamma_matrices import GammaMatrix as G, kahane_simplify\nfrom sympy.physics.hep.gamma_matrices import tensor_indices, LorentzIndex\n\ndef test_kahane_leading_gamma_matrix_bug_repro():\n    mu, nu, rho, sigma = tensor_indices('mu, nu, rho, sigma', LorentzIndex)\n    t1 = G(mu)*G(-mu)*G(rho)*G(sigma)\n    r1 = kahane_simplify(t1)\n    t2 = G(rho)*G(sigma)*G(mu)*G(-mu)\n    r2 = kahane_simplify(t2)\n    assert r2.equals(4*G(rho)*G(sigma))\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(r2) != '4*GammaMatrix(sigma)*GammaMatrix(rho)'"
+      }
+    ],
+    "expected_outputs": [
+      "4*GammaMatrix(rho)*GammaMatrix(sigma)"
+    ],
+    "actual_outputs": [
+      "4*GammaMatrix(sigma)*GammaMatrix(rho)"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "kahane_simplify",
+        "tensor_indices",
+        "equals"
+      ],
+      "classes": [
+        "GammaMatrix",
+        "LorentzIndex",
+        "G",
+        "Gamma_matrices"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/hep/tests/test_gamma_matrices.py",
+      "target_source_file": "sympy/physics/hep/gamma_matrices.py",
+      "test_visible_functions": [
+        "equals",
+        "kahane_simplify",
+        "tensor_indices"
+      ],
+      "test_visible_classes": [
+        "GammaMatrix",
+        "Gamma_matrices",
+        "LorentzIndex",
+        "G"
+      ]
+    }
+  }
+]

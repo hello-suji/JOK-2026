@@ -1,0 +1,490 @@
+{
+  "instance_id": "sympy__sympy-14711",
+  "repo": "sympy/sympy",
+  "base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+  "repo_path": "data/repos/sympy__sympy",
+  "candidate_source_files": [
+    {
+      "path": "sympy/physics/vector/vector.py",
+      "score": 53,
+      "matched_identifiers": [
+        "6/site-packages/sympy/physics/vector/vector.py",
+        "Vector",
+        "__add__",
+        "_check_vector",
+        "gives",
+        "must",
+        "operator",
+        "supplied"
+      ],
+      "reasons": [
+        "function_match:_check_vector",
+        "function_match:__add__",
+        "class_match:Vector",
+        "explicit_file_path_hint:6/site-packages/sympy/physics/vector/vector.py",
+        "path_contains_class:Vector",
+        "stem_in_issue_text:vector",
+        "source_content_tokens:gives,must,operator,supplied,typeerror"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Vector": "class Vector(object):\n    \"\"\"The class used to define vectors.\n\n    It along with ReferenceFrame are the building blocks of describing a\n    classical mechanics system in PyDy and sympy.physics.vector.\n\n    Attributes\n    ==========\n\n    simp : Boolean\n        Let certain methods use trigsimp on their outputs\n\n    \"\"\"\n\n    simp = False",
+        "_check_vector": "def _check_vector(other):\n    if not isinstance(other, Vector):\n        raise TypeError('A Vector must be supplied')\n    return other",
+        "__add__": "    def __add__(self, other):\n        \"\"\"The add operator for Vector. \"\"\"\n        other = _check_vector(other)\n        return Vector(self.args + other.args)\n\n    def __and__(self, other):\n        \"\"\"Dot product of two vectors.\n\n        Returns a scalar, the dot product of the two Vectors\n\n        Parameters\n        ==========\n\n        other : Vector\n            The Vector which we are dotting with"
+      },
+      "top_level_functions": [
+        "Vector.separate",
+        "Vector.dot",
+        "Vector.cross",
+        "Vector.outer",
+        "Vector.diff",
+        "Vector.express",
+        "Vector.to_matrix",
+        "Vector.doit",
+        "Vector.dt",
+        "Vector.simplify",
+        "Vector.subs",
+        "Vector.magnitude",
+        "Vector.normalize",
+        "Vector.applyfunc",
+        "Vector.free_symbols"
+      ]
+    },
+    {
+      "path": "sympy/vector/vector.py",
+      "score": 33,
+      "matched_identifiers": [
+        "6/site-packages/sympy/physics/vector/vector.py",
+        "Vector",
+        "must",
+        "operator",
+        "typeerror",
+        "vector"
+      ],
+      "reasons": [
+        "class_match:Vector",
+        "file_hint_match:6/site-packages/sympy/physics/vector/vector.py",
+        "path_contains_class:Vector",
+        "stem_in_issue_text:vector",
+        "source_content_tokens:must,operator,typeerror,vector,check"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Vector": "class Vector(BasisDependent):\n    \"\"\"\n    Super class for all Vector classes.\n    Ideally, neither this class nor any of its subclasses should be\n    instantiated by the user.\n    \"\"\"\n\n    is_Vector = True\n    _op_priority = 12.0\n\n    @property\n    def components(self):\n        \"\"\"\n        Returns the components of this vector in the form of a\n        Python dictionary mapping BaseVector instances to the"
+      },
+      "top_level_functions": [
+        "Vector.components",
+        "Vector.magnitude",
+        "Vector.normalize",
+        "Vector.dot",
+        "Vector.cross",
+        "Vector.outer",
+        "Vector.projection",
+        "Vector.to_matrix",
+        "Vector.separate",
+        "BaseVector.system",
+        "BaseVector.free_symbols",
+        "VectorMul.base_vector",
+        "VectorMul.measure_number",
+        "Cross.doit",
+        "Dot.doit",
+        "cross",
+        "dot"
+      ]
+    },
+    {
+      "path": "sympy/physics/vector/dyadic.py",
+      "score": 23,
+      "matched_identifiers": [
+        "__add__",
+        "gives",
+        "must",
+        "operator",
+        "supplied"
+      ],
+      "reasons": [
+        "function_match:__add__",
+        "path_contains_class:Vector",
+        "source_content_tokens:gives,must,operator,supplied,typeerror"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__add__": "    def __add__(self, other):\n        \"\"\"The add operator for Dyadic. \"\"\"\n        other = _check_dyadic(other)\n        return Dyadic(self.args + other.args)\n\n    def __and__(self, other):\n        \"\"\"The inner product operator for a Dyadic and a Dyadic or Vector.\n\n        Parameters\n        ==========\n\n        other : Dyadic or Vector\n            The other Dyadic or Vector to take the inner product with\n\n        Examples"
+      },
+      "top_level_functions": [
+        "Dyadic.express",
+        "Dyadic.to_matrix",
+        "Dyadic.doit",
+        "Dyadic.dt",
+        "Dyadic.simplify",
+        "Dyadic.subs",
+        "Dyadic.applyfunc"
+      ]
+    },
+    {
+      "path": "sympy/physics/vector/frame.py",
+      "score": 23,
+      "matched_identifiers": [
+        "ReferenceFrame",
+        "gives",
+        "must",
+        "supplied",
+        "typeerror"
+      ],
+      "reasons": [
+        "class_match:ReferenceFrame",
+        "path_contains_class:Vector",
+        "stem_in_issue_text:frame",
+        "source_content_tokens:gives,must,supplied,typeerror,vector"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ReferenceFrame": "class ReferenceFrame(object):\n    \"\"\"A reference frame in classical mechanics.\n\n    ReferenceFrame is a class used to represent a reference frame in classical\n    mechanics. It has a standard basis of three unit vectors in the frame's\n    x, y, and z directions.\n\n    It also can have a rotation relative to a parent frame; this rotation is\n    defined by a direction cosine matrix relating this frame's basis vectors to\n    the parent frame's basis vectors.  It can also have an angular velocity\n    vector, defined in another frame.\n\n    \"\"\"\n    _count = 0\n"
+      },
+      "top_level_functions": [
+        "CoordinateSym.frame",
+        "ReferenceFrame.variable_map",
+        "ReferenceFrame.ang_acc_in",
+        "ReferenceFrame.ang_vel_in",
+        "ReferenceFrame.dcm",
+        "ReferenceFrame.orient",
+        "ReferenceFrame.orientnew",
+        "ReferenceFrame.set_ang_acc",
+        "ReferenceFrame.set_ang_vel",
+        "ReferenceFrame.x",
+        "ReferenceFrame.y",
+        "ReferenceFrame.z",
+        "ReferenceFrame.partial_velocity"
+      ]
+    },
+    {
+      "path": "sympy/vector/basisdependent.py",
+      "score": 23,
+      "matched_identifiers": [
+        "__add__",
+        "check",
+        "typeerror",
+        "vector"
+      ],
+      "reasons": [
+        "function_match:__add__",
+        "path_contains_class:Vector",
+        "source_content_tokens:typeerror,vector,__add__,check,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__add__": "    def __add__(self, other):\n        if isinstance(other, self._expr_type):\n            return other\n        else:\n            raise TypeError(\"Invalid argument types for addition\")\n\n    @call_highest_priority('__add__')\n    def __radd__(self, other):\n        if isinstance(other, self._expr_type):\n            return other\n        else:\n            raise TypeError(\"Invalid argument types for addition\")\n\n    @call_highest_priority('__rsub__')\n    def __sub__(self, other):"
+      },
+      "top_level_functions": [
+        "BasisDependent.evalf",
+        "BasisDependent.simplify",
+        "BasisDependent.trigsimp",
+        "BasisDependent.as_numer_denom",
+        "BasisDependent.factor",
+        "BasisDependent.as_coeff_Mul",
+        "BasisDependent.as_coeff_add",
+        "BasisDependent.diff",
+        "BasisDependent.doit",
+        "BasisDependentZero.normalize"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sympy/physics/vector/tests/test_frame.py",
+      "score": 41,
+      "matched_identifiers": [
+        "ReferenceFrame",
+        "Vector"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Vector",
+        "test_path_related_to_class:ReferenceFrame",
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/vector/tests",
+        "test_name_matches_source_stem:frame",
+        "token_overlap:frame,physics,sympy,vector",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/physics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/physics/vector/tests/test_dyadic.py",
+      "score": 40,
+      "matched_identifiers": [
+        "Vector"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Vector",
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/vector/tests",
+        "test_name_matches_source_stem:dyadic",
+        "token_overlap:dyadic,physics,sympy,vector",
+        "internal_name_overlap:dyadic",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/physics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/physics/vector/tests/test_vector.py",
+      "score": 38,
+      "matched_identifiers": [
+        "Vector"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Vector",
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/vector/tests",
+        "test_name_matches_source_stem:vector",
+        "token_overlap:physics,sympy,vector",
+        "internal_name_overlap:vector",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/physics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/physics/vector/tests/test_functions.py",
+      "score": 32,
+      "matched_identifiers": [
+        "Vector"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Vector",
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/vector/tests",
+        "token_overlap:physics,sympy,vector",
+        "internal_name_overlap:frame",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/physics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/physics/vector/tests/test_printing.py",
+      "score": 32,
+      "matched_identifiers": [
+        "Vector"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Vector",
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/vector/tests",
+        "token_overlap:physics,sympy,vector",
+        "internal_name_overlap:vector",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/physics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sympy/physics/vector/tests/test_printing.py:top_level_test_functions",
+      "sympy/physics/vector/tests/test_frame.py:top_level_test_functions",
+      "sympy/physics/vector/tests/test_dyadic.py:top_level_test_functions",
+      "sympy/physics/vector/tests/test_functions.py:pytest_import_or_conftest",
+      "sympy/physics/vector/tests/test_functions.py:top_level_test_functions",
+      "sympy/physics/vector/tests/test_vector.py:pytest_import_or_conftest",
+      "sympy/physics/vector/tests/test_vector.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "sympy-bin-test"
+  },
+  "indexed_file_count": 1220,
+  "indexed_test_file_count": 521,
+  "available_imports": {
+    "sympy": [
+      "AxisOrienter",
+      "BaseDyadic",
+      "BaseScalar",
+      "BaseVector",
+      "BodyOrienter",
+      "CoordSys3D",
+      "CoordSysCartesian",
+      "Cross",
+      "Curl",
+      "Del",
+      "Divergence",
+      "Dot",
+      "Dyadic",
+      "DyadicAdd",
+      "DyadicMul",
+      "DyadicZero",
+      "Gradient",
+      "Point",
+      "QuaternionOrienter",
+      "SpaceOrienter",
+      "TableForm",
+      "Vector",
+      "VectorAdd",
+      "VectorMul",
+      "VectorZero",
+      "__sympy_debug",
+      "__version__",
+      "absolute_import",
+      "ccode",
+      "cross",
+      "curl",
+      "cxxcode",
+      "directional_derivative",
+      "divergence",
+      "dot",
+      "express",
+      "fcode",
+      "glsl_code",
+      "gradient",
+      "init_printing",
+      "init_session",
+      "is_conservative",
+      "is_solenoidal",
+      "jscode",
+      "julia_code",
+      "laplacian",
+      "latex",
+      "mathematica_code",
+      "mathml",
+      "matrix_to_vector",
+      "mdft",
+      "mgamma",
+      "minkowski_tensor",
+      "msigma",
+      "octave_code",
+      "pager_print",
+      "plot",
+      "plot_backends",
+      "plot_implicit",
+      "pprint",
+      "pprint_try_use_unicode",
+      "pprint_use_unicode",
+      "pretty",
+      "pretty_print",
+      "preview",
+      "print_function",
+      "print_gtk",
+      "print_python",
+      "print_tree",
+      "python",
+      "rcode",
+      "rust_code",
+      "scalar_potential",
+      "scalar_potential_difference",
+      "srepr",
+      "sstr",
+      "sstrrepr",
+      "textplot",
+      "units"
+    ],
+    "sympy.vector.vector": [
+      "BaseVector",
+      "Cross",
+      "Dot",
+      "Vector",
+      "VectorAdd",
+      "VectorMul",
+      "VectorZero",
+      "_vect_div",
+      "cross",
+      "dot"
+    ],
+    "sympy.vector.basisdependent": [
+      "BasisDependent",
+      "BasisDependentAdd",
+      "BasisDependentMul",
+      "BasisDependentZero"
+    ],
+    "sympy.physics.vector.vector": [
+      "Vector",
+      "VectorTypeError",
+      "_check_vector"
+    ],
+    "sympy.physics.vector.frame": [
+      "CoordinateSym",
+      "ReferenceFrame",
+      "_check_frame"
+    ],
+    "sympy.physics.vector.dyadic": [
+      "Dyadic",
+      "_check_dyadic"
+    ],
+    "sympy.physics": [
+      "dyadic",
+      "fieldfunctions",
+      "frame",
+      "functions",
+      "point",
+      "printing",
+      "vector"
+    ],
+    "sympy.physics.vector.tests.test_printing": [
+      "ascii_vpretty",
+      "test_dyadic_latex",
+      "test_dyadic_pretty_print",
+      "test_latex_printer",
+      "test_vector_latex",
+      "test_vector_latex_with_functions",
+      "test_vector_pretty_print",
+      "test_vlatex",
+      "unicode_vpretty"
+    ],
+    "sympy.physics.vector.tests.test_frame": [
+      "test_ang_vel",
+      "test_coordinate_vars",
+      "test_dcm",
+      "test_issue_10348",
+      "test_issue_11498",
+      "test_issue_11503",
+      "test_orientnew_respects_parent_class",
+      "test_partial_velocity"
+    ],
+    "sympy.physics.vector.tests.test_dyadic": [
+      "test_dyadic",
+      "test_dyadic_simplify"
+    ],
+    "sympy.physics.vector.tests.test_functions": [
+      "test_cross",
+      "test_cross_different_frames",
+      "test_dot",
+      "test_dot_different_frames",
+      "test_express",
+      "test_get_motion_methods",
+      "test_kin_eqs",
+      "test_operator_match",
+      "test_partial_velocity",
+      "test_time_derivative"
+    ],
+    "sympy.physics.vector.tests.test_vector": [
+      "test_Vector",
+      "test_Vector_diffs",
+      "test_vector_simplify",
+      "test_vector_var_in_dcm"
+    ]
+  },
+  "test_example_snippet": "def test_coordinate_vars():\n    \"\"\"Tests the coordinate variables functionality\"\"\"\n    A = ReferenceFrame('A')\n    assert CoordinateSym('Ax', A, 0) == A[0]\n    assert CoordinateSym('Ax', A, 1) == A[1]\n    assert CoordinateSym('Ax', A, 2) == A[2]\n    q = dynamicsymbols('q')\n    qd = dynamicsymbols('q', 1)\n    assert isinstance(A[0], CoordinateSym) and \\\n           isinstance(A[0], CoordinateSym) and \\\n           isinstance(A[0], CoordinateSym)\n    assert A.variable_map(A) == {A[0]:A[0], A[1]:A[1], A[2]:A[2]}\n    assert A[0].frame == A\n    B = A.orientnew('B', 'Axis', [q, A.z])\n    assert B.variable_map(A) == {B[2]: A[2], B[1]: -A[0]*sin(q) + A[1]*cos(q),\n                                 B[0]: A[0]*cos(q) + A[1]*sin(q)}\n    assert A.variable_map(B) == {A[0]: B[0]*cos(q) - B[1]*sin(q),\n                                 A[1]: B[0]*sin(q) + B[1]*cos(q), A[2]: B[2]}\n    assert time_derivative(B[0], A) == -A[0]*sin(q)*qd + A[1]*cos(q)*qd\n    assert time_derivative(B[1], A) == -A[0]*cos(q)*qd - A[1]*sin(q)*qd\n    assert time_derivative(B[2], A) == 0\n    assert express(B[0], A, variables=True) == A[0]*cos(q) + A[1]*sin(q)\n    assert express(B[1], A, variables=True) == -A[0]*sin(q) + A[1]*cos(q)\n    assert express(B[2], A, variables=True) == A[2]\n    assert time_derivative(A[0]*A.x + A[1]*A.y + A[2]*A.z, B) == A[1]*qd*A.x - A[0]*qd*A.y\n    assert time_derivative(B[0]*B.x + B[1]*B.y + B[2]*B.z, A) == - B[1]*qd*B.x + B[0]*qd*B.y\n    assert express(B[0]*B[1]*B[2], A, variables=True) == \\\n           A[2]*(-A[0]*sin(q) + A[1]*cos(q))*(A[0]*cos(q) + A[1]*sin(q))\n    assert (time_derivative(B[0]*B[1]*B[2], A) -\n            (A[2]*(-A[0]**2*cos(2*q) -\n             2*A[0]*A[1]*sin(2*q) +\n             A[1]**2*cos(2*q))*qd)).trigsimp() == 0\n    assert express(B[0]*B.x + B[1]*B.y + B[2]*B.z, A) == \\\n           (B[0]*cos(q) - B[1]*sin(q))*A.x + (B[0]*sin(q) + \\\n           B[1]*cos(q))*A.y + B[2]*A.z",
+  "conftest_fixtures": {
+    "sympy/conftest.py": [
+      "file_clear_cache",
+      "check_disabled"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/postgresql/schema.py",
+      "target_function": "remove_constraint",
+      "related_classes": [
+        "PostgreSQLSchemaEditor",
+        "PostgreSQL",
+        "DatabaseSchemaEditor"
+      ],
+      "candidate_test_file": "tests/backends/postgresql/test_operations.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import migrations, models",
+      "from django.test import TestCase",
+      "class TestUniqueTogetherConstraintRemoval(TestCase):",
+      "    def setUp(self):",
+      "        self.app_label = 'test_app'",
+      "        self.model_name = 'test_model'",
+      "        self.table_name = f'{self.app_label}_{self.model_name}'",
+      "        self.unique_constraint_name = f'{self.table_name}_id_1c3b3088c74c3b17_uniq'",
+      "        self.primary_key_constraint_name = f'{self.table_name}_pkey'",
+      "        self.migration = migrations.CreateModel(",
+      "            name=self.model_name,",
+      "            fields=[",
+      "                ('id', models.AutoField(primary_key=True)),",
+      "            ],",
+      "            options={",
+      "                'unique_together': (('id',),)",
+      "            },",
+      "        )",
+      "        self.migration.apply(self.app_label, schema_editor=self.connection.schema_editor())",
+      "Use the generated reproduction path that calls connection, remove_constraint, cursor, execute."
+    ],
+    "execution_stimulus": [
+      "self.connection.schema_editor().remove_constraint(self.table_name, self.unique_constraint_name)",
+      "Execute the focused target API path: connection, remove_constraint, cursor, execute."
+    ],
+    "expected_failure": "The migration fails to drop the unique_together constraint because it mistakenly identifies the primary key constraint as the only unique constraint on the column.",
+    "relevant_source_files": [
+      "django/db/backends/postgresql/schema.py",
+      "django/db/backends/postgresql/base.py",
+      "django/db/backends/postgresql/features.py",
+      "django/db/backends/postgresql/introspection.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/postgresql/test_operations.py",
+      "tests/backends/postgresql/test_introspection.py",
+      "tests/postgres_tests/test_introspection.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db import connection\nfrom django.db.backends.postgresql.schema import DatabaseSchemaEditor\nfrom django.test import TestCase\n\nclass TestRemoveConstraint(TestCase):\n    def test_remove_unique_constraint_repro(self):\n        schema_editor = DatabaseSchemaEditor(connection)\n        table_name = 'my_table'\n        constraint_name = 'my_unique_constraint'\n        with connection.cursor() as cursor:\n            cursor.execute(f'CREATE TABLE {table_name} (id SERIAL PRIMARY KEY, name VARCHAR(100) UNIQUE CONSTRAINT {constraint_name} UNIQUE)')\n        schema_editor.remove_constraint(table_name, constraint_name)\n        with connection.cursor() as cursor:\n            cursor.execute(f'SELECT conname FROM pg_constraint WHERE conname = %s', [constraint_name])\n            self.assertFalse(cursor.fetchone(), 'The constraint should have been removed.')"
+      },
+      {
+        "language": "python",
+        "code": "def test_remove_unique_together_constraint_with_primary_key():\n    from django.db import migrations, models\n    from django.test import TestCase\n    class TestUniqueTogetherConstraintRemoval(TestCase):\n        def setUp(self):\n            self.app_label = 'test_app'\n            self.model_name = 'test_model'\n            self.table_name = f'{self.app_label}_{self.model_name}'\n            self.unique_constraint_name = f'{self.table_name}_id_1c3b3088c74c3b17_uniq'\n            self.primary_key_constraint_name = f'{self.table_name}_pkey'\n            self.migration = migrations.CreateModel(\n                name=self.model_name,\n                fields=[\n                    ('id', models.AutoField(primary_key=True)),\n                ],\n                options={\n                    'unique_together': (('id',),),\n                },\n            )\n            self.migration.apply(self.app_label, schema_editor=self.connection.schema_editor())\n        def test_remove_constraint(self):\n            with self.assertRaises(Exception) as context:\n                self.connection.schema_editor().remove_constraint(self.table_name, self.unique_constraint_name)\n            self.assertIn('conflicting unique constraints', str(context.exception))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "conflicting unique constraints"
+    ],
+    "identifiers": {
+      "functions": [
+        "remove_constraint",
+        "connection",
+        "cursor",
+        "execute",
+        "fetchone"
+      ],
+      "classes": [
+        "PostgreSQLSchemaEditor",
+        "PostgreSQL",
+        "DatabaseSchemaEditor"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/postgresql/test_operations.py",
+      "target_source_file": "django/db/backends/postgresql/schema.py",
+      "test_visible_functions": [
+        "connection",
+        "remove_constraint",
+        "cursor",
+        "execute",
+        "fetchone"
+      ],
+      "test_visible_classes": [
+        "PostgreSQL",
+        "DatabaseSchemaEditor"
+      ]
+    }
+  }
+]

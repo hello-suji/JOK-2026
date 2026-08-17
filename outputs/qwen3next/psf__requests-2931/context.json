@@ -1,0 +1,249 @@
+{
+  "instance_id": "psf__requests-2931",
+  "repo": "psf/requests",
+  "base_commit": "5f7a3a74aab1625c2bb65f643197ee885e3da576",
+  "repo_path": "data/repos/psf__requests",
+  "candidate_source_files": [
+    {
+      "path": "requests/api.py",
+      "score": 21,
+      "matched_identifiers": [
+        "http",
+        "httpbin",
+        "import",
+        "put",
+        "utf-8"
+      ],
+      "reasons": [
+        "function_match:put",
+        "source_content_tokens:http,httpbin,utf-8,import,request"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "put": "def put(url, data=None, **kwargs):\n    \"\"\"Sends a PUT request.\n\n    :param url: URL for the new :class:`Request` object.\n    :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.\n    :param \\*\\*kwargs: Optional arguments that ``request`` takes.\n    :return: :class:`Response <Response>` object\n    :rtype: requests.Response\n    \"\"\"\n\n    return request('put', url, data=data, **kwargs)\n\n\ndef patch(url, data=None, **kwargs):\n    \"\"\"Sends a PATCH request."
+      },
+      "top_level_functions": [
+        "request",
+        "get",
+        "options",
+        "head",
+        "post",
+        "put",
+        "patch",
+        "delete"
+      ]
+    },
+    {
+      "path": "requests/sessions.py",
+      "score": 21,
+      "matched_identifiers": [
+        "encode",
+        "http",
+        "httpbin",
+        "put",
+        "utf-8"
+      ],
+      "reasons": [
+        "function_match:put",
+        "source_content_tokens:http,httpbin,utf-8,encode,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "put": "    def put(self, url, data=None, **kwargs):\n        \"\"\"Sends a PUT request. Returns :class:`Response` object.\n\n        :param url: URL for the new :class:`Request` object.\n        :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`.\n        :param \\*\\*kwargs: Optional arguments that ``request`` takes.\n        \"\"\"\n\n        return self.request('PUT', url, data=data, **kwargs)\n\n    def patch(self, url, data=None, **kwargs):\n        \"\"\"Sends a PATCH request. Returns :class:`Response` object.\n\n        :param url: URL for the new :class:`Request` object.\n        :param data: (optional) Dictionary, bytes, or file-like object to send in the body of the :class:`Request`."
+      },
+      "top_level_functions": [
+        "merge_setting",
+        "merge_hooks",
+        "SessionRedirectMixin.resolve_redirects",
+        "SessionRedirectMixin.rebuild_auth",
+        "SessionRedirectMixin.rebuild_proxies",
+        "Session.prepare_request",
+        "Session.request",
+        "Session.get",
+        "Session.options",
+        "Session.head",
+        "Session.post",
+        "Session.put",
+        "Session.patch",
+        "Session.delete",
+        "Session.send",
+        "Session.merge_environment_settings",
+        "Session.get_adapter",
+        "Session.close",
+        "Session.mount",
+        "session"
+      ]
+    },
+    {
+      "path": "docs/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "http",
+        "import",
+        "kennethreitz",
+        "utf-8"
+      ],
+      "reasons": [
+        "source_content_tokens:http,utf-8,import,kennethreitz,request"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "requests/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "http",
+        "httpbin",
+        "https",
+        "utf-8"
+      ],
+      "reasons": [
+        "source_content_tokens:http,httpbin,utf-8,https,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "requests/adapters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "encode",
+        "http",
+        "https",
+        "utf-8"
+      ],
+      "reasons": [
+        "source_content_tokens:http,utf-8,encode,https,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseAdapter.send",
+        "BaseAdapter.close",
+        "HTTPAdapter.init_poolmanager",
+        "HTTPAdapter.proxy_manager_for",
+        "HTTPAdapter.cert_verify",
+        "HTTPAdapter.build_response",
+        "HTTPAdapter.get_connection",
+        "HTTPAdapter.close",
+        "HTTPAdapter.request_url",
+        "HTTPAdapter.add_headers",
+        "HTTPAdapter.proxy_headers",
+        "HTTPAdapter.send"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "test_requests.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:requests",
+        "internal_name_overlap:requests",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "test_requests.py:pytest_import_or_conftest",
+      "test_requests.py:unittest_or_django_test_import",
+      "test_requests.py:top_level_test_functions",
+      "test_requests.py:testcase_class:TestCaseInsensitiveDict",
+      "test_requests.py:testcase_class:TestContentEncodingDetection",
+      "test_requests.py:testcase_class:TestMorselToCookieExpires",
+      "test_requests.py:testcase_class:TestMorselToCookieMaxAge",
+      "test_requests.py:testcase_class:TestRedirects",
+      "test_requests.py:testcase_class:TestRequests",
+      "test_requests.py:testcase_class:TestTimeout",
+      "test_requests.py:testcase_class:UtilsTestCase"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 84,
+  "indexed_test_file_count": 1,
+  "available_imports": {
+    "test_requests": [
+      "RedirectSession",
+      "TestCaseInsensitiveDict",
+      "TestContentEncodingDetection",
+      "TestMorselToCookieExpires",
+      "TestMorselToCookieMaxAge",
+      "TestRedirects",
+      "TestRequests",
+      "TestTimeout",
+      "UtilsTestCase",
+      "assert_copy",
+      "httpbin",
+      "httpsbin_url",
+      "list_of_tuples",
+      "test_data_argument_accepts_tuples",
+      "test_prepare_unicode_url",
+      "test_prepared_request_complete_copy",
+      "test_prepared_request_empty_copy",
+      "test_prepared_request_no_cookies_copy",
+      "test_urllib3_pool_connection_closed",
+      "test_urllib3_retries",
+      "test_vendor_aliases"
+    ],
+    "requests.api": [
+      "delete",
+      "get",
+      "head",
+      "options",
+      "patch",
+      "post",
+      "put",
+      "request"
+    ],
+    "requests.adapters": [
+      "BaseAdapter",
+      "HTTPAdapter"
+    ],
+    "requests": [
+      "ConnectionError",
+      "FileModeWarning",
+      "HTTPError",
+      "PreparedRequest",
+      "Request",
+      "RequestException",
+      "Response",
+      "Session",
+      "Timeout",
+      "TooManyRedirects",
+      "URLRequired",
+      "codes",
+      "delete",
+      "get",
+      "head",
+      "options",
+      "patch",
+      "post",
+      "put",
+      "request",
+      "session",
+      "utils"
+    ],
+    "requests.sessions": [
+      "Session",
+      "SessionRedirectMixin",
+      "merge_hooks",
+      "merge_setting",
+      "session"
+    ]
+  },
+  "test_example_snippet": "class TestRequests(object):\n\n    _multiprocess_can_split_ = True\n\n    def setUp(self):\n        \"\"\"Create simple data set with headers.\"\"\"\n        pass\n\n    def tearDown(self):\n        \"\"\"Teardown.\"\"\"\n        pass\n\n    def test_entry_points(self):\n\n        requests.session\n        requests.session().get\n        requests.session().head\n        requests.get\n        requests.head\n        requests.put\n        requests.patch\n        requests.post\n\n    def test_invalid_url(self):\n        with pytest.raises(MissingSchema):\n            requests.get('hiwpefhipowhefopw')\n        with pytest.raises(InvalidSchema):\n            requests.get('localhost:3128')\n        with pytest.raises(InvalidSchema):\n            requests.get('localhost.localdomain:3128/')\n        with pytest.raises(InvalidSchema):\n            requests.get('10.122.1.1:3128/')\n        with pytest.raises(InvalidURL):\n            requests.get('http://')\n",
+  "conftest_fixtures": {}
+}

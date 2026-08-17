@@ -1,0 +1,24 @@
+{
+  "instance_id": "django__django-10880",
+  "observed_behavior": [
+    "Query syntax error with condition and distinct combination",
+    "A Count annotation containing both a Case condition and a distinct=True param produces a query error on Django 2.2 (whatever the db backend). A space is missing at least (... COUNT(DISTINCTCASE WHEN ...)."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "A Count annotation containing both a Case condition and a distinct=True param produces a query error on Django 2.2 (whatever the db backend). A space is missing at least (... COUNT(DISTINCTCASE WHEN ...)."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Query syntax error with condition and distinct combination\nDescription\n\t\nA Count annotation containing both a Case condition and a distinct=True param produces a query error on Django 2.2 (whatever the db backend). A space is missing at least (... COUNT(DISTINCTCASE WHEN ...).",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

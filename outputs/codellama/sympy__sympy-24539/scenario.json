@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/polys/rings.py",
+      "target_function": "as_expr",
+      "related_classes": [
+        "PolyElement"
+      ],
+      "candidate_test_file": "sympy/polys/tests/test_rings.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where as_expr can be called.",
+      "Use the generated reproduction path that calls as_expr, ring, symbols."
+    ],
+    "execution_stimulus": [
+      "Call as_expr with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: as_expr, ring, symbols."
+    ],
+    "expected_failure": "is supposed to let you set the symbols you want to use, but, as it stands, either you pass the wrong number of symbols, and get an error message, or you pass the right number of symbols, and it ignores them, using `self.ring.symbols` instead:",
+    "relevant_source_files": [
+      "sympy/polys/rings.py",
+      "sympy/core/expr.py",
+      "sympy/core/symbol.py"
+    ],
+    "relevant_test_files": [
+      "sympy/polys/tests/test_rings.py",
+      "sympy/polys/tests/test_ring_series.py",
+      "sympy/polys/tests/test_orderings.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_PolyElement_as_expr_with_custom_symbols_repro():\n    R, x, y, z = ring(\"x,y,z\", ZZ)\n    f = 3*x**2*y - x*y*z + 7*z**3 + 1\n    U, V, W = symbols(\"u,v,w\")\n    expr = f.as_expr(U, V, W)\n    assert expr == 3*U**2*V - U*V*W + 7*W**3 + 1\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(expr) != '3*x**2*y - x*y*z + 7*z**3 + 1'"
+      },
+      {
+        "language": "python",
+        "code": ">>> from sympy import ring, ZZ, symbols\n>>> R, x, y, z = ring(\"x,y,z\", ZZ)\n>>> f = 3*x**2*y - x*y*z + 7*z**3 + 1\n>>> U, V, W = symbols(\"u,v,w\")\n>>> f.as_expr(U, V, W)\n3*x**2*y - x*y*z + 7*z**3 + 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "3*x**2*y - x*y*z + 7*z**3 + 1"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "as_expr",
+        "ring",
+        "symbols"
+      ],
+      "classes": [
+        "PolyElement"
+      ],
+      "files": [
+        "sympy/polys/rings.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/polys/tests/test_rings.py",
+      "target_source_file": "sympy/polys/rings.py",
+      "test_visible_functions": [
+        "as_expr",
+        "ring",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "PolyElement"
+      ]
+    }
+  }
+]

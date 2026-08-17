@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-6386",
+    "model_patch": "--- a/tests/checkers/unittest_similar.py\n+++ b/tests/checkers/unittest_similar.py\n@@ -490,3 +490,10 @@\n         similar.Run([\"--duplicates=0\", SIMILAR1, SIMILAR2])\n     assert ex.value.code == 0\n     assert output.getvalue() == \"\"\n+\n+def test_verbose_short_option_requires_argument_repro() -> None:\n+    output = StringIO()\n+    with redirect_stdout(output), pytest.raises(SystemExit) as ex:\n+        similar.Run(['-v', 'mytest.py'])\n+    assert ex.value.code != 0\n+    assert 'argument --verbose/-v: expected one argument' in output.getvalue()\n",
+    "patch_sha256": "0a8efc07c9687b592719e6fa85c9a39dd2a26ba78675700efccb73c842e4a148"
+  }
+]

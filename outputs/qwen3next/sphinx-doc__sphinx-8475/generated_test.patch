@@ -1,0 +1,22 @@
+--- a/tests/test_build_linkcheck.py
++++ b/tests/test_build_linkcheck.py
+@@ -382,3 +382,19 @@
+         "uri": "https://localhost:7777/",
+         "info": "Could not find a suitable TLS CA certificate bundle, invalid path: does/not/exist",
+     }
++
++def test_head_too_many_redirects_fallback_get_repro():
++    from sphinx.builders.linkcheck import CheckExternalLinksBuilder
++    import requests
++    import unittest.mock as mock
++
++    with mock.patch('requests.head') as mock_head, mock.patch('requests.get') as mock_get:
++        mock_head.side_effect = requests.exceptions.TooManyRedirects()
++        mock_get.return_value.status_code = 200
++
++        builder = CheckExternalLinksBuilder(None, None, None, None)
++        result = builder.check_uri('https://example.com')
++
++        mock_head.assert_called_once_with('https://example.com', allow_redirects=False)
++        mock_get.assert_called_once_with('https://example.com', allow_redirects=True)
++        assert result == (True, '')

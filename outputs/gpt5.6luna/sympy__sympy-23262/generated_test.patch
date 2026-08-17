@@ -1,0 +1,13 @@
+--- a/sympy/utilities/tests/test_lambdify.py
++++ b/sympy/utilities/tests/test_lambdify.py
+@@ -1570,3 +1570,10 @@
+ def test_deprecated_set_gate():
+     with warns_deprecated_sympy():
+         lambdify({x, y}, x + y)
++
++def test_lambdify_tuple_return_repro():
++    import inspect
++    from sympy import lambdify
++
++    source = inspect.getsource(lambdify([], tuple([1])))
++    assert source == 'def _lambdifygenerated():\n    return (1,)\n'

@@ -1,0 +1,32 @@
+--- a/tests/generic_views/test_base.py
++++ b/tests/generic_views/test_base.py
+@@ -603,3 +603,29 @@
+             str(response.context['foo2'])
+         self.assertEqual(response.context['key'], 'value')
+         self.assertIsInstance(response.context['view'], View)
++
++from django.test import TestCase, SimpleTestCase
++from django.shortcuts import get_object_or_404
++from django.views.generic.base import TemplateView
++from django.utils.functional import SimpleLazyObject
++from django.contrib.auth.models import User  # Assuming User model for Account model placeholder
++
++class TestOfferView(TemplateView):
++    template_name = "offers/offer.html"
++
++    def get_context_data(self, **kwargs):
++        offer_slug = kwargs.get("offer_slug", "")
++        offer = get_object_or_404(User, username=offer_slug)
++        return {"offer": offer, "offer_slug": offer_slug}
++
++class TestOfferViewIntegration(SimpleTestCase):
++    def setUp(self):
++        self.user = User.objects.create_user(username='testuser')
++        self.factory = RequestFactory()
++
++    def test_get_context_data_with_simplelazyobject_repro(self):
++        request = self.factory.get('/offer/')
++        view = TestOfferView()
++        context = view.get_context_data(offer_slug=SimpleLazyObject(lambda: self.user.username))
++        self.assertEqual(context['offer'], self.user)
++        self.assertEqual(context['offer_slug'], self.user.username)

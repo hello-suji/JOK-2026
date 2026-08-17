@@ -1,0 +1,15 @@
+--- a/tests/backends/postgresql/test_creation.py
++++ b/tests/backends/postgresql/test_creation.py
+@@ -123,3 +123,12 @@
+                 DatabaseCreation, "_database_exists", return_value=True
+             ):
+                 creation._create_test_db(verbosity=0, autoclobber=False, keepdb=True)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.backends.postgresql.client import DatabaseClient
++
++class TestDatabaseClientBehavior(SimpleTestCase):
++    def test_dbshell_additional_parameters_order_repro(self):
++        client = DatabaseClient()
++        args = client.runshell(['-c', 'select * from some_table;'])
++        self.assertLess(args.index('-c'), args.index(connection.settings_dict['NAME']))

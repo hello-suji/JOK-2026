@@ -1,0 +1,17 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -207,3 +207,14 @@
+         )
+         template = engine.get_template("hello.html")
+         self.assertEqual(template.render({"name": "Joe"}), "Hello Joe!\n")
++
++from django.db.models import Count
++from myapp.models import Book, Chapter
++
++class TestQueryOptimization(TemplateStringsTests):
++    def test_count_without_unused_annotation_repro(self):
++        Book.objects.create(title='Book1')
++        Chapter.objects.create(book_id=1)
++        query_with_annotation = Book.objects.annotate(chapter_count=Count('chapters'))
++        count_with_annotation = query_with_annotation.count()
++        self.assertEqual(count_with_annotation, Book.objects.count())

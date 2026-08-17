@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "setup",
+      "related_classes": [
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import necessary modules including sphinx.ext.autodoc and sphinx.ext.napoleon.",
+      "Configure Sphinx with autodoc_typehints='description' and autodoc_typehints_description_target='documented'.",
+      "Set napoleon_numpy_docstring=False.",
+      "Use the generated reproduction path that calls tempfile, autodoc, napoleon, join."
+    ],
+    "execution_stimulus": [
+      "Generate documentation for a function with a Google-style docstring containing a Returns section.",
+      "Execute the focused target API path: tempfile, autodoc, napoleon, join."
+    ],
+    "expected_failure": "The return types are missing from the generated documentation.",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "doc/conf.py",
+      "doc/development/tutorials/examples/todo.py",
+      "sphinx/config.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nfrom sphinx.application import Sphinx\nfrom sphinx.ext import autodoc, napoleon\n\ndef test_missing_return_types_in_documentation_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = os.path.join(tmpdir, 'conf')\n        outdir = os.path.join(tmpdir, '_build')\n        doctreedir = os.path.join(tmpdir, '_doctrees')\n        os.makedirs(srcdir)\n        os.makedirs(confdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(\"\"\"\n.. autofunction:: my_module.my_function\n\"\"\")\n        with open(os.path.join(srcdir, 'my_module.py'), 'w') as f:\n            f.write(\"\"\"\ndef my_function():\n    \\\"\\\"\\\n    Returns:\n        int: The returned value.\n    \\\"\\\"\\\n    return 42\n\"\"\")\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write(\"\"\"\nimport os\nimport sys\nsys.path.insert(0, os.path.abspath('.'))\nextensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']\nautodoc_typehints = 'description'\nautodoc_typehints_description_target = 'documented'\nnapoleon_numpy_docstring = False\n\"\"\")\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n        app.setup_extension('sphinx.ext.autodoc')\n        app.setup_extension('sphinx.ext.napoleon')\n        app.build()\n        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n            html_content = f.read()\n        assert 'Returns:' in html_content\n        assert 'int: The returned value.' in html_content"
+      },
+      {
+        "language": "python",
+        "code": "def test_missing_return_types_in_documentation():\n    import sphinx\n    from sphinx.ext import autodoc, napoleon\n    from sphinx.application import Sphinx\n    \n    app = Sphinx(srcdir='.', confdir='.', outdir='_build', doctreedir='_doctrees', buildername='html')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.setup_extension('sphinx.ext.napoleon')\n    \n    app.config.autodoc_typehints = 'description'\n    app.config.autodoc_typehints_description_target = 'documented'\n    app.config.napoleon_numpy_docstring = False\n    \n    def sample_function():\n        \"\"\"\n        Description.\n        \n        Parameters:\n            param1: First parameter.\n            param2: Second parameter.\n        \n        Returns:\n            The returned value.\n        \"\"\"\n        pass\n    \n    result = autodoc.Documenter(app, sample_function, 'function').document()\n    assert 'Returns:' not in result or 'The returned value.' not in result"
+      }
+    ],
+    "expected_outputs": [
+      "Returns:",
+      "The returned value."
+    ],
+    "actual_outputs": [],
+    "error_keywords": [
+      "missing return types"
+    ],
+    "identifiers": {
+      "functions": [
+        "setup",
+        "tempfile",
+        "autodoc",
+        "napoleon",
+        "join",
+        "makedirs",
+        "setup_extension",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "tempfile",
+        "autodoc",
+        "napoleon",
+        "join",
+        "makedirs",
+        "setup_extension",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

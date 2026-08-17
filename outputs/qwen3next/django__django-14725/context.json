@@ -1,0 +1,461 @@
+{
+  "instance_id": "django__django-14725",
+  "repo": "django/django",
+  "base_commit": "0af9a5fc7d765aa05ea784e2c3237675f3bb4b49",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/forms/forms.py",
+      "score": 17,
+      "matched_identifiers": [
+        "additional",
+        "create",
+        "display",
+        "provide"
+      ],
+      "reasons": [
+        "stem_in_issue_text:forms",
+        "source_content_tokens:create,provide,additional,display,extra"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseForm.order_fields",
+        "BaseForm.errors",
+        "BaseForm.is_valid",
+        "BaseForm.add_prefix",
+        "BaseForm.add_initial_prefix",
+        "BaseForm.get_context",
+        "BaseForm.non_field_errors",
+        "BaseForm.add_error",
+        "BaseForm.has_error",
+        "BaseForm.full_clean",
+        "BaseForm.clean",
+        "BaseForm.has_changed",
+        "BaseForm.changed_data",
+        "BaseForm.media",
+        "BaseForm.is_multipart",
+        "BaseForm.hidden_fields",
+        "BaseForm.visible_fields",
+        "BaseForm.get_initial_for_field"
+      ]
+    },
+    {
+      "path": "django/forms/formsets.py",
+      "score": 17,
+      "matched_identifiers": [
+        "additional",
+        "display",
+        "extra",
+        "forms"
+      ],
+      "reasons": [
+        "stem_in_issue_text:formsets",
+        "source_content_tokens:additional,display,extra,forms,formsets"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "forms": "    def forms(self):\n        \"\"\"Instantiate forms at first property access.\"\"\"\n        # DoS protection is included in total_form_count()\n        return [\n            self._construct_form(i, **self.get_form_kwargs(i))\n            for i in range(self.total_form_count())\n        ]\n\n    def get_form_kwargs(self, index):\n        \"\"\"\n        Return additional keyword arguments for each individual formset form.\n\n        index will be None if the form being constructed is a new empty\n        form.\n        \"\"\""
+      },
+      "top_level_functions": [
+        "ManagementForm.clean",
+        "BaseFormSet.management_form",
+        "BaseFormSet.total_form_count",
+        "BaseFormSet.initial_form_count",
+        "BaseFormSet.forms",
+        "BaseFormSet.get_form_kwargs",
+        "BaseFormSet.initial_forms",
+        "BaseFormSet.extra_forms",
+        "BaseFormSet.empty_form",
+        "BaseFormSet.cleaned_data",
+        "BaseFormSet.deleted_forms",
+        "BaseFormSet.ordered_forms",
+        "BaseFormSet.get_default_prefix",
+        "BaseFormSet.get_deletion_widget",
+        "BaseFormSet.get_ordering_widget",
+        "BaseFormSet.non_form_errors",
+        "BaseFormSet.errors",
+        "BaseFormSet.total_error_count",
+        "BaseFormSet.is_valid",
+        "BaseFormSet.full_clean",
+        "BaseFormSet.clean",
+        "BaseFormSet.has_changed",
+        "BaseFormSet.add_fields",
+        "BaseFormSet.add_prefix",
+        "BaseFormSet.is_multipart",
+        "BaseFormSet.media",
+        "BaseFormSet.get_context",
+        "formset_factory",
+        "all_valid"
+      ]
+    },
+    {
+      "path": "django/views/generic/edit.py",
+      "score": 17,
+      "matched_identifiers": [
+        "create",
+        "display",
+        "extra",
+        "provide"
+      ],
+      "reasons": [
+        "stem_in_issue_text:edit",
+        "source_content_tokens:create,provide,display,extra,forms"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FormMixin.get_initial",
+        "FormMixin.get_prefix",
+        "FormMixin.get_form_class",
+        "FormMixin.get_form",
+        "FormMixin.get_form_kwargs",
+        "FormMixin.get_success_url",
+        "FormMixin.form_valid",
+        "FormMixin.form_invalid",
+        "FormMixin.get_context_data",
+        "ModelFormMixin.get_form_class",
+        "ModelFormMixin.get_form_kwargs",
+        "ModelFormMixin.get_success_url",
+        "ModelFormMixin.form_valid",
+        "ProcessFormView.get",
+        "ProcessFormView.post",
+        "ProcessFormView.put",
+        "BaseCreateView.get",
+        "BaseCreateView.post",
+        "BaseUpdateView.get",
+        "BaseUpdateView.post",
+        "DeletionMixin.delete",
+        "DeletionMixin.post",
+        "DeletionMixin.get_success_url",
+        "BaseDeleteView.post",
+        "BaseDeleteView.form_valid"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "additional",
+        "create",
+        "creation",
+        "provide"
+      ],
+      "reasons": [
+        "source_content_tokens:create,provide,additional,creation,disallow"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "create",
+        "description",
+        "disallow",
+        "provide"
+      ],
+      "reasons": [
+        "source_content_tokens:create,provide,description,disallow,display"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/forms_tests/tests/test_formsets.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:formsets",
+        "token_overlap:forms,formsets",
+        "internal_name_overlap:formsets",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/flatpages_tests/test_forms.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:forms",
+        "internal_name_overlap:edit",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/foreign_object/test_forms.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:forms",
+        "internal_name_overlap:forms",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_forms.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:forms",
+        "internal_name_overlap:forms",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/generic_relations/test_forms.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:forms",
+        "token_overlap:forms",
+        "internal_name_overlap:options",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/flatpages_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/generic_relations/test_forms.py:unittest_or_django_test_import",
+      "tests/foreign_object/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_formsets.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_formsets.py:testcase_class:FormsFormsetTestCase",
+      "tests/forms_tests/tests/test_formsets.py:testcase_class:Jinja2FormsFormsetTestCase",
+      "tests/forms_tests/tests/test_formsets.py:testcase_class:TestEmptyFormSet",
+      "tests/forms_tests/tests/test_formsets.py:testcase_class:TestIsBoundBehavior",
+      "tests/forms_tests/tests/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_forms.py:testcase_class:FormsTestCase",
+      "tests/forms_tests/tests/test_forms.py:testcase_class:Jinja2FormsTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2733,
+  "indexed_test_file_count": 1867,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango50Warning",
+      "ValidationError",
+      "View",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.flatpages_tests.test_forms": [
+      "FlatpageAdminFormTests"
+    ],
+    "tests.generic_relations.test_forms": [
+      "CustomWidget",
+      "GenericInlineFormsetTests",
+      "TaggedItemForm"
+    ],
+    "tests.foreign_object.test_forms": [
+      "FormsTests"
+    ],
+    "tests.forms_tests.tests.test_formsets": [
+      "AllValidTests",
+      "ArticleForm",
+      "BaseFavoriteDrinksFormSet",
+      "Choice",
+      "ChoiceFormsetWithNonFormError",
+      "CustomKwargForm",
+      "FavoriteDrinkForm",
+      "FormsFormsetTestCase",
+      "FormsetAsTagTests",
+      "Jinja2FormsFormsetTestCase",
+      "Jinja2FormsetAsTagTests",
+      "TestEmptyFormSet",
+      "TestIsBoundBehavior"
+    ],
+    "tests.forms_tests.tests": [
+      "jinja2_tests"
+    ],
+    "tests.forms_tests": [
+      "override_settings",
+      "skipIf"
+    ],
+    "tests.forms_tests.tests.test_forms": [
+      "CustomRenderer",
+      "FormsTestCase",
+      "FrameworkForm",
+      "Jinja2FormsTestCase",
+      "MultiValueDictLike",
+      "OverrideTests",
+      "Person",
+      "PersonNew",
+      "RendererTests",
+      "SongForm",
+      "TemplateTests"
+    ],
+    "django.forms.formsets": [
+      "BaseFormSet",
+      "ManagementForm",
+      "all_valid",
+      "formset_factory"
+    ],
+    "django.forms.forms": [
+      "BaseForm",
+      "DeclarativeFieldsMetaclass",
+      "Form"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.views.generic.edit": [
+      "BaseCreateView",
+      "BaseDeleteView",
+      "BaseFormView",
+      "BaseUpdateView",
+      "CreateView",
+      "DeleteView",
+      "DeleteViewCustomDeleteWarning",
+      "DeletionMixin",
+      "FormMixin",
+      "FormView",
+      "ModelFormMixin",
+      "ProcessFormView",
+      "UpdateView"
+    ],
+    "django.views.generic": [
+      "GenericViewError"
+    ],
+    "django.views": [
+      "ArchiveIndexView",
+      "CreateView",
+      "DateDetailView",
+      "DayArchiveView",
+      "DeleteView",
+      "DetailView",
+      "FormView",
+      "GenericViewError",
+      "ListView",
+      "MonthArchiveView",
+      "RedirectView",
+      "TemplateView",
+      "TodayArchiveView",
+      "UpdateView",
+      "View",
+      "WeekArchiveView",
+      "YearArchiveView"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ]
+  },
+  "test_example_snippet": "class TestIsBoundBehavior(SimpleTestCase):\n    def test_no_data_error(self):\n        formset = ArticleFormSet({})\n        self.assertIs(formset.is_valid(), False)\n        self.assertEqual(\n            formset.non_form_errors(),\n            [\n                'ManagementForm data is missing or has been tampered with. '\n                'Missing fields: form-TOTAL_FORMS, form-INITIAL_FORMS. '\n                'You may need to file a bug report if the issue persists.',\n            ],\n        )\n        self.assertEqual(formset.errors, [])\n        # Can still render the formset.\n        self.assertHTMLEqual(\n            str(formset),\n            '<tr><td colspan=\"2\">'\n            '<ul class=\"errorlist nonfield\">'\n            '<li>(Hidden field TOTAL_FORMS) This field is required.</li>'\n            '<li>(Hidden field INITIAL_FORMS) This field is required.</li>'\n            '</ul>'\n            '<input type=\"hidden\" name=\"form-TOTAL_FORMS\" id=\"id_form-TOTAL_FORMS\">'\n            '<input type=\"hidden\" name=\"form-INITIAL_FORMS\" id=\"id_form-INITIAL_FORMS\">'\n            '<input type=\"hidden\" name=\"form-MIN_NUM_FORMS\" id=\"id_form-MIN_NUM_FORMS\">'\n            '<input type=\"hidden\" name=\"form-MAX_NUM_FORMS\" id=\"id_form-MAX_NUM_FORMS\">'\n            '</td></tr>\\n'\n        )\n\n    def test_management_form_invalid_data(self):\n        data = {\n            'form-TOTAL_FORMS': 'two',\n            'form-INITIAL_FORMS': 'one',\n        }\n        formset = ArticleFormSet(data)\n        self.assertIs(formset.is_valid(), False)",
+  "conftest_fixtures": {}
+}

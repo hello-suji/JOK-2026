@@ -1,0 +1,67 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "none",
+      "related_classes": [
+        "EmptyResultSet",
+        "MyModel",
+        "QuerySet"
+      ],
+      "candidate_test_file": "tests/empty/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where none can be called."
+    ],
+    "execution_stimulus": [
+      "Call none with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/query.py",
+      "django/db/models/sql/where.py"
+    ],
+    "relevant_test_files": [
+      "tests/empty/models.py",
+      "tests/queryset_pickle/models.py",
+      "tests/empty_models/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "none"
+      ],
+      "classes": [
+        "EmptyResultSet",
+        "MyModel",
+        "QuerySet"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

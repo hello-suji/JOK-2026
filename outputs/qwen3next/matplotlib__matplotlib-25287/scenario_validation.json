@@ -1,0 +1,104 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.83,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:add_subplot",
+        "target_function 'add_subplot' NOT found in source_file — may be hallucinated",
+        "target_function 'add_subplot' not in AST top_level_functions for lib/matplotlib/axis.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "lib/matplotlib/axis.py",
+          "target_function": "add_subplot",
+          "related_classes": [
+            "IdentityTransform"
+          ],
+          "candidate_test_file": "lib/matplotlib/tests/test_transforms.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where add_subplot can be called."
+        ],
+        "execution_stimulus": [
+          "Call add_subplot with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "[Bug]: offsetText is colored based on tick.color instead of tick.labelcolor",
+        "relevant_source_files": [
+          "lib/matplotlib/axis.py",
+          "lib/matplotlib/figure.py",
+          "lib/matplotlib/pyplot.py"
+        ],
+        "relevant_test_files": [
+          "lib/matplotlib/tests/test_transforms.py",
+          "lib/matplotlib/tests/test_figure.py",
+          "lib/matplotlib/tests/test_pyplot.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "import matplotlib.pyplot as plt\n\nplt.rcParams.update({'ytick.labelcolor': 'red'})\nfig = plt.figure()\nax = fig.add_subplot(1,1,1)\nax.plot([1.01e9,1.02e9,1.03e9])"
+          },
+          {
+            "language": "python",
+            "code": "diff --git a/axis.py b/axis.py\n--- a/axis.py\t\n+++ b/axis.py\t(date 1675716341305)\n@@ -2203,7 +2203,7 @@\n             transform=mtransforms.blended_transform_factory(\n                 self.axes.transAxes, mtransforms.IdentityTransform()),\n             fontsize=mpl.rcParams['xtick.labelsize'],\n-            color=mpl.rcParams['xtick.color'],\n+            color=mpl.rcParams['xtick.color'] if mpl.rcParams['xtick.labelcolor']=='inherit' else mpl.rcParams['xtick.labelcolor'],\n         )\n         self.offset_text_position = 'bottom'\n \n@@ -2456,7 +2456,7 @@\n             transform=mtransforms.blended_transform_factory(\n                 self.axes.transAxes, mtransforms.IdentityTransform()),\n             fontsize=mpl.rcParams['ytick.labelsize'],\n-            color=mpl.rcParams['ytick.color'],\n+            color=mpl.rcParams['ytick.color'] if mpl.rcParams['ytick.labelcolor']=='inherit' else mpl.rcParams['ytick.labelcolor'],\n         )\n         self.offset_text_position = 'left'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "add_subplot",
+            "blended_transform_factory",
+            "figure",
+            "plot",
+            "update"
+          ],
+          "classes": [
+            "IdentityTransform"
+          ],
+          "files": [
+            "axis.py"
+          ],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

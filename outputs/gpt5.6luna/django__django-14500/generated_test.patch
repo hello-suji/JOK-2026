@@ -1,0 +1,22 @@
+--- a/tests/migrations/test_executor.py
++++ b/tests/migrations/test_executor.py
+@@ -852,3 +852,19 @@
+         plan = executor.migration_plan({a1})
+
+         self.assertEqual(plan, [])
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.loader import MigrationLoader
++
++class TestSquashedMigrationUnapply(TestCase):
++    def test_squashed_migration_not_marked_as_unapplied_repro(self):
++        loader = MigrationLoader(connection)
++        executor = MigrationExecutor(connection, loader)
++        # Apply migrations to create a state where we can unapply a squashed migration
++        executor.migrate()
++        # Unapply a squashed migration
++        executor.unapply_migration(loader.graph.nodes['myapp', '0002_auto_20230101_0001'])
++        applied_migrations = executor.applied_migrations
++        # Assert that the squashed migration is still marked as applied
++        self.assertIn(('myapp', '0001_initial'), applied_migrations)
++        self.assertNotIn(('myapp', '0002_auto_20230101_0001'), applied_migrations)

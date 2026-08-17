@@ -1,0 +1,23 @@
+--- a/tests/forms_tests/field_tests/test_base.py
++++ b/tests/forms_tests/field_tests/test_base.py
+@@ -40,3 +40,20 @@
+     def test_disabled_field_has_changed_always_false_gate(self):
+         disabled_field = Field(disabled=True)
+         self.assertFalse(disabled_field.has_changed('x', 'y'))
++
++from django.test import TestCase
++from django.db.models import Model, BooleanField, AutoField
++
++class SaveTestCase(TestCase):
++    def setUp(self):
++        class Item(Model):
++            id = AutoField(primary_key=True)
++            is_active = BooleanField(default=True)
++        self.Item = Item
++        self.item = self.Item.objects.create(is_active=True)
++
++    def test_f_true_repro(self):
++        self.item.is_active = False
++        self.item.save()
++        self.item.refresh_from_db()
++        self.assertTrue(not self.item.is_active)

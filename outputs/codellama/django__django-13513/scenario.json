@@ -1,0 +1,117 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/views/debug.py",
+      "target_function": "explicit_or_implicit_cause",
+      "related_classes": [
+        "View",
+        "HttpResponse",
+        "ExceptionReporter",
+        "RuntimeError"
+      ],
+      "candidate_test_file": "tests/generic_views/test_base.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.views.generic import View",
+      "from django.http import HttpResponse",
+      "from django.test import TestCase",
+      "from django.views.debug import ExceptionReporter",
+      "import io",
+      "Use the generated reproduction path that calls explicit_or_implicit_cause, get, io, get_traceback_html."
+    ],
+    "execution_stimulus": [
+      "class TestView(View):",
+      "    def get(self, request, *args, **kwargs):",
+      "        try:",
+      "            raise RuntimeError('my error')",
+      "        except Exception as exc:",
+      "            raise ValueError('my new error') from None",
+      "request = type('Request', (object,), {'META': {}})()",
+      "response = HttpResponse()",
+      "try:",
+      "    TestView().get(request)",
+      "except ValueError as e:",
+      "    reporter = ExceptionReporter(request, *sys.exc_info())",
+      "    output = reporter.get_traceback_text()",
+      "Execute the focused target API path: explicit_or_implicit_cause, get, io, get_traceback_html."
+    ],
+    "expected_failure": "The debug error view still shows the RuntimeError even though it should not due to __suppress_context__ being set.",
+    "relevant_source_files": [
+      "django/views/debug.py",
+      "django/views/decorators/debug.py",
+      "django/template/context.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/generic_views/test_base.py",
+      "tests/admin_scripts/test_django_admin_py.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.views.generic import View\nfrom django.http import HttpResponse\nfrom django.views.debug import ExceptionReporter\nimport sys\nimport io\n\n\nclass TestView(View):\n    def get(self, request, *args, **kwargs):\n        try:\n            raise RuntimeError('my error')\n        except Exception as exc:\n            raise ValueError('my new error') from None\n\n\nclass TestDebugView(TestCase):\n    def test_explicit_or_implicit_cause_suppress_context_repro(self):\n        view = TestView()\n        request = self.client.get('/test/')\n        response = view.get(request)\n        exception_reporter = ExceptionReporter(request, 500, ValueError('my new error'), exc_info=sys.exc_info())\n        output = io.StringIO()\n        exception_reporter.get_traceback_html(output)\n        self.assertNotIn('RuntimeError', output.getvalue())"
+      },
+      {
+        "language": "python",
+        "code": "def test_explicit_or_implicit_cause_suppress_context():\n    from django.views.generic import View\n    from django.http import HttpResponse\n    from django.test import TestCase\n    from django.views.debug import ExceptionReporter\n    import sys\n    import io\n\n    class TestView(View):\n        def get(self, request, *args, **kwargs):\n            try:\n                raise RuntimeError('my error')\n            except Exception as exc:\n                raise ValueError('my new error') from None\n\n    request = type('Request', (object,), {'META': {}})()\n    response = HttpResponse()\n    try:\n        TestView().get(request)\n    except ValueError as e:\n        reporter = ExceptionReporter(request, *sys.exc_info())\n        output = reporter.get_traceback_text()\n    assert 'RuntimeError' in output"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "RuntimeError",
+      "ValueError",
+      "__suppress_context__"
+    ],
+    "identifiers": {
+      "functions": [
+        "explicit_or_implicit_cause",
+        "io",
+        "get_traceback_html",
+        "exc_info"
+      ],
+      "classes": [
+        "View",
+        "HttpResponse",
+        "ExceptionReporter",
+        "RuntimeError"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/generic_views/test_base.py",
+      "target_source_file": "django/views/debug.py",
+      "test_visible_functions": [
+        "explicit_or_implicit_cause",
+        "get",
+        "io",
+        "get_traceback_html",
+        "exc_info"
+      ],
+      "test_visible_classes": [
+        "View",
+        "HttpResponse",
+        "ExceptionReporter",
+        "RuntimeError"
+      ]
+    }
+  }
+]

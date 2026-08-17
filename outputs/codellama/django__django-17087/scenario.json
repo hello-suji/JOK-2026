@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/template/defaultfilters.py",
+      "target_function": "default",
+      "related_classes": [
+        "AddField",
+        "ArrayField",
+        "CharField",
+        "TextChoices",
+        "Capability"
+      ],
+      "candidate_test_file": "tests/postgres_tests/fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls default, migrations."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: default, migrations."
+    ],
+    "expected_failure": "Class methods from nested classes cannot be used as Field.default.",
+    "relevant_source_files": [
+      "django/template/defaultfilters.py",
+      "django/contrib/postgres/fields/array.py",
+      "django/db/migrations/operations/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/field_defaults/__init__.py",
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/postgres_tests/fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.postgres.fields import ArrayField\nfrom django.db import migrations\nfrom django.db.models import CharField\nfrom django.db.models.enums import TextChoices\nfrom django.test import TestCase\n\n\nclass TestArrayFieldWithChoicesDefault(TestCase):\n    def test_default_method_usage_repro(self):\n        class Capability(TextChoices):\n            BASIC = ('BASIC', 'Basic')\n            PROFESSIONAL = ('PROFESSIONAL', 'Professional')\n            @classmethod\n            def default(cls):\n                return [cls.BASIC]\n\n        operation = migrations.AddField(\n            model_name='arraymodel',\n            name='capabilities',\n            field=ArrayField(base_field=CharField(max_length=20), default=Capability.default)\n        )\n\n        self.assertEqual(operation.field.default(), [Capability.BASIC])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "default",
+        "migrations"
+      ],
+      "classes": [
+        "AddField",
+        "ArrayField",
+        "CharField",
+        "TextChoices",
+        "Capability"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/postgres_tests/fields.py",
+      "target_source_file": "django/template/defaultfilters.py",
+      "test_visible_functions": [
+        "default",
+        "migrations"
+      ],
+      "test_visible_classes": [
+        "AddField",
+        "ArrayField",
+        "CharField",
+        "TextChoices",
+        "Capability"
+      ]
+    }
+  }
+]

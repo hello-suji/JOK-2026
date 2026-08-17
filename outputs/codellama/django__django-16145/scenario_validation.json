@@ -1,0 +1,87 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.87,
+      "decision": "accept",
+      "reasons": [
+        "missing required fields",
+        "target function is weakly aligned with issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name contains target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected failure is explicit about assertion failure",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/utils/autoreload.py",
+          "target_function": "",
+          "related_classes": [
+            "StatReloader"
+          ],
+          "candidate_test_file": "tests/utils_tests/test_autoreload.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Reproduce the input conditions described in the issue."
+        ],
+        "execution_stimulus": [
+          "Execute the reproduction code from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "The assertion should fail due to the bug described in the issue.",
+        "relevant_source_files": [
+          "django/utils/autoreload.py",
+          "django/contrib/staticfiles/management/commands/runserver.py",
+          "django/core/management/commands/runserver.py"
+        ],
+        "relevant_test_files": [
+          "tests/utils_tests/test_autoreload.py",
+          "tests/utils_tests/test_http.py",
+          "tests/migrations/test_loader.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [],
+          "classes": [
+            "StatReloader"
+          ],
+          "files": [
+            "manage.py"
+          ],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

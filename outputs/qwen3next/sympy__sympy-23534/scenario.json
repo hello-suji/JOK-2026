@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/symbol.py",
+      "target_function": "symbols",
+      "related_classes": [
+        "Function",
+        "Symbol",
+        "UndefinedFunction"
+      ],
+      "candidate_test_file": "sympy/diffgeom/tests/test_function_diffgeom_book.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where symbols can be called.",
+      "Use the generated reproduction path that calls symbols, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call symbols with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, isinstance."
+    ],
+    "expected_failure": "Using `symbols` to create symbol-like objects like instances of `Function` as shown in the [documentation](https://docs.sympy.org/latest/modules/core.html?highlight=symbols#symbols) creates objects of class `Symbol` instead of `Function` if there is an extra layer of parentheses.",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/core/function.py",
+      "sympy/assumptions/cnf.py"
+    ],
+    "relevant_test_files": [
+      "sympy/diffgeom/tests/test_function_diffgeom_book.py",
+      "sympy/core/tests/test_function.py",
+      "sympy/core/tests/test_symbol.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_symbols_with_extra_parentheses_creates_functions_repro():\n    q, u = symbols(('q:2', 'u:2'), cls=Function)\n    assert isinstance(q[0], Function)\n    assert isinstance(u[0], Function)"
+      },
+      {
+        "language": "python",
+        "code": "q, u = smp.symbols(('q:2', 'u:2'), cls=smp.Function)\nprint(type(q[0]))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "symbols",
+        "isinstance"
+      ],
+      "classes": [
+        "Function",
+        "Symbol",
+        "UndefinedFunction"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/diffgeom/tests/test_function_diffgeom_book.py",
+      "target_source_file": "sympy/core/symbol.py",
+      "test_visible_functions": [
+        "symbols",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "Function",
+        "Symbol"
+      ]
+    }
+  }
+]

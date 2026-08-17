@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9320",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -453,3 +453,16 @@\n     stdout, stderr = capsys.readouterr()\n     assert stdout.startswith(\"c:function\\n\")\n     assert stderr == \"\"\n+\n+import os\n+import unittest\n+from sphinx.cmd.quickstart import main\n+\n+class TestQuickstartExistingConf(unittest.TestCase):\n+    def test_sphinx_quickstart_existing_conf_repro(self):\n+        os.makedirs('test_dir', exist_ok=True)\n+        with open('test_dir/conf.py', 'w') as f:\n+            f.write('')\n+        with self.assertRaises(SystemExit) as cm:\n+            main(argv=['sphinx-quickstart', 'test_dir'])\n+        self.assertEqual(cm.exception.code, 0)\n",
+    "patch_sha256": "ed3e22eef3822f46e658d60ec4bec36919b99ea2275c3e477d5c2b52d65801bb"
+  }
+]

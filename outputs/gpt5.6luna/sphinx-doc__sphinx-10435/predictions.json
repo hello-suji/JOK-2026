@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-10435",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -561,3 +561,18 @@\n\n     # explicit title\n     assert html.format('index.html#foons') in content\n+\n+from sphinx.domains.python import PyObject\n+from sphinx.writers.latex import LaTeXTranslator\n+from sphinx.testing.util import SphinxTestApp\n+from sphinx.testing.path import path\n+\n+def test_latex_code_highlighting_repro():\n+    srcdir = path(__file__).parent / 'roots' / 'test-domain-python'\n+    app = SphinxTestApp(srcdir=srcdir, buildername='latex')\n+    app.build()\n+    latex_output = (app.outdir / 'Python.tex').text()\n+    assert '\\texttt{def foo():}' in latex_output\n+    assert '\\texttt{class Inline:}' in latex_output\n+    assert '\\texttt{class LaTeX:}' in latex_output\n+    assert '\\texttt{class PYGZdq:}' in latex_output\n",
+    "patch_sha256": "a790d9d53359dfe4014552eae09560f3d0980ee4f0767a5c9d784a85f16cc36c"
+  }
+]

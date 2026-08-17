@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/base.py",
+      "target_function": "call_command",
+      "related_classes": [
+        "CommandError"
+      ],
+      "candidate_test_file": "tests/admin_scripts/management/commands/base_command.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where call_command can be called.",
+      "Use the generated reproduction path that calls call_command, fail."
+    ],
+    "execution_stimulus": [
+      "Call call_command with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: call_command, fail."
+    ],
+    "expected_failure": "call_command fails when argument of required mutually exclusive group is passed in kwargs.",
+    "relevant_source_files": [
+      "django/core/management/base.py",
+      "django/core/management/__init__.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/base_command.py",
+      "tests/i18n/commands/__init__.py",
+      "tests/model_options/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.management import call_command\nfrom django.core.management.base import CommandError\n\nclass TestMutuallyExclusiveGroupCommand(TestCase):\n    def test_call_command_with_valid_kwargs_repro(self):\n        try:\n            result = call_command('my_command', shop_id=1)\n            self.assertIsNone(result)  # Assuming the command returns None on success\n        except CommandError:\n            self.fail('call_command raised CommandError unexpectedly')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "CommandError"
+    ],
+    "identifiers": {
+      "functions": [
+        "add_argument",
+        "add_mutually_exclusive_group",
+        "call_command",
+        "parse_args",
+        "fail"
+      ],
+      "classes": [
+        "CommandError"
+      ],
+      "files": [],
+      "exceptions": [
+        "CommandError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/management/commands/base_command.py",
+      "target_source_file": "django/core/management/base.py",
+      "test_visible_functions": [
+        "call_command",
+        "fail"
+      ],
+      "test_visible_classes": [
+        "CommandError"
+      ]
+    }
+  }
+]

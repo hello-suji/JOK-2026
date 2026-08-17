@@ -1,0 +1,117 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/application.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Caused",
+        "Errno",
+        "Failed",
+        "Name",
+        "Sphinx",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, join, makedirs, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, join, makedirs, build."
+    ],
+    "expected_failure": "#### Error logs / results",
+    "relevant_source_files": [
+      "sphinx/application.py",
+      "sphinx/builders/linkcheck.py",
+      "sphinx/cmd/build.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import os\nimport tempfile\nfrom sphinx.application import Sphinx\nfrom sphinx.builders.linkcheck import CheckExternalLinksBuilder\n\ndef test_linkcheck_handles_newconnectionerror_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        os.makedirs(srcdir)\n        conf_path = os.path.join(srcdir, 'conf.py')\n        index_path = os.path.join(srcdir, 'index.rst')\n        \n        with open(conf_path, 'w') as f:\n            f.write('extensions = [\"sphinx.ext.intersphinx\"]\\nintersphinx_mapping = {\"example\": (\"http://nonexistent.example.com\", None)}')\n        with open(index_path, 'w') as f:\n            f.write(':mod:`example`')\n        \n        app = Sphinx(srcdir=srcdir, confdir=srcdir, outdir=os.path.join(tmpdir, 'out'), doctreedir=os.path.join(tmpdir, 'doctrees'), buildername='linkcheck')\n        app.build()\n        \n        # Assert that the build completes without crashing due to NewConnectionError\n        assert len(app.warnings) == 1"
+      },
+      {
+        "language": "python",
+        "code": "broken external-link_\nbroken local-link_\n\n.. _external-link: https://lkfqhlkghflkhs\n.. _local-link: doesntexist"
+      },
+      {
+        "language": "python",
+        "code": "Running Sphinx v1.7.6\nmaking output directory...\nloading pickled environment... done\nbuilding [mo]: targets for 0 po files that are out of date\nbuilding [linkcheck]: targets for 1 source files that are out of date\nupdating environment: 0 added, 0 changed, 0 removed\nlooking for now-outdated files... none found\npreparing documents... done\nwriting output... [100%] index                                                                   \n(line   14) -local-   doesntexist\n(line   14) broken    https://lkfqhlkghflkhs - HTTPSConnectionPool(host='lkfqhlkghflkhs', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7faed7ddfc88>: Failed to establish a new connection: [Errno -2] Name or service not known',))\n\nbuild finished with problems.\nmake: *** [Makefile:20: linkcheck] Error 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NewConnectionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Caused",
+        "Errno",
+        "Failed",
+        "HTTPSConnectionPool",
+        "Makefile",
+        "Max",
+        "Name",
+        "Running",
+        "Sphinx",
+        "VerifiedHTTPSConnection",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": [
+        "NewConnectionError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/application.py",
+      "test_visible_functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Name",
+        "Sphinx",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

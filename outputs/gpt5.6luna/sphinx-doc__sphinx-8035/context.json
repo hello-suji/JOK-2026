@@ -1,0 +1,298 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8035",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "5e6da19f0e44a0ae83944fb6ce18f18f781e1a6e",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "autodoc",
+        "document",
+        "feature",
+        "https"
+      ],
+      "reasons": [
+        "source_content_tokens:autodoc,document,feature,https,option"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/usage/extensions/example_google.py",
+      "score": 16,
+      "matched_identifiers": [
+        "arguments",
+        "behavior",
+        "members",
+        "private"
+      ],
+      "reasons": [
+        "source_content_tokens:members,private,arguments,behavior,document"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "function_with_types_in_docstring",
+        "function_with_pep484_type_annotations",
+        "module_level_function",
+        "example_generator",
+        "ExampleClass.readonly_property",
+        "ExampleClass.readwrite_property",
+        "ExampleClass.example_method"
+      ]
+    },
+    {
+      "path": "doc/usage/extensions/example_numpy.py",
+      "score": 16,
+      "matched_identifiers": [
+        "arguments",
+        "behavior",
+        "members",
+        "private"
+      ],
+      "reasons": [
+        "source_content_tokens:members,private,arguments,behavior,document"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "function_with_types_in_docstring",
+        "function_with_pep484_type_annotations",
+        "module_level_function",
+        "example_generator",
+        "ExampleClass.readonly_property",
+        "ExampleClass.readwrite_property",
+        "ExampleClass.example_method"
+      ]
+    },
+    {
+      "path": "setup.py",
+      "score": 16,
+      "matched_identifiers": [
+        "document",
+        "https",
+        "issues",
+        "request"
+      ],
+      "reasons": [
+        "source_content_tokens:document,https,issues,request,sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Tee.write",
+        "Tee.flush"
+      ]
+    },
+    {
+      "path": "sphinx/addnodes.py",
+      "score": 16,
+      "matched_identifiers": [
+        "describe",
+        "document",
+        "https",
+        "option"
+      ],
+      "reasons": [
+        "source_content_tokens:describe,document,https,option,please"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "document": "class document(nodes.document):\n    \"\"\"The document root element patched by Sphinx.\n\n    This fixes that document.set_id() does not support a node having multiple node Ids.\n    see https://sourceforge.net/p/docutils/patches/167/\n\n    .. important:: This is only for Sphinx internal use.  Please don't use this\n                   in your extensions.  It will be removed without deprecation period.\n    \"\"\"\n\n    def set_id(self, node: Element, msgnode: Element = None,\n               suggested_prefix: str = '') -> str:\n        from sphinx.util import docutils\n        if docutils.__version_info__ >= (0, 16):\n            ret = super().set_id(node, msgnode, suggested_prefix)  # type: ignore"
+      },
+      "top_level_functions": [
+        "document.set_id",
+        "translatable.preserve_original_messages",
+        "translatable.apply_translated_message",
+        "translatable.extract_original_messages",
+        "toctree.preserve_original_messages",
+        "toctree.apply_translated_message",
+        "toctree.extract_original_messages",
+        "desc_signature.child_text_separator",
+        "desc_returns.astext",
+        "desc_parameterlist.astext",
+        "desc_optional.astext",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-setup/doc/conf.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:setup",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-api-set-translator/conf.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "internal_name_overlap:setup"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-build-html-translator/conf.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "internal_name_overlap:setup"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 510,
+  "indexed_test_file_count": 316,
+  "available_imports": {
+    "setup": [
+      "Tee"
+    ],
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx.addnodes": [
+      "abbreviation",
+      "acks",
+      "centered",
+      "compact_paragraph",
+      "desc",
+      "desc_addname",
+      "desc_annotation",
+      "desc_content",
+      "desc_name",
+      "desc_optional",
+      "desc_parameter",
+      "desc_parameterlist",
+      "desc_returns",
+      "desc_sig_element",
+      "desc_sig_name",
+      "desc_sig_operator",
+      "desc_sig_punctuation",
+      "desc_signature",
+      "desc_signature_line",
+      "desc_type",
+      "document",
+      "download_reference",
+      "glossary",
+      "highlightlang",
+      "hlist",
+      "hlistcol",
+      "index",
+      "literal_emphasis",
+      "literal_strong",
+      "manpage",
+      "meta",
+      "not_smartquotable",
+      "number_reference",
+      "only",
+      "pending_xref",
+      "production",
+      "productionlist",
+      "seealso",
+      "setup",
+      "start_of_file",
+      "tabular_col_spec",
+      "toctree",
+      "translatable",
+      "versionmodified"
+    ],
+    "sphinx": [
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "path"
+    ],
+    "tests.roots.test-build-html-translator.conf": [
+      "ConfHTMLTranslator",
+      "setup"
+    ],
+    "tests.roots.test-api-set-translator.conf": [
+      "ConfDirHTMLTranslator",
+      "ConfHTMLTranslator",
+      "ConfJsonTranslator",
+      "ConfLaTeXTranslator",
+      "ConfManualPageTranslator",
+      "ConfPickleTranslator",
+      "ConfPseudoXMLTranslator",
+      "ConfSingleHTMLTranslator",
+      "ConfTexinfoTranslator",
+      "ConfTextTranslator",
+      "ConfXMLTranslator",
+      "setup"
+    ],
+    "doc.usage.extensions.example_numpy": [
+      "ExampleClass",
+      "ExampleError",
+      "example_generator",
+      "function_with_pep484_type_annotations",
+      "function_with_types_in_docstring",
+      "module_level_function"
+    ],
+    "doc.usage.extensions.example_google": [
+      "ExampleClass",
+      "ExampleError",
+      "example_generator",
+      "function_with_pep484_type_annotations",
+      "function_with_types_in_docstring",
+      "module_level_function"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

@@ -1,0 +1,341 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8269",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "1e2ccd8f0eca0870cf6f8fce6934e2da8eba9b72",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 17,
+      "matched_identifiers": [
+        "author",
+        "configuration",
+        "confval",
+        "https"
+      ],
+      "reasons": [
+        "stem_in_issue_text:conf",
+        "source_content_tokens:https,author,configuration,confval,exist"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/linkcheck.py",
+      "score": 17,
+      "matched_identifiers": [
+        "actual",
+        "anchors",
+        "https",
+        "linkcheck"
+      ],
+      "reasons": [
+        "stem_in_issue_text:linkcheck",
+        "source_content_tokens:actual,anchors,https,linkcheck,linkcheck_anchors"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AnchorCheckParser.handle_starttag",
+        "check_anchor",
+        "CheckExternalLinksBuilder.init",
+        "CheckExternalLinksBuilder.check_thread",
+        "CheckExternalLinksBuilder.process_result",
+        "CheckExternalLinksBuilder.get_target_uri",
+        "CheckExternalLinksBuilder.get_outdated_docs",
+        "CheckExternalLinksBuilder.prepare_writing",
+        "CheckExternalLinksBuilder.write_doc",
+        "CheckExternalLinksBuilder.write_entry",
+        "CheckExternalLinksBuilder.write_linkstat",
+        "CheckExternalLinksBuilder.finish",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/cmd/quickstart.py",
+      "score": 17,
+      "matched_identifiers": [
+        "author",
+        "https",
+        "linkcheck",
+        "same"
+      ],
+      "reasons": [
+        "stem_in_issue_text:quickstart",
+        "source_content_tokens:https,linkcheck,same,author,broken"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "term_input",
+        "is_path",
+        "allow_empty",
+        "nonempty",
+        "choice",
+        "boolean",
+        "suffix",
+        "ok",
+        "term_decode",
+        "do_prompt",
+        "convert_python_source",
+        "QuickstartRenderer.render",
+        "ask_user",
+        "generate",
+        "valid_dir",
+        "get_parser",
+        "main"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 17,
+      "matched_identifiers": [
+        "author",
+        "command",
+        "configuration",
+        "https"
+      ],
+      "reasons": [
+        "stem_in_issue_text:config",
+        "source_content_tokens:https,author,command,configuration,confval"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_unicode",
+        "check_primary_domain",
+        "check_master_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/usage/extensions/example_google.py",
+      "score": 16,
+      "matched_identifiers": [
+        "behavior",
+        "google",
+        "https",
+        "same"
+      ],
+      "reasons": [
+        "source_content_tokens:behavior,google,https,same,instead"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "function_with_types_in_docstring",
+        "function_with_pep484_type_annotations",
+        "module_level_function",
+        "example_generator",
+        "ExampleClass.readonly_property",
+        "ExampleClass.readwrite_property",
+        "ExampleClass.example_method"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-setup/doc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:example,sphinx",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 514,
+  "indexed_test_file_count": 320,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ENUM",
+      "check_confval_types",
+      "check_master_doc",
+      "check_primary_domain",
+      "check_unicode",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "BuildEnvironment",
+      "BuildPhase",
+      "CONFIG_CHANGED_REASON",
+      "CONFIG_OK",
+      "CatalogInfo",
+      "CatalogRepository",
+      "Config",
+      "Dict",
+      "EventManager",
+      "ImageAdapter",
+      "Iterable",
+      "List",
+      "Node",
+      "PIPE",
+      "ParallelTasks",
+      "RemovedInNextVersionWarning",
+      "SEP",
+      "Sequence",
+      "SerialTasks",
+      "Set",
+      "SphinxError",
+      "Tags",
+      "Tuple",
+      "Union",
+      "__",
+      "bold",
+      "directives",
+      "docname_to_domain",
+      "ensuredir",
+      "import_object",
+      "logging",
+      "make_chunks",
+      "nodes",
+      "parallel_available",
+      "path",
+      "progress_message",
+      "read_doc",
+      "relative_uri",
+      "relpath",
+      "roles",
+      "rst",
+      "sphinx_domains",
+      "status_iterator"
+    ],
+    "sphinx.builders.linkcheck": [
+      "AnchorCheckParser",
+      "CheckExternalLinksBuilder",
+      "check_anchor",
+      "setup"
+    ],
+    "sphinx.builders": [
+      "Builder"
+    ],
+    "sphinx.cmd.quickstart": [
+      "QuickstartRenderer",
+      "ValidationError",
+      "allow_empty",
+      "ask_user",
+      "boolean",
+      "choice",
+      "convert_python_source",
+      "do_prompt",
+      "generate",
+      "get_parser",
+      "is_path",
+      "main",
+      "nonempty",
+      "ok",
+      "suffix",
+      "term_decode",
+      "term_input",
+      "valid_dir"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.example.sphinx": [
+      "DummyClass"
+    ],
+    "doc.usage.extensions.example_google": [
+      "ExampleClass",
+      "ExampleError",
+      "example_generator",
+      "function_with_pep484_type_annotations",
+      "function_with_types_in_docstring",
+      "module_level_function"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

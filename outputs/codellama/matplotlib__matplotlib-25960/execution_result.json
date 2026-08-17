@@ -1,0 +1,24 @@
+{
+  "instance_id": "matplotlib__matplotlib-25960",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/qwen/matplotlib__matplotlib-25960/predictions.json",
+  "run_id": "sync-matplotlib__matplotlib-25960",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/qwen/matplotlib__matplotlib-25960/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "matplotlib__matplotlib-25960",
+    "--run_id",
+    "debug-matplotlib__matplotlib-25960"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "-------------------------------Final Report--------------------------------------\n{'matplotlib__matplotlib-25960': {'test_before_patch': {'matplotlib__matplotlib-25960::qwen_external_sync': 'FAILED'}, 'test_after_patch': {'matplotlib__matplotlib-25960::qwen_external_sync': 'FAILED'}, 'final_score': 0.0, 'resolved': False, 'contributing_functions': ['matplotlib__matplotlib-25960::qwen_external_sync']}}\n---------------------------------------------------------------------------------\nFinal score: 0.0\n",
+  "harness_stderr": ""
+}

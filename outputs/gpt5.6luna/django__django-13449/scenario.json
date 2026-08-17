@@ -1,0 +1,118 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/utils.py",
+      "target_function": "models",
+      "related_classes": [
+        "DateField",
+        "DecimalField",
+        "FloatField",
+        "ValidationError"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_datefield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _execute can be called.",
+      "Use the generated reproduction path that calls models, clean, strftime."
+    ],
+    "execution_stimulus": [
+      "Call _execute with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: models, clean, strftime."
+    ],
+    "expected_failure": "generates the following error:",
+    "relevant_source_files": [
+      "django/db/backends/utils.py",
+      "django/db/utils.py",
+      "django/db/models/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/custom_pk/fields.py",
+      "tests/forms_tests/field_tests/test_datefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.db import models\nfrom django.test import TestCase\nfrom django.core.exceptions import ValidationError\n\nclass TestDateFieldBehavior(TestCase):\n    def test_date_field_with_valid_data_repro(self):\n        date_field = models.DateField()\n        valid_values = ['2023-02-28', '2023-12-31', '2024-02-29']\n        for value in valid_values:\n            cleaned_value = date_field.clean(value)\n            self.assertEqual(cleaned_value.strftime('%Y-%m-%d'), value)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "DataError",
+      "IntegrityError",
+      "OperationalError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__call__",
+        "__exit__",
+        "__iter__",
+        "__repr__",
+        "_execute",
+        "_execute_with_wrappers",
+        "_executemany",
+        "_fetch_all",
+        "_iterable_class",
+        "_prefetch_related_objects",
+        "models",
+        "clean",
+        "strftime"
+      ],
+      "classes": [
+        "DateField",
+        "DecimalField",
+        "FloatField",
+        "LagTest",
+        "ProgramData",
+        "SQLite",
+        "ValidationError"
+      ],
+      "files": [
+        "ProgramData/Anaconda3/envs/djbase/lib/site-packages/django/db/backends/sqlite3/base.py",
+        "ProgramData/Anaconda3/envs/djbase/lib/site-packages/django/db/backends/utils.py",
+        "ProgramData/Anaconda3/envs/djbase/lib/site-packages/django/db/models/query.py",
+        "ProgramData/Anaconda3/envs/djbase/lib/site-packages/django/db/models/sql/compiler.py",
+        "ProgramData/Anaconda3/envs/djbase/lib/site-packages/django/db/utils.py"
+      ],
+      "exceptions": [
+        "DataError",
+        "IntegrityError",
+        "OperationalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_datefield.py",
+      "target_source_file": "django/db/backends/utils.py",
+      "test_visible_functions": [
+        "models",
+        "clean",
+        "strftime"
+      ],
+      "test_visible_classes": [
+        "DateField",
+        "ValidationError"
+      ]
+    }
+  }
+]

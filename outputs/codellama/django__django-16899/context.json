@@ -1,0 +1,469 @@
+{
+  "instance_id": "django__django-16899",
+  "repo": "django/django",
+  "base_commit": "d3d173425fc0a1107836da5b4567f1c88253191b",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 20,
+      "matched_identifiers": [
+        "ModelAdmin",
+        "attribute",
+        "callable",
+        "display",
+        "editable"
+      ],
+      "reasons": [
+        "class_match:ModelAdmin",
+        "source_content_tokens:attribute,callable,display,editable,list"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ModelAdmin": "class ModelAdmin(BaseModelAdmin):\n    \"\"\"Encapsulate all admin options and functionality for a given model.\"\"\"\n\n    list_display = (\"__str__\",)\n    list_display_links = ()\n    list_filter = ()\n    list_select_related = False\n    list_per_page = 100\n    list_max_show_all = 200\n    list_editable = ()\n    search_fields = ()\n    search_help_text = None\n    date_hierarchy = None\n    save_as = False\n    save_as_continue = True"
+      },
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/checks.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "callable",
+        "display",
+        "editable"
+      ],
+      "reasons": [
+        "stem_in_issue_text:checks",
+        "source_content_tokens:attribute,callable,display,editable,list"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_admin_app",
+        "check_dependencies",
+        "BaseModelAdminChecks.check",
+        "ModelAdminChecks.check",
+        "InlineModelAdminChecks.check",
+        "must_be",
+        "must_inherit_from",
+        "refer_to_missing_field"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/admin.py",
+      "score": 17,
+      "matched_identifiers": [
+        "display",
+        "list",
+        "list_display",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:admin",
+        "source_content_tokens:display,list,list_display,name,original"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GroupAdmin.formfield_for_manytomany",
+        "UserAdmin.get_fieldsets",
+        "UserAdmin.get_form",
+        "UserAdmin.get_urls",
+        "UserAdmin.lookup_allowed",
+        "UserAdmin.add_view",
+        "UserAdmin.user_change_password",
+        "UserAdmin.response_add"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/checks.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "check",
+        "list",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:checks",
+        "source_content_tokens:attribute,list,name,check,checks"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_user_model",
+        "check_models_permissions"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/admin.py",
+      "score": 17,
+      "matched_identifiers": [
+        "admin",
+        "check",
+        "checks",
+        "fault"
+      ],
+      "reasons": [
+        "stem_in_issue_text:admin",
+        "source_content_tokens:admin,check,checks,fault,field"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GenericInlineModelAdmin.get_formset"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_inlines/admin.py",
+      "score": 13,
+      "matched_identifiers": [
+        "CityInline",
+        "ModelAdmin"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CityInline",
+        "test_path_related_to_class:ModelAdmin",
+        "test_name_matches_source_stem:admin",
+        "token_overlap:inline",
+        "internal_name_overlap:inline",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/generic_inline_admin/admin.py",
+      "score": 13,
+      "matched_identifiers": [
+        "CityInline",
+        "ModelAdmin"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CityInline",
+        "test_path_related_to_class:ModelAdmin",
+        "test_name_matches_source_stem:admin",
+        "token_overlap:inline",
+        "internal_name_overlap:inline",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/modeladmin/test_checks.py",
+      "score": 11,
+      "matched_identifiers": [
+        "ModelAdmin"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ModelAdmin",
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks",
+        "internal_name_overlap:inline",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_checks.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:auth,checks",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/test_checks.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks,contenttypes",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/contenttypes_tests/test_checks.py:unittest_or_django_test_import",
+      "tests/modeladmin/test_checks.py:unittest_or_django_test_import",
+      "tests/modeladmin/test_checks.py:testcase_class:CheckTestCase",
+      "tests/auth_tests/test_checks.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2752,
+  "indexed_test_file_count": 1879,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.generic_inline_admin.admin": [
+      "EpisodeAdmin",
+      "MediaInline",
+      "MediaPermanentInline",
+      "PhoneNumberInline"
+    ],
+    "tests.contenttypes_tests.test_checks": [
+      "GenericForeignKeyTests",
+      "GenericRelationTests",
+      "ModelCheckTests"
+    ],
+    "tests.modeladmin.test_checks": [
+      "ActionsCheckTests",
+      "AutocompleteFieldsTests",
+      "CheckTestCase",
+      "DateHierarchyCheckTests",
+      "ExtraCheckTests",
+      "FieldsCheckTests",
+      "FieldsetsCheckTests",
+      "FilterHorizontalCheckTests",
+      "FilterVerticalCheckTests",
+      "FkNameCheckTests",
+      "FormCheckTests",
+      "FormsetCheckTests",
+      "InlinesCheckTests",
+      "ListDisplayEditableTests",
+      "ListDisplayLinksCheckTests",
+      "ListDisplayTests",
+      "ListFilterTests",
+      "ListMaxShowAllCheckTests",
+      "ListPerPageCheckTests",
+      "ListSelectRelatedCheckTests",
+      "MaxNumCheckTests",
+      "MinNumCheckTests",
+      "OrderingCheckTests",
+      "PrepopulatedFieldsCheckTests",
+      "RadioFieldsCheckTests",
+      "RawIdCheckTests",
+      "SaveAsCheckTests",
+      "SaveOnTopCheckTests",
+      "SearchFieldsCheckTests"
+    ],
+    "tests.auth_tests.test_checks": [
+      "ModelsPermissionsChecksTests",
+      "UserModelChecksTests"
+    ],
+    "tests.admin_inlines.admin": [
+      "AuthorAdmin",
+      "AuthorTabularInline",
+      "BinaryTreeAdmin",
+      "BookInline",
+      "ChapterInline",
+      "ChildHiddenFieldForm",
+      "ChildHiddenFieldInFieldsGroupStackedInline",
+      "ChildHiddenFieldOnSingleLineStackedInline",
+      "ChildHiddenFieldTabularInline",
+      "ChildModel1Inline",
+      "ChildModel2Inline",
+      "ClassAdminStackedHorizontal",
+      "ClassAdminStackedVertical",
+      "ClassAdminTabularHorizontal",
+      "ClassAdminTabularVertical",
+      "ClassStackedHorizontal",
+      "ClassStackedVertical",
+      "ClassTabularHorizontal",
+      "ClassTabularVertical",
+      "ConsigliereInline",
+      "CustomNumberWidget",
+      "EditablePKBookStackedInline",
+      "EditablePKBookTabularInline",
+      "FashonistaStackedInline",
+      "FootNoteForm",
+      "FootNoteNonEditableInlineCustomForm",
+      "Holder4Admin",
+      "Holder5Admin",
+      "HolderAdmin",
+      "InlineWeakness",
+      "Inner4StackedInline",
+      "Inner4TabularInline",
+      "Inner5StackedInline",
+      "Inner5TabularInline",
+      "InnerInline",
+      "InnerInline2",
+      "InnerInline2Tabular",
+      "InnerInline3",
+      "NonAutoPKBookChildTabularInline",
+      "NonAutoPKBookStackedInline",
+      "NonAutoPKBookTabularInline",
+      "NovelAdmin",
+      "NovelReadonlyChapterAdmin",
+      "PollAdmin",
+      "ProfileInline",
+      "QuestionInline",
+      "ReadOnlyChapterInline",
+      "ReadOnlyInlineInline",
+      "ShowInlineChildInline",
+      "ShowInlineParentAdmin",
+      "SightingInline",
+      "SomeChildModelForm",
+      "SomeChildModelInline",
+      "SottoCapoInline",
+      "StudentInline",
+      "TeacherAdmin",
+      "TitleForm",
+      "TitleInline",
+      "WeaknessForm",
+      "WeaknessInlineCustomForm"
+    ],
+    "django.contrib.contenttypes.admin": [
+      "GenericInlineModelAdmin",
+      "GenericInlineModelAdminChecks",
+      "GenericStackedInline",
+      "GenericTabularInline"
+    ],
+    "django.contrib.admin.checks": [
+      "BaseModelAdminChecks",
+      "InlineModelAdminChecks",
+      "ModelAdminChecks",
+      "_contains_subclass",
+      "_issubclass",
+      "check_admin_app",
+      "check_dependencies",
+      "must_be",
+      "must_inherit_from",
+      "refer_to_missing_field"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "ShowFacets",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "ShowFacets",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth.admin": [
+      "GroupAdmin",
+      "UserAdmin"
+    ],
+    "django.contrib.auth.checks": [
+      "check_models_permissions",
+      "check_user_model"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ]
+  },
+  "test_example_snippet": "        class TestModelAdmin(ModelAdmin):\n            raw_id_fields = 10\n\n        self.assertIsInvalid(\n            TestModelAdmin,\n            ValidationTestModel,\n            \"The value of 'raw_id_fields' must be a list or tuple.\",\n            \"admin.E001\",\n        )\n\n    def test_missing_field(self):\n        class TestModelAdmin(ModelAdmin):\n            raw_id_fields = (\"non_existent_field\",)\n\n        self.assertIsInvalid(\n            TestModelAdmin,\n            ValidationTestModel,\n            \"The value of 'raw_id_fields[0]' refers to 'non_existent_field', \"\n            \"which is not a field of 'modeladmin.ValidationTestModel'.\",\n            \"admin.E002\",\n        )\n\n    def test_invalid_field_type(self):\n        class TestModelAdmin(ModelAdmin):\n            raw_id_fields = (\"name\",)\n\n        self.assertIsInvalid(\n            TestModelAdmin,\n            ValidationTestModel,\n            \"The value of 'raw_id_fields[0]' must be a foreign key or a \"\n            \"many-to-many field.\",\n            \"admin.E003\",\n        )\n\n    def test_valid_case(self):",
+  "conftest_fixtures": {}
+}

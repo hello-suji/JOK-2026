@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15525",
+    "model_patch": "--- a/tests/serializers/models/base.py\n+++ b/tests/serializers/models/base.py\n@@ -163,3 +163,17 @@\n     field1 = models.CharField(max_length=10)\n     field2 = models.CharField(max_length=10)\n     field3 = models.CharField(max_length=10)\n+\n+from django.test import TestCase\n+from tests.serializers.models.base import Book, Author\n+from django.core import serializers\n+\n+class TestBuildInstance(TestCase):\n+    def test_build_instance_no_key_error_repro(self):\n+        author = Author.objects.create(name='John Doe')\n+        book_data = {'fields': {'title': 'Sample Book', 'author': author.pk}, 'model': 'serializers.book'}\n+        deserialized_objects = list(serializers.deserialize('python', [book_data]))\n+        self.assertEqual(len(deserialized_objects), 1)\n+        self.assertIsInstance(deserialized_objects[0].object, Book)\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(deserialized_objects) != \"'title'\"\n",
+    "patch_sha256": "2621c84362c8fa67629a96d616c8c7cc048b99e500a15ff2e795807da6bf553f"
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/combinatorics/permutations.py",
+      "target_function": "isinstance",
+      "related_classes": [
+        "Basic",
+        "Perm",
+        "Permutation",
+        "MyPermutation"
+      ],
+      "candidate_test_file": "sympy/combinatorics/tests/test_permutations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __new__ can be called.",
+      "Use the generated reproduction path that calls isinstance."
+    ],
+    "execution_stimulus": [
+      "Call __new__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: isinstance."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/combinatorics/permutations.py",
+      "sympy/core/basic.py",
+      "sympy/combinatorics/perm_groups.py"
+    ],
+    "relevant_test_files": [
+      "sympy/combinatorics/tests/test_permutations.py",
+      "sympy/combinatorics/tests/test_perm_groups.py",
+      "sympy/core/tests/test_basic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.combinatorics.permutations import Permutation\n\ndef test_subclassing_Permutation_repro():\n    class MyPermutation(Permutation):\n        pass\n    p = MyPermutation([1, 0])\n    assert isinstance(p, MyPermutation)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__new__",
+        "isinstance"
+      ],
+      "classes": [
+        "Basic",
+        "Perm",
+        "Permutation",
+        "MyPermutation"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/combinatorics/tests/test_permutations.py",
+      "target_source_file": "sympy/combinatorics/permutations.py",
+      "test_visible_functions": [
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "Perm",
+        "Permutation",
+        "MyPermutation"
+      ]
+    }
+  }
+]

@@ -1,0 +1,76 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "requests/sessions.py",
+      "target_function": "builtin_str",
+      "related_classes": [],
+      "candidate_test_file": "test_requests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where builtin_str can be called.",
+      "Use the generated reproduction path that calls builtin_str."
+    ],
+    "execution_stimulus": [
+      "Call builtin_str with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: builtin_str."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "requests/sessions.py",
+      "requests/utils.py",
+      "requests/adapters.py"
+    ],
+    "relevant_test_files": [
+      "test_requests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_builtin_str_method_conversion_repro():\n    from requests.sessions import builtin_str\n    method = b'GET'\n    converted_method = builtin_str(method)\n    assert converted_method == 'GET'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "builtin_str",
+        "safe_encode_list"
+      ],
+      "classes": [],
+      "files": [
+        "requests/sessions.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "test_requests.py",
+      "target_source_file": "requests/sessions.py",
+      "test_visible_functions": [
+        "builtin_str"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

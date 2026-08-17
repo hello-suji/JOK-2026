@@ -1,0 +1,21 @@
+--- a/tests/file_storage/tests.py
++++ b/tests/file_storage/tests.py
+@@ -1241,3 +1241,18 @@
+         )
+         with self.assertRaisesMessage(InvalidStorageError, msg):
+             test_storages["invalid_backend"]
++
++from django.core.files.storage import default_storage
++from django.db.models.fields.files import FileField
++from django.test import TestCase
++
++class TestFileFieldDeconstruction(TestCase):
++    def test_callable_storage_deconstruction_repro(self):
++        # Regression focus: Callable storage on FileField fails to deconstruct when it returns default_storage
++        other_storage = default_storage
++        def get_storage(): return other_storage
++        file_field = FileField(storage=get_storage)
++        name, path, args, kwargs = file_field.deconstruct()
++        self.assertEqual(name, 'django.db.models.FileField')
++        self.assertEqual(args, [])
++        self.assertIn('storage', kwargs)

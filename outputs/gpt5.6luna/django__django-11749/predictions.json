@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11749",
+    "model_patch": "--- a/tests/admin_scripts/management/commands/base_command.py\n+++ b/tests/admin_scripts/management/commands/base_command.py\n@@ -13,3 +13,16 @@\n\n     def handle(self, *labels, **options):\n         print('EXECUTE:BaseCommand labels=%s, options=%s' % (labels, sorted(options.items())))\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from django.core.management import call_command\n+from django.core.management.base import CommandError\n+\n+class TestMutuallyExclusiveGroupCommand(TestCase):\n+    def test_call_command_with_valid_kwargs_repro(self):\n+        try:\n+            result = call_command('my_command', shop_id=1)\n+            self.assertIsNone(result)  # Assuming the command returns None on success\n+        except CommandError:\n+            self.fail('call_command raised CommandError unexpectedly')\n",
+    "patch_sha256": "7ebdb59274aca9e9192bc2e02316a19e171f22888705691408709d2e2be634a1"
+  }
+]

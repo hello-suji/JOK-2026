@@ -1,0 +1,26 @@
+--- a/lib/matplotlib/tests/test_figure_gate.py
++++ b/lib/matplotlib/tests/test_figure_gate.py
+@@ -1611,3 +1611,23 @@
+     fig = plt.figure(layout=mpl.layout_engine.ConstrainedLayoutEngine(**params))
+     with pytest.warns(PendingDeprecationWarning, match="will be deprecated"):
+         assert fig.get_constrained_layout_pads() == expected
++
++import matplotlib
++matplotlib.use('Agg')
++import numpy as np
++
++@check_figures_equal(extensions=["png"])
++def test_hexbin_mincnt_behavior_repro(fig_test, fig_ref):
++    np.random.seed(42)
++    X, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T
++    Z = np.ones_like(X)
++    extent = [-3., 3., -3., 3.]
++    gridsize = (7, 7)
++
++    ax_test = fig_test.add_subplot()
++    hb_test = ax_test.hexbin(X, Y, C=Z, gridsize=gridsize, extent=extent, mincnt=1)
++
++    ax_ref = fig_ref.add_subplot()
++    hb_ref = ax_ref.hexbin(X, Y, C=Z, gridsize=gridsize, extent=extent, mincnt=1)
++
++    assert len(hb_test.get_offsets()) == len(hb_ref.get_offsets())

@@ -1,0 +1,16 @@
+
+
+from django.test import TestCase
+from django.db.models import OuterRef, Subquery
+from django.utils.functional import SimpleLazyObject
+from django.contrib.auth.models import User
+from django.db.models import F
+
+class TestSimpleLazyObjectWithSubquery(TestCase):
+    def test_bug_repro(self):
+        user = User.objects.create(username='testuser')
+        simple_lazy_user = SimpleLazyObject(lambda: user)
+        subquery = User.objects.filter(pk=OuterRef('pk')).values('username')
+        result = User.objects.annotate(sub_username=Subquery(subquery)).filter(pk=simple_lazy_user.pk).first()
+        self.assertIsNotNone(result)
+        self.assertEqual(result.username, 'testuser')

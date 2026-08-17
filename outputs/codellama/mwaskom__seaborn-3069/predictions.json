@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "mwaskom__seaborn-3069",
+    "model_patch": "--- a/tests/_core/test_plot.py\n+++ b/tests/_core/test_plot.py\n@@ -2010,3 +2010,21 @@\n     def test_default_repr_gate(self):\n\n         assert repr(Default()) == \"<default>\"\n+\n+def test_nominal_scale_behavior_repro():\n+    # Setup the plot with Nominal scale\n+    p = Plot()\n+    p.add(x='category', y='value', data=pd.DataFrame({'category': ['A', 'B'], 'value': [1, 2]}))\n+    p.scale(x=Nominal())\n+    ax = p.draw().axes[0]\n+\n+    # Check if the scale is drawn to +/- 0.5 from the first and last tick\n+    ticks = ax.get_xticks()\n+    assert ticks[0] == 0.5\n+    assert ticks[-1] == 1.5\n+\n+    # Check if the grid is shown\n+    assert ax.xaxis.get_gridlines()[0].get_visible()\n+\n+    # Check if the y-axis is not inverted\n+    assert not ax.yaxis_inverted()\n",
+    "patch_sha256": "4880e3cced1dc78fe3aa1c7a932a3111ed4ecb2eb85165ca6262d7ef46417345"
+  }
+]

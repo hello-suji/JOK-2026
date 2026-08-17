@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/conf/global_settings.py",
+      "target_function": "create",
+      "related_classes": [
+        "Avg",
+        "Sum",
+        "User"
+      ],
+      "candidate_test_file": "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls create, aggregate."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, aggregate."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/conf/global_settings.py",
+      "django/contrib/admin/filters.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "tests/sitemaps_tests/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Avg, Sum\nfrom django.contrib.auth.models import User\n\nclass TestAggregationSupport(TestCase):\n    def setUp(self):\n        User.objects.create(username='user1', first_name='John', last_name='Doe')\n        User.objects.create(username='user2', first_name='Jane', last_name='Doe')\n        User.objects.create(username='user3', first_name='John', last_name='Smith')\n\n    def test_avg_with_distinct_repro(self):\n        avg_first_name_length = User.objects.aggregate(avg_length=Avg('first_name__length', distinct=True))['avg_length']\n        self.assertIsNotNone(avg_first_name_length)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create",
+        "aggregate"
+      ],
+      "classes": [
+        "Avg",
+        "Sum",
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "target_source_file": "django/conf/global_settings.py",
+      "test_visible_functions": [
+        "create",
+        "aggregate"
+      ],
+      "test_visible_classes": [
+        "Avg",
+        "Sum",
+        "User"
+      ]
+    }
+  }
+]

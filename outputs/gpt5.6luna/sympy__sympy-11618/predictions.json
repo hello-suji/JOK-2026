@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-11618",
+    "model_patch": "--- a/sympy/geometry/tests/test_point.py\n+++ b/sympy/geometry/tests/test_point.py\n@@ -260,3 +260,12 @@\n     p3, p4 = Point(0, 1), Point(-1, 2)\n     assert Point.is_concyclic(p1, p2, p3)\n     assert not Point.is_concyclic(p1, p2, p3, p4)\n+\n+def test_distance_considers_third_dimension_repro():\n+    p1 = Point(2, 0)\n+    p2 = Point(1, 0, 2)\n+    result = p1.distance(p2)\n+    assert result != 1\n+    assert result == sqrt(5)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != '1'\n",
+    "patch_sha256": "b0bc05a9752c05fc26e577b3c8034fd502a94a8f321fbcab6d2a5a7a35f83d89"
+  }
+]

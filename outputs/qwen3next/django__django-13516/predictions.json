@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13516",
+    "model_patch": "--- a/tests/backends/mysql/test_operations.py\n+++ b/tests/backends/mysql/test_operations.py\n@@ -45,3 +45,17 @@\n                         'SET FOREIGN_KEY_CHECKS = 1;',\n                     ],\n                 )\n+\n+import re\n+from django.core.management import call_command\n+from django.core.management.base import CommandError\n+from django.test import TestCase\n+from io import StringIO\n+\n+class TestFlushCommand(TestCase):\n+    def test_flush_command_output_repro(self):\n+        out = StringIO()\n+        err = StringIO()\n+        call_command('flush', stdout=out, stderr=err, interactive=False)\n+        self.assertIn('Applying', out.getvalue())\n+        self.assertNotIn('Applying', err.getvalue())\n",
+    "patch_sha256": "d4d515752ebfb76aa243ab063b0244ee834398c40a79588ce8f7eddeeffbb2e2"
+  }
+]

@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/checkers/similar.py",
+      "target_function": "redirect_stdout",
+      "related_classes": [
+        "Run"
+      ],
+      "candidate_test_file": "tests/checkers/unittest_similar.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls redirect_stdout, raises."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: redirect_stdout, raises."
+    ],
+    "expected_failure": "pylint: error: argument --verbose/-v: expected one argument",
+    "relevant_source_files": [
+      "pylint/checkers/similar.py",
+      "examples/custom.py",
+      "pylint/checkers/base/name_checker/checker.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_similar.py",
+      "tests/checkers/unittest_base_checker.py",
+      "tests/checkers/base/unittest_name_preset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "shell",
+        "code": "pylint mytest.py -v"
+      },
+      {
+        "language": "shell",
+        "code": "usage: pylint [options]\npylint: error: argument --verbose/-v: expected one argument"
+      },
+      {
+        "language": "shell",
+        "code": "pylint 2.14.0-dev0\nastroid 2.11.2\nPython 3.10.0b2 (v3.10.0b2:317314165a, May 31 2021, 10:02:22) [Clang 12.0.5 (clang-1205.0.22.9)]"
+      },
+      {
+        "language": "python",
+        "code": "def test_verbose_short_option_requires_argument_repro() -> None:\n    output = StringIO()\n    with redirect_stdout(output), pytest.raises(SystemExit) as ex:\n        similar.Run(['-v', 'mytest.py'])\n    assert ex.value.code != 0\n    assert 'argument --verbose/-v: expected one argument' in output.getvalue()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "redirect_stdout",
+        "raises"
+      ],
+      "classes": [
+        "Run"
+      ],
+      "files": [
+        "mytest.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/checkers/unittest_similar.py",
+      "target_source_file": "pylint/checkers/similar.py",
+      "test_visible_functions": [
+        "redirect_stdout",
+        "raises"
+      ],
+      "test_visible_classes": [
+        "Run"
+      ]
+    }
+  }
+]

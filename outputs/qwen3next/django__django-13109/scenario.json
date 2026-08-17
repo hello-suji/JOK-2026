@@ -1,0 +1,113 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/related.py",
+      "target_function": "validate",
+      "related_classes": [
+        "ArticleManager",
+        "BooleanField",
+        "CharField",
+        "FavoriteArticle",
+        "ForeignKey",
+        "ModelForm",
+        "Model",
+        "Article",
+        "FavoriteArticleForm",
+        "Meta"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where validate can be called.",
+      "Use the generated reproduction path that calls validate, create."
+    ],
+    "execution_stimulus": [
+      "Call validate with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: validate, create."
+    ],
+    "expected_failure": "ForeignKey.validate() should validate using the base manager instead of the default manager.",
+    "relevant_source_files": [
+      "django/db/models/fields/related.py",
+      "django/db/models/fields/__init__.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/c/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Model, ForeignKey, BooleanField, CharField\nfrom django.forms.models import ModelForm\nfrom tests.get_object_or_404.models import Article, ArticleManager\n\nclass TestForeignKeyValidation(TestCase):\n    def setUp(self):\n        self.archived_article = Article.objects.create(title='Archived Article', archived=True)\n        self.active_article = Article.objects.create(title='Active Article', archived=False)\n\n    def test_validate_using_base_manager_repro(self):\n        class FavoriteArticle(Model):\n            article = ForeignKey(Article, on_delete=models.CASCADE)\n\n        class FavoriteArticleForm(ModelForm):\n            class Meta:\n                model = FavoriteArticle\n                fields = ['article']\n\n        form = FavoriteArticleForm(data={'article': self.archived_article.pk})\n        self.assertTrue(form.is_valid())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "get_queryset",
+        "validate",
+        "create"
+      ],
+      "classes": [
+        "ArticleManager",
+        "BooleanField",
+        "CharField",
+        "FavoriteAricles",
+        "FavoriteAriclesForm",
+        "FavoriteArticle",
+        "ForeignKey",
+        "ModelForm",
+        "Model",
+        "Article",
+        "FavoriteArticleForm",
+        "Meta"
+      ],
+      "files": [
+        "django/db/models/fields/related.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "target_source_file": "django/db/models/fields/related.py",
+      "test_visible_functions": [
+        "validate",
+        "create"
+      ],
+      "test_visible_classes": [
+        "ArticleManager",
+        "BooleanField",
+        "CharField",
+        "FavoriteArticle",
+        "ForeignKey",
+        "ModelForm",
+        "Model",
+        "Article"
+      ]
+    }
+  }
+]

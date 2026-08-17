@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/coordinates/sky_coordinate.py",
+      "target_function": "prop",
+      "related_classes": [
+        "SkyCoord",
+        "CustomCoord"
+      ],
+      "candidate_test_file": "astropy/coordinates/tests/test_celestial_transformations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where <module> can be called.",
+      "Use the generated reproduction path that calls prop, coord, raises."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: prop, coord, raises."
+    ],
+    "expected_failure": "I'm trying to subclass `SkyCoord`, and add some custom properties. This all seems to be working fine, but when I have a custom property (`prop` below) that tries to access a non-existent attribute (`random_attr`) below, the error message is misleading because it says `prop` doesn't exist, where it should say `random_attr` doesn't exist.",
+    "relevant_source_files": [
+      "astropy/coordinates/sky_coordinate.py",
+      "astropy/visualization/wcsaxes/formatter_locator.py",
+      "astropy/io/votable/tree.py"
+    ],
+    "relevant_test_files": [
+      "astropy/coordinates/tests/test_celestial_transformations.py",
+      "astropy/coordinates/tests/test_formatting.py",
+      "astropy/coordinates/tests/test_intermediate_transformations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import pytest\nimport astropy.coordinates as coord\n\nclass CustomCoord(coord.SkyCoord):\n    @property\n    def prop(self):\n        return self.random_attr\n\ndef test_skycoord_subclass_property_reports_inner_missing_attribute():\n    c = CustomCoord('00h42m30s', '+41d12m00s', frame='icrs')\n    with pytest.raises(AttributeError) as excinfo:\n        c.prop\n    message = str(excinfo.value)\n    assert 'random_attr' in message\n    assert 'prop' not in message\n"
+      },
+      {
+        "language": "python",
+        "code": "import astropy.coordinates as coord\n\n\nclass custom_coord(coord.SkyCoord):\n    @property\n    def prop(self):\n        return self.random_attr\n\n\nc = custom_coord('00h42m30s', '+41d12m00s', frame='icrs')\nc.prop"
+      },
+      {
+        "language": "python",
+        "code": "Traceback (most recent call last):\n  File \"test.py\", line 11, in <module>\n    c.prop\n  File \"/Users/dstansby/miniconda3/lib/python3.7/site-packages/astropy/coordinates/sky_coordinate.py\", line 600, in __getattr__\n    .format(self.__class__.__name__, attr))\nAttributeError: 'custom_coord' object has no attribute 'prop'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'custom_coord' object has no attribute 'prop'"
+    ],
+    "error_keywords": [
+      "AttributeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "custom_coord",
+        "prop",
+        "coord",
+        "raises"
+      ],
+      "classes": [
+        "SkyCoord",
+        "CustomCoord"
+      ],
+      "files": [
+        "7/site-packages/astropy/coordinates/sky_coordinate.py",
+        "test.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "astropy/coordinates/tests/test_celestial_transformations.py",
+      "target_source_file": "astropy/coordinates/sky_coordinate.py",
+      "test_visible_functions": [
+        "prop",
+        "coord",
+        "raises"
+      ],
+      "test_visible_classes": [
+        "SkyCoord",
+        "CustomCoord"
+      ]
+    }
+  }
+]

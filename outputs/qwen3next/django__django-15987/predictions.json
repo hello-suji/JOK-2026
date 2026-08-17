@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15987",
+    "model_patch": "--- a/tests/admin_scripts/management/commands/suppress_base_options_command.py\n+++ b/tests/admin_scripts/management/commands/suppress_base_options_command.py\n@@ -22,3 +22,16 @@\n\n     def handle(self, *labels, **options):\n         print(\"EXECUTE:SuppressBaseOptionsCommand options=%s\" % sorted(options.items()))\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from pathlib import Path\n+from django.core.management.commands.loaddata import Command\n+\n+class TestLoadDataCommand(TestCase):\n+    def test_duplicate_path_instances_not_detected_repro(self):\n+        command = Command()\n+        fixture_dir = Path('/path/to/fixtures')\n+        command.fixture_dirs = [fixture_dir, fixture_dir]\n+        unique_dirs = set(command.fixture_dirs)\n+        self.assertEqual(len(unique_dirs), len(command.fixture_dirs))\n",
+    "patch_sha256": "6735ef6132aa83d55b07f0a294a196fbaa003e9f2f0a86fe46605a607c407fa1"
+  }
+]

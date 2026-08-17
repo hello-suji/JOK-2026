@@ -1,0 +1,17 @@
+--- a/tests/foreign_object/test_forms.py
++++ b/tests/foreign_object/test_forms.py
+@@ -27,3 +27,14 @@
+         a2 = form.save()
+         self.assertEqual(a.pk, a2.pk)
+         self.assertEqual(a2.pub_date, datetime.date(2013, 1, 1))
++
++from django.test import TestCase, SimpleTestCase
++import datetime
++from collections import namedtuple
++
++class TestRangeFilterWithNamedTuple(TestCase):
++    def test_range_filter_with_namedtuple_repro(self):
++        Range = namedtuple('Range', ['start', 'end'])
++        date_range = Range(start=datetime.date(2020, 1, 1), end=datetime.date(2020, 12, 31))
++        articles = Article.objects.filter(pub_date__range=date_range)
++        self.assertTrue(articles.exists())

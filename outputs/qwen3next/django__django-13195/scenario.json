@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/http/response.py",
+      "target_function": "delete_cookie",
+      "related_classes": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "candidate_test_file": "tests/sitemaps_tests/test_http.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where delete_cookie can be called.",
+      "Use the generated reproduction path that calls delete_cookie, set_cookie, output."
+    ],
+    "execution_stimulus": [
+      "Call delete_cookie with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: delete_cookie, set_cookie, output."
+    ],
+    "expected_failure": "This has SameSite set. But the POST returns a 304 and the following GET's cookie header is this:",
+    "relevant_source_files": [
+      "django/http/response.py",
+      "django/contrib/admin/views/main.py",
+      "django/contrib/messages/storage/cookie.py"
+    ],
+    "relevant_test_files": [
+      "tests/sitemaps_tests/test_http.py",
+      "tests/sitemaps_tests/test_https.py",
+      "tests/sitemaps_tests/urls/http.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.http.response import HttpResponse\n\nclass TestDeleteCookieBehavior(SitemapTestsBase):\n    def test_delete_cookie_preserves_samesite_repro(self):\n        response = HttpResponse()\n        response.set_cookie('messages', 'value', samesite='None', secure=True)\n        response.delete_cookie('messages')\n        self.assertIn('SameSite=None', response.cookies['messages'].output())\n        self.assertTrue(response.cookies['messages']['secure'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "delete_cookie",
+        "set_cookie",
+        "output"
+      ],
+      "classes": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/sitemaps_tests/test_http.py",
+      "target_source_file": "django/http/response.py",
+      "test_visible_functions": [
+        "delete_cookie",
+        "set_cookie",
+        "output"
+      ],
+      "test_visible_classes": [
+        "HttpResponse",
+        "SameSite"
+      ]
+    }
+  }
+]

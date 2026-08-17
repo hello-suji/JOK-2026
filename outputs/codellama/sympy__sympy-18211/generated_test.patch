@@ -1,0 +1,15 @@
+--- a/sympy/sets/tests/test_conditionset.py
++++ b/sympy/sets/tests/test_conditionset.py
+@@ -179,3 +179,12 @@
+     # and the comparison is giving an error.
+     assert ConditionSet(x, 1/x >= 0, S.Reals).contains(0) == \
+         Contains(0, ConditionSet(x, 1/x >= 0, S.Reals), evaluate=False)
++
++from sympy import symbols, Eq, cos, sin, Reals
++from sympy.sets import ConditionSet
++
++def test_solveset_notimplemented_conditionset_repro():
++    n = symbols('n')
++    equation = Eq(n*cos(n) - 3*sin(n), 0)
++    expected_result = ConditionSet(n, equation, Reals)
++    assert solveset(equation, n, domain=Reals) == expected_result

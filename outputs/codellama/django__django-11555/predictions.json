@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11555",
+    "model_patch": "--- a/tests/queries/test_query.py\n+++ b/tests/queries/test_query.py\n@@ -106,3 +106,9 @@\n         self.assertIsInstance(b_isnull, RelatedIsNull)\n         self.assertIsInstance(b_isnull.lhs, SimpleCol)\n         self.assertEqual(b_isnull.lhs.target, ObjectC._meta.get_field('objectb'))\n+\n+from django.test import TestCase, SimpleTestCase\n+class TestMultiTableInheritanceOrdering(SimpleTestCase):\n+    def test_order_by_with_expression_fails_repro(self):\n+        queryset = Author.objects.order_by(F('num').asc())\n+        self.assertIsInstance(queryset, Query)\n",
+    "patch_sha256": "724edd8139aa9fd4db8c7f24654792d69b94aae1ebcf0562b8968c8bc98f22d0"
+  }
+]

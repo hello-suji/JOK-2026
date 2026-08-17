@@ -1,0 +1,480 @@
+{
+  "instance_id": "pylint-dev__pylint-7080",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "3c5eca2ded3dd2b59ebaf23eb289453b5d2930f0",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/config/arguments_manager.py",
+      "score": 19,
+      "matched_identifiers": [
+        "__init__",
+        "action",
+        "attribute",
+        "auto"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "path_contains_class:Argument",
+        "source_content_tokens:action,attribute,auto"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(\n        self, prog: str, usage: str | None = None, description: str | None = None\n    ) -> None:\n        self._config = argparse.Namespace()\n        \"\"\"Namespace for all options.\"\"\"\n\n        self._base_config = self._config\n        \"\"\"Fall back Namespace object created during initialization.\n\n        This is necessary for the per-directory configuration support. Whenever we\n        fail to match a file with a directory we fall back to the Namespace object\n        created during initialization.\n        \"\"\"\n\n        self._arg_parser = argparse.ArgumentParser("
+      },
+      "top_level_functions": [
+        "_ArgumentsManager.config",
+        "_ArgumentsManager.options_providers",
+        "_ArgumentsManager.reset_parsers",
+        "_ArgumentsManager.register_options_provider",
+        "_ArgumentsManager.add_option_group",
+        "_ArgumentsManager.add_optik_option",
+        "_ArgumentsManager.optik_option",
+        "_ArgumentsManager.generate_config",
+        "_ArgumentsManager.load_provider_defaults",
+        "_ArgumentsManager.read_config_file",
+        "_ArgumentsManager.load_config_file",
+        "_ArgumentsManager.load_configuration",
+        "_ArgumentsManager.load_configuration_from_config",
+        "_ArgumentsManager.load_command_line_configuration",
+        "_ArgumentsManager.help",
+        "_ArgumentsManager.cb_set_provider_option",
+        "_ArgumentsManager.global_set_option",
+        "_ArgumentsManager.set_option"
+      ]
+    },
+    {
+      "path": "pylint/config/arguments_provider.py",
+      "score": 19,
+      "matched_identifiers": [
+        "__init__",
+        "action",
+        "attribute",
+        "auto"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "path_contains_class:Argument",
+        "source_content_tokens:action,attribute,auto"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, arguments_manager: _ArgumentsManager) -> None:\n        self._arguments_manager = arguments_manager\n        \"\"\"The manager that will parse and register any options provided.\"\"\"\n\n        self._arguments_manager._register_options_provider(self)\n\n        self._level = 0\n\n    @property\n    def level(self) -> int:\n        # TODO: 3.0: Remove deprecated attribute\n        warnings.warn(\n            \"The level attribute has been deprecated. It was used to display the checker in the help or not,\"\n            \" and everything is displayed in the help now. It will be removed in pylint 3.0.\",\n            DeprecationWarning,"
+      },
+      "top_level_functions": [
+        "_ArgumentsProvider.level",
+        "_ArgumentsProvider.config",
+        "_ArgumentsProvider.load_defaults",
+        "_ArgumentsProvider.option_attrname",
+        "_ArgumentsProvider.option_value",
+        "_ArgumentsProvider.set_option",
+        "_ArgumentsProvider.get_option_def",
+        "_ArgumentsProvider.options_by_section",
+        "_ArgumentsProvider.options_and_values"
+      ]
+    },
+    {
+      "path": "pylint/checkers/base/name_checker/checker.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__init__",
+        "attribute",
+        "auto",
+        "c0103"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "stem_in_issue_text:checker",
+        "source_content_tokens:attribute,auto,c0103"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, linter: PyLinter) -> None:\n        super().__init__(linter)\n        self._name_group: dict[str, str] = {}\n        self._bad_names: dict[str, dict[str, list[_BadNamesTuple]]] = {}\n        self._name_regexps: dict[str, re.Pattern[str]] = {}\n        self._name_hints: dict[str, str] = {}\n        self._good_names_rgxs_compiled: list[re.Pattern[str]] = []\n        self._bad_names_rgxs_compiled: list[re.Pattern[str]] = []\n\n    def open(self) -> None:\n        self.linter.stats.reset_bad_names()\n        for group in self.linter.config.name_group:\n            for name_type in group.split(\":\"):\n                self._name_group[name_type] = f\"group_{group}\"\n"
+      },
+      "top_level_functions": [
+        "NameChecker.open",
+        "NameChecker.visit_module",
+        "NameChecker.leave_module",
+        "NameChecker.visit_classdef",
+        "NameChecker.visit_functiondef",
+        "NameChecker.visit_global",
+        "NameChecker.visit_assignname"
+      ]
+    },
+    {
+      "path": "pylint/checkers/variables.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__init__",
+        "action",
+        "attribute"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "path_contains_function:variables",
+        "path_contains_class:Variable",
+        "stem_in_issue_text:variables",
+        "source_content_tokens:action,attribute"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, linter=None):\n        super().__init__(linter)\n        self._to_consume: list[NamesConsumer] = []\n        self._checking_mod_attr = None\n        self._type_annotation_names = []\n        self._except_handler_names_queue: list[\n            tuple[nodes.ExceptHandler, nodes.AssignName]\n        ] = []\n        \"\"\"This is a queue, last in first out.\"\"\"\n        self._postponed_evaluation_enabled = False\n\n    def leave_for(self, node: nodes.For) -> None:\n        self._store_type_annotation_names(node)\n\n    def visit_module(self, node: nodes.Module) -> None:"
+      },
+      "top_level_functions": [
+        "overridden_method",
+        "NamesConsumer.to_consume",
+        "NamesConsumer.consumed",
+        "NamesConsumer.consumed_uncertain",
+        "NamesConsumer.scope_type",
+        "NamesConsumer.mark_as_consumed",
+        "NamesConsumer.get_next_to_consume",
+        "VariablesChecker.leave_for",
+        "VariablesChecker.visit_module",
+        "VariablesChecker.leave_module",
+        "VariablesChecker.visit_classdef",
+        "VariablesChecker.leave_classdef",
+        "VariablesChecker.visit_lambda",
+        "VariablesChecker.leave_lambda",
+        "VariablesChecker.visit_generatorexp",
+        "VariablesChecker.leave_generatorexp",
+        "VariablesChecker.visit_dictcomp",
+        "VariablesChecker.leave_dictcomp",
+        "VariablesChecker.visit_setcomp",
+        "VariablesChecker.leave_setcomp",
+        "VariablesChecker.visit_functiondef",
+        "VariablesChecker.leave_functiondef",
+        "VariablesChecker.visit_global",
+        "VariablesChecker.visit_assignname",
+        "VariablesChecker.visit_delname",
+        "VariablesChecker.visit_name",
+        "VariablesChecker.visit_excepthandler",
+        "VariablesChecker.leave_excepthandler",
+        "VariablesChecker.visit_import",
+        "VariablesChecker.visit_importfrom",
+        "VariablesChecker.visit_assign",
+        "VariablesChecker.visit_listcomp",
+        "VariablesChecker.leave_listcomp",
+        "VariablesChecker.leave_assign",
+        "VariablesChecker.leave_with",
+        "VariablesChecker.visit_arguments",
+        "VariablesChecker.visit_subscript",
+        "register"
+      ]
+    },
+    {
+      "path": "pylint/checkers/stdlib.py",
+      "score": 17,
+      "matched_identifiers": [
+        "__init__",
+        "action",
+        "attribute",
+        "browse"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:action,attribute,browse"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, linter: PyLinter) -> None:\n        BaseChecker.__init__(self, linter)\n        self._deprecated_methods: set[str] = set()\n        self._deprecated_arguments: dict[str, tuple[tuple[int | None, str], ...]] = {}\n        self._deprecated_classes: dict[str, set[str]] = {}\n        self._deprecated_decorators: set[str] = set()\n\n        for since_vers, func_list in DEPRECATED_METHODS[sys.version_info[0]].items():\n            if since_vers <= sys.version_info:\n                self._deprecated_methods.update(func_list)\n        for since_vers, func_list in DEPRECATED_ARGUMENTS.items():\n            if since_vers <= sys.version_info:\n                self._deprecated_arguments.update(func_list)\n        for since_vers, class_list in DEPRECATED_CLASSES.items():\n            if since_vers <= sys.version_info:"
+      },
+      "top_level_functions": [
+        "StdlibChecker.visit_call",
+        "StdlibChecker.visit_unaryop",
+        "StdlibChecker.visit_if",
+        "StdlibChecker.visit_ifexp",
+        "StdlibChecker.visit_boolop",
+        "StdlibChecker.visit_functiondef",
+        "StdlibChecker.deprecated_methods",
+        "StdlibChecker.deprecated_arguments",
+        "StdlibChecker.deprecated_classes",
+        "StdlibChecker.deprecated_decorators",
+        "register"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "pylint/testutils/lint_module_test.py",
+      "score": 25,
+      "matched_identifiers": [
+        "__init__",
+        "module"
+      ],
+      "reasons": [
+        "test_path_contains_function:module",
+        "test_function_match:__init__",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:module,pylint",
+        "internal_name_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_variables.py",
+      "score": 25,
+      "matched_identifiers": [
+        "Variable",
+        "variables"
+      ],
+      "reasons": [
+        "test_path_contains_function:variables",
+        "test_path_related_to_class:Variable",
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:variables",
+        "token_overlap:checker,checkers,variable,variables",
+        "internal_name_overlap:module",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:pylint/config"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "pylint/testutils/functional/test_file.py",
+      "score": 24,
+      "matched_identifiers": [
+        "__init__",
+        "module"
+      ],
+      "reasons": [
+        "test_function_match:module",
+        "test_function_match:__init__",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:pylint",
+        "internal_name_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_base_checker.py",
+      "score": 19,
+      "matched_identifiers": [
+        "__init__"
+      ],
+      "reasons": [
+        "test_function_match:__init__",
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:checker",
+        "token_overlap:checker,checkers",
+        "internal_name_overlap:init",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:pylint/config"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/config/pylint_config/test_pylint_config_help.py",
+      "score": 19,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/config",
+        "token_overlap:pylint",
+        "internal_name_overlap:pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/checkers/unittest_base_checker.py:top_level_test_functions",
+      "tests/checkers/unittest_variables.py:testcase_class:TestMissingSubmodule",
+      "tests/checkers/unittest_variables.py:testcase_class:TestVariablesChecker",
+      "tests/checkers/unittest_variables.py:testcase_class:TestVariablesCheckerWithTearDown",
+      "tests/config/pylint_config/test_pylint_config_help.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_pylint_config_help.py:top_level_test_functions",
+      "pylint/testutils/lint_module_test.py:pytest_import_or_conftest",
+      "pylint/testutils/functional/test_file.py:testcase_class:TestFileOptions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 1910,
+  "indexed_test_file_count": 1069,
+  "available_imports": {
+    "pylint": [
+      "BaseChecker",
+      "BaseRawFileChecker",
+      "BaseTokenChecker",
+      "CheckerTestCase",
+      "ConfigurationMixIn",
+      "DeprecatedMixin",
+      "FunctionalTestFile",
+      "GenericTestReporter",
+      "LintModuleTest",
+      "LinterStats",
+      "MapReduceMixin",
+      "MessageTest",
+      "MinimalTestReporter",
+      "NoReturn",
+      "Option",
+      "OptionParser",
+      "OptionsManagerMixIn",
+      "OptionsProviderMixIn",
+      "PYLINTRC",
+      "PYLINT_HOME",
+      "Sequence",
+      "TYPE_CHECKING",
+      "UPDATE_FILE",
+      "UPDATE_OPTION",
+      "USER_HOME",
+      "UnittestLinter",
+      "UnsupportedAction",
+      "__version__",
+      "_get_tests_info",
+      "_run_pylint_config",
+      "_tokenize_str",
+      "annotations",
+      "create_files",
+      "diff_string",
+      "find_default_config_files",
+      "find_pylintrc",
+      "initialize",
+      "linter",
+      "load_results",
+      "modify_sys_path",
+      "register_plugins",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "save_results",
+      "set_config",
+      "version"
+    ],
+    "tests.checkers.unittest_base_checker": [
+      "DifferentBasicChecker",
+      "LessBasicChecker",
+      "OtherBasicChecker",
+      "test_base_checker_doc",
+      "test_base_checker_ordering"
+    ],
+    "tests.checkers.unittest_variables": [
+      "TestMissingSubmodule",
+      "TestVariablesChecker",
+      "TestVariablesCheckerWithTearDown"
+    ],
+    "tests.config.pylint_config.test_pylint_config_help": [
+      "test_pylint_config_main_messages"
+    ],
+    "pylint.config.arguments_manager": [
+      "_ArgumentsManager"
+    ],
+    "pylint.config": [
+      "load_results",
+      "save_results"
+    ],
+    "pylint.config.arguments_provider": [
+      "UnsupportedAction",
+      "_ArgumentsProvider"
+    ],
+    "pylint.testutils.lint_module_test": [
+      "LintModuleTest"
+    ],
+    "pylint.checkers.stdlib": [
+      "StdlibChecker",
+      "_check_mode_str",
+      "register"
+    ],
+    "pylint.checkers": [
+      "AnyStyle",
+      "BasicChecker",
+      "BasicErrorChecker",
+      "CamelCaseStyle",
+      "ComparisonChecker",
+      "DocStringChecker",
+      "KNOWN_NAME_TYPES_WITH_STYLE",
+      "NameChecker",
+      "NamingStyle",
+      "PascalCaseStyle",
+      "PassChecker",
+      "SnakeCaseStyle",
+      "TYPE_CHECKING",
+      "UpperCaseStyle",
+      "annotations",
+      "initialize",
+      "table_lines_from_stats"
+    ],
+    "pylint.checkers.variables": [
+      "NamesConsumer",
+      "ScopeConsumer",
+      "VariableVisitConsumerAction",
+      "VariablesChecker",
+      "_assigned_locally",
+      "_detect_global_scope",
+      "_find_frame_imports",
+      "_fix_dot_imports",
+      "_flattened_scope_names",
+      "_get_unpacking_extra_info",
+      "_has_locals_call_after_node",
+      "_import_name_is_global",
+      "_infer_name_module",
+      "_is_from_future_import",
+      "overridden_method",
+      "register"
+    ],
+    "pylint.checkers.base": [
+      "AnyStyle",
+      "CamelCaseStyle",
+      "KNOWN_NAME_TYPES_WITH_STYLE",
+      "NameChecker",
+      "NamingStyle",
+      "PascalCaseStyle",
+      "SnakeCaseStyle",
+      "UpperCaseStyle",
+      "register"
+    ],
+    "pylint.checkers.base.name_checker.checker": [
+      "NameChecker",
+      "TypeVarVariance",
+      "_determine_function_name_type",
+      "_get_properties",
+      "_is_multi_naming_match",
+      "_redefines_import"
+    ],
+    "pylint.testutils.functional.test_file": [
+      "FunctionalTestFile",
+      "NoFileError",
+      "TestFileOptions",
+      "parse_python_version"
+    ],
+    "pylint.testutils": [
+      "FunctionalTestFile",
+      "LintModuleOutputUpdate",
+      "NoFileError",
+      "REASONABLY_DISPLAYABLE_VERTICALLY",
+      "get_functional_test_files_from_directory",
+      "parse_python_version"
+    ]
+  },
+  "test_example_snippet": "class TestVariablesChecker(CheckerTestCase):\n\n    CHECKER_CLASS = variables.VariablesChecker\n\n    def test_all_elements_without_parent(self) -> None:\n        node = astroid.extract_node(\"__all__ = []\")\n        node.value.elts.append(astroid.Const(\"test\"))\n        root = node.root()\n        with self.assertNoMessages():\n            self.checker.visit_module(root)\n            self.checker.leave_module(root)\n\n\nclass TestVariablesCheckerWithTearDown(CheckerTestCase):\n\n    CHECKER_CLASS = variables.VariablesChecker\n\n    def setup_method(self) -> None:\n        super().setup_method()\n        self._to_consume_backup = self.checker._to_consume\n        self.checker._to_consume = []\n\n    def teardown_method(self) -> None:\n        self.checker._to_consume = self._to_consume_backup\n\n    @set_config(callbacks=(\"callback_\", \"_callback\"))\n    def test_custom_callback_string(self) -> None:\n        \"\"\"Test the --callbacks option works.\"\"\"\n        node = astroid.extract_node(\n            \"\"\"\n        def callback_one(abc):\n             ''' should not emit unused-argument. '''\n        \"\"\"\n        )\n        with self.assertNoMessages():",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

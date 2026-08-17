@@ -1,0 +1,16 @@
+--- a/tests/migrations/test_state.py
++++ b/tests/migrations/test_state.py
+@@ -2225,3 +2225,13 @@
+         self.assertRelated(P, [M, Q, Z])
+         self.assertRelated(Q, [M, P, Z])
+         self.assertRelated(Z, [M, P, Q])
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations import Migration
++
++class TestMigrationImportOrdering(TestCase):
++    def test_import_ordering_repro(self):
++        migration = Migration('0001_initial', 'myapp')
++        migration.operations = []
++        migration_string = str(migration)
++        self.assertIn('import datetime\nfrom django.db import migrations, models\nimport time', migration_string)

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-4970",
+    "model_patch": "--- a/tests/checkers/unittest_similar.py\n+++ b/tests/checkers/unittest_similar.py\n@@ -502,3 +502,12 @@\n         # There doesn't seem to be a faster way of doing this, yet.\n         lines = (linespec.text for linespec in lineset_obj.stripped_lines)\n         assert tuple(expected_lines) == tuple(lines)\n+\n+def test_min_similarity_lines_zero_disables_check_repro():\n+    linter = PyLinter()\n+    linter.config.min_similarity_lines = 0\n+    reporter = Reporter()\n+    linter.set_reporter(reporter)\n+    linter.register_checker(similar.Similar(linter))\n+    linter.check(['tests/input/min_similarity_lines_zero.py'])\n+    assert len(reporter.messages) == 0\n",
+    "patch_sha256": "fb31864df14b04312c3a775e9cb8c50a327a9fe8ec74ef8bd1aa7df30f2a30f6"
+  }
+]

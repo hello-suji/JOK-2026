@@ -1,0 +1,10 @@
+{
+  "instance_id": "django__django-11885",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/qwen/django__django-11885/predictions.json",
+  "run_id": "sync-django__django-11885",
+  "harness_command": [],
+  "harness_returncode": 0,
+  "harness_stdout": "-------------------------------Final Report--------------------------------------\n{'django__django-11885': {'test_before_patch': {'django__django-11885::qwen_external_sync': 'FAILED'}, 'test_after_patch': {'django__django-11885::qwen_external_sync': 'PASSED'}, 'final_score': 1.0, 'resolved': True, 'contributing_functions': ['django__django-11885::qwen_external_sync']}}\n---------------------------------------------------------------------------------\nFinal score: 1.0\n",
+  "harness_stderr": ""
+}

@@ -1,0 +1,287 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/logging.py",
+      "target_function": "clear",
+      "related_classes": [
+        "LogCaptureFixture"
+      ],
+      "candidate_test_file": "testing/test_warning_types.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import logging module",
+      "Define a test function using pytest's caplog fixture",
+      "Log a warning message before clearing caplog",
+      "Use the generated reproduction path that calls clear, get_records, test, warning."
+    ],
+    "execution_stimulus": [
+      "Call caplog.clear()",
+      "Call caplog.get_records('call') again",
+      "Execute the focused target API path: clear, get_records, test, warning."
+    ],
+    "expected_failure": "The call to caplog.get_records('call') returns the old log record instead of an empty list",
+    "relevant_source_files": [
+      "src/_pytest/logging.py",
+      "src/_pytest/pytester.py",
+      "src/_pytest/recwarn.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_warning_types.py",
+      "testing/test_pytester.py",
+      "testing/code/test_code.py",
+      "testing/test_recwarn.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "caplog"
+      ],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import logging\n\ndef test_caplog_clear_issue_repro(caplog):\n    logging.warning('test')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+      },
+      {
+        "language": "python",
+        "code": "def test_caplog_clear_issue(caplog):\n    import logging\n    logging.warning('test')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "[\"<LogRecord: root, 30, 'test'>\"]"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "classes": [
+        "LogCaptureFixture"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_warning_types.py",
+      "target_source_file": "src/_pytest/logging.py",
+      "test_visible_functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/logging.py",
+      "target_function": "get_records",
+      "related_classes": [
+        "LogCaptureFixture"
+      ],
+      "candidate_test_file": "testing/test_warning_types.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import logging module",
+      "Define a test function using pytest's caplog fixture",
+      "Log a warning message",
+      "Clear caplog records",
+      "Use the generated reproduction path that calls clear, get_records, test, warning."
+    ],
+    "execution_stimulus": [
+      "Log another warning message",
+      "Call caplog.get_records('call')",
+      "Execute the focused target API path: clear, get_records, test, warning."
+    ],
+    "expected_failure": "The call to caplog.get_records('call') returns the previous log record instead of the new one",
+    "relevant_source_files": [
+      "src/_pytest/logging.py",
+      "src/_pytest/pytester.py",
+      "src/_pytest/recwarn.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_warning_types.py",
+      "testing/test_pytester.py",
+      "testing/code/test_code.py",
+      "testing/test_recwarn.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "caplog"
+      ],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import logging\n\ndef test_caplog_clear_issue_repro(caplog):\n    logging.warning('test')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+      },
+      {
+        "language": "python",
+        "code": "def test_caplog_get_records_after_clear(caplog):\n    import logging\n    logging.warning('first')\n    caplog.clear()\n    logging.warning('second')\n    assert caplog.get_records('call') == [<LogRecord: root, 30, 'second'>]"
+      }
+    ],
+    "expected_outputs": [
+      "[\"<LogRecord: root, 30, 'second'>\"]"
+    ],
+    "actual_outputs": [
+      "[\"<LogRecord: root, 30, 'first'>\"]"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "classes": [
+        "LogCaptureFixture"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_warning_types.py",
+      "target_source_file": "src/_pytest/logging.py",
+      "test_visible_functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/logging.py",
+      "target_function": "clear",
+      "related_classes": [
+        "LogCaptureFixture"
+      ],
+      "candidate_test_file": "testing/test_warning_types.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import logging module",
+      "Define a test function using pytest's caplog fixture",
+      "Log multiple warning messages",
+      "Use the generated reproduction path that calls clear, get_records, test, warning."
+    ],
+    "execution_stimulus": [
+      "Call caplog.clear()",
+      "Call caplog.get_records('call')",
+      "Execute the focused target API path: clear, get_records, test, warning."
+    ],
+    "expected_failure": "The call to caplog.get_records('call') returns all previous log records instead of an empty list",
+    "relevant_source_files": [
+      "src/_pytest/logging.py",
+      "src/_pytest/pytester.py",
+      "src/_pytest/recwarn.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_warning_types.py",
+      "testing/test_pytester.py",
+      "testing/code/test_code.py",
+      "testing/test_recwarn.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "caplog"
+      ],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import logging\n\ndef test_caplog_clear_issue_repro(caplog):\n    logging.warning('test')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+      },
+      {
+        "language": "python",
+        "code": "def test_multiple_logs_after_clear(caplog):\n    import logging\n    logging.warning('first')\n    logging.warning('second')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "[\"<LogRecord: root, 30, 'first'>\", \"<LogRecord: root, 30, 'second'>\"]"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "classes": [
+        "LogCaptureFixture"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_warning_types.py",
+      "target_source_file": "src/_pytest/logging.py",
+      "test_visible_functions": [
+        "clear",
+        "get_records",
+        "test",
+        "warning",
+        "logging"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13142",
+    "model_patch": "--- a/sklearn/cluster/tests/test_k_means.py\n+++ b/sklearn/cluster/tests/test_k_means.py\n@@ -922,3 +922,15 @@\n     estimator = KMeans(algorithm=\"elkan\", max_iter=1)\n     estimator.fit(np.random.rand(10, 10))\n     assert estimator.n_iter_ == 1\n+\n+from sklearn.mixture import GaussianMixture\n+import numpy\n+\n+def test_gaussian_mixture_fit_predict_disagreement_repro():\n+    X = numpy.random.randn(1000, 5)\n+    gm = GaussianMixture(n_components=5, n_init=5)\n+    c1 = gm.fit_predict(X)\n+    c2 = gm.predict(X)\n+    assert_array_equal(c1, c2)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(c2) != 'Traceback (most recent call last):\\n  File \"test_gm.py\", line 17, in <module>\\n    assert_array_equal(c1,c2)\\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 872, in assert_array_equal\\n    verbose=verbose, header=\\'Arrays are not equal\\')\\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 796, in assert_array_compare\\n    raise AssertionError(msg)\\nAssertionError:\\n\\nArrays are not equal\\n\\n(mismatch 88.6%)'\n",
+    "patch_sha256": "b2a9b6177cf9a5f7f45e71985701e7584e754e8a7df1ada3ddf3340ba274988e"
+  }
+]

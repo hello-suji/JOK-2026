@@ -1,0 +1,130 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.41,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:open",
+        "target_function 'open' NOT found in source_file — may be hallucinated",
+        "target_function 'open' not in AST top_level_functions for pylint/__init__.py",
+        "force-selected as best available (score 0.41, below threshold 0.65)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "pylint/__init__.py",
+          "target_function": "open",
+          "related_classes": [],
+          "candidate_test_file": "tests/checkers/unittest_base.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "import os",
+          "import tempfile",
+          "from pylint import __init__"
+        ],
+        "execution_stimulus": [
+          "temp_dir = tempfile.mkdtemp()",
+          "os.environ['XDG_DATA_HOME'] = temp_dir",
+          "__init__.open('test_file')"
+        ],
+        "expected_failure": "The .pylint.d directory is created in the home directory instead of using the XDG_DATA_HOME directory.",
+        "relevant_source_files": [
+          "doc/conf.py",
+          "pylint/checkers/base.py",
+          "pylint/checkers/variables.py"
+        ],
+        "relevant_test_files": [
+          "tests/checkers/unittest_variables.py",
+          "tests/checkers/unittest_base.py",
+          "tests/checkers/__init__.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_xdg_data_home_compliance():\n    import os\n    import tempfile\n    from pylint import __init__\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_DATA_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "open"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [],
+        "oracle": "",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": true
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S2",
+      "score": 0.41,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:open",
+        "target_function 'open' NOT found in source_file — may be hallucinated",
+        "target_function 'open' not in AST top_level_functions for pylint/__init__.py",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    },
+    {
+      "scenario_id": "S3",
+      "score": 0.41,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:open",
+        "target_function 'open' NOT found in source_file — may be hallucinated",
+        "target_function 'open' not in AST top_level_functions for pylint/__init__.py",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

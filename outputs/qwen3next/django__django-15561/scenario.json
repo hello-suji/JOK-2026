@@ -1,0 +1,70 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/sqlite3/schema.py",
+      "target_function": "alter_field",
+      "related_classes": [
+        "AlterField",
+        "SQLite"
+      ],
+      "candidate_test_file": "tests/backends/sqlite/test_features.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import migrations, models",
+      "from django.test import TestCase",
+      "class TestAlterFieldChoices(TestCase):",
+      "    def setUp(self):",
+      "        self.migration = migrations.AlterField('app_label', 'model_name', 'field_name', models.CharField(max_length=100, choices=[('a', 'A'), ('b', 'B')]))"
+    ],
+    "execution_stimulus": [
+      "editor = connections['default'].schema_editor()",
+      "editor.alter_field(None, None, self.migration.field)"
+    ],
+    "expected_failure": "The alter_field operation generates SQL for adding choices on SQLite, which should be a no-op.",
+    "relevant_source_files": [
+      "django/db/backends/sqlite3/schema.py",
+      "django/contrib/admin/options.py",
+      "django/contrib/admin/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/backends/base/test_schema.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_alter_field_choices_noop():\n    from django.db import migrations, models\n    from django.test import TestCase\n    from django.db import connections\n    class TestAlterFieldChoices(TestCase):\n        def setUp(self):\n            self.migration = migrations.AlterField('app_label', 'model_name', 'field_name', models.CharField(max_length=100, choices=[('a', 'A'), ('b', 'B')]))\n        def test_no_sql_generated(self):\n            editor = connections['default'].schema_editor()\n            with self.assertNumQueries(0):\n                editor.alter_field(None, None, self.migration.field)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "alter_field"
+      ],
+      "classes": [
+        "AlterField",
+        "SQLite"
+      ]
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic"
+  }
+]

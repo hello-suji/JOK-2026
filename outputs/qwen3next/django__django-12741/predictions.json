@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-12741",
+    "model_patch": "--- a/tests/backends/mysql/test_operations.py\n+++ b/tests/backends/mysql/test_operations.py\n@@ -45,3 +45,11 @@\n                         'SET FOREIGN_KEY_CHECKS = 1;',\n                     ],\n                 )\n+\n+from django.test import TestCase, SimpleTestCase\n+class TestExecuteSqlFlush(SimpleTestCase):\n+    def test_execute_sql_flush_with_using_argument_repro(self):\n+        sql_list = []\n+        connection.ops.execute_sql_flush(using='default', sql_list=sql_list)\n+        # Assuming the expected behavior is that the function executes without error and sql_list remains unchanged\n+        self.assertEqual(sql_list, [])\n",
+    "patch_sha256": "895b2bed7d88186fb549a848fb28349f19ae705a1bc2b347a1d5355aec3c76e8"
+  }
+]

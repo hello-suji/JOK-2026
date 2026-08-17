@@ -1,0 +1,19 @@
+--- a/tests/backends/postgresql/test_creation.py
++++ b/tests/backends/postgresql/test_creation.py
+@@ -123,3 +123,16 @@
+                 DatabaseCreation, "_database_exists", return_value=True
+             ):
+                 creation._create_test_db(verbosity=0, autoclobber=False, keepdb=True)
++
++from django.test import TestCase
++from django.contrib.postgres.tests.model_fields import ActivityBlackListed
++
++
++class TestBulkCreateWithDbColumn(TestCase):
++    def test_bulk_create_with_db_column_repro(self):
++        instances = [
++            ActivityBlackListed(blacklistid=1, sectorid=10),
++            ActivityBlackListed(blacklistid=2, sectorid=20)
++        ]
++        ActivityBlackListed.objects.bulk_create(instances)
++        self.assertEqual(ActivityBlackListed.objects.count(), 2)

@@ -1,0 +1,115 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/neighbors/base.py",
+      "target_function": "load_iris",
+      "related_classes": [
+        "NearestNeighbours",
+        "PRs",
+        "Still",
+        "OPTICS"
+      ],
+      "candidate_test_file": "sklearn/neighbors/tests/test_nearest_centroid.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _fit can be called.",
+      "Use the generated reproduction path that calls load_iris, fit, isinstance.",
+      "Use the generated reproduction path that calls fit, load_iris, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call _fit with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: load_iris, fit, isinstance.",
+      "Execute the focused target API path: fit, load_iris, isinstance."
+    ],
+    "expected_failure": "Error message:",
+    "relevant_source_files": [
+      "sklearn/neighbors/base.py",
+      "sklearn/cluster/optics_.py",
+      "sklearn/decomposition/base.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/neighbors/tests/test_nearest_centroid.py",
+      "sklearn/linear_model/tests/test_base.py",
+      "sklearn/neighbors/tests/test_ball_tree.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.cluster.optics_ import OPTICS\ndatasets = datasets.load_iris()\ndef test_optics_min_samples_float_repro():\n    data = datasets.data\n    clust = OPTICS(metric='minkowski', n_jobs=-1, min_samples=0.1)\n    clust.fit(data)\n    assert isinstance(clust.core_sample_indices_, np.ndarray)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(clust) != \"TypeError: n_neighbors does not take <class 'numpy.float64'> value, enter integer value\""
+      },
+      {
+        "language": "python",
+        "code": "data = load_some_data()\n\nclust = OPTICS(metric='minkowski', n_jobs=-1, min_samples=0.1)\nclust.fit(data)"
+      },
+      {
+        "language": "python",
+        "code": "if min_samples <= 1:\n        min_samples = max(2, min_samples * n_samples)           # Still a float"
+      },
+      {
+        "language": "python",
+        "code": "File \"/home/someusername/anaconda3/envs/bachelor_project/lib/python3.7/site-packages/sklearn/cluster/optics_.py\", line 248, in fit\n    max_eps=self.max_eps)\n  File \"/home/someusername/anaconda3/envs/bachelor_project/lib/python3.7/site-packages/sklearn/cluster/optics_.py\", line 456, in compute_optics_graph\n    nbrs.fit(X)\n  File \"/home/someusername/anaconda3/envs/bachelor_project/lib/python3.7/site-packages/sklearn/neighbors/base.py\", line 930, in fit\n    return self._fit(X)\n  File \"/home/someusername/anaconda3/envs/bachelor_project/lib/python3.7/site-packages/sklearn/neighbors/base.py\", line 275, in _fit\n    type(self.n_neighbors))\nTypeError: n_neighbors does not take <class 'numpy.float64'> value, enter integer value"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: n_neighbors does not take <class 'numpy.float64'> value, enter integer value"
+    ],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_fit",
+        "fit",
+        "load_some_data",
+        "load_iris",
+        "isinstance"
+      ],
+      "classes": [
+        "NearestNeighbours",
+        "PRs",
+        "Still",
+        "OPTICS"
+      ],
+      "files": [
+        "7/site-packages/sklearn/cluster/optics_.py",
+        "7/site-packages/sklearn/neighbors/base.py"
+      ],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/neighbors/tests/test_nearest_centroid.py",
+      "target_source_file": "sklearn/neighbors/base.py",
+      "test_visible_functions": [
+        "fit",
+        "load_iris",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "OPTICS"
+      ]
+    }
+  }
+]

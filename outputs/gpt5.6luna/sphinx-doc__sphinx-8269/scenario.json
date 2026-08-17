@@ -1,0 +1,103 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Sphinx",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, join, makedirs, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, join, makedirs, build."
+    ],
+    "expected_failure": "Linkcheck should report HTTP errors instead of Anchor not found",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/builders/linkcheck.py",
+      "sphinx/cmd/quickstart.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.builders.linkcheck import CheckExternalLinksBuilder\n\ndef test_linkcheck_reports_http_errors_instead_of_anchor_not_found_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'source')\n        confdir = srcdir\n        outdir = os.path.join(tmpdir, 'output')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        buildername = 'linkcheck'\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write('\\n`foo <https://google.com/test.txt#test>`_\\n')\n        with open(os.path.join(srcdir, 'conf.py'), 'w') as f:\n            f.write('extensions = []\\nlinkcheck_anchors = True\\n')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n        results = app.env.linkcheck_results\n        assert any('HTTP error' in msg for _, msg in results if 'https://google.com/test.txt#test' in msg)"
+      },
+      {
+        "language": "console",
+        "code": "$ sphinx-quickstart --project proj --sep --author me --release 1.0 --language en\n$ # https://google.com/test.txt does not exist, the server replies with a 404.\n$ echo '\\n`foo <https://google.com/test.txt#test>`_' >>source/index.rst\n$ make linkcheck"
+      },
+      {
+        "language": "python",
+        "code": "(line   22) broken    https://google.com/test.txt#test - Anchor 'test' not found"
+      },
+      {
+        "language": "python",
+        "code": "(line   22) broken    https://google.com/test.txt#test - 404 Client Error: Not Found for url: https://google.com/test.txt"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "CheckExternalLinksBuilder",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

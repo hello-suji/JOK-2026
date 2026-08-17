@@ -1,0 +1,17 @@
+--- a/tests/model_fields/models.py
++++ b/tests/model_fields/models.py
+@@ -442,3 +442,14 @@
+
+ class UUIDGrandchild(UUIDChild):
+     pass
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.operations.models import CreateModel
++from django.db.models import TextField
++
++class TestMigrationOperations(TestCase):
++    def test_missing_models_import_repro(self):
++        fields = [('name', TextField(primary_key=True))]
++        create_model_op = CreateModel('MyModel', fields)
++        # This test will fail pre-patch due to missing 'models' import in migration
++        self.assertIn('models', create_model_op.state_operations[0].__str__())

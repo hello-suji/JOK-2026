@@ -1,0 +1,23 @@
+--- a/tests/backends/sqlite/test_introspection.py
++++ b/tests/backends/sqlite/test_introspection.py
+@@ -159,3 +159,20 @@
+                 self.assertIsNone(constraint)
+                 self.assertConstraint(details, columns, unique=True)
+                 self.assertConstraint(check, columns, check=True)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.operations.models import RenameModel
++
++
++class TestRenameModelNoop(TestCase):
++    def test_rename_model_with_db_table_noop_repro(self):
++        # Assuming there's a model named 'Author' with a db_table defined
++        operation = RenameModel('Author', 'NewAuthor')
++        schema_editor = connection.schema_editor()
++        original_table_name = schema_editor.connection.introspection.table_name_converter('author')
++
++        # Apply the operation
++        operation.database_forwards('app_label', schema_editor, None, None)
++
++        # Check if the table name remains unchanged
++        self.assertIn(original_table_name, schema_editor.connection.introspection.table_names())

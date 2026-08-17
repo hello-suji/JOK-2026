@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-12308",
+    "model_patch": "--- a/tests/invalid_models_tests/test_custom_fields.py\n+++ b/tests/invalid_models_tests/test_custom_fields.py\n@@ -18,3 +18,16 @@\n\n         field = Model._meta.get_field('field')\n         self.assertEqual(field.check(), [])\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.contrib.postgres.forms.jsonb import JSONField\n+from django.contrib.postgres.fields.jsonb import InvalidJSONInput\n+from django.contrib.admin.utils import display_for_field\n+\n+\n+class TestJSONFieldDisplay(SimpleTestCase):\n+    def test_jsonfield_display_as_invalid_json_repro(self):\n+        field = JSONField()\n+        value = InvalidJSONInput('{\"foo\": \"bar\"}')\n+        displayed_value = display_for_field(value, field)\n+        self.assertNotEqual(displayed_value, \"{'foo': 'bar'}\")\n",
+    "patch_sha256": "9ae0c4d1f180aaf658b670cea8a748cf0fff1431f0ffd64c2b3f39cc574e8969"
+  }
+]

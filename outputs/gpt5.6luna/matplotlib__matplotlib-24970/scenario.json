@@ -1,0 +1,104 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/colors.py",
+      "target_function": "get_cmap",
+      "related_classes": [
+        "DeprecationWarning",
+        "NumPy"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_colors.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import matplotlib.pyplot and numpy",
+      "Create an empty numpy array with dtype uint8",
+      "Use the generated reproduction path that calls astype, empty, get_cmap, warnings."
+    ],
+    "execution_stimulus": [
+      "Call plt.get_cmap() and pass the empty numpy array to it",
+      "Execute the focused target API path: astype, empty, get_cmap, warnings."
+    ],
+    "expected_failure": "The code should raise multiple DeprecationWarnings related to NumPy's handling of out-of-bound Python integers to integer arrays.",
+    "relevant_source_files": [
+      "lib/matplotlib/colors.py",
+      "tutorials/colors/colors.py",
+      "lib/matplotlib/pyplot.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_cbook.py",
+      "lib/matplotlib/tests/test_colors.py",
+      "lib/matplotlib/tests/test_pyplot.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\ndef test_get_cmap_no_deprecation_warning_repro():\n    import numpy as np\n    import warnings\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter('always')\n        cmap = plt.get_cmap()\n        colors = cmap(np.empty((0,), dtype=np.uint8))\n    # [removed: warning presence oracle — assert fixed value/state instead]\n    assert colors.shape == (0, 4)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(colors) != '/usr/lib/python3.10/site-packages/matplotlib/colors.py:730: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 257 to uint8 will fail in the future.\\nFor the old behavior, usually:\\n    np.array(value).astype(dtype)`\\nwill give the desired result (the cast overflows).\\n  xa[xa > self.N - 1] = self._i_over\\n/usr/lib/python3.10/site-packages/matplotlib/colors.py:731: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 256 to uint8 will fail in the future.\\nFor the old behavior, usually:\\n    np.array(value).astype(dtype)`\\nwill give the desired result (the cast overflows).\\n  xa[xa < 0] = self._i_under\\n/usr/lib/python3.10/site-packages/matplotlib/colors.py:732: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 258 to uint8 will fail in the future.\\nFor the old behavior, usually:\\n    np.array(value).astype(dtype)`\\nwill give the desired result (the cast overflows).\\n  xa[mask_bad] = self._i_bad'"
+      },
+      {
+        "language": "python",
+        "code": "def test_get_cmap_deprecation_warning():\n    import matplotlib.pyplot as plt\n    import numpy as np\n    import warnings\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter('always')\n        plt.get_cmap()(np.empty((0,), dtype=np.uint8))\n    assert len(w) == 3\n    assert issubclass(w[-1].category, DeprecationWarning)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "/usr/lib/python3.10/site-packages/matplotlib/colors.py:730: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 257 to uint8 will fail in the future.\nFor the old behavior, usually:\n    np.array(value).astype(dtype)`\nwill give the desired result (the cast overflows).\n  xa[xa > self.N - 1] = self._i_over\n/usr/lib/python3.10/site-packages/matplotlib/colors.py:731: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 256 to uint8 will fail in the future.\nFor the old behavior, usually:\n    np.array(value).astype(dtype)`\nwill give the desired result (the cast overflows).\n  xa[xa < 0] = self._i_under\n/usr/lib/python3.10/site-packages/matplotlib/colors.py:732: DeprecationWarning: NumPy will stop allowing conversion of out-of-bound Python integers to integer arrays.  The conversion of 258 to uint8 will fail in the future.\nFor the old behavior, usually:\n    np.array(value).astype(dtype)`\nwill give the desired result (the cast overflows).\n  xa[mask_bad] = self._i_bad"
+    ],
+    "error_keywords": [
+      "DeprecationWarning",
+      "conversion of out-of-bound Python integers to integer arrays"
+    ],
+    "identifiers": {
+      "functions": [
+        "get_cmap",
+        "astype",
+        "empty",
+        "warnings",
+        "catch_warnings",
+        "simplefilter",
+        "cmap"
+      ],
+      "classes": [
+        "DeprecationWarning",
+        "NumPy"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_colors.py",
+      "target_source_file": "lib/matplotlib/colors.py",
+      "test_visible_functions": [
+        "astype",
+        "empty",
+        "get_cmap",
+        "warnings",
+        "catch_warnings",
+        "simplefilter",
+        "cmap"
+      ],
+      "test_visible_classes": [
+        "DeprecationWarning",
+        "NumPy"
+      ]
+    }
+  }
+]

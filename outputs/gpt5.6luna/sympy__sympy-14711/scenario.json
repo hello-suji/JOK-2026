@@ -1,0 +1,256 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/physics/vector/vector.py",
+      "target_function": "_check_vector",
+      "related_classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "candidate_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy.physics.vector import ReferenceFrame, Vector",
+      "N = ReferenceFrame('N')"
+    ],
+    "execution_stimulus": [
+      "zero_vector = 0 * N.x",
+      "result = N.x + zero_vector"
+    ],
+    "expected_failure": "TypeError: A Vector must be supplied",
+    "relevant_source_files": [
+      "sympy/physics/vector/vector.py",
+      "sympy/vector/vector.py",
+      "sympy/physics/vector/dyadic.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/vector/tests/test_frame.py",
+      "sympy/physics/vector/tests/test_dyadic.py",
+      "sympy/physics/vector/tests/test_vector.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_vector_add_zero_error_repro():\n    N = ReferenceFrame('N')\n    zero_vector = 0 * N.x\n    result = N.x + zero_vector\n    assert result == N.x\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(N) != 'TypeError: A Vector must be supplied'"
+      },
+      {
+        "language": "python",
+        "code": "def test_vector_add_zero_error():\n    from sympy.physics.vector import ReferenceFrame, Vector\n    N = ReferenceFrame('N')\n    zero_vector = 0 * N.x\n    try:\n        result = N.x + zero_vector\n    except TypeError as e:\n        assert str(e) == 'A Vector must be supplied'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: A Vector must be supplied"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "A Vector must be supplied"
+    ],
+    "identifiers": {
+      "functions": [
+        "_check_vector"
+      ],
+      "classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "target_source_file": "sympy/physics/vector/vector.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "ReferenceFrame",
+        "Vector"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/physics/vector/vector.py",
+      "target_function": "__add__",
+      "related_classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "candidate_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy.physics.vector import ReferenceFrame, Vector",
+      "N = ReferenceFrame('N')"
+    ],
+    "execution_stimulus": [
+      "zero_vector = 0 * N.x",
+      "result = N.x + zero_vector"
+    ],
+    "expected_failure": "TypeError: A Vector must be supplied",
+    "relevant_source_files": [
+      "sympy/physics/vector/vector.py",
+      "sympy/vector/vector.py",
+      "sympy/physics/vector/dyadic.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/vector/tests/test_frame.py",
+      "sympy/physics/vector/tests/test_dyadic.py",
+      "sympy/physics/vector/tests/test_vector.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_vector_add_zero_error_repro():\n    N = ReferenceFrame('N')\n    zero_vector = 0 * N.x\n    result = N.x + zero_vector\n    assert result == N.x\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(N) != 'TypeError: A Vector must be supplied'"
+      },
+      {
+        "language": "python",
+        "code": "def test_vector_add_zero_error_indirect():\n    from sympy.physics.vector import ReferenceFrame, Vector\n    N = ReferenceFrame('N')\n    zero_vector = 0 * N.x\n    try:\n        result = N.x + zero_vector\n    except TypeError as e:\n        assert str(e) == 'A Vector must be supplied'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: A Vector must be supplied"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "A Vector must be supplied"
+    ],
+    "identifiers": {
+      "functions": [
+        "__add__"
+      ],
+      "classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "target_source_file": "sympy/physics/vector/vector.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "ReferenceFrame",
+        "Vector"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/physics/vector/vector.py",
+      "target_function": "__add__",
+      "related_classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "candidate_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy.physics.vector import ReferenceFrame, Vector",
+      "N = ReferenceFrame('N')"
+    ],
+    "execution_stimulus": [
+      "result = sum([N.x, (0 * N.x)])"
+    ],
+    "expected_failure": "TypeError: A Vector must be supplied",
+    "relevant_source_files": [
+      "sympy/physics/vector/vector.py",
+      "sympy/vector/vector.py",
+      "sympy/physics/vector/dyadic.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/vector/tests/test_frame.py",
+      "sympy/physics/vector/tests/test_dyadic.py",
+      "sympy/physics/vector/tests/test_vector.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_vector_add_zero_error_repro():\n    N = ReferenceFrame('N')\n    zero_vector = 0 * N.x\n    result = N.x + zero_vector\n    assert result == N.x\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(N) != 'TypeError: A Vector must be supplied'"
+      },
+      {
+        "language": "python",
+        "code": "def test_vector_sum_zero_error():\n    from sympy.physics.vector import ReferenceFrame, Vector\n    N = ReferenceFrame('N')\n    try:\n        result = sum([N.x, (0 * N.x)])\n    except TypeError as e:\n        assert str(e) == 'A Vector must be supplied'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: A Vector must be supplied"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "A Vector must be supplied"
+    ],
+    "identifiers": {
+      "functions": [
+        "__add__"
+      ],
+      "classes": [
+        "Vector",
+        "ReferenceFrame"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/vector/tests/test_vector.py",
+      "target_source_file": "sympy/physics/vector/vector.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "ReferenceFrame",
+        "Vector"
+      ]
+    }
+  }
+]

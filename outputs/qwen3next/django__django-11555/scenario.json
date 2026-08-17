@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "order_by",
+      "related_classes": [
+        "OrderBy",
+        "F"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "from django.test import TestCase",
+      "from django.db.models import F",
+      "class ParentModel(models.Model): pass",
+      "class ChildModel(ParentModel): pass",
+      "ParentModel.objects.create()",
+      "ChildModel.objects.create()",
+      "Use the generated reproduction path that calls order_by, asc."
+    ],
+    "execution_stimulus": [
+      "queryset = ParentModel.objects.order_by(F('id').asc())",
+      "Execute the focused target API path: order_by, asc."
+    ],
+    "expected_failure": "The queryset raises an exception because the field is an OrderBy object, not a string, during get_order_dir.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/expressions.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/auth_tests/test_checks.py",
+      "tests/contenttypes_tests/test_checks.py",
+      "tests/modeladmin/test_checks.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_order_by_with_expression_fails():\n    from django.db import models\n    from django.test import TestCase\n    from django.db.models import F\n    class ParentModel(models.Model): pass\n    class ChildModel(ParentModel): pass\n    ParentModel.objects.create()\n    ChildModel.objects.create()\n    with TestCase().assertRaises(Exception):\n        queryset = ParentModel.objects.order_by(F('id').asc())"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestMultiTableInheritanceOrdering(SimpleTestCase):\n    def test_order_by_with_expression_fails_repro(self):\n        queryset = Author.objects.order_by(F('num').asc())\n        self.assertIsInstance(queryset, Query)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OrderBy object",
+      "get_order_dir"
+    ],
+    "identifiers": {
+      "functions": [
+        "order_by",
+        "asc"
+      ],
+      "classes": [
+        "OrderBy",
+        "F"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "order_by",
+        "asc"
+      ],
+      "test_visible_classes": [
+        "F"
+      ]
+    }
+  }
+]

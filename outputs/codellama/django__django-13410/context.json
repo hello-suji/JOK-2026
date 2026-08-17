@@ -1,0 +1,487 @@
+{
+  "instance_id": "django__django-13410",
+  "repo": "django/django",
+  "base_commit": "580a4341cb0b4cbfc215a70afc004875a7e815f4",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/files/locks.py",
+      "score": 44,
+      "matched_identifiers": [
+        "_fd",
+        "blocking",
+        "django/core/files/locks.py",
+        "except",
+        "fcntl",
+        "flags"
+      ],
+      "reasons": [
+        "function_match:_fd",
+        "explicit_file_path_hint:django/core/files/locks.py",
+        "path_contains_function:lock",
+        "stem_in_issue_text:locks",
+        "source_content_tokens:blocking,except,fcntl,flags,flock"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_fd": "def _fd(f):\n    \"\"\"Get a filedescriptor from something which could be a file or an fd.\"\"\"\n    return f.fileno() if hasattr(f, 'fileno') else f\n\n\nif os.name == 'nt':\n    import msvcrt\n    from ctypes import (\n        POINTER, Structure, Union, byref, c_int64, c_ulong, c_void_p, sizeof,\n        windll,\n    )\n    from ctypes.wintypes import BOOL, DWORD, HANDLE\n\n    LOCK_SH = 0  # the default\n    LOCK_NB = 0x1  # LOCKFILE_FAIL_IMMEDIATELY"
+      },
+      "top_level_functions": []
+    },
+    {
+      "path": "django/contrib/sessions/backends/file.py",
+      "score": 17,
+      "matched_identifiers": [
+        "always",
+        "except",
+        "flags",
+        "oserror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:file",
+        "source_content_tokens:oserror,always,except,flags,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SessionStore.load",
+        "SessionStore.create",
+        "SessionStore.save",
+        "SessionStore.exists",
+        "SessionStore.delete",
+        "SessionStore.clean",
+        "SessionStore.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/files/temp.py",
+      "score": 17,
+      "matched_identifiers": [
+        "except",
+        "https",
+        "implementation",
+        "oserror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:temp",
+        "source_content_tokens:oserror,except,https,implementation,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/db/models/fields/files.py",
+      "score": 17,
+      "matched_identifiers": [
+        "always",
+        "description",
+        "except",
+        "https"
+      ],
+      "reasons": [
+        "stem_in_issue_text:files",
+        "source_content_tokens:always,description,except,https,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FieldFile.path",
+        "FieldFile.url",
+        "FieldFile.size",
+        "FieldFile.open",
+        "FieldFile.save",
+        "FieldFile.delete",
+        "FieldFile.closed",
+        "FieldFile.close",
+        "FileField.check",
+        "FileField.deconstruct",
+        "FileField.get_internal_type",
+        "FileField.get_prep_value",
+        "FileField.pre_save",
+        "FileField.contribute_to_class",
+        "FileField.generate_filename",
+        "FileField.save_form_data",
+        "FileField.formfield",
+        "ImageFieldFile.delete",
+        "ImageField.check",
+        "ImageField.deconstruct",
+        "ImageField.contribute_to_class",
+        "ImageField.update_dimension_fields",
+        "ImageField.formfield"
+      ]
+    },
+    {
+      "path": "django/template/library.py",
+      "score": 17,
+      "matched_identifiers": [
+        "except",
+        "flags",
+        "import",
+        "index"
+      ],
+      "reasons": [
+        "stem_in_issue_text:library",
+        "source_content_tokens:except,flags,import,index,library"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Library.tag",
+        "Library.tag_function",
+        "Library.filter",
+        "Library.filter_function",
+        "Library.simple_tag",
+        "Library.inclusion_tag",
+        "TagHelperNode.get_resolved_arguments",
+        "SimpleNode.render",
+        "InclusionNode.render",
+        "parse_bits",
+        "import_library"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "token_overlap:backends,temp,template",
+        "internal_name_overlap:temp",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/syntax_tests/i18n/test_blocktranslate.py",
+      "score": 10,
+      "matched_identifiers": [
+        "lock"
+      ],
+      "reasons": [
+        "test_path_contains_function:lock",
+        "token_overlap:lock,temp,template",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/syntax_tests/test_named_endblock.py",
+      "score": 10,
+      "matched_identifiers": [
+        "lock"
+      ],
+      "reasons": [
+        "test_path_contains_function:lock",
+        "token_overlap:lock,temp,template",
+        "internal_name_overlap:locks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/test_library.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:library",
+        "token_overlap:library,temp,template",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/custom_templates/project_template/additional_dir/additional_file.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:file",
+        "token_overlap:temp,template",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/template_tests/test_library.py:unittest_or_django_test_import",
+      "tests/template_tests/syntax_tests/test_named_endblock.py:unittest_or_django_test_import",
+      "tests/template_tests/syntax_tests/i18n/test_blocktranslate.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2672,
+  "indexed_test_file_count": 1813,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "Context",
+      "ContextPopException",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Engine",
+      "EngineHandler",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "Library",
+      "Node",
+      "NodeList",
+      "NotSupportedError",
+      "OperationalError",
+      "Origin",
+      "ProgrammingError",
+      "RequestContext",
+      "Template",
+      "TemplateDoesNotExist",
+      "TemplateSyntaxError",
+      "Variable",
+      "VariableDoesNotExist",
+      "connection",
+      "connections",
+      "engines",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.template_tests.test_library": [
+      "FilterRegistrationTests",
+      "InclusionTagRegistrationTests",
+      "SimpleTagRegistrationTests",
+      "TagRegistrationTests"
+    ],
+    "tests.template_tests.syntax_tests.test_named_endblock": [
+      "NamedEndblockTests"
+    ],
+    "tests.template_tests.syntax_tests.i18n.test_blocktranslate": [
+      "I18nBlockTransTagTests",
+      "MiscBlockTranslationTests",
+      "MiscTests",
+      "MultipleLocaleActivationBlockTransTests",
+      "MultipleLocaleActivationBlockTranslateTests",
+      "TranslationBlockTranslateTagTests",
+      "TranslationBlockTransnTagTests",
+      "setup"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "DefaultConnectionProxy",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "ForeignObjectRel",
+      "Func",
+      "ImageField",
+      "JSONField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderBy",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RESTRICT",
+      "RestrictedError",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "enums_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.template.library": [
+      "InclusionNode",
+      "InvalidTemplateLibrary",
+      "Library",
+      "SimpleNode",
+      "TagHelperNode",
+      "import_library",
+      "parse_bits"
+    ],
+    "django.contrib.sessions.backends.file": [
+      "SessionStore"
+    ],
+    "django.core.files.locks": [
+      "_fd"
+    ],
+    "django.core": [
+      "File"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_load_field",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ],
+    "django.db.models.fields.files": [
+      "FieldFile",
+      "FileDescriptor",
+      "FileField",
+      "ImageField",
+      "ImageFieldFile",
+      "ImageFileDescriptor"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

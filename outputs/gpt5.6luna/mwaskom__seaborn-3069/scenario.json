@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "seaborn/_core/plot.py",
+      "target_function": "add",
+      "related_classes": [
+        "Nominal",
+        "Plotter",
+        "Plot",
+        "DataFrame"
+      ],
+      "candidate_test_file": "tests/_core/test_plot.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _finalize_figure can be called.",
+      "Use the generated reproduction path that calls add, scale, get_xticks, get_visible."
+    ],
+    "execution_stimulus": [
+      "Call _finalize_figure with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add, scale, get_xticks, get_visible."
+    ],
+    "expected_failure": "1. This is actually trickier than you'd think; I may have posted an issue over in matplotlib about this at one point, or just discussed on their gitter. I believe the suggested approach is to add an invisible artist with sticky edges and set the margin to 0. Feels like a hack! I might have looked into setting the sticky edges _on the spine artist_ at one point?",
+    "relevant_source_files": [
+      "seaborn/_core/plot.py",
+      "seaborn/_core/scales.py",
+      "seaborn/categorical.py"
+    ],
+    "relevant_test_files": [
+      "tests/_core/test_plot.py",
+      "tests/_core/test_properties.py",
+      "tests/_core/test_scales.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_nominal_scale_behavior_repro():\n    # Setup the plot with Nominal scale\n    p = Plot()\n    p.add(x='category', y='value', data=pd.DataFrame({'category': ['A', 'B'], 'value': [1, 2]}))\n    p.scale(x=Nominal())\n    ax = p.draw().axes[0]\n\n    # Check if the scale is drawn to +/- 0.5 from the first and last tick\n    ticks = ax.get_xticks()\n    assert ticks[0] == 0.5\n    assert ticks[-1] == 1.5\n\n    # Check if the grid is shown\n    assert ax.xaxis.get_gridlines()[0].get_visible()\n\n    # Check if the y-axis is not inverted\n    assert not ax.yaxis_inverted()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add",
+        "scale",
+        "get_xticks",
+        "get_visible",
+        "yaxis_inverted",
+        "draw",
+        "get_gridlines"
+      ],
+      "classes": [
+        "Nominal",
+        "Plotter",
+        "Plot",
+        "DataFrame"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/_core/test_plot.py",
+      "target_source_file": "seaborn/_core/plot.py",
+      "test_visible_functions": [
+        "add",
+        "scale",
+        "get_xticks",
+        "get_visible",
+        "yaxis_inverted",
+        "draw",
+        "get_gridlines"
+      ],
+      "test_visible_classes": [
+        "Nominal",
+        "Plot",
+        "DataFrame"
+      ]
+    }
+  }
+]

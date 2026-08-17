@@ -1,0 +1,24 @@
+{
+  "instance_id": "django__django-15987",
+  "observed_behavior": [
+    "When FIXTURE_DIRS contains Path instances, the duplicate check in loaddata does not detect duplicates."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "Fixture dirs duplicates undetected if dir is Path instance",
+    "When FIXTURE_DIRS contains Path instances, the duplicate check in loaddata does not detect duplicates."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Fixture dirs duplicates undetected if dir is Path instance\nDescription\n\t\nWhen FIXTURE_DIRS contains Path instances, the duplicate check in loaddata does not detect duplicates.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

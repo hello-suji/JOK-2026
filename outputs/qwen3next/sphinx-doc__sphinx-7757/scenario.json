@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "handle_signature",
+      "related_classes": [
+        "PyFunction"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import sphinx.domains.python",
+      "from sphinx.testing.util import SphinxTestApp",
+      "Use the generated reproduction path that calls handle_signature."
+    ],
+    "execution_stimulus": [
+      "app = SphinxTestApp()",
+      "app.build()",
+      "Execute the focused target API path: handle_signature."
+    ],
+    "expected_failure": "The default value for positional only argument 'b' is not shown in the generated documentation.",
+    "relevant_source_files": [
+      "sphinx/cmd/build.py",
+      "sphinx/domains/python.py",
+      "sphinx/writers/text.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sphinx.domains.python import PyFunction\n\ndef test_handle_signature_positional_only_argument_repro():\n    node = PyFunction('function', {}, None)\n    sig = 'func(/, arg1, arg2=42)'\n    ret = node.handle_signature(sig, 'path')\n    assert ret == ('func', '(arg1, arg2=42)')"
+      },
+      {
+        "language": "python",
+        "code": "def test_default_value_vanished():\n    from sphinx.testing.util import SphinxTestApp\n    app = SphinxTestApp()\n    app.builder.env.temp_data['py:module'] = 'test_module'\n    sig = sphinx.domains.python.PyFunction('py:function', ['foo(a, b=0, /, c=1)'], {}, app.builder)\n    sig.handle_signature('foo', 'test_module')\n    assert 'b=0' not in sig.arguments"
+      }
+    ],
+    "expected_outputs": [
+      "b=0"
+    ],
+    "actual_outputs": [],
+    "error_keywords": [
+      "default value",
+      "positional only argument"
+    ],
+    "identifiers": {
+      "functions": [
+        "handle_signature"
+      ],
+      "classes": [
+        "PyFunction"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "handle_signature"
+      ],
+      "test_visible_classes": [
+        "PyFunction"
+      ]
+    }
+  }
+]

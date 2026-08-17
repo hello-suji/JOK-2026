@@ -1,0 +1,255 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/utils/introspection.py",
+      "target_function": "minversion",
+      "related_classes": [
+        "LooseVersion"
+      ],
+      "candidate_test_file": "astropy/utils/tests/test_introspection.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import numpy",
+      "from astropy.utils import minversion",
+      "Use the generated reproduction path that calls minversion."
+    ],
+    "execution_stimulus": [
+      "result = minversion('numpy', '1.14dev')",
+      "Execute the focused target API path: minversion."
+    ],
+    "expected_failure": "TypeError: '<' not supported between instances of 'int' and 'str'",
+    "relevant_source_files": [
+      "astropy/utils/introspection.py",
+      "astropy/table/bst.py",
+      "astropy/table/soco.py"
+    ],
+    "relevant_test_files": [
+      "astropy/utils/tests/test_introspection.py",
+      "astropy/table/tests/test_init_table.py",
+      "astropy/table/tests/test_table.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_minversion_failure_repro():\n    import numpy\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14dev')\n    assert result is True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"TypeError: '<' not supported between instances of 'int' and 'str'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_minversion_failure():\n    import numpy\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14dev')\n    assert isinstance(result, TypeError)"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "TypeError: '<' not supported between instances of 'int' and 'str'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "'<' not supported between instances of 'int' and 'str'"
+    ],
+    "identifiers": {
+      "functions": [
+        "minversion"
+      ],
+      "classes": [
+        "LooseVersion"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "astropy/utils/tests/test_introspection.py",
+      "target_source_file": "astropy/utils/introspection.py",
+      "test_visible_functions": [
+        "minversion"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/utils/introspection.py",
+      "target_function": "minversion",
+      "related_classes": [
+        "LooseVersion"
+      ],
+      "candidate_test_file": "astropy/utils/tests/test_introspection.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from astropy.utils import minversion",
+      "Use the generated reproduction path that calls minversion."
+    ],
+    "execution_stimulus": [
+      "result = minversion('numpy', '1.14dev', inclusive=False)",
+      "Execute the focused target API path: minversion."
+    ],
+    "expected_failure": "TypeError: '<' not supported between instances of 'int' and 'str'",
+    "relevant_source_files": [
+      "astropy/utils/introspection.py",
+      "astropy/table/bst.py",
+      "astropy/table/soco.py"
+    ],
+    "relevant_test_files": [
+      "astropy/utils/tests/test_introspection.py",
+      "astropy/table/tests/test_init_table.py",
+      "astropy/table/tests/test_table.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_minversion_failure_repro():\n    import numpy\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14dev')\n    assert result is True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"TypeError: '<' not supported between instances of 'int' and 'str'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_minversion_inclusive_false_failure():\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14dev', inclusive=False)\n    assert isinstance(result, TypeError)"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "TypeError: '<' not supported between instances of 'int' and 'str'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "'<' not supported between instances of 'int' and 'str'"
+    ],
+    "identifiers": {
+      "functions": [
+        "minversion"
+      ],
+      "classes": [
+        "LooseVersion"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "astropy/utils/tests/test_introspection.py",
+      "target_source_file": "astropy/utils/introspection.py",
+      "test_visible_functions": [
+        "minversion"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/utils/introspection.py",
+      "target_function": "minversion",
+      "related_classes": [
+        "LooseVersion"
+      ],
+      "candidate_test_file": "astropy/utils/tests/test_introspection.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from astropy.utils import minversion",
+      "Use the generated reproduction path that calls minversion."
+    ],
+    "execution_stimulus": [
+      "result = minversion('numpy', '1.14')",
+      "Execute the focused target API path: minversion."
+    ],
+    "expected_failure": "TypeError: '<' not supported between instances of 'int' and 'str'",
+    "relevant_source_files": [
+      "astropy/utils/introspection.py",
+      "astropy/table/bst.py",
+      "astropy/table/soco.py"
+    ],
+    "relevant_test_files": [
+      "astropy/utils/tests/test_introspection.py",
+      "astropy/table/tests/test_init_table.py",
+      "astropy/table/tests/test_table.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_minversion_failure_repro():\n    import numpy\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14dev')\n    assert result is True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"TypeError: '<' not supported between instances of 'int' and 'str'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_minversion_no_dev_suffix_failure():\n    from astropy.utils import minversion\n    result = minversion('numpy', '1.14')\n    assert isinstance(result, TypeError)"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "TypeError: '<' not supported between instances of 'int' and 'str'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "'<' not supported between instances of 'int' and 'str'"
+    ],
+    "identifiers": {
+      "functions": [
+        "minversion"
+      ],
+      "classes": [
+        "LooseVersion"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "astropy/utils/tests/test_introspection.py",
+      "target_source_file": "astropy/utils/introspection.py",
+      "test_visible_functions": [
+        "minversion"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

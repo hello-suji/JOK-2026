@@ -1,0 +1,96 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:posify",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sympy/simplify/simplify.py",
+          "target_function": "posify",
+          "related_classes": [
+            "Symbol"
+          ],
+          "candidate_test_file": "sympy/simplify/tests/test_simplify.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "from sympy import Symbol",
+          "x = Symbol('x', finite=True)"
+        ],
+        "execution_stimulus": [
+          "xp, _ = posify(x)"
+        ],
+        "expected_failure": "The finite assumption is removed from the symbol after posify, resulting in xp.is_finite being None instead of True.",
+        "relevant_source_files": [
+          "sympy/core/symbol.py",
+          "sympy/simplify/simplify.py",
+          "sympy/printing/pretty/pretty_symbology.py"
+        ],
+        "relevant_test_files": [
+          "sympy/core/tests/test_symbol.py",
+          "sympy/core/tests/test_assumptions.py",
+          "sympy/printing/pretty/tests/test_pretty.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "sympy-bin-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_posify_preserves_finite_assumption():\n    from sympy import Symbol, posify\n    x = Symbol('x', finite=True)\n    xp, _ = posify(x)\n    assert xp.is_finite is True"
+          }
+        ],
+        "expected_outputs": [
+          "True"
+        ],
+        "actual_outputs": [
+          "None"
+        ],
+        "error_keywords": [
+          "is_finite",
+          "None"
+        ],
+        "identifiers": {
+          "functions": [
+            "posify"
+          ],
+          "classes": [
+            "Symbol"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

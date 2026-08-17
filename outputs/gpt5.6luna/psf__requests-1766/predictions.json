@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-1766",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -912,3 +912,12 @@\n\n if __name__ == '__main__':\n     unittest.main()\n+\n+def test_digest_auth_qop_options_quoted_repro():\n+    auth = HTTPDigestAuth('user', 'passwd')\n+    prep_request = requests.PreparedRequest()\n+    prep_request.method = 'GET'\n+    prep_request.url = 'http://example.com/digest-auth'\n+    prep_request.headers['WWW-Authenticate'] = 'Digest realm=\"example\", nonce=\"dcd98b7102dd2f0e8b11d0f600bfb0c093\", algorithm=MD5, qop=\"auth\"'\n+    auth.handle_401(prep_request)\n+    assert 'qop=\"auth\"' in prep_request.headers['Authorization']\n",
+    "patch_sha256": "57b346d19482b62a29cc746f1289d1d3f917ab61b90754cd6f53d51014078152"
+  }
+]

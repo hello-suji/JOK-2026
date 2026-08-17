@@ -1,0 +1,16 @@
+--- a/tests/save_delete_hooks/models.py
++++ b/tests/save_delete_hooks/models.py
+@@ -29,3 +29,13 @@
+         # Call the "real" delete() method
+         super().delete()
+         self.data.append("After deletion")
++
++from django.test import TestCase
++from tests.save_delete_hooks.models import Person
++
++class TestDeleteBehavior(TestCase):
++    def test_delete_clears_pk_repro(self):
++        person = Person.objects.create(name='John Doe')
++        pk_before_delete = person.pk
++        person.delete()
++        self.assertIsNone(person.pk)

@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "f",
+      "related_classes": [
+        "BaseClass",
+        "MetaClass",
+        "SubClass",
+        "Sphinx",
+        "A",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where f can be called.",
+      "Use the generated reproduction path that calls f, tempfile, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Call f with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: f, tempfile, join, makedirs."
+    ],
+    "expected_failure": "**EDIT:** The problem seems to be that `type(BaseClass.baseclass_property)` returns `property`, thus sphinx can just lookup `BaseClass.baseclass_property.__doc__`. However, `type(BaseClass.baseclass_class_property)` returns the type of the returned object, since essentially, a `@classmethod@property` ends up behaving like a class attribute. So Sphinx doesn't really have a chance to extract the docstring.",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/builders/texinfo.py",
+      "sphinx/config.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\n\ndef test_classmethod_property_documentation_repro():\n    class A:\n        @classmethod\n        @property\n        def f(cls):\n            \"\"\"Some class property.\"\"\"\n            return \"property\"\n\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = os.path.join(tmpdir, 'conf')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        buildername = 'html'\n\n        os.makedirs(srcdir)\n        os.makedirs(confdir)\n\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write('A.f\\n====\\n\\n.. autofunction:: A.f\\n')\n\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n\n        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n            content = f.read()\n            assert 'Some class property.' in content"
+      },
+      {
+        "language": "python",
+        "code": "class A:\n    @classmethod\n    @property\n    def f(cls):\n        \"\"\"Some class property.\"\"\"\n        return \"property\""
+      },
+      {
+        "language": "bash",
+        "code": "git clone https://github.com/randolf-scholz/sphinx_demo\ncd sphinx_demo/docs\nmake html\n# open _build/html/dummy_module.submodule.html"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "BaseClass",
+        "MetaClass",
+        "SubClass",
+        "Sphinx",
+        "A",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "A",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

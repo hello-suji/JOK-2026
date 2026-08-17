@@ -1,0 +1,16 @@
+--- a/astropy/io/ascii/tests/test_c_reader.py
++++ b/astropy/io/ascii/tests/test_c_reader.py
+@@ -1842,3 +1842,13 @@
+         [text], format="no_header", delimiter=delimiter, fast_reader=fast_reader
+     )
+     assert_table_equal(t2, expected)
++
++def test_qdp_case_insensitivity_repro():
++    qdp_content = 'read serr 1 2\n1 0.5 1 0.5'
++    with open('test.qdp', 'w') as f:
++        f.write(qdp_content)
++    table = Table.read('test.qdp', format='ascii.qdp')
++    assert len(table) == 1
++    assert len(table.colnames) == 3
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(table) != 'ValueError: Unrecognized QDP line: read serr 1 2'

@@ -1,0 +1,10 @@
+--- a/sympy/utilities/tests/test_iterables.py
++++ b/sympy/utilities/tests/test_iterables.py
+@@ -834,3 +834,7 @@
+     assert list(ibin(2, '', str=True)) == ['00', '01', '10', '11']
+     raises(ValueError, lambda: ibin(-.5))
+     raises(ValueError, lambda: ibin(2, 1))
++
++def test_partitions_reuse_dict_repro():
++    parts = list(partitions(3))
++    assert parts == [{3: 1}, {2: 1, 1: 1}, {1: 3}]

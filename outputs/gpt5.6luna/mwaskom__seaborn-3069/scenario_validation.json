@@ -1,0 +1,87 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.67,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "target_function verified to exist in source_file",
+        "target_function '_finalize_figure' not in AST top_level_functions for seaborn/_core/plot.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "seaborn/_core/plot.py",
+          "target_function": "_finalize_figure",
+          "related_classes": [
+            "Nominal",
+            "Plotter"
+          ],
+          "candidate_test_file": "tests/_core/test_plot.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where _finalize_figure can be called."
+        ],
+        "execution_stimulus": [
+          "Call _finalize_figure with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "1. This is actually trickier than you'd think; I may have posted an issue over in matplotlib about this at one point, or just discussed on their gitter. I believe the suggested approach is to add an invisible artist with sticky edges and set the margin to 0. Feels like a hack! I might have looked into setting the sticky edges _on the spine artist_ at one point?",
+        "relevant_source_files": [
+          "seaborn/_core/plot.py",
+          "seaborn/_core/scales.py",
+          "seaborn/categorical.py"
+        ],
+        "relevant_test_files": [
+          "tests/_core/test_plot.py",
+          "tests/_core/test_properties.py",
+          "tests/_core/test_scales.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [],
+          "classes": [
+            "Nominal",
+            "Plotter"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

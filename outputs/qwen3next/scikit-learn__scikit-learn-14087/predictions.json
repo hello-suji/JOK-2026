@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-14087",
+    "model_patch": "--- a/sklearn/linear_model/tests/test_logistic.py\n+++ b/sklearn/linear_model/tests/test_logistic.py\n@@ -1738,3 +1738,17 @@\n         \"LogisticRegressionCV\",\n         lr.fit, X, y\n     )\n+\n+def test_LogisticRegressionCV_fit_refit_false_repro():\n+    np.random.seed(29)\n+    X = np.random.normal(size=(1000, 3))\n+    beta = np.random.normal(size=3)\n+    intercept = np.random.normal(size=None)\n+    y = np.sign(intercept + X @ beta)\n+\n+    model = LogisticRegressionCV(cv=5, solver='saga', tol=1e-2, refit=False)\n+    model.fit(X, y)\n+    assert hasattr(model, 'scores_')\n+    assert isinstance(model.scores_, dict)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(model) != 'IndexError: too many indices for array'\n",
+    "patch_sha256": "b594fbd61b57b1fc79d6f3e042fc0cacad743440fdf8c8ec1e144daf09f3a1cf"
+  }
+]

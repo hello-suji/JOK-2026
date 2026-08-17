@@ -1,0 +1,17 @@
+--- a/tests/forms_tests/field_tests/test_decimalfield.py
++++ b/tests/forms_tests/field_tests/test_decimalfield.py
+@@ -172,3 +172,14 @@
+         msg = "'Enter a number.'"
+         with self.assertRaisesMessage(ValidationError, msg):
+             f.clean('1,001.1')
++
++from django.test import TestCase, SimpleTestCase
++from django.forms.fields import DecimalField
++from decimal import Decimal
++
++class TestDecimalFieldToPython(TestCase):
++    def test_to_python_with_valid_input_repro(self):
++        decimal_field = DecimalField()
++        result = decimal_field.to_python('123.45')
++        assert isinstance(result, Decimal)
++        assert result == Decimal('123.45')

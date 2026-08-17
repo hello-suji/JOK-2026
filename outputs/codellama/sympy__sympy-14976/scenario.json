@@ -1,0 +1,116 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/evalf.py",
+      "target_function": "_lambdifygenerated",
+      "related_classes": [
+        "Eq",
+        "Float",
+        "Not",
+        "S",
+        "RisingFactorial"
+      ],
+      "candidate_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _lambdifygenerated can be called.",
+      "Use the generated reproduction path that calls symbols, rf, lambdify, nsolve.",
+      "Use the generated reproduction path that calls _lambdifygenerated, evalf, lambdify, nsolve."
+    ],
+    "execution_stimulus": [
+      "Call _lambdifygenerated with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, rf, lambdify, nsolve.",
+      "Execute the focused target API path: _lambdifygenerated, evalf, lambdify, nsolve."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/core/evalf.py",
+      "sympy/utilities/lambdify.py",
+      "sympy/core/function.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_evalf.py",
+      "sympy/utilities/tests/test_lambdify.py",
+      "sympy/core/tests/test_function.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "py",
+        "code": ">>> eqn = Eq(rf(18,x), 77 + S(1)/3)\n>>> f = lambdify(x, eqn.lhs - eqn.rhs, 'mpmath')\n>>> print(inspect.getsource(f))\ndef _lambdifygenerated(x):\n    return (  # Not supported in Python:\n  # RisingFactorial\nRisingFactorial(18, x) - 232/3)"
+      },
+      {
+        "language": "py",
+        "code": ">>> eqn = Eq(rf(18,x), 77 + S(1)/3)\n>>> x0 = nsolve(eqn, Float('1.5', 64), prec=64)\n>>> rf(18, x0).evalf(64)\n77.33333333333332859638176159933209419250488281250000000000000000"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Eq, rf, lambdify, nsolve, Float, S\n\ndef test_lambdify_rational_wrapping_repro():\n    x = symbols('x')\n    eqn = Eq(rf(18, x), 77 + S(1)/3)\n    f = lambdify(x, eqn.lhs - eqn.rhs, 'mpmath')\n    x0 = nsolve(eqn, Float('1.5', 64), prec=64)\n    result = rf(18, x0).evalf(64)\n    assert result == Float('77.33333333333333333333333333333333333333333333333333333333333333', 64)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'def _lambdifygenerated(x):\\nreturn (  # Not supported in Python:\\n# RisingFactorial\\nRisingFactorial(18, x) - 232/3)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "def _lambdifygenerated(x):\nreturn (  # Not supported in Python:\n# RisingFactorial\nRisingFactorial(18, x) - 232/3)",
+      "77.33333333333332859638176159933209419250488281250000000000000000"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_lambdifygenerated",
+        "evalf",
+        "getsource",
+        "lambdify",
+        "nsolve",
+        "rf",
+        "symbols"
+      ],
+      "classes": [
+        "Eq",
+        "Float",
+        "Not",
+        "RisingFactorial",
+        "S"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "target_source_file": "sympy/core/evalf.py",
+      "test_visible_functions": [
+        "_lambdifygenerated",
+        "evalf",
+        "lambdify",
+        "nsolve",
+        "rf",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Eq",
+        "Float",
+        "Not",
+        "RisingFactorial",
+        "S"
+      ]
+    }
+  }
+]

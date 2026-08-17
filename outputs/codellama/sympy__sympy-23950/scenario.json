@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/functions/elementary/piecewise.py",
+      "target_function": "__new__",
+      "related_classes": [
+        "Contains",
+        "Piecewise",
+        "Reals",
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/functions/elementary/tests/test_piecewise.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __new__ can be called.",
+      "Use the generated reproduction path that calls as_relational, as_set, eval."
+    ],
+    "execution_stimulus": [
+      "Call __new__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: as_relational, as_set, eval."
+    ],
+    "expected_failure": "Contains.as_set returns Contains",
+    "relevant_source_files": [
+      "sympy/functions/elementary/piecewise.py",
+      "sympy/sets/contains.py",
+      "sympy/logic/boolalg.py"
+    ],
+    "relevant_test_files": [
+      "sympy/functions/elementary/tests/test_piecewise.py",
+      "sympy/functions/elementary/tests/test_exponential.py",
+      "sympy/functions/elementary/tests/test_miscellaneous.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Symbol\nfrom sympy.sets.contains import Contains\nfrom sympy.sets.sets import Reals\nfrom sympy.functions.elementary.piecewise import Piecewise\n\ndef test_piecewise_with_contains_repro():\n    x = Symbol('x')\n    piecewise_expr = Piecewise((6, Contains(x, Reals)), (7, True))\n    # Test the eval method\n    assert piecewise_expr.eval(subs={x: 5}) == 6\n    # Test the as_set method\n    assert piecewise_expr.as_set() == Reals\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(piecewise_expr) != 'Traceback (most recent call last):\\nFile \"<stdin>\", line 1, in <module>\\nFile \"./sympy/functions/elementary/piecewise.py\", line 136, in __new__\\nr = cls.eval(*newargs)\\nFile \"./sympy/functions/elementary/piecewise.py\", line 185, in eval\\nc = c.as_set().as_relational(x)\\nAttributeError: \\'Contains\\' object has no attribute \\'as_relational\\''"
+      },
+      {
+        "language": "py",
+        "code": ">>> Contains(x, Reals).as_set()\nContains(x, Reals)"
+      },
+      {
+        "language": "pytb",
+        "code": ">>> Piecewise((6, Contains(x, Reals)), (7, True))\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/functions/elementary/piecewise.py\", line 136, in __new__\n    r = cls.eval(*newargs)\n  File \"./sympy/functions/elementary/piecewise.py\", line 185, in eval\n    c = c.as_set().as_relational(x)\nAttributeError: 'Contains' object has no attribute 'as_relational'"
+      }
+    ],
+    "expected_outputs": [
+      "Contains(x, Reals)"
+    ],
+    "actual_outputs": [
+      "Traceback (most recent call last):\nFile \"<stdin>\", line 1, in <module>\nFile \"./sympy/functions/elementary/piecewise.py\", line 136, in __new__\nr = cls.eval(*newargs)\nFile \"./sympy/functions/elementary/piecewise.py\", line 185, in eval\nc = c.as_set().as_relational(x)\nAttributeError: 'Contains' object has no attribute 'as_relational'"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "AttributeError: 'Contains' object has no attribute 'as_relational'"
+    ],
+    "identifiers": {
+      "functions": [
+        "as_relational",
+        "as_set",
+        "eval"
+      ],
+      "classes": [
+        "Contains",
+        "Piecewise",
+        "Reals",
+        "Symbol"
+      ],
+      "files": [
+        "sympy/functions/elementary/piecewise.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/functions/elementary/tests/test_piecewise.py",
+      "target_source_file": "sympy/functions/elementary/piecewise.py",
+      "test_visible_functions": [
+        "as_relational",
+        "as_set",
+        "eval"
+      ],
+      "test_visible_classes": [
+        "Contains",
+        "Piecewise",
+        "Reals",
+        "Symbol"
+      ]
+    }
+  }
+]

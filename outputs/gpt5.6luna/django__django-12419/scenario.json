@@ -1,0 +1,69 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/http.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/admin_scripts/test_django_admin_py.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/utils/http.py",
+      "django/views/decorators/http.py",
+      "django/conf/global_settings.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/template_backends/test_django.py",
+      "tests/utils_tests/test_http.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestSecureReferrerPolicy(SimpleTestCase):\n    def test_referrer_policy_header_repro(self):\n        response = self.client.get('/admin/')\n        self.assertNotIn('Referrer-Policy', response)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/test_django_admin_py.py",
+      "target_source_file": "django/utils/http.py",
+      "test_visible_functions": [],
+      "test_visible_classes": []
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13820",
+    "model_patch": "--- a/tests/migrations/test_loader.py\n+++ b/tests/migrations/test_loader.py\n@@ -545,3 +545,20 @@\n             )\n             with self.assertRaisesRegex(ImportError, msg):\n                 MigrationLoader(connection)\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.migrations.loader import MigrationLoader\n+\n+class TestMigrationLoader(TestCase):\n+    def test_load_disk_without_file_attribute_repro(self):\n+        # Simulate a module without __file__ attribute\n+        class MockModule:\n+            __path__ = []\n+\n+        mock_module = MockModule()\n+        loader = MigrationLoader(connections['default'])\n+        loader.migrated_apps = {'mock_app': mock_module}\n+        loader.disk_migrations = {}\n+        loader.load_disk()\n+        # Assert that the loader does not raise an error and proceeds correctly\n+        self.assertIn('mock_app', loader.disk_migrations)\n",
+    "patch_sha256": "41ef7b628fcd6cc26b949a8ea0dd4882c1f32150087d94fb602e575c444e89f1"
+  }
+]

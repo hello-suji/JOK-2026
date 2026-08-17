@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11179",
+    "model_patch": "--- a/tests/save_delete_hooks/models.py\n+++ b/tests/save_delete_hooks/models.py\n@@ -29,3 +29,13 @@\n         # Call the \"real\" delete() method\n         super().delete()\n         self.data.append(\"After deletion\")\n+\n+from django.test import TestCase\n+from tests.save_delete_hooks.models import Person\n+\n+class TestDeleteBehavior(TestCase):\n+    def test_delete_clears_pk_repro(self):\n+        person = Person.objects.create(name='John Doe')\n+        pk_before_delete = person.pk\n+        person.delete()\n+        self.assertIsNone(person.pk)\n",
+    "patch_sha256": "cf8ba23dc42761a1f997275ec044b81046abb4cf5ea080698923b4612547f7a3"
+  }
+]

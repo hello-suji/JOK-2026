@@ -1,0 +1,109 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "annotate",
+      "related_classes": [
+        "BooleanField",
+        "Case",
+        "When",
+        "Value",
+        "QuerySet",
+        "User",
+        "Q"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where annotate can be called.",
+      "Use the generated reproduction path that calls create, values, all, order_by.",
+      "Use the generated reproduction path that calls annotate, order_by, values, create."
+    ],
+    "execution_stimulus": [
+      "Call annotate with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, values, all, order_by.",
+      "Execute the focused target API path: annotate, order_by, values, create."
+    ],
+    "expected_failure": "The following code generates a syntax error.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/sessions/backends/base.py",
+      "django/utils/datastructures.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/forms_tests/field_tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Case, When, Value, BooleanField\nfrom django.db.models.query import QuerySet\nfrom django.contrib.auth.models import User\n\nclass TestAnnotateWithEmptyQ(TestCase):\n    def test_annotate_with_empty_q_repro(self):\n        User.objects.create(username='testuser1')\n        User.objects.create(username='testuser2')\n        annotated_users = User.objects.annotate(\n            _a=Case(\n                When(~Q(pk__in=[]), then=Value(True)),\n                default=Value(False),\n                output_field=BooleanField(),\n            )\n        ).order_by('-_a').values('pk')\n        self.assertIsInstance(annotated_users, QuerySet)\n        self.assertTrue(all(user['_a'] for user in annotated_users))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ProgrammingError"
+    ],
+    "identifiers": {
+      "functions": [
+        "annotate",
+        "order_by",
+        "create"
+      ],
+      "classes": [
+        "BooleanField",
+        "Case",
+        "When",
+        "Value",
+        "QuerySet",
+        "User",
+        "Q"
+      ],
+      "files": [],
+      "exceptions": [
+        "ProgrammingError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "annotate",
+        "order_by",
+        "values",
+        "create"
+      ],
+      "test_visible_classes": [
+        "BooleanField",
+        "Case",
+        "When",
+        "Value",
+        "QuerySet",
+        "User",
+        "Q"
+      ]
+    }
+  }
+]

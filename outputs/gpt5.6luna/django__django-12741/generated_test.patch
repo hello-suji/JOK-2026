@@ -1,0 +1,14 @@
+--- a/tests/backends/mysql/test_operations.py
++++ b/tests/backends/mysql/test_operations.py
+@@ -45,3 +45,11 @@
+                         'SET FOREIGN_KEY_CHECKS = 1;',
+                     ],
+                 )
++
++from django.test import TestCase, SimpleTestCase
++class TestExecuteSqlFlush(SimpleTestCase):
++    def test_execute_sql_flush_with_using_argument_repro(self):
++        sql_list = []
++        connection.ops.execute_sql_flush(using='default', sql_list=sql_list)
++        # Assuming the expected behavior is that the function executes without error and sql_list remains unchanged
++        self.assertEqual(sql_list, [])

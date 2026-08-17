@@ -1,0 +1,16 @@
+--- a/tests/forms_tests/tests/test_utils.py
++++ b/tests/forms_tests/tests/test_utils.py
+@@ -163,3 +163,13 @@
+         e = ErrorList(['Invalid username.'])
+         self.assertTrue(hasattr(ErrorList, '__html__'))
+         self.assertEqual(str(e), e.__html__())
++
++from django.test import TestCase, SimpleTestCase
++from django.forms.models import model_to_dict
++from django.contrib.auth.models import User
++
++class TestModelToDictBehavior(SimpleTestCase):
++    def test_model_to_dict_with_empty_fields_repro(self):
++        instance = User(username='testuser')
++        result = model_to_dict(instance, fields=[])
++        self.assertEqual(result, {})

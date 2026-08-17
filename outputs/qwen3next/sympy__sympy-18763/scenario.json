@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/pretty/stringpict.py",
+      "target_function": "left",
+      "related_classes": [
+        "LaTeX",
+        "Subs"
+      ],
+      "candidate_test_file": "sympy/printing/tests/test_latex.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where left can be called.",
+      "Use the generated reproduction path that calls left, x, y, latex."
+    ],
+    "execution_stimulus": [
+      "Call left with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: left, x, y, latex."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/printing/pretty/stringpict.py",
+      "sympy/core/function.py",
+      "sympy/printing/latex.py"
+    ],
+    "relevant_test_files": [
+      "sympy/printing/tests/test_latex.py",
+      "sympy/printing/pretty/tests/test_pretty.py",
+      "sympy/printing/tests/test_ccode.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Subs\nfrom sympy.abc import x, y\n\ndef test_latex_subs_parenthesizing_repro():\n    expr = 3 * Subs(-x + y, (x,), (1,))\n    expected_latex = '3 \\left. \\left(- x + y\\right) \\right|_{\\substack{ x=1 }}'\n    assert latex(expr) == expected_latex"
+      },
+      {
+        "language": "python",
+        "code": ">>> from sympy import Subs\n>>> from sympy.abc import x,y\n>>> 3*Subs(-x+y, (x,),(1,))"
+      },
+      {
+        "language": "python",
+        "code": "'3 \\\\left. - x + y \\\\right|_{\\\\substack{ x=1 }}'"
+      },
+      {
+        "language": "python",
+        "code": "'3 \\\\left. \\\\left(- x + y\\\\right) \\\\right|_{\\\\substack{ x=1 }}'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "left",
+        "x",
+        "y",
+        "latex"
+      ],
+      "classes": [
+        "LaTeX",
+        "Subs"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/tests/test_latex.py",
+      "target_source_file": "sympy/printing/pretty/stringpict.py",
+      "test_visible_functions": [
+        "left",
+        "x",
+        "y",
+        "latex"
+      ],
+      "test_visible_classes": [
+        "LaTeX",
+        "Subs"
+      ]
+    }
+  }
+]

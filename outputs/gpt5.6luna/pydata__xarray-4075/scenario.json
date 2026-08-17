@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "mean",
+      "related_classes": [
+        "DataArray"
+      ],
+      "candidate_test_file": "xarray/tests/test_weighted.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where mean can be called.",
+      "Use the generated reproduction path that calls mean, array, weighted.",
+      "Use the generated reproduction path that calls mean, weighted, array."
+    ],
+    "execution_stimulus": [
+      "Call mean with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: mean, array, weighted.",
+      "Execute the focused target API path: mean, weighted, array."
+    ],
+    "expected_failure": "Returns",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/duck_array_ops.py",
+      "xarray/core/weighted.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_weighted.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_computation.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_weighted_mean_with_boolean_weights_repro():\n    dta = xr.DataArray([1., 1., 1.])\n    wgt = xr.DataArray(np.array([1, 1, 0], dtype=np.bool))\n\n    result = dta.weighted(wgt).mean()\n    assert result == 1.0"
+      },
+      {
+        "language": "python",
+        "code": "import numpy as np\nimport xarray as xr\n\ndta = xr.DataArray([1., 1., 1.])\nwgt = xr.DataArray(np.array([1, 1, 0], dtype=np.bool))\n\ndta.weighted(wgt).mean()"
+      },
+      {
+        "language": "python",
+        "code": "<xarray.DataArray ()>\narray(2.)"
+      },
+      {
+        "language": "python",
+        "code": "<xarray.DataArray ()>\narray(1.)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "dot",
+        "mean",
+        "notnull",
+        "weighted",
+        "array"
+      ],
+      "classes": [
+        "DataArray"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_weighted.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "mean",
+        "weighted",
+        "array"
+      ],
+      "test_visible_classes": [
+        "DataArray"
+      ]
+    }
+  }
+]

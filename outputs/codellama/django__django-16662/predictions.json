@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-16662",
+    "model_patch": "--- a/tests/migrations/test_state.py\n+++ b/tests/migrations/test_state.py\n@@ -2225,3 +2225,13 @@\n         self.assertRelated(P, [M, Q, Z])\n         self.assertRelated(Q, [M, P, Z])\n         self.assertRelated(Z, [M, P, Q])\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.migrations import Migration\n+\n+class TestMigrationImportOrdering(TestCase):\n+    def test_import_ordering_repro(self):\n+        migration = Migration('0001_initial', 'myapp')\n+        migration.operations = []\n+        migration_string = str(migration)\n+        self.assertIn('import datetime\\nfrom django.db import migrations, models\\nimport time', migration_string)\n",
+    "patch_sha256": "a76660543faf6a00fa8a2d22cf2b7f4d5320888337d9926cdfa68c8ac20860c0"
+  }
+]

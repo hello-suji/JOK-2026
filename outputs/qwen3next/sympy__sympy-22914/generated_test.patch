@@ -1,0 +1,15 @@
+--- a/sympy/printing/tests/test_pycode.py
++++ b/sympy/printing/tests/test_pycode.py
+@@ -392,3 +392,12 @@
+     assert prntr.doprint(expm1(x)) == 'numpy.expm1(x)'
+     assert prntr.doprint(log1p(x)) == 'numpy.log1p(x)'
+     assert prntr.doprint(cosm1(x)) == 'scipy.special.cosm1(x)'
++
++def test_PythonCodePrinter_Min_Max_repro():
++    from sympy.printing.pycode import PythonCodePrinter
++    a, b = symbols("a b")
++    c = Min(a, b)
++    d = Max(a, b)
++    printer = PythonCodePrinter()
++    assert printer.doprint(c) == 'min(a, b)'
++    assert printer.doprint(d) == 'max(a, b)'

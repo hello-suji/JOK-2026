@@ -1,0 +1,21 @@
+--- a/tests/admin_changelist/admin.py
++++ b/tests/admin_changelist/admin.py
+@@ -147,3 +147,18 @@
+     def age_display(self, obj):
+         return obj.age
+     age_display.empty_value_display = '&dagger;'
++
++from django.contrib.admin.filters import RelatedFieldListFilter, RelatedOnlyFieldListFilter
++from django.contrib.admin.options import ModelAdmin
++from django.test import TestCase
++
++class TestRelatedFieldListFilter(TestCase):
++    def test_related_field_list_filter_repro(self):
++        ma = ModelAdmin(Book, None)
++        request = self.client.get('/admin/')
++        field_path = 'author'
++        model_admin = ModelAdmin(Author, None)
++        list_filter = RelatedFieldListFilter.create(
++            field_path, request, {}, model_admin, model_admin.model, model_admin.model._meta.get_field(field_path)
++        )
++        self.assertIsNotNone(list_filter)

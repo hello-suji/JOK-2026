@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-26466",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1659,3 +1659,24 @@\n     fig.savefig(buf, format='svg')\n     buf.seek(0)\n     assert '<g ' not in buf.read()\n+\n+import numpy as np\n+from matplotlib.testing.decorators import check_figures_equal\n+\n+@check_figures_equal()\n+def test_annotate_array_modification_repro(fig_test, fig_ref):\n+    ax_test = fig_test.add_axes([0.13, 0.15, .8, .8])\n+    ax_ref = fig_ref.add_axes([0.13, 0.15, .8, .8])\n+    ax_test.set_xlim(-5, 5)\n+    ax_test.set_ylim(-3, 3)\n+    ax_ref.set_xlim(-5, 5)\n+    ax_ref.set_ylim(-3, 3)\n+\n+    xy_0 = np.array((-4, 1))\n+    xy_f = np.array((-1, 1))\n+\n+    ann_test = ax_test.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))\n+    ann_ref = ax_ref.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))\n+\n+    assert np.array_equal(ann_test.xy, ann_ref.xy)\n+    assert np.array_equal(ann_test.xyann, ann_ref.xyann)\n",
+    "patch_sha256": "c4b14245a00c14c40dfe832c7976ea627fd6f0324aea219a79f1dfd995a01948"
+  }
+]

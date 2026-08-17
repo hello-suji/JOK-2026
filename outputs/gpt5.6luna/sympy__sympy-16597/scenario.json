@@ -1,0 +1,82 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/symbol.py",
+      "target_function": "Symbol",
+      "related_classes": [
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_symbol.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Symbol",
+      "m = Symbol('m', even=True)"
+    ],
+    "execution_stimulus": [
+      "result = m.is_finite"
+    ],
+    "expected_failure": "The test should fail because m.is_finite returns None instead of True.",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/printing/pretty/pretty_symbology.py",
+      "sympy/printing/julia.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_symbol.py",
+      "sympy/printing/tests/test_julia.py",
+      "sympy/printing/pretty/tests/test_pretty.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_even_symbol_is_finite_repro():\n    m = Symbol('m', even=True)\n    result = m.is_finite\n    assert result is True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(m) != 'None'"
+      },
+      {
+        "language": "python",
+        "code": "def test_even_symbol_is_finite():\n    from sympy import Symbol\n    m = Symbol('m', even=True)\n    result = m.is_finite\n    assert result is True"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "None"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Symbol"
+      ],
+      "classes": [
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_symbol.py",
+      "target_source_file": "sympy/core/symbol.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "Symbol"
+      ]
+    }
+  }
+]

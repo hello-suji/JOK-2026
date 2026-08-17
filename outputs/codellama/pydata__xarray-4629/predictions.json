@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4629",
+    "model_patch": "--- a/xarray/tests/test_merge.py\n+++ b/xarray/tests/test_merge.py\n@@ -326,3 +326,12 @@\n         da = xr.DataArray(data=1, name=\"b\")\n\n         assert_identical(ds.merge(da), xr.merge([ds, da]))\n+\n+def test_merge_override_attrs_reference_bug_repro():\n+    xds1 = xr.Dataset(attrs={'a': 'b'})\n+    xds2 = xr.Dataset(attrs={'a': 'c'})\n+    xds3 = xr.merge([xds1, xds2], combine_attrs='override')\n+    xds3.attrs['a'] = 'd'\n+    assert xds1.attrs['a'] == 'b'\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(xds3) != 'd'\n",
+    "patch_sha256": "e8a6211fe682293cc30b9f3d2c0686f859a91a46bc94da872ed77e482d2de007"
+  }
+]

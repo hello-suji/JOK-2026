@@ -1,0 +1,513 @@
+{
+  "instance_id": "sympy__sympy-15017",
+  "repo": "sympy/sympy",
+  "base_commit": "6810dee426943c1a2fe85b5002dd0d4cf2246a05",
+  "repo_path": "data/repos/sympy__sympy",
+  "candidate_source_files": [
+    {
+      "path": "sympy/tensor/array/ndim_array.py",
+      "score": 20,
+      "matched_identifiers": [
+        "NDimArray",
+        "__len__",
+        "array",
+        "arrays",
+        "import"
+      ],
+      "reasons": [
+        "class_match:NDimArray",
+        "source_content_tokens:__len__,array,arrays,import,ndimarray"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "NDimArray": "class NDimArray(object):\n    \"\"\"\n\n    Examples\n    ========\n\n    Create an N-dim array of zeros:\n\n    >>> from sympy import MutableDenseNDimArray\n    >>> a = MutableDenseNDimArray.zeros(2, 3, 4)\n    >>> a\n    [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]\n\n    Create an N-dim array from a list;\n",
+        "__len__": "    def __len__(self):\n        \"\"\"Overload common function len(). Returns number of elements in array.\n\n        Examples\n        ========\n\n        >>> from sympy import MutableDenseNDimArray\n        >>> a = MutableDenseNDimArray.zeros(3, 3)\n        >>> a\n        [[0, 0, 0], [0, 0, 0], [0, 0, 0]]\n        >>> len(a)\n        9\n\n        \"\"\"\n        return self._loop_size"
+      },
+      "top_level_functions": [
+        "NDimArray.shape",
+        "NDimArray.rank",
+        "NDimArray.diff",
+        "NDimArray.applyfunc",
+        "NDimArray.tolist",
+        "NDimArray.transpose",
+        "NDimArray.conjugate",
+        "NDimArray.adjoint",
+        "ImmutableNDimArray.as_immutable",
+        "ImmutableNDimArray.as_mutable"
+      ]
+    },
+    {
+      "path": "sympy/tensor/tensor.py",
+      "score": 17,
+      "matched_identifiers": [
+        "array",
+        "arrays",
+        "following",
+        "import"
+      ],
+      "reasons": [
+        "stem_in_issue_text:tensor",
+        "source_content_tokens:array,arrays,following,import,ndimarray"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TIDS.get_tensors",
+        "TIDS.get_components_with_free_indices",
+        "TIDS.from_components_and_indices",
+        "TIDS.to_indices",
+        "TIDS.free_dum_from_indices",
+        "TIDS.mul",
+        "TIDS.sorted_components",
+        "TIDS.canon_args",
+        "TIDS.perm2tensor",
+        "TIDS.get_indices",
+        "TIDS.contract_metric",
+        "_IndexStructure.from_indices",
+        "_IndexStructure.from_components_free_dum",
+        "_IndexStructure.get_indices",
+        "_IndexStructure.generate_indices_from_free_dum_index_types",
+        "_IndexStructure.get_free_indices",
+        "_IndexStructure.perm2tensor",
+        "_IndexStructure.indices_canon_args",
+        "components_canon_args",
+        "_TensorDataLazyEvaluator.data_contract_dum",
+        "_TensorDataLazyEvaluator.data_tensorhead_from_tensmul",
+        "_TensorDataLazyEvaluator.data_from_tensor",
+        "_TensorDataLazyEvaluator.add_metric_data",
+        "_TensorDataLazyEvaluator.inverse_matrix",
+        "_TensorDataLazyEvaluator.inverse_transpose_matrix",
+        "_TensorDataLazyEvaluator.add_rearrange_tensmul_parts",
+        "_TensorDataLazyEvaluator.parse_data",
+        "_TensorManager.comm",
+        "_TensorManager.comm_symbols2i",
+        "_TensorManager.comm_i2symbol",
+        "_TensorManager.set_comm",
+        "_TensorManager.set_comms",
+        "_TensorManager.get_comm",
+        "_TensorManager.clear",
+        "TensorIndexType.auto_right",
+        "TensorIndexType.auto_left",
+        "TensorIndexType.auto_index",
+        "TensorIndexType.data",
+        "TensorIndexType.name",
+        "TensorIndexType.dim"
+      ]
+    },
+    {
+      "path": "bin/authors_update.py",
+      "score": 16,
+      "matched_identifiers": [
+        "following",
+        "import",
+        "running",
+        "sympy"
+      ],
+      "reasons": [
+        "source_content_tokens:following,import,running,sympy"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "red",
+        "yellow",
+        "green",
+        "author_name",
+        "move"
+      ]
+    },
+    {
+      "path": "doc/generate_logos.py",
+      "score": 16,
+      "matched_identifiers": [
+        "elements",
+        "import",
+        "size",
+        "sympy"
+      ],
+      "reasons": [
+        "source_content_tokens:import,size,sympy,elements,which"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "main",
+        "generate_notail_notext_versions",
+        "convert_to_png",
+        "convert_to_ico",
+        "versionkey_to_boolean_tuple",
+        "get_svg_filename_from_versionkey",
+        "searchElementById",
+        "load_svg",
+        "save_svg"
+      ]
+    },
+    {
+      "path": "doc/src/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "elements",
+        "import",
+        "size",
+        "sympy"
+      ],
+      "reasons": [
+        "source_content_tokens:import,size,sympy,elements,number"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sympy/tensor/array/tests/test_immutable_ndim_array.py",
+      "score": 34,
+      "matched_identifiers": [
+        "NDimArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDimArray",
+        "same_module_area:sympy",
+        "same_module_area:sympy/tensor",
+        "inferred_test_dir_match:sympy/tensor/array/tests",
+        "token_overlap:array,ndim,sympy,tensor",
+        "internal_name_overlap:ndim",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/tensor"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/tensor/array/tests/test_mutable_ndim_array.py",
+      "score": 34,
+      "matched_identifiers": [
+        "NDimArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDimArray",
+        "same_module_area:sympy",
+        "same_module_area:sympy/tensor",
+        "inferred_test_dir_match:sympy/tensor/array/tests",
+        "token_overlap:array,ndim,sympy,tensor",
+        "internal_name_overlap:ndim",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/tensor"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/tensor/array/tests/test_ndim_array_conversions.py",
+      "score": 34,
+      "matched_identifiers": [
+        "NDimArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDimArray",
+        "same_module_area:sympy",
+        "same_module_area:sympy/tensor",
+        "inferred_test_dir_match:sympy/tensor/array/tests",
+        "token_overlap:array,ndim,sympy,tensor",
+        "internal_name_overlap:ndim",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/tensor"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/tensor/tests/test_tensor.py",
+      "score": 33,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy",
+        "same_module_area:sympy/tensor",
+        "inferred_test_dir_match:sympy/tensor/tests",
+        "test_name_matches_source_stem:tensor",
+        "token_overlap:sympy,tensor",
+        "internal_name_overlap:array",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/tensor"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/tensor/array/tests/test_arrayop.py",
+      "score": 32,
+      "matched_identifiers": [
+        "NDimArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NDimArray",
+        "same_module_area:sympy",
+        "same_module_area:sympy/tensor",
+        "inferred_test_dir_match:sympy/tensor/array/tests",
+        "token_overlap:array,sympy,tensor",
+        "internal_name_overlap:array",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/tensor"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sympy/tensor/tests/test_tensor.py:pytest_import_or_conftest",
+      "sympy/tensor/tests/test_tensor.py:top_level_test_functions",
+      "sympy/tensor/array/tests/test_ndim_array_conversions.py:top_level_test_functions",
+      "sympy/tensor/array/tests/test_immutable_ndim_array.py:pytest_import_or_conftest",
+      "sympy/tensor/array/tests/test_immutable_ndim_array.py:top_level_test_functions",
+      "sympy/tensor/array/tests/test_arrayop.py:pytest_import_or_conftest",
+      "sympy/tensor/array/tests/test_arrayop.py:top_level_test_functions",
+      "sympy/tensor/array/tests/test_mutable_ndim_array.py:pytest_import_or_conftest",
+      "sympy/tensor/array/tests/test_mutable_ndim_array.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "sympy-bin-test"
+  },
+  "indexed_file_count": 1294,
+  "indexed_test_file_count": 547,
+  "available_imports": {
+    "doc.generate_logos": [
+      "convert_to_ico",
+      "convert_to_png",
+      "generate_notail_notext_versions",
+      "get_svg_filename_from_versionkey",
+      "load_svg",
+      "main",
+      "save_svg",
+      "searchElementById",
+      "versionkey_to_boolean_tuple"
+    ],
+    "bin.authors_update": [
+      "author_name",
+      "green",
+      "move",
+      "red",
+      "yellow"
+    ],
+    "sympy": [
+      "Array",
+      "DenseNDimArray",
+      "Idx",
+      "ImmutableDenseNDimArray",
+      "ImmutableSparseNDimArray",
+      "Indexed",
+      "IndexedBase",
+      "MutableDenseNDimArray",
+      "MutableSparseNDimArray",
+      "NDimArray",
+      "SparseNDimArray",
+      "TableForm",
+      "__sympy_debug",
+      "__version__",
+      "absolute_import",
+      "ccode",
+      "cxxcode",
+      "derive_by_array",
+      "fcode",
+      "get_contraction_structure",
+      "get_indices",
+      "glsl_code",
+      "init_printing",
+      "init_session",
+      "jscode",
+      "julia_code",
+      "latex",
+      "mathematica_code",
+      "mathml",
+      "octave_code",
+      "pager_print",
+      "permutedims",
+      "plot",
+      "plot_backends",
+      "plot_implicit",
+      "pprint",
+      "pprint_try_use_unicode",
+      "pprint_use_unicode",
+      "pretty",
+      "pretty_print",
+      "preview",
+      "print_function",
+      "print_gtk",
+      "print_python",
+      "print_tree",
+      "python",
+      "rcode",
+      "rust_code",
+      "srepr",
+      "sstr",
+      "sstrrepr",
+      "tensorcontraction",
+      "tensorproduct",
+      "textplot"
+    ],
+    "sympy.tensor.tensor": [
+      "TIDS",
+      "TensAdd",
+      "TensExpr",
+      "TensMul",
+      "Tensor",
+      "TensorHead",
+      "TensorIndex",
+      "TensorIndexType",
+      "TensorSymmetry",
+      "TensorType",
+      "_IndexStructure",
+      "_TensorDataLazyEvaluator",
+      "_TensorManager",
+      "_get_argtree_pos",
+      "canon_bp",
+      "components_canon_args",
+      "contract_metric",
+      "get_coeff",
+      "get_free_indices",
+      "get_index_structure",
+      "get_indices",
+      "get_lines",
+      "perm2tensor",
+      "riemann_cyclic",
+      "riemann_cyclic_replace",
+      "substitute_indices",
+      "tensor_indices",
+      "tensor_mul",
+      "tensorhead",
+      "tensorsymmetry"
+    ],
+    "sympy.tensor.array.ndim_array": [
+      "ImmutableNDimArray",
+      "NDimArray"
+    ],
+    "sympy.tensor": [
+      "DenseNDimArray",
+      "ImmutableDenseNDimArray",
+      "ImmutableSparseNDimArray",
+      "MutableDenseNDimArray",
+      "MutableSparseNDimArray",
+      "NDimArray",
+      "SparseNDimArray",
+      "derive_by_array",
+      "permutedims",
+      "tensorcontraction",
+      "tensorproduct"
+    ],
+    "sympy.tensor.tests.test_tensor": [
+      "Metric",
+      "_get_valued_base_test_variables",
+      "_is_equal",
+      "test_TensExpr",
+      "test_TensMul_data",
+      "test_TensorHead",
+      "test_TensorIndexType",
+      "test_TensorManager",
+      "test_TensorType",
+      "test_add1",
+      "test_add2",
+      "test_add3",
+      "test_bug_correction_tensor_indices",
+      "test_canonicalize1",
+      "test_canonicalize2",
+      "test_canonicalize3",
+      "test_canonicalize_no_dummies",
+      "test_canonicalize_no_slot_sym",
+      "test_contract_delta1",
+      "test_contract_metric1",
+      "test_contract_metric2",
+      "test_div",
+      "test_epsilon",
+      "test_fun",
+      "test_hash",
+      "test_index_iteration",
+      "test_indices",
+      "test_issue_10972_TensMul_data",
+      "test_issue_11020_TensAdd_data",
+      "test_metric_contract3",
+      "test_mul",
+      "test_no_metric_symmetry",
+      "test_noncommuting_components",
+      "test_pprint",
+      "test_riemann_cyclic",
+      "test_riemann_cyclic_replace",
+      "test_riemann_invariants",
+      "test_riemann_products",
+      "test_special_eq_ne",
+      "test_substitute_indices",
+      "test_tensorsymmetry",
+      "test_valued_assign_numpy_ndarray",
+      "test_valued_canon_bp_swapaxes",
+      "test_valued_components_with_wrong_symmetry",
+      "test_valued_metric_inverse",
+      "test_valued_non_diagonal_metric",
+      "test_valued_tensor_add_scalar",
+      "test_valued_tensor_contraction",
+      "test_valued_tensor_covariant_contravariant_elements",
+      "test_valued_tensor_expressions",
+      "test_valued_tensor_get_matrix",
+      "test_valued_tensor_iter",
+      "test_valued_tensor_pow",
+      "test_valued_tensor_self_contraction"
+    ],
+    "sympy.tensor.array.tests.test_ndim_array_conversions": [
+      "test_NDim_array_conv"
+    ],
+    "sympy.tensor.array.tests.test_immutable_ndim_array": [
+      "test_arithmetic",
+      "test_calculation",
+      "test_converting_functions",
+      "test_diff_and_applyfunc",
+      "test_equality",
+      "test_higher_dimenions",
+      "test_issue_12665",
+      "test_iterator",
+      "test_ndim_array_converting",
+      "test_ndim_array_initiation",
+      "test_op_priority",
+      "test_rebuild_immutable_arrays",
+      "test_reshape",
+      "test_slices",
+      "test_sparse",
+      "test_symbolic_indexing"
+    ],
+    "sympy.tensor.array.tests.test_arrayop": [
+      "test_array_permutedims",
+      "test_derivative_by_array",
+      "test_issue_emerged_while_discussing_10972",
+      "test_tensorcontraction",
+      "test_tensorproduct"
+    ],
+    "sympy.tensor.array.tests.test_mutable_ndim_array": [
+      "test_arithmetic",
+      "test_calculation",
+      "test_converting_functions",
+      "test_diff",
+      "test_equality",
+      "test_higher_dimenions",
+      "test_iterator",
+      "test_ndim_array_converting",
+      "test_ndim_array_initiation",
+      "test_reshape",
+      "test_slices",
+      "test_sparse",
+      "test_sympify"
+    ]
+  },
+  "test_example_snippet": "def test_ndim_array_initiation():\n    arr_with_one_element = ImmutableDenseNDimArray([23])\n    assert len(arr_with_one_element) == 1\n    assert arr_with_one_element[0] == 23\n    assert arr_with_one_element[:] == [23]\n    assert arr_with_one_element.rank() == 1\n\n    arr_with_symbol_element = ImmutableDenseNDimArray([Symbol('x')])\n    assert len(arr_with_symbol_element) == 1\n    assert arr_with_symbol_element[0] == Symbol('x')\n    assert arr_with_symbol_element[:] == [Symbol('x')]\n    assert arr_with_symbol_element.rank() == 1\n\n    number5 = 5\n    vector = ImmutableDenseNDimArray.zeros(number5)\n    assert len(vector) == number5\n    assert vector.shape == (number5,)\n    assert vector.rank() == 1\n\n    vector = ImmutableSparseNDimArray.zeros(number5)\n    assert len(vector) == number5\n    assert vector.shape == (number5,)\n    assert vector._sparse_array == Dict()\n    assert vector.rank() == 1\n\n    n_dim_array = ImmutableDenseNDimArray(range(3**4), (3, 3, 3, 3,))\n    assert len(n_dim_array) == 3 * 3 * 3 * 3\n    assert n_dim_array.shape == (3, 3, 3, 3)\n    assert n_dim_array.rank() == 4\n\n    array_shape = (3, 3, 3, 3)\n    sparse_array = ImmutableSparseNDimArray.zeros(*array_shape)\n    assert len(sparse_array._sparse_array) == 0\n    assert len(sparse_array) == 3 * 3 * 3 * 3\n    assert n_dim_array.shape == array_shape",
+  "conftest_fixtures": {
+    "sympy/conftest.py": [
+      "file_clear_cache",
+      "check_disabled"
+    ]
+  }
+}

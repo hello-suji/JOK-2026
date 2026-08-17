@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "state_forwards",
+      "related_classes": [
+        "AlterModelOptions",
+        "CreateModel",
+        "AutoField"
+      ],
+      "candidate_test_file": "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where state_forwards can be called.",
+      "Use the generated reproduction path that calls state_forwards, describe_state."
+    ],
+    "execution_stimulus": [
+      "Call state_forwards with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: state_forwards, describe_state."
+    ],
+    "expected_failure": "squashmigrations does not unset model options when optimizing CreateModel and AlterModelOptions",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/db/migrations/operations/base.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_migration_operations/operations.py",
+      "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.migrations.operations.models import CreateModel, AlterModelOptions\nfrom django.test import TestCase\n\nclass TestSquashMigrationsBehavior(TestCase):\n    def test_alter_model_options_unset_on_squash_repro(self):\n        create_model = CreateModel(\n            name='TestModel',\n            fields=[\n                ('id', models.AutoField(primary_key=True)),\n            ],\n            options={'ordering': ['name']}\n        )\n        alter_model_options = AlterModelOptions(\n            name='TestModel',\n            options={}\n        )\n        new_state = create_model.state_forwards('test_app', create_model.describe_state())\n        alter_model_options.state_forwards('test_app', new_state)\n        self.assertNotIn('ordering', new_state.models['test_app']['testmodel'].options)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "reduce",
+        "state_forwards",
+        "describe_state"
+      ],
+      "classes": [
+        "AlterModelOptions",
+        "CreateModel",
+        "AutoField"
+      ],
+      "files": [
+        "django/db/migrations/operations/models.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [
+        "state_forwards",
+        "describe_state"
+      ],
+      "test_visible_classes": [
+        "AlterModelOptions",
+        "CreateModel",
+        "AutoField"
+      ]
+    }
+  }
+]

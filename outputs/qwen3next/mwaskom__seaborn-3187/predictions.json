@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "mwaskom__seaborn-3187",
+    "model_patch": "--- a/tests/_core/test_plot.py\n+++ b/tests/_core/test_plot.py\n@@ -2057,3 +2057,21 @@\n     def test_default_repr_gate(self):\n\n         assert repr(Default()) == \"<default>\"\n+\n+import seaborn as sns\n+import seaborn.objects as so\n+\n+def test_legend_large_range_values_repro():\n+    penguins = sns.load_dataset(\"penguins\")\n+    penguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"] * 1000\n+    plot = (\n+        so.Plot(\n+            penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\",\n+            color=\"species\", pointsize=\"body_mass_mg\",\n+        )\n+        .add(so.Dot())\n+    )\n+    ax = plot.plot()\n+    legend = ax.get_legend()\n+    # Check if the legend labels contain the correct offset\n+    assert any('1e6' in label.get_text() for label in legend.get_texts())\n",
+    "patch_sha256": "102cc88129111bd67c2711da26eb13b397e35552ef27a791c56e76d73182ff22"
+  }
+]

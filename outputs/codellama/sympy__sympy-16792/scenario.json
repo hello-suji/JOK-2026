@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/utilities/autowrap.py",
+      "target_function": "autowrap",
+      "related_classes": [
+        "MatrixSymbol"
+      ],
+      "candidate_test_file": "sympy/utilities/tests/test_autowrap.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import sympy utilities and MatrixSymbol from sympy",
+      "Create a MatrixSymbol x with dimensions 2x1",
+      "Define an expression expr as 1.0 which does not depend on x",
+      "Use the generated reproduction path that calls autowrap, f, array, approx."
+    ],
+    "execution_stimulus": [
+      "Call autowrap with expr, args=(x,), and backend='cython'",
+      "Invoke the resulting function f with np.array([[1.0, 2.0]])",
+      "Execute the focused target API path: autowrap, f, array, approx."
+    ],
+    "expected_failure": "The function call should raise a TypeError: only size-1 arrays can be converted to Python scalars",
+    "relevant_source_files": [
+      "sympy/utilities/autowrap.py",
+      "sympy/codegen/fnodes.py",
+      "examples/advanced/autowrap_ufuncify.py"
+    ],
+    "relevant_test_files": [
+      "sympy/utilities/tests/test_autowrap.py",
+      "sympy/matrices/expressions/tests/test_funcmatrix.py",
+      "sympy/matrices/expressions/tests/test_matexpr.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.utilities.autowrap import autowrap\nfrom sympy import MatrixSymbol\nimport numpy as np\n\ndef test_autowrap_cython_backend_failure_repro():\n    x = MatrixSymbol('x', 2, 1)\n    expr = 1.0\n    f = autowrap(expr, args=(x,), backend='cython')\n    result = f(np.array([[1.0], [2.0]]))\n    assert result == pytest.approx(1.0)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'TypeError: only size-1 arrays can be converted to Python scalars'"
+      },
+      {
+        "language": "python",
+        "code": "def test_autowrap_cython_backend_failure():\n    from sympy.utilities.autowrap import autowrap\n    from sympy import MatrixSymbol\n    import numpy as np\n    x = MatrixSymbol('x', 2, 1)\n    expr = 1.0\n    f = autowrap(expr, args=(x,), backend='cython')\n    try:\n        f(np.array([[1.0, 2.0]]))\n    except TypeError as e:\n        assert str(e) == \"only size-1 arrays can be converted to Python scalars\""
+      }
+    ],
+    "expected_outputs": [
+      "1.0"
+    ],
+    "actual_outputs": [
+      "TypeError: only size-1 arrays can be converted to Python scalars"
+    ],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "autowrap",
+        "f",
+        "array",
+        "approx"
+      ],
+      "classes": [
+        "MatrixSymbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For floating-point outputs, use pytest.approx or a semantic numeric invariant, not exact equality."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For floating-point outputs, use pytest.approx or a semantic numeric invariant, not exact equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/utilities/tests/test_autowrap.py",
+      "target_source_file": "sympy/utilities/autowrap.py",
+      "test_visible_functions": [
+        "autowrap",
+        "f",
+        "array",
+        "approx"
+      ],
+      "test_visible_classes": [
+        "MatrixSymbol"
+      ]
+    }
+  }
+]

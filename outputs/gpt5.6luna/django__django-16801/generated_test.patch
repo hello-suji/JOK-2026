@@ -1,0 +1,13 @@
+--- a/tests/model_fields/models.py
++++ b/tests/model_fields/models.py
+@@ -469,3 +469,10 @@
+
+ class UUIDGrandchild(UUIDChild):
+     pass
++
++from django.db.models.fields.files import ImageField
++
++class TestImageFieldSignalHandling(models.TestCase):
++    def test_post_init_signal_not_added_when_no_width_or_height_field_repro(self):
++        image_field = ImageField()
++        self.assertFalse(hasattr(image_field, '_post_init_signal'))

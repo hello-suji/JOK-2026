@@ -1,0 +1,19 @@
+--- a/lib/matplotlib/tests/test_pyplot.py
++++ b/lib/matplotlib/tests/test_pyplot.py
+@@ -51,3 +51,16 @@
+ def test_stackplot_smoke_gate():
+     # Small smoke test for stackplot (see #12405)
+     plt.stackplot([1, 2, 3], [1, 2, 3])
++
++def test_log_axis_inversion_repro():
++    import numpy as np
++
++    y = np.linspace(1000e2, 1, 100)
++    x = np.exp(-np.linspace(0, 1, y.size))
++
++    for yscale in ('linear', 'log'):
++        fig, ax = plt.subplots()
++        ax.plot(x, y)
++        ax.set_yscale(yscale)
++        ax.set_ylim(y.max(), y.min())
++        assert ax.yaxis_inverted() == (yscale == 'log')

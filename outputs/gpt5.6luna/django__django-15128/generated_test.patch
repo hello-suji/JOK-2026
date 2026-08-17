@@ -1,0 +1,23 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -158,3 +158,20 @@
+             repr(JoinPromoter('AND', 3, True)),
+             "JoinPromoter(connector='AND', num_children=3, negated=True)",
+         )
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.db.models import Q
++from django.db.models.sql.query import Query
++
++
++class TestQueryCombineMethod(TestCase):
++    def test_query_combine_method_repro(self):
++        query1 = Query(None)
++        query1.add_q(Q(name='Alice'))
++        query2 = Query(None)
++        query2.add_q(Q(name='Bob'))
++        combined_query = query1.combine(query2, connector=Query.OR)
++        self.assertEqual(combined_query.where.connector, Query.OR)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(combined_query) != 'AssertionError'

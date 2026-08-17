@@ -1,0 +1,15 @@
+--- a/tests/utils_tests/test_timezone.py
++++ b/tests/utils_tests/test_timezone.py
+@@ -274,3 +274,12 @@
+     def test_fixedoffset_negative_timedelta_gate(self):
+         delta = datetime.timedelta(hours=-2)
+         self.assertEqual(timezone.get_fixed_timezone(delta).utcoffset(None), delta)
++
++from django.test import TestCase, SimpleTestCase
++from django.utils.timezone import get_tzname
++
++
++class TestTimezoneHandling(TestCase):
++    def test_get_tzname_correctness_repro(self):
++        tzname = get_tzname('Etc/GMT-10')
++        self.assertEqual(tzname, ('GMT+10', 'GMT+10'))

@@ -1,0 +1,481 @@
+{
+  "instance_id": "django__django-11239",
+  "repo": "django/django",
+  "base_commit": "d87bd29c4f8dfcdf3f4a4eb8340e6770a2416fe3",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "default",
+        "get",
+        "name",
+        "port"
+      ],
+      "reasons": [
+        "function_match:get",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,default,name,port,user"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, default=None):\n        return self._session.get(key, default)\n\n    def pop(self, key, default=__not_given):\n        self.modified = self.modified or key in self._session\n        args = () if default is self.__not_given else (default,)\n        return self._session.pop(key, *args)\n\n    def setdefault(self, key, value):\n        if key in self._session:\n            return self._session[key]\n        else:\n            self.modified = True\n            self._session[key] = value\n            return value"
+      },
+      "top_level_functions": [
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/cache/backends/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "cert",
+        "default",
+        "get",
+        "options"
+      ],
+      "reasons": [
+        "function_match:get",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,cert,default,options,port"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, default=None, version=None):\n        \"\"\"\n        Fetch a given key from the cache. If the key does not exist, return\n        default, which itself defaults to None.\n        \"\"\"\n        raise NotImplementedError('subclasses of BaseCache must provide a get() method')\n\n    def set(self, key, value, timeout=DEFAULT_TIMEOUT, version=None):\n        \"\"\"\n        Set a value in the cache. If timeout is given, use that timeout for the\n        key; otherwise use the default cache timeout.\n        \"\"\"\n        raise NotImplementedError('subclasses of BaseCache must provide a set() method')\n\n    def touch(self, key, timeout=DEFAULT_TIMEOUT, version=None):"
+      },
+      "top_level_functions": [
+        "default_key_func",
+        "get_key_func",
+        "BaseCache.get_backend_timeout",
+        "BaseCache.make_key",
+        "BaseCache.add",
+        "BaseCache.get",
+        "BaseCache.set",
+        "BaseCache.touch",
+        "BaseCache.delete",
+        "BaseCache.get_many",
+        "BaseCache.get_or_set",
+        "BaseCache.has_key",
+        "BaseCache.incr",
+        "BaseCache.decr",
+        "BaseCache.set_many",
+        "BaseCache.delete_many",
+        "BaseCache.clear",
+        "BaseCache.validate_key",
+        "BaseCache.incr_version",
+        "BaseCache.decr_version",
+        "BaseCache.close"
+      ]
+    },
+    {
+      "path": "django/test/client.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "chain",
+        "client",
+        "default",
+        "get"
+      ],
+      "reasons": [
+        "function_match:get",
+        "stem_in_issue_text:client",
+        "source_content_tokens:backends,chain,client,default,engine"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, path, data=None, follow=False, secure=False, **extra):\n        \"\"\"Request a response from the server using GET.\"\"\"\n        response = super().get(path, data=data, secure=secure, **extra)\n        if follow:\n            response = self._handle_redirects(response, data=data, **extra)\n        return response\n\n    def post(self, path, data=None, content_type=MULTIPART_CONTENT,\n             follow=False, secure=False, **extra):\n        \"\"\"Request a response from the server using POST.\"\"\"\n        response = super().post(path, data=data, content_type=content_type, secure=secure, **extra)\n        if follow:\n            response = self._handle_redirects(response, data=data, content_type=content_type, **extra)\n        return response\n"
+      },
+      "top_level_functions": [
+        "FakePayload.read",
+        "FakePayload.write",
+        "closing_iterator_wrapper",
+        "conditional_content_removal",
+        "store_rendered_templates",
+        "encode_multipart",
+        "encode_file",
+        "RequestFactory.request",
+        "RequestFactory.get",
+        "RequestFactory.post",
+        "RequestFactory.head",
+        "RequestFactory.trace",
+        "RequestFactory.options",
+        "RequestFactory.put",
+        "RequestFactory.patch",
+        "RequestFactory.delete",
+        "RequestFactory.generic",
+        "Client.store_exc_info",
+        "Client.session",
+        "Client.request",
+        "Client.get",
+        "Client.post",
+        "Client.head",
+        "Client.options",
+        "Client.put",
+        "Client.patch",
+        "Client.delete",
+        "Client.trace",
+        "Client.login",
+        "Client.force_login",
+        "Client.logout"
+      ]
+    },
+    {
+      "path": "django/views/generic/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "default",
+        "engine",
+        "get",
+        "name",
+        "options"
+      ],
+      "reasons": [
+        "function_match:get",
+        "stem_in_issue_text:base",
+        "source_content_tokens:default,engine,name,options,port"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "options": "    def options(self, request, *args, **kwargs):\n        return self.get(request, *args, **kwargs)\n\n    def delete(self, request, *args, **kwargs):\n        return self.get(request, *args, **kwargs)\n\n    def put(self, request, *args, **kwargs):\n        return self.get(request, *args, **kwargs)\n\n    def patch(self, request, *args, **kwargs):\n        return self.get(request, *args, **kwargs)",
+        "get": "    def get(self, request, *args, **kwargs):\n        url = self.get_redirect_url(*args, **kwargs)\n        if url:\n            if self.permanent:\n                return HttpResponsePermanentRedirect(url)\n            else:\n                return HttpResponseRedirect(url)\n        else:\n            logger.warning(\n                'Gone: %s', request.path,\n                extra={'status_code': 410, 'request': request}\n            )\n            return HttpResponseGone()\n\n    def head(self, request, *args, **kwargs):"
+      },
+      "top_level_functions": [
+        "ContextMixin.get_context_data",
+        "View.as_view",
+        "View.setup",
+        "View.dispatch",
+        "View.http_method_not_allowed",
+        "View.options",
+        "TemplateResponseMixin.render_to_response",
+        "TemplateResponseMixin.get_template_names",
+        "TemplateView.get",
+        "RedirectView.get_redirect_url",
+        "RedirectView.get",
+        "RedirectView.head",
+        "RedirectView.post",
+        "RedirectView.options",
+        "RedirectView.delete",
+        "RedirectView.put",
+        "RedirectView.patch"
+      ]
+    },
+    {
+      "path": "django/contrib/staticfiles/storage.py",
+      "score": 21,
+      "matched_identifiers": [
+        "default",
+        "get",
+        "name",
+        "options",
+        "port"
+      ],
+      "reasons": [
+        "function_match:get",
+        "source_content_tokens:default,name,options,port"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, default=None):\n        try:\n            return self[key]\n        except KeyError:\n            return default\n\n\nclass CachedFilesMixin(HashedFilesMixin):\n    def __init__(self, *args, **kwargs):\n        super().__init__(*args, **kwargs)\n        try:\n            self.hashed_files = _MappingCache(caches['staticfiles'])\n        except InvalidCacheBackendError:\n            # Use the default backend\n            self.hashed_files = _MappingCache(default_cache)"
+      },
+      "top_level_functions": [
+        "StaticFilesStorage.path",
+        "HashedFilesMixin.file_hash",
+        "HashedFilesMixin.hashed_name",
+        "HashedFilesMixin.url",
+        "HashedFilesMixin.url_converter",
+        "HashedFilesMixin.post_process",
+        "HashedFilesMixin.clean_name",
+        "HashedFilesMixin.hash_key",
+        "HashedFilesMixin.stored_name",
+        "ManifestFilesMixin.read_manifest",
+        "ManifestFilesMixin.load_manifest",
+        "ManifestFilesMixin.post_process",
+        "ManifestFilesMixin.save_manifest",
+        "ManifestFilesMixin.stored_name",
+        "_MappingCache.clear",
+        "_MappingCache.update",
+        "_MappingCache.get",
+        "CachedFilesMixin.hash_key"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/client.py",
+      "score": 12,
+      "matched_identifiers": [
+        "get"
+      ],
+      "reasons": [
+        "test_function_match:get",
+        "test_name_matches_source_stem:client",
+        "token_overlap:client",
+        "internal_name_overlap:client",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/generic_views/test_base.py",
+      "score": 11,
+      "matched_identifiers": [
+        "get"
+      ],
+      "reasons": [
+        "test_function_match:get",
+        "test_name_matches_source_stem:base",
+        "internal_name_overlap:cache",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_storage.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:storage",
+        "token_overlap:staticfiles,storage",
+        "internal_name_overlap:storage",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/storage.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:storage",
+        "token_overlap:staticfiles,storage",
+        "internal_name_overlap:storage",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/auth_tests/client.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_storage.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCachedStaticFilesStorageDeprecation",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionCachedStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionHashedFilesCache",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionManifestStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionSimpleStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestExtraPatternsStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestHashedFiles",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestStaticFilePermissions",
+      "tests/generic_views/test_base.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2545,
+  "indexed_test_file_count": 1717,
+  "available_imports": {
+    "django": [
+      "Client",
+      "LiveServerTestCase",
+      "RequestFactory",
+      "SimpleTestCase",
+      "TestCase",
+      "TransactionTestCase",
+      "View",
+      "get_version",
+      "ignore_warnings",
+      "modify_settings",
+      "override_settings",
+      "override_system_checks",
+      "setup",
+      "skipIfDBFeature",
+      "skipUnlessAnyDBFeature",
+      "skipUnlessDBFeature",
+      "tag"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.auth_tests.client": [
+      "PasswordResetConfirmClient",
+      "extract_token_from_url"
+    ],
+    "tests.staticfiles_tests.storage": [
+      "DummyStorage",
+      "ExtraPatternsStorage",
+      "NeverCopyRemoteStorage",
+      "PathNotImplementedStorage",
+      "QueryStringStorage",
+      "SimpleStorage"
+    ],
+    "tests.staticfiles_tests.test_storage": [
+      "CustomStaticFilesStorage",
+      "TestCachedStaticFilesStorageDeprecation",
+      "TestCollectionCachedStorage",
+      "TestCollectionHashedFilesCache",
+      "TestCollectionManifestStorage",
+      "TestCollectionSimpleStorage",
+      "TestExtraPatternsStorage",
+      "TestHashedFiles",
+      "TestStaticFilePermissions",
+      "hashed_file_path"
+    ],
+    "tests.generic_views.test_base": [
+      "AboutTemplateAttributeView",
+      "AboutTemplateView",
+      "CustomizableView",
+      "DecoratedDispatchView",
+      "GetContextDataTest",
+      "InstanceView",
+      "PostOnlyView",
+      "RedirectViewTest",
+      "SimplePostView",
+      "SimpleView",
+      "SingleObjectTemplateResponseMixinTest",
+      "TemplateViewTest",
+      "UseMultipleObjectMixinTest",
+      "ViewTest",
+      "decorator"
+    ],
+    "django.test.client": [
+      "Client",
+      "ClientHandler",
+      "FakePayload",
+      "RedirectCycleError",
+      "RequestFactory",
+      "closing_iterator_wrapper",
+      "conditional_content_removal",
+      "encode_file",
+      "encode_multipart",
+      "store_rendered_templates"
+    ],
+    "django.views.generic.base": [
+      "ContextMixin",
+      "RedirectView",
+      "TemplateResponseMixin",
+      "TemplateView",
+      "View"
+    ],
+    "django.views.generic": [
+      "GenericViewError"
+    ],
+    "django.views": [
+      "ArchiveIndexView",
+      "CreateView",
+      "DateDetailView",
+      "DayArchiveView",
+      "DeleteView",
+      "DetailView",
+      "FormView",
+      "GenericViewError",
+      "ListView",
+      "MonthArchiveView",
+      "RedirectView",
+      "TemplateView",
+      "TodayArchiveView",
+      "UpdateView",
+      "View",
+      "WeekArchiveView",
+      "YearArchiveView"
+    ],
+    "django.contrib.staticfiles.storage": [
+      "CachedFilesMixin",
+      "CachedStaticFilesStorage",
+      "ConfiguredStorage",
+      "HashedFilesMixin",
+      "ManifestFilesMixin",
+      "ManifestStaticFilesStorage",
+      "StaticFilesStorage",
+      "_MappingCache"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.core.cache": [
+      "CacheHandler",
+      "DefaultCacheProxy",
+      "_create_cache",
+      "close_caches"
+    ],
+    "django.core": [
+      "BaseCache",
+      "CacheKeyWarning",
+      "DEFAULT_CACHE_ALIAS",
+      "InvalidCacheBackendError",
+      "cache",
+      "caches",
+      "import_string",
+      "local",
+      "settings",
+      "signals"
+    ],
+    "django.core.cache.backends.base": [
+      "BaseCache",
+      "CacheKeyWarning",
+      "InvalidCacheBackendError",
+      "default_key_func",
+      "get_key_func"
+    ]
+  },
+  "test_example_snippet": "        class TestView(View):\n            def setup(self, request, *args, **kwargs):\n                pass  # Not calling supre().setup()\n\n        msg = (\n            \"TestView instance has no 'request' attribute. Did you override \"\n            \"setup() and forget to call super()?\"\n        )\n        with self.assertRaisesMessage(AttributeError, msg):\n            TestView.as_view()(self.rf.get('/'))\n\n    def test_direct_instantiation(self):\n        \"\"\"\n        It should be possible to use the view by directly instantiating it\n        without going through .as_view() (#21564).\n        \"\"\"\n        view = PostOnlyView()\n        response = view.dispatch(self.rf.head('/'))\n        self.assertEqual(response.status_code, 405)\n\n\n@override_settings(ROOT_URLCONF='generic_views.urls')\nclass TemplateViewTest(SimpleTestCase):\n\n    rf = RequestFactory()\n\n    def _assert_about(self, response):\n        response.render()\n        self.assertContains(response, '<h1>About</h1>')\n\n    def test_get(self):\n        \"\"\"\n        Test a view that simply renders a template on GET\n        \"\"\"\n        self._assert_about(AboutTemplateView.as_view()(self.rf.get('/about/')))",
+  "conftest_fixtures": {}
+}

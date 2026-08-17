@@ -1,0 +1,81 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "alias",
+      "related_classes": [
+        "FilteredRelation"
+      ],
+      "candidate_test_file": "tests/filtered_relation/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db.models import FilteredRelation, Q, Case, When, F",
+      "from tests.filtered_relation.models import MyModel, NestedModel",
+      "MyModel.objects.create(zone='zone1')",
+      "NestedModel.objects.create(myrelation_id=1, is_all=True)",
+      "NestedModel.objects.create(myrelation_id=1, zone='zone1')"
+    ],
+    "execution_stimulus": [
+      "qs = MyModel.objects.alias(",
+      "    relation_zone=FilteredRelation(",
+      "        'myrelation__nested',",
+      "        condition=Q(myrelation__nested__zone=F('zone'))",
+      "    ),",
+      "    relation_all=FilteredRelation(",
+      "        'myrelation__nested',",
+      "        condition=Q(myrelation__nested__is_all=True)",
+      "    ),",
+      ").annotate(",
+      "    price_final=Case(",
+      "        When(relation_zone__price__isnull=False, then=F('relation_zone__price')),",
+      "        default=F('relation_all__price'),",
+      "    )",
+      ")"
+    ],
+    "expected_failure": "The query should generate two separate SQL JOINs for relation_zone and relation_all, but it only generates one for relation_zone.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/query_utils.py",
+      "django/contrib/admin/filters.py"
+    ],
+    "relevant_test_files": [
+      "tests/filtered_relation/models.py",
+      "tests/generic_relations/models.py",
+      "tests/generic_relations_regress/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_filtered_relation_alias_issue():\n    from django.db.models import FilteredRelation, Q, Case, When, F\n    from tests.filtered_relation.models import MyModel, NestedModel\n    MyModel.objects.create(zone='zone1')\n    NestedModel.objects.create(myrelation_id=1, is_all=True)\n    NestedModel.objects.create(myrelation_id=1, zone='zone1')\n    qs = MyModel.objects.alias(\n        relation_zone=FilteredRelation(\n            'myrelation__nested',\n            condition=Q(myrelation__nested__zone=F('zone'))\n        ),\n        relation_all=FilteredRelation(\n            'myrelation__nested',\n            condition=Q(myrelation__nested__is_all=True)\n        ),\n    ).annotate(\n        price_final=Case(\n            When(relation_zone__price__isnull=False, then=F('relation_zone__price')),\n            default=F('relation_all__price'),\n        )\n    )\n    assert str(qs.query).count('JOIN') == 2, 'Expected two JOINs but found one.'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "alias"
+      ],
+      "classes": [
+        "FilteredRelation"
+      ]
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic"
+  }
+]

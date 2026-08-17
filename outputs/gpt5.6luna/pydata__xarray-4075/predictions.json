@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4075",
+    "model_patch": "--- a/xarray/tests/test_weighted.py\n+++ b/xarray/tests/test_weighted.py\n@@ -309,3 +309,10 @@\n     result = getattr(data.weighted(weights), operation)(keep_attrs=True)\n\n     assert data.a.attrs == result.a.attrs\n+\n+def test_weighted_mean_with_boolean_weights_repro():\n+    dta = xr.DataArray([1., 1., 1.])\n+    wgt = xr.DataArray(np.array([1, 1, 0], dtype=np.bool))\n+\n+    result = dta.weighted(wgt).mean()\n+    assert result == 1.0\n",
+    "patch_sha256": "7db66ff178b088f78f853d22331f632cc90b4d0789a1cf9596e9858e1e73862d"
+  }
+]

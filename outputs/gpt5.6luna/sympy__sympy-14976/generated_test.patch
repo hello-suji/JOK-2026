@@ -1,0 +1,18 @@
+--- a/sympy/utilities/tests/test_lambdify.py
++++ b/sympy/utilities/tests/test_lambdify.py
+@@ -898,3 +898,15 @@
+     # test list
+     f3 = lambdify([x, y], [y, x], 'sympy')
+     assert f3(2, 3) == [3, 2]
++
++from sympy import symbols, Eq, rf, lambdify, nsolve, Float, S
++
++def test_lambdify_rational_wrapping_repro():
++    x = symbols('x')
++    eqn = Eq(rf(18, x), 77 + S(1)/3)
++    f = lambdify(x, eqn.lhs - eqn.rhs, 'mpmath')
++    x0 = nsolve(eqn, Float('1.5', 64), prec=64)
++    result = rf(18, x0).evalf(64)
++    assert result == Float('77.33333333333333333333333333333333333333333333333333333333333333', 64)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'def _lambdifygenerated(x):\nreturn (  # Not supported in Python:\n# RisingFactorial\nRisingFactorial(18, x) - 232/3)'

@@ -1,0 +1,32 @@
+--- a/tests/generic_views/test_base.py
++++ b/tests/generic_views/test_base.py
+@@ -584,3 +584,29 @@
+         )
+         with self.assertRaisesMessage(ImproperlyConfigured, msg):
+             view.get_template_names()
++
++from django.test import TestCase, SimpleTestCase
++from django.views.generic import View
++from django.http import HttpResponse
++from django.views.debug import ExceptionReporter
++import sys
++import io
++
++
++class TestView(View):
++    def get(self, request, *args, **kwargs):
++        try:
++            raise RuntimeError('my error')
++        except Exception as exc:
++            raise ValueError('my new error') from None
++
++
++class TestDebugView(TestCase):
++    def test_explicit_or_implicit_cause_suppress_context_repro(self):
++        view = TestView()
++        request = self.client.get('/test/')
++        response = view.get(request)
++        exception_reporter = ExceptionReporter(request, 500, ValueError('my new error'), exc_info=sys.exc_info())
++        output = io.StringIO()
++        exception_reporter.get_traceback_html(output)
++        self.assertNotIn('RuntimeError', output.getvalue())

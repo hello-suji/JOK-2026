@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/urls/resolvers.py",
+      "target_function": "partial",
+      "related_classes": [
+        "ResolverMatch"
+      ],
+      "candidate_test_file": "tests/sitemaps_tests/urls/__init__.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.urls.resolvers import ResolverMatch",
+      "from functools import partial",
+      "def sample_view(request): pass",
+      "view_func = partial(sample_view, arg1='value')",
+      "Use the generated reproduction path that calls partial."
+    ],
+    "execution_stimulus": [
+      "resolver_match = ResolverMatch(view_func, [], {})",
+      "repr_output = repr(resolver_match)",
+      "Execute the focused target API path: partial."
+    ],
+    "expected_failure": "The __repr__ method outputs 'functools.partial' without revealing the underlying function or arguments.",
+    "relevant_source_files": [
+      "django/urls/resolvers.py",
+      "django/db/models/fields/__init__.py",
+      "django/conf/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/apps/explicit_default_config_mismatch_app/__init__.py",
+      "tests/sitemaps_tests/urls/__init__.py",
+      "tests/staticfiles_tests/urls/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_repr_with_partial_function():\n    from django.urls.resolvers import ResolverMatch\n    from functools import partial\n    def sample_view(request): pass\n    view_func = partial(sample_view, arg1='value')\n    resolver_match = ResolverMatch(view_func, [], {})\n    repr_output = repr(resolver_match)\n    assert 'functools.partial' in repr_output and 'sample_view' not in repr_output"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.urls.resolvers import ResolverMatch\nfrom functools import partial\n\nclass TestResolverMatchRepr(TestCase):\n    def test_repr_with_partial_function_repro(self):\n        def sample_view(request): pass\n        view_func = partial(sample_view, arg1='value')\n        resolver_match = ResolverMatch(view_func, [], {})\n        repr_output = repr(resolver_match)\n        self.assertNotIn('functools.partial', repr_output)\n        self.assertIn('sample_view', repr_output)\n        self.assertIn(\"arg1='value'\", repr_output)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__repr__",
+        "partial"
+      ],
+      "classes": [
+        "ResolverMatch"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/sitemaps_tests/urls/__init__.py",
+      "target_source_file": "django/urls/resolvers.py",
+      "test_visible_functions": [
+        "partial"
+      ],
+      "test_visible_classes": [
+        "ResolverMatch"
+      ]
+    }
+  }
+]

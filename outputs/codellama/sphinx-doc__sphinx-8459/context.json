@@ -1,0 +1,437 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8459",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "68aa4fb29e7dfe521749e1e14f750d7afabb3481",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 37,
+      "matched_identifiers": [
+        "autodoc",
+        "conf",
+        "conf.py",
+        "description",
+        "type"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:conf.py",
+        "stem_in_issue_text:conf",
+        "source_content_tokens:autodoc,conf,description,type,types"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/locale/__init__.py",
+      "score": 21,
+      "matched_identifiers": [
+        "conf",
+        "data",
+        "dict",
+        "instead",
+        "remove"
+      ],
+      "reasons": [
+        "function_match:data",
+        "source_content_tokens:conf,dict,instead,remove,then"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "data": "    def data(self) -> str:  # type: ignore\n        return self._func(*self._args)\n\n    # replace function from UserString; it instantiates a self.__class__\n    # for the encoding result\n\n    def encode(self, encoding: str = None, errors: str = None) -> bytes:  # type: ignore\n        if encoding:\n            if errors:\n                return self.data.encode(encoding, errors)\n            else:\n                return self.data.encode(encoding)\n        else:\n            return self.data.encode()\n"
+      },
+      "top_level_functions": [
+        "_TranslationProxy.data",
+        "_TranslationProxy.encode",
+        "init",
+        "setlocale",
+        "init_console",
+        "get_translator",
+        "is_translator_registered",
+        "get_translation"
+      ]
+    },
+    {
+      "path": "doc/development/tutorials/examples/todo.py",
+      "score": 17,
+      "matched_identifiers": [
+        "conf",
+        "description",
+        "import",
+        "remove"
+      ],
+      "reasons": [
+        "stem_in_issue_text:todo",
+        "source_content_tokens:conf,description,remove,import,sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "visit_todo_node",
+        "depart_todo_node",
+        "TodolistDirective.run",
+        "TodoDirective.run",
+        "purge_todos",
+        "merge_todos",
+        "process_todo_nodes",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/domains/python.py",
+      "score": 17,
+      "matched_identifiers": [
+        "conf",
+        "description",
+        "dict",
+        "instead"
+      ],
+      "reasons": [
+        "stem_in_issue_text:python",
+        "source_content_tokens:conf,description,dict,instead,remove"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "type_to_xref",
+        "PyXrefMixin.make_xref",
+        "PyXrefMixin.make_xrefs",
+        "PyField.make_xref",
+        "PyTypedField.make_xref",
+        "PyObject.get_signature_prefix",
+        "PyObject.needs_arglist",
+        "PyObject.handle_signature",
+        "PyObject.get_index_text",
+        "PyObject.add_target_and_index",
+        "PyObject.before_content",
+        "PyObject.after_content",
+        "PyModulelevel.run",
+        "PyModulelevel.needs_arglist",
+        "PyModulelevel.get_index_text",
+        "PyFunction.get_signature_prefix",
+        "PyFunction.needs_arglist",
+        "PyFunction.add_target_and_index",
+        "PyFunction.get_index_text",
+        "PyDecoratorFunction.run",
+        "PyDecoratorFunction.handle_signature",
+        "PyDecoratorFunction.needs_arglist",
+        "PyVariable.handle_signature",
+        "PyVariable.get_index_text",
+        "PyClasslike.get_signature_prefix",
+        "PyClasslike.get_index_text",
+        "PyClassmember.run",
+        "PyClassmember.needs_arglist",
+        "PyClassmember.get_signature_prefix",
+        "PyClassmember.get_index_text",
+        "PyMethod.needs_arglist",
+        "PyMethod.get_signature_prefix",
+        "PyMethod.get_index_text",
+        "PyClassMethod.run",
+        "PyStaticMethod.run",
+        "PyDecoratorMethod.run",
+        "PyDecoratorMethod.handle_signature",
+        "PyDecoratorMethod.needs_arglist",
+        "PyAttribute.handle_signature",
+        "PyAttribute.get_index_text"
+      ]
+    },
+    {
+      "path": "sphinx/ext/autodoc/typehints.py",
+      "score": 17,
+      "matched_identifiers": [
+        "autodoc",
+        "autodoc_typehints",
+        "conf",
+        "description"
+      ],
+      "reasons": [
+        "stem_in_issue_text:typehints",
+        "source_content_tokens:autodoc,autodoc_typehints,conf,description,dict"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "record_typehints",
+        "merge_typehints",
+        "insert_field_list",
+        "modify_field_list",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:autodoc,todo",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:autodoc,todo",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-metadata/conf.py",
+      "score": 12,
+      "matched_identifiers": [
+        "data"
+      ],
+      "reasons": [
+        "test_path_contains_function:data",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:data"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-setup/doc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 524,
+  "indexed_test_file_count": 330,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "Callable",
+      "Dict",
+      "Element",
+      "Inliner",
+      "Iterable",
+      "List",
+      "NamedTuple",
+      "Node",
+      "NullTranslations",
+      "Optional",
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "RoleFunction",
+      "SphinxError",
+      "Tuple",
+      "Union",
+      "UserString",
+      "XRefRole",
+      "_",
+      "cast",
+      "defaultdict",
+      "nodes",
+      "path",
+      "pending_xref",
+      "system_message"
+    ],
+    "sphinx.locale": [
+      "_TranslationProxy",
+      "_lazy_translate",
+      "get_translation",
+      "get_translator",
+      "init",
+      "init_console",
+      "is_translator_registered",
+      "setlocale"
+    ],
+    "sphinx.domains.python": [
+      "PyAttribute",
+      "PyClassMethod",
+      "PyClasslike",
+      "PyClassmember",
+      "PyCurrentModule",
+      "PyDecoratorFunction",
+      "PyDecoratorMethod",
+      "PyDecoratorMixin",
+      "PyField",
+      "PyFunction",
+      "PyGroupedField",
+      "PyMethod",
+      "PyModule",
+      "PyModulelevel",
+      "PyObject",
+      "PyStaticMethod",
+      "PyTypedField",
+      "PyVariable",
+      "PyXRefRole",
+      "PyXrefMixin",
+      "PythonDomain",
+      "PythonModuleIndex",
+      "_parse_annotation",
+      "_parse_arglist",
+      "_pseudo_parse_arglist",
+      "builtin_resolver",
+      "filter_meta_fields",
+      "setup",
+      "type_to_xref"
+    ],
+    "sphinx.domains": [
+      "Domain",
+      "Index",
+      "ObjType"
+    ],
+    "sphinx.ext.autodoc": [
+      "AttributeDocumenter",
+      "ClassDocumenter",
+      "ClassLevelDocumenter",
+      "DataDeclarationDocumenter",
+      "DataDocumenter",
+      "DecoratorDocumenter",
+      "DocstringSignatureMixin",
+      "DocstringStripSignatureMixin",
+      "Documenter",
+      "ExceptionDocumenter",
+      "FunctionDocumenter",
+      "GenericAliasDocumenter",
+      "InstanceAttributeDocumenter",
+      "MethodDocumenter",
+      "ModuleDocumenter",
+      "ModuleLevelDocumenter",
+      "ObjectMember",
+      "Options",
+      "PropertyDocumenter",
+      "SingledispatchFunctionDocumenter",
+      "SingledispatchMethodDocumenter",
+      "SlotsAttributeDocumenter",
+      "TypeVarDocumenter",
+      "_All",
+      "_Empty",
+      "annotation_option",
+      "autodoc_attrgetter",
+      "between",
+      "bool_option",
+      "cut_lines",
+      "exclude_members_option",
+      "get_documenters",
+      "identity",
+      "inherited_members_option",
+      "member_order_option",
+      "members_option",
+      "members_set_option",
+      "merge_members_option",
+      "merge_special_members_option",
+      "migrate_autodoc_member_order",
+      "setup"
+    ],
+    "sphinx.ext": [
+      "Any",
+      "BuildEnvironment",
+      "Callable",
+      "Config",
+      "Dict",
+      "ENUM",
+      "Iterator",
+      "List",
+      "ModuleAnalyzer",
+      "ModuleType",
+      "Optional",
+      "Parameter",
+      "PycodeError",
+      "RemovedInSphinx40Warning",
+      "RemovedInSphinx50Warning",
+      "Sequence",
+      "Set",
+      "Signature",
+      "Sphinx",
+      "StringList",
+      "Tuple",
+      "Type",
+      "TypeVar",
+      "Union",
+      "_",
+      "__",
+      "evaluate_signature",
+      "extract_metadata",
+      "get_module_members",
+      "get_object_members",
+      "get_type_hints",
+      "getdoc",
+      "import_object",
+      "inspect",
+      "logging",
+      "mock",
+      "object_description",
+      "prepare_docstring",
+      "restify",
+      "safe_getattr",
+      "stringify_signature",
+      "stringify_typehint"
+    ],
+    "sphinx.ext.autodoc.typehints": [
+      "insert_field_list",
+      "merge_typehints",
+      "modify_field_list",
+      "record_typehints",
+      "setup"
+    ],
+    "doc.development.tutorials.examples.todo": [
+      "TodoDirective",
+      "TodolistDirective",
+      "depart_todo_node",
+      "merge_todos",
+      "process_todo_nodes",
+      "purge_todos",
+      "setup",
+      "todo",
+      "todolist",
+      "visit_todo_node"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

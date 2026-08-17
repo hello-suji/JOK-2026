@@ -1,0 +1,567 @@
+{
+  "instance_id": "django__django-11815",
+  "repo": "django/django",
+  "base_commit": "e02f67ef2d03d48128e7a118bf75f0418e24e8ac",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/models.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__str__",
+        "charfield",
+        "default",
+        "migration",
+        "models",
+        "models.py"
+      ],
+      "reasons": [
+        "function_match:__str__",
+        "explicit_file_path_hint:models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:charfield,default,migration,models,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__str__": "    def __str__(self):\n        if self.is_addition():\n            return gettext('Added “%(object)s”.') % {'object': self.object_repr}\n        elif self.is_change():\n            return gettext('Changed “%(object)s” — %(changes)s') % {\n                'object': self.object_repr,\n                'changes': self.get_change_message(),\n            }\n        elif self.is_deletion():\n            return gettext('Deleted “%(object)s.”') % {'object': self.object_repr}\n\n        return gettext('LogEntry Object')\n\n    def is_addition(self):\n        return self.action_flag == ADDITION"
+      },
+      "top_level_functions": [
+        "LogEntryManager.log_action",
+        "LogEntry.is_addition",
+        "LogEntry.is_change",
+        "LogEntry.is_deletion",
+        "LogEntry.get_change_message",
+        "LogEntry.get_edited_object",
+        "LogEntry.get_admin_url"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/models.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__str__",
+        "charfield",
+        "default",
+        "migration",
+        "models",
+        "models.py"
+      ],
+      "reasons": [
+        "function_match:__str__",
+        "explicit_file_path_hint:models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:charfield,default,migration,models,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__str__": "    def __str__(self):\n        return 'AnonymousUser'\n\n    def __eq__(self, other):\n        return isinstance(other, self.__class__)\n\n    def __hash__(self):\n        return 1  # instances always return the same hash value\n\n    def __int__(self):\n        raise TypeError('Cannot cast AnonymousUser to int. Are you trying to use it in place of User?')\n\n    def save(self):\n        raise NotImplementedError(\"Django doesn't provide a DB representation for AnonymousUser.\")\n"
+      },
+      "top_level_functions": [
+        "update_last_login",
+        "PermissionManager.get_by_natural_key",
+        "Permission.natural_key",
+        "GroupManager.get_by_natural_key",
+        "Group.natural_key",
+        "UserManager.create_user",
+        "UserManager.create_superuser",
+        "UserManager.with_perm",
+        "PermissionsMixin.get_user_permissions",
+        "PermissionsMixin.get_group_permissions",
+        "PermissionsMixin.get_all_permissions",
+        "PermissionsMixin.has_perm",
+        "PermissionsMixin.has_perms",
+        "PermissionsMixin.has_module_perms",
+        "AbstractUser.clean",
+        "AbstractUser.get_full_name",
+        "AbstractUser.get_short_name",
+        "AbstractUser.email_user",
+        "AnonymousUser.save",
+        "AnonymousUser.delete",
+        "AnonymousUser.set_password",
+        "AnonymousUser.check_password",
+        "AnonymousUser.groups",
+        "AnonymousUser.user_permissions",
+        "AnonymousUser.get_user_permissions",
+        "AnonymousUser.get_group_permissions",
+        "AnonymousUser.get_all_permissions",
+        "AnonymousUser.has_perm",
+        "AnonymousUser.has_perms",
+        "AnonymousUser.has_module_perms",
+        "AnonymousUser.is_anonymous",
+        "AnonymousUser.is_authenticated",
+        "AnonymousUser.get_username"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/models.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__str__",
+        "charfield",
+        "default",
+        "migration",
+        "models",
+        "models.py"
+      ],
+      "reasons": [
+        "function_match:__str__",
+        "explicit_file_path_hint:models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:charfield,default,migration,models,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__str__": "    def __str__(self):\n        return self.app_labeled_name\n\n    @property\n    def name(self):\n        model = self.model_class()\n        if not model:\n            return self.model\n        return str(model._meta.verbose_name)\n\n    @property\n    def app_labeled_name(self):\n        model = self.model_class()\n        if not model:\n            return self.model"
+      },
+      "top_level_functions": [
+        "ContentTypeManager.get_by_natural_key",
+        "ContentTypeManager.get_for_model",
+        "ContentTypeManager.get_for_models",
+        "ContentTypeManager.get_for_id",
+        "ContentTypeManager.clear_cache",
+        "ContentType.name",
+        "ContentType.app_labeled_name",
+        "ContentType.model_class",
+        "ContentType.get_object_for_this_type",
+        "ContentType.get_all_objects_for_this_type",
+        "ContentType.natural_key"
+      ]
+    },
+    {
+      "path": "django/contrib/flatpages/models.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__str__",
+        "charfield",
+        "default",
+        "models",
+        "models.py",
+        "name"
+      ],
+      "reasons": [
+        "function_match:__str__",
+        "explicit_file_path_hint:models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:charfield,default,models,name,__str__"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__str__": "    def __str__(self):\n        return \"%s -- %s\" % (self.url, self.title)\n\n    def get_absolute_url(self):\n        # Handle script prefix manually because we bypass reverse()\n        return iri_to_uri(get_script_prefix().rstrip('/') + self.url)"
+      },
+      "top_level_functions": [
+        "FlatPage.get_absolute_url"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/db/backends/oracle/models.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__str__",
+        "charfield",
+        "default",
+        "models",
+        "models.py",
+        "name"
+      ],
+      "reasons": [
+        "function_match:__str__",
+        "explicit_file_path_hint:models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:charfield,default,models,name,__str__"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__str__": "    def __str__(self):\n        return '%s - %s (SRID: %s)' % (self.table_name, self.column_name, self.srid)\n\n    @classmethod\n    def table_name_col(cls):\n        \"\"\"\n        Return the name of the metadata column used to store the feature table\n        name.\n        \"\"\"\n        return 'table_name'\n\n    @classmethod\n    def geom_col_name(cls):\n        \"\"\"\n        Return the name of the metadata column used to store the feature"
+      },
+      "top_level_functions": [
+        "OracleGeometryColumns.table_name_col",
+        "OracleGeometryColumns.geom_col_name",
+        "OracleSpatialRefSys.wkt"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/distinct_on_fields/models.py",
+      "score": 17,
+      "matched_identifiers": [
+        "CharField",
+        "_",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_contains_function:_",
+        "test_path_related_to_class:CharField",
+        "test_name_matches_source_stem:models",
+        "token_overlap:field",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/field_defaults/models.py",
+      "score": 17,
+      "matched_identifiers": [
+        "CharField",
+        "_",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_contains_function:_",
+        "test_path_related_to_class:CharField",
+        "test_name_matches_source_stem:models",
+        "token_overlap:field",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/update_only_fields/models.py",
+      "score": 17,
+      "matched_identifiers": [
+        "CharField",
+        "_",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_contains_function:_",
+        "test_path_related_to_class:CharField",
+        "test_name_matches_source_stem:models",
+        "token_overlap:field",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/models.py",
+      "score": 16,
+      "matched_identifiers": [
+        "_",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:models",
+        "token_overlap:contenttypes",
+        "internal_name_overlap:auth",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_changelist/models.py",
+      "score": 14,
+      "matched_identifiers": [
+        "_",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_contains_function:_",
+        "test_name_matches_source_stem:models",
+        "internal_name_overlap:char",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2572,
+  "indexed_test_file_count": 1739,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.contenttypes_tests.models": [
+      "Answer",
+      "Article",
+      "Author",
+      "ConcreteModel",
+      "FooWithBrokenAbsoluteUrl",
+      "FooWithUrl",
+      "FooWithoutUrl",
+      "ModelWithM2MToSite",
+      "ModelWithNullFKToSite",
+      "Post",
+      "ProxyModel",
+      "Question",
+      "SchemeIncludedURL",
+      "Site"
+    ],
+    "tests.distinct_on_fields.models": [
+      "Celebrity",
+      "Fan",
+      "Staff",
+      "StaffTag",
+      "Tag"
+    ],
+    "tests.field_defaults.models": [
+      "Article"
+    ],
+    "tests.update_only_fields.models": [
+      "Account",
+      "Employee",
+      "Person",
+      "Profile",
+      "ProxyEmployee"
+    ],
+    "tests.admin_changelist.models": [
+      "Band",
+      "CharPK",
+      "Child",
+      "ChordsBand",
+      "ChordsMusician",
+      "Concert",
+      "CustomIdUser",
+      "Event",
+      "Genre",
+      "Group",
+      "Invitation",
+      "Membership",
+      "Musician",
+      "OrderedObject",
+      "OrderedObjectManager",
+      "Parent",
+      "Quartet",
+      "Swallow",
+      "SwallowOneToOne",
+      "UnorderedObject"
+    ],
+    "django.forms.fields": [
+      "BaseTemporalField",
+      "BooleanField",
+      "CallableChoiceIterator",
+      "CharField",
+      "ChoiceField",
+      "ComboField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Field",
+      "FileField",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "ImageField",
+      "IntegerField",
+      "MultiValueField",
+      "MultipleChoiceField",
+      "NullBooleanField",
+      "RegexField",
+      "SlugField",
+      "SplitDateTimeField",
+      "TimeField",
+      "TypedChoiceField",
+      "TypedMultipleChoiceField",
+      "URLField",
+      "UUIDField"
+    ],
+    "django.contrib.flatpages.models": [
+      "FlatPage"
+    ],
+    "django.contrib.contenttypes.models": [
+      "ContentType",
+      "ContentTypeManager"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.models": [
+      "LogEntry",
+      "LogEntryManager"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.models": [
+      "AbstractUser",
+      "AnonymousUser",
+      "Group",
+      "GroupManager",
+      "Permission",
+      "PermissionManager",
+      "PermissionsMixin",
+      "User",
+      "UserManager",
+      "_user_get_permissions",
+      "_user_has_module_perms",
+      "_user_has_perm",
+      "update_last_login"
+    ],
+    "django.contrib.gis.db.backends.oracle.models": [
+      "OracleGeometryColumns",
+      "OracleSpatialRefSys"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_load_field",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

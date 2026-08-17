@@ -1,0 +1,109 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/ensemble/voting.py",
+      "target_function": "fit",
+      "related_classes": [
+        "LogisticRegression",
+        "NoneType",
+        "RandomForestClassifier",
+        "VotingClassifier"
+      ],
+      "candidate_test_file": "sklearn/ensemble/tests/test_voting.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where fit can be called.",
+      "Use the generated reproduction path that calls fit, load_iris, ones, set_params."
+    ],
+    "execution_stimulus": [
+      "Call fit with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: fit, load_iris, ones, set_params."
+    ],
+    "expected_failure": "AttributeError: 'NoneType' object has no attribute 'fit'",
+    "relevant_source_files": [
+      "sklearn/ensemble/voting.py",
+      "sklearn/compose/_column_transformer.py",
+      "sklearn/ensemble/forest.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/ensemble/tests/test_forest.py",
+      "sklearn/ensemble/tests/test_voting.py",
+      "sklearn/ensemble/tests/test_gradient_boosting.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.datasets import load_iris\nfrom sklearn.ensemble import VotingClassifier, RandomForestClassifier\nfrom sklearn.linear_model import LogisticRegression\n\n\ndef test_voting_classifier_with_none_estimator_and_weights_repro():\n    X, y = load_iris(return_X_y=True)\n    voter = VotingClassifier(\n        estimators=[('lr', LogisticRegression()),\n                    ('rf', RandomForestClassifier())]\n    )\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n    voter.set_params(lr=None)\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n    assert voter.named_estimators['rf'] is not None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(estimators) != \"AttributeError: 'NoneType' object has no attribute 'fit'\""
+      },
+      {
+        "language": "python",
+        "code": "X, y = load_iris(return_X_y=True)\n    voter = VotingClassifier(\n        estimators=[('lr', LogisticRegression()),\n                    ('rf', RandomForestClassifier())]\n    )\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n    voter.set_params(lr=None)\n    voter.fit(X, y, sample_weight=np.ones(y.shape))"
+      },
+      {
+        "language": "python",
+        "code": "AttributeError: 'NoneType' object has no attribute 'fit'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'NoneType' object has no attribute 'fit'"
+    ],
+    "error_keywords": [
+      "AttributeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "fit",
+        "load_iris",
+        "ones",
+        "set_params"
+      ],
+      "classes": [
+        "LogisticRegression",
+        "NoneType",
+        "RandomForestClassifier",
+        "VotingClassifier"
+      ],
+      "files": [],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/ensemble/tests/test_voting.py",
+      "target_source_file": "sklearn/ensemble/voting.py",
+      "test_visible_functions": [
+        "fit",
+        "load_iris",
+        "ones",
+        "set_params"
+      ],
+      "test_visible_classes": [
+        "LogisticRegression",
+        "NoneType",
+        "RandomForestClassifier",
+        "VotingClassifier"
+      ]
+    }
+  }
+]

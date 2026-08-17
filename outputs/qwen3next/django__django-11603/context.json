@@ -1,0 +1,395 @@
+{
+  "instance_id": "django__django-11603",
+  "repo": "django/django",
+  "base_commit": "f618e033acd37d59b536d6e6126e6c5be18037f6",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "although",
+        "applied",
+        "classes",
+        "exception"
+      ],
+      "reasons": [
+        "source_content_tokens:although,applied,classes,exception,ignored"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/filters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "change",
+        "classes",
+        "distinct",
+        "exception"
+      ],
+      "reasons": [
+        "source_content_tokens:change,classes,distinct,exception,other"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ListFilter.has_output",
+        "ListFilter.choices",
+        "ListFilter.queryset",
+        "ListFilter.expected_parameters",
+        "SimpleListFilter.has_output",
+        "SimpleListFilter.value",
+        "SimpleListFilter.lookups",
+        "SimpleListFilter.expected_parameters",
+        "SimpleListFilter.choices",
+        "FieldListFilter.has_output",
+        "FieldListFilter.queryset",
+        "FieldListFilter.register",
+        "FieldListFilter.create",
+        "RelatedFieldListFilter.include_empty_choice",
+        "RelatedFieldListFilter.has_output",
+        "RelatedFieldListFilter.expected_parameters",
+        "RelatedFieldListFilter.field_choices",
+        "RelatedFieldListFilter.choices",
+        "BooleanFieldListFilter.expected_parameters",
+        "BooleanFieldListFilter.choices",
+        "ChoicesFieldListFilter.expected_parameters",
+        "ChoicesFieldListFilter.choices",
+        "DateFieldListFilter.expected_parameters",
+        "DateFieldListFilter.choices",
+        "AllValuesFieldListFilter.expected_parameters",
+        "AllValuesFieldListFilter.choices",
+        "RelatedOnlyFieldListFilter.field_choices"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allowing",
+        "change",
+        "classes",
+        "description"
+      ],
+      "reasons": [
+        "source_content_tokens:allowing,change,classes,description,distinct"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "change",
+        "could",
+        "description",
+        "distinct"
+      ],
+      "reasons": [
+        "source_content_tokens:change,could,description,distinct,exception"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 16,
+      "matched_identifiers": [
+        "applied",
+        "change",
+        "could",
+        "distinct"
+      ],
+      "reasons": [
+        "source_content_tokens:applied,change,could,distinct,exception"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:filters",
+        "token_overlap:filters",
+        "internal_name_overlap:filters",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "internal_name_overlap:global",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_docs/test_utils.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/test_utils.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_utils.py:unittest_or_django_test_import",
+      "tests/admin_docs/test_utils.py:unittest_or_django_test_import",
+      "tests/admin_docs/test_utils.py:testcase_class:TestUtils",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:testcase_class:TestUtils",
+      "tests/template_tests/syntax_tests/i18n/test_filters.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2567,
+  "indexed_test_file_count": 1735,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango31Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.sitemaps_tests.test_utils": [
+      "PingGoogleTests"
+    ],
+    "tests.admin_docs.test_utils": [
+      "TestUtils"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.backends.test_utils": [
+      "CursorWrapperTests",
+      "TestUtils"
+    ],
+    "tests.template_tests.syntax_tests.i18n.test_filters": [
+      "I18nFiltersTests"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin.filters": [
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "ListFilter",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList"
+    ]
+  },
+  "test_example_snippet": "    def test_i18n32(self):\n        output = self.engine.render_to_string('i18n32')\n        self.assertEqual(output, 'Hungarian Magyar False Hungarian')\n\n        with translation.override('cs'):\n            output = self.engine.render_to_string('i18n32')\n            self.assertEqual(output, 'Hungarian Magyar False maďarsky')\n\n    @setup({'i18n33': '{% load i18n %}'\n                      '{{ langcode|language_name }} {{ langcode|language_name_local }} '\n                      '{{ langcode|language_bidi }} {{ langcode|language_name_translated }}'})\n    def test_i18n33(self):\n        output = self.engine.render_to_string('i18n33', {'langcode': 'nl'})\n        self.assertEqual(output, 'Dutch Nederlands False Dutch')\n\n        with translation.override('cs'):\n            output = self.engine.render_to_string('i18n33', {'langcode': 'nl'})\n            self.assertEqual(output, 'Dutch Nederlands False nizozemsky')\n\n    @setup({'i18n38_2': '{% load i18n custom %}'\n                        '{% get_language_info_list for langcodes|noop:\"x y\" as langs %}'\n                        '{% for l in langs %}{{ l.code }}: {{ l.name }}/'\n                        '{{ l.name_local }}/{{ l.name_translated }} '\n                        'bidi={{ l.bidi }}; {% endfor %}'})\n    def test_i18n38_2(self):\n        with translation.override('cs'):\n            output = self.engine.render_to_string('i18n38_2', {'langcodes': ['it', 'fr']})\n        self.assertEqual(\n            output,\n            'it: Italian/italiano/italsky bidi=False; '\n            'fr: French/français/francouzsky bidi=False; '\n        )",
+  "conftest_fixtures": {}
+}

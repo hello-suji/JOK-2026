@@ -1,0 +1,275 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/functions/elementary/hyperbolic.py",
+      "target_function": "coth",
+      "related_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import Symbol, coth, log, tan",
+      "x = Symbol('x')",
+      "e = coth(log(tan(x)))",
+      "Use the generated reproduction path that calls coth, log, subs, tan."
+    ],
+    "execution_stimulus": [
+      "result = e.subs(x, 2)",
+      "Execute the focused target API path: coth, log, subs, tan."
+    ],
+    "expected_failure": "NameError: name 'cotm' is not defined",
+    "relevant_source_files": [
+      "sympy/functions/elementary/hyperbolic.py",
+      "sympy/integrals/rubi/rules/hyperbolic.py",
+      "sympy/plotting/intervalmath/lib_interval.py"
+    ],
+    "relevant_test_files": [
+      "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "sympy/functions/elementary/tests/test_complexes.py",
+      "sympy/functions/elementary/tests/test_exponential.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import coth, log, tan, Symbol, ComplexInfinity\n\ndef test_coth_log_tan_subs_repro():\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 0)\n    assert result == ComplexInfinity"
+      },
+      {
+        "language": "python",
+        "code": "def test_coth_log_tan_subs_error():\n    from sympy import Symbol, coth, log, tan\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 2)\n    assert result is not None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NameError",
+      "cotm"
+    ],
+    "identifiers": {
+      "functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "target_source_file": "sympy/functions/elementary/hyperbolic.py",
+      "test_visible_functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "test_visible_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/functions/elementary/hyperbolic.py",
+      "target_function": "coth",
+      "related_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Symbol, coth, log, tan",
+      "x = Symbol('x')",
+      "e = coth(log(tan(x)))",
+      "Use the generated reproduction path that calls coth, log, subs, tan."
+    ],
+    "execution_stimulus": [
+      "result = e.subs(x, 3)",
+      "Execute the focused target API path: coth, log, subs, tan."
+    ],
+    "expected_failure": "NameError: name 'cotm' is not defined",
+    "relevant_source_files": [
+      "sympy/functions/elementary/hyperbolic.py",
+      "sympy/integrals/rubi/rules/hyperbolic.py",
+      "sympy/plotting/intervalmath/lib_interval.py"
+    ],
+    "relevant_test_files": [
+      "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "sympy/functions/elementary/tests/test_complexes.py",
+      "sympy/functions/elementary/tests/test_exponential.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import coth, log, tan, Symbol, ComplexInfinity\n\ndef test_coth_log_tan_subs_repro():\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 0)\n    assert result == ComplexInfinity"
+      },
+      {
+        "language": "python",
+        "code": "def test_coth_log_tan_subs_error_3():\n    from sympy import Symbol, coth, log, tan\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 3)\n    assert result is not None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NameError",
+      "cotm"
+    ],
+    "identifiers": {
+      "functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "target_source_file": "sympy/functions/elementary/hyperbolic.py",
+      "test_visible_functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "test_visible_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/functions/elementary/hyperbolic.py",
+      "target_function": "coth",
+      "related_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Symbol, coth, log, tan",
+      "x = Symbol('x')",
+      "e = coth(log(tan(x)))",
+      "Use the generated reproduction path that calls coth, log, subs, tan."
+    ],
+    "execution_stimulus": [
+      "result = e.subs(x, 5)",
+      "Execute the focused target API path: coth, log, subs, tan."
+    ],
+    "expected_failure": "NameError: name 'cotm' is not defined",
+    "relevant_source_files": [
+      "sympy/functions/elementary/hyperbolic.py",
+      "sympy/integrals/rubi/rules/hyperbolic.py",
+      "sympy/plotting/intervalmath/lib_interval.py"
+    ],
+    "relevant_test_files": [
+      "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "sympy/functions/elementary/tests/test_complexes.py",
+      "sympy/functions/elementary/tests/test_exponential.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import coth, log, tan, Symbol, ComplexInfinity\n\ndef test_coth_log_tan_subs_repro():\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 0)\n    assert result == ComplexInfinity"
+      },
+      {
+        "language": "python",
+        "code": "def test_coth_log_tan_subs_error_5():\n    from sympy import Symbol, coth, log, tan\n    x = Symbol('x')\n    e = coth(log(tan(x)))\n    result = e.subs(x, 5)\n    assert result is not None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NameError",
+      "cotm"
+    ],
+    "identifiers": {
+      "functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/functions/elementary/tests/test_hyperbolic.py",
+      "target_source_file": "sympy/functions/elementary/hyperbolic.py",
+      "test_visible_functions": [
+        "coth",
+        "log",
+        "subs",
+        "tan"
+      ],
+      "test_visible_classes": [
+        "ComplexInfinity",
+        "Symbol"
+      ]
+    }
+  }
+]

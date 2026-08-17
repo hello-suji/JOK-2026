@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/__init__.py",
+      "target_function": "getcwd",
+      "related_classes": [
+        "PyCQA",
+        "Run"
+      ],
+      "candidate_test_file": "pylint/testutils/lint_module_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where getcwd can be called.",
+      "Use the generated reproduction path that calls getcwd, insert, run_module, runpy."
+    ],
+    "execution_stimulus": [
+      "Call getcwd with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: getcwd, insert, run_module, runpy."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "pylint/__init__.py",
+      "pylint/checkers/__init__.py",
+      "pylint/extensions/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/lint/test_pylinter.py",
+      "pylint/testutils/lint_module_test.py",
+      "tests/config/pylint_config/test_pylint_config_help.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import sys\nimport os\nimport runpy\n\ndef test_pylint_removes_first_item_from_sys_path_repro(linter):\n    original_sys_path = sys.path.copy()\n    sys.path.insert(0, \"something\")\n    runpy.run_module('pylint', run_name=\"__main__\", alter_sys=True)\n    assert sys.path[0] in (\"\", \".\", os.getcwd())\n    sys.path = original_sys_path"
+      },
+      {
+        "language": "shell",
+        "code": "Run programmatically to repro this, using this code:\n\nimport sys\nimport runpy\n\nsys.path.insert(0, \"something\")\n\nrunpy.run_module('pylint', run_name=\"__main__\", alter_sys=True)"
+      },
+      {
+        "language": "shell",
+        "code": "When using pylint extension which bundles the libraries, the extension add them to sys.path depending on user settings. Pylint removes the first entry from sys path causing it to fail to load."
+      },
+      {
+        "language": "shell",
+        "code": "pylint 2.14.5"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "getcwd",
+        "insert",
+        "run_module",
+        "runpy"
+      ],
+      "classes": [
+        "PyCQA",
+        "Run"
+      ],
+      "files": [
+        "pylint/__init__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "pylint/testutils/lint_module_test.py",
+      "target_source_file": "pylint/__init__.py",
+      "test_visible_functions": [
+        "getcwd",
+        "insert",
+        "run_module",
+        "runpy"
+      ],
+      "test_visible_classes": [
+        "Run"
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14351",
+    "model_patch": "--- a/tests/queries/test_query.py\n+++ b/tests/queries/test_query.py\n@@ -150,3 +150,15 @@\n         msg = 'Cannot filter against a non-conditional expression.'\n         with self.assertRaisesMessage(TypeError, msg):\n             query.build_where(Func(output_field=CharField()))\n+\n+from django.test import TestCase, SimpleTestCase\n+class TestQObjectOrBehavior(SimpleTestCase):\n+    def test_q_object_or_behavior_repro(self):\n+        q1 = Q(agent__property_groups__id__in=[1])\n+        q2 = Q(agent__property_groups__in=[1])\n+        combined_q = q1 | q2\n+        try:\n+            # This should raise ProgrammingError in the buggy version\n+            Author.objects.filter(combined_q)\n+        except Exception as e:\n+            self.assertNotIsInstance(e, ProgrammingError)\n",
+    "patch_sha256": "a32e9430ade036989f6622ba322bd8efa65bb65e59becceddafba535c085349c"
+  }
+]

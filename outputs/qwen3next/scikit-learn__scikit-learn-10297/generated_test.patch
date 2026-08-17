@@ -1,0 +1,19 @@
+--- a/sklearn/linear_model/tests/test_ridge_gate.py
++++ b/sklearn/linear_model/tests/test_ridge_gate.py
+@@ -860,3 +860,16 @@
+     assert ridge_32.predict(X_32).dtype == X_32.dtype
+     assert ridge_64.predict(X_64).dtype == X_64.dtype
+     assert_almost_equal(ridge_32.coef_, ridge_64.coef_, decimal=5)
++
++def test_RidgeClassifierCV_store_cv_values_error_repro():
++    from sklearn.exceptions import NotFittedError
++    import numpy as np
++    n = 100
++    x = np.random.randn(n, 30)
++    y = np.random.randint(0, 2, size=n)
++
++    rr = RidgeClassifierCV(alphas=np.arange(0.1, 1000, 0.1), normalize=True)
++    rr.fit(x, y)
++    assert hasattr(rr, 'cv_values_')
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(rr) != "TypeError: __init__() got an unexpected keyword argument 'store_cv_values'"

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9461",
+    "model_patch": "--- a/tests/roots/test-domain-c-intersphinx/conf.py\n+++ b/tests/roots/test-domain-c-intersphinx/conf.py\n@@ -2,3 +2,38 @@\n extensions = [\n \t'sphinx.ext.intersphinx',\n ]\n+\n+import tempfile\n+import os\n+from sphinx.application import Sphinx\n+\n+def test_classmethod_property_documentation_repro():\n+    class A:\n+        @classmethod\n+        @property\n+        def f(cls):\n+            \"\"\"Some class property.\"\"\"\n+            return \"property\"\n+\n+    with tempfile.TemporaryDirectory() as tmpdir:\n+        srcdir = os.path.join(tmpdir, 'src')\n+        confdir = os.path.join(tmpdir, 'conf')\n+        outdir = os.path.join(tmpdir, 'out')\n+        doctreedir = os.path.join(tmpdir, 'doctrees')\n+        buildername = 'html'\n+\n+        os.makedirs(srcdir)\n+        os.makedirs(confdir)\n+\n+        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n+            f.write('A.f\\n====\\n\\n.. autofunction:: A.f\\n')\n+\n+        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n+            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n+\n+        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n+        app.build()\n+\n+        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n+            content = f.read()\n+            assert 'Some class property.' in content\n",
+    "patch_sha256": "183d862c94e804267af906ce0d8ee283575d43698d9ced61246f8b2d69b051e8"
+  }
+]

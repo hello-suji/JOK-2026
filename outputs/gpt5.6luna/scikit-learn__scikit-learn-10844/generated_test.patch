@@ -1,0 +1,17 @@
+--- a/sklearn/metrics/cluster/tests/test_supervised.py
++++ b/sklearn/metrics/cluster/tests/test_supervised.py
+@@ -274,3 +274,14 @@
+     # symmetric and permutation(both together)
+     score_both = fowlkes_mallows_score(labels_b, (labels_a + 2) % 3)
+     assert_almost_equal(score_both, expected)
++
++import warnings
++
++def test_fowlkes_mallows_score_large_input_warning_repro():
++    labels_true = np.random.randint(0, 1000000, size=1000000)
++    labels_pred = np.random.randint(0, 1000000, size=1000000)
++    with warnings.catch_warnings(record=True) as w:
++        warnings.simplefilter('always')
++        score = fowlkes_mallows_score(labels_true, labels_pred)
++    assert any(isinstance(warning.message, RuntimeWarning) for warning in w), 'A RuntimeWarning should be raised'
++    assert np.isnan(score), 'The score should be NaN'

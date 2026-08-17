@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-15809",
+    "model_patch": "--- a/sympy/functions/combinatorial/tests/test_comb_numbers.py\n+++ b/sympy/functions/combinatorial/tests/test_comb_numbers.py\n@@ -642,3 +642,9 @@\n     assert str(c1) == '6.93334070531408e-5'\n     c2 = catalan(-35.4).evalf()\n     assert str(c2) == '-4.14189164517449e-24'\n+\n+from sympy import oo\n+from sympy.functions.elementary.miscellaneous import Max\n+\n+def test_max_no_arguments_repro():\n+    assert Max() == oo\n",
+    "patch_sha256": "6b0851a4b248a2b49fe902d5e51f4553ff362dc6358cc3b9f05910ecf2ee44a4"
+  }
+]

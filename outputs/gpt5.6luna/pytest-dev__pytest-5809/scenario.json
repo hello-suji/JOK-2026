@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/pastebin.py",
+      "target_function": "read",
+      "related_classes": [
+        "MagicMock"
+      ],
+      "candidate_test_file": "testing/test_pastebin.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where read can be called.",
+      "Use the generated reproduction path that calls read, urlopen, patch."
+    ],
+    "execution_stimulus": [
+      "Call read with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: read, urlopen, patch."
+    ],
+    "expected_failure": "Lexer \"python3\" in --pastebin feature causes HTTP errors",
+    "relevant_source_files": [
+      "src/_pytest/pastebin.py",
+      "src/_pytest/capture.py",
+      "src/_pytest/_code/code.py"
+    ],
+    "relevant_test_files": [
+      "testing/code/test_code.py",
+      "testing/test_capture.py",
+      "testing/test_pastebin.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import pytest\nfrom _pytest.pastebin import read\nfrom unittest.mock import patch, MagicMock\n\ndef test_pastebin_read_fails_with_http_error_repro() -> None:\n    mock_response = MagicMock()\n    mock_response.read.return_value = b'Sample data'\n    with patch('urllib.request.urlopen', return_value=mock_response):\n        result = read('http://example.com')\n    assert result == b'Sample data'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "HTTPError"
+    ],
+    "identifiers": {
+      "functions": [
+        "urlopen",
+        "patch"
+      ],
+      "classes": [
+        "MagicMock"
+      ],
+      "files": [
+        "data.txt",
+        "src/_pytest/pastebin.py"
+      ],
+      "exceptions": [
+        "HTTPError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_pastebin.py",
+      "target_source_file": "src/_pytest/pastebin.py",
+      "test_visible_functions": [
+        "read",
+        "urlopen",
+        "patch"
+      ],
+      "test_visible_classes": [
+        "MagicMock"
+      ]
+    }
+  }
+]

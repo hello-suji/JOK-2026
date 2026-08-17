@@ -1,0 +1,573 @@
+{
+  "instance_id": "django__django-13786",
+  "repo": "django/django",
+  "base_commit": "bb64b99b78a579cb2f6178011a4cf9366e634438",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/migrations/operations/models.py",
+      "score": 55,
+      "matched_identifiers": [
+        "AlterModelOptions",
+        "CreateModel",
+        "altermodeloptions",
+        "based",
+        "createmodel",
+        "django/db/migrations/operations/models.py",
+        "forwards",
+        "reduce",
+        "state_forwards"
+      ],
+      "reasons": [
+        "function_match:state_forwards",
+        "function_match:reduce",
+        "class_match:CreateModel",
+        "class_match:AlterModelOptions",
+        "explicit_file_path_hint:django/db/migrations/operations/models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:altermodeloptions,based,createmodel,forwards,found"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "CreateModel": "class CreateModel(ModelOperation):\n    \"\"\"Create a model's table.\"\"\"\n\n    serialization_expand_args = ['fields', 'options', 'managers']\n\n    def __init__(self, name, fields, options=None, bases=None, managers=None):\n        self.fields = fields\n        self.options = options or {}\n        self.bases = bases or (models.Model,)\n        self.managers = managers or []\n        super().__init__(name)\n        # Sanity-check that there are no duplicated field names, bases, or\n        # manager names\n        _check_for_duplicates('fields', (name for name, _ in self.fields))\n        _check_for_duplicates('bases', (",
+        "AlterModelOptions": "class AlterModelOptions(ModelOptionOperation):\n    \"\"\"\n    Set new model options that don't directly affect the database schema\n    (like verbose_name, permissions, ordering). Python code in migrations\n    may still need them.\n    \"\"\"\n\n    # Model options we want to compare and preserve in an AlterModelOptions op\n    ALTER_OPTION_KEYS = [\n        \"base_manager_name\",\n        \"default_manager_name\",\n        \"default_related_name\",\n        \"get_latest_by\",\n        \"managed\",\n        \"ordering\",",
+        "reduce": "    def reduce(self, operation, app_label):\n        if isinstance(operation, (self.__class__, DeleteModel)) and self.name_lower == operation.name_lower:\n            return [operation]\n        return super().reduce(operation, app_label)\n\n\nclass AlterModelTable(ModelOptionOperation):\n    \"\"\"Rename a model's table.\"\"\"\n\n    def __init__(self, name, table):\n        self.table = table\n        super().__init__(name)\n\n    def deconstruct(self):\n        kwargs = {",
+        "state_forwards": "    def state_forwards(self, app_label, state):\n        model_state = state.models[app_label, self.model_name_lower]\n        constraints = model_state.options[self.option_name]\n        model_state.options[self.option_name] = [c for c in constraints if c.name != self.name]\n        state.reload_model(app_label, self.model_name_lower, delay=True)\n\n    def database_forwards(self, app_label, schema_editor, from_state, to_state):\n        model = to_state.apps.get_model(app_label, self.model_name)\n        if self.allow_migrate_model(schema_editor.connection.alias, model):\n            from_model_state = from_state.models[app_label, self.model_name_lower]\n            constraint = from_model_state.get_constraint_by_name(self.name)\n            schema_editor.remove_constraint(model, constraint)\n\n    def database_backwards(self, app_label, schema_editor, from_state, to_state):\n        model = to_state.apps.get_model(app_label, self.model_name)"
+      },
+      "top_level_functions": [
+        "ModelOperation.name_lower",
+        "ModelOperation.references_model",
+        "ModelOperation.reduce",
+        "CreateModel.deconstruct",
+        "CreateModel.state_forwards",
+        "CreateModel.database_forwards",
+        "CreateModel.database_backwards",
+        "CreateModel.describe",
+        "CreateModel.migration_name_fragment",
+        "CreateModel.references_model",
+        "CreateModel.reduce",
+        "DeleteModel.deconstruct",
+        "DeleteModel.state_forwards",
+        "DeleteModel.database_forwards",
+        "DeleteModel.database_backwards",
+        "DeleteModel.references_model",
+        "DeleteModel.describe",
+        "DeleteModel.migration_name_fragment",
+        "RenameModel.old_name_lower",
+        "RenameModel.new_name_lower",
+        "RenameModel.deconstruct",
+        "RenameModel.state_forwards",
+        "RenameModel.database_forwards",
+        "RenameModel.database_backwards",
+        "RenameModel.references_model",
+        "RenameModel.describe",
+        "RenameModel.migration_name_fragment",
+        "RenameModel.reduce",
+        "ModelOptionOperation.reduce",
+        "AlterModelTable.deconstruct",
+        "AlterModelTable.state_forwards",
+        "AlterModelTable.database_forwards",
+        "AlterModelTable.database_backwards",
+        "AlterModelTable.describe",
+        "AlterModelTable.migration_name_fragment",
+        "AlterTogetherOptionOperation.option_value",
+        "AlterTogetherOptionOperation.deconstruct",
+        "AlterTogetherOptionOperation.state_forwards",
+        "AlterTogetherOptionOperation.database_forwards",
+        "AlterTogetherOptionOperation.database_backwards"
+      ]
+    },
+    {
+      "path": "django/db/migrations/operations/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "createmodel",
+        "forwards",
+        "migrations",
+        "operation",
+        "reduce",
+        "state_forwards"
+      ],
+      "reasons": [
+        "function_match:state_forwards",
+        "function_match:reduce",
+        "stem_in_issue_text:base",
+        "source_content_tokens:createmodel,forwards,migrations,operation,operations"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "state_forwards": "    def state_forwards(self, app_label, state):\n        \"\"\"\n        Take the state from the previous migration, and mutate it\n        so that it matches what this migration would perform.\n        \"\"\"\n        raise NotImplementedError('subclasses of Operation must provide a state_forwards() method')\n\n    def database_forwards(self, app_label, schema_editor, from_state, to_state):\n        \"\"\"\n        Perform the mutation on the database schema in the normal\n        (forwards) direction.\n        \"\"\"\n        raise NotImplementedError('subclasses of Operation must provide a database_forwards() method')\n\n    def database_backwards(self, app_label, schema_editor, from_state, to_state):",
+        "reduce": "    def reduce(self, operation, app_label):\n        \"\"\"\n        Return either a list of operations the actual operation should be\n        replaced with or a boolean that indicates whether or not the specified\n        operation can be optimized across.\n        \"\"\"\n        if self.elidable:\n            return [operation]\n        elif operation.elidable:\n            return [self]\n        return False\n\n    def __repr__(self):\n        return \"<%s %s%s>\" % (\n            self.__class__.__name__,"
+      },
+      "top_level_functions": [
+        "Operation.deconstruct",
+        "Operation.state_forwards",
+        "Operation.database_forwards",
+        "Operation.database_backwards",
+        "Operation.describe",
+        "Operation.migration_name_fragment",
+        "Operation.references_model",
+        "Operation.references_field",
+        "Operation.allow_migrate_model",
+        "Operation.reduce"
+      ]
+    },
+    {
+      "path": "django/forms/models.py",
+      "score": 27,
+      "matched_identifiers": [
+        "based",
+        "commit",
+        "corresponding",
+        "django/db/migrations/operations/models.py",
+        "exists"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/migrations/operations/models.py",
+        "stem_in_issue_text:models",
+        "source_content_tokens:based,commit,corresponding,exists,models"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "construct_instance",
+        "model_to_dict",
+        "apply_limit_choices_to_to_formfield",
+        "fields_for_model",
+        "BaseModelForm.clean",
+        "BaseModelForm.validate_unique",
+        "BaseModelForm.save",
+        "modelform_factory",
+        "BaseModelFormSet.initial_form_count",
+        "BaseModelFormSet.get_queryset",
+        "BaseModelFormSet.save_new",
+        "BaseModelFormSet.save_existing",
+        "BaseModelFormSet.delete_existing",
+        "BaseModelFormSet.save",
+        "BaseModelFormSet.clean",
+        "BaseModelFormSet.validate_unique",
+        "BaseModelFormSet.get_unique_error_message",
+        "BaseModelFormSet.get_date_error_message",
+        "BaseModelFormSet.get_form_error",
+        "BaseModelFormSet.save_existing_objects",
+        "BaseModelFormSet.save_new_objects",
+        "BaseModelFormSet.add_fields",
+        "modelformset_factory",
+        "BaseInlineFormSet.initial_form_count",
+        "BaseInlineFormSet.get_default_prefix",
+        "BaseInlineFormSet.save_new",
+        "BaseInlineFormSet.add_fields",
+        "BaseInlineFormSet.get_unique_error_message",
+        "inlineformset_factory",
+        "InlineForeignKeyField.clean",
+        "InlineForeignKeyField.has_changed",
+        "ModelChoiceIterator.choice",
+        "ModelChoiceField.get_limit_choices_to",
+        "ModelChoiceField.label_from_instance",
+        "ModelChoiceField.prepare_value",
+        "ModelChoiceField.to_python",
+        "ModelChoiceField.validate",
+        "ModelChoiceField.has_changed",
+        "ModelMultipleChoiceField.to_python",
+        "ModelMultipleChoiceField.clean"
+      ]
+    },
+    {
+      "path": "django/db/migrations/operations/fields.py",
+      "score": 26,
+      "matched_identifiers": [
+        "forwards",
+        "found",
+        "models",
+        "operation",
+        "reduce",
+        "state_forwards"
+      ],
+      "reasons": [
+        "function_match:state_forwards",
+        "function_match:reduce",
+        "source_content_tokens:forwards,found,models,operation,options"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "reduce": "    def reduce(self, operation, app_label):\n        if (isinstance(operation, RenameField) and\n                self.is_same_model_operation(operation) and\n                self.new_name_lower == operation.old_name_lower):\n            return [\n                RenameField(\n                    self.model_name,\n                    self.old_name,\n                    operation.new_name,\n                ),\n            ]\n        # Skip `FieldOperation.reduce` as we want to run `references_field`\n        # against self.new_name.\n        return (\n            super(FieldOperation, self).reduce(operation, app_label) or",
+        "state_forwards": "    def state_forwards(self, app_label, state):\n        model_state = state.models[app_label, self.model_name_lower]\n        # Rename the field\n        fields = model_state.fields\n        try:\n            found = fields.pop(self.old_name)\n        except KeyError:\n            raise FieldDoesNotExist(\n                \"%s.%s has no field named '%s'\" % (app_label, self.model_name, self.old_name)\n            )\n        fields[self.new_name] = found\n        for field in fields.values():\n            # Fix from_fields to refer to the new field.\n            from_fields = getattr(field, 'from_fields', None)\n            if from_fields:"
+      },
+      "top_level_functions": [
+        "FieldOperation.model_name_lower",
+        "FieldOperation.name_lower",
+        "FieldOperation.is_same_model_operation",
+        "FieldOperation.is_same_field_operation",
+        "FieldOperation.references_model",
+        "FieldOperation.references_field",
+        "FieldOperation.reduce",
+        "AddField.deconstruct",
+        "AddField.state_forwards",
+        "AddField.database_forwards",
+        "AddField.database_backwards",
+        "AddField.describe",
+        "AddField.migration_name_fragment",
+        "AddField.reduce",
+        "RemoveField.deconstruct",
+        "RemoveField.state_forwards",
+        "RemoveField.database_forwards",
+        "RemoveField.database_backwards",
+        "RemoveField.describe",
+        "RemoveField.migration_name_fragment",
+        "RemoveField.reduce",
+        "AlterField.deconstruct",
+        "AlterField.state_forwards",
+        "AlterField.database_forwards",
+        "AlterField.database_backwards",
+        "AlterField.describe",
+        "AlterField.migration_name_fragment",
+        "AlterField.reduce",
+        "RenameField.old_name_lower",
+        "RenameField.new_name_lower",
+        "RenameField.deconstruct",
+        "RenameField.state_forwards",
+        "RenameField.database_forwards",
+        "RenameField.database_backwards",
+        "RenameField.describe",
+        "RenameField.migration_name_fragment",
+        "RenameField.references_field",
+        "RenameField.reduce"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/operations.py",
+      "score": 22,
+      "matched_identifiers": [
+        "exists",
+        "forwards",
+        "migrations",
+        "models",
+        "state_forwards"
+      ],
+      "reasons": [
+        "function_match:state_forwards",
+        "stem_in_issue_text:operations",
+        "source_content_tokens:exists,forwards,migrations,models,operation"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "state_forwards": "    def state_forwards(self, app_label, state):\n        pass\n\n    def deconstruct(self):\n        kwargs = {'name': self.name, 'locale': self.locale}\n        if self.provider and self.provider != 'libc':\n            kwargs['provider'] = self.provider\n        if self.deterministic is False:\n            kwargs['deterministic'] = self.deterministic\n        return (\n            self.__class__.__qualname__,\n            [],\n            kwargs,\n        )\n"
+      },
+      "top_level_functions": [
+        "CreateExtension.state_forwards",
+        "CreateExtension.database_forwards",
+        "CreateExtension.database_backwards",
+        "CreateExtension.extension_exists",
+        "CreateExtension.describe",
+        "CreateExtension.migration_name_fragment",
+        "AddIndexConcurrently.describe",
+        "AddIndexConcurrently.database_forwards",
+        "AddIndexConcurrently.database_backwards",
+        "RemoveIndexConcurrently.describe",
+        "RemoveIndexConcurrently.database_forwards",
+        "RemoveIndexConcurrently.database_backwards",
+        "CollationOperation.state_forwards",
+        "CollationOperation.deconstruct",
+        "CollationOperation.create_collation",
+        "CollationOperation.remove_collation",
+        "CreateCollation.database_forwards",
+        "CreateCollation.database_backwards",
+        "CreateCollation.describe",
+        "CreateCollation.migration_name_fragment",
+        "RemoveCollation.database_forwards",
+        "RemoveCollation.database_backwards",
+        "RemoveCollation.describe",
+        "RemoveCollation.migration_name_fragment"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/custom_migration_operations/operations.py",
+      "score": 16,
+      "matched_identifiers": [
+        "CreateModel",
+        "state_forwards"
+      ],
+      "reasons": [
+        "test_function_match:state_forwards",
+        "test_class_match:CreateModel",
+        "test_name_matches_source_stem:operations",
+        "token_overlap:operations",
+        "internal_name_overlap:create",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "score": 15,
+      "matched_identifiers": [
+        "AlterModelOptions",
+        "CreateModel"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CreateModel",
+        "test_path_related_to_class:AlterModelOptions",
+        "test_name_matches_source_stem:models",
+        "token_overlap:create,migrations,postgres",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_deprecated_fields.py",
+      "score": 14,
+      "matched_identifiers": [
+        "AlterModelOptions",
+        "CreateModel"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CreateModel",
+        "test_path_related_to_class:AlterModelOptions",
+        "test_name_matches_source_stem:fields",
+        "token_overlap:fields",
+        "internal_name_overlap:fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_relative_fields.py",
+      "score": 14,
+      "matched_identifiers": [
+        "AlterModelOptions",
+        "CreateModel"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CreateModel",
+        "test_path_related_to_class:AlterModelOptions",
+        "test_name_matches_source_stem:fields",
+        "token_overlap:fields",
+        "internal_name_overlap:fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/bulk_create/models.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AlterModelOptions",
+        "CreateModel"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CreateModel",
+        "test_path_related_to_class:AlterModelOptions",
+        "test_name_matches_source_stem:models",
+        "token_overlap:create",
+        "internal_name_overlap:fields",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/invalid_models_tests/test_relative_fields.py:unittest_or_django_test_import",
+      "tests/invalid_models_tests/test_deprecated_fields.py:unittest_or_django_test_import",
+      "tests/custom_migration_operations/operations.py:testcase_class:TestOperation"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2692,
+  "indexed_test_file_count": 1830,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "ValidationError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.invalid_models_tests.test_relative_fields": [
+      "AccessorClashTests",
+      "ComplexClashTests",
+      "ExplicitRelatedNameClashTests",
+      "ExplicitRelatedQueryNameClashTests",
+      "M2mThroughFieldsTests",
+      "RelativeFieldTests",
+      "ReverseQueryNameClashTests",
+      "SelfReferentialFKClashTests",
+      "SelfReferentialM2MClashTests"
+    ],
+    "tests.invalid_models_tests.test_deprecated_fields": [
+      "DeprecatedFieldsTests"
+    ],
+    "tests.custom_migration_operations.operations": [
+      "ArgsKwargsOperation",
+      "ArgsOperation",
+      "CreateModel",
+      "ExpandArgsOperation",
+      "KwargsOperation",
+      "TestOperation"
+    ],
+    "tests.bulk_create.models": [
+      "BigAutoFieldModel",
+      "Country",
+      "NoFields",
+      "NullableFields",
+      "Pizzeria",
+      "Place",
+      "ProxyCountry",
+      "ProxyMultiCountry",
+      "ProxyMultiProxyCountry",
+      "ProxyProxyCountry",
+      "Restaurant",
+      "SmallAutoFieldModel",
+      "State",
+      "TwoFields"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "WidgetTest",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.postgres_tests.migrations.0002_create_test_models": [
+      "Migration"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.forms.models": [
+      "BaseInlineFormSet",
+      "BaseModelForm",
+      "BaseModelFormSet",
+      "InlineForeignKeyField",
+      "ModelChoiceField",
+      "ModelChoiceIterator",
+      "ModelChoiceIteratorValue",
+      "ModelForm",
+      "ModelFormMetaclass",
+      "ModelFormOptions",
+      "ModelMultipleChoiceField",
+      "_get_foreign_key",
+      "apply_limit_choices_to_to_formfield",
+      "construct_instance",
+      "fields_for_model",
+      "inlineformset_factory",
+      "model_to_dict",
+      "modelform_defines_fields",
+      "modelform_factory",
+      "modelformset_factory"
+    ],
+    "django.contrib.postgres.operations": [
+      "AddIndexConcurrently",
+      "BloomExtension",
+      "BtreeGinExtension",
+      "BtreeGistExtension",
+      "CITextExtension",
+      "CollationOperation",
+      "CreateCollation",
+      "CreateExtension",
+      "CryptoExtension",
+      "HStoreExtension",
+      "NotInTransactionMixin",
+      "RemoveCollation",
+      "RemoveIndexConcurrently",
+      "TrigramExtension",
+      "UnaccentExtension"
+    ],
+    "django.db.migrations.operations.fields": [
+      "AddField",
+      "AlterField",
+      "FieldOperation",
+      "RemoveField",
+      "RenameField"
+    ],
+    "django.db.migrations.operations.base": [
+      "Operation"
+    ],
+    "django.db.migrations": [
+      "AddConstraint",
+      "AddField",
+      "AddIndex",
+      "AlterField",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "RemoveConstraint",
+      "RemoveField",
+      "RemoveIndex",
+      "RenameField",
+      "RenameModel",
+      "RunPython",
+      "RunSQL",
+      "SeparateDatabaseAndState"
+    ],
+    "django.db.migrations.operations.models": [
+      "AddConstraint",
+      "AddIndex",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterTogetherOptionOperation",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "IndexOperation",
+      "ModelOperation",
+      "ModelOptionOperation",
+      "RemoveConstraint",
+      "RemoveIndex",
+      "RenameModel",
+      "_check_for_duplicates"
+    ]
+  },
+  "test_example_snippet": "class TestOperation(Operation):\n    def __init__(self):\n        pass\n\n    def deconstruct(self):\n        return (\n            self.__class__.__name__,\n            [],\n            {}\n        )\n\n    @property\n    def reversible(self):\n        return True\n\n    def state_forwards(self, app_label, state):\n        pass\n\n    def database_forwards(self, app_label, schema_editor, from_state, to_state):\n        pass\n\n    def state_backwards(self, app_label, state):\n        pass\n\n    def database_backwards(self, app_label, schema_editor, from_state, to_state):\n        pass\n\n\nclass CreateModel(TestOperation):\n    pass\n\n\nclass ArgsOperation(TestOperation):\n    def __init__(self, arg1, arg2):\n        self.arg1, self.arg2 = arg1, arg2",
+  "conftest_fixtures": {}
+}

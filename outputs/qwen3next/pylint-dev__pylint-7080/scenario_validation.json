@@ -1,0 +1,252 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.71,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function '_ArgumentsManager.load_configuration' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "pylint/config/arguments_manager.py",
+          "target_function": "_ArgumentsManager.load_configuration",
+          "related_classes": [],
+          "candidate_test_file": "pylint/testutils/lint_module_test.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "import argparse",
+          "create an instance of _ArgumentsManager with necessary arguments"
+        ],
+        "execution_stimulus": [
+          "call load_configuration with a configuration that includes ignore-paths",
+          "run pylint with --recursive=y option"
+        ],
+        "expected_failure": "The ignore-paths setting is ignored, causing pylint to check files that should be excluded.",
+        "relevant_source_files": [
+          "pylint/config/arguments_manager.py",
+          "pylint/config/arguments_provider.py",
+          "pylint/checkers/base/name_checker/checker.py"
+        ],
+        "relevant_test_files": [
+          "pylint/testutils/functional/test_file.py",
+          "pylint/testutils/lint_module_test.py",
+          "tests/checkers/unittest_variables.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_ignore_paths_ignored():\n    import argparse\n    from pylint.config.arguments_manager import _ArgumentsManager\n    \n    manager = _ArgumentsManager(prog='pylint')\n    manager.load_configuration()\n    \n    # Simulate running pylint with --recursive=y\n    # This should not include files in 'src/gen/'\n    result = manager._config.ignore_paths\n    assert '^src/gen/.*$' in result"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [
+          "ignore-paths",
+          "recursive"
+        ],
+        "identifiers": {
+          "functions": [
+            "load_configuration"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [],
+        "oracle": "",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S2",
+      "score": 0.58,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function '_ArgumentsProvider.set_option' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S2",
+        "target_location": {
+          "source_file": "pylint/config/arguments_provider.py",
+          "target_function": "_ArgumentsProvider.set_option",
+          "related_classes": [],
+          "candidate_test_file": "tests/config/pylint_config/test_pylint_config_help.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "import warnings",
+          "create an instance of _ArgumentsProvider with a mock arguments manager"
+        ],
+        "execution_stimulus": [
+          "set ignore-paths option using set_option",
+          "verify if the option is correctly set and respected during pylint execution"
+        ],
+        "expected_failure": "The ignore-paths option is not set correctly, leading to incorrect file checks.",
+        "relevant_source_files": [
+          "pylint/config/arguments_manager.py",
+          "pylint/config/arguments_provider.py",
+          "pylint/checkers/base/name_checker/checker.py"
+        ],
+        "relevant_test_files": [
+          "pylint/testutils/functional/test_file.py",
+          "pylint/testutils/lint_module_test.py",
+          "tests/checkers/unittest_variables.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_set_option_ignore_paths():\n    import warnings\n    from pylint.config.arguments_provider import _ArgumentsProvider\n    from unittest.mock import Mock\n    \n    mock_manager = Mock()\n    provider = _ArgumentsProvider(mock_manager)\n    provider.set_option('ignore-paths', ['^src/gen/.*$'])\n    \n    # Check if the option is set correctly\n    assert provider.option_value('ignore-paths') == ['^src/gen/.*$']"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [
+          "ignore-paths",
+          "set_option"
+        ],
+        "identifiers": {
+          "functions": [
+            "set_option"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [],
+        "oracle": "",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    },
+    {
+      "scenario_id": "S3",
+      "score": 0.58,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function 'NameChecker.visit_module' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S3",
+        "target_location": {
+          "source_file": "pylint/checkers/base/name_checker/checker.py",
+          "target_function": "NameChecker.visit_module",
+          "related_classes": [
+            "NameChecker"
+          ],
+          "candidate_test_file": "tests/checkers/unittest_base_checker.py",
+          "confidence": "low"
+        },
+        "setup_steps": [
+          "import the NameChecker class",
+          "create an instance of NameChecker"
+        ],
+        "execution_stimulus": [
+          "simulate visiting a module that should be ignored",
+          "check if the module is processed despite being in ignore-paths"
+        ],
+        "expected_failure": "The module is processed even though it matches the ignore-paths pattern.",
+        "relevant_source_files": [
+          "pylint/config/arguments_manager.py",
+          "pylint/config/arguments_provider.py",
+          "pylint/checkers/base/name_checker/checker.py"
+        ],
+        "relevant_test_files": [
+          "pylint/testutils/functional/test_file.py",
+          "pylint/testutils/lint_module_test.py",
+          "tests/checkers/unittest_variables.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_visit_module_ignore_paths():\n    from pylint.checkers.base.name_checker.checker import NameChecker\n    \n    checker = NameChecker()\n    # Simulate visiting a module that should be ignored\n    checker.visit_module('src/gen/ignored_module.py')\n    \n    # Check if the module was incorrectly processed\n    assert 'ignored_module' not in checker.processed_modules"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [
+          "ignore-paths",
+          "visit_module"
+        ],
+        "identifiers": {
+          "functions": [
+            "visit_module"
+          ],
+          "classes": [
+            "NameChecker"
+          ]
+        },
+        "oracle_hints": [],
+        "oracle": "",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/crypto/crypto.py",
+      "target_function": "encipher_morse",
+      "related_classes": [],
+      "candidate_test_file": "sympy/crypto/tests/test_crypto.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import sympy.crypto.crypto as crypto",
+      "morse_mapping = crypto.morse_mapping",
+      "Use the generated reproduction path that calls encipher_morse."
+    ],
+    "execution_stimulus": [
+      "encoded_value = crypto.encipher_morse('1')",
+      "Execute the focused target API path: encipher_morse."
+    ],
+    "expected_failure": "The encoded value for '1' is incorrectly mapped to '----' instead of '.----'",
+    "relevant_source_files": [
+      "sympy/crypto/crypto.py",
+      "sympy/combinatorics/perm_groups.py",
+      "sympy/combinatorics/permutations.py"
+    ],
+    "relevant_test_files": [
+      "sympy/combinatorics/tests/test_permutations.py",
+      "sympy/crypto/tests/test_crypto.py",
+      "sympy/combinatorics/tests/test_perm_groups.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_encipher_morse_incorrect_1_mapping():\n    import sympy.crypto.crypto as crypto\n    encoded_value = crypto.encipher_morse('1')\n    assert encoded_value == '----'"
+      },
+      {
+        "language": "python",
+        "code": "def test_encipher_morse_correct_1_mapping_repro():\n    from sympy.crypto.crypto import encipher_morse\n    encoded_value = encipher_morse('1')\n    assert encoded_value == '.----'\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(encoded_value) != '----'"
+      }
+    ],
+    "expected_outputs": [
+      ".----"
+    ],
+    "actual_outputs": [
+      "----"
+    ],
+    "error_keywords": [
+      "incorrect mapping",
+      "morse encoding"
+    ],
+    "identifiers": {
+      "functions": [
+        "encipher_morse"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/crypto/tests/test_crypto.py",
+      "target_source_file": "sympy/crypto/crypto.py",
+      "test_visible_functions": [
+        "encipher_morse"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

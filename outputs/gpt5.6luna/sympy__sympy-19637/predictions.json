@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-19637",
+    "model_patch": "--- a/sympy/core/tests/test_sympify.py\n+++ b/sympy/core/tests/test_sympify.py\n@@ -763,3 +763,13 @@\n     raises(SympifyError, lambda: sympify(numpy.array([1]), strict=True))\n     raises(SympifyError, lambda: sympify(z1, strict=True))\n     raises(SympifyError, lambda: sympify(z2, strict=True))\n+\n+import re\n+from sympy.core.sympify import kernS\n+from sympy.abc import x\n+def test_kernS_unbound_local_error_repro():\n+    text = \"(2*x)/(x-1)\"\n+    expr = kernS(text)\n+    assert expr == (2*x)/(x-1)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(expr) != \"UnboundLocalError: local variable 'kern' referenced before assignment\"\n",
+    "patch_sha256": "22c01d75534f24aacd0cf82e7bfb6877bb4931980530450fcbc57b308f3a5190"
+  }
+]

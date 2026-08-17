@@ -1,0 +1,41 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13496",
+  "observed_behavior": [
+    "It took me a while to notice that it actually works, and I had to inspect the source code of both `IsolationForest` and `BaseBagging`. Also, it looks to me that the behavior is in-line with `sklearn.ensemble.BaseForest` that is behind e.g. `sklearn.ensemble.RandomForestClassifier`."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "It took me a while to notice that it actually works, and I had to inspect the source code of both `IsolationForest` and `BaseBagging`. Also, it looks to me that the behavior is in-line with `sklearn.ensemble.BaseForest` that is behind e.g. `sklearn.ensemble.RandomForestClassifier`.",
+    "* document it in the same way as it is documented for `RandomForestClassifier`, i.e. say:",
+    "When set to ``True``, reuse the solution of the previous call to fit",
+    "* possibly also mention in the \"IsolationForest example\" documentation entry;"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "__init__"
+    ],
+    "classes": [
+      "BaseBagging",
+      "BaseForest",
+      "Glossary",
+      "IsolationForest",
+      "RandomForestClassifier"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Expose warm_start in Isolation forest\nIt seems to me that `sklearn.ensemble.IsolationForest` supports incremental addition of new trees with the `warm_start` parameter of its parent class, `sklearn.ensemble.BaseBagging`.\n\nEven though this parameter is not exposed in `__init__()` , it gets inherited from `BaseBagging` and one can use it by changing it to `True` after initialization. To make it work, you have to also increment `n_estimators` on every iteration. \n\nIt took me a while to notice that it actually works, and I had to inspect the source code of both `IsolationForest` and `BaseBagging`. Also, it looks to me that the behavior is in-line with `sklearn.ensemble.BaseForest` that is behind e.g. `sklearn.ensemble.RandomForestClassifier`.\n\nTo make it more easier to use, I'd suggest to:\n* expose `warm_start` in `IsolationForest.__init__()`, default `False`;\n* document it in the same way as it is documented for `RandomForestClassifier`, i.e. say:\n```py\n    warm_start : bool, optional (default=False)\n        When set to ``True``, reuse the solution of the previous call to fit\n        and add more estimators to the ensemble, otherwise, just fit a whole\n        new forest. See :term:`the Glossary <warm_start>`.\n```\n* add a test to make sure it works properly;\n* possibly also mention in the \"IsolationForest example\" documentation entry;",
+  "code_examples": [
+    {
+      "language": "py",
+      "code": "warm_start : bool, optional (default=False)\n        When set to ``True``, reuse the solution of the previous call to fit\n        and add more estimators to the ensemble, otherwise, just fit a whole\n        new forest. See :term:`the Glossary <warm_start>`.",
+      "context_before": "* document it in the same way as it is documented for `RandomForestClassifier`, i.e. say:",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

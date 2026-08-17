@@ -1,0 +1,349 @@
+{
+  "instance_id": "psf__requests-2317",
+  "repo": "psf/requests",
+  "base_commit": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+  "repo_path": "data/repos/psf__requests",
+  "candidate_source_files": [
+    {
+      "path": "requests/sessions.py",
+      "score": 37,
+      "matched_identifiers": [
+        "args",
+        "encode",
+        "list",
+        "requests/sessions.py",
+        "sure"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:requests/sessions.py",
+        "stem_in_issue_text:sessions",
+        "source_content_tokens:args,encode,list,sure,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "merge_setting",
+        "merge_hooks",
+        "SessionRedirectMixin.resolve_redirects",
+        "SessionRedirectMixin.rebuild_auth",
+        "SessionRedirectMixin.rebuild_proxies",
+        "Session.prepare_request",
+        "Session.request",
+        "Session.get",
+        "Session.options",
+        "Session.head",
+        "Session.post",
+        "Session.put",
+        "Session.patch",
+        "Session.delete",
+        "Session.send",
+        "Session.merge_environment_settings",
+        "Session.get_adapter",
+        "Session.close",
+        "Session.mount",
+        "session"
+      ]
+    },
+    {
+      "path": "requests/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "doesn",
+        "encode",
+        "list",
+        "problem"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:doesn,encode,list,problem,safe"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "dict_to_sequence",
+        "super_len",
+        "get_netrc_auth",
+        "guess_filename",
+        "from_key_val_list",
+        "to_key_val_list",
+        "parse_list_header",
+        "parse_dict_header",
+        "unquote_header_value",
+        "dict_from_cookiejar",
+        "add_dict_to_cookiejar",
+        "get_encodings_from_content",
+        "get_encoding_from_headers",
+        "stream_decode_response_unicode",
+        "iter_slices",
+        "get_unicode_from_response",
+        "unquote_unreserved",
+        "requote_uri",
+        "address_in_network",
+        "dotted_netmask",
+        "is_ipv4_address",
+        "is_valid_cidr",
+        "should_bypass_proxies",
+        "get_environ_proxies",
+        "default_user_agent",
+        "default_headers",
+        "parse_header_links",
+        "guess_json_utf",
+        "prepend_scheme_if_needed",
+        "get_auth_from_url",
+        "to_native_string",
+        "urldefragauth"
+      ]
+    },
+    {
+      "path": "requests/adapters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "args",
+        "encode",
+        "problem",
+        "sure"
+      ],
+      "reasons": [
+        "source_content_tokens:args,encode,problem,sure,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseAdapter.send",
+        "BaseAdapter.close",
+        "HTTPAdapter.init_poolmanager",
+        "HTTPAdapter.proxy_manager_for",
+        "HTTPAdapter.cert_verify",
+        "HTTPAdapter.build_response",
+        "HTTPAdapter.get_connection",
+        "HTTPAdapter.close",
+        "HTTPAdapter.request_url",
+        "HTTPAdapter.add_headers",
+        "HTTPAdapter.proxy_headers",
+        "HTTPAdapter.send"
+      ]
+    },
+    {
+      "path": "requests/auth.py",
+      "score": 16,
+      "matched_identifiers": [
+        "args",
+        "encode",
+        "method",
+        "utils"
+      ],
+      "reasons": [
+        "source_content_tokens:args,encode,utils,method,response"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "HTTPDigestAuth.build_digest_header",
+        "HTTPDigestAuth.handle_401"
+      ]
+    },
+    {
+      "path": "requests/cookies.py",
+      "score": 16,
+      "matched_identifiers": [
+        "args",
+        "found",
+        "list",
+        "utils"
+      ],
+      "reasons": [
+        "source_content_tokens:args,list,utils,found,method"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MockRequest.get_type",
+        "MockRequest.get_host",
+        "MockRequest.get_origin_req_host",
+        "MockRequest.get_full_url",
+        "MockRequest.is_unverifiable",
+        "MockRequest.has_header",
+        "MockRequest.get_header",
+        "MockRequest.add_header",
+        "MockRequest.add_unredirected_header",
+        "MockRequest.get_new_headers",
+        "MockRequest.unverifiable",
+        "MockRequest.origin_req_host",
+        "MockRequest.host",
+        "MockResponse.info",
+        "MockResponse.getheaders",
+        "extract_cookies_to_jar",
+        "get_cookie_header",
+        "remove_cookie_by_name",
+        "RequestsCookieJar.get",
+        "RequestsCookieJar.set",
+        "RequestsCookieJar.iterkeys",
+        "RequestsCookieJar.keys",
+        "RequestsCookieJar.itervalues",
+        "RequestsCookieJar.values",
+        "RequestsCookieJar.iteritems",
+        "RequestsCookieJar.items",
+        "RequestsCookieJar.list_domains",
+        "RequestsCookieJar.list_paths",
+        "RequestsCookieJar.multiple_domains",
+        "RequestsCookieJar.get_dict",
+        "RequestsCookieJar.set_cookie",
+        "RequestsCookieJar.update",
+        "RequestsCookieJar.copy",
+        "create_cookie",
+        "morsel_to_cookie",
+        "cookiejar_from_dict",
+        "merge_cookies"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "test_requests.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:requests",
+        "internal_name_overlap:requests",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "test_requests.py:pytest_import_or_conftest",
+      "test_requests.py:unittest_or_django_test_import",
+      "test_requests.py:top_level_test_functions",
+      "test_requests.py:testcase_class:RequestsTestCase",
+      "test_requests.py:testcase_class:TestCaseInsensitiveDict",
+      "test_requests.py:testcase_class:TestContentEncodingDetection",
+      "test_requests.py:testcase_class:TestMorselToCookieExpires",
+      "test_requests.py:testcase_class:TestMorselToCookieMaxAge",
+      "test_requests.py:testcase_class:TestRedirects",
+      "test_requests.py:testcase_class:TestTimeout",
+      "test_requests.py:testcase_class:UtilsTestCase"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 83,
+  "indexed_test_file_count": 1,
+  "available_imports": {
+    "test_requests": [
+      "RedirectSession",
+      "RequestsTestCase",
+      "TestCaseInsensitiveDict",
+      "TestContentEncodingDetection",
+      "TestMorselToCookieExpires",
+      "TestMorselToCookieMaxAge",
+      "TestRedirects",
+      "TestTimeout",
+      "UtilsTestCase",
+      "assert_copy",
+      "httpbin",
+      "list_of_tuples",
+      "test_data_argument_accepts_tuples",
+      "test_prepare_unicode_url",
+      "test_prepared_request_complete_copy",
+      "test_prepared_request_empty_copy",
+      "test_prepared_request_no_cookies_copy"
+    ],
+    "requests.utils": [
+      "add_dict_to_cookiejar",
+      "address_in_network",
+      "default_headers",
+      "default_user_agent",
+      "dict_from_cookiejar",
+      "dict_to_sequence",
+      "dotted_netmask",
+      "from_key_val_list",
+      "get_auth_from_url",
+      "get_encoding_from_headers",
+      "get_encodings_from_content",
+      "get_environ_proxies",
+      "get_netrc_auth",
+      "get_unicode_from_response",
+      "guess_filename",
+      "guess_json_utf",
+      "is_ipv4_address",
+      "is_valid_cidr",
+      "iter_slices",
+      "parse_dict_header",
+      "parse_header_links",
+      "parse_list_header",
+      "prepend_scheme_if_needed",
+      "requote_uri",
+      "should_bypass_proxies",
+      "stream_decode_response_unicode",
+      "super_len",
+      "to_key_val_list",
+      "to_native_string",
+      "unquote_header_value",
+      "unquote_unreserved",
+      "urldefragauth"
+    ],
+    "requests.adapters": [
+      "BaseAdapter",
+      "HTTPAdapter"
+    ],
+    "requests": [
+      "ConnectionError",
+      "HTTPError",
+      "PreparedRequest",
+      "Request",
+      "RequestException",
+      "Response",
+      "Session",
+      "Timeout",
+      "TooManyRedirects",
+      "URLRequired",
+      "codes",
+      "delete",
+      "get",
+      "head",
+      "options",
+      "patch",
+      "post",
+      "put",
+      "request",
+      "session",
+      "utils"
+    ],
+    "requests.auth": [
+      "AuthBase",
+      "HTTPBasicAuth",
+      "HTTPDigestAuth",
+      "HTTPProxyAuth",
+      "_basic_auth_str"
+    ],
+    "requests.sessions": [
+      "Session",
+      "SessionRedirectMixin",
+      "merge_hooks",
+      "merge_setting",
+      "session"
+    ],
+    "requests.cookies": [
+      "CookieConflictError",
+      "MockRequest",
+      "MockResponse",
+      "RequestsCookieJar",
+      "cookiejar_from_dict",
+      "create_cookie",
+      "extract_cookies_to_jar",
+      "get_cookie_header",
+      "merge_cookies",
+      "morsel_to_cookie",
+      "remove_cookie_by_name"
+    ]
+  },
+  "test_example_snippet": "class TestContentEncodingDetection(unittest.TestCase):\n\n    def test_none(self):\n        encodings = requests.utils.get_encodings_from_content('')\n        assert not len(encodings)\n\n    def test_html_charset(self):\n        \"\"\"HTML5 meta charset attribute\"\"\"\n        content = '<meta charset=\"UTF-8\">'\n        encodings = requests.utils.get_encodings_from_content(content)\n        assert len(encodings) == 1\n        assert encodings[0] == 'UTF-8'\n\n    def test_html4_pragma(self):\n        \"\"\"HTML4 pragma directive\"\"\"\n        content = '<meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\">'\n        encodings = requests.utils.get_encodings_from_content(content)\n        assert len(encodings) == 1\n        assert encodings[0] == 'UTF-8'\n\n    def test_xhtml_pragma(self):\n        \"\"\"XHTML 1.x served with text/html MIME type\"\"\"\n        content = '<meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\" />'\n        encodings = requests.utils.get_encodings_from_content(content)\n        assert len(encodings) == 1\n        assert encodings[0] == 'UTF-8'\n\n    def test_xml(self):\n        \"\"\"XHTML 1.x served as XML\"\"\"\n        content = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>'\n        encodings = requests.utils.get_encodings_from_content(content)\n        assert len(encodings) == 1\n        assert encodings[0] == 'UTF-8'\n\n    def test_precedence(self):",
+  "conftest_fixtures": {}
+}

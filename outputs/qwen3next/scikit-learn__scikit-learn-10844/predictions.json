@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-10844",
+    "model_patch": "--- a/sklearn/metrics/cluster/tests/test_supervised.py\n+++ b/sklearn/metrics/cluster/tests/test_supervised.py\n@@ -274,3 +274,14 @@\n     # symmetric and permutation(both together)\n     score_both = fowlkes_mallows_score(labels_b, (labels_a + 2) % 3)\n     assert_almost_equal(score_both, expected)\n+\n+import warnings\n+\n+def test_fowlkes_mallows_score_large_input_warning_repro():\n+    labels_true = np.random.randint(0, 1000000, size=1000000)\n+    labels_pred = np.random.randint(0, 1000000, size=1000000)\n+    with warnings.catch_warnings(record=True) as w:\n+        warnings.simplefilter('always')\n+        score = fowlkes_mallows_score(labels_true, labels_pred)\n+    assert any(isinstance(warning.message, RuntimeWarning) for warning in w), 'A RuntimeWarning should be raised'\n+    assert np.isnan(score), 'The score should be NaN'\n",
+    "patch_sha256": "4528734e9bed4040a66ebf3d1227e1bf2f80959ab5a185b614444a3e8bf1a81a"
+  }
+]

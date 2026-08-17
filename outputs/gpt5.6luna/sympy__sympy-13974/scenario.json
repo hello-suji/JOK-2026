@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/matrices/common.py",
+      "target_function": "expand",
+      "related_classes": [
+        "Pauli",
+        "Symbol",
+        "TensorProduct",
+        "TP"
+      ],
+      "candidate_test_file": "sympy/physics/quantum/tests/test_tensorproduct.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where expand can be called.",
+      "Use the generated reproduction path that calls expand, subs.",
+      "Use the generated reproduction path that calls expand, subs, tp."
+    ],
+    "execution_stimulus": [
+      "Call expand with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: expand, subs.",
+      "Execute the focused target API path: expand, subs, tp."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/matrices/common.py",
+      "sympy/core/symbol.py",
+      "sympy/physics/paulialgebra.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/quantum/tests/test_tensorproduct.py",
+      "sympy/physics/tests/test_paulialgebra.py",
+      "sympy/matrices/expressions/tests/test_dotproduct.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "In [1]: from sympy import *\n        from sympy.physics.quantum import TensorProduct as tp\n        from sympy.physics.quantum import tensor_product_simp as tps\n        from sympy.physics.paulialgebra import Pauli\n        a = Symbol('a', commutative=False)\n\nIn [2]: t1 = tp(1,1)*tp(1,1)\n        t1\nOut[2]: 1x1**2\n\nIn [3]: tps(t1)\nOut[3]: 1x1**2\n\nIn [4]: t1.expand(tensorproduct=True)\nOut[4]: 1x1**2\n\nIn [5]: tps(tp(1,1)*tp(1,a)).subs(a, 1)\nOut[5]: 1x1\n\nIn [6]: t2 = tp(1,Pauli(3))*tp(1,Pauli(3))\n        t2\nOut[6]: 1xsigma3**2\n\nIn [7]: tps(t2)\nOut[7]: 1xsigma3**2\n\nIn [8]: t2.expand(tensorproduct=True)\nOut[8]: 1xsigma3**2\n\nIn [9]: tps(tp(1,Pauli(3))*tp(1,a)).subs(a, Pauli(3))\nOut[9]: 1x1"
+      },
+      {
+        "language": "python",
+        "code": "import re\ndef test_tensor_product_power_evaluation_repro():\n    from sympy.physics.paulialgebra import Pauli\n    from sympy.core.symbol import Symbol\n    from sympy.physics.quantum.tensorproduct import TensorProduct as TP\n\n    a = Symbol('a', commutative=False)\n    t1 = TP(Pauli(1), Pauli(1))\n    t2 = t1**2\n\n    # Expected behavior after the bug is fixed\n    assert t2.expand() == TP(Pauli(1), Pauli(1)).expand()\n    assert t2.subs(a, 1).expand() == TP(Pauli(1), Pauli(1)).subs(a, 1).expand()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "expand",
+        "subs",
+        "tp",
+        "tps"
+      ],
+      "classes": [
+        "Pauli",
+        "Symbol",
+        "TensorProduct",
+        "TP"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/quantum/tests/test_tensorproduct.py",
+      "target_source_file": "sympy/matrices/common.py",
+      "test_visible_functions": [
+        "expand",
+        "subs",
+        "tp"
+      ],
+      "test_visible_classes": [
+        "Pauli",
+        "Symbol",
+        "TensorProduct",
+        "TP"
+      ]
+    }
+  }
+]

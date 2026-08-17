@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/staticfiles/storage.py",
+      "target_function": "post_process",
+      "related_classes": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "candidate_test_file": "tests/staticfiles_tests/test_storage.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.staticfiles.storage import ManifestStaticFilesStorage",
+      "class MyManifestStaticFilesStorage(ManifestStaticFilesStorage): max_post_process_passes = 0",
+      "storage = MyManifestStaticFilesStorage()",
+      "Use the generated reproduction path that calls post_process."
+    ],
+    "execution_stimulus": [
+      "list(storage.post_process([], dry_run=False))",
+      "Execute the focused target API path: post_process."
+    ],
+    "expected_failure": "UnboundLocalError: local variable 'substitutions' referenced before assignment",
+    "relevant_source_files": [
+      "django/contrib/staticfiles/storage.py",
+      "django/contrib/staticfiles/management/commands/collectstatic.py",
+      "django/core/files/storage.py"
+    ],
+    "relevant_test_files": [
+      "tests/staticfiles_tests/test_storage.py",
+      "tests/staticfiles_tests/storage.py",
+      "tests/staticfiles_tests/test_utils.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.staticfiles.storage import ManifestStaticFilesStorage\n\nclass TestManifestStaticFilesStorage(TestCase):\n    def test_post_process_with_zero_max_post_process_passes_repro(self):\n        class MyManifestStaticFilesStorage(ManifestStaticFilesStorage):\n            max_post_process_passes = 0\n        storage = MyManifestStaticFilesStorage()\n        result = list(storage.post_process([], dry_run=False))\n        self.assertEqual(result, [])\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(result) != \"UnboundLocalError: local variable 'substitutions' referenced before assignment\""
+      },
+      {
+        "language": "python",
+        "code": "def test_post_process_with_zero_max_post_process_passes():\n    from django.contrib.staticfiles.storage import ManifestStaticFilesStorage\n    class MyManifestStaticFilesStorage(ManifestStaticFilesStorage):\n        max_post_process_passes = 0\n    storage = MyManifestStaticFilesStorage()\n    try:\n        list(storage.post_process([], dry_run=False))\n    except UnboundLocalError as e:\n        assert str(e) == \"local variable 'substitutions' referenced before assignment\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "UnboundLocalError: local variable 'substitutions' referenced before assignment"
+    ],
+    "error_keywords": [
+      "UnboundLocalError",
+      "substitutions"
+    ],
+    "identifiers": {
+      "functions": [
+        "post_process"
+      ],
+      "classes": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/staticfiles_tests/test_storage.py",
+      "target_source_file": "django/contrib/staticfiles/storage.py",
+      "test_visible_functions": [
+        "post_process"
+      ],
+      "test_visible_classes": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ]
+    }
+  }
+]

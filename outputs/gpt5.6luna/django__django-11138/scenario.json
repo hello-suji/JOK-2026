@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/mysql/operations.py",
+      "target_function": "date",
+      "related_classes": [
+        "DstTzInfo",
+        "MyModel",
+        "MySQL",
+        "DatabaseOperations"
+      ],
+      "candidate_test_file": "tests/model_fields/test_datetimefield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where date can be called.",
+      "Use the generated reproduction path that calls date, datetime, make_aware, settings."
+    ],
+    "execution_stimulus": [
+      "Call date with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: date, datetime, make_aware, settings."
+    ],
+    "expected_failure": "But this does not work, while it logically should",
+    "relevant_source_files": [
+      "django/db/backends/mysql/operations.py",
+      "django/contrib/gis/db/backends/mysql/operations.py",
+      "django/db/backends/sqlite3/operations.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/test_datetimefield.py",
+      "tests/backends/oracle/test_operations.py",
+      "tests/datetimes/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import datetime\nfrom django.conf import settings\nfrom django.utils import timezone\nfrom django.db.backends.mysql.operations import DatabaseOperations\nfrom django.utils.timezone import make_aware\nfrom django.utils.dateparse import parse_datetime\nfrom django.test import TestCase\n\n\nclass TestMySQLDateConversion(TestCase):\n    def test_mysql_date_conversion_repro(self):\n        original_time_zone = settings.TIME_ZONE\n        settings.TIME_ZONE = 'Europe/Paris'\n        try:\n            db_ops = DatabaseOperations(connection=None)\n            naive_datetime = parse_datetime('2023-01-01 12:00:00')\n            aware_datetime = make_aware(naive_datetime, timezone.get_current_timezone())\n            converted_datetime = db_ops.date(aware_datetime)\n            self.assertEqual(converted_datetime.tzinfo, timezone.get_current_timezone())\n        finally:\n            settings.TIME_ZONE = original_time_zone"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "date",
+        "datetime",
+        "exists",
+        "make_aware",
+        "settings",
+        "timezone",
+        "parse_datetime",
+        "get_current_timezone"
+      ],
+      "classes": [
+        "DstTzInfo",
+        "MyModel",
+        "MySQL",
+        "SQLite",
+        "DatabaseOperations"
+      ],
+      "files": [
+        "1.11.x/django/db/backends/mysql/operations.py",
+        "manage.py",
+        "settings.py",
+        "x/django/db/backends/mysql/operations.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_fields/test_datetimefield.py",
+      "target_source_file": "django/db/backends/mysql/operations.py",
+      "test_visible_functions": [
+        "date",
+        "datetime",
+        "make_aware",
+        "settings",
+        "timezone",
+        "parse_datetime",
+        "get_current_timezone"
+      ],
+      "test_visible_classes": [
+        "MySQL",
+        "DatabaseOperations"
+      ]
+    }
+  }
+]

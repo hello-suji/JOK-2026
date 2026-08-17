@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/files.py",
+      "target_function": "hasattr",
+      "related_classes": [
+        "ImageField"
+      ],
+      "candidate_test_file": "tests/model_fields/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls hasattr."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: hasattr."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/fields/files.py",
+      "django/forms/models.py",
+      "django/apps/registry.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/models.py",
+      "tests/update_only_fields/models.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.models.fields.files import ImageField\n\nclass TestImageFieldSignalHandling(models.TestCase):\n    def test_post_init_signal_not_added_when_no_width_or_height_field_repro(self):\n        image_field = ImageField()\n        self.assertFalse(hasattr(image_field, '_post_init_signal'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "hasattr"
+      ],
+      "classes": [
+        "ImageField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_fields/models.py",
+      "target_source_file": "django/db/models/fields/files.py",
+      "test_visible_functions": [
+        "hasattr"
+      ],
+      "test_visible_classes": [
+        "ImageField"
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-13798",
+    "model_patch": "--- a/sympy/printing/tests/test_latex.py\n+++ b/sympy/printing/tests/test_latex.py\n@@ -1693,3 +1693,14 @@\n     from sympy.diffgeom import WedgeProduct\n     wp = WedgeProduct(R2.dx, R2.dy)\n     assert latex(wp) == r\"\\mathrm{d}x \\wedge \\mathrm{d}y\"\n+\n+from sympy import symbols, Integral, latex\n+\n+def test_custom_mul_symbol_repro():\n+    x, y = symbols('x y')\n+    expr = 3 * x**2 * y\n+    integral_expr = Integral(2 * x**2 * y, x)\n+    assert latex(expr, mul_symbol='\\,') == '3 \\, x^{2} \\, y'\n+    assert latex(integral_expr) == '\\int 2 x^{2} y\\, dx'\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(integral_expr) != \"'\\\\\\\\int 2 x^{2} y\\\\\\\\, dx' # This thin space is sympy's current behavior\"\n",
+    "patch_sha256": "cb1d2d26d0ca81c9c6a719eb6fdcf7ce38a344259559d3628b52284960e67091"
+  }
+]

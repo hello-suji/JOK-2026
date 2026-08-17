@@ -1,0 +1,12 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -1518,3 +1518,9 @@
+
+ if __name__ == '__main__':
+     unittest.main()
++
++def test_builtin_str_method_conversion_repro():
++    from requests.sessions import builtin_str
++    method = b'GET'
++    converted_method = builtin_str(method)
++    assert converted_method == 'GET'

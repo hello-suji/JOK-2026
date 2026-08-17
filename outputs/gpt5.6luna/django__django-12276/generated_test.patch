@@ -1,0 +1,14 @@
+--- a/tests/staticfiles_tests/test_forms.py
++++ b/tests/staticfiles_tests/test_forms.py
+@@ -36,3 +36,11 @@
+ <script src="https://secure.other.com/path/to/js3"></script>
+ <script src="https://example.com/assets/relative/path/to/js4"></script>"""
+         )
++
++from django.test import TestCase, SimpleTestCase
++from django.forms.widgets import FileInput
++
++class TestFileInputRequiredAttribute(SimpleTestCase):
++    def test_use_required_attribute_with_initial_data_repro(self):
++        widget = FileInput()
++        self.assertFalse(widget.use_required_attribute(initial='somefile.txt'))

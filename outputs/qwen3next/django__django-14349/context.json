@@ -1,0 +1,484 @@
+{
+  "instance_id": "django__django-14349",
+  "repo": "django/django",
+  "base_commit": "a708f39ce67af174df90c5b5e50ad1976cec7cb8",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/validators.py",
+      "score": 23,
+      "matched_identifiers": [
+        "URLValidator",
+        "case",
+        "ffff",
+        "http",
+        "validationerror"
+      ],
+      "reasons": [
+        "class_match:URLValidator",
+        "path_contains_function:validator",
+        "stem_in_issue_text:validators",
+        "source_content_tokens:case,ffff,http,validationerror,validators"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "URLValidator": "class URLValidator(RegexValidator):\n    ul = '\\u00a1-\\uffff'  # Unicode letters range (must not be a raw string).\n\n    # IP patterns\n    ipv4_re = r'(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}'\n    ipv6_re = r'\\[[0-9a-f:.]+\\]'  # (simple regex, validated later)\n\n    # Host patterns\n    hostname_re = r'[a-z' + ul + r'0-9](?:[a-z' + ul + r'0-9-]{0,61}[a-z' + ul + r'0-9])?'\n    # Max length for domain name labels is 63 characters per RFC 1034 sec. 3.1\n    domain_re = r'(?:\\.(?!-)[a-z' + ul + r'0-9-]{1,63}(?<!-))*'\n    tld_re = (\n        r'\\.'                                # dot\n        r'(?!-)'                             # can't start with a dash\n        r'(?:[a-z' + ul + '-]{2,63}'         # domain label"
+      },
+      "top_level_functions": [
+        "validate_integer",
+        "EmailValidator.domain_whitelist",
+        "EmailValidator.validate_domain_part",
+        "validate_ipv4_address",
+        "validate_ipv6_address",
+        "validate_ipv46_address",
+        "ip_address_validators",
+        "int_list_validator",
+        "BaseValidator.compare",
+        "BaseValidator.clean",
+        "MaxValueValidator.compare",
+        "MinValueValidator.compare",
+        "MinLengthValidator.compare",
+        "MinLengthValidator.clean",
+        "MaxLengthValidator.compare",
+        "MaxLengthValidator.clean",
+        "get_available_image_extensions",
+        "validate_image_file_extension"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geoip2/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "djangoproject",
+        "validationerror",
+        "validators",
+        "work"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:djangoproject,validationerror,validators,work,assume"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoIP2.city",
+        "GeoIP2.country_code",
+        "GeoIP2.country_name",
+        "GeoIP2.country",
+        "GeoIP2.coords",
+        "GeoIP2.lon_lat",
+        "GeoIP2.lat_lon",
+        "GeoIP2.geos",
+        "GeoIP2.info",
+        "GeoIP2.open"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "behavior",
+        "djangoproject",
+        "raised",
+        "work"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:djangoproject,raised,work,behavior,changes"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    },
+    {
+      "path": "django/db/backends/base/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "another",
+        "assume",
+        "case",
+        "work"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:case,work,another,assume,based"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseDatabaseWrapper.ensure_timezone",
+        "BaseDatabaseWrapper.timezone",
+        "BaseDatabaseWrapper.timezone_name",
+        "BaseDatabaseWrapper.queries_logged",
+        "BaseDatabaseWrapper.queries",
+        "BaseDatabaseWrapper.get_connection_params",
+        "BaseDatabaseWrapper.get_new_connection",
+        "BaseDatabaseWrapper.init_connection_state",
+        "BaseDatabaseWrapper.create_cursor",
+        "BaseDatabaseWrapper.connect",
+        "BaseDatabaseWrapper.check_settings",
+        "BaseDatabaseWrapper.ensure_connection",
+        "BaseDatabaseWrapper.cursor",
+        "BaseDatabaseWrapper.commit",
+        "BaseDatabaseWrapper.rollback",
+        "BaseDatabaseWrapper.close",
+        "BaseDatabaseWrapper.savepoint",
+        "BaseDatabaseWrapper.savepoint_rollback",
+        "BaseDatabaseWrapper.savepoint_commit",
+        "BaseDatabaseWrapper.clean_savepoints",
+        "BaseDatabaseWrapper.get_autocommit",
+        "BaseDatabaseWrapper.set_autocommit",
+        "BaseDatabaseWrapper.get_rollback",
+        "BaseDatabaseWrapper.set_rollback",
+        "BaseDatabaseWrapper.validate_no_atomic_block",
+        "BaseDatabaseWrapper.validate_no_broken_transaction",
+        "BaseDatabaseWrapper.constraint_checks_disabled",
+        "BaseDatabaseWrapper.disable_constraint_checking",
+        "BaseDatabaseWrapper.enable_constraint_checking",
+        "BaseDatabaseWrapper.check_constraints",
+        "BaseDatabaseWrapper.is_usable",
+        "BaseDatabaseWrapper.close_if_unusable_or_obsolete",
+        "BaseDatabaseWrapper.allow_thread_sharing",
+        "BaseDatabaseWrapper.inc_thread_sharing",
+        "BaseDatabaseWrapper.dec_thread_sharing",
+        "BaseDatabaseWrapper.validate_thread_sharing",
+        "BaseDatabaseWrapper.prepare_database",
+        "BaseDatabaseWrapper.wrap_database_errors",
+        "BaseDatabaseWrapper.chunked_cursor",
+        "BaseDatabaseWrapper.make_debug_cursor"
+      ]
+    },
+    {
+      "path": "django/db/backends/mysql/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "based",
+        "case",
+        "http",
+        "work"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:case,http,work,based,behavior"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.disable_constraint_checking",
+        "DatabaseWrapper.enable_constraint_checking",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.display_name",
+        "DatabaseWrapper.data_type_check_constraints",
+        "DatabaseWrapper.mysql_server_data",
+        "DatabaseWrapper.mysql_server_info",
+        "DatabaseWrapper.mysql_version",
+        "DatabaseWrapper.mysql_is_mariadb",
+        "DatabaseWrapper.sql_mode"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/test_validators.py",
+      "score": 18,
+      "matched_identifiers": [
+        "TestValidators",
+        "URLValidator",
+        "validator"
+      ],
+      "reasons": [
+        "test_path_contains_function:validator",
+        "test_path_related_to_class:TestValidators",
+        "test_path_related_to_class:URLValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_validators.py",
+      "score": 18,
+      "matched_identifiers": [
+        "TestValidators",
+        "URLValidator",
+        "validator"
+      ],
+      "reasons": [
+        "test_path_contains_function:validator",
+        "test_path_related_to_class:TestValidators",
+        "test_path_related_to_class:URLValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/validation/test_validators.py",
+      "score": 18,
+      "matched_identifiers": [
+        "TestValidators",
+        "URLValidator",
+        "validator"
+      ],
+      "reasons": [
+        "test_path_contains_function:validator",
+        "test_path_related_to_class:TestValidators",
+        "test_path_related_to_class:URLValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/validators/tests.py",
+      "score": 16,
+      "matched_identifiers": [
+        "TestValidators",
+        "URLValidator",
+        "validator"
+      ],
+      "reasons": [
+        "test_path_contains_function:validator",
+        "test_class_match:TestValidators",
+        "test_path_related_to_class:TestValidators",
+        "test_path_related_to_class:URLValidator",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 11,
+      "matched_identifiers": [
+        "TestValidators"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestValidators",
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/validation/test_validators.py:unittest_or_django_test_import",
+      "tests/validation/test_validators.py:testcase_class:TestModelsWithValidators",
+      "tests/validators/tests.py:unittest_or_django_test_import",
+      "tests/validators/tests.py:testcase_class:TestValidatorEquality",
+      "tests/validators/tests.py:testcase_class:TestValidators",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_validators.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_validators.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_validators.py:testcase_class:TestFieldWithValidators"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2691,
+  "indexed_test_file_count": 1829,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.validation.test_validators": [
+      "TestModelsWithValidators"
+    ],
+    "tests.validation": [
+      "ValidationAssertions"
+    ],
+    "tests": [
+      "ValidationError"
+    ],
+    "tests.validators.tests": [
+      "DeprecationTests",
+      "TestValidatorEquality",
+      "TestValidators",
+      "create_path"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.auth_tests.test_validators": [
+      "CommonPasswordValidatorTest",
+      "MinimumLengthValidatorTest",
+      "NumericPasswordValidatorTest",
+      "PasswordValidationTest",
+      "UserAttributeSimilarityValidatorTest",
+      "UsernameValidatorsTests"
+    ],
+    "tests.postgres_tests.test_ranges": [
+      "BasicTests",
+      "TestChecks",
+      "TestFormField",
+      "TestQuerying",
+      "TestQueryingWithRanges",
+      "TestRangeContainsLookup",
+      "TestSaveLoad",
+      "TestSerialization",
+      "TestValidators",
+      "TestWidget"
+    ],
+    "tests.forms_tests.tests.test_validators": [
+      "TestFieldWithValidators",
+      "ValidatorCustomMessageTests"
+    ],
+    "django.db": [
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.core.validators": [
+      "BaseValidator",
+      "DecimalValidator",
+      "EmailValidator",
+      "FileExtensionValidator",
+      "MaxLengthValidator",
+      "MaxValueValidator",
+      "MinLengthValidator",
+      "MinValueValidator",
+      "ProhibitNullCharactersValidator",
+      "RegexValidator",
+      "URLValidator",
+      "get_available_image_extensions",
+      "int_list_validator",
+      "ip_address_validators",
+      "validate_image_file_extension",
+      "validate_integer",
+      "validate_ipv46_address",
+      "validate_ipv4_address",
+      "validate_ipv6_address"
+    ],
+    "django.contrib.gis.geoip2.base": [
+      "GeoIP2",
+      "GeoIP2Exception"
+    ],
+    "django.contrib.gis": [
+      "HAS_GEOIP2"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.db.backends.base.base": [
+      "BaseDatabaseWrapper"
+    ],
+    "django.db.backends.mysql.base": [
+      "CursorWrapper",
+      "DatabaseWrapper"
+    ]
+  },
+  "test_example_snippet": "        class TestUser(models.Model):\n            pass\n\n            @property\n            def username(self):\n                return 'foobar'\n\n        with self.assertRaises(ValidationError) as cm:\n            UserAttributeSimilarityValidator().validate('foobar', user=TestUser()),\n        self.assertEqual(cm.exception.messages, ['The password is too similar to the username.'])\n\n    def test_help_text(self):\n        self.assertEqual(\n            UserAttributeSimilarityValidator().get_help_text(),\n            'Your password can’t be too similar to your other personal information.'\n        )\n\n\nclass CommonPasswordValidatorTest(SimpleTestCase):\n    def test_validate(self):\n        expected_error = \"This password is too common.\"\n        self.assertIsNone(CommonPasswordValidator().validate('a-safe-password'))\n\n        with self.assertRaises(ValidationError) as cm:\n            CommonPasswordValidator().validate('godzilla')\n        self.assertEqual(cm.exception.messages, [expected_error])\n\n    def test_validate_custom_list(self):\n        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'common-passwords-custom.txt')\n        validator = CommonPasswordValidator(password_list_path=path)\n        expected_error = \"This password is too common.\"\n        self.assertIsNone(validator.validate('a-safe-password'))\n\n        with self.assertRaises(ValidationError) as cm:\n            validator.validate('from-my-custom-list')",
+  "conftest_fixtures": {}
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/contenttypes/fields.py",
+      "target_function": "",
+      "related_classes": [
+        "ContentType"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_custom_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Currently, when submitting a form, if 'some_field' isn't in the data payload (e.g. it wasn't included in the form, perhaps because its value is derived from another field), and 'some_field' has a default value on the model, it cannot be overwritten with 'self.cleaned_data'.",
+    "relevant_source_files": [
+      "django/contrib/contenttypes/fields.py",
+      "django/contrib/gis/db/models/fields.py",
+      "django/contrib/gis/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.contrib.contenttypes.models import ContentType\n\n\nclass TestFormFieldDefaultOverwrite(TestCase):\n    def test_default_overwritten_by_cleaned_data_repro(self):\n        ct = ContentType.objects.first()\n        form_data = {'name': 'test_name', 'content_type': ct.pk}\n        form = TestContentTypeForm(data=form_data)\n        form.is_valid()\n        self.assertEqual(form.cleaned_data['name'], 'test_name')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "ContentType"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/invalid_models_tests/test_custom_fields.py",
+      "target_source_file": "django/contrib/contenttypes/fields.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "ContentType"
+      ]
+    }
+  }
+]

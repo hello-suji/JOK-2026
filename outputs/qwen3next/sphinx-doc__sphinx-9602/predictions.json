@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9602",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -463,3 +463,14 @@\n     stdout, stderr = capsys.readouterr()\n     assert stdout.startswith(\"c:function\\n\")\n     assert stderr == \"\"\n+\n+from typing import Any, Dict, List, Optional, Tuple\n+import unittest\n+from typing import Any, Dict, List, Optional, Tuple\n+import typing\n+from sphinx.domains.python import type_to_xref\n+\n+class TestLiteralNitpickWarning(unittest.TestCase):\n+    def test_literal_nitpick_warning_repro(self):\n+        result = type_to_xref('typing.Literal[True]', None)\n+        self.assertNotIn('nitpick', result)\n",
+    "patch_sha256": "fe4db518da9509404b8ba1c506f357fe54e85a6b9318f916d7f8e37bd9b9f708"
+  }
+]

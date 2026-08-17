@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/symbol.py",
+      "target_function": "init_printing",
+      "related_classes": [
+        "Bd",
+        "Commutator",
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/physics/quantum/tests/test_commutator.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where init_printing can be called.",
+      "Use the generated reproduction path that calls init_printing."
+    ],
+    "execution_stimulus": [
+      "Call init_printing with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: init_printing."
+    ],
+    "expected_failure": "There are Latex rendering problems within the \"secondquant\" module, as it does not correctly interpret double superscripts containing the \"dagger\" command within Jupyter Notebook.",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/physics/quantum/commutator.py",
+      "sympy/interactive/printing.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/quantum/tests/test_commutator.py",
+      "sympy/core/tests/test_symbol.py",
+      "sympy/physics/quantum/tests/test_printing.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.physics.quantum import Bd, Commutator\nfrom sympy import Symbol\nfrom sympy.interactive.printing import init_printing\n\ndef test_commutator_representation_repro():\n    init_printing()\n    a = Symbol('a')\n    comm = Commutator(Bd(a)**2, Bd(a))\n    str_output = str(comm)\n    assert 'Comm(Bd(a)**2, Bd(a))' == str_output"
+      },
+      {
+        "language": "python",
+        "code": "In [1]: import sympy as sp\n        from sympy.physics.secondquant import B, Bd, Commutator\n        sp.init_printing()\n\nIn [2]: a = sp.Symbol('0')\n\nIn [3]: Commutator(Bd(a)**2, B(a))\nOut[3]: \\displaystyle - \\left[b_{0},b^\\dagger_{0}^{2}\\right]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "init_printing"
+      ],
+      "classes": [
+        "Bd",
+        "Commutator",
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/quantum/tests/test_commutator.py",
+      "target_source_file": "sympy/core/symbol.py",
+      "test_visible_functions": [
+        "init_printing"
+      ],
+      "test_visible_classes": [
+        "Bd",
+        "Commutator",
+        "Symbol"
+      ]
+    }
+  }
+]

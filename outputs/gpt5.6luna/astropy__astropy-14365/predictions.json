@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14365",
+    "model_patch": "--- a/astropy/io/ascii/tests/test_c_reader.py\n+++ b/astropy/io/ascii/tests/test_c_reader.py\n@@ -1842,3 +1842,13 @@\n         [text], format=\"no_header\", delimiter=delimiter, fast_reader=fast_reader\n     )\n     assert_table_equal(t2, expected)\n+\n+def test_qdp_case_insensitivity_repro():\n+    qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'\n+    with open('test.qdp', 'w') as f:\n+        f.write(qdp_content)\n+    table = Table.read('test.qdp', format='ascii.qdp')\n+    assert len(table) == 1\n+    assert len(table.colnames) == 3\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(table) != 'ValueError: Unrecognized QDP line: read serr 1 2'\n",
+    "patch_sha256": "b2e396a7aa0798067bce1a5d28947faeb1bfe40cb561f6bb968943df082953ab"
+  }
+]

@@ -1,0 +1,26 @@
+--- a/tests/custom_pk/fields.py
++++ b/tests/custom_pk/fields.py
+@@ -58,3 +58,23 @@
+         if isinstance(value, MyWrapper):
+             return str(value)
+         return value
++
++from django.test import TestCase
++from django.db.models import CharField, TextChoices
++
++
++class MyChoice(TextChoices):
++    FIRST_CHOICE = 'first', 'First Choice'
++    SECOND_CHOICE = 'second', 'Second Choice'
++
++class MyObject:
++    choice_field = CharField(max_length=10, choices=MyChoice.choices)
++
++class TestMyObjectChoices(TestCase):
++    def setUp(self):
++        self.obj = MyObject()
++        self.obj.choice_field = MyChoice.FIRST_CHOICE
++
++    def test_created_object_is_str_repro(self):
++        self.assertIsInstance(self.obj.choice_field, str)
++        self.assertEqual(self.obj.choice_field, MyChoice.FIRST_CHOICE)

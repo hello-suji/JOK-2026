@@ -1,0 +1,74 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/html.py",
+      "target_function": "_urlize",
+      "related_classes": [],
+      "candidate_test_file": "tests/template_backends/test_django.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _urlize can be called.",
+      "Use the generated reproduction path that calls urlize."
+    ],
+    "execution_stimulus": [
+      "Call _urlize with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: urlize."
+    ],
+    "expected_failure": "urlize() does not handle html escaped string and trailing punctuation correctly",
+    "relevant_source_files": [
+      "django/utils/html.py",
+      "django/contrib/admin/options.py",
+      "django/forms/widgets.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/utils_tests/test_html.py",
+      "tests/forms_tests/tests/test_widgets.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.utils.html import urlize\n\nclass TestUrlizeFunction(TemplateStringsTests):\n    def test_urlize_with_html_escaped_string_and_trailing_punctuation_repro(self):\n        result = urlize('Search for google.com/?q=1&lt! and see.')\n        self.assertEqual(result, 'Search for <a href=\"http://google.com/?q=1%3C\">google.com/?q=1&lt</a>! and see.')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "urlize"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/template_backends/test_django.py",
+      "target_source_file": "django/utils/html.py",
+      "test_visible_functions": [
+        "urlize"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

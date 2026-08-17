@@ -1,0 +1,508 @@
+{
+  "instance_id": "django__django-15268",
+  "repo": "django/django",
+  "base_commit": "0ab58c120939093fea90822f376e1866fc714d1f",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/migrations/operations/models.py",
+      "score": 24,
+      "matched_identifiers": [
+        "AlterIndexTogether",
+        "AlterUniqueTogether",
+        "alterindextogether",
+        "alteruniquetogether",
+        "constraint",
+        "constraints"
+      ],
+      "reasons": [
+        "class_match:AlterUniqueTogether",
+        "class_match:AlterIndexTogether",
+        "source_content_tokens:alterindextogether,alteruniquetogether,constraint,constraints,field"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "AlterUniqueTogether": "class AlterUniqueTogether(AlterTogetherOptionOperation):\n    \"\"\"\n    Change the value of unique_together to the target one.\n    Input value of unique_together must be a set of tuples.\n    \"\"\"\n    option_name = 'unique_together'\n\n    def __init__(self, name, unique_together):\n        super().__init__(name, unique_together)\n\n\nclass AlterIndexTogether(AlterTogetherOptionOperation):\n    \"\"\"\n    Change the value of index_together to the target one.\n    Input value of index_together must be a set of tuples.",
+        "AlterIndexTogether": "class AlterIndexTogether(AlterTogetherOptionOperation):\n    \"\"\"\n    Change the value of index_together to the target one.\n    Input value of index_together must be a set of tuples.\n    \"\"\"\n    option_name = \"index_together\"\n\n    def __init__(self, name, index_together):\n        super().__init__(name, index_together)\n\n\nclass AlterOrderWithRespectTo(ModelOptionOperation):\n    \"\"\"Represent a change with the order_with_respect_to option.\"\"\"\n\n    option_name = 'order_with_respect_to'"
+      },
+      "top_level_functions": [
+        "ModelOperation.name_lower",
+        "ModelOperation.references_model",
+        "ModelOperation.reduce",
+        "CreateModel.deconstruct",
+        "CreateModel.state_forwards",
+        "CreateModel.database_forwards",
+        "CreateModel.database_backwards",
+        "CreateModel.describe",
+        "CreateModel.migration_name_fragment",
+        "CreateModel.references_model",
+        "CreateModel.reduce",
+        "DeleteModel.deconstruct",
+        "DeleteModel.state_forwards",
+        "DeleteModel.database_forwards",
+        "DeleteModel.database_backwards",
+        "DeleteModel.references_model",
+        "DeleteModel.describe",
+        "DeleteModel.migration_name_fragment",
+        "RenameModel.old_name_lower",
+        "RenameModel.new_name_lower",
+        "RenameModel.deconstruct",
+        "RenameModel.state_forwards",
+        "RenameModel.database_forwards",
+        "RenameModel.database_backwards",
+        "RenameModel.references_model",
+        "RenameModel.describe",
+        "RenameModel.migration_name_fragment",
+        "RenameModel.reduce",
+        "ModelOptionOperation.reduce",
+        "AlterModelTable.deconstruct",
+        "AlterModelTable.state_forwards",
+        "AlterModelTable.database_forwards",
+        "AlterModelTable.database_backwards",
+        "AlterModelTable.describe",
+        "AlterModelTable.migration_name_fragment",
+        "AlterTogetherOptionOperation.option_value",
+        "AlterTogetherOptionOperation.deconstruct",
+        "AlterTogetherOptionOperation.state_forwards",
+        "AlterTogetherOptionOperation.database_forwards",
+        "AlterTogetherOptionOperation.database_backwards"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/operations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "constraint",
+        "constraints",
+        "field",
+        "index"
+      ],
+      "reasons": [
+        "stem_in_issue_text:operations",
+        "source_content_tokens:constraint,constraints,field,index,instance"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CreateExtension.state_forwards",
+        "CreateExtension.database_forwards",
+        "CreateExtension.database_backwards",
+        "CreateExtension.extension_exists",
+        "CreateExtension.describe",
+        "CreateExtension.migration_name_fragment",
+        "AddIndexConcurrently.describe",
+        "AddIndexConcurrently.database_forwards",
+        "AddIndexConcurrently.database_backwards",
+        "RemoveIndexConcurrently.describe",
+        "RemoveIndexConcurrently.database_forwards",
+        "RemoveIndexConcurrently.database_backwards",
+        "CollationOperation.state_forwards",
+        "CollationOperation.deconstruct",
+        "CollationOperation.create_collation",
+        "CollationOperation.remove_collation",
+        "CreateCollation.database_forwards",
+        "CreateCollation.database_backwards",
+        "CreateCollation.describe",
+        "CreateCollation.migration_name_fragment",
+        "RemoveCollation.database_forwards",
+        "RemoveCollation.database_backwards",
+        "RemoveCollation.describe",
+        "RemoveCollation.migration_name_fragment",
+        "AddConstraintNotValid.describe",
+        "AddConstraintNotValid.database_forwards",
+        "AddConstraintNotValid.migration_name_fragment",
+        "ValidateConstraint.describe",
+        "ValidateConstraint.database_forwards",
+        "ValidateConstraint.database_backwards",
+        "ValidateConstraint.state_forwards",
+        "ValidateConstraint.migration_name_fragment",
+        "ValidateConstraint.deconstruct"
+      ]
+    },
+    {
+      "path": "django/db/backends/base/operations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "actually",
+        "cases",
+        "constraint",
+        "during"
+      ],
+      "reasons": [
+        "stem_in_issue_text:operations",
+        "source_content_tokens:actually,cases,constraint,during,example"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseDatabaseOperations.autoinc_sql",
+        "BaseDatabaseOperations.bulk_batch_size",
+        "BaseDatabaseOperations.format_for_duration_arithmetic",
+        "BaseDatabaseOperations.cache_key_culling_sql",
+        "BaseDatabaseOperations.unification_cast_sql",
+        "BaseDatabaseOperations.date_extract_sql",
+        "BaseDatabaseOperations.date_trunc_sql",
+        "BaseDatabaseOperations.datetime_cast_date_sql",
+        "BaseDatabaseOperations.datetime_cast_time_sql",
+        "BaseDatabaseOperations.datetime_extract_sql",
+        "BaseDatabaseOperations.datetime_trunc_sql",
+        "BaseDatabaseOperations.time_trunc_sql",
+        "BaseDatabaseOperations.time_extract_sql",
+        "BaseDatabaseOperations.deferrable_sql",
+        "BaseDatabaseOperations.distinct_sql",
+        "BaseDatabaseOperations.fetch_returned_insert_columns",
+        "BaseDatabaseOperations.field_cast_sql",
+        "BaseDatabaseOperations.force_no_ordering",
+        "BaseDatabaseOperations.for_update_sql",
+        "BaseDatabaseOperations.limit_offset_sql",
+        "BaseDatabaseOperations.last_executed_query",
+        "BaseDatabaseOperations.last_insert_id",
+        "BaseDatabaseOperations.lookup_cast",
+        "BaseDatabaseOperations.max_in_list_size",
+        "BaseDatabaseOperations.max_name_length",
+        "BaseDatabaseOperations.no_limit_value",
+        "BaseDatabaseOperations.pk_default_value",
+        "BaseDatabaseOperations.prepare_sql_script",
+        "BaseDatabaseOperations.process_clob",
+        "BaseDatabaseOperations.return_insert_columns",
+        "BaseDatabaseOperations.compiler",
+        "BaseDatabaseOperations.quote_name",
+        "BaseDatabaseOperations.regex_lookup",
+        "BaseDatabaseOperations.savepoint_create_sql",
+        "BaseDatabaseOperations.savepoint_commit_sql",
+        "BaseDatabaseOperations.savepoint_rollback_sql",
+        "BaseDatabaseOperations.set_time_zone_sql",
+        "BaseDatabaseOperations.sql_flush",
+        "BaseDatabaseOperations.execute_sql_flush",
+        "BaseDatabaseOperations.sequence_reset_by_name_sql"
+      ]
+    },
+    {
+      "path": "django/db/backends/mysql/operations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allows",
+        "field",
+        "https",
+        "index"
+      ],
+      "reasons": [
+        "stem_in_issue_text:operations",
+        "source_content_tokens:allows,field,https,index,instance"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseOperations.date_extract_sql",
+        "DatabaseOperations.date_trunc_sql",
+        "DatabaseOperations.datetime_cast_date_sql",
+        "DatabaseOperations.datetime_cast_time_sql",
+        "DatabaseOperations.datetime_extract_sql",
+        "DatabaseOperations.datetime_trunc_sql",
+        "DatabaseOperations.time_trunc_sql",
+        "DatabaseOperations.fetch_returned_insert_rows",
+        "DatabaseOperations.format_for_duration_arithmetic",
+        "DatabaseOperations.force_no_ordering",
+        "DatabaseOperations.adapt_decimalfield_value",
+        "DatabaseOperations.last_executed_query",
+        "DatabaseOperations.no_limit_value",
+        "DatabaseOperations.quote_name",
+        "DatabaseOperations.return_insert_columns",
+        "DatabaseOperations.sql_flush",
+        "DatabaseOperations.sequence_reset_by_name_sql",
+        "DatabaseOperations.validate_autopk_value",
+        "DatabaseOperations.adapt_datetimefield_value",
+        "DatabaseOperations.adapt_timefield_value",
+        "DatabaseOperations.max_name_length",
+        "DatabaseOperations.pk_default_value",
+        "DatabaseOperations.bulk_insert_sql",
+        "DatabaseOperations.combine_expression",
+        "DatabaseOperations.get_db_converters",
+        "DatabaseOperations.convert_booleanfield_value",
+        "DatabaseOperations.convert_datetimefield_value",
+        "DatabaseOperations.convert_uuidfield_value",
+        "DatabaseOperations.binary_placeholder_sql",
+        "DatabaseOperations.subtract_temporals",
+        "DatabaseOperations.explain_query_prefix",
+        "DatabaseOperations.regex_lookup",
+        "DatabaseOperations.insert_statement",
+        "DatabaseOperations.lookup_cast",
+        "DatabaseOperations.conditional_expression_supported_in_where_clause"
+      ]
+    },
+    {
+      "path": "django/db/backends/oracle/operations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "constraint",
+        "constraints",
+        "field",
+        "first"
+      ],
+      "reasons": [
+        "stem_in_issue_text:operations",
+        "source_content_tokens:constraint,constraints,field,first,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseOperations.cache_key_culling_sql",
+        "DatabaseOperations.date_extract_sql",
+        "DatabaseOperations.date_trunc_sql",
+        "DatabaseOperations.datetime_cast_date_sql",
+        "DatabaseOperations.datetime_cast_time_sql",
+        "DatabaseOperations.datetime_extract_sql",
+        "DatabaseOperations.datetime_trunc_sql",
+        "DatabaseOperations.time_trunc_sql",
+        "DatabaseOperations.get_db_converters",
+        "DatabaseOperations.convert_textfield_value",
+        "DatabaseOperations.convert_binaryfield_value",
+        "DatabaseOperations.convert_booleanfield_value",
+        "DatabaseOperations.convert_datetimefield_value",
+        "DatabaseOperations.convert_datefield_value",
+        "DatabaseOperations.convert_timefield_value",
+        "DatabaseOperations.convert_uuidfield_value",
+        "DatabaseOperations.convert_empty_string",
+        "DatabaseOperations.convert_empty_bytes",
+        "DatabaseOperations.deferrable_sql",
+        "DatabaseOperations.fetch_returned_insert_columns",
+        "DatabaseOperations.field_cast_sql",
+        "DatabaseOperations.no_limit_value",
+        "DatabaseOperations.limit_offset_sql",
+        "DatabaseOperations.last_executed_query",
+        "DatabaseOperations.last_insert_id",
+        "DatabaseOperations.lookup_cast",
+        "DatabaseOperations.max_in_list_size",
+        "DatabaseOperations.max_name_length",
+        "DatabaseOperations.pk_default_value",
+        "DatabaseOperations.prep_for_iexact_query",
+        "DatabaseOperations.process_clob",
+        "DatabaseOperations.quote_name",
+        "DatabaseOperations.regex_lookup",
+        "DatabaseOperations.return_insert_columns",
+        "DatabaseOperations.sql_flush",
+        "DatabaseOperations.sequence_reset_by_name_sql",
+        "DatabaseOperations.sequence_reset_sql",
+        "DatabaseOperations.start_transaction_sql",
+        "DatabaseOperations.tablespace_sql",
+        "DatabaseOperations.adapt_datefield_value"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/mysql/test_operations.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:operations",
+        "token_overlap:backends,mysql,operations",
+        "internal_name_overlap:mysql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/oracle/test_operations.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:operations",
+        "token_overlap:backends,operations,oracle",
+        "internal_name_overlap:operations",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/postgresql/test_operations.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:operations",
+        "token_overlap:backends,operations,postgres",
+        "internal_name_overlap:operations",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/sqlite/test_operations.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:operations",
+        "token_overlap:backends,operations",
+        "internal_name_overlap:operations",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/indexes/models.py",
+      "score": 10,
+      "matched_identifiers": [
+        "AlterIndexTogether"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AlterIndexTogether",
+        "test_name_matches_source_stem:models",
+        "token_overlap:index",
+        "internal_name_overlap:together",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/backends/oracle/test_operations.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/test_operations.py:unittest_or_django_test_import",
+      "tests/backends/postgresql/test_operations.py:unittest_or_django_test_import",
+      "tests/backends/mysql/test_operations.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2729,
+  "indexed_test_file_count": 1863,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.indexes.models": [
+      "Article",
+      "ArticleTranslation",
+      "CurrentTranslation",
+      "IndexTogetherSingleList",
+      "IndexedArticle",
+      "IndexedArticle2"
+    ],
+    "tests.backends.oracle.test_operations": [
+      "OperationsTests"
+    ],
+    "tests.backends.sqlite.test_operations": [
+      "SQLiteOperationsTests"
+    ],
+    "tests.backends.postgresql.test_operations": [
+      "PostgreSQLOperationsTests"
+    ],
+    "tests.backends.mysql.test_operations": [
+      "MySQLOperationsTests"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.contrib.postgres.operations": [
+      "AddConstraintNotValid",
+      "AddIndexConcurrently",
+      "BloomExtension",
+      "BtreeGinExtension",
+      "BtreeGistExtension",
+      "CITextExtension",
+      "CollationOperation",
+      "CreateCollation",
+      "CreateExtension",
+      "CryptoExtension",
+      "HStoreExtension",
+      "NotInTransactionMixin",
+      "RemoveCollation",
+      "RemoveIndexConcurrently",
+      "TrigramExtension",
+      "UnaccentExtension",
+      "ValidateConstraint"
+    ],
+    "django.db.backends.oracle.operations": [
+      "DatabaseOperations"
+    ],
+    "django.db.backends.base.operations": [
+      "BaseDatabaseOperations"
+    ],
+    "django.db.backends.mysql.operations": [
+      "DatabaseOperations"
+    ],
+    "django.db.migrations": [
+      "AddConstraint",
+      "AddField",
+      "AddIndex",
+      "AlterField",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "RemoveConstraint",
+      "RemoveField",
+      "RemoveIndex",
+      "RenameField",
+      "RenameModel",
+      "RunPython",
+      "RunSQL",
+      "SeparateDatabaseAndState"
+    ],
+    "django.db.migrations.operations.models": [
+      "AddConstraint",
+      "AddIndex",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterTogetherOptionOperation",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "IndexOperation",
+      "ModelOperation",
+      "ModelOptionOperation",
+      "RemoveConstraint",
+      "RemoveIndex",
+      "RenameModel",
+      "_check_for_duplicates"
+    ]
+  },
+  "test_example_snippet": "    def test_sql_flush(self):\n        # allow_cascade doesn't change statements on MySQL.\n        for allow_cascade in [False, True]:\n            with self.subTest(allow_cascade=allow_cascade):\n                self.assertEqual(\n                    connection.ops.sql_flush(\n                        no_style(),\n                        [Person._meta.db_table, Tag._meta.db_table],\n                        allow_cascade=allow_cascade,\n                    ),\n                    [\n                        'SET FOREIGN_KEY_CHECKS = 0;',\n                        'DELETE FROM `backends_person`;',\n                        'DELETE FROM `backends_tag`;',\n                        'SET FOREIGN_KEY_CHECKS = 1;',\n                    ],\n                )\n\n    def test_sql_flush_sequences(self):\n        # allow_cascade doesn't change statements on MySQL.\n        for allow_cascade in [False, True]:\n            with self.subTest(allow_cascade=allow_cascade):\n                self.assertEqual(\n                    connection.ops.sql_flush(\n                        no_style(),\n                        [Person._meta.db_table, Tag._meta.db_table],\n                        reset_sequences=True,\n                        allow_cascade=allow_cascade,\n                    ),\n                    [\n                        'SET FOREIGN_KEY_CHECKS = 0;',\n                        'TRUNCATE `backends_person`;',\n                        'TRUNCATE `backends_tag`;',\n                        'SET FOREIGN_KEY_CHECKS = 1;',\n                    ],",
+  "conftest_fixtures": {}
+}

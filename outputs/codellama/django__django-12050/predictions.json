@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-12050",
+    "model_patch": "--- a/tests/queries/test_query.py\n+++ b/tests/queries/test_query.py\n@@ -0,0 +1,9 @@\n+from django.test import TestCase\n+\n+from .models import PickledObject\n+\n+class PickledFieldGetRegressionTests(TestCase):\n+    def test_get_uses_pickled_field_prep_value_for_lookup_repro(self):\n+        PickledObject.objects.create(data=[1, 2, 3])\n+        obj = PickledObject.objects.get(data=[1, 2, 3])\n+        self.assertEqual(obj.data, [1, 2, 3])\n",
+    "patch_sha256": "fce360d4dece931a5bae68f1e459d4defba6f68ced351590f8aaebd1821c5d28"
+  }
+]

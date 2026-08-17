@@ -1,0 +1,102 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/pycode.py",
+      "target_function": "pycode",
+      "related_classes": [
+        "Indexed",
+        "IndexedBase",
+        "PythonCodePrinter"
+      ],
+      "candidate_test_file": "sympy/printing/tests/test_pycode.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _print_Indexed can be called.",
+      "Use the generated reproduction path that calls pycode."
+    ],
+    "execution_stimulus": [
+      "Call _print_Indexed with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: pycode."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/printing/pycode.py",
+      "sympy/tensor/indexed.py",
+      "sympy/utilities/lambdify.py"
+    ],
+    "relevant_test_files": [
+      "sympy/printing/tests/test_pycode.py",
+      "sympy/physics/continuum_mechanics/tests/test_beam.py",
+      "sympy/tensor/tests/test_indexed.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import *\np = IndexedBase(\"p\")\n\npycode(p[0])"
+      },
+      {
+        "language": "python",
+        "code": "# Not supported in Python:\n  # Indexed\np[0]"
+      },
+      {
+        "language": "python",
+        "code": "def _print_Indexed(self, expr):\n    base, *index = expr.args\n    return \"{}[{}]\".format(str(base), \", \".join([self._print(ind) for ind in index]))"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import IndexedBase\nfrom sympy.printing.pycode import pycode\n\ndef test_PythonCodePrinter_Indexed_repro():\n    p = IndexedBase(\"p\")\n    assert pycode(p[0]) == 'p[0]'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_print",
+        "_print_Indexed",
+        "join",
+        "lambdify",
+        "pycode"
+      ],
+      "classes": [
+        "Indexed",
+        "IndexedBase",
+        "PythonCodePrinter"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/tests/test_pycode.py",
+      "target_source_file": "sympy/printing/pycode.py",
+      "test_visible_functions": [
+        "pycode"
+      ],
+      "test_visible_classes": [
+        "Indexed",
+        "IndexedBase",
+        "PythonCodePrinter"
+      ]
+    }
+  }
+]

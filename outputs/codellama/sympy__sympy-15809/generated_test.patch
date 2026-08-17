@@ -1,0 +1,12 @@
+--- a/sympy/functions/combinatorial/tests/test_comb_numbers.py
++++ b/sympy/functions/combinatorial/tests/test_comb_numbers.py
+@@ -642,3 +642,9 @@
+     assert str(c1) == '6.93334070531408e-5'
+     c2 = catalan(-35.4).evalf()
+     assert str(c2) == '-4.14189164517449e-24'
++
++from sympy import oo
++from sympy.functions.elementary.miscellaneous import Max
++
++def test_max_no_arguments_repro():
++    assert Max() == oo

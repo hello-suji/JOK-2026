@@ -1,0 +1,113 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/axis.py",
+      "target_function": "autofmt_xdate",
+      "related_classes": [
+        "AutoDateLocator",
+        "ConciseDateFormatter",
+        "Qt5Agg"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_dates.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where autofmt_xdate can be called.",
+      "Use the generated reproduction path that calls matplotlib, plt, mdates, datetime.",
+      "Use the generated reproduction path that calls autofmt_xdate, datetime, plot, set_major_formatter."
+    ],
+    "execution_stimulus": [
+      "Call autofmt_xdate with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: matplotlib, plt, mdates, datetime.",
+      "Execute the focused target API path: autofmt_xdate, datetime, plot, set_major_formatter."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/axis.py",
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/axes/_base.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_dates.py",
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nimport matplotlib.dates as mdates\nfrom datetime import datetime, timedelta\n\n#create time array\ninitial = datetime(2021,2,14,0,0,0)\ntime_array = [initial + timedelta(days=x) for x in range(1,200)]\n\n#create data array\ndata = [-x**2/20000 for x in range(1,200)]\n\n\n#plot data\nfig,ax = plt.subplots()\nax.plot(time_array,data) \n        \nlocator = mdates.AutoDateLocator()\nformatter = mdates.ConciseDateFormatter(locator)\n\nax.grid(True)\nax.set_ylabel(\"Temperature ($\\degree$C)\")\nax.xaxis.set_major_locator(locator)   \nax.xaxis.set_major_formatter(formatter)\nfig.autofmt_xdate() #automatically makes the x-labels rotate"
+      },
+      {
+        "language": "python",
+        "code": "def test_concise_date_formatter_year_display_repro():\n    import matplotlib\n    matplotlib.use('Agg')\n    import matplotlib.pyplot as plt\n    import matplotlib.dates as mdates\n    from datetime import datetime, timedelta\n\n    # create time array\n    initial = datetime(2021, 2, 14, 0, 0, 0)\n    time_array = [initial + timedelta(days=x) for x in range(1, 200)]\n\n    # create data array\n    data = [-x**2/20000 for x in range(1, 200)]\n\n    # plot data\n    fig, ax = plt.subplots()\n    ax.plot(time_array, data)\n\n    # set major locator and formatter\n    locator = mdates.AutoDateLocator()\n    formatter = mdates.ConciseDateFormatter(locator)\n    ax.xaxis.set_major_locator(locator)\n    ax.xaxis.set_major_formatter(formatter)\n\n    # apply autofmt_xdate\n    fig.autofmt_xdate()\n\n    # check if the year is displayed in the tick labels\n    labels = [label.get_text() for label in ax.get_xticklabels()]\n    assert any('2021' in label for label in labels)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "autofmt_xdate",
+        "datetime",
+        "grid",
+        "plot",
+        "set_major_formatter",
+        "set_major_locator",
+        "set_ylabel",
+        "subplots",
+        "timedelta",
+        "matplotlib",
+        "plt",
+        "mdates",
+        "use",
+        "get_text",
+        "get_xticklabels"
+      ],
+      "classes": [
+        "AutoDateLocator",
+        "ConciseDateFormatter",
+        "Qt5Agg",
+        "Temperature"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_dates.py",
+      "target_source_file": "lib/matplotlib/axis.py",
+      "test_visible_functions": [
+        "autofmt_xdate",
+        "datetime",
+        "plot",
+        "set_major_formatter",
+        "set_major_locator",
+        "subplots",
+        "timedelta",
+        "matplotlib"
+      ],
+      "test_visible_classes": [
+        "AutoDateLocator",
+        "ConciseDateFormatter"
+      ]
+    }
+  }
+]

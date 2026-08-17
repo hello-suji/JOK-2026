@@ -1,0 +1,19 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -453,3 +453,16 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import os
++import unittest
++from sphinx.cmd.quickstart import main
++
++class TestQuickstartExistingConf(unittest.TestCase):
++    def test_sphinx_quickstart_existing_conf_repro(self):
++        os.makedirs('test_dir', exist_ok=True)
++        with open('test_dir/conf.py', 'w') as f:
++            f.write('')
++        with self.assertRaises(SystemExit) as cm:
++            main(argv=['sphinx-quickstart', 'test_dir'])
++        self.assertEqual(cm.exception.code, 0)

@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/sites.py",
+      "target_function": "catch_all_view",
+      "related_classes": [
+        "SlavaSkvortsov",
+        "HttpRequest"
+      ],
+      "candidate_test_file": "tests/admin_default_site/sites.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where catch_all_view can be called.",
+      "Use the generated reproduction path that calls catch_all_view, settings."
+    ],
+    "execution_stimulus": [
+      "Call catch_all_view with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: catch_all_view, settings."
+    ],
+    "expected_failure": "catch_all_view() does not support FORCE_SCRIPT_NAME.",
+    "relevant_source_files": [
+      "django/contrib/admin/sites.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/admin_default_site/sites.py",
+      "tests/wsgi/wsgi.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.http import HttpRequest\nfrom django.contrib.admin.sites import catch_all_view\nfrom django.conf import settings\n\nclass TestCatchAllView(TestCase):\n    def test_catch_all_view_with_force_script_name_repro(self):\n        original_script_name = settings.FORCE_SCRIPT_NAME\n        settings.FORCE_SCRIPT_NAME = '/forced-script'\n        request = HttpRequest()\n        request.path_info = '/some-path/'\n        request.path = '/forced-script/some-path/'\n        response = catch_all_view(request)\n        self.assertEqual(response.url, '/forced-script/some-path/')\n        settings.FORCE_SCRIPT_NAME = original_script_name"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "catch_all_view",
+        "settings"
+      ],
+      "classes": [
+        "SlavaSkvortsov",
+        "HttpRequest"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_default_site/sites.py",
+      "target_source_file": "django/contrib/admin/sites.py",
+      "test_visible_functions": [
+        "catch_all_view",
+        "settings"
+      ],
+      "test_visible_classes": [
+        "HttpRequest"
+      ]
+    }
+  }
+]

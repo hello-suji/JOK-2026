@@ -1,0 +1,632 @@
+{
+  "instance_id": "pytest-dev__pytest-7205",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "5e7f1ab4bf58e473e5d7f878eb2b499d7deabd29",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/fixtures.py",
+      "score": 76,
+      "matched_identifiers": [
+        "FixtureDef",
+        "_compute_fixture_value",
+        "_fillfixtures",
+        "_get_active_fixturedef",
+        "_pytest",
+        "cached",
+        "call",
+        "data",
+        "execute",
+        "fillfixtures",
+        "getfixturevalue",
+        "pytest_fixture_setup",
+        "src/_pytest/fixtures.py"
+      ],
+      "reasons": [
+        "function_match:_compute_fixture_value",
+        "function_match:fillfixtures",
+        "function_match:getfixturevalue",
+        "function_match:pytest_fixture_setup",
+        "function_match:_fillfixtures",
+        "function_match:_get_active_fixturedef",
+        "function_match:execute",
+        "class_match:FixtureDef",
+        "explicit_file_path_hint:src/_pytest/fixtures.py",
+        "stem_in_issue_text:fixtures"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fillfixtures": "def fillfixtures(function):\n    \"\"\" fill missing funcargs for a test function. \"\"\"\n    warnings.warn(FILLFUNCARGS, stacklevel=2)\n    try:\n        request = function._request\n    except AttributeError:\n        # XXX this special code path is only expected to execute\n        # with the oejskit plugin.  It uses classes with funcargs\n        # and we thus have to work a bit to allow this.\n        fm = function.session._fixturemanager\n        fi = fm.getfixtureinfo(function.parent, function.obj, None)\n        function._fixtureinfo = fi\n        request = function._request = FixtureRequest(function)\n        request._fillfixtures()\n        # prune out funcargs for jstests",
+        "FixtureDef": "class FixtureDef:\n    \"\"\" A container for a factory definition. \"\"\"\n\n    def __init__(\n        self,\n        fixturemanager,\n        baseid,\n        argname,\n        func,\n        scope,\n        params,\n        unittest=False,\n        ids=None,\n    ):\n        self._fixturemanager = fixturemanager",
+        "pytest_fixture_setup": "def pytest_fixture_setup(fixturedef, request):\n    \"\"\" Execution of fixture setup. \"\"\"\n    kwargs = {}\n    for argname in fixturedef.argnames:\n        fixdef = request._get_active_fixturedef(argname)\n        assert fixdef.cached_result is not None\n        result, arg_cache_key, exc = fixdef.cached_result\n        request._check_scope(argname, request.scope, fixdef.scope)\n        kwargs[argname] = result\n\n    fixturefunc = resolve_fixture_function(fixturedef, request)\n    my_cache_key = fixturedef.cache_key(request)\n    try:\n        result = call_fixture_func(fixturefunc, request, kwargs)\n    except TEST_OUTCOME:",
+        "_fillfixtures": "    def _fillfixtures(self):\n        item = self._pyfuncitem\n        fixturenames = getattr(item, \"fixturenames\", self.fixturenames)\n        for argname in fixturenames:\n            if argname not in item.funcargs:\n                item.funcargs[argname] = self.getfixturevalue(argname)\n\n    def getfixturevalue(self, argname):\n        \"\"\" Dynamically run a named fixture function.\n\n        Declaring fixtures via function argument is recommended where possible.\n        But if you can only decide whether to use another fixture at test\n        setup time, you may use this function to retrieve it inside a fixture\n        or test function body.\n",
+        "getfixturevalue": "    def getfixturevalue(self, argname):\n        \"\"\" Dynamically run a named fixture function.\n\n        Declaring fixtures via function argument is recommended where possible.\n        But if you can only decide whether to use another fixture at test\n        setup time, you may use this function to retrieve it inside a fixture\n        or test function body.\n\n        :raise pytest.FixtureLookupError:\n            If the given fixture could not be found.\n        \"\"\"\n        return self._get_active_fixturedef(argname).cached_result[0]\n\n    def _get_active_fixturedef(self, argname):\n        try:",
+        "_get_active_fixturedef": "    def _get_active_fixturedef(self, argname):\n        try:\n            return self._fixture_defs[argname]\n        except KeyError:\n            try:\n                fixturedef = self._getnextfixturedef(argname)\n            except FixtureLookupError:\n                if argname == \"request\":\n                    cached_result = (self, [0], None)\n                    scope = \"function\"\n                    return PseudoFixtureDef(cached_result, scope)\n                raise\n        # remove indent to prevent the python3 exception\n        # from leaking into the call\n        self._compute_fixture_value(fixturedef)",
+        "_compute_fixture_value": "    def _compute_fixture_value(self, fixturedef: \"FixtureDef\") -> None:\n        \"\"\"\n        Creates a SubRequest based on \"self\" and calls the execute method of the given fixturedef object. This will\n        force the FixtureDef object to throw away any previous results and compute a new fixture value, which\n        will be stored into the FixtureDef object itself.\n        \"\"\"\n        # prepare a subrequest object before calling fixture function\n        # (latter managed by fixturedef)\n        argname = fixturedef.argname\n        funcitem = self._pyfuncitem\n        scope = fixturedef.scope\n        try:\n            param = funcitem.callspec.getparam(argname)\n        except (AttributeError, ValueError):\n            param = NOTSET",
+        "execute": "    def execute(self, request):\n        # get required arguments and register our own finish()\n        # with their finalization\n        for argname in self.argnames:\n            fixturedef = request._get_active_fixturedef(argname)\n            if argname != \"request\":\n                fixturedef.addfinalizer(functools.partial(self.finish, request=request))\n\n        my_cache_key = self.cache_key(request)\n        if self.cached_result is not None:\n            result, cache_key, err = self.cached_result\n            # note: comparison with `==` can fail (or be expensive) for e.g.\n            # numpy arrays (#6497)\n            if my_cache_key is cache_key:\n                if err is not None:"
+      },
+      "top_level_functions": [
+        "pytest_sessionstart",
+        "scopeproperty",
+        "get_scope_package",
+        "get_scope_node",
+        "add_funcarg_pseudo_fixture_def",
+        "getfixturemarker",
+        "get_parametrized_fixture_keys",
+        "reorder_items",
+        "fix_cache_order",
+        "reorder_items_atscope",
+        "fillfixtures",
+        "get_direct_param_fixture_func",
+        "FuncFixtureInfo.prune_dependency_tree",
+        "FixtureRequest.fixturenames",
+        "FixtureRequest.funcargnames",
+        "FixtureRequest.node",
+        "FixtureRequest.config",
+        "FixtureRequest.function",
+        "FixtureRequest.cls",
+        "FixtureRequest.instance",
+        "FixtureRequest.module",
+        "FixtureRequest.fspath",
+        "FixtureRequest.keywords",
+        "FixtureRequest.session",
+        "FixtureRequest.addfinalizer",
+        "FixtureRequest.applymarker",
+        "FixtureRequest.raiseerror",
+        "FixtureRequest.getfixturevalue",
+        "SubRequest.addfinalizer",
+        "scopemismatch",
+        "scope2index",
+        "FixtureLookupError.formatrepr",
+        "FixtureLookupErrorRepr.toterminal",
+        "fail_fixturefunc",
+        "call_fixture_func",
+        "FixtureDef.addfinalizer",
+        "FixtureDef.finish",
+        "FixtureDef.execute",
+        "FixtureDef.cache_key",
+        "resolve_fixture_function"
+      ]
+    },
+    {
+      "path": "src/_pytest/runner.py",
+      "score": 51,
+      "matched_identifiers": [
+        "CallInfo",
+        "_pytest",
+        "call",
+        "callinfo",
+        "exit",
+        "from_call",
+        "prepare",
+        "src/_pytest/runner.py"
+      ],
+      "reasons": [
+        "function_match:from_call",
+        "function_match:prepare",
+        "class_match:CallInfo",
+        "explicit_file_path_hint:src/_pytest/runner.py",
+        "stem_in_issue_text:runner",
+        "source_content_tokens:_pytest,call,callinfo,exit,fixtures"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "CallInfo": "class CallInfo:\n    \"\"\" Result/Exception info a function invocation.\n\n    :param result: The return value of the call, if it didn't raise. Can only be accessed\n        if excinfo is None.\n    :param Optional[ExceptionInfo] excinfo: The captured exception of the call, if it raised.\n    :param float start: The system time when the call started, in seconds since the epoch.\n    :param float stop: The system time when the call ended, in seconds since the epoch.\n    :param float duration: The call duration, in seconds.\n    :param str when: The context of invocation: \"setup\", \"call\", \"teardown\", ...\n    \"\"\"\n\n    _result = attr.ib()\n    excinfo = attr.ib(type=Optional[ExceptionInfo])\n    start = attr.ib(type=float)",
+        "from_call": "    def from_call(cls, func, when, reraise=None) -> \"CallInfo\":\n        #: context of invocation: one of \"setup\", \"call\",\n        #: \"teardown\", \"memocollect\"\n        excinfo = None\n        start = time()\n        precise_start = perf_counter()\n        try:\n            result = func()\n        except:  # noqa\n            excinfo = ExceptionInfo.from_current()\n            if reraise is not None and excinfo.errisinstance(reraise):\n                raise\n            result = None\n        # use the perf counter\n        precise_stop = perf_counter()",
+        "prepare": "    def prepare(self, colitem):\n        \"\"\" setup objects along the collector chain to the test-method\n            and teardown previously setup objects.\"\"\"\n        needed_collectors = colitem.listchain()\n        self._teardown_towards(needed_collectors)\n\n        # check if the last collection node has raised an error\n        for col in self.stack:\n            if hasattr(col, \"_prepare_exc\"):\n                exc = col._prepare_exc\n                raise exc\n        for col in needed_collectors[len(self.stack) :]:\n            self.stack.append(col)\n            try:\n                col.setup()"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_terminal_summary",
+        "pytest_sessionstart",
+        "pytest_sessionfinish",
+        "pytest_runtest_protocol",
+        "runtestprotocol",
+        "show_test_item",
+        "pytest_runtest_setup",
+        "pytest_runtest_call",
+        "pytest_runtest_teardown",
+        "pytest_report_teststatus",
+        "call_and_report",
+        "check_interactive_exception",
+        "call_runtest_hook",
+        "CallInfo.result",
+        "CallInfo.from_call",
+        "pytest_runtest_makereport",
+        "pytest_make_collect_report",
+        "SetupState.addfinalizer",
+        "SetupState.teardown_all",
+        "SetupState.teardown_exact",
+        "SetupState.prepare",
+        "collect_one_node"
+      ]
+    },
+    {
+      "path": "src/_pytest/setuponly.py",
+      "score": 49,
+      "matched_identifiers": [
+        "_show_fixture_action",
+        "cached",
+        "cached_param",
+        "call",
+        "capturemanager",
+        "pytest_fixture_setup",
+        "src/_pytest/setuponly.py"
+      ],
+      "reasons": [
+        "function_match:_show_fixture_action",
+        "function_match:pytest_fixture_setup",
+        "explicit_file_path_hint:src/_pytest/setuponly.py",
+        "path_contains_function:setup",
+        "stem_in_issue_text:setuponly",
+        "source_content_tokens:cached,cached_param,call,capturemanager,deps"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "pytest_fixture_setup": "def pytest_fixture_setup(fixturedef, request):\n    yield\n    if request.config.option.setupshow:\n        if hasattr(request, \"param\"):\n            # Save the fixture parameter so ._show_fixture_action() can\n            # display it now and during the teardown (in .finish()).\n            if fixturedef.ids:\n                if callable(fixturedef.ids):\n                    fixturedef.cached_param = fixturedef.ids(request.param)\n                else:\n                    fixturedef.cached_param = fixturedef.ids[request.param_index]\n            else:\n                fixturedef.cached_param = request.param\n        _show_fixture_action(fixturedef, \"SETUP\")\n",
+        "_show_fixture_action": "def _show_fixture_action(fixturedef, msg):\n    config = fixturedef._fixturemanager.config\n    capman = config.pluginmanager.getplugin(\"capturemanager\")\n    if capman:\n        capman.suspend_global_capture()\n\n    tw = config.get_terminal_writer()\n    tw.line()\n    tw.write(\" \" * 2 * fixturedef.scopenum)\n    tw.write(\n        \"{step} {scope} {fixture}\".format(\n            step=msg.ljust(8),  # align the output to TEARDOWN\n            scope=fixturedef.scope[0].upper(),\n            fixture=fixturedef.argname,\n        )"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_fixture_setup",
+        "pytest_fixture_post_finalizer",
+        "pytest_cmdline_main"
+      ]
+    },
+    {
+      "path": "src/_pytest/python.py",
+      "score": 47,
+      "matched_identifiers": [
+        "_pytest",
+        "call",
+        "fixturedef",
+        "fixtures",
+        "parametrize",
+        "setup",
+        "src/_pytest/python.py"
+      ],
+      "reasons": [
+        "function_match:setup",
+        "function_match:parametrize",
+        "explicit_file_path_hint:src/_pytest/python.py",
+        "stem_in_issue_text:python",
+        "source_content_tokens:_pytest,call,fixturedef,fixtures,hasattr"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "setup": "    def setup(self) -> None:\n        if isinstance(self.parent, Instance):\n            self.parent.newinstance()\n            self.obj = self._getobj()\n        self._request._fillfixtures()\n\n    def _prunetraceback(self, excinfo: ExceptionInfo) -> None:\n        if hasattr(self, \"_obj\") and not self.config.getoption(\"fulltrace\", False):\n            code = _pytest._code.Code(get_real_func(self.obj))\n            path, firstlineno = code.path, code.firstlineno\n            traceback = excinfo.traceback\n            ntraceback = traceback.cut(path=path, firstlineno=firstlineno)\n            if ntraceback == traceback:\n                ntraceback = ntraceback.cut(path=path)\n                if ntraceback == traceback:",
+        "parametrize": "    def parametrize(\n        self,\n        argnames: Union[str, List[str], Tuple[str, ...]],\n        argvalues: Iterable[Union[ParameterSet, typing.Sequence[object], object]],\n        indirect: Union[bool, typing.Sequence[str]] = False,\n        ids: Optional[\n            Union[\n                Iterable[Union[None, str, float, int, bool]],\n                Callable[[object], Optional[object]],\n            ]\n        ] = None,\n        scope: \"Optional[str]\" = None,\n        *,\n        _param_mark: Optional[Mark] = None\n    ) -> None:"
+      },
+      "top_level_functions": [
+        "pyobj_property",
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_generate_tests",
+        "pytest_configure",
+        "async_warn_and_skip",
+        "pytest_pyfunc_call",
+        "pytest_collect_file",
+        "path_matches_patterns",
+        "pytest_pycollect_makemodule",
+        "pytest_pycollect_makeitem",
+        "PyobjMixin.obj",
+        "PyobjMixin.getmodpath",
+        "PyobjMixin.reportinfo",
+        "PyCollector.funcnamefilter",
+        "PyCollector.isnosetest",
+        "PyCollector.classnamefilter",
+        "PyCollector.istestfunction",
+        "PyCollector.istestclass",
+        "PyCollector.collect",
+        "Module.collect",
+        "Package.setup",
+        "Package.gethookproxy",
+        "Package.isinitpath",
+        "Package.collect",
+        "Class.from_parent",
+        "Class.collect",
+        "Instance.collect",
+        "Instance.newinstance",
+        "hasinit",
+        "hasnew",
+        "CallSpec2.copy",
+        "CallSpec2.getparam",
+        "CallSpec2.id",
+        "CallSpec2.setmulti2",
+        "Metafunc.funcargnames",
+        "Metafunc.parametrize",
+        "idmaker",
+        "show_fixtures_per_test",
+        "showfixtures"
+      ]
+    },
+    {
+      "path": "src/_pytest/capture.py",
+      "score": 27,
+      "matched_identifiers": [
+        "_pytest",
+        "call",
+        "capturemanager",
+        "data",
+        "suspend_global_capture",
+        "write"
+      ],
+      "reasons": [
+        "function_match:suspend_global_capture",
+        "function_match:write",
+        "stem_in_issue_text:capture",
+        "source_content_tokens:_pytest,call,capturemanager,data,fixtures"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "suspend_global_capture": "    def suspend_global_capture(self, in_=False):\n        cap = getattr(self, \"_global_capturing\", None)\n        if cap is not None:\n            cap.suspend_capturing(in_=in_)\n\n    def suspend(self, in_=False):\n        # Need to undo local capsys-et-al if it exists before disabling global capture.\n        self.suspend_fixture()\n        self.suspend_global_capture(in_)\n\n    def resume(self):\n        self.resume_global_capture()\n        self.resume_fixture()\n\n    def read_global_capture(self):",
+        "write": "    def write(self, s: str) -> int:\n        super().write(s)\n        return self._other.write(s)\n\n\nclass CaptureFixture:\n    \"\"\"\n    Object returned by :py:func:`capsys`, :py:func:`capsysbinary`, :py:func:`capfd` and :py:func:`capfdbinary`\n    fixtures.\n    \"\"\"\n\n    def __init__(self, captureclass, request):\n        self.captureclass = captureclass\n        self.request = request\n        self._capture = None"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_load_initial_conftests",
+        "CaptureManager.is_capturing",
+        "CaptureManager.is_globally_capturing",
+        "CaptureManager.start_global_capturing",
+        "CaptureManager.stop_global_capturing",
+        "CaptureManager.resume_global_capture",
+        "CaptureManager.suspend_global_capture",
+        "CaptureManager.suspend",
+        "CaptureManager.resume",
+        "CaptureManager.read_global_capture",
+        "CaptureManager.activate_fixture",
+        "CaptureManager.deactivate_fixture",
+        "CaptureManager.suspend_fixture",
+        "CaptureManager.resume_fixture",
+        "CaptureManager.global_and_fixture_disabled",
+        "CaptureManager.item_capture",
+        "CaptureManager.pytest_make_collect_report",
+        "CaptureManager.pytest_runtest_setup",
+        "CaptureManager.pytest_runtest_call",
+        "CaptureManager.pytest_runtest_teardown",
+        "CaptureManager.pytest_keyboard_interrupt",
+        "CaptureManager.pytest_internalerror",
+        "capsys",
+        "capsysbinary",
+        "capfd",
+        "capfdbinary",
+        "CaptureIO.getvalue",
+        "TeeCaptureIO.write",
+        "CaptureFixture.close",
+        "CaptureFixture.readouterr",
+        "CaptureFixture.disabled",
+        "EncodedFile.name",
+        "EncodedFile.mode",
+        "MultiCapture.start_capturing",
+        "MultiCapture.pop_outerr_to_orig",
+        "MultiCapture.suspend_capturing",
+        "MultiCapture.resume_capturing",
+        "MultiCapture.stop_capturing",
+        "MultiCapture.readouterr"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/python/show_fixtures_per_test.py",
+      "score": 17,
+      "matched_identifiers": [
+        "FixtureDef"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FixtureDef",
+        "test_name_matches_source_stem:fixtures",
+        "token_overlap:fixture,fixtures,python,show",
+        "internal_name_overlap:fixtures",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_setuponly.py",
+      "score": 14,
+      "matched_identifiers": [
+        "setup"
+      ],
+      "reasons": [
+        "test_path_contains_function:setup",
+        "test_name_matches_source_stem:setuponly",
+        "token_overlap:setup,setuponly",
+        "internal_name_overlap:func",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py",
+      "score": 13,
+      "matched_identifiers": [
+        "FixtureDef",
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_path_related_to_class:FixtureDef",
+        "token_overlap:fixture,fixtures,func",
+        "internal_name_overlap:func",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookup_modulelevel.py",
+      "score": 13,
+      "matched_identifiers": [
+        "FixtureDef",
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_path_related_to_class:FixtureDef",
+        "token_overlap:fixture,fixtures,func",
+        "internal_name_overlap:func",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookupfails.py",
+      "score": 13,
+      "matched_identifiers": [
+        "FixtureDef",
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_path_related_to_class:FixtureDef",
+        "token_overlap:fixture,fixtures,func",
+        "internal_name_overlap:func",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "testing/test_setuponly.py:pytest_import_or_conftest",
+      "testing/test_setuponly.py:top_level_test_functions",
+      "testing/python/show_fixtures_per_test.py:top_level_test_functions",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookupfails.py:pytest_import_or_conftest",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookupfails.py:top_level_test_functions",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py:pytest_import_or_conftest",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py:top_level_test_functions",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookup_modulelevel.py:pytest_import_or_conftest",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookup_modulelevel.py:top_level_test_functions",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_lookup_modulelevel.py:testcase_class:TestClass"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 210,
+  "indexed_test_file_count": 112,
+  "available_imports": {
+    "testing.test_setuponly": [
+      "mode",
+      "test_capturing",
+      "test_dynamic_fixture_request",
+      "test_setup_show_with_KeyboardInterrupt_in_test",
+      "test_show_different_scopes",
+      "test_show_fixtures_and_execute_test",
+      "test_show_fixtures_with_autouse",
+      "test_show_fixtures_with_parameter_ids",
+      "test_show_fixtures_with_parameter_ids_function",
+      "test_show_fixtures_with_parameters",
+      "test_show_nested_fixtures",
+      "test_show_only_active_fixtures"
+    ],
+    "src._pytest.runner": [
+      "CallInfo",
+      "SetupState",
+      "_update_current_test_var",
+      "call_and_report",
+      "call_runtest_hook",
+      "check_interactive_exception",
+      "collect_one_node",
+      "pytest_addoption",
+      "pytest_make_collect_report",
+      "pytest_report_teststatus",
+      "pytest_runtest_call",
+      "pytest_runtest_makereport",
+      "pytest_runtest_protocol",
+      "pytest_runtest_setup",
+      "pytest_runtest_teardown",
+      "pytest_sessionfinish",
+      "pytest_sessionstart",
+      "pytest_terminal_summary",
+      "runtestprotocol",
+      "show_test_item"
+    ],
+    "src._pytest.capture": [
+      "CaptureFixture",
+      "CaptureIO",
+      "CaptureManager",
+      "DontReadFromInput",
+      "EncodedFile",
+      "FDCapture",
+      "FDCaptureBinary",
+      "MultiCapture",
+      "NoCapture",
+      "SysCapture",
+      "SysCaptureBinary",
+      "TeeCaptureIO",
+      "TeeSysCapture",
+      "_colorama_workaround",
+      "_get_multicapture",
+      "_py36_windowsconsoleio_workaround",
+      "_readline_workaround",
+      "capfd",
+      "capfdbinary",
+      "capsys",
+      "capsysbinary",
+      "pytest_addoption",
+      "pytest_load_initial_conftests"
+    ],
+    "src._pytest.python": [
+      "CallSpec2",
+      "Class",
+      "Function",
+      "FunctionDefinition",
+      "Instance",
+      "Metafunc",
+      "Module",
+      "Package",
+      "PyCollector",
+      "PyobjMixin",
+      "_ascii_escaped_by_config",
+      "_call_with_optional_argument",
+      "_find_parametrized_scope",
+      "_get_first_non_fixture_func",
+      "_idval",
+      "_idvalset",
+      "_show_fixtures_per_test",
+      "_showfixtures_main",
+      "async_warn_and_skip",
+      "hasinit",
+      "hasnew",
+      "idmaker",
+      "path_matches_patterns",
+      "pyobj_property",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collect_file",
+      "pytest_configure",
+      "pytest_generate_tests",
+      "pytest_pycollect_makeitem",
+      "pytest_pycollect_makemodule",
+      "pytest_pyfunc_call",
+      "show_fixtures_per_test",
+      "showfixtures",
+      "write_docstring"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "src._pytest.outcomes": [
+      "Exit",
+      "Failed",
+      "OutcomeException",
+      "Skipped",
+      "XFailed",
+      "_WithException",
+      "_with_exception",
+      "exit",
+      "fail",
+      "importorskip",
+      "skip",
+      "xfail"
+    ],
+    "src._pytest.fixtures": [
+      "FixtureDef",
+      "FixtureFunctionMarker",
+      "FixtureLookupError",
+      "FixtureLookupErrorRepr",
+      "FixtureManager",
+      "FixtureRequest",
+      "FuncFixtureInfo",
+      "PseudoFixtureDef",
+      "SubRequest",
+      "_ensure_immutable_ids",
+      "_eval_scope_callable",
+      "_teardown_yield_fixture",
+      "add_funcarg_pseudo_fixture_def",
+      "call_fixture_func",
+      "fail_fixturefunc",
+      "fillfixtures",
+      "fix_cache_order",
+      "fixture",
+      "get_direct_param_fixture_func",
+      "get_parametrized_fixture_keys",
+      "get_scope_node",
+      "get_scope_package",
+      "get_use_fixtures_for_node",
+      "getfixturemarker",
+      "pytest_addoption",
+      "pytest_fixture_setup",
+      "pytest_sessionstart",
+      "pytestconfig",
+      "reorder_items",
+      "reorder_items_atscope",
+      "resolve_fixture_function",
+      "scope2index",
+      "scopemismatch",
+      "scopeproperty",
+      "wrap_function_to_error_out_if_called_directly",
+      "yield_fixture"
+    ],
+    "src._pytest.setuponly": [
+      "_show_fixture_action",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_fixture_post_finalizer",
+      "pytest_fixture_setup"
+    ],
+    "testing.python.show_fixtures_per_test": [
+      "test_doctest_items",
+      "test_fixtures_in_conftest",
+      "test_fixtures_in_module",
+      "test_no_items_should_not_show_output",
+      "test_should_show_fixtures_used_by_test",
+      "test_verbose_include_private_fixtures_and_loc"
+    ],
+    "testing.example_scripts.warnings.test_group_warnings_by_message": [
+      "func",
+      "test_bar",
+      "test_foo",
+      "test_foo_1"
+    ],
+    "testing.example_scripts.warnings.test_group_warnings_by_message_summary.test_1": [
+      "func",
+      "test_bar",
+      "test_foo",
+      "test_foo_1"
+    ],
+    "testing.example_scripts.fixtures.fill_fixtures.test_funcarg_lookupfails": [
+      "test_func",
+      "xyzsomething"
+    ],
+    "testing.example_scripts.fixtures.fill_fixtures.test_funcarg_basic": [
+      "other",
+      "some",
+      "test_func"
+    ],
+    "testing.example_scripts.fixtures.fill_fixtures.test_funcarg_lookup_modulelevel": [
+      "TestClass",
+      "something",
+      "test_func"
+    ]
+  },
+  "test_example_snippet": "def test_no_items_should_not_show_output(testdir):\n    result = testdir.runpytest(\"--fixtures-per-test\")\n    result.stdout.no_fnmatch_line(\"*fixtures used by*\")\n    assert result.ret == 0\n\n\ndef test_fixtures_in_module(testdir):\n    p = testdir.makepyfile(\n        '''\n        import pytest\n        @pytest.fixture\n        def _arg0():\n            \"\"\"hidden arg0 fixture\"\"\"\n        @pytest.fixture\n        def arg1():\n            \"\"\"arg1 docstring\"\"\"\n        def test_arg1(arg1):\n            pass\n    '''\n    )\n\n    result = testdir.runpytest(\"--fixtures-per-test\", p)\n    assert result.ret == 0\n\n    result.stdout.fnmatch_lines(\n        [\n            \"*fixtures used by test_arg1*\",\n            \"*(test_fixtures_in_module.py:9)*\",\n            \"arg1\",\n            \"    arg1 docstring\",\n        ]\n    )\n    result.stdout.no_fnmatch_line(\"*_arg0*\")\n\n",
+  "conftest_fixtures": {
+    "testing/conftest.py": [
+      "tw_mock",
+      "dummy_yaml_custom_test",
+      "testdir",
+      "color_mapping",
+      "restore_tracing"
+    ]
+  }
+}

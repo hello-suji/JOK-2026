@@ -1,0 +1,85 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.59,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function '_urlize' NOT found in source_file — may be hallucinated",
+        "target_function '_urlize' not in AST top_level_functions for django/utils/html.py",
+        "force-selected as best available (score 0.59, below threshold 0.65)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/utils/html.py",
+          "target_function": "_urlize",
+          "related_classes": [],
+          "candidate_test_file": "tests/template_backends/test_django.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where _urlize can be called."
+        ],
+        "execution_stimulus": [
+          "Call _urlize with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "urlize() does not handle html escaped string and trailing punctuation correctly",
+        "relevant_source_files": [
+          "django/utils/html.py",
+          "django/contrib/admin/options.py",
+          "django/forms/widgets.py"
+        ],
+        "relevant_test_files": [
+          "tests/template_backends/test_django.py",
+          "tests/utils_tests/test_html.py",
+          "tests/forms_tests/tests/test_widgets.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "urlize"
+          ],
+          "classes": [],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": true
+    }
+  ],
+  "rejected_scenarios": []
+}

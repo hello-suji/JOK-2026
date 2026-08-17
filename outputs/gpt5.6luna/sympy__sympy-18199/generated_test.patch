@@ -1,0 +1,12 @@
+--- a/sympy/solvers/tests/test_diophantine.py
++++ b/sympy/solvers/tests/test_diophantine.py
+@@ -962,3 +962,9 @@
+         124*x**2 - 30*y**2 - 7729*z**2) == (
+         -1410*p**2 - 363263*q**2, 2700*p**2 + 30916*p*q -
+         695610*q**2, -60*p**2 + 5400*p*q + 15458*q**2)
++
++from sympy.ntheory.residue_ntheory import nthroot_mod
++
++def test_nthroot_mod_zero_root_repro():
++    roots = nthroot_mod(17*17, 5, 17)
++    assert 0 in roots

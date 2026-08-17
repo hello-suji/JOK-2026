@@ -1,0 +1,21 @@
+--- a/tests/middleware/test_security.py
++++ b/tests/middleware/test_security.py
+@@ -255,3 +255,18 @@
+         """
+         response = self.process_response(headers={'Referrer-Policy': 'unsafe-url'})
+         self.assertEqual(response['Referrer-Policy'], 'unsafe-url')
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.core.handlers.asgi import ASGIRequest
++from django.middleware.security import SecurityMiddleware
++from django.http import HttpResponse
++
++
++class TestSecurityMiddlewareProcessResponse(TestCase):
++    def test_process_response_called_repro(self):
++        request = ASGIRequest()
++        response = HttpResponse('Hello, world!')
++        middleware = SecurityMiddleware()
++        processed_response = middleware.process_response(request, response)
++        self.assertEqual(processed_response.content, b'Hello, world!')

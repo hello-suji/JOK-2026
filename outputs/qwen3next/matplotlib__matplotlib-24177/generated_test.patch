@@ -1,0 +1,17 @@
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -8208,3 +8208,14 @@
+
+     ax_ref.bar([1], [1]).remove()
+     ax_ref.bar([1], [1])
++
++import numpy as np
++import matplotlib.pyplot as plt
++def test_histogram_density_issue_repro():
++    scale = 1.2
++    test_random = np.random.randn(100000) * scale
++    fig, ax = plt.subplots(1, 2, figsize=(20, 10))
++    hist_bar = ax[0].hist(test_random, bins=100, density=True, histtype='bar')
++    hist_step = ax[1].hist(test_random, bins=100, density=True, histtype='step')
++    assert len(hist_bar[0]) == 100
++    assert len(hist_step[0]) == 100

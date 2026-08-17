@@ -1,0 +1,15 @@
+--- a/sympy/core/tests/test_basic.py
++++ b/sympy/core/tests/test_basic.py
+@@ -296,3 +296,12 @@
+     raises(TypeError, lambda: e.replace(b*c, c.is_real))
+     raises(TypeError, lambda: e.replace(b.is_real, 1))
+     raises(TypeError, lambda: e.replace(lambda d: d.is_Number, 1))
++
++import re
++def test_string_argument_invariance_repro():
++    from sympy.core.basic import Basic
++    from sympy.codegen.ast import String
++    s = String('example')
++    reconstructed_s = s.func(*s.args, **s.kwargs)
++    assert isinstance(reconstructed_s, String)
++    assert reconstructed_s == s

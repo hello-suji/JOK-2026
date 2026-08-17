@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-12143",
+    "model_patch": "--- a/tests/template_tests/filter_tests/test_autoescape.py\n+++ b/tests/template_tests/filter_tests/test_autoescape.py\n@@ -27,3 +27,13 @@\n     def test_autoescape_stringfilter04_gate(self):\n         output = self.engine.render_to_string('autoescape-stringfilter04', {'safe': SafeClass()})\n         self.assertEqual(output, 'You &gt; me')\n+\n+import re\n+\n+class TestAdminFormsetPrefixRegex(AutoescapeStringfilterTests):\n+    def test_regex_with_special_characters_repro(self):\n+        # Regression focus: Possible data loss in admin changeform view when using regex special characters in formset prefix\n+        prefix = 'special*prefix'\n+        pk_name = 'id'\n+        pk_pattern = re.compile(r'{}-\\d+-{}$'.format(prefix, pk_name))\n+        self.assertTrue(pk_pattern.match('special*prefix-1-id'))\n",
+    "patch_sha256": "b0111b3eaec2907b47bc809da229115b3e7a90fe22363bdbca08449e07ab8a92"
+  }
+]

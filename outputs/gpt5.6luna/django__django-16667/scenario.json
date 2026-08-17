@@ -1,0 +1,69 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/widgets.py",
+      "target_function": "path",
+      "related_classes": [
+        "SelectDateWidget"
+      ],
+      "candidate_test_file": "tests/forms_tests/widget_tests/test_dateinput.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django import forms",
+      "from django.forms import SelectDateWidget",
+      "from django.http import HttpResponse",
+      "class ReproForm(forms.Form): my_date = forms.DateField(widget=SelectDateWidget())",
+      "def repro_view(request): form = ReproForm(request.GET); return HttpResponse('ok') if form.is_valid() else HttpResponse('not ok')"
+    ],
+    "execution_stimulus": [
+      "response = repro_view({'GET': {'my_date_day': '1', 'my_date_month': '1', 'my_date_year': '1234567821345678'}})"
+    ],
+    "expected_failure": "The test should raise an OverflowError due to invalid date conversion.",
+    "relevant_source_files": [
+      "django/forms/widgets.py",
+      "django/contrib/admindocs/urls.py",
+      "django/contrib/auth/urls.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_datefield.py",
+      "tests/forms_tests/field_tests/test_datetimefield.py",
+      "tests/forms_tests/field_tests/test_splitdatetimefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_selectdatewidget_overflow_error():\n    from django import forms\n    from django.forms import SelectDateWidget\n    from django.http import HttpResponse\n    class ReproForm(forms.Form): my_date = forms.DateField(widget=SelectDateWidget())\n    def repro_view(request): form = ReproForm(request.GET); return HttpResponse('ok') if form.is_valid() else HttpResponse('not ok')\n    try:\n        response = repro_view({'GET': {'my_date_day': '1', 'my_date_month': '1', 'my_date_year': '1234567821345678'}})\n        assert False, 'OverflowError was not raised'\n    except OverflowError:\n        assert True"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OverflowError"
+    ],
+    "identifiers": {
+      "functions": [
+        "value_from_datadict"
+      ],
+      "classes": [
+        "SelectDateWidget"
+      ]
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected"
+  }
+]

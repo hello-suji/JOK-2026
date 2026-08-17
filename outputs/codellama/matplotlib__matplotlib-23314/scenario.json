@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/pyplot.py",
+      "target_function": "set_visible",
+      "related_classes": [
+        "GridSpec",
+        "Qt5Agg",
+        "Tim"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_gridspec.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where set_visible can be called.",
+      "Use the generated reproduction path that calls scatter, set_visible, subplots, matplotlib."
+    ],
+    "execution_stimulus": [
+      "Call set_visible with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: scatter, set_visible, subplots, matplotlib."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/gridspec.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_gridspec.py",
+      "lib/matplotlib/tests/test_artist.py",
+      "lib/matplotlib/tests/test_figure.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\n\ndef test_set_visible_3d_projection_repro():\n    \"\"\"\n    Addresses issue #23314.\n    See at https://github.com/matplotlib/matplotlib/issues/23314.\n    \"\"\"\n    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'projection': '3d'})\n    ax1.scatter(1, 1, 1)\n    ax2.scatter(1, 1, 1, c='r')\n    ax1.set_visible(False)\n\n    assert not ax1.get_visible()\n    assert ax2.get_visible()"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib.gridspec import GridSpec\n\nfig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'projection': '3d'})\nax1.scatter(1,1,1)\nax2.scatter(1,1,1, c='r')\nax1.set_visible(False)\n\nplt.show()\n# Thanks Tim for your help!"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "scatter",
+        "set_visible",
+        "show",
+        "subplots",
+        "matplotlib",
+        "plt",
+        "use",
+        "get_visible"
+      ],
+      "classes": [
+        "GridSpec",
+        "Qt5Agg",
+        "Tim"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_gridspec.py",
+      "target_source_file": "lib/matplotlib/pyplot.py",
+      "test_visible_functions": [
+        "scatter",
+        "set_visible",
+        "subplots",
+        "matplotlib",
+        "plt",
+        "use",
+        "get_visible"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/cmd/quickstart.py",
+      "target_function": "main",
+      "related_classes": [],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Create a directory with an existing conf.py file",
+      "Navigate to the directory in the terminal",
+      "Use the generated reproduction path that calls unittest, main, makedirs, open.",
+      "Use the generated reproduction path that calls unittest, main, makedirs."
+    ],
+    "execution_stimulus": [
+      "Run sphinx-quickstart",
+      "Press Enter when prompted for a new root path name",
+      "Execute the focused target API path: unittest, main, makedirs, open.",
+      "Execute the focused target API path: unittest, main, makedirs."
+    ],
+    "expected_failure": "The program returns an error message \"Please enter a valid path name\" instead of exiting",
+    "relevant_source_files": [
+      "sphinx/cmd/quickstart.py",
+      "doc/conf.py",
+      "sphinx/builders/text.py",
+      "sphinx/cmd/build.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import os\nimport subprocess\ndef test_sphinx_quickstart_existing_conf():\n    os.makedirs('test_dir', exist_ok=True)\n    with open('test_dir/conf.py', 'w') as f:\n        f.write('')\n    result = subprocess.run(['sphinx-quickstart', 'test_dir'], input=b'\\n', capture_output=True, text=True)\n    assert 'Please enter a valid path name' in result.stderr"
+      },
+      {
+        "language": "python",
+        "code": "import os\nimport unittest\nfrom sphinx.cmd.quickstart import main\n\nclass TestQuickstartExistingConf(unittest.TestCase):\n    def test_sphinx_quickstart_existing_conf_repro(self):\n        os.makedirs('test_dir', exist_ok=True)\n        with open('test_dir/conf.py', 'w') as f:\n            f.write('')\n        with self.assertRaises(SystemExit) as cm:\n            main(argv=['sphinx-quickstart', 'test_dir'])\n        self.assertEqual(cm.exception.code, 0)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "Please enter a valid path name"
+    ],
+    "error_keywords": [
+      "Please enter a valid path name"
+    ],
+    "identifiers": {
+      "functions": [
+        "main",
+        "unittest",
+        "makedirs"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/cmd/quickstart.py",
+      "test_visible_functions": [
+        "unittest",
+        "main",
+        "makedirs"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

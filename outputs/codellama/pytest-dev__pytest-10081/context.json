@@ -1,0 +1,426 @@
+{
+  "instance_id": "pytest-dev__pytest-10081",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "da9a2b584eb7a6c7e924b2621ed0ddaeca0a7bea",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/debugging.py",
+      "score": 23,
+      "matched_identifiers": [
+        "capturing",
+        "defined",
+        "entering",
+        "io-capturing",
+        "post_mortem"
+      ],
+      "reasons": [
+        "function_match:post_mortem",
+        "path_contains_function:py",
+        "source_content_tokens:capturing,defined,entering,io-capturing,item"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "post_mortem": "def post_mortem(t: types.TracebackType) -> None:\n    p = pytestPDB._init_pdb(\"post_mortem\")\n    p.reset()\n    p.interaction(None, t)\n    if p.quitting:\n        outcomes.exit(\"Quitting debugger\")"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "pytestPDB.set_trace",
+        "PdbInvoke.pytest_exception_interact",
+        "PdbInvoke.pytest_internalerror",
+        "PdbTrace.pytest_pyfunc_call",
+        "wrap_pytest_function_for_tracing",
+        "maybe_wrap_pytest_function_for_tracing",
+        "post_mortem"
+      ]
+    },
+    {
+      "path": "src/_pytest/outcomes.py",
+      "score": 23,
+      "matched_identifiers": [
+        "full",
+        "item",
+        "name",
+        "platform",
+        "skip"
+      ],
+      "reasons": [
+        "function_match:skip",
+        "path_contains_function:py",
+        "source_content_tokens:full,item,name,platform,pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "skip": "def skip(\n    reason: str = \"\", *, allow_module_level: bool = False, msg: Optional[str] = None\n) -> NoReturn:\n    \"\"\"Skip an executing test with the given message.\n\n    This function should be called only during testing (setup, call or teardown) or\n    during collection by using the ``allow_module_level`` flag.  This function can\n    be called in doctests as well.\n\n    :param reason:\n        The message to show the user as reason for the skip.\n\n    :param allow_module_level:\n        Allows this function to be called at module level, skipping the rest\n        of the module. Defaults to False."
+      },
+      "top_level_functions": [
+        "exit",
+        "skip",
+        "fail",
+        "xfail",
+        "importorskip"
+      ]
+    },
+    {
+      "path": "src/_pytest/setuponly.py",
+      "score": 20,
+      "matched_identifiers": [
+        "defined",
+        "list",
+        "name",
+        "post"
+      ],
+      "reasons": [
+        "path_contains_function:py",
+        "path_contains_function:setUp",
+        "source_content_tokens:defined,list,name,post,pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_fixture_setup",
+        "pytest_fixture_post_finalizer",
+        "pytest_cmdline_main"
+      ]
+    },
+    {
+      "path": "src/_pytest/skipping.py",
+      "score": 20,
+      "matched_identifiers": [
+        "defined",
+        "item",
+        "list",
+        "name"
+      ],
+      "reasons": [
+        "path_contains_function:py",
+        "path_contains_function:skip",
+        "source_content_tokens:defined,item,list,name,platform"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "evaluate_condition",
+        "evaluate_skip_marks",
+        "evaluate_xfail_marks",
+        "pytest_runtest_setup",
+        "pytest_runtest_call",
+        "pytest_runtest_makereport",
+        "pytest_report_teststatus"
+      ]
+    },
+    {
+      "path": "doc/en/conf.py",
+      "score": 19,
+      "matched_identifiers": [
+        "full",
+        "linux",
+        "list",
+        "name"
+      ],
+      "reasons": [
+        "path_contains_function:py",
+        "stem_in_issue_text:conf",
+        "source_content_tokens:full,linux,list,name,pluggy"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "configure_logging",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/test_skipping.py",
+      "score": 24,
+      "matched_identifiers": [
+        "MyTestCase",
+        "TestCase",
+        "py",
+        "skip"
+      ],
+      "reasons": [
+        "test_path_contains_function:py",
+        "test_path_contains_function:skip",
+        "test_path_related_to_class:TestCase",
+        "test_path_related_to_class:MyTestCase",
+        "test_name_matches_source_stem:skipping",
+        "token_overlap:skip,skipping",
+        "internal_name_overlap:tear",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/unittest/test_setup_skip.py",
+      "score": 23,
+      "matched_identifiers": [
+        "MyTestCase",
+        "TestCase",
+        "py",
+        "setUp",
+        "skip"
+      ],
+      "reasons": [
+        "test_path_contains_function:py",
+        "test_function_match:setUp",
+        "test_path_contains_function:setUp",
+        "test_path_contains_function:skip",
+        "test_path_related_to_class:TestCase",
+        "test_path_related_to_class:MyTestCase",
+        "token_overlap:skip",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_setuponly.py",
+      "score": 20,
+      "matched_identifiers": [
+        "MyTestCase",
+        "TestCase",
+        "py",
+        "setUp"
+      ],
+      "reasons": [
+        "test_path_contains_function:py",
+        "test_path_contains_function:setUp",
+        "test_path_related_to_class:TestCase",
+        "test_path_related_to_class:MyTestCase",
+        "test_name_matches_source_stem:setuponly",
+        "token_overlap:setuponly",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/test_setup_flow_example.py",
+      "score": 19,
+      "matched_identifiers": [
+        "MyTestCase",
+        "TestCase",
+        "py",
+        "setUp"
+      ],
+      "reasons": [
+        "test_path_contains_function:py",
+        "test_path_contains_function:setUp",
+        "test_path_related_to_class:TestCase",
+        "test_path_related_to_class:MyTestCase",
+        "same_module_area:doc",
+        "internal_name_overlap:tear",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/unittest/test_setup_skip_class.py",
+      "score": 18,
+      "matched_identifiers": [
+        "MyTestCase",
+        "TestCase",
+        "py",
+        "setUp",
+        "skip"
+      ],
+      "reasons": [
+        "test_path_contains_function:py",
+        "test_path_contains_function:setUp",
+        "test_path_contains_function:skip",
+        "test_path_related_to_class:TestCase",
+        "test_path_related_to_class:MyTestCase",
+        "token_overlap:skip",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "testing/test_skipping.py:pytest_import_or_conftest",
+      "testing/test_skipping.py:top_level_test_functions",
+      "testing/test_skipping.py:testcase_class:TestBooleanCondition",
+      "testing/test_skipping.py:testcase_class:TestEvaluation",
+      "testing/test_skipping.py:testcase_class:TestSkip",
+      "testing/test_skipping.py:testcase_class:TestSkipif",
+      "testing/test_skipping.py:testcase_class:TestXFail",
+      "testing/test_skipping.py:testcase_class:TestXFailwithSetupTeardown",
+      "testing/test_setuponly.py:pytest_import_or_conftest",
+      "testing/test_setuponly.py:top_level_test_functions",
+      "testing/example_scripts/unittest/test_setup_skip_class.py:unittest_or_django_test_import",
+      "testing/example_scripts/unittest/test_setup_skip_class.py:testcase_class:Test",
+      "testing/example_scripts/unittest/test_setup_skip.py:unittest_or_django_test_import",
+      "testing/example_scripts/unittest/test_setup_skip.py:testcase_class:Test",
+      "doc/en/example/assertion/test_setup_flow_example.py:testcase_class:TestStateFullThing"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 245,
+  "indexed_test_file_count": 130,
+  "available_imports": {
+    "testing.test_skipping": [
+      "TestBooleanCondition",
+      "TestEvaluation",
+      "TestSkip",
+      "TestSkipif",
+      "TestXFail",
+      "TestXFailwithSetupTeardown",
+      "test_default_markers",
+      "test_errors_in_xfail_skip_expressions",
+      "test_exit_with_msg_and_reason_fails",
+      "test_exit_with_reason_works_ok",
+      "test_fail_fails_with_msg_and_reason",
+      "test_fail_using_reason_works_ok",
+      "test_imperativeskip_on_xfail_test",
+      "test_importorskip",
+      "test_invalid_skip_keyword_parameter",
+      "test_mark_xfail_item",
+      "test_module_level_skip_error",
+      "test_module_level_skip_with_allow_module_level",
+      "test_relpath_rootdir",
+      "test_reportchars",
+      "test_reportchars_all",
+      "test_reportchars_all_error",
+      "test_reportchars_error",
+      "test_skip_fails_with_msg_and_reason",
+      "test_skip_not_report_default",
+      "test_skip_using_reason_works_ok",
+      "test_skipif_class",
+      "test_skipped_folding",
+      "test_skipped_reasons_functional",
+      "test_summary_list_after_errors",
+      "test_xfail_item",
+      "test_xfail_skipif_with_globals",
+      "test_xfail_test_setup_exception"
+    ],
+    "testing.test_setuponly": [
+      "mode",
+      "test_capturing",
+      "test_dynamic_fixture_request",
+      "test_setup_show_with_KeyboardInterrupt_in_test",
+      "test_show_different_scopes",
+      "test_show_fixture_action_with_bytes",
+      "test_show_fixtures_and_execute_test",
+      "test_show_fixtures_with_autouse",
+      "test_show_fixtures_with_parameter_ids",
+      "test_show_fixtures_with_parameter_ids_function",
+      "test_show_fixtures_with_parameters",
+      "test_show_nested_fixtures",
+      "test_show_only_active_fixtures"
+    ],
+    "src._pytest.skipping": [
+      "Skip",
+      "Xfail",
+      "evaluate_condition",
+      "evaluate_skip_marks",
+      "evaluate_xfail_marks",
+      "pytest_addoption",
+      "pytest_configure",
+      "pytest_report_teststatus",
+      "pytest_runtest_call",
+      "pytest_runtest_makereport",
+      "pytest_runtest_setup"
+    ],
+    "src._pytest.debugging": [
+      "PdbInvoke",
+      "PdbTrace",
+      "_enter_pdb",
+      "_postmortem_traceback",
+      "_validate_usepdb_cls",
+      "maybe_wrap_pytest_function_for_tracing",
+      "post_mortem",
+      "pytestPDB",
+      "pytest_addoption",
+      "pytest_configure",
+      "wrap_pytest_function_for_tracing"
+    ],
+    "src": [
+      "__version__",
+      "version_tuple"
+    ],
+    "src._pytest.outcomes": [
+      "Exit",
+      "Failed",
+      "OutcomeException",
+      "Skipped",
+      "XFailed",
+      "_WithException",
+      "_resolve_msg_to_reason",
+      "_with_exception",
+      "exit",
+      "fail",
+      "importorskip",
+      "skip",
+      "xfail"
+    ],
+    "src._pytest.setuponly": [
+      "_show_fixture_action",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_fixture_post_finalizer",
+      "pytest_fixture_setup"
+    ],
+    "testing.example_scripts.issue_519": [
+      "checked_order",
+      "fix1",
+      "fix2",
+      "pytest_generate_tests",
+      "test_one",
+      "test_two"
+    ],
+    "testing.example_scripts.unittest.test_setup_skip_class": [
+      "Base",
+      "Test"
+    ],
+    "testing.example_scripts.unittest.test_setup_skip": [
+      "Base",
+      "Test"
+    ],
+    "doc.en.conf": [
+      "configure_logging",
+      "setup"
+    ],
+    "doc.en.example.assertion.test_setup_flow_example": [
+      "TestStateFullThing",
+      "setup_module",
+      "teardown_module"
+    ]
+  },
+  "test_example_snippet": "class TestEvaluation:\n    def test_no_marker(self, pytester: Pytester) -> None:\n        item = pytester.getitem(\"def test_func(): pass\")\n        skipped = evaluate_skip_marks(item)\n        assert not skipped\n\n    def test_marked_xfail_no_args(self, pytester: Pytester) -> None:\n        item = pytester.getitem(\n            \"\"\"\n            import pytest\n            @pytest.mark.xfail\n            def test_func():\n                pass\n        \"\"\"\n        )\n        xfailed = evaluate_xfail_marks(item)\n        assert xfailed\n        assert xfailed.reason == \"\"\n        assert xfailed.run\n\n    def test_marked_skipif_no_args(self, pytester: Pytester) -> None:\n        item = pytester.getitem(\n            \"\"\"\n            import pytest\n            @pytest.mark.skipif\n            def test_func():\n                pass\n        \"\"\"\n        )\n        skipped = evaluate_skip_marks(item)\n        assert skipped\n        assert skipped.reason == \"\"\n\n    def test_marked_one_arg(self, pytester: Pytester) -> None:\n        item = pytester.getitem(",
+  "conftest_fixtures": {
+    "testing/conftest.py": [
+      "tw_mock",
+      "dummy_yaml_custom_test",
+      "pytester",
+      "color_mapping",
+      "mock_timing",
+      "restore_tracing"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+--- a/tests/urlpatterns/path_base64_urls.py
++++ b/tests/urlpatterns/path_base64_urls.py
+@@ -21,3 +21,21 @@
+     path('base64/<base64:base>/subpatterns/', include(subpatterns)),
+     path('base64/<base64:base>/namespaced/', include((subpatterns, 'namespaced-base64'))),
+ ]
++
++from django.conf.urls.i18n import i18n_patterns
++from django.http.response import HttpResponse
++from django.test import TestCase
++from django.urls import path
++
++def bangiah(request):
++    return HttpResponse('U!')
++
++urlpatterns = i18n_patterns(
++    path('', bangiah, name='bangiah'),
++)
++
++class TestBangiahWithLocale(TestCase):
++    def test_bangiah_with_en_latn_us_repro(self):
++        response = self.client.get('/en-latn-us/')
++        self.assertEqual(response.status_code, 200)
++        self.assertEqual(response.content.decode(), 'U!')

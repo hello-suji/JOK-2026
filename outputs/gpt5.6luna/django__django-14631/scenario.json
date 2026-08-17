@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/forms.py",
+      "target_function": "_clean_fields",
+      "related_classes": [
+        "BaseForm",
+        "BoundField",
+        "Form",
+        "CharField"
+      ],
+      "candidate_test_file": "tests/forms_tests/tests/test_forms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _clean_fields can be called.",
+      "Use the generated reproduction path that calls _clean_fields, changed_data, full_clean."
+    ],
+    "execution_stimulus": [
+      "Call _clean_fields with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _clean_fields, changed_data, full_clean."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/forms/forms.py",
+      "django/forms/boundfield.py",
+      "django/contrib/auth/forms.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/tests/test_forms.py",
+      "tests/auth_tests/test_forms.py",
+      "tests/forms_tests/field_tests/test_datetimefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms import Form, CharField\n\nclass TestBaseFormCleanFields(TestCase):\n    def test_clean_fields_access_via_bound_field_repro(self):\n        class TestForm(Form):\n            name = CharField(initial='Initial Name')\n\n        form = TestForm(data={'name': 'Changed Name'})\n        form.full_clean()\n        self.assertNotEqual(form.cleaned_data['name'], form['name'].initial)\n        self.assertIn('name', form.changed_data)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_bound_items",
+        "_clean_fields",
+        "_did_change",
+        "changed_data",
+        "did_change",
+        "full_clean"
+      ],
+      "classes": [
+        "BaseForm",
+        "BoundField",
+        "Form",
+        "CharField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/tests/test_forms.py",
+      "target_source_file": "django/forms/forms.py",
+      "test_visible_functions": [
+        "_clean_fields",
+        "changed_data",
+        "full_clean"
+      ],
+      "test_visible_classes": [
+        "BaseForm",
+        "Form",
+        "CharField"
+      ]
+    }
+  }
+]

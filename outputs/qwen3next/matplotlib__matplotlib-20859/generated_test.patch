@@ -1,0 +1,16 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1163,3 +1163,13 @@
+
+     assert fig.get_label() == 'whole Figure'
+     assert sub_fig.get_label() == 'sub figure'
++
++import matplotlib.pyplot as plt
++
++def test_subfigure_legend_success_repro():
++    fig = plt.figure()
++    subfig = fig.subfigures()
++    ax = subfig.subplots()
++    ax.plot([0, 1, 2], [0, 1, 2], label='test')
++    legend = subfig.legend()
++    assert isinstance(legend, plt.Legend)

@@ -1,0 +1,477 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-12682",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "d360ffa7c5896a91ae498b3fb9cf464464ce8f34",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "examples/decomposition/plot_sparse_coding.py",
+      "score": 37,
+      "matched_identifiers": [
+        "coding",
+        "decomposition",
+        "examples/decomposition/plot_sparse_coding.py",
+        "lasso",
+        "plot"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:examples/decomposition/plot_sparse_coding.py",
+        "stem_in_issue_text:plot_sparse_coding",
+        "source_content_tokens:coding,decomposition,lasso,plot,sparse"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ricker_function",
+        "ricker_matrix"
+      ]
+    },
+    {
+      "path": "sklearn/decomposition/dict_learning.py",
+      "score": 20,
+      "matched_identifiers": [
+        "SparseCoder",
+        "__init__",
+        "coding",
+        "init",
+        "iter"
+      ],
+      "reasons": [
+        "class_match:SparseCoder",
+        "source_content_tokens:__init__,coding,init,iter,lasso"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "SparseCoder": "class SparseCoder(BaseEstimator, SparseCodingMixin):\n    \"\"\"Sparse coding\n\n    Finds a sparse representation of data against a fixed, precomputed\n    dictionary.\n\n    Each row of the result is the solution to a sparse coding problem.\n    The goal is to find a sparse array `code` such that::\n\n        X ~= code * dictionary\n\n    Read more in the :ref:`User Guide <SparseCoder>`.\n\n    Parameters\n    ----------",
+        "__init__": "    def __init__(self, n_components=None, alpha=1, n_iter=1000,\n                 fit_algorithm='lars', n_jobs=None, batch_size=3,\n                 shuffle=True, dict_init=None, transform_algorithm='omp',\n                 transform_n_nonzero_coefs=None, transform_alpha=None,\n                 verbose=False, split_sign=False, random_state=None,\n                 positive_code=False, positive_dict=False):\n\n        self._set_sparse_coding_params(n_components, transform_algorithm,\n                                       transform_n_nonzero_coefs,\n                                       transform_alpha, split_sign, n_jobs,\n                                       positive_code)\n        self.alpha = alpha\n        self.n_iter = n_iter\n        self.fit_algorithm = fit_algorithm\n        self.dict_init = dict_init"
+      },
+      "top_level_functions": [
+        "sparse_encode",
+        "dict_learning",
+        "dict_learning_online",
+        "SparseCodingMixin.transform",
+        "SparseCoder.fit",
+        "DictionaryLearning.fit",
+        "MiniBatchDictionaryLearning.fit",
+        "MiniBatchDictionaryLearning.partial_fit"
+      ]
+    },
+    {
+      "path": "sklearn/linear_model/coordinate_descent.py",
+      "score": 20,
+      "matched_identifiers": [
+        "Lasso",
+        "__init__",
+        "decomposition",
+        "examples",
+        "init"
+      ],
+      "reasons": [
+        "class_match:Lasso",
+        "source_content_tokens:__init__,decomposition,examples,init,iter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Lasso": "class Lasso(ElasticNet):\n    \"\"\"Linear Model trained with L1 prior as regularizer (aka the Lasso)\n\n    The optimization objective for Lasso is::\n\n        (1 / (2 * n_samples)) * ||y - Xw||^2_2 + alpha * ||w||_1\n\n    Technically the Lasso model is optimizing the same objective function as\n    the Elastic Net with ``l1_ratio=1.0`` (no L2 penalty).\n\n    Read more in the :ref:`User Guide <lasso>`.\n\n    Parameters\n    ----------\n    alpha : float, optional",
+        "__init__": "    def __init__(self, eps=1e-3, n_alphas=100, alphas=None, fit_intercept=True,\n                 normalize=False, max_iter=1000, tol=1e-4, copy_X=True,\n                 cv=None, verbose=False, n_jobs=None, random_state=None,\n                 selection='cyclic'):\n        super().__init__(\n            eps=eps, n_alphas=n_alphas, alphas=alphas,\n            fit_intercept=fit_intercept, normalize=normalize,\n            max_iter=max_iter, tol=tol, copy_X=copy_X,\n            cv=cv, verbose=verbose, n_jobs=n_jobs, random_state=random_state,\n            selection=selection)\n\n    def _more_tags(self):\n        return {'multioutput_only': True}"
+      },
+      "top_level_functions": [
+        "lasso_path",
+        "enet_path",
+        "ElasticNet.fit",
+        "ElasticNet.sparse_coef_",
+        "LinearModelCV.fit",
+        "MultiTaskElasticNet.fit"
+      ]
+    },
+    {
+      "path": "benchmarks/bench_plot_lasso_path.py",
+      "score": 18,
+      "matched_identifiers": [
+        "init",
+        "iter",
+        "lasso",
+        "plot"
+      ],
+      "reasons": [
+        "path_contains_class:Lasso",
+        "source_content_tokens:init,iter,lasso,plot,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "compute_bench"
+      ]
+    },
+    {
+      "path": "examples/linear_model/plot_lasso_dense_vs_sparse_data.py",
+      "score": 18,
+      "matched_identifiers": [
+        "iter",
+        "lasso",
+        "max_iter",
+        "sparse"
+      ],
+      "reasons": [
+        "path_contains_class:Lasso",
+        "source_content_tokens:iter,lasso,max_iter,sparse,results"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/decomposition/tests/test_sparse_pca.py",
+      "score": 26,
+      "matched_identifiers": [
+        "SparseCoder"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SparseCoder",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/decomposition/tests",
+        "token_overlap:decomposition,sklearn,sparse",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/decomposition/tests/test_dict_learning.py",
+      "score": 25,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/decomposition/tests",
+        "token_overlap:decomposition,dict,learning,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_sparse_coordinate_descent.py",
+      "score": 25,
+      "matched_identifiers": [
+        "SparseCoder"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SparseCoder",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:coordinate,descent,linear,sklearn,sparse",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:examples/decomposition"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_coordinate_descent.py",
+      "score": 22,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:coordinate,descent,linear,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:examples/decomposition"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/decomposition/tests/test_incremental_pca.py",
+      "score": 21,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/decomposition/tests",
+        "token_overlap:decomposition,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/decomposition/tests/test_dict_learning.py:pytest_import_or_conftest",
+      "sklearn/decomposition/tests/test_dict_learning.py:top_level_test_functions",
+      "sklearn/decomposition/tests/test_sparse_pca.py:pytest_import_or_conftest",
+      "sklearn/decomposition/tests/test_sparse_pca.py:top_level_test_functions",
+      "sklearn/decomposition/tests/test_incremental_pca.py:pytest_import_or_conftest",
+      "sklearn/decomposition/tests/test_incremental_pca.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_coordinate_descent.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_coordinate_descent.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_sparse_coordinate_descent.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 726,
+  "indexed_test_file_count": 210,
+  "available_imports": {
+    "sklearn": [
+      "ARDRegression",
+      "BayesianRidge",
+      "DictionaryLearning",
+      "ElasticNet",
+      "ElasticNetCV",
+      "FactorAnalysis",
+      "FastICA",
+      "Hinge",
+      "Huber",
+      "HuberRegressor",
+      "IncrementalPCA",
+      "KernelPCA",
+      "Lars",
+      "LarsCV",
+      "Lasso",
+      "LassoCV",
+      "LassoLars",
+      "LassoLarsCV",
+      "LassoLarsIC",
+      "LatentDirichletAllocation",
+      "LinearRegression",
+      "Log",
+      "LogisticRegression",
+      "LogisticRegressionCV",
+      "MiniBatchDictionaryLearning",
+      "MiniBatchSparsePCA",
+      "ModifiedHuber",
+      "MultiTaskElasticNet",
+      "MultiTaskElasticNetCV",
+      "MultiTaskLasso",
+      "MultiTaskLassoCV",
+      "NMF",
+      "OrthogonalMatchingPursuit",
+      "OrthogonalMatchingPursuitCV",
+      "PCA",
+      "PassiveAggressiveClassifier",
+      "PassiveAggressiveRegressor",
+      "Perceptron",
+      "RANSACRegressor",
+      "Ridge",
+      "RidgeCV",
+      "RidgeClassifier",
+      "RidgeClassifierCV",
+      "SGDClassifier",
+      "SGDRegressor",
+      "SparseCoder",
+      "SparsePCA",
+      "SquaredLoss",
+      "TheilSenRegressor",
+      "TruncatedSVD",
+      "config_context",
+      "dict_learning",
+      "dict_learning_online",
+      "enet_path",
+      "fastica",
+      "get_config",
+      "lars_path",
+      "lars_path_gram",
+      "lasso_path",
+      "logistic_regression_path",
+      "non_negative_factorization",
+      "orthogonal_mp",
+      "orthogonal_mp_gram",
+      "randomized_svd",
+      "ridge_regression",
+      "set_config",
+      "setup_module",
+      "sparse_encode"
+    ],
+    "benchmarks.bench_plot_lasso_path": [
+      "compute_bench"
+    ],
+    "examples.decomposition.plot_sparse_coding": [
+      "ricker_function",
+      "ricker_matrix"
+    ],
+    "sklearn.linear_model.coordinate_descent": [
+      "ElasticNet",
+      "ElasticNetCV",
+      "Lasso",
+      "LassoCV",
+      "LinearModelCV",
+      "MultiTaskElasticNet",
+      "MultiTaskElasticNetCV",
+      "MultiTaskLasso",
+      "MultiTaskLassoCV",
+      "_alpha_grid",
+      "_path_residuals",
+      "enet_path",
+      "lasso_path"
+    ],
+    "sklearn.decomposition.dict_learning": [
+      "DictionaryLearning",
+      "MiniBatchDictionaryLearning",
+      "SparseCoder",
+      "SparseCodingMixin",
+      "_check_positive_coding",
+      "_sparse_encode",
+      "_update_dict",
+      "dict_learning",
+      "dict_learning_online",
+      "sparse_encode"
+    ],
+    "sklearn.decomposition.tests.test_dict_learning": [
+      "test_dict_learning_lars_code_positivity",
+      "test_dict_learning_lars_dict_positivity",
+      "test_dict_learning_lars_positive_parameter",
+      "test_dict_learning_lassocd_readonly_data",
+      "test_dict_learning_nonzero_coefs",
+      "test_dict_learning_online_estimator_shapes",
+      "test_dict_learning_online_initialization",
+      "test_dict_learning_online_lars_positive_parameter",
+      "test_dict_learning_online_overcomplete",
+      "test_dict_learning_online_partial_fit",
+      "test_dict_learning_online_positivity",
+      "test_dict_learning_online_readonly_initialization",
+      "test_dict_learning_online_shapes",
+      "test_dict_learning_online_verbosity",
+      "test_dict_learning_overcomplete",
+      "test_dict_learning_positivity",
+      "test_dict_learning_reconstruction",
+      "test_dict_learning_reconstruction_parallel",
+      "test_dict_learning_shapes",
+      "test_dict_learning_split",
+      "test_dict_learning_unknown_fit_algorithm",
+      "test_minibatch_dictionary_learning_lars",
+      "test_minibatch_dictionary_learning_positivity",
+      "test_sparse_coder_estimator",
+      "test_sparse_coder_parallel_mmap",
+      "test_sparse_encode_error",
+      "test_sparse_encode_error_default_sparsity",
+      "test_sparse_encode_input",
+      "test_sparse_encode_positivity",
+      "test_sparse_encode_shapes",
+      "test_sparse_encode_shapes_omp",
+      "test_sparse_encode_unavailable_positivity",
+      "test_unknown_method"
+    ],
+    "sklearn.decomposition.tests.test_sparse_pca": [
+      "generate_toy_data",
+      "test_correct_shapes",
+      "test_fit_transform",
+      "test_fit_transform_parallel",
+      "test_fit_transform_tall",
+      "test_initialization",
+      "test_mini_batch_correct_shapes",
+      "test_mini_batch_fit_transform",
+      "test_pca_vs_spca",
+      "test_scaling_fit_transform",
+      "test_spca_deprecation_warning",
+      "test_spca_error_unormalized_components",
+      "test_transform_nan"
+    ],
+    "sklearn.decomposition.tests.test_incremental_pca": [
+      "test_explained_variances",
+      "test_incremental_pca",
+      "test_incremental_pca_against_pca_iris",
+      "test_incremental_pca_against_pca_random_data",
+      "test_incremental_pca_batch_rank",
+      "test_incremental_pca_batch_signs",
+      "test_incremental_pca_batch_values",
+      "test_incremental_pca_check_projection",
+      "test_incremental_pca_inverse",
+      "test_incremental_pca_num_features_change",
+      "test_incremental_pca_partial_fit",
+      "test_incremental_pca_partial_fit_float_division",
+      "test_incremental_pca_set_params",
+      "test_incremental_pca_sparse",
+      "test_incremental_pca_validation",
+      "test_n_components_none",
+      "test_singular_values",
+      "test_whitening"
+    ],
+    "sklearn.linear_model.tests.test_coordinate_descent": [
+      "build_dataset",
+      "test_1d_multioutput_enet_and_multitask_enet_cv",
+      "test_1d_multioutput_lasso_and_multitask_lasso_cv",
+      "test_check_input_false",
+      "test_coef_shape_not_zero",
+      "test_convergence_warnings",
+      "test_enet_coordinate_descent",
+      "test_enet_copy_X_False_check_input_False",
+      "test_enet_copy_X_True",
+      "test_enet_cv_positive_constraint",
+      "test_enet_float_precision",
+      "test_enet_l1_ratio",
+      "test_enet_multitarget",
+      "test_enet_path",
+      "test_enet_path_positive",
+      "test_enet_positive_constraint",
+      "test_enet_toy",
+      "test_lasso_alpha_warning",
+      "test_lasso_cv",
+      "test_lasso_cv_positive_constraint",
+      "test_lasso_cv_with_some_model_selection",
+      "test_lasso_non_float_y",
+      "test_lasso_path_return_models_vs_new_return_gives_same_coefficients",
+      "test_lasso_positive_constraint",
+      "test_lasso_readonly_data",
+      "test_lasso_toy",
+      "test_lasso_zero",
+      "test_multi_task_lasso_and_enet",
+      "test_multi_task_lasso_readonly_data",
+      "test_multioutput_enetcv_error",
+      "test_multitask_enet_and_lasso_cv",
+      "test_overrided_gram_matrix",
+      "test_path_parameters",
+      "test_precompute_invalid_argument",
+      "test_random_descent",
+      "test_sparse_dense_descent_paths",
+      "test_sparse_input_convergence_warning",
+      "test_sparse_input_dtype_enet_and_lassocv",
+      "test_uniform_targets",
+      "test_warm_start",
+      "test_warm_start_convergence",
+      "test_warm_start_convergence_with_regularizer_decrement",
+      "test_warm_start_multitask_lasso"
+    ],
+    "sklearn.linear_model.tests.test_sparse_coordinate_descent": [
+      "_test_sparse_enet_not_as_toy_dataset",
+      "make_sparse_data",
+      "test_enet_multitarget",
+      "test_enet_toy_explicit_sparse_input",
+      "test_enet_toy_list_input",
+      "test_lasso_zero",
+      "test_normalize_option",
+      "test_path_parameters",
+      "test_same_multiple_output_sparse_dense",
+      "test_same_output_sparse_dense_lasso_and_enet_cv",
+      "test_sparse_coef",
+      "test_sparse_enet_coordinate_descent",
+      "test_sparse_enet_not_as_toy_dataset",
+      "test_sparse_lasso_not_as_toy_dataset"
+    ]
+  },
+  "test_example_snippet": "def test_correct_shapes():\n    rng = np.random.RandomState(0)\n    X = rng.randn(12, 10)\n    spca = SparsePCA(n_components=8, random_state=rng)\n    U = spca.fit_transform(X)\n    assert_equal(spca.components_.shape, (8, 10))\n    assert_equal(U.shape, (12, 8))\n    # test overcomplete decomposition\n    spca = SparsePCA(n_components=13, random_state=rng)\n    U = spca.fit_transform(X)\n    assert_equal(spca.components_.shape, (13, 10))\n    assert_equal(U.shape, (12, 13))\n\n\ndef test_fit_transform():\n    alpha = 1\n    rng = np.random.RandomState(0)\n    Y, _, _ = generate_toy_data(3, 10, (8, 8), random_state=rng)  # wide array\n    spca_lars = SparsePCA(n_components=3, method='lars', alpha=alpha,\n                          random_state=0)\n    spca_lars.fit(Y)\n\n    # Test that CD gives similar results\n    spca_lasso = SparsePCA(n_components=3, method='cd', random_state=0,\n                           alpha=alpha)\n    spca_lasso.fit(Y)\n    assert_array_almost_equal(spca_lasso.components_, spca_lars.components_)\n\n\n@if_safe_multiprocessing_with_blas\ndef test_fit_transform_parallel():\n    alpha = 1\n    rng = np.random.RandomState(0)\n    Y, _, _ = generate_toy_data(3, 10, (8, 8), random_state=rng)  # wide array\n    spca_lars = SparsePCA(n_components=3, method='lars', alpha=alpha,",
+  "conftest_fixtures": {
+    "sklearn/conftest.py": [
+      "pyplot"
+    ]
+  }
+}

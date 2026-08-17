@@ -1,0 +1,19 @@
+--- a/sympy/utilities/tests/test_autowrap.py
++++ b/sympy/utilities/tests/test_autowrap.py
+@@ -467,3 +467,16 @@
+ }
+ #endif""" % {'num': CodeWrapper._module_counter}
+     assert source == expected
++
++from sympy.utilities.autowrap import autowrap
++from sympy import MatrixSymbol
++import numpy as np
++
++def test_autowrap_cython_backend_failure_repro():
++    x = MatrixSymbol('x', 2, 1)
++    expr = 1.0
++    f = autowrap(expr, args=(x,), backend='cython')
++    result = f(np.array([[1.0], [2.0]]))
++    assert result == pytest.approx(1.0)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'TypeError: only size-1 arrays can be converted to Python scalars'

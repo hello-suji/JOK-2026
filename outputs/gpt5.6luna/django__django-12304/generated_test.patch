@@ -1,0 +1,22 @@
+--- a/tests/auth_tests/test_checks.py
++++ b/tests/auth_tests/test_checks.py
+@@ -200,3 +200,19 @@
+                 default_permissions = ()
+
+         self.assertEqual(checks.run_checks(self.apps.get_app_configs()), [])
++
++from django.test import TestCase, SimpleTestCase
++from tests.model_enums.tests import YearInSchool
++
++class TestYearInSchoolInTemplate(TestCase):
++    def test_year_in_school_callable_issue_repro(self):
++        student = {'year_in_school': YearInSchool.FRESHMAN}
++        context = {'student': student}
++        # Simulate template rendering behavior by calling the callable
++        try:
++            year_in_school_value = context['student']['year_in_school']()
++            self.fail('Expected a TypeError due to callable being called without arguments')
++        except TypeError:
++            pass
++        # Assert the correct non-callable behavior
++        self.assertEqual(context['student']['year_in_school'], YearInSchool.FRESHMAN)

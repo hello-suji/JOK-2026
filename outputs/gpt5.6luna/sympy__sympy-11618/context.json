@@ -1,0 +1,594 @@
+{
+  "instance_id": "sympy__sympy-11618",
+  "repo": "sympy/sympy",
+  "base_commit": "360290c4c401e386db60723ddb0109ed499c9f6e",
+  "repo_path": "data/repos/sympy__sympy",
+  "candidate_source_files": [
+    {
+      "path": "sympy/geometry/point.py",
+      "score": 28,
+      "matched_identifiers": [
+        "Point",
+        "computed",
+        "distance",
+        "point",
+        "sqrt"
+      ],
+      "reasons": [
+        "function_match:distance",
+        "class_match:Point",
+        "path_contains_class:Point",
+        "stem_in_issue_text:point",
+        "source_content_tokens:distance,point,sqrt,computed,dimension"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Point": "class Point(GeometryEntity):\n    \"\"\"A point in a n-dimensional Euclidean space.\n\n    Parameters\n    ==========\n\n    coords : sequence of n-coordinate values. In the special\n    case where n=2 or 3, a Point2D or Point3D will be created\n    as appropriate.\n\n    Attributes\n    ==========\n\n    length\n    origin: A `Point` representing the origin of the",
+        "distance": "    def distance(self, p):\n        \"\"\"The Euclidean distance from self to point p.\n\n        Parameters\n        ==========\n\n        p : Point\n\n        Returns\n        =======\n\n        distance : number or symbolic expression.\n\n        See Also\n        ========"
+      },
+      "top_level_functions": [
+        "Point.is_concyclic",
+        "Point.is_collinear",
+        "Point.is_scalar_multiple",
+        "Point.length",
+        "Point.origin",
+        "Point.is_zero",
+        "Point.ambient_dimension",
+        "Point.distance",
+        "Point.taxicab_distance",
+        "Point.midpoint",
+        "Point.evalf",
+        "Point.intersection",
+        "Point.dot",
+        "Point.equals",
+        "Point2D.x",
+        "Point2D.y",
+        "Point2D.bounds",
+        "Point2D.is_concyclic",
+        "Point2D.rotate",
+        "Point2D.scale",
+        "Point2D.translate",
+        "Point2D.transform",
+        "Point3D.x",
+        "Point3D.y",
+        "Point3D.z",
+        "Point3D.direction_ratio",
+        "Point3D.direction_cosine",
+        "Point3D.are_collinear",
+        "Point3D.are_coplanar",
+        "Point3D.intersection",
+        "Point3D.scale",
+        "Point3D.translate",
+        "Point3D.transform"
+      ]
+    },
+    {
+      "path": "sympy/geometry/line.py",
+      "score": 21,
+      "matched_identifiers": [
+        "dimension",
+        "distance",
+        "point",
+        "sqrt"
+      ],
+      "reasons": [
+        "function_match:distance",
+        "source_content_tokens:distance,point,sqrt,dimension,instead"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "distance": "    def distance(self, o):\n        \"\"\"\n        Finds the shortest distance between a line segment and a point.\n\n        Raises\n        ======\n\n        NotImplementedError is raised if o is not a Point\n\n        Examples\n        ========\n\n        >>> from sympy import Point, Segment\n        >>> p1, p2 = Point(0, 1), Point(3, 4)\n        >>> s = Segment(p1, p2)"
+      },
+      "top_level_functions": [
+        "LinearEntity.ambient_dimension",
+        "LinearEntity.p1",
+        "LinearEntity.p2",
+        "LinearEntity.coefficients",
+        "LinearEntity.are_concurrent",
+        "LinearEntity.is_parallel",
+        "LinearEntity.is_perpendicular",
+        "LinearEntity.angle_between",
+        "LinearEntity.parallel_line",
+        "LinearEntity.perpendicular_line",
+        "LinearEntity.perpendicular_segment",
+        "LinearEntity.length",
+        "LinearEntity.slope",
+        "LinearEntity.points",
+        "LinearEntity.bounds",
+        "LinearEntity.projection",
+        "LinearEntity.intersection",
+        "LinearEntity.arbitrary_point",
+        "LinearEntity.random_point",
+        "LinearEntity.is_similar",
+        "LinearEntity.contains",
+        "Line.plot_interval",
+        "Line.equation",
+        "Line.contains",
+        "Line.distance",
+        "Line.equal",
+        "Line.equals",
+        "Ray.source",
+        "Ray.direction",
+        "Ray.xdirection",
+        "Ray.ydirection",
+        "Ray.distance",
+        "Ray.plot_interval",
+        "Ray.equals",
+        "Ray.contains",
+        "Segment.plot_interval",
+        "Segment.perpendicular_bisector",
+        "Segment.length",
+        "Segment.midpoint",
+        "Segment.distance"
+      ]
+    },
+    {
+      "path": "sympy/geometry/line3d.py",
+      "score": 21,
+      "matched_identifiers": [
+        "dimension",
+        "distance",
+        "point",
+        "sqrt"
+      ],
+      "reasons": [
+        "function_match:distance",
+        "source_content_tokens:distance,point,sqrt,dimension,points"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "distance": "    def distance(self, o):\n        \"\"\"\n        Finds the shortest distance between a line segment and a point.\n\n        Raises\n        ======\n\n        NotImplementedError is raised if o is not a Point3D\n\n        Examples\n        ========\n\n        >>> from sympy import Point3D, Segment3D\n        >>> p1, p2 = Point3D(0, 0, 3), Point3D(1, 1, 4)\n        >>> s = Segment3D(p1, p2)"
+      },
+      "top_level_functions": [
+        "LinearEntity3D.p1",
+        "LinearEntity3D.p2",
+        "LinearEntity3D.direction_ratio",
+        "LinearEntity3D.direction_cosine",
+        "LinearEntity3D.length",
+        "LinearEntity3D.points",
+        "LinearEntity3D.are_concurrent",
+        "LinearEntity3D.is_parallel",
+        "LinearEntity3D.is_perpendicular",
+        "LinearEntity3D.angle_between",
+        "LinearEntity3D.parallel_line",
+        "LinearEntity3D.perpendicular_line",
+        "LinearEntity3D.perpendicular_segment",
+        "LinearEntity3D.projection",
+        "LinearEntity3D.intersection",
+        "LinearEntity3D.arbitrary_point",
+        "LinearEntity3D.is_similar",
+        "LinearEntity3D.contains",
+        "Line3D.plot_interval",
+        "Line3D.equation",
+        "Line3D.contains",
+        "Line3D.distance",
+        "Line3D.equals",
+        "Ray3D.source",
+        "Ray3D.xdirection",
+        "Ray3D.ydirection",
+        "Ray3D.zdirection",
+        "Ray3D.distance",
+        "Ray3D.plot_interval",
+        "Ray3D.contains",
+        "Ray3D.equals",
+        "Segment3D.plot_interval",
+        "Segment3D.length",
+        "Segment3D.midpoint",
+        "Segment3D.distance",
+        "Segment3D.contains"
+      ]
+    },
+    {
+      "path": "sympy/geometry/plane.py",
+      "score": 21,
+      "matched_identifiers": [
+        "calculate",
+        "distance",
+        "point",
+        "sqrt"
+      ],
+      "reasons": [
+        "function_match:distance",
+        "source_content_tokens:distance,point,sqrt,calculate,dimension"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "distance": "    def distance(self, o):\n        \"\"\"Distance beteen the plane and another geometric entity.\n\n        Parameters\n        ==========\n\n        Point3D, LinearEntity3D, Plane.\n\n        Returns\n        =======\n\n        distance\n\n        Notes\n        ====="
+      },
+      "top_level_functions": [
+        "Plane.p1",
+        "Plane.normal_vector",
+        "Plane.equation",
+        "Plane.projection",
+        "Plane.projection_line",
+        "Plane.is_parallel",
+        "Plane.is_perpendicular",
+        "Plane.distance",
+        "Plane.angle_between",
+        "Plane.are_concurrent",
+        "Plane.perpendicular_line",
+        "Plane.parallel_plane",
+        "Plane.perpendicular_plane",
+        "Plane.random_point",
+        "Plane.arbitrary_point",
+        "Plane.intersection",
+        "Plane.is_coplanar"
+      ]
+    },
+    {
+      "path": "sympy/geometry/polygon.py",
+      "score": 21,
+      "matched_identifiers": [
+        "calculate",
+        "distance",
+        "point",
+        "sqrt"
+      ],
+      "reasons": [
+        "function_match:distance",
+        "source_content_tokens:distance,point,sqrt,calculate,calculation"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "distance": "    def distance(self, o):\n        \"\"\"\n        Returns the shortest distance between self and o.\n\n        If o is a point, then self does not need to be convex.\n        If o is another polygon self and o must be complex.\n\n        Examples\n        ========\n\n        >>> from sympy import Point, Polygon, RegularPolygon\n        >>> p1, p2 = map(Point, [(0, 0), (7, 5)])\n        >>> poly = Polygon(*RegularPolygon(p1, 1, 3).vertices)\n        >>> poly.distance(p2)\n        sqrt(61)"
+      },
+      "top_level_functions": [
+        "Polygon.area",
+        "Polygon.angles",
+        "Polygon.perimeter",
+        "Polygon.vertices",
+        "Polygon.centroid",
+        "Polygon.sides",
+        "Polygon.bounds",
+        "Polygon.is_convex",
+        "Polygon.encloses_point",
+        "Polygon.arbitrary_point",
+        "Polygon.plot_interval",
+        "Polygon.intersection",
+        "Polygon.distance",
+        "RegularPolygon.args",
+        "RegularPolygon.area",
+        "RegularPolygon.length",
+        "RegularPolygon.center",
+        "RegularPolygon.circumcenter",
+        "RegularPolygon.radius",
+        "RegularPolygon.circumradius",
+        "RegularPolygon.rotation",
+        "RegularPolygon.apothem",
+        "RegularPolygon.inradius",
+        "RegularPolygon.interior_angle",
+        "RegularPolygon.exterior_angle",
+        "RegularPolygon.circumcircle",
+        "RegularPolygon.incircle",
+        "RegularPolygon.angles",
+        "RegularPolygon.encloses_point",
+        "RegularPolygon.spin",
+        "RegularPolygon.rotate",
+        "RegularPolygon.scale",
+        "RegularPolygon.reflect",
+        "RegularPolygon.vertices",
+        "Triangle.vertices",
+        "Triangle.is_similar",
+        "Triangle.is_equilateral",
+        "Triangle.is_isosceles",
+        "Triangle.is_scalene",
+        "Triangle.is_right"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sympy/geometry/tests/test_point.py",
+      "score": 33,
+      "matched_identifiers": [
+        "Point"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Point",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/geometry/tests",
+        "test_name_matches_source_stem:point",
+        "token_overlap:geometry,point,sympy",
+        "internal_name_overlap:point",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/geometry"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/geometry/tests/test_line.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/geometry/tests",
+        "test_name_matches_source_stem:line",
+        "token_overlap:geometry,line,sympy",
+        "internal_name_overlap:line",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/geometry"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/geometry/tests/test_plane.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/geometry/tests",
+        "test_name_matches_source_stem:plane",
+        "token_overlap:geometry,plane,sympy",
+        "internal_name_overlap:plane",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/geometry"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/geometry/tests/test_polygon.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/geometry/tests",
+        "test_name_matches_source_stem:polygon",
+        "token_overlap:geometry,polygon,sympy",
+        "internal_name_overlap:polygon",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/geometry"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/geometry/tests/test_ellipse.py",
+      "score": 22,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/geometry/tests",
+        "token_overlap:geometry,sympy",
+        "internal_name_overlap:point",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/geometry"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sympy/geometry/tests/test_polygon.py:pytest_import_or_conftest",
+      "sympy/geometry/tests/test_polygon.py:top_level_test_functions",
+      "sympy/geometry/tests/test_ellipse.py:pytest_import_or_conftest",
+      "sympy/geometry/tests/test_ellipse.py:top_level_test_functions",
+      "sympy/geometry/tests/test_point.py:pytest_import_or_conftest",
+      "sympy/geometry/tests/test_point.py:top_level_test_functions",
+      "sympy/geometry/tests/test_plane.py:pytest_import_or_conftest",
+      "sympy/geometry/tests/test_plane.py:top_level_test_functions",
+      "sympy/geometry/tests/test_line.py:pytest_import_or_conftest",
+      "sympy/geometry/tests/test_line.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "sympy-bin-test"
+  },
+  "indexed_file_count": 1106,
+  "indexed_test_file_count": 480,
+  "available_imports": {
+    "sympy": [
+      "Circle",
+      "Curve",
+      "Ellipse",
+      "GeometryError",
+      "Line",
+      "Line3D",
+      "Parabola",
+      "Plane",
+      "Point",
+      "Point2D",
+      "Point3D",
+      "Polygon",
+      "Ray",
+      "Ray3D",
+      "RegularPolygon",
+      "Segment",
+      "Segment3D",
+      "TableForm",
+      "Triangle",
+      "__sympy_debug",
+      "__version__",
+      "absolute_import",
+      "are_similar",
+      "ccode",
+      "centroid",
+      "closest_points",
+      "convex_hull",
+      "deg",
+      "farthest_points",
+      "fcode",
+      "idiff",
+      "init_printing",
+      "init_session",
+      "intersection",
+      "jscode",
+      "julia_code",
+      "latex",
+      "mathematica_code",
+      "octave_code",
+      "pager_print",
+      "plot",
+      "plot_backends",
+      "plot_implicit",
+      "pprint",
+      "pprint_try_use_unicode",
+      "pprint_use_unicode",
+      "pretty",
+      "pretty_print",
+      "preview",
+      "print_function",
+      "print_gtk",
+      "print_python",
+      "print_tree",
+      "python",
+      "rad",
+      "srepr",
+      "sstr",
+      "sstrrepr",
+      "textplot"
+    ],
+    "sympy.vector.point": [
+      "Point"
+    ],
+    "sympy.geometry.polygon": [
+      "Polygon",
+      "RegularPolygon",
+      "Triangle",
+      "_asa",
+      "_sas",
+      "_slope",
+      "_sss",
+      "deg",
+      "rad"
+    ],
+    "sympy.geometry.point": [
+      "Point",
+      "Point2D",
+      "Point3D"
+    ],
+    "sympy.geometry.line3d": [
+      "Line3D",
+      "LinearEntity3D",
+      "Ray3D",
+      "Segment3D"
+    ],
+    "sympy.geometry.line": [
+      "Line",
+      "LinearEntity",
+      "Ray",
+      "Segment",
+      "Undecidable"
+    ],
+    "sympy.geometry.plane": [
+      "Plane"
+    ],
+    "sympy.diffgeom.diffgeom": [
+      "BaseCovarDerivativeOp",
+      "BaseScalarField",
+      "BaseVectorField",
+      "Commutator",
+      "CoordSystem",
+      "CovarDerivativeOp",
+      "Differential",
+      "LieDerivative",
+      "Manifold",
+      "Patch",
+      "Point",
+      "TensorProduct",
+      "WedgeProduct",
+      "contravariant_order",
+      "covariant_order",
+      "dummyfy",
+      "intcurve_diffequ",
+      "intcurve_series",
+      "metric_to_Christoffel_1st",
+      "metric_to_Christoffel_2nd",
+      "metric_to_Ricci_components",
+      "metric_to_Riemann_components",
+      "twoform_to_matrix",
+      "vectors_in_basis"
+    ],
+    "sympy.functions.elementary.miscellaneous": [
+      "IdentityFunction",
+      "Max",
+      "Min",
+      "MinMaxBase",
+      "cbrt",
+      "real_root",
+      "root",
+      "sqrt"
+    ],
+    "sympy.plotting.intervalmath.lib_interval": [
+      "Abs",
+      "And",
+      "Or",
+      "acos",
+      "acosh",
+      "asin",
+      "asinh",
+      "atan",
+      "atanh",
+      "ceil",
+      "cos",
+      "cosh",
+      "exp",
+      "floor",
+      "imax",
+      "imin",
+      "log",
+      "log10",
+      "sin",
+      "sinh",
+      "sqrt",
+      "tan",
+      "tanh"
+    ],
+    "sympy.geometry.tests.test_polygon": [
+      "feq",
+      "test_convex_hull",
+      "test_encloses",
+      "test_eulerline",
+      "test_polygon",
+      "test_reflect",
+      "test_transform",
+      "test_triangle_kwargs"
+    ],
+    "sympy.geometry.tests.test_ellipse": [
+      "test_ellipse_geom",
+      "test_ellipse_random_point",
+      "test_reflect",
+      "test_repr",
+      "test_transform"
+    ],
+    "sympy.geometry.tests.test_point": [
+      "test_Point2D",
+      "test_concyclic_doctest_bug",
+      "test_issue_9214",
+      "test_point",
+      "test_point3D",
+      "test_transform"
+    ],
+    "sympy.geometry.tests.test_plane": [
+      "test_plane"
+    ],
+    "sympy.geometry.tests.test_line": [
+      "feq",
+      "test_issue_2941",
+      "test_line3d",
+      "test_line_geom",
+      "test_line_intersection",
+      "test_symbolic_intersect"
+    ],
+    "sympy.physics.vector.point": [
+      "Point"
+    ]
+  },
+  "test_example_snippet": "def test_point():\n    x = Symbol('x', real=True)\n    y = Symbol('y', real=True)\n    x1 = Symbol('x1', real=True)\n    x2 = Symbol('x2', real=True)\n    y1 = Symbol('y1', real=True)\n    y2 = Symbol('y2', real=True)\n    half = Rational(1, 2)\n    p1 = Point(x1, x2)\n    p2 = Point(y1, y2)\n    p3 = Point(0, 0)\n    p4 = Point(1, 1)\n    p5 = Point(0, 1)\n\n    assert p1 in p1\n    assert p1 not in p2\n    assert p2.y == y2\n    assert (p3 + p4) == p4\n    assert (p2 - p1) == Point(y1 - x1, y2 - x2)\n    assert p4*5 == Point(5, 5)\n    assert -p2 == Point(-y1, -y2)\n    raises(ValueError, lambda: Point(3, I))\n    raises(ValueError, lambda: Point(2*I, I))\n    raises(ValueError, lambda: Point(3 + I, I))\n\n    assert Point(34.05, sqrt(3)) == Point(Rational(681, 20), sqrt(3))\n    assert Point.midpoint(p3, p4) == Point(half, half)\n    assert Point.midpoint(p1, p4) == Point(half + half*x1, half + half*x2)\n    assert Point.midpoint(p2, p2) == p2\n    assert p2.midpoint(p2) == p2\n\n    assert Point.distance(p3, p4) == sqrt(2)\n    assert Point.distance(p1, p1) == 0\n    assert Point.distance(p3, p2) == sqrt(p2.x**2 + p2.y**2)\n",
+  "conftest_fixtures": {
+    "sympy/conftest.py": [
+      "file_clear_cache",
+      "check_disabled"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+--- a/tests/invalid_models_tests/test_deprecated_fields.py
++++ b/tests/invalid_models_tests/test_deprecated_fields.py
+@@ -37,3 +37,15 @@
+                 id='fields.E901',
+             )],
+         )
++
++from django.db.migrations import AddConstraint
++from django.db.migrations.operations.models import CreateModel
++from django.db.models import IntegerField, BooleanField
++from django.db.models.constraints import CheckConstraint
++from django.test import SimpleTestCase
++
++class TestCheckConstraintWithOrAndClauses(SimpleTestCase):
++    def test_constraint_with_or_and_clauses_repro(self):
++        constraint = CheckConstraint(check=(Q(field1=True) | Q(field2=False)) & Q(field3__gte=0), name='check_constraint')
++        operation = AddConstraint('MyModel', constraint)
++        self.assertEqual(operation.name, 'check_constraint')

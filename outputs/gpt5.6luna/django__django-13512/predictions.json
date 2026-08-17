@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13512",
+    "model_patch": "--- a/tests/admin_scripts/test_django_admin_py.py\n+++ b/tests/admin_scripts/test_django_admin_py.py\n@@ -37,3 +37,14 @@\n         django_admin_py_out, _ = self._run_test([self.django_admin_py, '--version'])\n         django_out, _ = self._run_test(['-m', 'django', '--version'])\n         self.assertEqual(django_admin_py_out, django_out)\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from django.core.signing import dumps\n+\n+class TestJSONFieldUnicodeDisplay(SimpleTestCase):\n+    def test_jsonfield_unicode_display_repro(self):\n+        original_data = {'country': '中国'}\n+        serialized_data = dumps(original_data)\n+        self.assertNotIn('\\u4e2d\\u56fd', serialized_data)\n+        self.assertIn('中国', serialized_data)\n",
+    "patch_sha256": "b22de433fc2082ee7c0081a6d41ac230965e9c7a023ed3778eb9fdc2331324d4"
+  }
+]

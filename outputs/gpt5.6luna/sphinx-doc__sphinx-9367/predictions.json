@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9367",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -453,3 +453,17 @@\n     stdout, stderr = capsys.readouterr()\n     assert stdout.startswith(\"c:function\\n\")\n     assert stderr == \"\"\n+\n+import unittest\n+class TestTupleHandling(unittest.TestCase):\n+    def test_tuple_representation_repro(self):\n+        \"\"\"Ensure Tuple is correctly represented.\"\"\"\n+        from sphinx.addnodes import desc_signature\n+        from sphinx.application import Sphinx\n+        app = Sphinx(srcdir='tests/roots/test-domain-c-intersphinx', confdir=None, outdir='_build', doctreedir='_doctrees', buildername='html')\n+        env = app.env\n+        node = desc_signature()\n+        node += desc_signature(names=['example'], signode=node)\n+        node += desc_signature(addnames=['.method'], signode=node)\n+        node += desc_signature(args=[('(', ')', [('x', 1), (',', 2), ('y', 3)])], signode=node)\n+        self.assertIn('x, y', node.astext())\n",
+    "patch_sha256": "a5336af2f7a8a24de4354ad0b9b9d265079e66e05c78c20564019a5f50260576"
+  }
+]

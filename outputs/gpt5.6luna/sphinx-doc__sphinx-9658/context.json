@@ -1,0 +1,320 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9658",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "232dbe41c5250eb7d559d40438c4743483e95f15",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 17,
+      "matched_identifiers": [
+        "apidoc",
+        "autodoc",
+        "doctest",
+        "intersphinx"
+      ],
+      "reasons": [
+        "stem_in_issue_text:conf",
+        "source_content_tokens:apidoc,autodoc,doctest,intersphinx,link"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/development/tutorials/examples/todo.py",
+      "score": 17,
+      "matched_identifiers": [
+        "link",
+        "parser",
+        "sphinx",
+        "todo"
+      ],
+      "reasons": [
+        "stem_in_issue_text:todo",
+        "source_content_tokens:link,parser,sphinx,todo,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "todo": "class todo(nodes.Admonition, nodes.Element):\n    pass\n\n\nclass todolist(nodes.General, nodes.Element):\n    pass\n\n\ndef visit_todo_node(self, node):\n    self.visit_admonition(node)\n\n\ndef depart_todo_node(self, node):\n    self.depart_admonition(node)\n"
+      },
+      "top_level_functions": [
+        "visit_todo_node",
+        "depart_todo_node",
+        "TodolistDirective.run",
+        "TodoDirective.run",
+        "purge_todos",
+        "merge_todos",
+        "process_todo_nodes",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/cmd/build.py",
+      "score": 17,
+      "matched_identifiers": [
+        "detect",
+        "parser",
+        "report",
+        "sphinx"
+      ],
+      "reasons": [
+        "stem_in_issue_text:build",
+        "source_content_tokens:detect,parser,report,sphinx,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "handle_exception",
+        "jobs_argument",
+        "get_parser",
+        "make_main",
+        "build_main",
+        "main"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 17,
+      "matched_identifiers": [
+        "bases",
+        "detect",
+        "doctest",
+        "section"
+      ],
+      "reasons": [
+        "stem_in_issue_text:config",
+        "source_content_tokens:bases,detect,doctest,section,sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "convert_highlight_options",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_primary_domain",
+        "check_root_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/directives/code.py",
+      "score": 17,
+      "matched_identifiers": [
+        "link",
+        "parser",
+        "report",
+        "sphinx"
+      ],
+      "reasons": [
+        "stem_in_issue_text:code",
+        "source_content_tokens:link,parser,report,sphinx,utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Highlight.run",
+        "dedent_lines",
+        "container_wrapper",
+        "CodeBlock.run",
+        "LiteralIncludeReader.parse_options",
+        "LiteralIncludeReader.read_file",
+        "LiteralIncludeReader.read",
+        "LiteralIncludeReader.show_diff",
+        "LiteralIncludeReader.pyobject_filter",
+        "LiteralIncludeReader.lines_filter",
+        "LiteralIncludeReader.start_filter",
+        "LiteralIncludeReader.end_filter",
+        "LiteralIncludeReader.prepend_filter",
+        "LiteralIncludeReader.append_filter",
+        "LiteralIncludeReader.dedent_filter",
+        "LiteralInclude.run",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:todo",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:todo",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 548,
+  "indexed_test_file_count": 358,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ConfigValue",
+      "ENUM",
+      "check_confval_types",
+      "check_primary_domain",
+      "check_root_doc",
+      "convert_highlight_options",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "Dict",
+      "DocFieldTransformer",
+      "Field",
+      "Generic",
+      "List",
+      "Node",
+      "OptionSpec",
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "RemovedInSphinx50Warning",
+      "SphinxDirective",
+      "TYPE_CHECKING",
+      "Tuple",
+      "TypeVar",
+      "TypedField",
+      "addnodes",
+      "cast",
+      "deprecated_alias",
+      "desc_signature",
+      "directives",
+      "docutils",
+      "nodes",
+      "path",
+      "roles"
+    ],
+    "sphinx.cmd.build": [
+      "build_main",
+      "get_parser",
+      "handle_exception",
+      "jobs_argument",
+      "main",
+      "make_main"
+    ],
+    "sphinx.directives.code": [
+      "CodeBlock",
+      "Highlight",
+      "LiteralInclude",
+      "LiteralIncludeReader",
+      "container_wrapper",
+      "dedent_lines",
+      "setup"
+    ],
+    "sphinx.directives": [
+      "DefaultDomain",
+      "DefaultRole",
+      "ObjectDescription",
+      "optional_int",
+      "setup"
+    ],
+    "doc.development.tutorials.examples.todo": [
+      "TodoDirective",
+      "TodolistDirective",
+      "depart_todo_node",
+      "merge_todos",
+      "process_todo_nodes",
+      "purge_todos",
+      "setup",
+      "todo",
+      "todolist",
+      "visit_todo_node"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

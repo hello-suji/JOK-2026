@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "__str__",
+      "related_classes": [
+        "CreateModel",
+        "MyBaseModel",
+        "MyField",
+        "MyModel",
+        "TextField"
+      ],
+      "candidate_test_file": "tests/model_fields/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls __str__."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: __str__."
+    ],
+    "expected_failure": "Missing import statement in generated migration (NameError: name 'models' is not defined)",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/contrib/admin/models.py",
+      "django/contrib/auth/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/models.py",
+      "tests/update_only_fields/models.py",
+      "tests/distinct_on_fields/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.operations.models import CreateModel\nfrom django.db.models import TextField\n\nclass TestMigrationOperations(TestCase):\n    def test_missing_models_import_repro(self):\n        fields = [('name', TextField(primary_key=True))]\n        create_model_op = CreateModel('MyModel', fields)\n        # This test will fail pre-patch due to missing 'models' import in migration\n        self.assertIn('models', create_model_op.state_operations[0].__str__())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NameError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__str__"
+      ],
+      "classes": [
+        "CreateModel",
+        "MyBaseModel",
+        "MyField",
+        "MyMixin",
+        "MyModel",
+        "TextField"
+      ],
+      "files": [
+        "home/jj/django_example/app/migrations/0001_initial.py",
+        "models.py"
+      ],
+      "exceptions": [
+        "NameError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_fields/models.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [
+        "__str__"
+      ],
+      "test_visible_classes": [
+        "CreateModel",
+        "MyModel",
+        "TextField"
+      ]
+    }
+  }
+]

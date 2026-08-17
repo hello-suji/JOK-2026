@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/mysql/operations.py",
+      "target_function": "get_tzname",
+      "related_classes": [
+        "DatabaseOperations",
+        "TimezoneMixin",
+        "ZoneInfo"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_timezone.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _prepare_tzname_delta can be called.",
+      "Use the generated reproduction path that calls get_tzname, timezone."
+    ],
+    "execution_stimulus": [
+      "Call _prepare_tzname_delta with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_tzname, timezone."
+    ],
+    "expected_failure": "On Django 3.1 the TimezoneMixin method get_tzname() returns \"+10\" for a \"Etc/GMT-10\" time zone after calling ​_get_timezone_name(). This later becomes \"-10\" in the resulting query due to the return value of _prepare_tzname_delta() of the Postgres DatabaseOperations class, i.e. the time zone 10 hours east from UTC.",
+    "relevant_source_files": [
+      "django/db/backends/mysql/operations.py",
+      "django/db/backends/oracle/operations.py",
+      "django/db/backends/postgresql/operations.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_timezone.py",
+      "tests/template_tests/filter_tests/timezone_utils.py",
+      "tests/backends/mysql/test_operations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.utils.timezone import get_tzname\n\n\nclass TestTimezoneHandling(TestCase):\n    def test_get_tzname_correctness_repro(self):\n        tzname = get_tzname('Etc/GMT-10')\n        self.assertEqual(tzname, ('GMT+10', 'GMT+10'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_get_timezone_name",
+        "_prepare_tzname_delta",
+        "get_tzname",
+        "timezone"
+      ],
+      "classes": [
+        "DatabaseOperations",
+        "TimezoneMixin",
+        "ZoneInfo"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_timezone.py",
+      "target_source_file": "django/db/backends/mysql/operations.py",
+      "test_visible_functions": [
+        "get_tzname",
+        "timezone"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

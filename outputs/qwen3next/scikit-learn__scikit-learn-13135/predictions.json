@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13135",
+    "model_patch": "--- a/sklearn/preprocessing/tests/test_discretization.py\n+++ b/sklearn/preprocessing/tests/test_discretization.py\n@@ -247,3 +247,13 @@\n     Xinv = est.inverse_transform(Xt)\n     assert_array_equal(Xt, Xt_before)\n     assert_array_equal(Xinv, np.array([[0.5], [1.5], [2.5], [2.5]]))\n+\n+def test_kbinsdiscretizer_kmeans_strategy_with_high_n_bins_repro():\n+    X = np.array([0, 0.5, 2, 3, 9, 10]).reshape(-1, 1)\n+\n+    # with 5 bins\n+    est = KBinsDiscretizer(n_bins=5, strategy='kmeans', encode='ordinal')\n+    Xt = est.fit_transform(X)\n+    assert_array_equal(Xt.shape, (X.shape[0], 1))\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(Xt) != 'ValueError: bins must be monotonically increasing or decreasing'\n",
+    "patch_sha256": "19d902bade4424372327e8206773f99801040c92b04d79714f4332e4b516cfc3"
+  }
+]

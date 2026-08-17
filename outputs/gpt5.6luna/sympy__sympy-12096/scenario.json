@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/function.py",
+      "target_function": "evalf",
+      "related_classes": [
+        "Function"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_function.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy.utilities.lambdify import implemented_function",
+      "f = implemented_function('f', lambda x: x ** 2)",
+      "g = implemented_function('g', lambda x: 2 * x)",
+      "Use the generated reproduction path that calls evalf, f, g, implemented_function."
+    ],
+    "execution_stimulus": [
+      "result = f(g(2)).evalf()",
+      "Execute the focused target API path: evalf, f, g, implemented_function."
+    ],
+    "expected_failure": "The result should be 16.0000000000000 but instead it is f(g(2))",
+    "relevant_source_files": [
+      "sympy/core/function.py",
+      "sympy/core/evalf.py",
+      "sympy/functions/elementary/miscellaneous.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_evalf.py",
+      "sympy/functions/elementary/tests/test_miscellaneous.py",
+      "sympy/core/tests/test_function.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.utilities.lambdify import implemented_function\ndef test_evalf_recursive_call_repro():\n    f = implemented_function('f', lambda x: x ** 2)\n    g = implemented_function('g', lambda x: 2 * x)\n    result = f(g(2)).evalf()\n    assert result == 16.0000000000000\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'f(g(2))'"
+      },
+      {
+        "language": "python",
+        "code": "def test_evalf_recursive_call():\n    from sympy.utilities.lambdify import implemented_function\n    f = implemented_function('f', lambda x: x ** 2)\n    g = implemented_function('g', lambda x: 2 * x)\n    result = f(g(2)).evalf()\n    assert result == 16.0000000000000"
+      }
+    ],
+    "expected_outputs": [
+      "16.0000000000000"
+    ],
+    "actual_outputs": [
+      "f(g(2))"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "evalf",
+        "_eval_evalf",
+        "f",
+        "g",
+        "implemented_function"
+      ],
+      "classes": [
+        "Function"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For floating-point outputs, use pytest.approx or a semantic numeric invariant, not exact equality."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For floating-point outputs, use pytest.approx or a semantic numeric invariant, not exact equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_function.py",
+      "target_source_file": "sympy/core/function.py",
+      "test_visible_functions": [
+        "evalf",
+        "f",
+        "g",
+        "implemented_function"
+      ],
+      "test_visible_classes": [
+        "Function"
+      ]
+    }
+  }
+]

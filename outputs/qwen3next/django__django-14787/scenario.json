@@ -1,0 +1,115 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/functional.py",
+      "target_function": "func",
+      "related_classes": [],
+      "candidate_test_file": "tests/utils_tests/test_functional.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from functools import partial",
+      "from django.utils.decorators import method_decorator",
+      "from django.utils.functional import wraps",
+      "import logging",
+      "logging.basicConfig(level=logging.DEBUG)",
+      "Use the generated reproduction path that calls debug, func, hello_world, inner."
+    ],
+    "execution_stimulus": [
+      "def logger(func):",
+      "    @wraps(func)",
+      "    def inner(*args, **kwargs):",
+      "        try:",
+      "            result = func(*args, **kwargs)",
+      "        except Exception as e:",
+      "            result = str(e)",
+      "        finally:",
+      "            logging.debug(f\"{func.__name__} called with args: {args} and kwargs: {kwargs} resulting: {result}\")",
+      "        return inner",
+      "class Test:",
+      "    @method_decorator(partial(logger))",
+      "    def hello_world(self):",
+      "        return \"hello\"",
+      "test_instance = Test()",
+      "test_instance.hello_world()",
+      "Execute the focused target API path: debug, func, hello_world, inner."
+    ],
+    "expected_failure": "AttributeError: 'functools.partial' object has no attribute '__name__'",
+    "relevant_source_files": [
+      "django/utils/functional.py",
+      "django/contrib/gis/geos/libgeos.py",
+      "django/contrib/messages/api.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/utils_tests/test_functional.py",
+      "tests/test_runner/test_debug_sql.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom functools import partial\nfrom django.utils.decorators import method_decorator\nfrom django.utils.functional import wraps\nimport logging\n\n\ndef logger(func):\n    @wraps(func)\n    def inner(*args, **kwargs):\n        try:\n            result = func(*args, **kwargs)\n        except Exception as e:\n            result = str(e)\n        finally:\n            logging.debug(f\"{func.__name__} called with args: {args} and kwargs: {kwargs} resulting: {result}\")\n        return result\n    return inner\n\nclass TestMethodDecoratorWithPartial(SimpleTestCase):\n    def test_method_decorator_with_partial_repro(self):\n        class Test:\n            @method_decorator(partial(logger))\n            def hello_world(self):\n                return \"hello\"\n        test_instance = Test()\n        self.assertEqual(test_instance.hello_world(), \"hello\")\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(test_instance) != \"AttributeError: 'functools.partial' object has no attribute '__name__'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_method_decorator_with_partial():\n    from functools import partial\n    from django.utils.decorators import method_decorator\n    from django.utils.functional import wraps\n    import logging\n    logging.basicConfig(level=logging.DEBUG)\n    \n    def logger(func):\n        @wraps(func)\n        def inner(*args, **kwargs):\n            try:\n                result = func(*args, **kwargs)\n            except Exception as e:\n                result = str(e)\n            finally:\n                logging.debug(f\"{func.__name__} called with args: {args} and kwargs: {kwargs} resulting: {result}\")\n            return inner\n    \n    class Test:\n        @method_decorator(partial(logger))\n        def hello_world(self):\n            return \"hello\"\n    \n    test_instance = Test()\n    assert test_instance.hello_world() == 'hello'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'functools.partial' object has no attribute '__name__'"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "__name__"
+    ],
+    "identifiers": {
+      "functions": [
+        "method_decorator",
+        "logger",
+        "hello_world",
+        "debug",
+        "func",
+        "inner",
+        "wraps",
+        "partial",
+        "logging"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_functional.py",
+      "target_source_file": "django/utils/functional.py",
+      "test_visible_functions": [
+        "debug",
+        "func",
+        "hello_world",
+        "inner",
+        "logger",
+        "method_decorator",
+        "wraps",
+        "partial"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

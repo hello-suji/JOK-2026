@@ -1,0 +1,123 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/sets/sets.py",
+      "target_function": "ImageSet",
+      "related_classes": [
+        "Abs",
+        "ConditionSet",
+        "Contains",
+        "Symbol",
+        "Rational",
+        "S",
+        "ImageSet",
+        "Integers",
+        "Interval",
+        "Lambda"
+      ],
+      "candidate_test_file": "sympy/sets/tests/test_sets.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where ImageSet can be called.",
+      "Use the generated reproduction path that calls pi, asin, imageset, subs.",
+      "Use the generated reproduction path that calls asin, imageset, subs, pi."
+    ],
+    "execution_stimulus": [
+      "Call ImageSet with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: pi, asin, imageset, subs.",
+      "Execute the focused target API path: asin, imageset, subs, pi."
+    ],
+    "expected_failure": "Strange/wrong? behaviour of subs with ConditionSet / ImageSet",
+    "relevant_source_files": [
+      "sympy/sets/sets.py",
+      "sympy/core/basic.py",
+      "sympy/matrices/common.py"
+    ],
+    "relevant_test_files": [
+      "sympy/sets/tests/test_fancysets.py",
+      "sympy/sets/tests/test_sets.py",
+      "sympy/sets/tests/test_conditionset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "In [71]: solveset_real(Abs(x) - y, x)\nOut[71]: {x | x ∊ {-y, y} ∧ (y ∈ [0, ∞))}\n\nIn [72]: _.subs(y, Rational(1,3))\nOut[72]: {-1/3, 1/3}\n\nIn [73]:  imageset(Lambda(n, 2*n*pi + asin(y)), S.Integers)\nOut[73]: {2⋅π⋅n + asin(y) | n ∊ ℤ}\n\nIn [74]: ConditionSet(x, Contains(y, Interval(-1,1)), _)\nOut[74]: {x | x ∊ {2⋅π⋅n + asin(y) | n ∊ ℤ} ∧ (y ∈ [-1, 1])}\n\nIn [75]: _.subs(y, Rational(1,3))\nOut[75]: {1/3 | 1/3 ∊ {2⋅π⋅n + asin(1/3) | n ∊ ℤ} ∧ (1/3 ∈ {2⋅π⋅n + asin(1/3) | n ∊ ℤ})}\n\nIn [78]: _74.xreplace({y: Rational(1,3)})\nOut[78]: {2⋅π⋅n + asin(1/3) | n ∊ ℤ}\n\nIn [80]: _74.subs({y: Rational(1,3)}, simultaneous=True)\nOut[80]: {2⋅π⋅n + asin(1/3) | n ∊ ℤ}"
+      },
+      {
+        "language": "python",
+        "code": "In [86]:  imageset(Lambda(n, 2*n*pi + asin(y)), S.Integers)\nOut[86]: {2⋅π⋅n + asin(y) | n ∊ ℤ}\n\nIn [87]: _.subs(y, Rational(1,3))\nOut[87]: {2⋅π⋅n + asin(1/3) | n ∊ ℤ}\n\nIn [88]: _86.subs(y, z)\nOut[88]: {2⋅π⋅n + asin(z) | n ∊ ℤ}"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import Symbol, Rational, pi, asin, imageset, S, ConditionSet, Contains, Interval\n\ndef test_imageset_subs_conditionset_repro():\n    y, n = Symbol('y'), Symbol('n')\n    img_set = imageset(Lambda(n, 2*n*pi + asin(y)), S.Integers)\n    cond_set = ConditionSet(Symbol('x'), Contains(y, Interval(-1, 1)), img_set)\n    substituted_set = cond_set.subs(y, Rational(1, 3))\n    expected_set = ConditionSet(Symbol('x'), Contains(Rational(1, 3), Interval(-1, 1)), imageset(Lambda(n, 2*n*pi + asin(Rational(1, 3))), S.Integers))\n    assert substituted_set == expected_set"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "asin",
+        "imageset",
+        "solveset_real",
+        "subs",
+        "xreplace",
+        "pi"
+      ],
+      "classes": [
+        "Abs",
+        "ConditionSet",
+        "Contains",
+        "FiniteSet",
+        "ImageSet",
+        "Integers",
+        "Interval",
+        "Lambda",
+        "Rational",
+        "Symbol",
+        "S"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/sets/tests/test_sets.py",
+      "target_source_file": "sympy/sets/sets.py",
+      "test_visible_functions": [
+        "asin",
+        "imageset",
+        "subs",
+        "pi"
+      ],
+      "test_visible_classes": [
+        "ConditionSet",
+        "Contains",
+        "ImageSet",
+        "Integers",
+        "Interval",
+        "Lambda",
+        "Rational",
+        "Symbol"
+      ]
+    }
+  }
+]

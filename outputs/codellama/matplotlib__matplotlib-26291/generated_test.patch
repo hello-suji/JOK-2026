@@ -1,0 +1,16 @@
+--- a/lib/matplotlib/tests/test_offsetbox.py
++++ b/lib/matplotlib/tests/test_offsetbox.py
+@@ -450,3 +450,13 @@
+     an.draggable(True)
+     an.remove()
+     MouseEvent("button_release_event", fig.canvas, 1, 1)._process()
++
++import re
++def test_get_window_extent_failure_repro():
++    fig, ax = plt.subplots()
++    ob = OffsetBox()
++    try:
++        ob.get_window_extent(renderer=ax.figure.canvas.get_renderer())
++# [removed: trivial oracle — assert post-fix behavior instead]
++    except AttributeError as e:
++        assert False, f"Unexpected AttributeError: {str(e)}"

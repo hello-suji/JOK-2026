@@ -1,0 +1,85 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/loader.py",
+      "target_function": "load_disk",
+      "related_classes": [
+        "CPython",
+        "MigrationLoader",
+        "MockModule"
+      ],
+      "candidate_test_file": "tests/migrations/test_loader.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls load_disk."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: load_disk."
+    ],
+    "expected_failure": "This narrow proposal does not change Django's behavior at all for normal Python environments. The only change for frozen environments is that Django will learn how to find existing migrations. In particular, at this time I am not proposing to enable any other Django feature that does not already work in frozen environments.",
+    "relevant_source_files": [
+      "django/db/migrations/loader.py",
+      "django/contrib/gis/db/backends/spatialite/base.py",
+      "django/contrib/sessions/backends/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_loader.py",
+      "tests/migrations/test_base.py",
+      "tests/migrations/faulty_migrations/file.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.loader import MigrationLoader\n\nclass TestMigrationLoader(TestCase):\n    def test_load_disk_without_file_attribute_repro(self):\n        # Simulate a module without __file__ attribute\n        class MockModule:\n            __path__ = []\n\n        mock_module = MockModule()\n        loader = MigrationLoader(connections['default'])\n        loader.migrated_apps = {'mock_app': mock_module}\n        loader.disk_migrations = {}\n        loader.load_disk()\n        # Assert that the loader does not raise an error and proceeds correctly\n        self.assertIn('mock_app', loader.disk_migrations)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "load_disk"
+      ],
+      "classes": [
+        "CPython",
+        "MigrationLoader",
+        "MockModule"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/test_loader.py",
+      "target_source_file": "django/db/migrations/loader.py",
+      "test_visible_functions": [
+        "load_disk"
+      ],
+      "test_visible_classes": [
+        "MigrationLoader",
+        "MockModule"
+      ]
+    }
+  }
+]

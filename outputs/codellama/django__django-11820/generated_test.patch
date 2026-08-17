@@ -1,0 +1,25 @@
+--- a/tests/model_options/test_default_related_name.py
++++ b/tests/model_options/test_default_related_name.py
+@@ -36,3 +36,22 @@
+
+     def test_inheritance_with_overridden_default_related_name_gate(self):
+         self.assertEqual(list(self.book.editor_stores.all()), [])
++
++from django.test import TestCase, SimpleTestCase
++import re
++class TestMetaOrderingWithRelatedPk(TestCase):
++    def test_ordering_with_related_pk_repro(self):
++        from django.core.management.validation import get_validation_errors
++        from io import StringIO
++
++        # Simulate the model with Meta ordering containing related pk
++        class SomeModel(Author):
++            class Meta:
++                ordering = ['option__pk']
++
++        # Capture validation errors
++        f = StringIO()
++        error_count = get_validation_errors(f, None)
++
++        # Assert that models.E015 is raised
++        self.assertIn('E015', f.getvalue())

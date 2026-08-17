@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/sympify.py",
+      "target_function": "kernS",
+      "related_classes": [],
+      "candidate_test_file": "sympy/core/tests/test_sympify.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy.core.sympify import kernS",
+      "from sympy.abc import x",
+      "Use the generated reproduction path that calls kernS, x."
+    ],
+    "execution_stimulus": [
+      "text = \"(2*x)/(x-1)\"",
+      "expr = kernS(text)",
+      "Execute the focused target API path: kernS, x."
+    ],
+    "expected_failure": "UnboundLocalError: local variable 'kern' referenced before assignment",
+    "relevant_source_files": [
+      "sympy/core/sympify.py",
+      "sympy/polys/rootoftools.py",
+      "sympy/parsing/fortran/fortran_parser.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_sympify.py",
+      "sympy/codegen/tests/test_fnodes.py",
+      "sympy/polys/tests/test_rootoftools.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom sympy.core.sympify import kernS\nfrom sympy.abc import x\ndef test_kernS_unbound_local_error_repro():\n    text = \"(2*x)/(x-1)\"\n    expr = kernS(text)\n    assert expr == (2*x)/(x-1)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(expr) != \"UnboundLocalError: local variable 'kern' referenced before assignment\""
+      },
+      {
+        "language": "python",
+        "code": "def test_kernS_unbound_local_error():\n    from sympy.core.sympify import kernS\n    from sympy.abc import x\n    text = \"(2*x)/(x-1)\"\n    try:\n        expr = kernS(text)\n    except UnboundLocalError as e:\n        assert str(e) == \"local variable 'kern' referenced before assignment\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "UnboundLocalError: local variable 'kern' referenced before assignment"
+    ],
+    "error_keywords": [
+      "UnboundLocalError",
+      "kern"
+    ],
+    "identifiers": {
+      "functions": [
+        "kernS",
+        "x"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_sympify.py",
+      "target_source_file": "sympy/core/sympify.py",
+      "test_visible_functions": [
+        "kernS",
+        "x"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

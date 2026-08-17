@@ -1,0 +1,28 @@
+{
+  "instance_id": "django__django-12713",
+  "observed_behavior": [
+    "It does not work when I set widget param to function formfield_for_manytomany()."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "(last modified by Mariusz Felisiak)",
+    "It does not work when I set widget param to function formfield_for_manytomany().",
+    "This is different from the formfield_for_foreignkey() function."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "formfield_for_foreignkey",
+      "formfield_for_manytomany"
+    ],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Allow overridding widget in formfield_for_manytomany().\nDescription\n\t \n\t\t(last modified by Mariusz Felisiak)\n\t \nIt does not work when I set widget param to function formfield_for_manytomany().\nThis is different from the formfield_for_foreignkey() function.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

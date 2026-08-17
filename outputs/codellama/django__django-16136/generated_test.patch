@@ -1,0 +1,20 @@
+--- a/tests/generic_views/test_base.py
++++ b/tests/generic_views/test_base.py
+@@ -614,3 +614,17 @@
+         )
+         with self.assertRaisesMessage(ImproperlyConfigured, msg):
+             view.get_template_names()
++
++from django.test import TestCase, SimpleTestCase
++class TestAsyncPostView(SimpleTestCase):
++    def test_get_gate_request_to_async_post_view_repro(self):
++        from django.views.generic.base import View
++        from django.http import HttpResponseNotAllowed
++        class SimpleAsyncPostView(View):
++            async def post(self, request, *args, **kwargs):
++                return HttpResponse('POST request')
++        request = type('Request', (object,), {'method': 'GET'})()
++        response = SimpleAsyncPostView.as_view()(request)
++        self.assertIsInstance(response, HttpResponseNotAllowed)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(response) != "object HttpResponseNotAllowed can't be used in 'await' expression"

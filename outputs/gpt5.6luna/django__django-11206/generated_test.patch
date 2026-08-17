@@ -1,0 +1,14 @@
+--- a/tests/utils_tests/test_numberformat.py
++++ b/tests/utils_tests/test_numberformat.py
+@@ -111,3 +111,11 @@
+
+         price = EuroDecimal('1.23')
+         self.assertEqual(nformat(price, ','), '€ 1,23')
++
++from django.test import TestCase, SimpleTestCase
++from django.utils.numberformat import format as nformat
++
++class TestNumberFormat(TestCase):
++    def test_small_decimal_formatting_repro(self):
++        result = nformat(Decimal('1e-200'), '.', decimal_pos=2)
++        self.assertEqual(result, '0.00')

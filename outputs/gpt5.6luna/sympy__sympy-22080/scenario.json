@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/series/formal.py",
+      "target_function": "_lambdifygenerated",
+      "related_classes": [
+        "Mod"
+      ],
+      "candidate_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _lambdifygenerated can be called.",
+      "Use the generated reproduction path that calls lambdify, symbols, g.",
+      "Use the generated reproduction path that calls _lambdifygenerated, f, g, lambdify."
+    ],
+    "execution_stimulus": [
+      "Call _lambdifygenerated with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: lambdify, symbols, g.",
+      "Execute the focused target API path: _lambdifygenerated, f, g, lambdify."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/series/formal.py",
+      "sympy/utilities/lambdify.py",
+      "sympy/diffgeom/diffgeom.py"
+    ],
+    "relevant_test_files": [
+      "sympy/polys/agca/tests/test_modules.py",
+      "sympy/series/tests/test_formal.py",
+      "sympy/utilities/tests/test_lambdify.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": ">>> from sympy import Mod, lambdify, symbols\n>>> x, y = symbols('x y')\n>>> expr = -Mod(x, y)\n>>> f = lambdify([x, y], expr)\n>>> f(3, 7)\n-3\n>>> inspect.getsource(f)\ndef _lambdifygenerated(x, y):\n    return (-mod(x, y))\n\n\n>>> g = lambdify([x, y], expr, modules=[])\n>>> g(3, 7)\n4\n>>> inspect.getsource(g)\ndef _lambdifygenerated(x, y):\n    return (-x % y)"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import Mod, lambdify, symbols\n\ndef test_Mod_lambdify_bug_repro():\n    x, y = symbols('x y')\n    expr = -Mod(x, y)\n    g = lambdify([x, y], expr, modules=[])\n    assert g(3, 7) != 4\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(g) != '-3\\ndef _lambdifygenerated(x, y):\\nreturn (-mod(x, y))\\n\\n\\n4\\ndef _lambdifygenerated(x, y):\\nreturn (-x % y)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "-3\ndef _lambdifygenerated(x, y):\nreturn (-mod(x, y))\n\n\n4\ndef _lambdifygenerated(x, y):\nreturn (-x % y)"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_lambdifygenerated",
+        "f",
+        "g",
+        "getsource",
+        "lambdify",
+        "mod",
+        "symbols"
+      ],
+      "classes": [
+        "Mod"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "target_source_file": "sympy/series/formal.py",
+      "test_visible_functions": [
+        "_lambdifygenerated",
+        "f",
+        "g",
+        "lambdify",
+        "mod",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Mod"
+      ]
+    }
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "__init__",
+      "related_classes": [
+        "AlterFooTogether",
+        "AlterIndexTogether",
+        "AlterUniqueTogether"
+      ],
+      "candidate_test_file": "tests/backends/mysql/test_operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __init__ can be called."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "In some cases, this introduced two operations that can actually easily be reduced to one.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/contrib/postgres/operations.py",
+      "django/db/backends/base/operations.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/mysql/test_operations.py",
+      "tests/backends/oracle/test_operations.py",
+      "tests/backends/postgresql/test_operations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.operations.models import AlterIndexTogether\n\nclass TestAlterIndexTogetherOptimization(SimpleTestCase):\n    def test_optimized_alter_index_together_repro(self):\n        initial_options = [('field1', 'field2')]\n        new_options = [('field3', 'field4')]\n        operation = AlterIndexTogether('my_model', new_options, initial_options)\n        self.assertEqual(len(operation.operations), 1)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "AlterFooTogether",
+        "AlterIndexTogether",
+        "AlterUniqueTogether"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/mysql/test_operations.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "AlterIndexTogether"
+      ]
+    }
+  }
+]

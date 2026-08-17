@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4687",
+    "model_patch": "--- a/xarray/tests/test_dataarray.py\n+++ b/xarray/tests/test_dataarray.py\n@@ -6710,3 +6710,13 @@\n         da = DataArray([[1, 2], [1, 2]], dims=(\"x\", \"y\"))\n         with pytest.raises(ValueError):\n             da.stack(flat=...)\n+\n+def test_where_preserves_attributes_and_dtype_repro(self) -> None:\n+        import numpy as np\n+        import xarray as xr\n+        data = xr.DataArray(np.ones([10, 10], dtype=np.int8), attrs={'attr_1': 'test1', 'attr_2': 'test2'})\n+        condition = xr.ones_like(data, dtype=bool)\n+        result = data.where(condition)\n+\n+        assert result.attrs == data.attrs\n+        assert result.dtype == data.dtype\n",
+    "patch_sha256": "0f79b9235f1770648ee2a5931b3e7f884df0e610e6bb1b61112eaf0658cfc638"
+  }
+]

@@ -1,0 +1,18 @@
+--- a/tests/auth_tests/test_tokens.py
++++ b/tests/auth_tests/test_tokens.py
+@@ -175,3 +175,15 @@
+         p2 = PasswordResetTokenGenerator()
+         p2.secret_fallbacks = []
+         self.assertIs(p2.check_token(user, tk), False)
++
++from django.test import TestCase, SimpleTestCase
++class TestSessionAuthHashWithFallback(TestCase):
++    @override_settings(SECRET_KEY='new_secret_key', SECRET_KEY_FALLBACKS=['old_secret_key'])
++    def test_session_auth_hash_with_fallback_repro(self):
++        user = User.objects.create_user(username='testuser', email='testuser@example.com', password='testpass')
++        auth_hash_with_fallback = user.get_session_auth_hash()
++
++        with override_settings(SECRET_KEY_FALLBACKS=[]):
++            auth_hash_without_fallback = user.get_session_auth_hash()
++
++        self.assertNotEqual(auth_hash_with_fallback, auth_hash_without_fallback)

@@ -1,0 +1,21 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -561,3 +561,18 @@
+
+     # explicit title
+     assert html.format('index.html#foons') in content
++
++from sphinx.domains.python import PyObject
++from sphinx.writers.latex import LaTeXTranslator
++from sphinx.testing.util import SphinxTestApp
++from sphinx.testing.path import path
++
++def test_latex_code_highlighting_repro():
++    srcdir = path(__file__).parent / 'roots' / 'test-domain-python'
++    app = SphinxTestApp(srcdir=srcdir, buildername='latex')
++    app.build()
++    latex_output = (app.outdir / 'Python.tex').text()
++    assert '\texttt{def foo():}' in latex_output
++    assert '\texttt{class Inline:}' in latex_output
++    assert '\texttt{class LaTeX:}' in latex_output
++    assert '\texttt{class PYGZdq:}' in latex_output

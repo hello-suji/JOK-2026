@@ -1,0 +1,24 @@
+--- a/tests/_core/test_plot.py
++++ b/tests/_core/test_plot.py
+@@ -2010,3 +2010,21 @@
+     def test_default_repr_gate(self):
+
+         assert repr(Default()) == "<default>"
++
++def test_nominal_scale_behavior_repro():
++    # Setup the plot with Nominal scale
++    p = Plot()
++    p.add(x='category', y='value', data=pd.DataFrame({'category': ['A', 'B'], 'value': [1, 2]}))
++    p.scale(x=Nominal())
++    ax = p.draw().axes[0]
++
++    # Check if the scale is drawn to +/- 0.5 from the first and last tick
++    ticks = ax.get_xticks()
++    assert ticks[0] == 0.5
++    assert ticks[-1] == 1.5
++
++    # Check if the grid is shown
++    assert ax.xaxis.get_gridlines()[0].get_visible()
++
++    # Check if the y-axis is not inverted
++    assert not ax.yaxis_inverted()

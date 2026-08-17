@@ -1,0 +1,120 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "f1",
+      "related_classes": [
+        "Permalink",
+        "Searching",
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where f1 can be called.",
+      "Use the generated reproduction path that calls f1, f2, unittest, tempfile."
+    ],
+    "execution_stimulus": [
+      "Call f1 with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: f1, f2, unittest, tempfile."
+    ],
+    "expected_failure": "With `autodoc_typehints='description'`, a function that returns `None` generates a clickable link to [None's documentation](https://docs.python.org/3/library/constants.html#None).",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/domains/python.py",
+      "sphinx/ext/autodoc/typehints.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nimport tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc import DocumenterBridge\nfrom sphinx.ext.autodoc.typehints import setup\n\nclass TestAutodocTypeHints(unittest.TestCase):\n    def test_none_typehint_description_repro(self):\n        with tempfile.TemporaryDirectory() as tmpdir:\n            srcdir = os.path.join(tmpdir, 'src')\n            confdir = os.path.join(tmpdir, 'conf')\n            outdir = os.path.join(tmpdir, 'out')\n            doctreedir = os.path.join(tmpdir, 'doctrees')\n            os.makedirs(srcdir)\n            os.makedirs(confdir)\n\n            with open(os.path.join(srcdir, 'type_hint_test.py'), 'w') as f:\n                f.write('def f1() -> None: return None\\ndef f2() -> int: return 42\\n')\n\n            with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n                f.write('extensions = [\"sphinx.ext.autodoc\", \"sphinx.ext.intersphinx\"]\\nintersphinx_mapping = {\"python\": (\"https://docs.python.org/3\", None)}\\nautodoc_typehints = \"description\"\\n')\n\n            app = Sphinx(srcdir, confdir, outdir, doctreedir, 'html')\n            app.build()\n\n            doctree = app.env.get_doctree('type_hint_test')\n            none_link = doctree.traverse(nodes.reference)[0]['refuri']\n            self.assertEqual(none_link, 'https://docs.python.org/3/library/constants.html#None')"
+      },
+      {
+        "language": "sh",
+        "code": "mkdir -p sphinx_type_hint_links\ncd sphinx_type_hint_links\n\ncat <<'EOF' >type_hint_test.py\ndef f1() -> None: return None\ndef f2() -> int: return 42\nEOF\n\nmkdir -p docs\n\ncat <<'EOF' >docs/conf.py\nextensions = [\"sphinx.ext.autodoc\", \"sphinx.ext.intersphinx\"]\nintersphinx_mapping = {\"python\": (\"https://docs.python.org/3\", None)}\n#autodoc_typehints = 'description'\nEOF\n\ncat <<'EOF' >docs/index.rst\n.. automodule:: type_hint_test\n.. autofunction:: f1\n.. autofunction:: f2\nEOF\n\nmkdir -p html\npython3.8 -m sphinx -nW -b html --keep-going docs html\n\necho\necho \"Searching for links:\"\ngrep 'docs.python.org' html/index.html"
+      },
+      {
+        "language": "html",
+        "code": "Searching for links:\n<code class=\"sig-prename descclassname\">type_hint_test.</code><code class=\"sig-name descname\">f2</code><span class=\"sig-paren\">(</span><span class=\"sig-paren\">)</span> &#x2192; <a class=\"reference external\" href=\"https://docs.python.org/3/library/functions.html#int\" title=\"(in Python v3.8)\">int</a><a class=\"headerlink\" href=\"#type_hint_test.f2\" title=\"Permalink to this definition\">¶</a></dt>"
+      },
+      {
+        "language": "html",
+        "code": "Searching for links:\n<dd class=\"field-odd\"><p><a class=\"reference external\" href=\"https://docs.python.org/3/library/constants.html#None\" title=\"(in Python v3.8)\">None</a></p>\n<dd class=\"field-odd\"><p><a class=\"reference external\" href=\"https://docs.python.org/3/library/functions.html#int\" title=\"(in Python v3.8)\">int</a></p>"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "f1",
+        "f2",
+        "unittest",
+        "tempfile",
+        "setup",
+        "join",
+        "makedirs",
+        "build",
+        "get_doctree",
+        "traverse"
+      ],
+      "classes": [
+        "Permalink",
+        "Searching",
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "files": [
+        "docs/conf.py",
+        "type_hint_test.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "f1",
+        "f2",
+        "unittest",
+        "tempfile",
+        "setup",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

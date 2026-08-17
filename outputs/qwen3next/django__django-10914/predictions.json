@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-10914",
+    "model_patch": "--- a/tests/staticfiles_tests/test_storage.py\n+++ b/tests/staticfiles_tests/test_storage.py\n@@ -597,3 +597,21 @@\n                 content = relfile.read()\n                 self.assertIn(b'foo.57a5cb9ba68d.png', content)\n                 self.assertIn(b'xyz.57a5cb9ba68d.png', content)\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from django.core.files.storage import FileSystemStorage\n+from django.core.files.uploadedfile import TemporaryUploadedFile\n+import os\n+\n+class TestFileUploadPermissions(TestCase):\n+    def test_default_file_permissions_repro(self):\n+        fs = FileSystemStorage()\n+        temp_file = TemporaryUploadedFile('temp.txt', 'text/plain', 100, 'utf-8')\n+        temp_file.write(b'test content')\n+        temp_file.seek(0)\n+        name = fs.save('test.txt', temp_file)\n+        file_path = fs.path(name)\n+        # Check the file permissions\n+        permissions = oct(os.stat(file_path).st_mode)[-3:]\n+        self.assertEqual(permissions, '644')\n",
+    "patch_sha256": "3605d026c008837e88dccf550885450865239a7d87f7723ac1d30906895bd106"
+  }
+]

@@ -1,0 +1,519 @@
+{
+  "instance_id": "astropy__astropy-13033",
+  "repo": "astropy/astropy",
+  "base_commit": "298ccb478e6bf092953bca67a3d29dc6c35f6752",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/timeseries/core.py",
+      "score": 28,
+      "matched_identifiers": [
+        "_required_columns",
+        "columns",
+        "required column",
+        "required columns"
+      ],
+      "reasons": [
+        "path_contains_class:TimeSeries",
+        "path_contains_class:Time",
+        "source_content_tokens:required column,required columns,_required_columns,columns,required",
+        "astropy_required_column_core_file"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "autocheck_required_columns"
+      ]
+    },
+    {
+      "path": "astropy/timeseries/sampled.py",
+      "score": 24,
+      "matched_identifiers": [
+        "TimeSeries",
+        "_required_columns",
+        "columns",
+        "data",
+        "required"
+      ],
+      "reasons": [
+        "class_match:TimeSeries",
+        "path_contains_class:TimeSeries",
+        "path_contains_class:Time",
+        "source_content_tokens:_required_columns,columns,data,required,time"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "TimeSeries": "class TimeSeries(BaseTimeSeries):\n    \"\"\"\n    A class to represent time series data in tabular form.\n\n    `~astropy.timeseries.TimeSeries` provides a class for representing time\n    series as a collection of values of different quantities measured at specific\n    points in time (for time series with finite time bins, see the\n    `~astropy.timeseries.BinnedTimeSeries` class).\n    `~astropy.timeseries.TimeSeries` is a sub-class of `~astropy.table.QTable`\n    and thus provides all the standard table maniplation methods available to\n    tables, but it also provides additional conveniences for dealing with time\n    series, such as a flexible initializer for setting up the times, a method\n    for folding time series, and a ``time`` attribute for easy access to the\n    time values.\n"
+      },
+      "top_level_functions": [
+        "TimeSeries.time",
+        "TimeSeries.fold",
+        "TimeSeries.add_column",
+        "TimeSeries.add_columns",
+        "TimeSeries.from_pandas",
+        "TimeSeries.to_pandas",
+        "TimeSeries.read"
+      ]
+    },
+    {
+      "path": "astropy/time/core.py",
+      "score": 22,
+      "matched_identifiers": [
+        "Time",
+        "behavior",
+        "columns",
+        "data",
+        "required"
+      ],
+      "reasons": [
+        "class_match:Time",
+        "path_contains_class:Time",
+        "source_content_tokens:behavior,columns,data,required,time"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Time": "class Time(TimeBase):\n    \"\"\"\n    Represent and manipulate times and dates for astronomy.\n\n    A `Time` object is initialized with one or more times in the ``val``\n    argument.  The input times in ``val`` must conform to the specified\n    ``format`` and must correspond to the specified time ``scale``.  The\n    optional ``val2`` time input should be supplied only for numeric input\n    formats (e.g. JD) where very high precision (better than 64-bit precision)\n    is required.\n\n    The allowed values for ``format`` can be listed with::\n\n      >>> list(Time.FORMATS)\n      ['jd', 'mjd', 'decimalyear', 'unix', 'unix_tai', 'cxcsec', 'gps', 'plot_date',"
+      },
+      "top_level_functions": [
+        "TimeInfoBase.get_sortable_arrays",
+        "TimeInfoBase.unit",
+        "TimeInfoBase.new_like",
+        "TimeDeltaInfo.new_like",
+        "TimeBase.writeable",
+        "TimeBase.format",
+        "TimeBase.scale",
+        "TimeBase.precision",
+        "TimeBase.in_subfmt",
+        "TimeBase.out_subfmt",
+        "TimeBase.shape",
+        "TimeBase.jd1",
+        "TimeBase.jd2",
+        "TimeBase.to_value",
+        "TimeBase.value",
+        "TimeBase.masked",
+        "TimeBase.mask",
+        "TimeBase.insert",
+        "TimeBase.isclose",
+        "TimeBase.copy",
+        "TimeBase.replicate",
+        "TimeBase.argmin",
+        "TimeBase.argmax",
+        "TimeBase.argsort",
+        "TimeBase.min",
+        "TimeBase.max",
+        "TimeBase.ptp",
+        "TimeBase.sort",
+        "TimeBase.cache",
+        "Time.now",
+        "Time.strptime",
+        "Time.strftime",
+        "Time.light_travel_time",
+        "Time.earth_rotation_angle",
+        "Time.sidereal_time",
+        "Time.get_delta_ut1_utc",
+        "Time.to_datetime",
+        "TimeDelta.replicate",
+        "TimeDelta.to_datetime",
+        "TimeDelta.to"
+      ]
+    },
+    {
+      "path": "astropy/table/table.py",
+      "score": 21,
+      "matched_identifiers": [
+        "behavior",
+        "columns",
+        "data",
+        "remove_column",
+        "required"
+      ],
+      "reasons": [
+        "function_match:remove_column",
+        "source_content_tokens:behavior,columns,data,required,time"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "remove_column": "    def remove_column(self, name):\n        \"\"\"\n        Remove a column from the table.\n\n        This can also be done with::\n\n          del table[name]\n\n        Parameters\n        ----------\n        name : str\n            Name of column to remove\n\n        Examples\n        --------"
+      },
+      "top_level_functions": [
+        "descr",
+        "has_info_class",
+        "TableColumns.isinstance",
+        "TableColumns.not_isinstance",
+        "PprintIncludeExclude.add",
+        "PprintIncludeExclude.remove",
+        "PprintIncludeExclude.set",
+        "Table.as_array",
+        "Table.mask",
+        "Table.filled",
+        "Table.indices",
+        "Table.loc",
+        "Table.loc_indices",
+        "Table.iloc",
+        "Table.add_index",
+        "Table.remove_indices",
+        "Table.index_mode",
+        "Table.itercols",
+        "Table.has_mixin_columns",
+        "Table.has_masked_columns",
+        "Table.has_masked_values",
+        "Table.pprint",
+        "Table.pprint_all",
+        "Table.show_in_notebook",
+        "Table.show_in_browser",
+        "Table.pformat",
+        "Table.pformat_all",
+        "Table.more",
+        "Table.field",
+        "Table.masked",
+        "Table.ColumnClass",
+        "Table.dtype",
+        "Table.colnames",
+        "Table.keys",
+        "Table.values",
+        "Table.items",
+        "Table.index_column",
+        "Table.add_column",
+        "Table.add_columns",
+        "Table.replace_column"
+      ]
+    },
+    {
+      "path": "astropy/timeseries/periodograms/lombscargle/implementations/main.py",
+      "score": 21,
+      "matched_identifiers": [
+        "data",
+        "required",
+        "time",
+        "valueerror"
+      ],
+      "reasons": [
+        "path_contains_class:TimeSeries",
+        "path_contains_class:Time",
+        "stem_in_issue_text:main",
+        "source_content_tokens:data,required,time,valueerror,addition"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "available_methods",
+        "validate_method",
+        "lombscargle"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/timeseries/tests/test_sampled.py",
+      "score": 48,
+      "matched_identifiers": [
+        "Time",
+        "TimeSeries"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TimeSeries",
+        "test_path_related_to_class:Time",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/timeseries/tests",
+        "test_name_matches_source_stem:sampled",
+        "token_overlap:sampled,series,time,timeseries",
+        "internal_name_overlap:column",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/timeseries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_mle.py",
+      "score": 45,
+      "matched_identifiers": [
+        "Time",
+        "TimeSeries"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TimeSeries",
+        "test_path_related_to_class:Time",
+        "same_module_area:astropy/timeseries/periodograms/lombscargle",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/timeseries/periodograms/lombscargle/implementations/tests",
+        "token_overlap:implementations,lombscargle,periodograms,series,time",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/timeseries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_utils.py",
+      "score": 45,
+      "matched_identifiers": [
+        "Time",
+        "TimeSeries"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TimeSeries",
+        "test_path_related_to_class:Time",
+        "same_module_area:astropy/timeseries/periodograms/lombscargle",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/timeseries/periodograms/lombscargle/implementations/tests",
+        "token_overlap:implementations,lombscargle,periodograms,series,time",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/timeseries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/timeseries/periodograms/lombscargle/implementations/tests/__init__.py",
+      "score": 44,
+      "matched_identifiers": [
+        "Time",
+        "TimeSeries"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TimeSeries",
+        "test_path_related_to_class:Time",
+        "same_module_area:astropy/timeseries/periodograms/lombscargle",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/timeseries/periodograms/lombscargle/implementations/tests",
+        "token_overlap:implementations,lombscargle,periodograms,series,time",
+        "explicit_source_area_match:astropy/timeseries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/timeseries/periodograms/lombscargle/tests/test_lombscargle.py",
+      "score": 43,
+      "matched_identifiers": [
+        "Time",
+        "TimeSeries"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TimeSeries",
+        "test_path_related_to_class:Time",
+        "same_module_area:astropy/timeseries/periodograms/lombscargle",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "token_overlap:lombscargle,periodograms,series,time,timeseries",
+        "internal_name_overlap:time",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/timeseries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "astropy/timeseries/tests/test_sampled.py:pytest_import_or_conftest",
+      "astropy/timeseries/tests/test_sampled.py:top_level_test_functions",
+      "astropy/timeseries/periodograms/lombscargle/tests/test_lombscargle.py:pytest_import_or_conftest",
+      "astropy/timeseries/periodograms/lombscargle/tests/test_lombscargle.py:top_level_test_functions",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_utils.py:pytest_import_or_conftest",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_utils.py:top_level_test_functions",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_mle.py:pytest_import_or_conftest",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_mle.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 920,
+  "indexed_test_file_count": 418,
+  "available_imports": {
+    "astropy": [
+      "BST",
+      "Column",
+      "ColumnGroups",
+      "ColumnInfo",
+      "Conf",
+      "JSViewer",
+      "MaskedColumn",
+      "NdarrayMixin",
+      "PprintIncludeExclude",
+      "QTable",
+      "Row",
+      "SCEngine",
+      "ScienceState",
+      "SerializedColumn",
+      "SortedArray",
+      "StringTruncateWarning",
+      "Table",
+      "TableAttribute",
+      "TableColumns",
+      "TableFormatter",
+      "TableGroups",
+      "TableMergeError",
+      "TableReplaceWarning",
+      "TestRunner",
+      "__module_type__",
+      "__version__",
+      "_config",
+      "_get_bibtex",
+      "_init_log",
+      "_initialize_astropy",
+      "_is_astropy_source",
+      "_teardown_log",
+      "astronomical_constants",
+      "base_constants_version",
+      "conf",
+      "connect",
+      "dstack",
+      "find_api_page",
+      "hstack",
+      "io",
+      "join",
+      "join_distance",
+      "join_skycoord",
+      "online_help",
+      "optional_deps",
+      "physical_constants",
+      "registry",
+      "represent_mixins_as_columns",
+      "setdiff",
+      "unique",
+      "vstack"
+    ],
+    "astropy.time.core": [
+      "OperandTypeError",
+      "ScaleValueError",
+      "Time",
+      "TimeBase",
+      "TimeDelta",
+      "TimeDeltaInfo",
+      "TimeDeltaMissingUnitWarning",
+      "TimeInfo",
+      "_LeapSecondsCheck",
+      "_check_for_masked_and_fill",
+      "_check_leapsec",
+      "_make_array",
+      "update_leap_seconds"
+    ],
+    "astropy.time": [
+      "Conf"
+    ],
+    "astropy.table": [
+      "Conf"
+    ],
+    "astropy.table.table": [
+      "PprintIncludeExclude",
+      "QTable",
+      "Table",
+      "TableAttribute",
+      "TableColumns",
+      "TableReplaceWarning",
+      "_get_names_from_list_of_dict",
+      "descr",
+      "has_info_class"
+    ],
+    "astropy.timeseries.core": [
+      "BaseTimeSeries",
+      "autocheck_required_columns"
+    ],
+    "astropy.timeseries.sampled": [
+      "TimeSeries"
+    ],
+    "astropy.timeseries.tests.test_sampled": [
+      "test_empty_initialization",
+      "test_empty_initialization_invalid",
+      "test_fold",
+      "test_fold_invalid_options",
+      "test_initialization_invalid_both_time_and_time_delta",
+      "test_initialization_invalid_time_and_time_start",
+      "test_initialization_invalid_time_delta",
+      "test_initialization_length_mismatch",
+      "test_initialization_missing_time_delta",
+      "test_initialization_n_samples",
+      "test_initialization_with_data",
+      "test_initialization_with_table",
+      "test_initialization_with_time_delta",
+      "test_initialization_with_time_in_data",
+      "test_initialize_only_data",
+      "test_initialize_only_time",
+      "test_kepler_astropy",
+      "test_pandas",
+      "test_periodogram",
+      "test_read",
+      "test_read_time_missing",
+      "test_read_time_wrong",
+      "test_required_columns",
+      "test_tess_astropy"
+    ],
+    "astropy.timeseries.periodograms": [
+      "LombScargle"
+    ],
+    "astropy.timeseries.periodograms.lombscargle.tests.test_lombscargle": [
+      "data",
+      "test_absolute_times",
+      "test_all_methods",
+      "test_autofrequency",
+      "test_autopower",
+      "test_errors_on_unit_mismatch",
+      "test_fast_approximations",
+      "test_integer_inputs",
+      "test_model",
+      "test_model_parameters",
+      "test_model_units_match",
+      "test_model_units_mismatch",
+      "test_nterms_methods",
+      "test_output_shapes",
+      "test_unit_conversions"
+    ],
+    "astropy.timeseries.periodograms.lombscargle.implementations.main": [
+      "_get_frequency_grid",
+      "_is_regular",
+      "available_methods",
+      "lombscargle",
+      "validate_method"
+    ],
+    "astropy.timeseries.periodograms.lombscargle": [
+      "available_methods",
+      "lombscargle",
+      "lombscargle_chi2",
+      "lombscargle_fast",
+      "lombscargle_fastchi2",
+      "lombscargle_scipy",
+      "lombscargle_slow"
+    ],
+    "astropy.timeseries.periodograms.lombscargle.implementations.tests.test_utils": [
+      "extirpolate_data",
+      "extirpolate_int_data",
+      "test_bitceil",
+      "test_extirpolate",
+      "test_extirpolate_with_integers",
+      "test_trig_sum",
+      "trig_sum_data"
+    ],
+    "astropy.timeseries.periodograms.lombscargle.implementations.tests.test_mle": [
+      "t",
+      "test_design_matrix",
+      "test_exact_mle_fit",
+      "test_multiterm_design_matrix"
+    ]
+  },
+  "test_example_snippet": "def test_empty_initialization():\n    ts = TimeSeries()\n    ts['time'] = Time([50001, 50002, 50003], format='mjd')\n\n\ndef test_empty_initialization_invalid():\n    # Make sure things crash when the first column added is not a time column\n    ts = TimeSeries()\n    with pytest.raises(ValueError) as exc:\n        ts['flux'] = [1, 2, 3]\n    assert exc.value.args[0] == (\"TimeSeries object is invalid - expected \"\n                                 \"'time' as the first column but found 'flux'\")\n\n\ndef test_initialize_only_time():\n    ts = TimeSeries(time=INPUT_TIME)\n    assert ts['time'] is ts.time\n    # NOTE: the object in the table is a copy\n    assert_equal(ts.time.isot, INPUT_TIME.isot)\n\n\ndef test_initialization_with_data():\n    ts = TimeSeries(time=INPUT_TIME, data=[[10, 2, 3], [4, 5, 6]], names=['a', 'b'])\n    assert_equal(ts.time.isot, INPUT_TIME.isot)\n    assert_equal(ts['a'], [10, 2, 3])\n    assert_equal(ts['b'], [4, 5, 6])\n\n\ndef test_initialize_only_data():\n    with pytest.raises(TypeError) as exc:\n        TimeSeries(data=[[10, 2, 3], [4, 5, 6]], names=['a', 'b'])\n    assert exc.value.args[0] == \"Either 'time' or 'time_start' should be specified\"\n\n\ndef test_initialization_with_table():",
+  "conftest_fixtures": {
+    "astropy/conftest.py": [
+      "ignore_matplotlibrc",
+      "fast_thread_switching"
+    ]
+  }
+}

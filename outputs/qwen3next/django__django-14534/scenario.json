@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/boundfield.py",
+      "target_function": "subwidgets",
+      "related_classes": [
+        "BoundField",
+        "BoundWidget",
+        "CheckboxSelectMultiple"
+      ],
+      "candidate_test_file": "tests/forms_tests/tests/test_widgets.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where subwidgets can be called.",
+      "Use the generated reproduction path that calls get, subwidgets, type."
+    ],
+    "execution_stimulus": [
+      "Call subwidgets with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get, subwidgets, type."
+    ],
+    "expected_failure": "one sees that self.field.widget.subwidgets(self.html_name, self.value(), attrs=attrs) returns a dict and assigns it to widget. Now widget['attrs']['id'] contains the \"id\" we would like to use when rendering the label of our CheckboxSelectMultiple.",
+    "relevant_source_files": [
+      "django/forms/boundfield.py",
+      "django/forms/widgets.py",
+      "django/contrib/admin/widgets.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/tests/test_widgets.py",
+      "tests/forms_tests/widget_tests/test_checkboxselectmultiple.py",
+      "tests/forms_tests/widget_tests/test_selectmultiple.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms.boundfield import BoundField\nfrom django.forms.widgets import CheckboxSelectMultiple\n\n\nclass TestCheckboxSelectMultipleSubwidgets(TestCase):\n    def test_subwidgets_id_assignment_repro(self):\n        widget = CheckboxSelectMultiple()\n        field = widget.field = type('MockField', (), {'widget': widget})()\n        bound_field = BoundField(field, [], None)\n        attrs = {'id': 'custom_id'}\n        subwidgets = bound_field.subwidgets('html_name', [], attrs=attrs)\n        self.assertEqual(subwidgets[0].data['attrs']['id'], 'custom_id')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "build_widget_attrs",
+        "id_for_label",
+        "subwidgets",
+        "value",
+        "type"
+      ],
+      "classes": [
+        "BoundField",
+        "BoundWidget",
+        "CheckboxSelectMultiple",
+        "ChoiceWidget"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/tests/test_widgets.py",
+      "target_source_file": "django/forms/boundfield.py",
+      "test_visible_functions": [
+        "get",
+        "subwidgets",
+        "type"
+      ],
+      "test_visible_classes": [
+        "BoundField",
+        "CheckboxSelectMultiple"
+      ]
+    }
+  }
+]

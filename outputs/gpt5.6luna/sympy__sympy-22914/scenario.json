@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/pycode.py",
+      "target_function": "symbols",
+      "related_classes": [
+        "Min",
+        "PythonCodePrinter",
+        "Max"
+      ],
+      "candidate_test_file": "sympy/printing/tests/test_pycode.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _print_Max can be called.",
+      "Use the generated reproduction path that calls symbols, doprint.",
+      "Use the generated reproduction path that calls pycode, symbols, doprint."
+    ],
+    "execution_stimulus": [
+      "Call _print_Max with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, doprint.",
+      "Execute the focused target API path: pycode, symbols, doprint."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/printing/pycode.py",
+      "sympy/calculus/accumulationbounds.py",
+      "sympy/codegen/ast.py"
+    ],
+    "relevant_test_files": [
+      "sympy/printing/tests/test_pycode.py",
+      "sympy/printing/tests/test_c.py",
+      "sympy/printing/tests/test_aesaracode.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Min, pycode\na, b = symbols(\"a b\")\nc = Min(a,b)\nprint(pycode(c))"
+      },
+      {
+        "language": "python",
+        "code": "# Not supported in Python:\n  # Min\nMin(a, b)"
+      },
+      {
+        "language": "python",
+        "code": "def _print_Min(self, expr):\n    return \"min({})\".format(\", \".join(self._print(arg) for arg in expr.args))\n\n\ndef _print_Max(self, expr):\n    return \"max({})\".format(\", \".join(self._print(arg) for arg in expr.args))"
+      },
+      {
+        "language": "python",
+        "code": "def test_PythonCodePrinter_Min_Max_repro():\n    from sympy.printing.pycode import PythonCodePrinter\n    a, b = symbols(\"a b\")\n    c = Min(a, b)\n    d = Max(a, b)\n    printer = PythonCodePrinter()\n    assert printer.doprint(c) == 'min(a, b)'\n    assert printer.doprint(d) == 'max(a, b)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_print",
+        "_print_Max",
+        "_print_Min",
+        "join",
+        "pycode",
+        "symbols",
+        "doprint"
+      ],
+      "classes": [
+        "Min",
+        "PythonCodePrinter",
+        "Max"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/tests/test_pycode.py",
+      "target_source_file": "sympy/printing/pycode.py",
+      "test_visible_functions": [
+        "pycode",
+        "symbols",
+        "doprint"
+      ],
+      "test_visible_classes": [
+        "Min",
+        "PythonCodePrinter",
+        "Max"
+      ]
+    }
+  }
+]

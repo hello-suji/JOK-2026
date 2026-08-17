@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14508",
+    "model_patch": "--- a/astropy/io/fits/tests/test_convenience.py\n+++ b/astropy/io/fits/tests/test_convenience.py\n@@ -494,3 +494,13 @@\n             IndexError, match=\"No data in Primary HDU and no extension HDU found.\"\n         ):\n             fits.getdata(buf)\n+\n+def test_card_format_float_issue_14508_repro():\n+    from astropy.io import fits\n+    hdr = fits.Header()\n+    hdr['ESO IFM CL RADIUS'] = (0.009125, '[m] radius around actuator to avoid')\n+    c = hdr.cards['ESO IFM CL RADIUS']\n+    new_c = fits.Card(f'HIERARCH {c.keyword}', c.value, c.comment)\n+    assert new_c.value == 0.009125\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(new_c) != \"from astropy.io import fits\\nhdr = fits.getheader('test.fits')\\nc = hdr.cards['ESO IFM CL RADIUS']\\n\\n('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\\n\\n'HIERARCH ESO IFM CL RADIUS = 0.009125 / [m] radius arround actuator to avoid    '\"\n",
+    "patch_sha256": "47fc824c4faf01a09e40fb8184ae81280e2817df8065a982f3acf97167d33a19"
+  }
+]

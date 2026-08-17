@@ -1,0 +1,83 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/related.py",
+      "target_function": "get_validation_errors",
+      "related_classes": [
+        "SomeModel",
+        "Meta"
+      ],
+      "candidate_test_file": "tests/model_options/test_default_related_name.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls get_validation_errors."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_validation_errors."
+    ],
+    "expected_failure": "models.E015 is raised when Meta.ordering contains \"pk\" of a related field.",
+    "relevant_source_files": [
+      "django/db/models/fields/related.py",
+      "django/forms/models.py",
+      "django/contrib/admin/checks.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_options/test_default_related_name.py",
+      "tests/modeladmin/test_checks.py",
+      "tests/model_fields/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nclass TestMetaOrderingWithRelatedPk(TestCase):\n    def test_ordering_with_related_pk_repro(self):\n        from django.core.management.validation import get_validation_errors\n        from io import StringIO\n        \n        # Simulate the model with Meta ordering containing related pk\n        class SomeModel(Author):\n            class Meta:\n                ordering = ['option__pk']\n        \n        # Capture validation errors\n        f = StringIO()\n        error_count = get_validation_errors(f, None)\n        \n        # Assert that models.E015 is raised\n        self.assertIn('E015', f.getvalue())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_validation_errors"
+      ],
+      "classes": [
+        "SomeModel",
+        "Meta"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_options/test_default_related_name.py",
+      "target_source_file": "django/db/models/fields/related.py",
+      "test_visible_functions": [
+        "get_validation_errors"
+      ],
+      "test_visible_classes": [
+        "SomeModel",
+        "Meta"
+      ]
+    }
+  }
+]

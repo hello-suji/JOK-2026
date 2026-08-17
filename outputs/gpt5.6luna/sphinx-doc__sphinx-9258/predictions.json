@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9258",
+    "model_patch": "--- a/tests/roots/test-domain-c-intersphinx/conf.py\n+++ b/tests/roots/test-domain-c-intersphinx/conf.py\n@@ -2,3 +2,21 @@\n extensions = [\n \t'sphinx.ext.intersphinx',\n ]\n+\n+import tempfile\n+import os\n+from sphinx.application import Sphinx\n+from sphinx.ext.napoleon.docstring import GoogleDocstring\n+\n+def foo(text):\n+    \"\"\"Bar\n+\n+    :param text: a text\n+    :type text: bytes | str\n+\n+    \"\"\"\n+\n+def test_union_types_support_repro():\n+    docstring = GoogleDocstring(foo.__doc__, config=None)\n+    parsed = docstring.parse()\n+    assert 'bytes | str' in parsed['params']['text']\n",
+    "patch_sha256": "8b611b92af01bbb6c59045893e6af5ea1ee575f902442fcef37490c8b1d3f242"
+  }
+]

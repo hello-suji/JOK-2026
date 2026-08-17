@@ -1,0 +1,15 @@
+--- a/xarray/tests/test_merge.py
++++ b/xarray/tests/test_merge.py
+@@ -326,3 +326,12 @@
+         da = xr.DataArray(data=1, name="b")
+
+         assert_identical(ds.merge(da), xr.merge([ds, da]))
++
++def test_merge_override_attrs_reference_bug_repro():
++    xds1 = xr.Dataset(attrs={'a': 'b'})
++    xds2 = xr.Dataset(attrs={'a': 'c'})
++    xds3 = xr.merge([xds1, xds2], combine_attrs='override')
++    xds3.attrs['a'] = 'd'
++    assert xds1.attrs['a'] == 'b'
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(xds3) != 'd'

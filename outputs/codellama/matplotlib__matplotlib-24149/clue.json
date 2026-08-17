@@ -1,0 +1,94 @@
+{
+  "instance_id": "matplotlib__matplotlib-24149",
+  "observed_behavior": [
+    "### Actual outcome",
+    "```python-traceback",
+    "StopIteration                             Traceback (most recent call last)",
+    "2183     except (TypeError, IndexError, KeyError):",
+    "1746     raise RuntimeError(\"matplotlib does not \"",
+    "On 3.6.0 this returns a `BarCollection` with one Rectangle, having `nan` for `x` and `height`."
+  ],
+  "expected_behavior": [
+    "-> 1423         return func(ax, *map(sanitize_sequence, args), **kwargs)",
+    "-> 1749     return next(val for val in obj if safe_isfinite(val))",
+    "### Expected outcome",
+    "On 3.6.0 this returns a `BarCollection` with one Rectangle, having `nan` for `x` and `height`."
+  ],
+  "repro_conditions": [
+    "`ax.bar` raises an exception in 3.6.1 when passed only nan data. This irrevocably breaks seaborn's histogram function (which draws and then removes a \"phantom\" bar to trip the color cycle).",
+    "1422     if data is None:",
+    "2374 if xerr is not None:",
+    "-> 1749     return next(val for val in obj if safe_isfinite(val))",
+    "- Fix barplot being empty when first element is NaN",
+    "So it's about the x position specifically."
+  ],
+  "environment": [
+    "Macos",
+    "### Matplotlib Version",
+    "### Python version",
+    "### Jupyter version"
+  ],
+  "identifiers": {
+    "functions": [
+      "_convert_dx",
+      "_safe_first_finite",
+      "asarray",
+      "bar",
+      "bind",
+      "convert_xunits",
+      "func",
+      "get",
+      "get_x",
+      "subplots"
+    ],
+    "classes": [
+      "Additional",
+      "BarCollection",
+      "But",
+      "Further",
+      "NaN",
+      "On",
+      "PRs",
+      "Rectangle",
+      "StopIteration"
+    ],
+    "files": [
+      "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py",
+      "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/axes/_axes.py",
+      "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/cbook/__init__.py",
+      "10/site-packages/matplotlib/__init__.py",
+      "10/site-packages/matplotlib/axes/_axes.py",
+      "10/site-packages/matplotlib/cbook/__init__.py"
+    ],
+    "exceptions": [
+      "IndexError",
+      "KeyError",
+      "RuntimeError",
+      "TypeError"
+    ]
+  },
+  "raw_issue_text": "[Bug]: ax.bar raises for all-nan data on matplotlib 3.6.1 \n### Bug summary\n\n`ax.bar` raises an exception in 3.6.1 when passed only nan data. This irrevocably breaks seaborn's histogram function (which draws and then removes a \"phantom\" bar to trip the color cycle).\n\n### Code for reproduction\n\n```python\nimport numpy as np\nimport matplotlib.pyplot as plt\nf, ax = plt.subplots()\nax.bar([np.nan], [np.nan])\n```\n\n\n### Actual outcome\n\n```python-traceback\n---------------------------------------------------------------------------\nStopIteration                             Traceback (most recent call last)\nCell In [1], line 4\n      2 import matplotlib.pyplot as plt\n      3 f, ax = plt.subplots()\n----> 4 ax.bar([np.nan], [np.nan])[0].get_x()\n\nFile ~/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py:1423, in _preprocess_data.<locals>.inner(ax, data, *args, **kwargs)\n   1420 @functools.wraps(func)\n   1421 def inner(ax, *args, data=None, **kwargs):\n   1422     if data is None:\n-> 1423         return func(ax, *map(sanitize_sequence, args), **kwargs)\n   1425     bound = new_sig.bind(ax, *args, **kwargs)\n   1426     auto_label = (bound.arguments.get(label_namer)\n   1427                   or bound.kwargs.get(label_namer))\n\nFile ~/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/axes/_axes.py:2373, in Axes.bar(self, x, height, width, bottom, align, **kwargs)\n   2371 x0 = x\n   2372 x = np.asarray(self.convert_xunits(x))\n-> 2373 width = self._convert_dx(width, x0, x, self.convert_xunits)\n   2374 if xerr is not None:\n   2375     xerr = self._convert_dx(xerr, x0, x, self.convert_xunits)\n\nFile ~/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/axes/_axes.py:2182, in Axes._convert_dx(dx, x0, xconv, convert)\n   2170 try:\n   2171     # attempt to add the width to x0; this works for\n   2172     # datetime+timedelta, for instance\n   (...)\n   2179     # removes the units from unit packages like `pint` that\n   2180     # wrap numpy arrays.\n   2181     try:\n-> 2182         x0 = cbook._safe_first_finite(x0)\n   2183     except (TypeError, IndexError, KeyError):\n   2184         pass\n\nFile ~/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/cbook/__init__.py:1749, in _safe_first_finite(obj, skip_nonfinite)\n   1746     raise RuntimeError(\"matplotlib does not \"\n   1747                        \"support generators as input\")\n   1748 else:\n-> 1749     return next(val for val in obj if safe_isfinite(val))\n\nStopIteration: \n```\n\n### Expected outcome\n\nOn 3.6.0 this returns a `BarCollection` with one Rectangle, having `nan` for `x` and `height`.\n\n### Additional information\n\nI assume it's related to this bullet in the release notes:\n\n- Fix barplot being empty when first element is NaN\n\nBut I don't know the context for it to investigate further (could these link to PRs?)\n\nFurther debugging:\n\n```python\nax.bar([np.nan], [0])  # Raises\nax.bar([0], [np.nan])  # Works\n```\n\nSo it's about the x position specifically.\n\n### Operating system\n\nMacos\n\n### Matplotlib Version\n\n3.6.1\n\n### Matplotlib Backend\n\n_No response_\n\n### Python version\n\n_No response_\n\n### Jupyter version\n\n_No response_\n\n### Installation\n\npip",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "import numpy as np\nimport matplotlib.pyplot as plt\nf, ax = plt.subplots()\nax.bar([np.nan], [np.nan])",
+      "context_before": "### Code for reproduction",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "### Expected outcome\n\nOn 3.6.0 this returns a `BarCollection` with one Rectangle, having `nan` for `x` and `height`.\n\n### Additional information\n\nI assume it's related to this bullet in the release notes:\n\n- Fix barplot being empty when first element is NaN\n\nBut I don't know the context for it to investigate further (could these link to PRs?)\n\nFurther debugging:",
+      "context_before": "StopIteration:",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [
+    "IndexError",
+    "KeyError",
+    "RuntimeError",
+    "TypeError"
+  ],
+  "fault_locations": []
+}

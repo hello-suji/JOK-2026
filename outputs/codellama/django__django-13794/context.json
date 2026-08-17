@@ -1,0 +1,356 @@
+{
+  "instance_id": "django__django-13794",
+  "repo": "django/django",
+  "base_commit": "fe886eee36be8022f34cfe59aa61ff1c21fe01d9",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/conf/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "empty",
+        "exception",
+        "proxy",
+        "typeerror"
+      ],
+      "reasons": [
+        "source_content_tokens:proxy,typeerror,empty,exception,string"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "LazySettings.configure",
+        "LazySettings.configured",
+        "LazySettings.PASSWORD_RESET_TIMEOUT_DAYS",
+        "Settings.is_overridden",
+        "UserSettingsHolder.is_overridden"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "empty",
+        "exception",
+        "filter",
+        "proxy"
+      ],
+      "reasons": [
+        "source_content_tokens:proxy,empty,exception,filter,result"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "description",
+        "empty",
+        "exception"
+      ],
+      "reasons": [
+        "source_content_tokens:always,description,empty,exception,filter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "description",
+        "empty",
+        "typeerror"
+      ],
+      "reasons": [
+        "source_content_tokens:typeerror,always,description,empty,exception"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admindocs/views.py",
+      "score": 16,
+      "matched_identifiers": [
+        "description",
+        "exception",
+        "filter",
+        "typeerror"
+      ],
+      "reasons": [
+        "source_content_tokens:typeerror,description,exception,filter,string"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseAdminDocsView.dispatch",
+        "BaseAdminDocsView.get_context_data",
+        "TemplateTagIndexView.get_context_data",
+        "TemplateFilterIndexView.get_context_data",
+        "ViewIndexView.get_context_data",
+        "ViewDetailView.get_context_data",
+        "ModelIndexView.get_context_data",
+        "ModelDetailView.get_context_data",
+        "TemplateDetailView.get_context_data",
+        "get_return_data_type",
+        "get_readable_field_data_type",
+        "extract_views_from_urlpatterns",
+        "simplify_regex"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/apps/explicit_default_config_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/explicit_default_config_empty_apps/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/explicit_default_config_mismatch_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/explicit_default_config_without_apps/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/no_config_app/__init__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2692,
+  "indexed_test_file_count": 1830,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango40Warning",
+      "URLValidator",
+      "ValidationError",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.apps.explicit_default_config_empty_apps": [
+      "ExplicitDefaultConfigEmptyApps"
+    ],
+    "tests.apps": [
+      "AppConfig"
+    ],
+    "tests.apps.explicit_default_config_without_apps": [
+      "ExplicitDefaultConfigWithoutApps"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admindocs.views": [
+      "BaseAdminDocsView",
+      "BookmarkletsView",
+      "ModelDetailView",
+      "ModelIndexView",
+      "TemplateDetailView",
+      "TemplateFilterIndexView",
+      "TemplateTagIndexView",
+      "ViewDetailView",
+      "ViewIndexView",
+      "extract_views_from_urlpatterns",
+      "get_readable_field_data_type",
+      "get_return_data_type",
+      "simplify_regex"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

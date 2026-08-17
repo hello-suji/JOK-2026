@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/postgresql/base.py",
+      "target_function": "runshell",
+      "related_classes": [
+        "PostgreSQL",
+        "DatabaseClient"
+      ],
+      "candidate_test_file": "tests/backends/postgresql/test_creation.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls runshell, index."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: runshell, index."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/backends/postgresql/base.py",
+      "django/db/backends/postgresql/client.py",
+      "django/db/backends/postgresql/creation.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/postgresql/test_creation.py",
+      "tests/backends/postgresql/test_introspection.py",
+      "tests/postgres_tests/test_introspection.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.backends.postgresql.client import DatabaseClient\n\nclass TestDatabaseClientBehavior(SimpleTestCase):\n    def test_dbshell_additional_parameters_order_repro(self):\n        client = DatabaseClient()\n        args = client.runshell(['-c', 'select * from some_table;'])\n        self.assertLess(args.index('-c'), args.index(connection.settings_dict['NAME']))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "runshell",
+        "index"
+      ],
+      "classes": [
+        "PostgreSQL",
+        "DatabaseClient"
+      ],
+      "files": [
+        "manage.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/postgresql/test_creation.py",
+      "target_source_file": "django/db/backends/postgresql/base.py",
+      "test_visible_functions": [
+        "runshell",
+        "index"
+      ],
+      "test_visible_classes": [
+        "PostgreSQL",
+        "DatabaseClient"
+      ]
+    }
+  }
+]

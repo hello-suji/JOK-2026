@@ -1,0 +1,115 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/auth/admin.py",
+      "target_function": "register",
+      "related_classes": [
+        "BigAutoField",
+        "CharField",
+        "ForeignKey",
+        "ModelAdmin",
+        "StackedInline",
+        "SubThing",
+        "SubThingInline",
+        "ThingAdmin",
+        "UUIDField",
+        "UUIDModel",
+        "Model",
+        "Thing"
+      ],
+      "candidate_test_file": "tests/admin_inlines/admin.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where register can be called.",
+      "Use the generated reproduction path that calls register, uuid, create."
+    ],
+    "execution_stimulus": [
+      "Call register with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: register, uuid, create."
+    ],
+    "expected_failure": "When logging into the admin, if you delete all of the entries for \"subthings\", add a name, and save the model, it will work. As soon as you try to add a subthing alongside the main Thing, it fails with the following exception:",
+    "relevant_source_files": [
+      "django/contrib/auth/admin.py",
+      "django/contrib/contenttypes/admin.py",
+      "django/contrib/flatpages/admin.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/test_foreignkey.py",
+      "tests/model_fields/models.py",
+      "tests/admin_inlines/admin.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport uuid\nfrom django.contrib.admin import register\nfrom django.contrib.admin.options import ModelAdmin, StackedInline\nfrom django.db.models import BigAutoField, CharField, ForeignKey, UUIDField\nfrom django.db.models import Model\n\n\nclass UUIDModel(Model):\n    pkid = BigAutoField(primary_key=True, editable=False)\n    id = UUIDField(default=uuid.uuid4, unique=True, editable=False)\n\n\nclass SubThing(UUIDModel):\n    name = CharField(max_length=100)\n    thing = ForeignKey('Thing', related_name='subthings', on_delete=models.CASCADE)\n\n\nclass SubThingInline(StackedInline):\n    model = SubThing\n    extra = 1\n\n\nclass Thing(UUIDModel):\n    name = CharField(max_length=100)\n\n\n@register(Thing)\nclass ThingAdmin(ModelAdmin):\n    inlines = [SubThingInline]\n\n\nclass TestThingAdmin(TestCase):\n    def test_adding_subthing_repro(self):\n        # Create a Thing instance\n        thing = Thing.objects.create(name='Main Thing')\n        # Add a SubThing instance\n        subthing = SubThing.objects.create(name='Sub Thing', thing=thing)\n        # Assert that the subthing is correctly linked to the thing\n        self.assertIn(subthing, thing.subthings.all())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "register",
+        "uuid",
+        "create"
+      ],
+      "classes": [
+        "BigAutoField",
+        "CharField",
+        "ForeignKey",
+        "ModelAdmin",
+        "StackedInline",
+        "SubThing",
+        "SubThingInline",
+        "ThingAdmin",
+        "UUIDField",
+        "UUIDModel",
+        "Model",
+        "Thing"
+      ],
+      "files": [
+        "admin.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_inlines/admin.py",
+      "target_source_file": "django/contrib/auth/admin.py",
+      "test_visible_functions": [
+        "register",
+        "uuid",
+        "create"
+      ],
+      "test_visible_classes": [
+        "BigAutoField",
+        "CharField",
+        "ForeignKey",
+        "ModelAdmin",
+        "StackedInline",
+        "SubThing",
+        "SubThingInline",
+        "ThingAdmin"
+      ]
+    }
+  }
+]

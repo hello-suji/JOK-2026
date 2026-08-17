@@ -1,0 +1,17 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -1739,3 +1739,14 @@
+
+ if __name__ == '__main__':
+     unittest.main()
++
++from unittest.mock import MagicMock
++from requests.models import PreparedRequest
++
++def test_put_with_binary_payload_repro():
++    session = MagicMock()
++    prepared_request = PreparedRequest()
++    prepared_request.prepare(method='PUT', url='http://httpbin.org/put', data=u"ööö".encode("utf-8"))
++    session.send.return_value.status_code = 200
++    response = session.send(prepared_request)
++    assert response.status_code == 200

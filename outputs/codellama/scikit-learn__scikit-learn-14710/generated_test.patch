@@ -1,0 +1,20 @@
+--- a/sklearn/ensemble/tests/test_gradient_boosting.py
++++ b/sklearn/ensemble/tests/test_gradient_boosting.py
+@@ -1444,3 +1444,17 @@
+     gbr = GradientBoostingRegressor().fit(X, y)
+     assert_array_equal(gbr.feature_importances_,
+                        np.zeros(10, dtype=np.float64))
++
++from sklearn.experimental import enable_hist_gradient_boosting
++from sklearn.ensemble import HistGradientBoostingClassifier
++
++
++def test_hist_gradient_boosting_with_string_target_and_early_stopping_repro():
++    X = np.random.randn(100, 10)
++    y = np.array(['x'] * 50 + ['y'] * 50, dtype=object)
++    gbrt = HistGradientBoostingClassifier(n_iter_no_change=10)
++    gbrt.fit(X, y)
++    score = gbrt.score(X, y)
++    assert isinstance(score, float)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(score) != "TypeError: '<' not supported between instances of 'str' and 'float'"

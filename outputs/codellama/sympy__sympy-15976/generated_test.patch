@@ -1,0 +1,15 @@
+--- a/sympy/printing/tests/test_mathml.py
++++ b/sympy/printing/tests/test_mathml.py
+@@ -962,3 +962,12 @@
+     R = RandomSymbol(Symbol('R'))
+     assert mpp.doprint(R) == '<mi>R</mi>'
+     assert mp.doprint(R) == '<ci>R</ci>'
++
++from sympy import symbols
++from sympy.printing.mathml import mathml
++
++def test_mathml_output_structure_repro():
++    x = symbols('x')
++    expr = x**2 + 3*x + 2
++    mathml_representation = mathml(expr)
++    assert '<apply><plus/>' in mathml_representation

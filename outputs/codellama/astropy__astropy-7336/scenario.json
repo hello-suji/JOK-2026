@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/units/decorators.py",
+      "target_function": "__init__",
+      "related_classes": [
+        "PoC",
+        "NoneType"
+      ],
+      "candidate_test_file": "astropy/units/tests/test_quantity_decorator.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import astropy.units as u",
+      "from astropy.units.decorators import QuantityInput",
+      "class PoC(object):",
+      "    @QuantityInput()",
+      "    def __init__(self, voltage: u.V) -> None:",
+      "        pass",
+      "Use the generated reproduction path that calls __init__, to."
+    ],
+    "execution_stimulus": [
+      "poc = PoC(1.*u.V)",
+      "Execute the focused target API path: __init__, to."
+    ],
+    "expected_failure": "AttributeError: 'NoneType' object has no attribute 'to'",
+    "relevant_source_files": [
+      "astropy/units/decorators.py",
+      "astropy/utils/decorators.py",
+      "astropy/nddata/decorators.py"
+    ],
+    "relevant_test_files": [
+      "astropy/units/tests/test_quantity_decorator.py",
+      "astropy/units/tests/py3_test_quantity_annotations.py",
+      "astropy/units/tests/test_quantity.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_quantity_input_decorator_with_none_return_repro():\n    class PoC(object):\n        @u.quantity_input\n        def __init__(self, voltage: u.V) -> None:\n            pass\n    \n    poc = PoC(1.*u.V)\n    assert poc is not None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(poc) != \"AttributeError: 'NoneType' object has no attribute 'to'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_quantity_input_decorator_with_none_return():\n    import astropy.units as u\n    from astropy.units.decorators import QuantityInput\n    \n    class PoC(object):\n        @QuantityInput()\n        def __init__(self, voltage: u.V) -> None:\n            pass\n    \n    with pytest.raises(AttributeError) as excinfo:\n        poc = PoC(1.*u.V)\n    assert str(excinfo.value) == \"'NoneType' object has no attribute 'to'\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'NoneType' object has no attribute 'to'"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "'NoneType' object has no attribute 'to'"
+    ],
+    "identifiers": {
+      "functions": [
+        "wrapper",
+        "__init__",
+        "to"
+      ],
+      "classes": [
+        "PoC",
+        "NoneType"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "astropy/units/tests/test_quantity_decorator.py",
+      "target_source_file": "astropy/units/decorators.py",
+      "test_visible_functions": [
+        "__init__",
+        "to"
+      ],
+      "test_visible_classes": [
+        "NoneType",
+        "PoC"
+      ]
+    }
+  }
+]

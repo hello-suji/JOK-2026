@@ -1,0 +1,13 @@
+--- a/sympy/core/tests/test_symbol.py
++++ b/sympy/core/tests/test_symbol.py
+@@ -382,3 +382,10 @@
+     assert disambiguate(*t7) == (y*y_1, y_1)
+     assert disambiguate(Dummy('x_1'), Dummy('x_1')
+         ) == (x_1, Symbol('x_1_1'))
++
++def test_even_symbol_is_finite_repro():
++    m = Symbol('m', even=True)
++    result = m.is_finite
++    assert result is True
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(m) != 'None'

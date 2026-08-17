@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-8269",
+    "model_patch": "--- a/tests/roots/test-ext-intersphinx-cppdomain/conf.py\n+++ b/tests/roots/test-ext-intersphinx-cppdomain/conf.py\n@@ -1 +1,23 @@\n extensions = ['sphinx.ext.intersphinx']\n+\n+import tempfile\n+import os\n+from sphinx.application import Sphinx\n+from sphinx.builders.linkcheck import CheckExternalLinksBuilder\n+\n+def test_linkcheck_reports_http_errors_instead_of_anchor_not_found_repro():\n+    with tempfile.TemporaryDirectory() as tmpdir:\n+        srcdir = os.path.join(tmpdir, 'source')\n+        confdir = srcdir\n+        outdir = os.path.join(tmpdir, 'output')\n+        doctreedir = os.path.join(tmpdir, 'doctrees')\n+        buildername = 'linkcheck'\n+        os.makedirs(srcdir)\n+        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n+            f.write('\\n`foo <https://google.com/test.txt#test>`_\\n')\n+        with open(os.path.join(srcdir, 'conf.py'), 'w') as f:\n+            f.write('extensions = []\\nlinkcheck_anchors = True\\n')\n+        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n+        app.build()\n+        results = app.env.linkcheck_results\n+        assert any('HTTP error' in msg for _, msg in results if 'https://google.com/test.txt#test' in msg)\n",
+    "patch_sha256": "9388a8d05cc03e5eae6699d4b419271157bfd16379f97658dee93184b8774050"
+  }
+]

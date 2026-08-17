@@ -1,0 +1,16 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -177,3 +177,13 @@
+         })
+         template = engine.get_template('hello.html')
+         self.assertEqual(template.render({'name': 'Joe'}), 'Hello Joe!\n')
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import F
++from django.db.models.expressions import Expression
++
++class TestExpressionDeconstruction(TestCase):
++    def test_f_expression_deconstruction_repro(self):
++        f_expr = F('field_name')
++        path, args, kwargs = f_expr.deconstruct()
++        self.assertEqual(path, 'django.db.models.F')

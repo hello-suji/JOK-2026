@@ -1,0 +1,24 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8475",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/qwen/sphinx-doc__sphinx-8475/predictions.json",
+  "run_id": "sync-sphinx-doc__sphinx-8475",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/qwen/sphinx-doc__sphinx-8475/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "sphinx-doc__sphinx-8475",
+    "--run_id",
+    "debug-sphinx-doc__sphinx-8475"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "-------------------------------Final Report--------------------------------------\n{'sphinx-doc__sphinx-8475': {'test_before_patch': {'sphinx-doc__sphinx-8475::qwen_external_sync': 'FAILED'}, 'test_after_patch': {'sphinx-doc__sphinx-8475::qwen_external_sync': 'FAILED'}, 'final_score': 0.0, 'resolved': False, 'contributing_functions': ['sphinx-doc__sphinx-8475::qwen_external_sync']}}\n---------------------------------------------------------------------------------\nFinal score: 0.0\n",
+  "harness_stderr": ""
+}

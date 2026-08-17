@@ -1,0 +1,14 @@
+--- a/sympy/matrices/expressions/tests/test_det_gateerminant.py
++++ b/sympy/matrices/expressions/tests/test_det_gateerminant.py
+@@ -34,3 +34,11 @@
+ def test_refine_gate():
+     assert refine(det(A), Q.orthogonal(A)) == 1
+     assert refine(det(A), Q.singular(A)) == 0
++
++from sympy import symbols, Matrix, nan
++
++def test_det_gate_with_nan_repro():
++    a = symbols('a')
++    f = lambda n: Matrix([[i + a*j for i in range(n)] for j in range(n)]).det()
++    result = f(5)
++    assert not (result.has(nan) or result.is_nan)

@@ -1,0 +1,28 @@
+--- a/lib/matplotlib/tests/test_offsetbox.py
++++ b/lib/matplotlib/tests/test_offsetbox.py
+@@ -335,3 +335,25 @@
+                         arrowprops=arrowprops)
+     assert ab.arrowprops is not ab
+     assert arrowprops["relpos"] == (.3, .7)
++
++import matplotlib.pyplot as plt
++from matplotlib.offsetbox import AnchoredOffsetbox, HPacker, DrawingArea
++from matplotlib.patches import Rectangle
++
++def test_hpacker_align_reversed_repro():
++    da1 = DrawingArea(10, 20)
++    rect1 = Rectangle((0, 0), 10, 20)
++    da1.add_artist(rect1)
++
++    da2 = DrawingArea(10, 30)
++    rect2 = Rectangle((0, 0), 10, 30)
++    da2.add_artist(rect2)
++
++    hpacker = HPacker(children=[da1, da2], align='top')
++    anchored_box = AnchoredOffsetbox(child=hpacker, loc='upper left')
++
++    fig, ax = plt.subplots()
++    ax.add_artist(anchored_box)
++
++    # Asserting the number of children in HPacker to ensure correct setup
++    assert len(hpacker.children) == 2

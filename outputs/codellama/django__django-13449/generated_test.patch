@@ -1,0 +1,19 @@
+--- a/tests/forms_tests/field_tests/test_datefield.py
++++ b/tests/forms_tests/field_tests/test_datefield.py
+@@ -186,3 +186,16 @@
+             # assertIsInstance or assertRaises cannot be used because UnicodeEncodeError
+             # is a subclass of ValueError
+             self.assertEqual(e.__class__, ValueError)
++
++import re
++from django.db import models
++from django.test import TestCase
++from django.core.exceptions import ValidationError
++
++class TestDateFieldBehavior(TestCase):
++    def test_date_field_with_valid_data_repro(self):
++        date_field = models.DateField()
++        valid_values = ['2023-02-28', '2023-12-31', '2024-02-29']
++        for value in valid_values:
++            cleaned_value = date_field.clean(value)
++            self.assertEqual(cleaned_value.strftime('%Y-%m-%d'), value)

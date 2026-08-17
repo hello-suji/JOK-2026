@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/contour.py",
+      "target_function": "get_paths",
+      "related_classes": [
+        "ContourSet",
+        "SciTools"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_contour.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where get_paths can be called.",
+      "Use the generated reproduction path that calls matplotlib, plt, use, linspace.",
+      "Use the generated reproduction path that calls get_paths, set_paths, matplotlib, plt."
+    ],
+    "execution_stimulus": [
+      "Call get_paths with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: matplotlib, plt, use, linspace.",
+      "Execute the focused target API path: get_paths, set_paths, matplotlib, plt."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "lib/matplotlib/contour.py",
+      "lib/matplotlib/collections.py",
+      "lib/matplotlib/path.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_contour.py",
+      "lib/matplotlib/tests/test_collections.py",
+      "lib/matplotlib/tests/test_path.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "paths = cs.get_paths()\npaths[:] = transformed_paths"
+      },
+      {
+        "language": "python",
+        "code": "cs.set_paths(transformed_paths)"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib\nmatplotlib.use('Agg')\nimport numpy as np\nfrom matplotlib import pyplot as plt\nfrom matplotlib.contour import ContourSet\n\n\ndef test_contour_set_paths_reproduction_repro():\n\n    x = np.linspace(-3.0, 3.0, 100)\n    y = np.linspace(-3.0, 3.0, 100)\n    X, Y = np.meshgrid(x, y)\n    Z = np.sin(X**2 + Y**2)\n\n    fig, ax = plt.subplots()\n    cs = ax.contour(X, Y, Z)\n\n    original_paths = cs.get_paths()\n    transformed_paths = [path.transformed(cs.axes.transData.inverted()) for path in original_paths]\n\n    # This will fail on pre-patch code because set_paths does not correctly handle the transformation\n    cs.set_paths(transformed_paths)\n\n    updated_paths = cs.get_paths()\n    assert updated_paths != original_paths"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_paths",
+        "set_paths",
+        "matplotlib",
+        "plt",
+        "use",
+        "linspace",
+        "meshgrid",
+        "sin",
+        "subplots",
+        "contour",
+        "transformed",
+        "inverted"
+      ],
+      "classes": [
+        "ContourSet",
+        "SciTools"
+      ],
+      "files": [
+        "lib/cartopy/mpl/contour.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_contour.py",
+      "target_source_file": "lib/matplotlib/contour.py",
+      "test_visible_functions": [
+        "get_paths",
+        "set_paths",
+        "matplotlib",
+        "plt",
+        "use",
+        "linspace",
+        "meshgrid",
+        "sin"
+      ],
+      "test_visible_classes": [
+        "ContourSet"
+      ]
+    }
+  }
+]

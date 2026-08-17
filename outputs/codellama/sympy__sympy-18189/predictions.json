@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-18189",
+    "model_patch": "--- a/sympy/solvers/tests/test_diophantine.py\n+++ b/sympy/solvers/tests/test_diophantine.py\n@@ -907,3 +907,13 @@\n     eq = x - 3*y + 2\n     assert diophantine(eq, syms=[y,x]) == set([(t_0, 3*t_0 - 2)])\n     raises(TypeError, lambda: diophantine(eq, syms=set([y,x])))\n+\n+from sympy import symbols, diophantine\n+\n+def test_diophantine_permute_order_repro():\n+    # Regression focus: diophantine: incomplete results depending on syms order with permute=True\n+    n, m = symbols('n m')\n+    result_mn = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m, n), permute=True)\n+    result_nm = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n, m), permute=True)\n+    assert result_mn == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n+    assert result_nm == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n",
+    "patch_sha256": "e4cb5760d1ec6d7a9386937aa4c46afb2e2ae5727f4c482ef464d8530cefa380"
+  }
+]

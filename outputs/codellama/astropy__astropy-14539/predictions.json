@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14539",
+    "model_patch": "--- a/astropy/io/fits/tests/test_table.py\n+++ b/astropy/io/fits/tests/test_table.py\n@@ -3922,3 +3922,19 @@\n\n     with pytest.warns(UnitsWarning):\n         Table.read(path, unit_parse_strict=\"warn\")\n+\n+from astropy.io import fits\n+\n+def test_fitsdiff_identical_files_repro():\n+    \"\"\"\n+    Regression test for https://github.com/astropy/astropy/issues/14539\n+\n+    Ensure that FITSDiff does not report differences when comparing identical files.\n+    \"\"\"\n+    col = fits.Column('a', format='QD', array=[[0], [0, 0]])\n+    hdu = fits.BinTableHDU.from_columns([col])\n+    hdu.writeto('diffbug.fits', overwrite=True)\n+\n+    diff = fits.FITSDiff('diffbug.fits', 'diffbug.fits')\n+    assert diff.identical, 'Files should be identical'\n+    fits.printdiff('diffbug.fits', 'diffbug.fits')\n",
+    "patch_sha256": "e5e11eb0464371350e98e6af263994d5f03c9acec83d559c569ac7a2bc6ca028"
+  }
+]

@@ -1,0 +1,364 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8120",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "795747bdb6b8fb7d717d5bbfc2c3316869e66a73",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 37,
+      "matched_identifiers": [
+        "_build",
+        "auto",
+        "build",
+        "conf",
+        "conf.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:conf.py",
+        "stem_in_issue_text:conf",
+        "source_content_tokens:_build,auto,build,conf,figur"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 19,
+      "matched_identifiers": [
+        "block",
+        "build",
+        "conf",
+        "figur"
+      ],
+      "reasons": [
+        "path_contains_class:Fig",
+        "stem_in_issue_text:config",
+        "source_content_tokens:block,build,conf,figur,figure"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_unicode",
+        "check_primary_domain",
+        "check_master_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/gettext.py",
+      "score": 17,
+      "matched_identifiers": [
+        "_build",
+        "auto",
+        "build",
+        "conf"
+      ],
+      "reasons": [
+        "stem_in_issue_text:gettext",
+        "source_content_tokens:_build,auto,build,conf,entries"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "build": "    def build(self, docnames: Iterable[str], summary: str = None, method: str = 'update') -> None:  # NOQA\n        self._extract_from_template()\n        super().build(docnames, summary, method)\n\n    def finish(self) -> None:\n        super().finish()\n        context = {\n            'version': self.config.version,\n            'copyright': self.config.copyright,\n            'project': self.config.project,\n            'last_translator': self.config.gettext_last_translator,\n            'language_team': self.config.gettext_language_team,\n            'ctime': datetime.fromtimestamp(timestamp, ltz).strftime('%Y-%m-%d %H:%M%z'),\n            'display_location': self.config.gettext_location,\n            'display_uuid': self.config.gettext_uuid,"
+      },
+      "top_level_functions": [
+        "Catalog.add",
+        "GettextRenderer.render",
+        "I18nTags.eval_condition",
+        "I18nBuilder.init",
+        "I18nBuilder.get_target_uri",
+        "I18nBuilder.get_outdated_docs",
+        "I18nBuilder.prepare_writing",
+        "I18nBuilder.compile_catalogs",
+        "I18nBuilder.write_doc",
+        "LocalTimeZone.utcoffset",
+        "LocalTimeZone.dst",
+        "should_write",
+        "MessageCatalogBuilder.init",
+        "MessageCatalogBuilder.build",
+        "MessageCatalogBuilder.finish",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/text.py",
+      "score": 17,
+      "matched_identifiers": [
+        "_build",
+        "build",
+        "conf",
+        "locale"
+      ],
+      "reasons": [
+        "stem_in_issue_text:text",
+        "source_content_tokens:_build,build,conf,locale,open"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TextBuilder.init",
+        "TextBuilder.get_outdated_docs",
+        "TextBuilder.get_target_uri",
+        "TextBuilder.prepare_writing",
+        "TextBuilder.write_doc",
+        "TextBuilder.finish",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/cmd/build.py",
+      "score": 17,
+      "matched_identifiers": [
+        "auto",
+        "been",
+        "block",
+        "build"
+      ],
+      "reasons": [
+        "stem_in_issue_text:build",
+        "source_content_tokens:auto,been,block,build,conf"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "handle_exception",
+        "jobs_argument",
+        "get_parser",
+        "make_main",
+        "build_main",
+        "main"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_build_gettext.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "test_name_matches_source_stem:gettext",
+        "token_overlap:build,gettext,text",
+        "internal_name_overlap:build",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_build_text.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "test_name_matches_source_stem:text",
+        "token_overlap:build,text",
+        "internal_name_overlap:build",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-builder-gettext-dont-rebuild-mo/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:build,gettext,text"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/test_build_text.py:pytest_import_or_conftest",
+      "tests/test_build_text.py:top_level_test_functions",
+      "tests/test_build_gettext.py:pytest_import_or_conftest",
+      "tests/test_build_gettext.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 515,
+  "indexed_test_file_count": 321,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "tests.test_build_text": [
+      "test_lineblock",
+      "test_list_items_in_admonition",
+      "test_maxwitdh_with_prefix",
+      "test_nonascii_maxwidth",
+      "test_nonascii_table",
+      "test_nonascii_title_line",
+      "test_secnums",
+      "test_table_builder",
+      "test_table_cell",
+      "test_table_separator",
+      "test_table_with_colspan",
+      "test_table_with_colspan_and_rowspan",
+      "test_table_with_colspan_left",
+      "test_table_with_empty_cell",
+      "test_table_with_rowspan",
+      "with_text_app"
+    ],
+    "tests.test_build_gettext": [
+      "test_build_gettext",
+      "test_build_single_pot",
+      "test_gettext_disable_index_entries",
+      "test_gettext_index_entries",
+      "test_gettext_template",
+      "test_gettext_template_msgid_order_in_sphinxpot",
+      "test_msgfmt"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ENUM",
+      "check_confval_types",
+      "check_master_doc",
+      "check_primary_domain",
+      "check_unicode",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "BuildEnvironment",
+      "BuildPhase",
+      "CONFIG_CHANGED_REASON",
+      "CONFIG_OK",
+      "CatalogInfo",
+      "CatalogRepository",
+      "Config",
+      "Dict",
+      "EventManager",
+      "ImageAdapter",
+      "Iterable",
+      "List",
+      "Node",
+      "PIPE",
+      "ParallelTasks",
+      "RemovedInNextVersionWarning",
+      "SEP",
+      "Sequence",
+      "SerialTasks",
+      "Set",
+      "SphinxError",
+      "Tags",
+      "Tuple",
+      "Union",
+      "__",
+      "bold",
+      "directives",
+      "docname_to_domain",
+      "ensuredir",
+      "import_object",
+      "logging",
+      "make_chunks",
+      "nodes",
+      "parallel_available",
+      "path",
+      "progress_message",
+      "read_doc",
+      "relative_uri",
+      "relpath",
+      "roles",
+      "rst",
+      "sphinx_domains",
+      "status_iterator"
+    ],
+    "sphinx.builders.text": [
+      "TextBuilder",
+      "setup"
+    ],
+    "sphinx.builders.gettext": [
+      "Catalog",
+      "GettextRenderer",
+      "I18nBuilder",
+      "I18nTags",
+      "LocalTimeZone",
+      "Message",
+      "MessageCatalogBuilder",
+      "MsgOrigin",
+      "setup",
+      "should_write"
+    ],
+    "sphinx.builders": [
+      "Builder"
+    ],
+    "sphinx.cmd.build": [
+      "build_main",
+      "get_parser",
+      "handle_exception",
+      "jobs_argument",
+      "main",
+      "make_main"
+    ]
+  },
+  "test_example_snippet": "def test_build_gettext(app):\n    # Generic build; should fail only when the builder is horribly broken.\n    app.builder.build_all()\n\n    # Do messages end up in the correct location?\n    # top-level documents end up in a message catalog\n    assert (app.outdir / 'extapi.pot').isfile()\n    # directory items are grouped into sections\n    assert (app.outdir / 'subdir.pot').isfile()\n\n    # regression test for issue #960\n    catalog = (app.outdir / 'markup.pot').read_text()\n    assert 'msgid \"something, something else, something more\"' in catalog\n\n\n@pytest.mark.sphinx('gettext', srcdir='root-gettext')\ndef test_msgfmt(app):\n    app.builder.build_all()\n    (app.outdir / 'en' / 'LC_MESSAGES').makedirs()\n    with cd(app.outdir):\n        try:\n            args = ['msginit', '--no-translator', '-i', 'markup.pot', '--locale', 'en_US']\n            subprocess.run(args, stdout=PIPE, stderr=PIPE, check=True)\n        except OSError:\n            pytest.skip()  # most likely msginit was not found\n        except CalledProcessError as exc:\n            print(exc.stdout)\n            print(exc.stderr)\n            assert False, 'msginit exited with return code %s' % exc.returncode\n\n        assert (app.outdir / 'en_US.po').isfile(), 'msginit failed'\n        try:\n            args = ['msgfmt', 'en_US.po',\n                    '-o', os.path.join('en', 'LC_MESSAGES', 'test_root.mo')]\n            subprocess.run(args, stdout=PIPE, stderr=PIPE, check=True)",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

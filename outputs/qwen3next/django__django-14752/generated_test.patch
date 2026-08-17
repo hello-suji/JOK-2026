@@ -1,0 +1,34 @@
+--- a/tests/admin_views/custom_has_permission_admin.py
++++ b/tests/admin_views/custom_has_permission_admin.py
+@@ -29,3 +29,31 @@
+
+ site = HasPermissionAdmin(name="has_permission_admin")
+ site.register(models.Article, base_admin.ArticleAdmin)
++
++from django.contrib.admin.views.autocomplete import AutocompleteJsonView
++from django.http import HttpRequest
++from django.test import TestCase
++from django.contrib.auth.models import User
++from django.contrib.contenttypes.models import ContentType
++from django.contrib.auth.models import Permission
++
++
++class TestAutocompleteJsonView(TestCase):
++    def setUp(self):
++        self.user = User.objects.create_user(username='testuser', password='testpass')
++        self.user.is_staff = True
++        self.user.save()
++        content_type = ContentType.objects.get_for_model(User)
++        permission = Permission.objects.create(codename='view_user', name='Can view user', content_type=content_type)
++        self.user.user_permissions.add(permission)
++        self.client.login(username='testuser', password='testpass')
++
++    def test_custom_extra_fields_in_autocomplete_response_repro(self):
++        request = HttpRequest()
++        request.GET = {'term': 'test'}
++        request.user = self.user
++        view = AutocompleteJsonView()
++        view.model_admin = admin.ModelAdmin(User, admin.site)
++        view.queryset = User.objects.all()
++        response = view.get(request)
++        self.assertIn('notes', response.json()['results'][0])

@@ -1,0 +1,107 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:hexbin",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "lib/matplotlib/axes/_axes.py",
+          "target_function": "hexbin",
+          "related_classes": [
+            "Blues",
+            "Order"
+          ],
+          "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where hexbin can be called."
+        ],
+        "execution_stimulus": [
+          "Call hexbin with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "**Actual outcome**",
+        "relevant_source_files": [
+          "lib/matplotlib/axes/_axes.py",
+          "lib/matplotlib/pyplot.py",
+          "lib/matplotlib/figure.py"
+        ],
+        "relevant_test_files": [
+          "lib/matplotlib/tests/test_figure.py",
+          "lib/matplotlib/tests/test_pyplot.py",
+          "lib/matplotlib/tests/test_collections.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "from matplotlib import pyplot\nimport numpy as np\n\nnp.random.seed(42)\n\nX, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T\n#Z = (X ** 2 + Y ** 2)\nZ = np.ones_like(X)\n\nextent = [-3., 3., -3., 3.]  # doc: \"Order of scalars is (left, right, bottom, top)\"\ngridsize = (7, 7)  # doc: \"int or (int, int), optional, default is 100\"\n\n# #### no mincnt specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")  # for contrast\n# shows a plot where all gridpoints are shown, even when the values are zero\n\n# #### mincnt=1 specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# *all makes sense, so far*\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### no mincnt specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### mincnt=1 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# hmm, unexpected...\n# shows only a plot where gridpoints containing at least **two** data points are shown(!!!)\n\n# #### mincnt=0 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=0,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown"
+          },
+          {
+            "language": "python",
+            "code": "from matplotlib import pyplot\nimport numpy as np\n\nnp.random.seed(42)\n\nX, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T\n#Z = (X ** 2 + Y ** 2)\nZ = np.ones_like(X)\n\nextent = [-3., 3., -3., 3.]  # doc: \"Order of scalars is (left, right, bottom, top)\"\ngridsize = (7, 7)  # doc: \"int or (int, int), optional, default is 100\"\n\n# #### no mincnt specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")  # for contrast\n# shows a plot where all gridpoints are shown, even when the values are zero\n\n# #### mincnt=1 specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# *all makes sense, so far*\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### no mincnt specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### mincnt=1 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# hmm, unexpected...\n# shows only a plot where gridpoints containing at least **two** data points are shown(!!!)\n\n# #### mincnt=0 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=0,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "hexbin",
+            "multivariate_normal",
+            "ones_like",
+            "set_facecolor",
+            "shown",
+            "subplots"
+          ],
+          "classes": [
+            "Blues",
+            "Order"
+          ],
+          "files": [
+            "lib/matplotlib/axes/_axes.py"
+          ],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

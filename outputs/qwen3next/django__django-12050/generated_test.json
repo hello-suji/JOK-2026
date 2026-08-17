@@ -1,0 +1,31 @@
+{
+  "instance_id": "django__django-12050",
+  "scenario_id": "S1",
+  "model_name": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "repo_path": "data/repos/django",
+  "target_test_file": "tests/queries/test_query.py",
+  "target_test_file_abspath": "data/repos/django/tests/queries/test_query.py",
+  "target_source_file": "django/db/models/query.py",
+  "insert_mode": "append_block",
+  "insertion_hint": "end_of_file",
+  "imports": [],
+  "test_code": "from django.test import TestCase\n\nfrom .models import PickledObject\n\nclass PickledFieldGetRegressionTests(TestCase):\n    def test_get_uses_pickled_field_prep_value_for_lookup_repro(self):\n        PickledObject.objects.create(data=[1, 2, 3])\n        obj = PickledObject.objects.get(data=[1, 2, 3])\n        self.assertEqual(obj.data, [1, 2, 3])\n",
+  "original_test_file_content": "",
+  "modified_test_file_content": "from django.test import TestCase\n\nfrom .models import PickledObject\n\nclass PickledFieldGetRegressionTests(TestCase):\n    def test_get_uses_pickled_field_prep_value_for_lookup_repro(self):\n        PickledObject.objects.create(data=[1, 2, 3])\n        obj = PickledObject.objects.get(data=[1, 2, 3])\n        self.assertEqual(obj.data, [1, 2, 3])\n",
+  "test_patch": "--- a/tests/queries/test_query.py\n+++ b/tests/queries/test_query.py\n@@ -0,0 +1,9 @@\n+from django.test import TestCase\n+\n+from .models import PickledObject\n+\n+class PickledFieldGetRegressionTests(TestCase):\n+    def test_get_uses_pickled_field_prep_value_for_lookup_repro(self):\n+        PickledObject.objects.create(data=[1, 2, 3])\n+        obj = PickledObject.objects.get(data=[1, 2, 3])\n+        self.assertEqual(obj.data, [1, 2, 3])\n",
+  "raw_response": "",
+  "prompt": "",
+  "patch_sha256": "fce360d4dece931a5bae68f1e459d4defba6f68ced351590f8aaebd1821c5d28",
+  "repair_attempted": false,
+  "repair_actions": [],
+  "repair_failed_reason": "",
+  "repair_retry_count": 0,
+  "retry_required_oracle_risks": [],
+  "semantic_risk_flags": [],
+  "prompt_profile": {},
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  }
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "name",
+      "related_classes": [
+        "AddConstraint",
+        "AutoField",
+        "BooleanField",
+        "CreateModel",
+        "IntegerField",
+        "CheckConstraint",
+        "Q"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_deprecated_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where database_forwards can be called.",
+      "Use the generated reproduction path that calls name."
+    ],
+    "execution_stimulus": [
+      "Call database_forwards with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: name."
+    ],
+    "expected_failure": "Including the fully qualified field name fails the migration because when we drop the old table and swap the name of the staging table in place, the constraint fails with a malformed schema exception (on sqlite) saying that the field doesn’t exist on the table. It appears that this has to do with the AND clause items using Col while the OR clause uses SimpleCol. Here is an example of this behavior:",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/db/migrations/operations/models.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/check_framework/test_model_field_deprecation.py",
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.migrations import AddConstraint\nfrom django.db.migrations.operations.models import CreateModel\nfrom django.db.models import IntegerField, BooleanField\nfrom django.db.models.constraints import CheckConstraint\nfrom django.test import SimpleTestCase\n\nclass TestCheckConstraintWithOrAndClauses(SimpleTestCase):\n    def test_constraint_with_or_and_clauses_repro(self):\n        constraint = CheckConstraint(check=(Q(field1=True) | Q(field2=False)) & Q(field3__gte=0), name='check_constraint')\n        operation = AddConstraint('MyModel', constraint)\n        self.assertEqual(operation.name, 'check_constraint')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "name"
+      ],
+      "classes": [
+        "AddConstraint",
+        "AutoField",
+        "BooleanField",
+        "CheckConstraint",
+        "CreateModel",
+        "IntegerField",
+        "SQLite",
+        "SimpleCol",
+        "Q"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/invalid_models_tests/test_deprecated_fields.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "name"
+      ],
+      "test_visible_classes": [
+        "AddConstraint",
+        "BooleanField",
+        "CheckConstraint",
+        "CreateModel",
+        "IntegerField",
+        "Q"
+      ]
+    }
+  }
+]

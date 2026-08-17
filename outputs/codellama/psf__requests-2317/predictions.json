@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-2317",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -1518,3 +1518,9 @@\n\n if __name__ == '__main__':\n     unittest.main()\n+\n+def test_builtin_str_method_conversion_repro():\n+    from requests.sessions import builtin_str\n+    method = b'GET'\n+    converted_method = builtin_str(method)\n+    assert converted_method == 'GET'\n",
+    "patch_sha256": "3a19d787e7147bf218bc758270ac8b3a6be42708fe8660843c900bb9201f47a4"
+  }
+]

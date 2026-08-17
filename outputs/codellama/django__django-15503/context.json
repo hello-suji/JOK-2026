@@ -1,0 +1,641 @@
+{
+  "instance_id": "django__django-15503",
+  "repo": "django/django",
+  "base_commit": "859a87d873ce7152af73ab851653b4e1c3ffea4c",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/tests.py",
+      "score": 27,
+      "matched_identifiers": [
+        "Files/Projects/Electaco/Webservice/elecserve/markers/tests.py",
+        "assertequal",
+        "default",
+        "found",
+        "name"
+      ],
+      "reasons": [
+        "file_hint_match:Files/Projects/Electaco/Webservice/elecserve/markers/tests.py",
+        "stem_in_issue_text:tests",
+        "source_content_tokens:assertequal,default,found,name,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CSPMiddleware.process_response",
+        "AdminSeleniumTestCase.wait_until",
+        "AdminSeleniumTestCase.wait_for_and_switch_to_popup",
+        "AdminSeleniumTestCase.wait_for",
+        "AdminSeleniumTestCase.wait_for_text",
+        "AdminSeleniumTestCase.wait_for_value",
+        "AdminSeleniumTestCase.wait_until_visible",
+        "AdminSeleniumTestCase.wait_until_invisible",
+        "AdminSeleniumTestCase.wait_page_ready",
+        "AdminSeleniumTestCase.wait_page_loaded",
+        "AdminSeleniumTestCase.admin_login",
+        "AdminSeleniumTestCase.select_option",
+        "AdminSeleniumTestCase.deselect_option",
+        "AdminSeleniumTestCase.assertCountSeleniumElements",
+        "AdminSeleniumTestCase.assertSelectOptions",
+        "AdminSeleniumTestCase.assertSelectedOptions",
+        "AdminSeleniumTestCase.has_css_class"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/models.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "default",
+        "name",
+        "save",
+        "self"
+      ],
+      "reasons": [
+        "function_match:save",
+        "stem_in_issue_text:models",
+        "source_content_tokens:backends,default,name,self,backend"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "save": "    def save(self):\n        raise NotImplementedError(\n            \"Django doesn't provide a DB representation for AnonymousUser.\"\n        )\n\n    def delete(self):\n        raise NotImplementedError(\n            \"Django doesn't provide a DB representation for AnonymousUser.\"\n        )\n\n    def set_password(self, raw_password):\n        raise NotImplementedError(\n            \"Django doesn't provide a DB representation for AnonymousUser.\"\n        )\n"
+      },
+      "top_level_functions": [
+        "update_last_login",
+        "PermissionManager.get_by_natural_key",
+        "Permission.natural_key",
+        "GroupManager.get_by_natural_key",
+        "Group.natural_key",
+        "UserManager.create_user",
+        "UserManager.create_superuser",
+        "UserManager.with_perm",
+        "PermissionsMixin.get_user_permissions",
+        "PermissionsMixin.get_group_permissions",
+        "PermissionsMixin.get_all_permissions",
+        "PermissionsMixin.has_perm",
+        "PermissionsMixin.has_perms",
+        "PermissionsMixin.has_module_perms",
+        "AbstractUser.clean",
+        "AbstractUser.get_full_name",
+        "AbstractUser.get_short_name",
+        "AbstractUser.email_user",
+        "AnonymousUser.save",
+        "AnonymousUser.delete",
+        "AnonymousUser.set_password",
+        "AnonymousUser.check_password",
+        "AnonymousUser.groups",
+        "AnonymousUser.user_permissions",
+        "AnonymousUser.get_user_permissions",
+        "AnonymousUser.get_group_permissions",
+        "AnonymousUser.get_all_permissions",
+        "AnonymousUser.has_perm",
+        "AnonymousUser.has_perms",
+        "AnonymousUser.has_module_perms",
+        "AnonymousUser.is_anonymous",
+        "AnonymousUser.is_authenticated",
+        "AnonymousUser.get_username"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "default",
+        "name",
+        "save",
+        "self"
+      ],
+      "reasons": [
+        "function_match:save",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,default,name,self,backend"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "save": "    def save(self, must_create=False):\n        \"\"\"\n        Save the session data. If 'must_create' is True, create a new session\n        object (or raise CreateError). Otherwise, only update an existing\n        object and don't create one (raise UpdateError if needed).\n        \"\"\"\n        raise NotImplementedError(\n            \"subclasses of SessionBase must provide a save() method\"\n        )\n\n    def delete(self, session_key=None):\n        \"\"\"\n        Delete the session data under this key. If the key is None, use the\n        current session key value.\n        \"\"\""
+      },
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/file.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "found",
+        "name",
+        "save",
+        "self"
+      ],
+      "reasons": [
+        "function_match:save",
+        "stem_in_issue_text:file",
+        "source_content_tokens:backends,found,name,self,additional"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "save": "    def save(self, must_create=False):\n        if self.session_key is None:\n            return self.create()\n        # Get the session data now, before we start messing\n        # with the file it is stored within.\n        session_data = self._get_session(no_load=must_create)\n\n        session_file_name = self._key_to_file()\n\n        try:\n            # Make sure the file exists.  If it does not already exist, an\n            # empty placeholder file is created.\n            flags = os.O_WRONLY | getattr(os, \"O_BINARY\", 0)\n            if must_create:\n                flags |= os.O_EXCL | os.O_CREAT"
+      },
+      "top_level_functions": [
+        "SessionStore.load",
+        "SessionStore.create",
+        "SessionStore.save",
+        "SessionStore.exists",
+        "SessionStore.delete",
+        "SessionStore.clean",
+        "SessionStore.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/serializers/base.py",
+      "score": 22,
+      "matched_identifiers": [
+        "backends",
+        "default",
+        "found",
+        "name",
+        "save"
+      ],
+      "reasons": [
+        "function_match:save",
+        "stem_in_issue_text:base",
+        "source_content_tokens:backends,default,found,name,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "save": "    def save(self, save_m2m=True, using=None, **kwargs):\n        # Call save on the Model baseclass directly. This bypasses any\n        # model-defined save. The save is also forced to be raw.\n        # raw=True is passed to any pre/post_save signals.\n        models.Model.save_base(self.object, using=using, raw=True, **kwargs)\n        if self.m2m_data and save_m2m:\n            for accessor_name, object_list in self.m2m_data.items():\n                getattr(self.object, accessor_name).set(object_list)\n\n        # prevent a second (possibly accidental) call to save() from saving\n        # the m2m data twice.\n        self.m2m_data = None\n\n    def save_deferred_fields(self, using=None):\n        self.m2m_data = {}"
+      },
+      "top_level_functions": [
+        "PickleSerializer.dumps",
+        "PickleSerializer.loads",
+        "DeserializationError.WithData",
+        "ProgressBar.update",
+        "Serializer.serialize",
+        "Serializer.start_serialization",
+        "Serializer.end_serialization",
+        "Serializer.start_object",
+        "Serializer.end_object",
+        "Serializer.handle_field",
+        "Serializer.handle_fk_field",
+        "Serializer.handle_m2m_field",
+        "Serializer.getvalue",
+        "DeserializedObject.save",
+        "DeserializedObject.save_deferred_fields",
+        "build_instance",
+        "deserialize_m2m_values",
+        "deserialize_fk_value"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/save_delete_hooks/models.py",
+      "score": 25,
+      "matched_identifiers": [
+        "JsonFieldHasKeyTest",
+        "JsonFieldHasKeyTestCase",
+        "TestCase",
+        "save"
+      ],
+      "reasons": [
+        "test_function_match:save",
+        "test_path_contains_function:save",
+        "test_path_related_to_class:JsonFieldHasKeyTest",
+        "test_path_related_to_class:JsonFieldHasKeyTestCase",
+        "test_path_related_to_class:TestCase",
+        "test_name_matches_source_stem:models",
+        "token_overlap:save",
+        "internal_name_overlap:save",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_models.py",
+      "score": 22,
+      "matched_identifiers": [
+        "JsonFieldHasKeyTest",
+        "JsonFieldHasKeyTestCase",
+        "TestCase",
+        "setUp"
+      ],
+      "reasons": [
+        "test_function_match:setUp",
+        "test_path_related_to_class:JsonFieldHasKeyTest",
+        "test_path_related_to_class:JsonFieldHasKeyTestCase",
+        "test_path_related_to_class:TestCase",
+        "test_name_matches_source_stem:models",
+        "token_overlap:auth",
+        "internal_name_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/sqlite/tests.py",
+      "score": 22,
+      "matched_identifiers": [
+        "JsonFieldHasKeyTest",
+        "JsonFieldHasKeyTestCase",
+        "SQLite",
+        "TestCase"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SQLite",
+        "test_path_related_to_class:JsonFieldHasKeyTest",
+        "test_path_related_to_class:JsonFieldHasKeyTestCase",
+        "test_path_related_to_class:TestCase",
+        "test_name_matches_source_stem:tests",
+        "token_overlap:backends,lite",
+        "internal_name_overlap:field",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/tests.py",
+      "score": 22,
+      "matched_identifiers": [
+        "JsonFieldHasKeyTest",
+        "JsonFieldHasKeyTestCase",
+        "TestCase",
+        "setUp"
+      ],
+      "reasons": [
+        "test_function_match:setUp",
+        "test_path_related_to_class:JsonFieldHasKeyTest",
+        "test_path_related_to_class:JsonFieldHasKeyTestCase",
+        "test_path_related_to_class:TestCase",
+        "test_name_matches_source_stem:tests",
+        "token_overlap:backends",
+        "internal_name_overlap:case",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sessions_tests/tests.py",
+      "score": 22,
+      "matched_identifiers": [
+        "JsonFieldHasKeyTest",
+        "JsonFieldHasKeyTestCase",
+        "TestCase",
+        "setUp"
+      ],
+      "reasons": [
+        "test_function_match:setUp",
+        "test_path_related_to_class:JsonFieldHasKeyTest",
+        "test_path_related_to_class:JsonFieldHasKeyTestCase",
+        "test_path_related_to_class:TestCase",
+        "test_name_matches_source_stem:tests",
+        "token_overlap:sessions",
+        "internal_name_overlap:field",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sessions_tests/tests.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_models.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_models.py:testcase_class:AbstractUserTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:IsActiveTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithNaturalKeysAndMultipleDatabasesTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithNaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithoutNaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:NaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:TestCreateSuperUserSignals",
+      "tests/auth_tests/test_models.py:testcase_class:UserManagerTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:UserWithPermTestCase",
+      "tests/backends/tests.py:unittest_or_django_test_import",
+      "tests/backends/tests.py:testcase_class:BackendTestCase",
+      "tests/backends/tests.py:testcase_class:DBConstraintTestCase",
+      "tests/backends/sqlite/tests.py:unittest_or_django_test_import",
+      "tests/backends/sqlite/tests.py:testcase_class:Tests"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2742,
+  "indexed_test_file_count": 1875,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.sessions_tests.tests": [
+      "CacheDBSessionTests",
+      "CacheDBSessionWithTimeZoneTests",
+      "CacheSessionTests",
+      "ClearSessionsCommandTests",
+      "CookieSessionTests",
+      "CustomDatabaseSessionTests",
+      "DatabaseSessionTests",
+      "DatabaseSessionWithTimeZoneTests",
+      "FileSessionPathLibTests",
+      "FileSessionTests",
+      "SessionMiddlewareTests",
+      "SessionTestsMixin"
+    ],
+    "tests.auth_tests.test_models": [
+      "AbstractBaseUserTests",
+      "AbstractUserTestCase",
+      "AnonymousUserTests",
+      "CustomModelBackend",
+      "GroupTests",
+      "IsActiveTestCase",
+      "LoadDataWithNaturalKeysAndMultipleDatabasesTestCase",
+      "LoadDataWithNaturalKeysTestCase",
+      "LoadDataWithoutNaturalKeysTestCase",
+      "NaturalKeysTestCase",
+      "PermissionTests",
+      "TestCreateSuperUserSignals",
+      "UserManagerTestCase",
+      "UserWithPermTestCase"
+    ],
+    "tests.backends.tests": [
+      "BackendTestCase",
+      "ConnectionCreatedSignalTest",
+      "DBConstraintTestCase",
+      "DateQuotingTest",
+      "EscapingChecks",
+      "EscapingChecksDebug",
+      "FkConstraintsTests",
+      "LastExecutedQueryTest",
+      "LongNameTest",
+      "MySQLPKZeroTests",
+      "ParameterHandlingTest",
+      "SequenceResetTest",
+      "ThreadTests"
+    ],
+    "tests.save_delete_hooks.models": [
+      "Person"
+    ],
+    "tests.backends.sqlite.tests": [
+      "EscapingChecks",
+      "EscapingChecksDebug",
+      "LastExecutedQueryTest",
+      "SchemaTests",
+      "Tests",
+      "ThreadSharing"
+    ],
+    "django.test.testcases": [
+      "CheckCondition",
+      "DatabaseOperationForbidden",
+      "FSFilesHandler",
+      "LiveServerTestCase",
+      "LiveServerThread",
+      "QuietWSGIRequestHandler",
+      "SerializeMixin",
+      "SimpleTestCase",
+      "TestCase",
+      "TestData",
+      "TransactionTestCase",
+      "_AssertNumQueriesContext",
+      "_AssertTemplateNotUsedContext",
+      "_AssertTemplateUsedContext",
+      "_DatabaseFailure",
+      "_MediaFilesHandler",
+      "_StaticFilesHandler",
+      "_deferredSkip",
+      "assert_and_parse_html",
+      "connections_support_transactions",
+      "skipIfDBFeature",
+      "skipUnlessAnyDBFeature",
+      "skipUnlessDBFeature",
+      "to_list"
+    ],
+    "django.forms.fields": [
+      "BaseTemporalField",
+      "BooleanField",
+      "CallableChoiceIterator",
+      "CharField",
+      "ChoiceField",
+      "ComboField",
+      "DateField",
+      "DateTimeField",
+      "DateTimeFormatsIterator",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Field",
+      "FileField",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "ImageField",
+      "IntegerField",
+      "InvalidJSONInput",
+      "JSONField",
+      "JSONString",
+      "MultiValueField",
+      "MultipleChoiceField",
+      "NullBooleanField",
+      "RegexField",
+      "SlugField",
+      "SplitDateTimeField",
+      "TimeField",
+      "TypedChoiceField",
+      "TypedMultipleChoiceField",
+      "URLField",
+      "UUIDField"
+    ],
+    "django.contrib.admin.tests": [
+      "AdminSeleniumTestCase",
+      "CSPMiddleware"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.models": [
+      "AbstractUser",
+      "AnonymousUser",
+      "Group",
+      "GroupManager",
+      "Permission",
+      "PermissionManager",
+      "PermissionsMixin",
+      "User",
+      "UserManager",
+      "_user_get_permissions",
+      "_user_has_module_perms",
+      "_user_has_perm",
+      "update_last_login"
+    ],
+    "django.contrib.postgres.fields.jsonb": [
+      "JSONField"
+    ],
+    "django.contrib.sessions.backends.file": [
+      "SessionStore"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.core.serializers.base": [
+      "DeserializationError",
+      "DeserializedObject",
+      "Deserializer",
+      "M2MDeserializationError",
+      "PickleSerializer",
+      "ProgressBar",
+      "SerializationError",
+      "Serializer",
+      "SerializerDoesNotExist",
+      "build_instance",
+      "deserialize_fk_value",
+      "deserialize_m2m_values"
+    ],
+    "django.core.serializers": [
+      "BadSerializer",
+      "_load_serializers",
+      "deserialize",
+      "get_deserializer",
+      "get_public_serializer_formats",
+      "get_serializer",
+      "get_serializer_formats",
+      "register_serializer",
+      "serialize",
+      "sort_dependencies",
+      "unregister_serializer"
+    ],
+    "django.core": [
+      "SerializerDoesNotExist",
+      "apps",
+      "settings"
+    ],
+    "django.db.models.fields.json": [
+      "CaseInsensitiveMixin",
+      "ContainedBy",
+      "DataContains",
+      "HasAnyKeys",
+      "HasKey",
+      "HasKeyLookup",
+      "HasKeys",
+      "JSONExact",
+      "JSONField",
+      "JSONIContains",
+      "KeyTextTransform",
+      "KeyTransform",
+      "KeyTransformEndsWith",
+      "KeyTransformExact",
+      "KeyTransformFactory",
+      "KeyTransformGt",
+      "KeyTransformGte",
+      "KeyTransformIContains",
+      "KeyTransformIEndsWith",
+      "KeyTransformIExact",
+      "KeyTransformIRegex",
+      "KeyTransformIStartsWith",
+      "KeyTransformIn",
+      "KeyTransformIsNull",
+      "KeyTransformLt",
+      "KeyTransformLte",
+      "KeyTransformNumericLookupMixin",
+      "KeyTransformRegex",
+      "KeyTransformStartsWith",
+      "KeyTransformTextLookupMixin",
+      "compile_json_path"
+    ]
+  },
+  "test_example_snippet": "class TestCreateSuperUserSignals(TestCase):\n    \"\"\"\n    Simple test case for ticket #20541\n    \"\"\"\n\n    def post_save_listener(self, *args, **kwargs):\n        self.signals_count += 1\n\n    def setUp(self):\n        self.signals_count = 0\n        post_save.connect(self.post_save_listener, sender=User)\n\n    def tearDown(self):\n        post_save.disconnect(self.post_save_listener, sender=User)\n\n    def test_create_user(self):\n        User.objects.create_user(\"JohnDoe\")\n        self.assertEqual(self.signals_count, 1)\n\n    def test_create_superuser(self):\n        User.objects.create_superuser(\"JohnDoe\", \"mail@example.com\", \"1\")\n        self.assertEqual(self.signals_count, 1)\n\n\nclass AnonymousUserTests(SimpleTestCase):\n    no_repr_msg = \"Django doesn't provide a DB representation for AnonymousUser.\"\n\n    def setUp(self):\n        self.user = AnonymousUser()\n\n    def test_properties(self):\n        self.assertIsNone(self.user.pk)\n        self.assertEqual(self.user.username, \"\")\n        self.assertEqual(self.user.get_username(), \"\")\n        self.assertIs(self.user.is_anonymous, True)",
+  "conftest_fixtures": {}
+}

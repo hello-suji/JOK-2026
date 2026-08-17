@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-23534",
+    "model_patch": "--- a/sympy/diffgeom/tests/test_function_diffgeom_book.py\n+++ b/sympy/diffgeom/tests/test_function_diffgeom_book.py\n@@ -143,3 +143,8 @@\n     expr = dtheta - WedgeProduct(\n         da, R3_r.dx) - WedgeProduct(db, R3_r.dy) - WedgeProduct(dc, R3_r.dz)\n     assert expr.rcall(R3_r.e_x, R3_r.e_y) == 0\n+\n+def test_symbols_with_extra_parentheses_creates_functions_repro():\n+    q, u = symbols(('q:2', 'u:2'), cls=Function)\n+    assert isinstance(q[0], Function)\n+    assert isinstance(u[0], Function)\n",
+    "patch_sha256": "765f7626fcd26a6e60452733fb402b0c94c4d891199ea1d1d540d65713baf73d"
+  }
+]

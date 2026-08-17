@@ -1,0 +1,19 @@
+from django.contrib import admin
+
+
+class CustomAdminSite(admin.AdminSite):
+    pass
+
+from django.test import TestCase, SimpleTestCase
+from django.contrib.admin.sites import AdminSite
+from django.http import HttpRequest, HttpResponsePermanentRedirect
+
+class TestAdminSiteCatchAllView(TestCase):
+    def test_catch_all_view_preserves_query_string_repro(self):
+        admin_site = AdminSite()
+        request = HttpRequest()
+        request.path_info = '/admin/auth/foo'
+        request.GET = {'id': '123'}
+        response = admin_site.catch_all_view(request, 'auth', 'foo')
+        self.assertIsInstance(response, HttpResponsePermanentRedirect)
+        self.assertEqual(response.url, '/admin/auth/foo/?id=123/')

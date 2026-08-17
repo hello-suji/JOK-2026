@@ -1,0 +1,295 @@
+[
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "src/_pytest/setuponly.py",
+      "target_function": "_show_fixture_action",
+      "related_classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "candidate_test_file": "testing/python/show_fixtures_per_test.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import pytest module",
+      "Define a test function with a parametrized byte string argument",
+      "Use the generated reproduction path that calls _show_fixture_action, makepyfile, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest with --setup-show and -bb flags",
+      "Execute the focused target API path: _show_fixture_action, makepyfile, runpytest."
+    ],
+    "expected_failure": "BytesWarning is raised due to str() on a bytes instance",
+    "relevant_source_files": [
+      "src/_pytest/fixtures.py",
+      "src/_pytest/runner.py",
+      "src/_pytest/setuponly.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/show_fixtures_per_test.py",
+      "testing/test_setuponly.py",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_in_show_fixture_action_repro(pytester: Pytester) -> None:\n    pytester.makepyfile(\n        \"\"\"\n        import pytest\n        @pytest.mark.parametrize('data', [b'Hello World'])\n        def test_data_repro(data):\n            pass\n        \"\"\"\n    )\n    result = pytester.runpytest('-bb', '--setup-show')\n    assert result.ret == 0\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'BytesWarning: str() on a bytes instance'"
+      },
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_with_setup_show():\n    import pytest\n    @pytest.mark.parametrize('data', [b'Hello World'])\n    def test_data(data):\n        pass\n    pytest.main(['-bb', '--setup-show', '-k', 'test_data'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "BytesWarning: str() on a bytes instance"
+    ],
+    "error_keywords": [
+      "BytesWarning"
+    ],
+    "identifiers": {
+      "functions": [
+        "pytest_fixture_setup",
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/show_fixtures_per_test.py",
+      "target_source_file": "src/_pytest/setuponly.py",
+      "test_visible_functions": [
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "test_visible_classes": [
+        "BytesWarning",
+        "Hello",
+        "World"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "src/_pytest/setuponly.py",
+      "target_function": "_show_fixture_action",
+      "related_classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "candidate_test_file": "testing/python/show_fixtures_per_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import pytest module",
+      "Define a test function with a parametrized byte string argument",
+      "Use the generated reproduction path that calls _show_fixture_action, makepyfile, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest with --setup-show and -bb flags",
+      "Execute the focused target API path: _show_fixture_action, makepyfile, runpytest."
+    ],
+    "expected_failure": "BytesWarning is raised due to str() on a bytes instance",
+    "relevant_source_files": [
+      "src/_pytest/fixtures.py",
+      "src/_pytest/runner.py",
+      "src/_pytest/setuponly.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/show_fixtures_per_test.py",
+      "testing/test_setuponly.py",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_in_show_fixture_action_repro(pytester: Pytester) -> None:\n    pytester.makepyfile(\n        \"\"\"\n        import pytest\n        @pytest.mark.parametrize('data', [b'Hello World'])\n        def test_data_repro(data):\n            pass\n        \"\"\"\n    )\n    result = pytester.runpytest('-bb', '--setup-show')\n    assert result.ret == 0\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'BytesWarning: str() on a bytes instance'"
+      },
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_in_get_active_fixturedef():\n    import pytest\n    @pytest.mark.parametrize('data', [b'Hello World'])\n    def test_data(data):\n        pass\n    pytest.main(['-bb', '--setup-show', '-k', 'test_data'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "BytesWarning: str() on a bytes instance"
+    ],
+    "error_keywords": [
+      "BytesWarning"
+    ],
+    "identifiers": {
+      "functions": [
+        "_get_active_fixturedef",
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/show_fixtures_per_test.py",
+      "target_source_file": "src/_pytest/setuponly.py",
+      "test_visible_functions": [
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "test_visible_classes": [
+        "BytesWarning",
+        "Hello",
+        "World"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "src/_pytest/setuponly.py",
+      "target_function": "_show_fixture_action",
+      "related_classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "candidate_test_file": "testing/python/show_fixtures_per_test.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import pytest module",
+      "Define a test function with a parametrized byte string argument",
+      "Use the generated reproduction path that calls _show_fixture_action, makepyfile, runpytest."
+    ],
+    "execution_stimulus": [
+      "Run pytest with --setup-show and -bb flags",
+      "Execute the focused target API path: _show_fixture_action, makepyfile, runpytest."
+    ],
+    "expected_failure": "BytesWarning is raised due to str() on a bytes instance",
+    "relevant_source_files": [
+      "src/_pytest/fixtures.py",
+      "src/_pytest/runner.py",
+      "src/_pytest/setuponly.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/show_fixtures_per_test.py",
+      "testing/test_setuponly.py",
+      "testing/example_scripts/fixtures/fill_fixtures/test_funcarg_basic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_in_show_fixture_action_repro(pytester: Pytester) -> None:\n    pytester.makepyfile(\n        \"\"\"\n        import pytest\n        @pytest.mark.parametrize('data', [b'Hello World'])\n        def test_data_repro(data):\n            pass\n        \"\"\"\n    )\n    result = pytester.runpytest('-bb', '--setup-show')\n    assert result.ret == 0\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'BytesWarning: str() on a bytes instance'"
+      },
+      {
+        "language": "python",
+        "code": "def test_bytes_warning_in_show_fixture_action():\n    import pytest\n    @pytest.mark.parametrize('data', [b'Hello World'])\n    def test_data(data):\n        pass\n    pytest.main(['-bb', '--setup-show', '-k', 'test_data'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "BytesWarning: str() on a bytes instance"
+    ],
+    "error_keywords": [
+      "BytesWarning"
+    ],
+    "identifiers": {
+      "functions": [
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "classes": [
+        "FixtureDef",
+        "BytesWarning",
+        "Hello",
+        "World"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/show_fixtures_per_test.py",
+      "target_source_file": "src/_pytest/setuponly.py",
+      "test_visible_functions": [
+        "_show_fixture_action",
+        "makepyfile",
+        "runpytest"
+      ],
+      "test_visible_classes": [
+        "BytesWarning",
+        "Hello",
+        "World"
+      ]
+    }
+  }
+]

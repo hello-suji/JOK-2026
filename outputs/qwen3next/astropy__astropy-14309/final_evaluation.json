@@ -1,0 +1,14 @@
+{
+  "instance_id": "astropy__astropy-14309",
+  "final_score": 1.0,
+  "before_patch": {
+    "astropy__astropy-14309::qwen_external_sync": "FAILED"
+  },
+  "after_patch": {
+    "astropy__astropy-14309::qwen_external_sync": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "b4ebdb792e118ebc27f0a82c35584d87195b14114fcd66b57a13dfd5773cc728",
+  "resolved": true
+}

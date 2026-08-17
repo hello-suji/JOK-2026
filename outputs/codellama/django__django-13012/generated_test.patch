@@ -1,0 +1,16 @@
+--- a/tests/expressions/test_queryset_values.py
++++ b/tests/expressions/test_queryset_values.py
+@@ -59,3 +59,13 @@
+     def test_values_list_expression_gate_flat_gate(self):
+         companies = Company.objects.values_list(F('ceo__salary'), flat=True)
+         self.assertSequenceEqual(companies, (10, 20, 30))
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import Value, IntegerField, ExpressionWrapper
++
++
++class TestExpressionWrapperGroupByIssue(TestCase):
++    def test_exec_query_with_constant_expression_repro(self):
++        expr = ExpressionWrapper(Value(3), output_field=IntegerField())
++        result = Company.objects.annotate(expr_res=expr).values('expr_res', 'name').annotate(sum=Sum('num_employees'))
++        self.assertIsNotNone(result)

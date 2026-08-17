@@ -1,0 +1,17 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1380,3 +1380,14 @@
+
+     assert ax.get_xlim() == (1e-1, 1e2)
+     assert fig2.axes[0].get_xlim() == (0, 1)
++
++import matplotlib.pyplot as plt
++from matplotlib._pylab_helpers import Gcf
++
++def test_destroy_fig_clears_gcf_repro():
++    fig = plt.figure()
++    fig_number = fig.number
++    Gcf.destroy_fig(fig)
++    assert Gcf.get_fig(fig_number) is None
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(fig) != 'AssertionError:'

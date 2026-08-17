@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/symbol.py",
+      "target_function": "srepr",
+      "related_classes": [
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_symbol.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where srepr can be called.",
+      "Use the generated reproduction path that calls srepr, x, y."
+    ],
+    "execution_stimulus": [
+      "Call srepr with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: srepr, x, y."
+    ],
+    "expected_failure": "However, `srepr` prints the elements in `dict` and `set` wrong.",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/printing/repr.py",
+      "sympy/printing/pretty/pretty_symbology.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_symbol.py",
+      "sympy/printing/tests/test_repr.py",
+      "sympy/printing/pretty/tests/test_pretty.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": ">>> from sympy import srepr\n>>> from sympy.abc import x,y\n>>> srepr([x,y])\n[Symbol('x'), Symbol('y')]\n>>> srepr((x,y))\n(Symbol('x'), Symbol('y'))"
+      },
+      {
+        "language": "python",
+        "code": ">>> srepr({x, y})\n{x, y}\n>>> srepr({x: y})\n{x: y}"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import srepr\nfrom sympy.abc import x, y\n\ndef test_srepr_dict_set_repro():\n    assert srepr({x, y}) == \"FiniteSet(Symbol('x'), Symbol('y'))\"\n    assert srepr({x: y}) == \"{Symbol('x'): Symbol('y')}\""
+      }
+    ],
+    "expected_outputs": [
+      "[Symbol('x'), Symbol('y')]\n(Symbol('x'), Symbol('y'))"
+    ],
+    "actual_outputs": [
+      "{x, y}\n{x: y}"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "srepr",
+        "x",
+        "y"
+      ],
+      "classes": [
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_symbol.py",
+      "target_source_file": "sympy/core/symbol.py",
+      "test_visible_functions": [
+        "srepr",
+        "x",
+        "y"
+      ],
+      "test_visible_classes": [
+        "Symbol"
+      ]
+    }
+  }
+]

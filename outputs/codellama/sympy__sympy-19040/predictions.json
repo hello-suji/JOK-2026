@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-19040",
+    "model_patch": "--- a/sympy/core/tests/test_expr.py\n+++ b/sympy/core/tests/test_expr.py\n@@ -2102,3 +2102,12 @@\n\n     assert (x == BadRepr()) is False\n     assert (x != BadRepr()) is True\n+\n+def test_factor_extension_bug_repro():\n+    from sympy import symbols, expand, factor\n+    x, y = symbols('x y')\n+    z = expand((x-1)*(y-1))\n+    result = factor(z, extension=[I])\n+    assert result == (x - 1)*(y - 1)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != 'x - 1'\n",
+    "patch_sha256": "556e7a3aca1ded8d864158eff3996f55fddfe11adfe5df8208974327c7cdcee2"
+  }
+]

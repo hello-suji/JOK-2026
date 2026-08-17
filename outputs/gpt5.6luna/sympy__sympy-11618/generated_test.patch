@@ -1,0 +1,15 @@
+--- a/sympy/geometry/tests/test_point.py
++++ b/sympy/geometry/tests/test_point.py
+@@ -260,3 +260,12 @@
+     p3, p4 = Point(0, 1), Point(-1, 2)
+     assert Point.is_concyclic(p1, p2, p3)
+     assert not Point.is_concyclic(p1, p2, p3, p4)
++
++def test_distance_considers_third_dimension_repro():
++    p1 = Point(2, 0)
++    p2 = Point(1, 0, 2)
++    result = p1.distance(p2)
++    assert result != 1
++    assert result == sqrt(5)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != '1'

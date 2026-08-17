@@ -1,0 +1,102 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "requests/sessions.py",
+      "target_function": "prepare_request",
+      "related_classes": [
+        "Accept",
+        "Do",
+        "Encoding",
+        "Session",
+        "Request"
+      ],
+      "candidate_test_file": "test_requests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls prepare_request."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: prepare_request."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "requests/sessions.py",
+      "docs/conf.py",
+      "requests/adapters.py"
+    ],
+    "relevant_test_files": [
+      "test_requests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "session = requests.Session()\n# Do not send Accept-Encoding\nsession.headers['Accept-Encoding'] = None"
+      },
+      {
+        "language": "python",
+        "code": "Accept-Encoding: None"
+      },
+      {
+        "language": "python",
+        "code": "del session.headers['Accept-Encoding']"
+      },
+      {
+        "language": "python",
+        "code": "def test_session_remove_accept_encoding_header_repro():\n    session = requests.Session()\n    # Do not send Accept-Encoding\n    session.headers['Accept-Encoding'] = None\n    prepared_request = session.prepare_request(requests.Request('GET', 'http://example.com'))\n    assert 'Accept-Encoding' not in prepared_request.headers"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "prepare_request"
+      ],
+      "classes": [
+        "Accept",
+        "Do",
+        "Encoding",
+        "Session",
+        "Request"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "test_requests.py",
+      "target_source_file": "requests/sessions.py",
+      "test_visible_functions": [
+        "prepare_request"
+      ],
+      "test_visible_classes": [
+        "Accept",
+        "Do",
+        "Encoding",
+        "Session",
+        "Request"
+      ]
+    }
+  }
+]

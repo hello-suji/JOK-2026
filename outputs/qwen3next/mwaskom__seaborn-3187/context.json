@@ -1,0 +1,408 @@
+{
+  "instance_id": "mwaskom__seaborn-3187",
+  "repo": "mwaskom/seaborn",
+  "base_commit": "22cdfb0c93f8ec78492d87edb810f10cb7f57a31",
+  "repo_path": "data/repos/mwaskom__seaborn",
+  "candidate_source_files": [
+    {
+      "path": "seaborn/_core/scales.py",
+      "score": 37,
+      "matched_identifiers": [
+        "_core",
+        "color",
+        "formatter",
+        "scalarformatter",
+        "seaborn/_core/scales.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:seaborn/_core/scales.py",
+        "stem_in_issue_text:scales",
+        "source_content_tokens:scalarformatter,formatter,_core,color,formatters"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Scale.tick",
+        "Scale.label",
+        "Nominal.tick",
+        "Nominal.label",
+        "Continuous.tick",
+        "Continuous.label",
+        "Temporal.tick",
+        "Temporal.label",
+        "PseudoAxis.set_view_interval",
+        "PseudoAxis.get_view_interval",
+        "PseudoAxis.set_data_interval",
+        "PseudoAxis.get_data_interval",
+        "PseudoAxis.get_tick_space",
+        "PseudoAxis.set_major_locator",
+        "PseudoAxis.set_major_formatter",
+        "PseudoAxis.set_minor_locator",
+        "PseudoAxis.set_minor_formatter",
+        "PseudoAxis.set_units",
+        "PseudoAxis.update_units",
+        "PseudoAxis.convert_units",
+        "PseudoAxis.get_scale",
+        "PseudoAxis.get_majorticklocs"
+      ]
+    },
+    {
+      "path": "seaborn/_core/plot.py",
+      "score": 28,
+      "matched_identifiers": [
+        "Plot",
+        "add",
+        "axes",
+        "formatter",
+        "length",
+        "rcparams"
+      ],
+      "reasons": [
+        "function_match:add",
+        "class_match:Plot",
+        "path_contains_class:Plot",
+        "stem_in_issue_text:plot",
+        "source_content_tokens:axes,formatter,length,rcparams,_core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Plot": "class Plot:\n    \"\"\"\n    An interface for declaratively specifying statistical graphics.\n\n    Plots are constructed by initializing this class and adding one or more\n    layers, comprising a `Mark` and optional `Stat` or `Move`.  Additionally,\n    faceting variables or variable pairings may be defined to divide the space\n    into multiple subplots. The mappings from data values to visual properties\n    can be parametrized using scales, although the plot will try to infer good\n    defaults when scales are not explicitly defined.\n\n    The constructor accepts a data source (a :class:`pandas.DataFrame` or\n    dictionary with columnar values) and variable assignments. Variables can be\n    passed as keys to the data source or directly as data vectors.  If multiple\n    data-containing objects are provided, they will be index-aligned.",
+        "add": "    def add(\n        self,\n        mark: Mark,\n        *transforms: Stat | Mark,\n        orient: str | None = None,\n        legend: bool = True,\n        data: DataSource = None,\n        **variables: VariableSpec,\n    ) -> Plot:\n        \"\"\"\n        Specify a layer of the visualization in terms of mark and data transform(s).\n\n        This is the main method for specifying how the data should be visualized.\n        It can be called multiple times with different arguments to define\n        a plot with multiple layers."
+      },
+      "top_level_functions": [
+        "theme_context",
+        "build_plot_signature",
+        "Plot.on",
+        "Plot.add",
+        "Plot.pair",
+        "Plot.facet",
+        "Plot.scale",
+        "Plot.share",
+        "Plot.limit",
+        "Plot.label",
+        "Plot.layout",
+        "Plot.theme",
+        "Plot.save",
+        "Plot.show",
+        "Plot.plot",
+        "Plotter.save",
+        "Plotter.show"
+      ]
+    },
+    {
+      "path": "seaborn/utils.py",
+      "score": 21,
+      "matched_identifiers": [
+        "axes",
+        "formatter",
+        "load_dataset",
+        "offset",
+        "scalarformatter"
+      ],
+      "reasons": [
+        "function_match:load_dataset",
+        "source_content_tokens:scalarformatter,axes,formatter,offset,penguins"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "load_dataset": "def load_dataset(name, cache=True, data_home=None, **kws):\n    \"\"\"Load an example dataset from the online repository (requires internet).\n\n    This function provides quick access to a small number of example datasets\n    that are useful for documenting seaborn or generating reproducible examples\n    for bug reports. It is not necessary for normal usage.\n\n    Note that some of the datasets have a small amount of preprocessing applied\n    to define a proper ordering for categorical variables.\n\n    Use :func:`get_dataset_names` to see a list of available datasets.\n\n    Parameters\n    ----------\n    name : str"
+      },
+      "top_level_functions": [
+        "ci_to_errsize",
+        "desaturate",
+        "saturate",
+        "set_hls_values",
+        "axlabel",
+        "remove_na",
+        "get_color_cycle",
+        "despine",
+        "move_legend",
+        "ci",
+        "get_dataset_names",
+        "get_data_home",
+        "load_dataset",
+        "axis_ticklabels_overlap",
+        "axes_ticklabels_overlap",
+        "locator_to_legend_entries",
+        "relative_luminance",
+        "to_utf8",
+        "adjust_legend_subtitles"
+      ]
+    },
+    {
+      "path": "seaborn/_marks/dot.py",
+      "score": 20,
+      "matched_identifiers": [
+        "Dot",
+        "_core",
+        "color",
+        "offset",
+        "scatterplot"
+      ],
+      "reasons": [
+        "class_match:Dot",
+        "path_contains_class:Dot",
+        "source_content_tokens:offset,scatterplot,_core,color,example"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Dot": "class Dot(DotBase):\n    \"\"\"\n    A mark suitable for dot plots or less-dense scatterplots.\n\n    See also\n    --------\n    Dots : A dot mark defined by strokes to better handle overplotting.\n\n    Examples\n    --------\n    .. include:: ../docstrings/objects.Dot.rst\n\n    \"\"\"\n    marker: MappableString = Mappable(\"o\", grouping=False)\n    pointsize: MappableFloat = Mappable(6, grouping=False)  # TODO rcParam?"
+      },
+      "top_level_functions": []
+    },
+    {
+      "path": "examples/grouped_barplot.py",
+      "score": 18,
+      "matched_identifiers": [
+        "body",
+        "body_mass_g",
+        "mass",
+        "penguins"
+      ],
+      "reasons": [
+        "path_contains_class:Plot",
+        "source_content_tokens:body,body_mass_g,mass,penguins,species"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/_core/test_plot.py",
+      "score": 18,
+      "matched_identifiers": [
+        "Plot"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Plot",
+        "inferred_test_dir_match:tests/_core",
+        "test_name_matches_source_stem:plot",
+        "token_overlap:plot",
+        "internal_name_overlap:plot",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_scales.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "test_name_matches_source_stem:scales",
+        "token_overlap:scales",
+        "internal_name_overlap:formatter",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_subplots.py",
+      "score": 12,
+      "matched_identifiers": [
+        "Plot"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Plot",
+        "inferred_test_dir_match:tests/_core",
+        "token_overlap:plot",
+        "internal_name_overlap:plot",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_marks/test_dot.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_marks",
+        "test_name_matches_source_stem:dot",
+        "token_overlap:marks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:seaborn/_core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/_core/test_data.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/_core",
+        "internal_name_overlap:plot",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/_core/test_subplots.py:pytest_import_or_conftest",
+      "tests/_core/test_subplots.py:testcase_class:TestSpecificationChecks",
+      "tests/_core/test_subplots.py:testcase_class:TestSubplotElements",
+      "tests/_core/test_subplots.py:testcase_class:TestSubplotSpec",
+      "tests/_core/test_data.py:pytest_import_or_conftest",
+      "tests/_core/test_data.py:testcase_class:TestPlotData",
+      "tests/_core/test_scales.py:pytest_import_or_conftest",
+      "tests/_core/test_scales.py:testcase_class:TestContinuous",
+      "tests/_core/test_scales.py:testcase_class:TestNominal",
+      "tests/_core/test_scales.py:testcase_class:TestTemporal",
+      "tests/_core/test_plot.py:pytest_import_or_conftest",
+      "tests/_core/test_plot.py:testcase_class:TestDefaultObject",
+      "tests/_core/test_plot.py:testcase_class:TestFacetInterface",
+      "tests/_core/test_plot.py:testcase_class:TestInit",
+      "tests/_core/test_plot.py:testcase_class:TestLabelVisibility",
+      "tests/_core/test_plot.py:testcase_class:TestLayerAddition",
+      "tests/_core/test_plot.py:testcase_class:TestLegend",
+      "tests/_core/test_plot.py:testcase_class:TestPairInterface",
+      "tests/_core/test_plot.py:testcase_class:TestPlotting",
+      "tests/_core/test_plot.py:testcase_class:TestScaling"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 152,
+  "indexed_test_file_count": 40,
+  "available_imports": {
+    "seaborn.utils": [
+      "_assign_default_kwargs",
+      "_check_argument",
+      "_default_color",
+      "_deprecate_ci",
+      "_disable_autolayout",
+      "_draw_figure",
+      "_kde_support",
+      "_normal_quantile_func",
+      "_normalize_kwargs",
+      "adjust_legend_subtitles",
+      "axes_ticklabels_overlap",
+      "axis_ticklabels_overlap",
+      "axlabel",
+      "ci",
+      "ci_to_errsize",
+      "desaturate",
+      "despine",
+      "get_color_cycle",
+      "get_data_home",
+      "get_dataset_names",
+      "load_dataset",
+      "locator_to_legend_entries",
+      "move_legend",
+      "relative_luminance",
+      "remove_na",
+      "saturate",
+      "set_hls_values",
+      "to_utf8"
+    ],
+    "seaborn": [
+      "cm",
+      "crayons",
+      "xkcd_rgb"
+    ],
+    "tests._core.test_subplots": [
+      "TestSpecificationChecks",
+      "TestSubplotElements",
+      "TestSubplotSpec"
+    ],
+    "tests._core.test_data": [
+      "TestPlotData"
+    ],
+    "tests._core.test_scales": [
+      "TestContinuous",
+      "TestNominal",
+      "TestTemporal"
+    ],
+    "tests._core.test_plot": [
+      "MockMark",
+      "TestDefaultObject",
+      "TestFacetInterface",
+      "TestInit",
+      "TestLabelVisibility",
+      "TestLayerAddition",
+      "TestLegend",
+      "TestPairInterface",
+      "TestPlotting",
+      "TestScaling",
+      "assert_gridspec_shape"
+    ],
+    "tests._marks.test_dot": [
+      "DotBase",
+      "TestDot",
+      "TestDots",
+      "default_palette"
+    ],
+    "seaborn._core.plot": [
+      "FacetSpec",
+      "Layer",
+      "PairSpec",
+      "Plot",
+      "Plotter",
+      "build_plot_signature",
+      "theme_context"
+    ],
+    "seaborn._core.scales": [
+      "Continuous",
+      "ContinuousBase",
+      "Discrete",
+      "Nominal",
+      "Ordinal",
+      "PseudoAxis",
+      "Scale",
+      "Temporal",
+      "_make_identity_transforms",
+      "_make_log_transforms",
+      "_make_logit_transforms",
+      "_make_power_transforms",
+      "_make_sqrt_transforms",
+      "_make_symlog_transforms"
+    ],
+    "seaborn._marks.dot": [
+      "Dot",
+      "DotBase",
+      "Dots"
+    ]
+  },
+  "test_example_snippet": "class TestInit:\n\n    def test_empty(self):\n\n        p = Plot()\n        assert p._data.source_data is None\n        assert p._data.source_vars == {}\n\n    def test_data_only(self, long_df):\n\n        p = Plot(long_df)\n        assert p._data.source_data is long_df\n        assert p._data.source_vars == {}\n\n    def test_df_and_named_variables(self, long_df):\n\n        variables = {\"x\": \"a\", \"y\": \"z\"}\n        p = Plot(long_df, **variables)\n        for var, col in variables.items():\n            assert_vector_equal(p._data.frame[var], long_df[col])\n        assert p._data.source_data is long_df\n        assert p._data.source_vars.keys() == variables.keys()\n\n    def test_df_and_mixed_variables(self, long_df):\n\n        variables = {\"x\": \"a\", \"y\": long_df[\"z\"]}\n        p = Plot(long_df, **variables)\n        for var, col in variables.items():\n            if isinstance(col, str):\n                assert_vector_equal(p._data.frame[var], long_df[col])\n            else:\n                assert_vector_equal(p._data.frame[var], col)\n        assert p._data.source_data is long_df\n        assert p._data.source_vars.keys() == variables.keys()\n",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "close_figs",
+      "random_seed",
+      "rng",
+      "wide_df",
+      "wide_array",
+      "flat_series",
+      "flat_array",
+      "flat_list",
+      "flat_data",
+      "wide_list_of_series",
+      "wide_list_of_arrays",
+      "wide_list_of_lists",
+      "wide_dict_of_series",
+      "wide_dict_of_arrays",
+      "wide_dict_of_lists",
+      "long_df",
+      "long_dict",
+      "repeated_df",
+      "missing_df",
+      "object_df",
+      "null_series"
+    ]
+  }
+}

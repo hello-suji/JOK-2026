@@ -1,0 +1,28 @@
+{
+  "instance_id": "django__django-14608",
+  "observed_behavior": [
+    "Add `nonform` CSS class for non form errors in FormSets",
+    "Forms add the nonfield CSS class for non field errors in ErrorList instances. This is documented in a section on ​rendering form error messages. Similarly, in FormSets I'd expect to see the nonform CSS class added for non form errors. This would allow a custom ErrorList to make a distinction in form field errors, non field errors (forms) and non form errors (FormSets) when rendering error messages. Therefore I'd suggest to add this nonform CSS class and document it for developers to use."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "(last modified by Ties Jan Hefting)",
+    "Forms add the nonfield CSS class for non field errors in ErrorList instances. This is documented in a section on ​rendering form error messages. Similarly, in FormSets I'd expect to see the nonform CSS class added for non form errors. This would allow a custom ErrorList to make a distinction in form field errors, non field errors (forms) and non form errors (FormSets) when rendering error messages. Therefore I'd suggest to add this nonform CSS class and document it for developers to use."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "ErrorList",
+      "FormSets"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Add `nonform` CSS class for non form errors in FormSets\nDescription\n\t \n\t\t(last modified by Ties Jan Hefting)\n\t \nForms add the nonfield CSS class for non field errors in ErrorList instances. This is documented in a section on ​rendering form error messages. Similarly, in FormSets I'd expect to see the nonform CSS class added for non form errors. This would allow a custom ErrorList to make a distinction in form field errors, non field errors (forms) and non form errors (FormSets) when rendering error messages. Therefore I'd suggest to add this nonform CSS class and document it for developers to use.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

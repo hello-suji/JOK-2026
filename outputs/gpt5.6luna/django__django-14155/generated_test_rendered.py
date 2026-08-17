@@ -1,0 +1,15 @@
+
+
+from django.test import TestCase, SimpleTestCase
+from django.urls.resolvers import ResolverMatch
+from functools import partial
+
+class TestResolverMatchRepr(TestCase):
+    def test_repr_with_partial_function_repro(self):
+        def sample_view(request): pass
+        view_func = partial(sample_view, arg1='value')
+        resolver_match = ResolverMatch(view_func, [], {})
+        repr_output = repr(resolver_match)
+        self.assertNotIn('functools.partial', repr_output)
+        self.assertIn('sample_view', repr_output)
+        self.assertIn("arg1='value'", repr_output)

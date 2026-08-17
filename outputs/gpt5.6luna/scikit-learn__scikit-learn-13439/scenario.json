@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/pipeline.py",
+      "target_function": "__len__",
+      "related_classes": [
+        "Pipeline",
+        "SelectKBest"
+      ],
+      "candidate_test_file": "sklearn/tests/test_pipeline.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import necessary modules from sklearn",
+      "Generate sample data using make_classification",
+      "Create a Pipeline instance with SelectKBest and SVC",
+      "Use the generated reproduction path that calls f_regression, hasattr."
+    ],
+    "execution_stimulus": [
+      "Call len() on the Pipeline instance",
+      "Execute the focused target API path: f_regression, hasattr."
+    ],
+    "expected_failure": "The code raises an AttributeError because __len__ is not implemented",
+    "relevant_source_files": [
+      "sklearn/pipeline.py",
+      "sklearn/datasets/samples_generator.py",
+      "sklearn/feature_selection/univariate_selection.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/tests/test_pipeline.py",
+      "sklearn/feature_selection/tests/test_base.py",
+      "sklearn/feature_selection/tests/test_chi2.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_pipeline_len_not_implemented():\n    from sklearn import svm\n    from sklearn.datasets import samples_generator\n    from sklearn.feature_selection import SelectKBest\n    from sklearn.feature_selection import f_regression\n    from sklearn.pipeline import Pipeline\n\n    X, y = samples_generator.make_classification(n_informative=5, n_redundant=0, random_state=42)\n    anova_filter = SelectKBest(f_regression, k=5)\n    clf = svm.SVC(kernel='linear')\n    pipe = Pipeline([('anova', anova_filter), ('svc', clf)])\n\n    try:\n        len(pipe)\n    except AttributeError as e:\n        assert str(e) == \"'Pipeline' object has no attribute '__len__'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_pipeline_len_behavior_repro():\n    from sklearn.pipeline import Pipeline\n    from sklearn.feature_selection import SelectKBest, f_regression\n\n    pipe = Pipeline([('selectkbest', SelectKBest(f_regression))])\n    assert hasattr(pipe, '__len__')\n    assert len(pipe) == 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "AttributeError",
+      "'Pipeline' object has no attribute '__len__'"
+    ],
+    "identifiers": {
+      "functions": [
+        "__len__",
+        "f_regression",
+        "hasattr"
+      ],
+      "classes": [
+        "Pipeline",
+        "SelectKBest"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/tests/test_pipeline.py",
+      "target_source_file": "sklearn/pipeline.py",
+      "test_visible_functions": [
+        "f_regression",
+        "hasattr"
+      ],
+      "test_visible_classes": [
+        "Pipeline",
+        "SelectKBest"
+      ]
+    }
+  }
+]

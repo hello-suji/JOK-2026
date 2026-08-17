@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-15875",
+    "model_patch": "--- a/sympy/simplify/tests/test_simplify.py\n+++ b/sympy/simplify/tests/test_simplify.py\n@@ -781,3 +781,11 @@\n     assert nc_simplify(expr) == (1-c)**-1\n     # commutative expressions should be returned without an error\n     assert nc_simplify(2*x**2) == 2*x**2\n+\n+def test_simplify_is_zero_incorrect_on_complex_integer_repro():\n+    from sympy import I, simplify\n+    e = -2*I + (1 + I)**2\n+    result = simplify(e).is_zero\n+    assert result is None\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != 'True'\n",
+    "patch_sha256": "19b7833843339894b8ff2c4b7e17214615f9cc5c27270e42dc28513f03981482"
+  }
+]

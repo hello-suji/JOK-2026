@@ -1,0 +1,105 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.93,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:combine_by_coords",
+        "target_function 'combine_by_coords' NOT found in source_file — may be hallucinated",
+        "target_function 'combine_by_coords' not in AST top_level_functions for xarray/core/dataset.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "xarray/core/dataset.py",
+          "target_function": "combine_by_coords",
+          "related_classes": [
+            "Dataset"
+          ],
+          "candidate_test_file": "xarray/tests/test_dataset.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where combine_by_coords can be called."
+        ],
+        "execution_stimulus": [
+          "Call combine_by_coords with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "xr.combine_by_coords raises ValueError if identical coordinates are non-monotonic",
+        "relevant_source_files": [
+          "xarray/core/dataset.py",
+          "xarray/core/combine.py",
+          "setup.py"
+        ],
+        "relevant_test_files": [
+          "xarray/tests/test_dataset.py",
+          "xarray/tests/test_combine.py",
+          "xarray/tests/test_backends.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "import xarray as xr\nimport numpy as np\n\n#yCoord = ['a', 'b', 'c']  # works without error\nyCoord = ['a', 'c', 'b']  # raises ValueError on combine\n\nds1 = xr.Dataset(\n    data_vars=dict(\n        data=(['x', 'y'], np.random.rand(3, 3))\n    ),\n    coords=dict(\n        x=[1, 2, 3],\n        y=yCoord\n    )\n)\n\nds2 = xr.Dataset(\n    data_vars=dict(\n        data=(['x', 'y'], np.random.rand(4, 3))\n    ),\n    coords = dict(\n        x=[4, 5, 6, 7],\n        y=yCoord\n    )\n)\n\nds3 = xr.combine_by_coords((ds1, ds2))"
+          },
+          {
+            "language": "python",
+            "code": "ValueError: Resulting object does not have monotonic global indexes along dimension y"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: Resulting object does not have monotonic global indexes along dimension y"
+        ],
+        "error_keywords": [
+          "ValueError"
+        ],
+        "identifiers": {
+          "functions": [
+            "combine_by_coords"
+          ],
+          "classes": [
+            "Dataset"
+          ],
+          "files": [],
+          "exceptions": [
+            "ValueError"
+          ]
+        },
+        "oracle_hints": [
+          "Call the target API and assert a public invariant that excludes the buggy output.",
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "success_path",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

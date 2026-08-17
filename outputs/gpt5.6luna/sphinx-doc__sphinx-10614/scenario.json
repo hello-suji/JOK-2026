@@ -1,0 +1,110 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/development/tutorials/examples/todo.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "MyClass1",
+        "MyClass2",
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls unittest, tempfile, inheritance_diagram, join."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, tempfile, inheritance_diagram, join."
+    ],
+    "expected_failure": "This issue does not happen in the default (png?) mode.",
+    "relevant_source_files": [
+      "doc/development/tutorials/examples/todo.py",
+      "sphinx/builders/text.py",
+      "sphinx/cmd/build.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/test_build_text.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nclass TestInheritanceDiagramLinks(unittest.TestCase):\n    def test_svg_link_correctness_repro(self):\n        \"\"\"Ensure SVG links in inheritance diagrams are correctly formed.\"\"\"\n        import tempfile\n        import os\n        from sphinx.application import Sphinx\n        from sphinx.ext.inheritance_diagram import inheritance_diagram\n\n        srcdir = os.path.join(os.path.dirname(__file__), 'roots', 'test-inheritance-svg')\n        confdir = srcdir\n        outdir = os.path.join(srcdir, '_build', 'html')\n        doctreedir = os.path.join(srcdir, '_build', 'doctrees')\n        buildername = 'html'\n\n        with tempfile.TemporaryDirectory() as tmpdir:\n            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n            app.build()\n\n            svg_path = os.path.join(outdir, 'my_package', 'inheritance.svg')\n            with open(svg_path, 'r') as f:\n                svg_content = f.read()\n\n            # Assert the presence of correctly formed links\n            self.assertIn('href=\"my_class_1.html#my_package.MyClass1\"', svg_content)\n            self.assertIn('href=\"my_class_2.html#my_package.MyClass2\"', svg_content)"
+      },
+      {
+        "language": "python",
+        "code": "http://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_1.html\nhttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_2.html"
+      },
+      {
+        "language": "python",
+        "code": "http://localhost:63342/sphix_svg_bug/docs_build/index.html\n\tthis is correct\n\t../my_package/my_class_1.html#my_package.MyClass1\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_1.html#my_package.MyClass1\n\t../my_package/my_class_2.html#my_package.MyClass2\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_2.html#my_package.MyClass2"
+      },
+      {
+        "language": "python",
+        "code": "http://localhost:63342/sphix_svg_bug/docs_build/my_package/index.html\n\tthis is incorrect\n\t../my_class_1.html#my_package.MyClass1\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_class_1.html#my_package.MyClass1\n\t../my_class_2.html#my_package.MyClass2\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_class_2.html#my_package.MyClass2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "unittest",
+        "tempfile",
+        "inheritance_diagram",
+        "join",
+        "dirname",
+        "build"
+      ],
+      "classes": [
+        "MyClass1",
+        "MyClass2",
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "doc/development/tutorials/examples/todo.py",
+      "test_visible_functions": [
+        "unittest",
+        "tempfile",
+        "inheritance_diagram",
+        "join",
+        "dirname",
+        "build"
+      ],
+      "test_visible_classes": [
+        "MyClass1",
+        "MyClass2",
+        "Sphinx",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

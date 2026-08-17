@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-3305",
+    "model_patch": "--- a/xarray/tests/test_dataarray.py\n+++ b/xarray/tests/test_dataarray.py\n@@ -4647,3 +4647,8 @@\n             pass\n\n     assert str(e.value) == \"MyArray must explicitly define __slots__\"\n+\n+def test_quantile_keep_attrs_repro():\n+    da = xr.DataArray([0, 0], dims=\"x\", attrs={'units': 'K'})\n+    result = da.quantile(q=0.5, keep_attrs=True)\n+    assert 'units' in result.attrs and result.attrs['units'] == 'K'\n",
+    "patch_sha256": "7e557c223cc59c33675f11ebff35da6e9cb618b9a6e47c7c9ff2c04e588bc7d3"
+  }
+]

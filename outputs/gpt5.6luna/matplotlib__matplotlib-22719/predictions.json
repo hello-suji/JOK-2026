@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-22719",
+    "model_patch": "--- a/lib/matplotlib/tests/test_artist.py\n+++ b/lib/matplotlib/tests/test_artist.py\n@@ -372,3 +372,11 @@\n         pass\n\n     assert MyArtist4.set is MyArtist3.set\n+\n+def test_convert_xunits_with_empty_data_repro():\n+    f, ax = plt.subplots()\n+    ax.xaxis.update_units([\"a\", \"b\"])\n+    ax.plot([], [])\n+    # Assert that no ConversionError is raised and the plot is created successfully\n+    assert len(ax.lines) == 1\n+    assert ax.lines[0].get_data() == ([], [])\n",
+    "patch_sha256": "45af2a0b20a1b4d95a3897e712ad3c1f15749c8e82f935b8a54207410dbdb04b"
+  }
+]

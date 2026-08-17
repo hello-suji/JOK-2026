@@ -1,0 +1,559 @@
+{
+  "instance_id": "django__django-14534",
+  "repo": "django/django",
+  "base_commit": "910ecd1b8df7678f45c3d507dde6bcb1faafa243",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/forms/boundfield.py",
+      "score": 47,
+      "matched_identifiers": [
+        "BoundField",
+        "BoundWidget",
+        "attrs",
+        "auto",
+        "auto_id",
+        "build_widget_attrs",
+        "id_for_label",
+        "index",
+        "subwidgets",
+        "value"
+      ],
+      "reasons": [
+        "function_match:build_widget_attrs",
+        "function_match:id_for_label",
+        "function_match:subwidgets",
+        "function_match:value",
+        "class_match:BoundField",
+        "class_match:BoundWidget",
+        "path_contains_class:BoundField",
+        "stem_in_issue_text:boundfield",
+        "source_content_tokens:attrs,auto,auto_id,index,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BoundField": "class BoundField:\n    \"A Field plus data\"\n    def __init__(self, form, field, name):\n        self.form = form\n        self.field = field\n        self.name = name\n        self.html_name = form.add_prefix(name)\n        self.html_initial_name = form.add_initial_prefix(name)\n        self.html_initial_id = form.add_initial_prefix(self.auto_id)\n        if self.field.label is None:\n            self.label = pretty_name(name)\n        else:\n            self.label = self.field.label\n        self.help_text = field.help_text or ''\n",
+        "BoundWidget": "class BoundWidget:\n    \"\"\"\n    A container class used for iterating over widgets. This is useful for\n    widgets that have choices. For example, the following can be used in a\n    template:\n\n    {% for radio in myform.beatles %}\n      <label for=\"{{ radio.id_for_label }}\">\n        {{ radio.choice_label }}\n        <span class=\"radio\">{{ radio.tag }}</span>\n      </label>\n    {% endfor %}\n    \"\"\"\n    def __init__(self, parent_widget, data, renderer):\n        self.parent_widget = parent_widget",
+        "subwidgets": "    def subwidgets(self):\n        \"\"\"\n        Most widgets yield a single subwidget, but others like RadioSelect and\n        CheckboxSelectMultiple produce one subwidget for each choice.\n\n        This property is cached so that only one database query occurs when\n        rendering ModelChoiceFields.\n        \"\"\"\n        id_ = self.field.widget.attrs.get('id') or self.auto_id\n        attrs = {'id': id_} if id_ else {}\n        attrs = self.build_widget_attrs(attrs)\n        return [\n            BoundWidget(self.field.widget, widget, self.form.renderer)\n            for widget in self.field.widget.subwidgets(self.html_name, self.value(), attrs=attrs)\n        ]",
+        "value": "    def value(self):\n        \"\"\"\n        Return the value for this BoundField, using the initial value if\n        the form is not bound or the data otherwise.\n        \"\"\"\n        data = self.initial\n        if self.form.is_bound:\n            data = self.field.bound_data(self.data, data)\n        return self.field.prepare_value(data)\n\n    def _has_changed(self):\n        field = self.field\n        if field.show_hidden_initial:\n            hidden_widget = field.hidden_widget()\n            initial_value = self.form._widget_data_value(",
+        "auto_id": "    def auto_id(self):\n        \"\"\"\n        Calculate and return the ID attribute for this BoundField, if the\n        associated Form has specified auto_id. Return an empty string otherwise.\n        \"\"\"\n        auto_id = self.form.auto_id  # Boolean or string\n        if auto_id and '%s' in str(auto_id):\n            return auto_id % self.html_name\n        elif auto_id:\n            return self.html_name\n        return ''\n\n    @property\n    def id_for_label(self):\n        \"\"\"",
+        "id_for_label": "    def id_for_label(self):\n        return 'id_%s_%s' % (self.data['name'], self.data['index'])\n\n    @property\n    def choice_label(self):\n        return self.data['label']",
+        "build_widget_attrs": "    def build_widget_attrs(self, attrs, widget=None):\n        widget = widget or self.field.widget\n        attrs = dict(attrs)  # Copy attrs to avoid modifying the argument.\n        if widget.use_required_attribute(self.initial) and self.field.required and self.form.use_required_attribute:\n            attrs['required'] = True\n        if self.field.disabled:\n            attrs['disabled'] = True\n        return attrs\n\n    @property\n    def widget_type(self):\n        return re.sub(r'widget$|input$', '', self.field.widget.__class__.__name__.lower())\n\n\n@html_safe"
+      },
+      "top_level_functions": [
+        "BoundField.subwidgets",
+        "BoundField.errors",
+        "BoundField.as_widget",
+        "BoundField.as_text",
+        "BoundField.as_textarea",
+        "BoundField.as_hidden",
+        "BoundField.data",
+        "BoundField.value",
+        "BoundField.label_tag",
+        "BoundField.css_classes",
+        "BoundField.is_hidden",
+        "BoundField.auto_id",
+        "BoundField.id_for_label",
+        "BoundField.initial",
+        "BoundField.build_widget_attrs",
+        "BoundField.widget_type",
+        "BoundWidget.tag",
+        "BoundWidget.template_name",
+        "BoundWidget.id_for_label",
+        "BoundWidget.choice_label"
+      ]
+    },
+    {
+      "path": "django/forms/widgets.py",
+      "score": 37,
+      "matched_identifiers": [
+        "CheckboxSelectMultiple",
+        "ChoiceWidget",
+        "attrs",
+        "contains",
+        "id_for_label",
+        "index",
+        "name",
+        "subwidgets"
+      ],
+      "reasons": [
+        "function_match:id_for_label",
+        "function_match:subwidgets",
+        "class_match:ChoiceWidget",
+        "class_match:CheckboxSelectMultiple",
+        "path_contains_function:get",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attrs,contains,index,name,rendering"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ChoiceWidget": "class ChoiceWidget(Widget):\n    allow_multiple_selected = False\n    input_type = None\n    template_name = None\n    option_template_name = None\n    add_id_index = True\n    checked_attribute = {'checked': True}\n    option_inherits_attrs = True\n\n    def __init__(self, attrs=None, choices=()):\n        super().__init__(attrs)\n        # choices can be any iterable, but we may need to render this widget\n        # multiple times. Thus, collapse it into a list so it can be consumed\n        # more than once.\n        self.choices = list(choices)",
+        "CheckboxSelectMultiple": "class CheckboxSelectMultiple(RadioSelect):\n    allow_multiple_selected = True\n    input_type = 'checkbox'\n    template_name = 'django/forms/widgets/checkbox_select.html'\n    option_template_name = 'django/forms/widgets/checkbox_option.html'\n\n    def use_required_attribute(self, initial):\n        # Don't use the 'required' attribute because browser validation would\n        # require all checkboxes to be checked instead of at least one.\n        return False\n\n    def value_omitted_from_data(self, data, files, name):\n        # HTML checkboxes don't appear in POST data if not checked, so it's\n        # never known if the value is actually omitted.\n        return False",
+        "subwidgets": "    def subwidgets(self, name, value, attrs=None):\n        \"\"\"\n        Yield all \"subwidgets\" of this widget. Used to enable iterating\n        options from a BoundField for choice widgets.\n        \"\"\"\n        value = self.format_value(value)\n        yield from self.options(name, value, attrs)\n\n    def options(self, name, value, attrs=None):\n        \"\"\"Yield a flat list of options for this widgets.\"\"\"\n        for group in self.optgroups(name, value, attrs):\n            yield from group[1]\n\n    def optgroups(self, name, value, attrs=None):\n        \"\"\"Return a list of optgroups for this widget.\"\"\"",
+        "id_for_label": "    def id_for_label(self, id_):\n        for first_select in self._parse_date_fmt():\n            return '%s_%s' % (id_, first_select)\n        return '%s_month' % id_\n\n    def value_from_datadict(self, data, files, name):\n        y = data.get(self.year_field % name)\n        m = data.get(self.month_field % name)\n        d = data.get(self.day_field % name)\n        if y == m == d == '':\n            return None\n        if y is not None and m is not None and d is not None:\n            input_format = get_format('DATE_INPUT_FORMATS')[0]\n            input_format = formats.sanitize_strftime_format(input_format)\n            try:"
+      },
+      "top_level_functions": [
+        "Media.render",
+        "Media.render_js",
+        "Media.render_css",
+        "Media.absolute_path",
+        "Media.merge",
+        "media_property",
+        "Widget.is_hidden",
+        "Widget.subwidgets",
+        "Widget.format_value",
+        "Widget.get_context",
+        "Widget.render",
+        "Widget.build_attrs",
+        "Widget.value_from_datadict",
+        "Widget.value_omitted_from_data",
+        "Widget.id_for_label",
+        "Widget.use_required_attribute",
+        "Input.get_context",
+        "PasswordInput.get_context",
+        "MultipleHiddenInput.get_context",
+        "MultipleHiddenInput.value_from_datadict",
+        "MultipleHiddenInput.format_value",
+        "FileInput.format_value",
+        "FileInput.value_from_datadict",
+        "FileInput.value_omitted_from_data",
+        "FileInput.use_required_attribute",
+        "ClearableFileInput.clear_checkbox_name",
+        "ClearableFileInput.clear_checkbox_id",
+        "ClearableFileInput.is_initial",
+        "ClearableFileInput.format_value",
+        "ClearableFileInput.get_context",
+        "ClearableFileInput.value_from_datadict",
+        "ClearableFileInput.value_omitted_from_data",
+        "DateTimeBaseInput.format_value",
+        "boolean_check",
+        "CheckboxInput.format_value",
+        "CheckboxInput.get_context",
+        "CheckboxInput.value_from_datadict",
+        "CheckboxInput.value_omitted_from_data",
+        "ChoiceWidget.subwidgets",
+        "ChoiceWidget.options"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/widgets.py",
+      "score": 24,
+      "matched_identifiers": [
+        "attrs",
+        "auto",
+        "id_for_label",
+        "index",
+        "name"
+      ],
+      "reasons": [
+        "function_match:id_for_label",
+        "path_contains_function:get",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attrs,auto,index,name,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "id_for_label": "    def id_for_label(self, id_):\n        return self.widget.id_for_label(id_)\n\n\nclass AdminTextareaWidget(forms.Textarea):\n    def __init__(self, attrs=None):\n        super().__init__(attrs={'class': 'vLargeTextField', **(attrs or {})})\n\n\nclass AdminTextInputWidget(forms.TextInput):\n    def __init__(self, attrs=None):\n        super().__init__(attrs={'class': 'vTextField', **(attrs or {})})\n\n\nclass AdminEmailInputWidget(forms.EmailInput):"
+      },
+      "top_level_functions": [
+        "FilteredSelectMultiple.get_context",
+        "AdminSplitDateTime.get_context",
+        "url_params_from_lookup_dict",
+        "ForeignKeyRawIdWidget.get_context",
+        "ForeignKeyRawIdWidget.base_url_parameters",
+        "ForeignKeyRawIdWidget.url_parameters",
+        "ForeignKeyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.get_context",
+        "ManyToManyRawIdWidget.url_parameters",
+        "ManyToManyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.value_from_datadict",
+        "ManyToManyRawIdWidget.format_value",
+        "RelatedFieldWidgetWrapper.is_hidden",
+        "RelatedFieldWidgetWrapper.media",
+        "RelatedFieldWidgetWrapper.get_related_url",
+        "RelatedFieldWidgetWrapper.get_context",
+        "RelatedFieldWidgetWrapper.value_from_datadict",
+        "RelatedFieldWidgetWrapper.value_omitted_from_data",
+        "RelatedFieldWidgetWrapper.id_for_label",
+        "AdminURLFieldWidget.get_context",
+        "AutocompleteMixin.get_url",
+        "AutocompleteMixin.build_attrs",
+        "AutocompleteMixin.optgroups",
+        "AutocompleteMixin.media"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/gdal/field.py",
+      "score": 22,
+      "matched_identifiers": [
+        "field",
+        "index",
+        "name",
+        "self",
+        "value"
+      ],
+      "reasons": [
+        "function_match:value",
+        "stem_in_issue_text:field",
+        "source_content_tokens:index,name,self,field,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "name": "    def name(self):\n        \"Return the name of this Field.\"\n        name = capi.get_field_name(self.ptr)\n        return force_str(name, encoding=self._feat.encoding, strings_only=True)\n\n    @property\n    def precision(self):\n        \"Return the precision of this Field.\"\n        return capi.get_field_precision(self.ptr)\n\n    @property\n    def type(self):\n        \"Return the OGR type of this Field.\"\n        return capi.get_field_type(self.ptr)\n",
+        "value": "    def value(self):\n        \"Return a Python `time` object for this OFTTime field.\"\n        try:\n            yy, mm, dd, hh, mn, ss, tz = self.as_datetime()\n            return time(hh.value, mn.value, ss.value)\n        except (ValueError, GDALException):\n            return None\n\n\nclass OFTInteger64(OFTInteger):\n    _bit64 = True\n\n\n# List fields are also just subclasses\nclass OFTIntegerList(Field):"
+      },
+      "top_level_functions": [
+        "Field.as_double",
+        "Field.as_int",
+        "Field.as_string",
+        "Field.as_datetime",
+        "Field.is_set",
+        "Field.name",
+        "Field.precision",
+        "Field.type",
+        "Field.type_name",
+        "Field.value",
+        "Field.width",
+        "OFTInteger.value",
+        "OFTInteger.type",
+        "OFTReal.value",
+        "OFTDate.value",
+        "OFTDateTime.value",
+        "OFTTime.value"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/filters.py",
+      "score": 21,
+      "matched_identifiers": [
+        "field",
+        "index",
+        "name",
+        "self",
+        "value"
+      ],
+      "reasons": [
+        "function_match:value",
+        "source_content_tokens:index,name,self,field,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "value": "    def value(self):\n        \"\"\"\n        Return the value (in string format) provided in the request's\n        query string for this filter, if any, or None if the value wasn't\n        provided.\n        \"\"\"\n        return self.used_parameters.get(self.parameter_name)\n\n    def lookups(self, request, model_admin):\n        \"\"\"\n        Must be overridden to return a list of tuples (value, verbose value)\n        \"\"\"\n        raise NotImplementedError(\n            'The SimpleListFilter.lookups() method must be overridden to '\n            'return a list of tuples (value, verbose value).'"
+      },
+      "top_level_functions": [
+        "ListFilter.has_output",
+        "ListFilter.choices",
+        "ListFilter.queryset",
+        "ListFilter.expected_parameters",
+        "SimpleListFilter.has_output",
+        "SimpleListFilter.value",
+        "SimpleListFilter.lookups",
+        "SimpleListFilter.expected_parameters",
+        "SimpleListFilter.choices",
+        "FieldListFilter.has_output",
+        "FieldListFilter.queryset",
+        "FieldListFilter.register",
+        "FieldListFilter.create",
+        "RelatedFieldListFilter.include_empty_choice",
+        "RelatedFieldListFilter.has_output",
+        "RelatedFieldListFilter.expected_parameters",
+        "RelatedFieldListFilter.field_admin_ordering",
+        "RelatedFieldListFilter.field_choices",
+        "RelatedFieldListFilter.choices",
+        "BooleanFieldListFilter.expected_parameters",
+        "BooleanFieldListFilter.choices",
+        "ChoicesFieldListFilter.expected_parameters",
+        "ChoicesFieldListFilter.choices",
+        "DateFieldListFilter.expected_parameters",
+        "DateFieldListFilter.choices",
+        "AllValuesFieldListFilter.expected_parameters",
+        "AllValuesFieldListFilter.choices",
+        "RelatedOnlyFieldListFilter.field_choices",
+        "EmptyFieldListFilter.queryset",
+        "EmptyFieldListFilter.expected_parameters",
+        "EmptyFieldListFilter.choices"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/forms_tests/tests/test_widgets.py",
+      "score": 25,
+      "matched_identifiers": [
+        "BoundWidget",
+        "ChoiceWidget",
+        "get"
+      ],
+      "reasons": [
+        "test_path_contains_function:get",
+        "test_path_related_to_class:ChoiceWidget",
+        "test_path_related_to_class:BoundWidget",
+        "test_name_matches_source_stem:widgets",
+        "token_overlap:forms,widget,widgets",
+        "internal_name_overlap:widget",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_checkboxselectmultiple.py",
+      "score": 24,
+      "matched_identifiers": [
+        "BoundWidget",
+        "CheckboxSelectMultiple",
+        "ChoiceWidget",
+        "get"
+      ],
+      "reasons": [
+        "test_path_contains_function:get",
+        "test_path_related_to_class:ChoiceWidget",
+        "test_path_related_to_class:BoundWidget",
+        "test_path_related_to_class:CheckboxSelectMultiple",
+        "token_overlap:checkbox,forms,multiple,select,widget",
+        "internal_name_overlap:checkbox",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_selectmultiple.py",
+      "score": 24,
+      "matched_identifiers": [
+        "BoundWidget",
+        "CheckboxSelectMultiple",
+        "ChoiceWidget",
+        "get"
+      ],
+      "reasons": [
+        "test_path_contains_function:get",
+        "test_path_related_to_class:ChoiceWidget",
+        "test_path_related_to_class:BoundWidget",
+        "test_path_related_to_class:CheckboxSelectMultiple",
+        "token_overlap:forms,multiple,select,widget",
+        "internal_name_overlap:select",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_checkboxinput.py",
+      "score": 22,
+      "matched_identifiers": [
+        "BoundWidget",
+        "CheckboxSelectMultiple",
+        "ChoiceWidget",
+        "get"
+      ],
+      "reasons": [
+        "test_path_contains_function:get",
+        "test_path_related_to_class:ChoiceWidget",
+        "test_path_related_to_class:BoundWidget",
+        "test_path_related_to_class:CheckboxSelectMultiple",
+        "token_overlap:checkbox,forms,widget",
+        "internal_name_overlap:checkbox",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/widget_tests/test_multiplehiddeninput.py",
+      "score": 22,
+      "matched_identifiers": [
+        "BoundWidget",
+        "CheckboxSelectMultiple",
+        "ChoiceWidget",
+        "get"
+      ],
+      "reasons": [
+        "test_path_contains_function:get",
+        "test_path_related_to_class:ChoiceWidget",
+        "test_path_related_to_class:BoundWidget",
+        "test_path_related_to_class:CheckboxSelectMultiple",
+        "token_overlap:forms,multiple,widget",
+        "internal_name_overlap:attrs",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/forms_tests/widget_tests/test_checkboxselectmultiple.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_widgets.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2698,
+  "indexed_test_file_count": 1836,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.forms_tests.widget_tests.test_multiplehiddeninput": [
+      "MultipleHiddenInputTest"
+    ],
+    "tests.forms_tests.widget_tests.test_selectmultiple": [
+      "SelectMultipleTest"
+    ],
+    "tests.forms_tests.widget_tests.test_checkboxinput": [
+      "CheckboxInputTest"
+    ],
+    "tests.forms_tests.widget_tests.test_checkboxselectmultiple": [
+      "CheckboxSelectMultipleTest"
+    ],
+    "tests.forms_tests.tests.test_widgets": [
+      "LiveWidgetTests"
+    ],
+    "django.forms.widgets": [
+      "CheckboxInput",
+      "CheckboxSelectMultiple",
+      "ChoiceWidget",
+      "ClearableFileInput",
+      "DateInput",
+      "DateTimeBaseInput",
+      "DateTimeInput",
+      "EmailInput",
+      "FileInput",
+      "HiddenInput",
+      "Input",
+      "Media",
+      "MediaDefiningClass",
+      "MediaOrderConflictWarning",
+      "MultiWidget",
+      "MultipleHiddenInput",
+      "NullBooleanSelect",
+      "NumberInput",
+      "PasswordInput",
+      "RadioSelect",
+      "Select",
+      "SelectDateWidget",
+      "SelectMultiple",
+      "SplitDateTimeWidget",
+      "SplitHiddenDateTimeWidget",
+      "TextInput",
+      "Textarea",
+      "TimeInput",
+      "URLInput",
+      "Widget",
+      "boolean_check",
+      "media_property"
+    ],
+    "django.forms.boundfield": [
+      "BoundField",
+      "BoundWidget"
+    ],
+    "django.contrib.admin.filters": [
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "ListFilter",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter"
+    ],
+    "django.contrib.admin.widgets": [
+      "AdminBigIntegerFieldWidget",
+      "AdminDateWidget",
+      "AdminEmailInputWidget",
+      "AdminFileWidget",
+      "AdminIntegerFieldWidget",
+      "AdminRadioSelect",
+      "AdminSplitDateTime",
+      "AdminTextInputWidget",
+      "AdminTextareaWidget",
+      "AdminTimeWidget",
+      "AdminURLFieldWidget",
+      "AdminUUIDInputWidget",
+      "AutocompleteMixin",
+      "AutocompleteSelect",
+      "AutocompleteSelectMultiple",
+      "FilteredSelectMultiple",
+      "ForeignKeyRawIdWidget",
+      "ManyToManyRawIdWidget",
+      "RelatedFieldWidgetWrapper",
+      "url_params_from_lookup_dict"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.gdal.field": [
+      "Field",
+      "OFTBinary",
+      "OFTDate",
+      "OFTDateTime",
+      "OFTInteger",
+      "OFTInteger64",
+      "OFTInteger64List",
+      "OFTIntegerList",
+      "OFTReal",
+      "OFTRealList",
+      "OFTString",
+      "OFTStringList",
+      "OFTTime",
+      "OFTWideString",
+      "OFTWideStringList"
+    ],
+    "django.contrib.gis": [
+      "AxisOrder",
+      "CoordTransform",
+      "DataSource",
+      "Driver",
+      "Envelope",
+      "GDALException",
+      "GDALRaster",
+      "GDAL_VERSION",
+      "OGRGeomType",
+      "OGRGeometry",
+      "SRSException",
+      "SpatialReference",
+      "check_err",
+      "gdal_full_version",
+      "gdal_version"
+    ]
+  },
+  "test_example_snippet": "    def test_textarea_trailing_newlines(self):\n        \"\"\"\n        A roundtrip on a ModelForm doesn't alter the TextField value\n        \"\"\"\n        article = Article.objects.create(content=\"\\nTst\\n\")\n        self.selenium.get(self.live_server_url + reverse('article_form', args=[article.pk]))\n        self.selenium.find_element_by_id('submit').click()\n        article = Article.objects.get(pk=article.pk)\n        self.assertEqual(article.content, \"\\r\\nTst\\r\\n\")",
+  "conftest_fixtures": {}
+}

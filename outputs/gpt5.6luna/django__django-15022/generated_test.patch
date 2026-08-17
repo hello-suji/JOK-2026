@@ -1,0 +1,52 @@
+--- a/tests/invalid_models_tests/test_ordinary_fields.py
++++ b/tests/invalid_models_tests/test_ordinary_fields.py
+@@ -901,3 +901,49 @@
+             field = models.JSONField(default=callable_default)
+
+         self.assertEqual(Model._meta.get_field('field').check(), [])
++
++from django.contrib.admin.options import ModelAdmin
++from django.db.models import CharField, ForeignKey
++from django.test import TestCase
++from django.test.utils import override_settings
++from django.contrib.contenttypes.models import ContentType
++
++
++class ClientOffice:
++    pass
++
++class ClientAdmin(ModelAdmin):
++    search_fields = ['name']
++
++
++class TestClientAdminSearch(TestCase):
++    @override_settings(ROOT_URLCONF='django.contrib.admin.tests.urls')
++    def test_search_with_multiple_words_repro(self):
++        from django.contrib.auth.models import User
++        from django.contrib import admin
++        from django.urls import reverse
++        from django.test.client import RequestFactory
++
++        # Register the model admin
++        site = admin.AdminSite()
++        site.register(ClientOffice, ClientAdmin)
++
++        # Create some test data
++        office1 = ClientOffice(name='Test Office One')
++        office1.save()
++        office2 = ClientOffice(name='Another Test Office')
++        office2.save()
++
++        # Setup client and request
++        factory = RequestFactory()
++        user = User.objects.create_superuser(username='super', email='super@example.com', password='secret')
++        self.client.force_login(user)
++        request = factory.get('/admin/test_app/clientoffice/?q=test+office')
++        request.user = user
++
++        # Get the changelist view
++        response = site.index(request)
++
++        # Check if both offices are in the response context
++        self.assertIn(office1, response.context['app_list'][0]['models'][0]['results'])
++        self.assertIn(office2, response.context['app_list'][0]['models'][0]['results'])

@@ -1,0 +1,31 @@
+{
+  "instance_id": "django__django-11740",
+  "scenario_id": "S1",
+  "model_name": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "repo_path": "data/repos/django",
+  "target_test_file": "tests/model_fields/models.py",
+  "target_test_file_abspath": "data/repos/django/tests/model_fields/models.py",
+  "target_source_file": "django/contrib/admin/models.py",
+  "insert_mode": "append_block",
+  "insertion_hint": "end_of_file",
+  "imports": [],
+  "test_code": "import uuid\n\nfrom django.db import models\nfrom django.db.migrations.autodetector import MigrationAutodetector\nfrom django.db.migrations.questioner import NonInteractiveMigrationQuestioner\nfrom django.db.migrations.state import ModelState, ProjectState\n\n\ndef test_uuidfield_to_foreignkey_creates_cross_app_dependency_repro():\n    before = ProjectState()\n    before.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.UUIDField(null=True, blank=True)),\n    ]))\n    before.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    after = ProjectState()\n    after.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.ForeignKey('testapp2.App2', null=True, blank=True, on_delete=models.SET_NULL)),\n    ]))\n    after.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    changes = MigrationAutodetector(before, after, NonInteractiveMigrationQuestioner())._detect_changes()\n    dependencies = changes['testapp1'][0].dependencies\n    assert ('testapp2', '__first__') in dependencies\n",
+  "original_test_file_content": "",
+  "modified_test_file_content": "import uuid\n\nfrom django.db import models\nfrom django.db.migrations.autodetector import MigrationAutodetector\nfrom django.db.migrations.questioner import NonInteractiveMigrationQuestioner\nfrom django.db.migrations.state import ModelState, ProjectState\n\n\ndef test_uuidfield_to_foreignkey_creates_cross_app_dependency_repro():\n    before = ProjectState()\n    before.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.UUIDField(null=True, blank=True)),\n    ]))\n    before.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    after = ProjectState()\n    after.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.ForeignKey('testapp2.App2', null=True, blank=True, on_delete=models.SET_NULL)),\n    ]))\n    after.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    changes = MigrationAutodetector(before, after, NonInteractiveMigrationQuestioner())._detect_changes()\n    dependencies = changes['testapp1'][0].dependencies\n    assert ('testapp2', '__first__') in dependencies\n",
+  "test_patch": "--- a/tests/model_fields/models.py\n+++ b/tests/model_fields/models.py\n@@ -0,0 +1,28 @@\n+import uuid\n+\n+from django.db import models\n+from django.db.migrations.autodetector import MigrationAutodetector\n+from django.db.migrations.questioner import NonInteractiveMigrationQuestioner\n+from django.db.migrations.state import ModelState, ProjectState\n+\n+\n+def test_uuidfield_to_foreignkey_creates_cross_app_dependency_repro():\n+    before = ProjectState()\n+    before.add_model(ModelState('testapp1', 'App1', [\n+        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n+        ('another_app', models.UUIDField(null=True, blank=True)),\n+    ]))\n+    before.add_model(ModelState('testapp2', 'App2', [\n+        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n+    ]))\n+    after = ProjectState()\n+    after.add_model(ModelState('testapp1', 'App1', [\n+        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n+        ('another_app', models.ForeignKey('testapp2.App2', null=True, blank=True, on_delete=models.SET_NULL)),\n+    ]))\n+    after.add_model(ModelState('testapp2', 'App2', [\n+        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n+    ]))\n+    changes = MigrationAutodetector(before, after, NonInteractiveMigrationQuestioner())._detect_changes()\n+    dependencies = changes['testapp1'][0].dependencies\n+    assert ('testapp2', '__first__') in dependencies\n",
+  "raw_response": "",
+  "prompt": "",
+  "patch_sha256": "05c22a4dc51a7e57567068659e65906c483cf037cfedfea624d90a62eb90de81",
+  "repair_attempted": false,
+  "repair_actions": [],
+  "repair_failed_reason": "",
+  "repair_retry_count": 0,
+  "retry_required_oracle_risks": [],
+  "semantic_risk_flags": [],
+  "prompt_profile": {},
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  }
+}

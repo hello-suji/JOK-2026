@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/index.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Foo",
+        "Sphinx",
+        "DocumenterBridge",
+        "PyMethodDocumenter",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, join, makedirs, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, join, makedirs, build."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/domains/index.py",
+      "sphinx/domains/python.py",
+      "sphinx/writers/text.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc import DocumenterBridge\nfrom sphinx.domains.python import PyMethodDocumenter\n\ndef test_index_entry_without_parens_repro():\n    src_content = '''\n.. py:method:: Foo.bar\n   :property:\n\n.. py:property:: Foo.baz\n'''\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = tmpdir\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(src_content)\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='text')\n        app.build()\n        env = app.env\n        index_entries = env.domaindata['py']['objects']\n        assert ('bar', 'Foo.bar', 'method', '', '', '', '') in index_entries\n        assert ('baz', 'Foo.baz', 'property', '', '', '', '') in index_entries\n        assert ('bar', 'Foo.bar()', 'method', '', '', '', '') not in index_entries"
+      },
+      {
+        "language": "python",
+        "code": "# index.rst\n\n.. py:method:: Foo.bar\n   :property:\n\n.. py:property:: Foo.baz"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Foo",
+        "Sphinx",
+        "DocumenterBridge",
+        "PyMethodDocumenter",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "target_source_file": "sphinx/domains/index.py",
+      "test_visible_functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Foo",
+        "Sphinx",
+        "DocumenterBridge",
+        "PyMethodDocumenter",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

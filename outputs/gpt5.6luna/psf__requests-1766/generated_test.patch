@@ -1,0 +1,15 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -912,3 +912,12 @@
+
+ if __name__ == '__main__':
+     unittest.main()
++
++def test_digest_auth_qop_options_quoted_repro():
++    auth = HTTPDigestAuth('user', 'passwd')
++    prep_request = requests.PreparedRequest()
++    prep_request.method = 'GET'
++    prep_request.url = 'http://example.com/digest-auth'
++    prep_request.headers['WWW-Authenticate'] = 'Digest realm="example", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", algorithm=MD5, qop="auth"'
++    auth.handle_401(prep_request)
++    assert 'qop="auth"' in prep_request.headers['Authorization']

@@ -1,0 +1,17 @@
+--- a/tests/admin_scripts/test_django_admin_py.py
++++ b/tests/admin_scripts/test_django_admin_py.py
+@@ -37,3 +37,14 @@
+         django_admin_py_out, _ = self._run_test([self.django_admin_py, '--version'])
+         django_out, _ = self._run_test(['-m', 'django', '--version'])
+         self.assertEqual(django_admin_py_out, django_out)
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.core.signing import dumps
++
++class TestJSONFieldUnicodeDisplay(SimpleTestCase):
++    def test_jsonfield_unicode_display_repro(self):
++        original_data = {'country': '中国'}
++        serialized_data = dumps(original_data)
++        self.assertNotIn('\u4e2d\u56fd', serialized_data)
++        self.assertIn('中国', serialized_data)

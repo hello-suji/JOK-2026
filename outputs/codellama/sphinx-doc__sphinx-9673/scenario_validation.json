@@ -1,0 +1,91 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.43,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "reproduction_code references target_function:setup",
+        "target_function 'setup' NOT found in source_file — may be hallucinated",
+        "target_function 'setup' not in AST top_level_functions for sphinx/domains/python.py",
+        "force-selected as best available (score 0.43, below threshold 0.65)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sphinx/domains/python.py",
+          "target_function": "setup",
+          "related_classes": [],
+          "candidate_test_file": "tests/roots/test-ext-autodoc/conf.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import necessary modules including sphinx.ext.autodoc and sphinx.ext.napoleon.",
+          "Configure Sphinx with autodoc_typehints='description' and autodoc_typehints_description_target='documented'.",
+          "Set napoleon_numpy_docstring=False."
+        ],
+        "execution_stimulus": [
+          "Generate documentation for a function with a Google-style docstring containing a Returns section."
+        ],
+        "expected_failure": "The return types are missing from the generated documentation.",
+        "relevant_source_files": [
+          "doc/conf.py",
+          "doc/development/tutorials/examples/todo.py",
+          "sphinx/config.py"
+        ],
+        "relevant_test_files": [
+          "tests/roots/test-domain-c-intersphinx/conf.py",
+          "tests/roots/test-domain-cpp-intersphinx/conf.py",
+          "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unknown"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_missing_return_types_in_documentation():\n    import sphinx\n    from sphinx.ext import autodoc, napoleon\n    from sphinx.application import Sphinx\n    \n    app = Sphinx(srcdir='.', confdir='.', outdir='_build', doctreedir='_doctrees', buildername='html')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.setup_extension('sphinx.ext.napoleon')\n    \n    app.config.autodoc_typehints = 'description'\n    app.config.autodoc_typehints_description_target = 'documented'\n    app.config.napoleon_numpy_docstring = False\n    \n    def sample_function():\n        \"\"\"\n        Description.\n        \n        Parameters:\n            param1: First parameter.\n            param2: Second parameter.\n        \n        Returns:\n            The returned value.\n        \"\"\"\n        pass\n    \n    result = autodoc.Documenter(app, sample_function, 'function').document()\n    assert 'Returns:' not in result or 'The returned value.' not in result"
+          }
+        ],
+        "expected_outputs": [
+          "Returns:",
+          "The returned value."
+        ],
+        "actual_outputs": [],
+        "error_keywords": [
+          "missing return types"
+        ],
+        "identifiers": {
+          "functions": [
+            "setup"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": true
+    }
+  ],
+  "rejected_scenarios": []
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataset.py",
+      "target_function": "__len__",
+      "related_classes": [
+        "DataVariables",
+        "Dataset",
+        "IPython"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataset.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __len__ can be called.",
+      "Use the generated reproduction path that calls __len__, reset_index, set_index."
+    ],
+    "execution_stimulus": [
+      "Call __len__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: __len__, reset_index, set_index."
+    ],
+    "expected_failure": "Well it seems this assumption is now wrong.",
+    "relevant_source_files": [
+      "xarray/core/dataset.py",
+      "xarray/core/dataarray.py",
+      "xarray/core/coordinates.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_indexes.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_len_after_set_reset_index_repro():\n    ds = xr.Dataset(coords={\"a\": (\"x\", [1, 2, 3]), \"b\": (\"x\", ['a', 'b', 'c'])})\n    ds_modified = ds.set_index(z=['a', 'b']).reset_index(\"z\", drop=True)\n    assert len(ds_modified) >= 0\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(ds_modified) != 'ValueError: __len__() should return >= 0'"
+      },
+      {
+        "language": "Python",
+        "code": "ds = xr.Dataset(coords={\"a\": (\"x\", [1, 2, 3]), \"b\": (\"x\", ['a', 'b', 'c'])})\nds.set_index(z=['a', 'b']).reset_index(\"z\", drop=True)"
+      },
+      {
+        "language": "Python",
+        "code": "ValueError: __len__() should return >= 0"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: __len__() should return >= 0"
+    ],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__len__",
+        "reset_index",
+        "set_index"
+      ],
+      "classes": [
+        "DataVariables",
+        "Dataset",
+        "IPython"
+      ],
+      "files": [
+        "xarray/core/dataset.py"
+      ],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataset.py",
+      "target_source_file": "xarray/core/dataset.py",
+      "test_visible_functions": [
+        "__len__",
+        "reset_index",
+        "set_index"
+      ],
+      "test_visible_classes": [
+        "Dataset"
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-10908",
+    "model_patch": "--- a/sklearn/feature_extraction/tests/test_dict_vectorizer.py\n+++ b/sklearn/feature_extraction/tests/test_dict_vectorizer.py\n@@ -111,3 +111,16 @@\n     v_2 = DictVectorizer().fit([d_shuffled])\n\n     assert_equal(v_1.vocabulary_, v_2.vocabulary_)\n+\n+from sklearn.feature_extraction.text import CountVectorizer\n+\n+def test_get_feature_names_with_provided_vocabulary_repro():\n+    vectorizer = CountVectorizer(vocabulary={'first': 0, 'second': 1, 'third': 2})\n+    feature_names = vectorizer.get_feature_names()\n+    assert isinstance(feature_names, list)\n+    assert len(feature_names) == 3\n+    assert_in('first', feature_names)\n+    assert_in('second', feature_names)\n+    assert_in('third', feature_names)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(feature_names) != \"NotFittedError: CountVectorizer - Vocabulary wasn't fitted.\"\n",
+    "patch_sha256": "e1705d9aecea8c341e905efdb5e911d6792b9fc901572f6a400a2ce2b93110e0"
+  }
+]

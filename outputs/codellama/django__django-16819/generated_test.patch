@@ -1,0 +1,23 @@
+--- a/tests/indexes/models.py
++++ b/tests/indexes/models.py
+@@ -52,3 +52,20 @@
+ class IndexedArticle2(models.Model):
+     headline = models.CharField(max_length=100)
+     body = models.TextField()
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.operations.models import AddIndex, RemoveIndex
++
++
++class TestIndexOptimization(TestCase):
++    def test_reduce_add_remove_index_operations_repro(self):
++        # Simulate a scenario where AddIndex and RemoveIndex operations are generated
++        add_index_op = AddIndex('my_model', models.Index(fields=['field_name']))
++        remove_index_op = RemoveIndex('my_model', 'index_name')
++
++        # Assuming the autodetector or optimizer should reduce these operations
++        optimized_operations = [add_index_op, remove_index_op]
++
++        # The expected behavior is that the optimized operations list should be empty
++        # after optimization, indicating that AddIndex and RemoveIndex were reduced
++        self.assertEqual([], optimized_operations)

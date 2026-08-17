@@ -1,0 +1,18 @@
+--- a/tests/modeladmin/test_checks.py
++++ b/tests/modeladmin/test_checks.py
+@@ -1630,3 +1630,15 @@
+             actions = (action1, action2)
+
+         self.assertIsValid(BandAdmin, Band)
++
++from django.contrib.admin.options import ModelAdmin
++from django.contrib.admin.checks import check_model_admin
++
++
++def test_readonly_fields_error_message_repro():
++    class CityInline(ModelAdmin):
++        readonly_fields = ('non_existent_field',)
++    errors = check_model_admin(CityInline)
++    assert not any('readonly_fields[0]' in error.msg and 'non_existent_field' not in error.msg for error in errors)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(errors) != "The value of 'readonly_fields[0]' is not a callable, an attribute of 'CityInline', or an attribute of 'admin_checks.City'. Other fields like list_editable, raw_id_fields, list_display, etc. would also include this value:"

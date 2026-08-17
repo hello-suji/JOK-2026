@@ -1,0 +1,13 @@
+--- a/tests/backends/oracle/test_operations.py
++++ b/tests/backends/oracle/test_operations.py
+@@ -141,3 +141,10 @@
+         self.assertIn("BACKENDS_PERSON_SQ", statements[5])
+         self.assertIn("BACKENDS_VERYLONGMODELN7BE2_SQ", statements[6])
+         self.assertIn("BACKENDS_TAG_SQ", statements[7])
++
++from django.template.defaultfilters import floatformat
++
++class TestFloatFormat(TransactionTestCase):
++    def test_floatformat_zero_precision_repro(self):
++        result = floatformat('0.00', 0)
++        self.assertEqual(result, '0')

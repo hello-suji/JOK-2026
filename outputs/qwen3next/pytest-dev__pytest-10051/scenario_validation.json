@@ -1,0 +1,217 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:clear",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "src/_pytest/logging.py",
+          "target_function": "clear",
+          "related_classes": [
+            "LogCaptureFixture"
+          ],
+          "candidate_test_file": "testing/test_warning_types.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import logging module",
+          "Define a test function using pytest's caplog fixture",
+          "Log a warning message before clearing caplog"
+        ],
+        "execution_stimulus": [
+          "Call caplog.clear()",
+          "Call caplog.get_records('call') again"
+        ],
+        "expected_failure": "The call to caplog.get_records('call') returns the old log record instead of an empty list",
+        "relevant_source_files": [
+          "src/_pytest/logging.py",
+          "src/_pytest/pytester.py",
+          "src/_pytest/recwarn.py"
+        ],
+        "relevant_test_files": [
+          "testing/test_pytester.py",
+          "testing/code/test_code.py",
+          "testing/test_recwarn.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [
+            "caplog"
+          ],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_caplog_clear_issue(caplog):\n    import logging\n    logging.warning('test')\n    caplog.clear()\n    assert caplog.get_records('call') == []"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "[\"<LogRecord: root, 30, 'test'>\"]"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "clear",
+            "get_records"
+          ],
+          "classes": [
+            "LogCaptureFixture"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "issue_repro_code",
+          "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "issue_repro_code"
+      },
+      "force_selected": false
+    },
+    {
+      "scenario_id": "S2",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:get_records",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S2",
+        "target_location": {
+          "source_file": "src/_pytest/logging.py",
+          "target_function": "get_records",
+          "related_classes": [
+            "LogCaptureFixture"
+          ],
+          "candidate_test_file": "testing/test_warning_types.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import logging module",
+          "Define a test function using pytest's caplog fixture",
+          "Log a warning message",
+          "Clear caplog records"
+        ],
+        "execution_stimulus": [
+          "Log another warning message",
+          "Call caplog.get_records('call')"
+        ],
+        "expected_failure": "The call to caplog.get_records('call') returns the previous log record instead of the new one",
+        "relevant_source_files": [
+          "src/_pytest/logging.py",
+          "src/_pytest/pytester.py",
+          "src/_pytest/recwarn.py"
+        ],
+        "relevant_test_files": [
+          "testing/test_pytester.py",
+          "testing/code/test_code.py",
+          "testing/test_recwarn.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [
+            "caplog"
+          ],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_caplog_get_records_after_clear(caplog):\n    import logging\n    logging.warning('first')\n    caplog.clear()\n    logging.warning('second')\n    assert caplog.get_records('call') == [<LogRecord: root, 30, 'second'>]"
+          }
+        ],
+        "expected_outputs": [
+          "[\"<LogRecord: root, 30, 'second'>\"]"
+        ],
+        "actual_outputs": [
+          "[\"<LogRecord: root, 30, 'first'>\"]"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "clear",
+            "get_records"
+          ],
+          "classes": [
+            "LogCaptureFixture"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S3",
+      "score": 1.0,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:clear",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

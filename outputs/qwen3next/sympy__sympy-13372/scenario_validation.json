@@ -1,0 +1,112 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name is semantically aligned with target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:evalf",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions",
+        "target matches traceback fault location (file+function)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sympy/core/evalf.py",
+          "target_function": "evalf",
+          "related_classes": [
+            "Max",
+            "Mul"
+          ],
+          "candidate_test_file": "sympy/core/tests/test_evalf.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where evalf can be called."
+        ],
+        "execution_stimulus": [
+          "Call evalf with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "UnboundLocalError in evalf",
+        "relevant_source_files": [
+          "sympy/core/evalf.py",
+          "sympy/functions/elementary/miscellaneous.py",
+          "sympy/core/mul.py"
+        ],
+        "relevant_test_files": [
+          "sympy/core/tests/test_evalf.py",
+          "sympy/functions/elementary/tests/test_miscellaneous.py",
+          "sympy/core/tests/test_function.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "sympy-bin-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": ">>> Mul(x, Max(0, y), evaluate=False).evalf()\nx*Max(0, y)\n>>> Mul(Max(0, y), x, evaluate=False).evalf()\nTraceback (most recent call last):\n  File \"./sympy/core/evalf.py\", line 1285, in evalf\n    rf = evalf_table[x.func]\nKeyError: Max\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/core/evalf.py\", line 1394, in evalf\n    result = evalf(self, prec + 4, options)\n  File \"./sympy/core/evalf.py\", line 1286, in evalf\n    r = rf(x, prec, options)\n  File \"./sympy/core/evalf.py\", line 538, in evalf_mul\n    arg = evalf(arg, prec, options)\n  File \"./sympy/core/evalf.py\", line 1308, in evalf\n    r = re, im, reprec, imprec\nUnboundLocalError: local variable 'reprec' referenced before assignment"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "x*Max(0, y)\nTraceback (most recent call last):\nFile \"./sympy/core/evalf.py\", line 1285, in evalf\nrf = evalf_table[x.func]\nKeyError: Max\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\nFile \"<stdin>\", line 1, in <module>\nFile \"./sympy/core/evalf.py\", line 1394, in evalf\nresult = evalf(self, prec + 4, options)\nFile \"./sympy/core/evalf.py\", line 1286, in evalf\nr = rf(x, prec, options)\nFile \"./sympy/core/evalf.py\", line 538, in evalf_mul\narg = evalf(arg, prec, options)\nFile \"./sympy/core/evalf.py\", line 1308, in evalf\nr = re, im, reprec, imprec\nUnboundLocalError: local variable 'reprec' referenced before assignment"
+        ],
+        "error_keywords": [
+          "KeyError",
+          "NotImplementedError",
+          "UnboundLocalError",
+          "UnboundLocalError: local variable 'reprec' referenced before assignment"
+        ],
+        "identifiers": {
+          "functions": [
+            "evalf",
+            "rf"
+          ],
+          "classes": [
+            "Max",
+            "Mul"
+          ],
+          "files": [
+            "sympy/core/evalf.py"
+          ],
+          "exceptions": [
+            "KeyError",
+            "NotImplementedError",
+            "UnboundLocalError"
+          ]
+        },
+        "oracle_hints": [
+          "Call the target API and assert a public invariant that excludes the buggy output.",
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-26291",
+    "model_patch": "--- a/lib/matplotlib/tests/test_offsetbox.py\n+++ b/lib/matplotlib/tests/test_offsetbox.py\n@@ -450,3 +450,13 @@\n     an.draggable(True)\n     an.remove()\n     MouseEvent(\"button_release_event\", fig.canvas, 1, 1)._process()\n+\n+import re\n+def test_get_window_extent_failure_repro():\n+    fig, ax = plt.subplots()\n+    ob = OffsetBox()\n+    try:\n+        ob.get_window_extent(renderer=ax.figure.canvas.get_renderer())\n+# [removed: trivial oracle — assert post-fix behavior instead]\n+    except AttributeError as e:\n+        assert False, f\"Unexpected AttributeError: {str(e)}\"\n",
+    "patch_sha256": "26d4ac806eb2ed44508c5b5f0b61e34a92ba6aacd72959d9f8d5580c579195af"
+  }
+]

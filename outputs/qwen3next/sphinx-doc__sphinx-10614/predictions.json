@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-10614",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -570,3 +570,30 @@\n\n     # explicit title\n     assert html.format('index.html#foons') in content\n+\n+import unittest\n+class TestInheritanceDiagramLinks(unittest.TestCase):\n+    def test_svg_link_correctness_repro(self):\n+        \"\"\"Ensure SVG links in inheritance diagrams are correctly formed.\"\"\"\n+        import tempfile\n+        import os\n+        from sphinx.application import Sphinx\n+        from sphinx.ext.inheritance_diagram import inheritance_diagram\n+\n+        srcdir = os.path.join(os.path.dirname(__file__), 'roots', 'test-inheritance-svg')\n+        confdir = srcdir\n+        outdir = os.path.join(srcdir, '_build', 'html')\n+        doctreedir = os.path.join(srcdir, '_build', 'doctrees')\n+        buildername = 'html'\n+\n+        with tempfile.TemporaryDirectory() as tmpdir:\n+            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n+            app.build()\n+\n+            svg_path = os.path.join(outdir, 'my_package', 'inheritance.svg')\n+            with open(svg_path, 'r') as f:\n+                svg_content = f.read()\n+\n+            # Assert the presence of correctly formed links\n+            self.assertIn('href=\"my_class_1.html#my_package.MyClass1\"', svg_content)\n+            self.assertIn('href=\"my_class_2.html#my_package.MyClass2\"', svg_content)\n",
+    "patch_sha256": "a91b421e232739a470e52d096b7fc471c24b3421e1e8bbdc5d1a3ea908a21a27"
+  }
+]

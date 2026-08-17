@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/basic.py",
+      "target_function": "kwargs",
+      "related_classes": [
+        "Basic",
+        "String"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_basic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where kwargs can be called.",
+      "Use the generated reproduction path that calls func, isinstance.",
+      "Use the generated reproduction path that calls func, kwargs, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call kwargs with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: func, isinstance.",
+      "Execute the focused target API path: func, kwargs, isinstance."
+    ],
+    "expected_failure": "Currently, the `codegen.ast` `String` class does not support argument invariance like:",
+    "relevant_source_files": [
+      "sympy/core/basic.py",
+      "sympy/codegen/ast.py",
+      "sympy/core/function.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_function.py",
+      "sympy/core/tests/test_basic.py",
+      "sympy/physics/vector/tests/test_dyadic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\ndef test_string_argument_invariance_repro():\n    from sympy.core.basic import Basic\n    from sympy.codegen.ast import String\n    s = String('example')\n    reconstructed_s = s.func(*s.args, **s.kwargs)\n    assert isinstance(reconstructed_s, String)\n    assert reconstructed_s == s"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "func",
+        "kwargs",
+        "isinstance"
+      ],
+      "classes": [
+        "Basic",
+        "String"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_basic.py",
+      "target_source_file": "sympy/core/basic.py",
+      "test_visible_functions": [
+        "func",
+        "kwargs",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "Basic",
+        "String"
+      ]
+    }
+  }
+]

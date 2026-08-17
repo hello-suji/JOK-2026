@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-9711",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -463,3 +463,12 @@\n     stdout, stderr = capsys.readouterr()\n     assert stdout.startswith(\"c:function\\n\")\n     assert stderr == \"\"\n+\n+import unittest\n+from sphinx.ext.intersphinx import InventoryAdapter\n+\n+class TestInventoryAdapter(unittest.TestCase):\n+    def test_inventory_adapter_initialization_repro(self):\n+        \"\"\"Test that InventoryAdapter initializes correctly with a base URI.\"\"\"\n+        adapter = InventoryAdapter('http://example.com')\n+        self.assertEqual(adapter.base_uri, 'http://example.com')\n",
+    "patch_sha256": "72714fda07a102aab28dc5b3a2b557a1a159fa158c1abc8dd1ab825a908f83d8"
+  }
+]

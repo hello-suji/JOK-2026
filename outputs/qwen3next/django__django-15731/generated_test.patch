@@ -1,0 +1,15 @@
+--- a/tests/forms_tests/field_tests/__init__.py
++++ b/tests/forms_tests/field_tests/__init__.py
+@@ -7,3 +7,12 @@
+             f = field
+
+         self.assertHTMLEqual(str(Form()["f"]), to)
++
++from django.test import TestCase, SimpleTestCase
++import inspect
++from django.forms.fields import CharField
++
++class TestCharFieldSignature(TestCase):
++    def test_charfield_init_signature_repro(self):
++        sig = inspect.signature(CharField.__init__)
++        self.assertEqual(list(sig.parameters.keys()), ['self', '*args', '**kwargs'])

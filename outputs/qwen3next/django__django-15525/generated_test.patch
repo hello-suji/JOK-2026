@@ -1,0 +1,20 @@
+--- a/tests/serializers/models/base.py
++++ b/tests/serializers/models/base.py
+@@ -163,3 +163,17 @@
+     field1 = models.CharField(max_length=10)
+     field2 = models.CharField(max_length=10)
+     field3 = models.CharField(max_length=10)
++
++from django.test import TestCase
++from tests.serializers.models.base import Book, Author
++from django.core import serializers
++
++class TestBuildInstance(TestCase):
++    def test_build_instance_no_key_error_repro(self):
++        author = Author.objects.create(name='John Doe')
++        book_data = {'fields': {'title': 'Sample Book', 'author': author.pk}, 'model': 'serializers.book'}
++        deserialized_objects = list(serializers.deserialize('python', [book_data]))
++        self.assertEqual(len(deserialized_objects), 1)
++        self.assertIsInstance(deserialized_objects[0].object, Book)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(deserialized_objects) != "'title'"

@@ -1,0 +1,120 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Fig",
+        "Foobar",
+        "Listing",
+        "Open",
+        "Viser",
+        "Whatever",
+        "Sphinx",
+        "MessageCatalogBuilder",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_build_gettext.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, shutil, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, shutil, join, makedirs."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/config.py",
+      "sphinx/builders/gettext.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/test_build_gettext.py",
+      "tests/test_build_text.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import os\ndef test_custom_locale_translation_repro():\n    import tempfile\n    import shutil\n    from sphinx.application import Sphinx\n    from sphinx.builders.gettext import MessageCatalogBuilder\n    \n    # Create a temporary directory to simulate the project structure\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = srcdir\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        locale_dir = os.path.join(srcdir, 'locale')\n        da_locale_dir = os.path.join(locale_dir, 'da', 'LC_MESSAGES')\n        \n        # Create necessary directories and files\n        os.makedirs(da_locale_dir)\n        os.makedirs(srcdir)\n        \n        # Create a simple conf.py\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write(\"\"\"\nlanguage = 'da'\ngettext_auto_build = True\n\"\"\")\n        \n        # Create a simple index.rst\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(\"\"\"\n.. figure:: image.png\n   :caption: Figur 1\n\n.. code-block:: python\n   :caption: Viser 1\n\n   print('Hello World')\n\"\"\")\n        \n        # Create a custom sphinx.po file\n        with open(os.path.join(da_locale_dir, 'sphinx.po'), 'w') as f:\n            f.write('''\\\nmsgid \"\"\\\nmsgstr \"\"\\\n\"Project-Id-Version: PROJECT VERSION\\n\"POT-Creation-Date: 2023-10-01 00:00+0000\\n\"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n\"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n\"Language-Team: LANGUAGE <LL@li.org>\\n\"MIME-Version: 1.0\\n\"Content-Type: text/plain; charset=UTF-8\\n\"Content-Transfer-Encoding: 8bit\\n\"\n\nmsgid \"Fig. %s\"\nmsgstr \"Foobar %s\"\n\nmsgid \"Listing %s\"\nmsgstr \"Whatever %s\"\n''')\n        \n        # Build the Sphinx documentation\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='gettext')\n        app.build()\n        \n        # Build the MO file from PO file\n        subprocess.run(['msgfmt', os.path.join(da_locale_dir, 'sphinx.po'), '-o', os.path.join(da_locale_dir, 'sphinx.mo')], check=True)\n        \n        # Rebuild the Sphinx documentation with the MO file\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n        app.build()\n        \n        # Check the output files for the translated captions\n        with open(os.path.join(outdir, 'index.html'), 'r', encoding='utf-8') as f:\n            content = f.read()\n            assert 'Foobar 1' in content\n            assert 'Whatever 1' in content"
+      },
+      {
+        "language": "python",
+        "code": "$ git clone https://github.com/jonascj/sphinx-test-locale-override.git\n$ cd sphinx-test-locale-override\n$ git checkout 8dea4cd # EDIT: current master showcases workaround, so revert back to see the bug\n$ # make python venv however you like\n$ pip install sphinx\n$ make html"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "shutil",
+        "join",
+        "makedirs",
+        "build",
+        "run"
+      ],
+      "classes": [
+        "Fig",
+        "Foobar",
+        "Listing",
+        "Makefile",
+        "Of",
+        "Open",
+        "Viser",
+        "Whatever",
+        "Sphinx",
+        "MessageCatalogBuilder",
+        "TemporaryDirectory"
+      ],
+      "files": [
+        "conf.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_build_gettext.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "tempfile",
+        "shutil",
+        "join",
+        "makedirs",
+        "build",
+        "run"
+      ],
+      "test_visible_classes": [
+        "Fig",
+        "Foobar",
+        "Listing",
+        "Open",
+        "Viser",
+        "Whatever",
+        "Sphinx",
+        "MessageCatalogBuilder"
+      ]
+    }
+  }
+]

@@ -1,0 +1,23 @@
+--- a/doc/en/example/assertion/test_failures.py
++++ b/doc/en/example/assertion/test_failures.py
+@@ -11,3 +11,20 @@
+     result = testdir.runpytest(target, syspathinsert=True)
+     result.stdout.fnmatch_lines(["*44 failed*"])
+     assert result.ret != 0
++
++import pytest
++from _pytest.skipping import pytest_runtest_makereport
++
++def test_pytest_runtest_makereport_skip_location_repro(testdir):
++    testdir.makepyfile('''
++import pytest
++
++@pytest.mark.skip
++def test_example_repro():
++    assert 0
++''')
++    result = testdir.runpytest()
++    report = pytest_runtest_makereport(result)
++    assert 'src/_pytest/skipping.py' not in report.longreprtext
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(report) != 'SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip'

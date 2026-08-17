@@ -1,0 +1,17 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1611,3 +1611,14 @@
+     fig = plt.figure(layout=mpl.layout_engine.ConstrainedLayoutEngine(**params))
+     with pytest.warns(PendingDeprecationWarning, match="will be deprecated"):
+         assert fig.get_constrained_layout_pads() == expected
++
++import matplotlib.pyplot as plt
++
++def test_subfigures_wspace_hspace_repro():
++    fig = plt.figure()
++    subfigs = fig.subfigures(2, 2, wspace=0, hspace=0)
++    for subfig in subfigs.flat:
++        ax = subfig.subplots()
++        ax.plot([1, 2])
++    assert len(subfigs) == 4
++    assert all(isinstance(subfig, plt.Figure) for subfig in subfigs)

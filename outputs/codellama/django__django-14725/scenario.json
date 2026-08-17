@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/forms.py",
+      "target_function": "formset_factory",
+      "related_classes": [
+        "ModelForm",
+        "User",
+        "UserForm",
+        "Meta",
+        "UserFormSet"
+      ],
+      "candidate_test_file": "tests/forms_tests/tests/test_formsets.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls formset_factory, modelformset_factory, create."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: formset_factory, modelformset_factory, create."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/forms/forms.py",
+      "django/forms/formsets.py",
+      "django/views/generic/edit.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/tests/test_formsets.py",
+      "tests/flatpages_tests/test_forms.py",
+      "tests/foreign_object/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.forms.formsets import formset_factory\nfrom django.forms.models import modelformset_factory\nfrom django.forms import ModelForm\nfrom django.test import TestCase\nfrom django.contrib.auth.models import User\n\nclass TestModelFormsetEditOnly(TestCase):\n    def test_disallow_new_object_creation_repro(self):\n        # Create a user instance to use in the formset\n        self.user1 = User.objects.create(username='user1')\n\n        # Define a simple ModelForm for User\n        class UserForm(ModelForm):\n            class Meta:\n                model = User\n                fields = ['username']\n\n        # Create a modelformset with extra=0 to disallow new object creation\n        UserFormSet = modelformset_factory(User, form=UserForm, extra=0)\n\n        # Prepare data that includes a new user\n        data = {\n            'form-TOTAL_FORMS': '2',\n            'form-INITIAL_FORMS': '1',\n            'form-MIN_NUM_FORMS': '0',\n            'form-MAX_NUM_FORMS': '1000',\n            'form-0-id': str(self.user1.id),\n            'form-0-username': 'updated_user1',\n            'form-1-id': '',\n            'form-1-username': 'new_user',\n        }\n\n        # Instantiate the formset with the data\n        formset = UserFormSet(data)\n\n        # Assert that the formset is not valid due to the new object creation attempt\n        self.assertFalse(formset.is_valid())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "formset_factory",
+        "modelformset_factory",
+        "create"
+      ],
+      "classes": [
+        "ModelForm",
+        "User",
+        "UserForm",
+        "Meta",
+        "UserFormSet"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/tests/test_formsets.py",
+      "target_source_file": "django/forms/forms.py",
+      "test_visible_functions": [
+        "formset_factory",
+        "modelformset_factory",
+        "create"
+      ],
+      "test_visible_classes": [
+        "ModelForm",
+        "User",
+        "UserForm",
+        "Meta",
+        "UserFormSet"
+      ]
+    }
+  }
+]

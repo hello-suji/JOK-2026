@@ -1,0 +1,15 @@
+--- a/astropy/io/fits/tests/test_core.py
++++ b/astropy/io/fits/tests/test_core.py
+@@ -1439,3 +1439,12 @@
+         # See https://github.com/astropy/astropy/issues/3766
+         with fits.open(pth, memmap=True, do_not_scale_image_data=True) as hdul:
+             hdul[0].data  # Just make sure it doesn't crash
++
++from astropy.table.ndarray_mixin import NdarrayMixin
++from astropy.table import Table
++import numpy as np
++
++def test_structured_array_not_viewed_as_ndarraymixin_repro():
++    structured_array = np.array([(1, 2.0), (3, 4.0)], dtype=[('a', int), ('b', float)])
++    table = Table([structured_array], names=['structured_col'])
++    assert not isinstance(table['structured_col'], NdarrayMixin)

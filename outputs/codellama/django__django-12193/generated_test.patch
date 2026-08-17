@@ -1,0 +1,20 @@
+--- a/tests/forms_tests/field_tests/test_booleanfield.py
++++ b/tests/forms_tests/field_tests/test_booleanfield.py
+@@ -61,3 +61,17 @@
+     def test_disabled_has_changed_gate(self):
+         f = BooleanField(disabled=True)
+         self.assertIs(f.has_changed('True', 'False'), False)
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.postgres.forms.array import SplitArrayField, SplitArrayWidget
++from django.forms.widgets import CheckboxInput
++
++class TestSplitArrayFieldWithBooleanField(SimpleTestCase):
++    def test_checkbox_input_checked_state_repro(self):
++        initial_data = [False, True, False]
++        split_array_field = SplitArrayField(BooleanField(), size=len(initial_data))
++        split_array_widget = SplitArrayWidget(widget=CheckboxInput(), size=len(initial_data))
++        contexts = [split_array_widget.widget.get_context(name='test', value=value, attrs={})['widget'] for value in initial_data]
++        self.assertNotIn('checked', contexts[0]['attrs'])
++        self.assertIn('checked', contexts[1]['attrs'])
++        self.assertNotIn('checked', contexts[2]['attrs'])

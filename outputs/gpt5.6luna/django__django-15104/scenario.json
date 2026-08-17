@@ -1,0 +1,121 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/__init__.py",
+      "target_function": "assertEqual",
+      "related_classes": [
+        "CustomFKField",
+        "ForeignKey",
+        "HardcodedModel",
+        "MigrationAutodetector",
+        "ModelState",
+        "ProjectState",
+        "AutoField"
+      ],
+      "candidate_test_file": "tests/migrations/test_autodetector.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where <module> can be called.",
+      "Use the generated reproduction path that calls assertEqual, changes."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: assertEqual, changes."
+    ],
+    "expected_failure": "KeyError with migration autodetector and FK field with hardcoded reference",
+    "relevant_source_files": [
+      "django/core/management/__init__.py",
+      "django/db/migrations/autodetector.py",
+      "django/core/management/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_autodetector.py",
+      "tests/migrations/migrations_test_apps/mutate_state_a/__init__.py",
+      "tests/migrations/migrations_test_apps/mutate_state_a/migrations/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.state import ModelState, ProjectState\nfrom django.db.migrations.autodetector import MigrationAutodetector\nfrom django.db.models.fields.related import ForeignKey\n\nclass TestMigrationAutodetectorWithHardcodedFK(TestCase):\n    def test_hardcoded_fk_detection_repro(self):\n        # Define a model state with a ForeignKey that has a hardcoded reference\n        old_model_state = ModelState('app_label', 'TestModel', [('id', models.AutoField(primary_key=True)), ('fk', ForeignKey('HardcodedModel', on_delete=models.CASCADE))])\n        new_model_state = ModelState('app_label', 'TestModel', [('id', models.AutoField(primary_key=True)), ('fk', ForeignKey('app_label.HardcodedModel', on_delete=models.CASCADE))])\n        \n        old_project_state = ProjectState(models={'app_label.TestModel': old_model_state})\n        new_project_state = ProjectState(models={'app_label.TestModel': new_model_state})\n        \n        autodetector = MigrationAutodetector(old_project_state, new_project_state)\n        changes = autodetector.changes(graph=loader.graph)\n        \n        self.assertEqual(len(changes['app_label']), 1)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "KeyError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "_detect_changes",
+        "add_model",
+        "changes",
+        "deconstruct",
+        "execute",
+        "execute_from_command_line",
+        "fetch_command",
+        "generate_renamed_models"
+      ],
+      "classes": [
+        "CustomFKField",
+        "ForeignKey",
+        "HardcodedModel",
+        "MigrationAutodetector",
+        "ModelState",
+        "ProjectState",
+        "ReproTestCase",
+        "AutoField"
+      ],
+      "files": [
+        "django/core/management/__init__.py",
+        "django/core/management/base.py",
+        "django/core/management/commands/migrate.py",
+        "django/core/management/commands/test.py",
+        "django/db/backends/base/creation.py",
+        "django/db/migrations/autodetector.py",
+        "django/test/runner.py",
+        "django/test/utils.py",
+        "manage.py"
+      ],
+      "exceptions": [
+        "KeyError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/test_autodetector.py",
+      "target_source_file": "django/core/management/__init__.py",
+      "test_visible_functions": [
+        "assertEqual",
+        "changes"
+      ],
+      "test_visible_classes": [
+        "ForeignKey",
+        "HardcodedModel",
+        "MigrationAutodetector",
+        "ModelState",
+        "ProjectState",
+        "AutoField"
+      ]
+    }
+  }
+]

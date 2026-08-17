@@ -1,0 +1,412 @@
+{
+  "instance_id": "django__django-13513",
+  "repo": "django/django",
+  "base_commit": "6599608c4d0befdcb820ddccce55f183f247ae4f",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/views/debug.py",
+      "score": 42,
+      "matched_identifiers": [
+        "__cause__",
+        "__context__",
+        "__suppress_context__",
+        "cause",
+        "django/views/debug.py",
+        "get_traceback_frames"
+      ],
+      "reasons": [
+        "function_match:get_traceback_frames",
+        "explicit_file_path_hint:django/views/debug.py",
+        "stem_in_issue_text:debug",
+        "source_content_tokens:__cause__,__context__,__suppress_context__,cause,context"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get_traceback_frames": "    def get_traceback_frames(self):\n        def explicit_or_implicit_cause(exc_value):\n            explicit = getattr(exc_value, '__cause__', None)\n            suppress_context = getattr(exc_value, '__suppress_context__', None)\n            implicit = getattr(exc_value, '__context__', None)\n            return explicit or (None if suppress_context else implicit)\n\n        # Get the exception and all its causes\n        exceptions = []\n        exc_value = self.exc_value\n        while exc_value:\n            exceptions.append(exc_value)\n            exc_value = explicit_or_implicit_cause(exc_value)\n            if exc_value in exceptions:\n                warnings.warn("
+      },
+      "top_level_functions": [
+        "technical_500_response",
+        "get_default_exception_reporter_filter",
+        "get_exception_reporter_filter",
+        "get_exception_reporter_class",
+        "SafeExceptionReporterFilter.cleanse_setting",
+        "SafeExceptionReporterFilter.get_safe_settings",
+        "SafeExceptionReporterFilter.get_safe_request_meta",
+        "SafeExceptionReporterFilter.is_active",
+        "SafeExceptionReporterFilter.get_cleansed_multivaluedict",
+        "SafeExceptionReporterFilter.get_post_parameters",
+        "SafeExceptionReporterFilter.cleanse_special_types",
+        "SafeExceptionReporterFilter.get_traceback_frame_variables",
+        "ExceptionReporter.get_traceback_data",
+        "ExceptionReporter.get_traceback_html",
+        "ExceptionReporter.get_traceback_text",
+        "ExceptionReporter.get_traceback_frames",
+        "technical_404_response",
+        "default_urlconf"
+      ]
+    },
+    {
+      "path": "django/views/decorators/debug.py",
+      "score": 27,
+      "matched_identifiers": [
+        "consider",
+        "django/views/debug.py",
+        "except",
+        "raise",
+        "which"
+      ],
+      "reasons": [
+        "file_hint_match:django/views/debug.py",
+        "stem_in_issue_text:debug",
+        "source_content_tokens:raise,which,consider,except,exception"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "sensitive_variables",
+        "sensitive_post_parameters"
+      ]
+    },
+    {
+      "path": "django/template/context.py",
+      "score": 22,
+      "matched_identifiers": [
+        "cause",
+        "context",
+        "get",
+        "raise",
+        "runtimeerror"
+      ],
+      "reasons": [
+        "function_match:get",
+        "stem_in_issue_text:context",
+        "source_content_tokens:cause,context,raise,runtimeerror,except"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, otherwise=None):\n        return self.dicts[-1].get(key, otherwise)\n\n    def __getitem__(self, key):\n        return self.dicts[-1][key]\n\n    @contextmanager\n    def push_state(self, template, isolated_context=True):\n        initial = self.template\n        self.template = template\n        if isolated_context:\n            self.push()\n        try:\n            yield\n        finally:"
+      },
+      "top_level_functions": [
+        "BaseContext.push",
+        "BaseContext.pop",
+        "BaseContext.set_upward",
+        "BaseContext.get",
+        "BaseContext.setdefault",
+        "BaseContext.new",
+        "BaseContext.flatten",
+        "Context.bind_template",
+        "Context.update",
+        "RenderContext.get",
+        "RenderContext.push_state",
+        "RequestContext.bind_template",
+        "RequestContext.new",
+        "make_context"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/gdal/feature.py",
+      "score": 21,
+      "matched_identifiers": [
+        "except",
+        "exception",
+        "get",
+        "raise",
+        "which"
+      ],
+      "reasons": [
+        "function_match:get",
+        "source_content_tokens:raise,which,except,exception,getattr"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, field):\n        \"\"\"\n        Return the value of the field, instead of an instance of the Field\n        object.  May take a string of the field name or a Field object as\n        parameters.\n        \"\"\"\n        field_name = getattr(field, 'name', field)\n        return self[field_name].value\n\n    def index(self, field_name):\n        \"Return the index of the given field name.\"\n        i = capi.get_field_index(self.ptr, force_bytes(field_name))\n        if i < 0:\n            raise IndexError('Invalid OFT field name given: %s.' % field_name)\n        return i"
+      },
+      "top_level_functions": [
+        "Feature.encoding",
+        "Feature.fid",
+        "Feature.layer_name",
+        "Feature.num_fields",
+        "Feature.fields",
+        "Feature.geom",
+        "Feature.geom_type",
+        "Feature.get",
+        "Feature.index"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 21,
+      "matched_identifiers": [
+        "cause",
+        "except",
+        "get",
+        "raise",
+        "valueerror"
+      ],
+      "reasons": [
+        "function_match:get",
+        "source_content_tokens:cause,raise,valueerror,except,exception"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, default=None):\n        return self._session.get(key, default)\n\n    def pop(self, key, default=__not_given):\n        self.modified = self.modified or key in self._session\n        args = () if default is self.__not_given else (default,)\n        return self._session.pop(key, *args)\n\n    def setdefault(self, key, value):\n        if key in self._session:\n            return self._session[key]\n        else:\n            self.modified = True\n            self._session[key] = value\n            return value"
+      },
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 20,
+      "matched_identifiers": [
+        "TestView"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestView",
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:backends,template",
+        "internal_name_overlap:context",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/generic_views/test_base.py",
+      "score": 19,
+      "matched_identifiers": [
+        "TestView",
+        "get"
+      ],
+      "reasons": [
+        "test_function_match:get",
+        "test_path_related_to_class:TestView",
+        "test_name_matches_source_stem:base",
+        "token_overlap:view",
+        "internal_name_overlap:view",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/test_django_admin_py.py",
+      "score": 14,
+      "matched_identifiers": [
+        "TestView"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestView",
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/test_context.py",
+      "score": 13,
+      "matched_identifiers": [
+        "TestView"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestView",
+        "test_name_matches_source_stem:context",
+        "token_overlap:context,template",
+        "internal_name_overlap:context",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/views"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/view_tests/tests/test_debug.py",
+      "score": 13,
+      "matched_identifiers": [
+        "TestView"
+      ],
+      "reasons": [
+        "test_path_related_to_class:TestView",
+        "test_name_matches_source_stem:debug",
+        "token_overlap:debug,view",
+        "internal_name_overlap:view",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/views"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/template_tests/test_context.py:unittest_or_django_test_import",
+      "tests/admin_scripts/test_django_admin_py.py:unittest_or_django_test_import",
+      "tests/generic_views/test_base.py:unittest_or_django_test_import",
+      "tests/view_tests/tests/test_debug.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2679,
+  "indexed_test_file_count": 1820,
+  "available_imports": {
+    "django": [
+      "Context",
+      "ContextPopException",
+      "Engine",
+      "EngineHandler",
+      "Library",
+      "Node",
+      "NodeList",
+      "Origin",
+      "RequestContext",
+      "Template",
+      "TemplateDoesNotExist",
+      "TemplateSyntaxError",
+      "Variable",
+      "VariableDoesNotExist",
+      "View",
+      "engines",
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.template_tests.test_context": [
+      "ContextTests",
+      "RequestContextTests"
+    ],
+    "tests.admin_scripts.test_django_admin_py": [
+      "DeprecationTests"
+    ],
+    "tests.generic_views.test_base": [
+      "AboutTemplateAttributeView",
+      "AboutTemplateView",
+      "CustomizableView",
+      "DecoratedDispatchView",
+      "GetContextDataTest",
+      "InstanceView",
+      "PostOnlyView",
+      "RedirectViewTest",
+      "SimplePostView",
+      "SimpleView",
+      "SingleObjectTemplateResponseMixinTest",
+      "TemplateViewTest",
+      "UseMultipleObjectMixinTest",
+      "ViewTest",
+      "decorator"
+    ],
+    "tests.view_tests.tests.test_debug": [
+      "CallableSettingWrapperTests",
+      "CustomExceptionReporterFilter",
+      "CustomExceptionReporterFilterTests",
+      "DebugViewQueriesAllowedTests",
+      "DebugViewTests",
+      "DecoratorsTests",
+      "ExceptionReportTestMixin",
+      "ExceptionReporterFilterTests",
+      "ExceptionReporterTests",
+      "NonDjangoTemplatesDebugViewTests",
+      "NonHTMLResponseExceptionReporterFilter",
+      "PlainTextReportTests",
+      "User",
+      "WithoutEmptyPathUrls"
+    ],
+    "django.template.context": [
+      "BaseContext",
+      "Context",
+      "ContextDict",
+      "ContextPopException",
+      "RenderContext",
+      "RequestContext",
+      "make_context"
+    ],
+    "django.views.debug": [
+      "CallableSettingWrapper",
+      "ExceptionCycleWarning",
+      "ExceptionReporter",
+      "SafeExceptionReporterFilter",
+      "default_urlconf",
+      "get_default_exception_reporter_filter",
+      "get_exception_reporter_class",
+      "get_exception_reporter_filter",
+      "technical_404_response",
+      "technical_500_response"
+    ],
+    "django.views.decorators.debug": [
+      "sensitive_post_parameters",
+      "sensitive_variables"
+    ],
+    "django.contrib.gis.gdal.feature": [
+      "Feature"
+    ],
+    "django.contrib.gis": [
+      "AxisOrder",
+      "CoordTransform",
+      "DataSource",
+      "Driver",
+      "Envelope",
+      "GDALException",
+      "GDALRaster",
+      "GDAL_VERSION",
+      "OGRGeomType",
+      "OGRGeometry",
+      "SRSException",
+      "SpatialReference",
+      "check_err",
+      "gdal_full_version",
+      "gdal_version"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

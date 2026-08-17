@@ -1,0 +1,256 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/constraints.py",
+      "target_function": "validate",
+      "related_classes": [
+        "BaseConstraint"
+      ],
+      "candidate_test_file": "tests/validation/test_constraints.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.core.exceptions import ValidationError",
+      "from django.db.models.constraints import BaseConstraint",
+      "constraint = BaseConstraint(name='test_constraint')",
+      "Use the generated reproduction path that calls validate."
+    ],
+    "execution_stimulus": [
+      "try:",
+      "    constraint.validate(None)",
+      "except ValidationError as e:",
+      "    error_code = e.code",
+      "Execute the focused target API path: validate."
+    ],
+    "expected_failure": "The ValidationError raised does not have a custom code attribute.",
+    "relevant_source_files": [
+      "django/db/models/constraints.py",
+      "django/contrib/auth/forms.py",
+      "django/contrib/gis/geoip2/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/postgres_tests/test_constraints.py",
+      "tests/validation/test_constraints.py",
+      "tests/auth_tests/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models.constraints import BaseConstraint\n\nclass TestBaseConstraintValidation(TestCase):\n    def test_validate_without_custom_code_repro(self):\n        constraint = BaseConstraint(name='test_constraint')\n        try:\n            constraint.validate(None)\n        except ValidationError as e:\n            self.assertIsNone(e.code)"
+      },
+      {
+        "language": "python",
+        "code": "def test_validate_without_custom_code():\n    from django.core.exceptions import ValidationError\n    from django.db.models.constraints import BaseConstraint\n    constraint = BaseConstraint(name='test_constraint')\n    try:\n        constraint.validate(None)\n    except ValidationError as e:\n        assert e.code is None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValidationError"
+    ],
+    "identifiers": {
+      "functions": [
+        "validate"
+      ],
+      "classes": [
+        "BaseConstraint"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/validation/test_constraints.py",
+      "target_source_file": "django/db/models/constraints.py",
+      "test_visible_functions": [
+        "validate"
+      ],
+      "test_visible_classes": [
+        "BaseConstraint"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/constraints.py",
+      "target_function": "validate",
+      "related_classes": [
+        "BaseConstraint"
+      ],
+      "candidate_test_file": "tests/validation/test_constraints.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db.models.constraints import BaseConstraint",
+      "Use the generated reproduction path that calls validate."
+    ],
+    "execution_stimulus": [
+      "constraint = BaseConstraint(name='test_constraint', violation_error_message='Custom message')",
+      "Execute the focused target API path: validate."
+    ],
+    "expected_failure": "The violation_error_message is set but the code attribute of ValidationError remains None.",
+    "relevant_source_files": [
+      "django/db/models/constraints.py",
+      "django/contrib/auth/forms.py",
+      "django/contrib/gis/geoip2/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/postgres_tests/test_constraints.py",
+      "tests/validation/test_constraints.py",
+      "tests/auth_tests/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models.constraints import BaseConstraint\n\nclass TestBaseConstraintValidation(TestCase):\n    def test_validate_without_custom_code_repro(self):\n        constraint = BaseConstraint(name='test_constraint')\n        try:\n            constraint.validate(None)\n        except ValidationError as e:\n            self.assertIsNone(e.code)"
+      },
+      {
+        "language": "python",
+        "code": "def test_init_with_violation_error_message():\n    from django.db.models.constraints import BaseConstraint\n    constraint = BaseConstraint(name='test_constraint', violation_error_message='Custom message')\n    assert constraint.violation_error_message == 'Custom message'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValidationError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "validate"
+      ],
+      "classes": [
+        "BaseConstraint"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/validation/test_constraints.py",
+      "target_source_file": "django/db/models/constraints.py",
+      "test_visible_functions": [
+        "validate"
+      ],
+      "test_visible_classes": [
+        "BaseConstraint"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/constraints.py",
+      "target_function": "validate",
+      "related_classes": [
+        "BaseConstraint"
+      ],
+      "candidate_test_file": "tests/validation/test_constraints.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.core.exceptions import ValidationError",
+      "from django.db.models.constraints import BaseConstraint",
+      "constraint = BaseConstraint(name='test_constraint', violation_error_message='Custom message')",
+      "Use the generated reproduction path that calls validate."
+    ],
+    "execution_stimulus": [
+      "try:",
+      "    constraint.validate(None)",
+      "except ValidationError as e:",
+      "    error_code = e.code",
+      "Execute the focused target API path: validate."
+    ],
+    "expected_failure": "The ValidationError raised still does not have a custom code attribute despite setting violation_error_message.",
+    "relevant_source_files": [
+      "django/db/models/constraints.py",
+      "django/contrib/auth/forms.py",
+      "django/contrib/gis/geoip2/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/postgres_tests/test_constraints.py",
+      "tests/validation/test_constraints.py",
+      "tests/auth_tests/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models.constraints import BaseConstraint\n\nclass TestBaseConstraintValidation(TestCase):\n    def test_validate_without_custom_code_repro(self):\n        constraint = BaseConstraint(name='test_constraint')\n        try:\n            constraint.validate(None)\n        except ValidationError as e:\n            self.assertIsNone(e.code)"
+      },
+      {
+        "language": "python",
+        "code": "def test_validate_with_violation_error_message():\n    from django.core.exceptions import ValidationError\n    from django.db.models.constraints import BaseConstraint\n    constraint = BaseConstraint(name='test_constraint', violation_error_message='Custom message')\n    try:\n        constraint.validate(None)\n    except ValidationError as e:\n        assert e.code is None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValidationError"
+    ],
+    "identifiers": {
+      "functions": [
+        "validate"
+      ],
+      "classes": [
+        "BaseConstraint"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/validation/test_constraints.py",
+      "target_source_file": "django/db/models/constraints.py",
+      "test_visible_functions": [
+        "validate"
+      ],
+      "test_visible_classes": [
+        "BaseConstraint"
+      ]
+    }
+  }
+]

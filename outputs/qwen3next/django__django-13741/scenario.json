@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/auth/forms.py",
+      "target_function": "clean_password",
+      "related_classes": [
+        "ReadOnlyPasswordHashField",
+        "UserChangeForm",
+        "User"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where clean_password can be called.",
+      "Use the generated reproduction path that calls create_user, clean_password."
+    ],
+    "execution_stimulus": [
+      "Call clean_password with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create_user, clean_password."
+    ],
+    "expected_failure": "Currently the django.contrib.auth.forms.UserChangeForm defines a clean_password method that returns the initial password value to prevent (accidental) changes to the password value. It is also documented that custom forms for the User model need to define this method: ​https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#a-full-example",
+    "relevant_source_files": [
+      "django/contrib/auth/forms.py",
+      "django/contrib/gis/geoip2/base.py",
+      "django/contrib/sessions/backends/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/auth_tests/test_forms.py",
+      "tests/admin_views/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.auth.forms import UserChangeForm\nfrom django.contrib.auth.models import User\n\nclass TestUserChangeForm(TestCase):\n    def test_clean_password_returns_initial_value_repro(self):\n        user = User.objects.create_user(username='testuser', password='initialpassword')\n        form = UserChangeForm(instance=user, data={'password': 'newpassword'})\n        cleaned_password = form.clean_password()\n        self.assertEqual(cleaned_password, 'initialpassword')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create_user",
+        "clean_password"
+      ],
+      "classes": [
+        "ReadOnlyPasswordHashField",
+        "UserChangeForm",
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "target_source_file": "django/contrib/auth/forms.py",
+      "test_visible_functions": [
+        "create_user",
+        "clean_password"
+      ],
+      "test_visible_classes": [
+        "UserChangeForm",
+        "User"
+      ]
+    }
+  }
+]

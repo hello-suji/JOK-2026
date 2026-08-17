@@ -1,0 +1,114 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/simplify/sqrtdenest.py",
+      "target_function": "sqrtdenest",
+      "related_classes": [],
+      "candidate_test_file": "sympy/simplify/tests/test_sqrtdenest.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where sqrtdenest can be called.",
+      "Use the generated reproduction path that calls sqrtdenest, sqrt.",
+      "Use the generated reproduction path that calls _split_gcd, _sqrt_match, _sqrtdenest0, _sqrtdenest1."
+    ],
+    "execution_stimulus": [
+      "Call sqrtdenest with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sqrtdenest, sqrt.",
+      "Execute the focused target API path: _split_gcd, _sqrt_match, _sqrtdenest0, _sqrtdenest1."
+    ],
+    "expected_failure": "sqrtdenest raises IndexError",
+    "relevant_source_files": [
+      "sympy/simplify/sqrtdenest.py",
+      "sympy/simplify/radsimp.py",
+      "sympy/core/function.py"
+    ],
+    "relevant_test_files": [
+      "sympy/simplify/tests/test_sqrtdenest.py",
+      "sympy/matrices/expressions/tests/test_applyfunc.py",
+      "sympy/functions/elementary/tests/test_miscellaneous.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": ">>> sqrtdenest((3 - sqrt(2)*sqrt(4 + 3*I) + 3*I)/2)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"sympy\\simplify\\sqrtdenest.py\", line 132, in sqrtdenest\n    z = _sqrtdenest0(expr)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\n    return expr.func(*[_sqrtdenest0(a) for a in args])\n  File \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\n    return expr.func(*[_sqrtdenest0(a) for a in args])\n  File \"sympy\\simplify\\sqrtdenest.py\", line 235, in _sqrtdenest0\n    return _sqrtdenest1(expr)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 319, in _sqrtdenest1\n    val = _sqrt_match(a)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 159, in _sqrt_match\n    r, b, a = split_surds(p)\n  File \"sympy\\simplify\\radsimp.py\", line 1032, in split_surds\n    g, b1, b2 = _split_gcd(*surds)\n  File \"sympy\\simplify\\radsimp.py\", line 1068, in _split_gcd\n    g = a[0]\nIndexError: tuple index out of range"
+      },
+      {
+        "language": "python",
+        "code": ">>> sqrtdenest((3 - sqrt(2)*sqrt(4 + 3*I) + 3*I)/2)\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"sympy\\simplify\\sqrtdenest.py\", line 132, in sqrtdenest\n    z = _sqrtdenest0(expr)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\n    return expr.func(*[_sqrtdenest0(a) for a in args])\n  File \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\n    return expr.func(*[_sqrtdenest0(a) for a in args])\n  File \"sympy\\simplify\\sqrtdenest.py\", line 235, in _sqrtdenest0\n    return _sqrtdenest1(expr)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 319, in _sqrtdenest1\n    val = _sqrt_match(a)\n  File \"sympy\\simplify\\sqrtdenest.py\", line 159, in _sqrt_match\n    r, b, a = split_surds(p)\n  File \"sympy\\simplify\\radsimp.py\", line 1032, in split_surds\n    g, b1, b2 = _split_gcd(*surds)\n  File \"sympy\\simplify\\radsimp.py\", line 1068, in _split_gcd\n    g = a[0]\nIndexError: tuple index out of range"
+      },
+      {
+        "language": "python",
+        "code": "In [9]: sqrtdenest((3 - sqrt(2)*sqrt(4 + 3*I) + 3*I)/2)\nOut[9]: 3/2 - sqrt(2)*sqrt(4 + 3*I)/2 + 3*I/2"
+      },
+      {
+        "language": "python",
+        "code": "def test_sqrtdenest_index_error_repro():\n    expr = (3 - sqrt(2)*sqrt(4 + 3*I) + 3*I)/2\n    result = sqrtdenest(expr)\n    assert result == expr\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'Traceback (most recent call last):\\nFile \"<stdin>\", line 1, in <module>\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 132, in sqrtdenest\\nz = _sqrtdenest0(expr)\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 242, in _sqrtdenest0\\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 242, in _sqrtdenest0\\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 235, in _sqrtdenest0\\nreturn _sqrtdenest1(expr)\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 319, in _sqrtdenest1\\nval = _sqrt_match(a)\\nFile \"sympy\\\\simplify\\\\sqrtdenest.py\", line 159, in _sqrt_match\\nr, b, a = split_surds(p)\\nFile \"sympy\\\\simplify\\\\radsimp.py\", line 1032, in split_surds\\ng, b1, b2 = _split_gcd(*surds)\\nFile \"sympy\\\\simplify\\\\radsimp.py\", line 1068, in _split_gcd\\ng = a[0]\\nIndexError: tuple index out of range'"
+      }
+    ],
+    "expected_outputs": [
+      "Traceback (most recent call last):\nFile \"<stdin>\", line 1, in <module>\nFile \"sympy\\simplify\\sqrtdenest.py\", line 132, in sqrtdenest\nz = _sqrtdenest0(expr)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\nFile \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\nFile \"sympy\\simplify\\sqrtdenest.py\", line 235, in _sqrtdenest0\nreturn _sqrtdenest1(expr)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 319, in _sqrtdenest1\nval = _sqrt_match(a)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 159, in _sqrt_match\nr, b, a = split_surds(p)\nFile \"sympy\\simplify\\radsimp.py\", line 1032, in split_surds\ng, b1, b2 = _split_gcd(*surds)\nFile \"sympy\\simplify\\radsimp.py\", line 1068, in _split_gcd\ng = a[0]\nIndexError: tuple index out of range"
+    ],
+    "actual_outputs": [
+      "Traceback (most recent call last):\nFile \"<stdin>\", line 1, in <module>\nFile \"sympy\\simplify\\sqrtdenest.py\", line 132, in sqrtdenest\nz = _sqrtdenest0(expr)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\nFile \"sympy\\simplify\\sqrtdenest.py\", line 242, in _sqrtdenest0\nreturn expr.func(*[_sqrtdenest0(a) for a in args])\nFile \"sympy\\simplify\\sqrtdenest.py\", line 235, in _sqrtdenest0\nreturn _sqrtdenest1(expr)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 319, in _sqrtdenest1\nval = _sqrt_match(a)\nFile \"sympy\\simplify\\sqrtdenest.py\", line 159, in _sqrt_match\nr, b, a = split_surds(p)\nFile \"sympy\\simplify\\radsimp.py\", line 1032, in split_surds\ng, b1, b2 = _split_gcd(*surds)\nFile \"sympy\\simplify\\radsimp.py\", line 1068, in _split_gcd\ng = a[0]\nIndexError: tuple index out of range"
+    ],
+    "error_keywords": [
+      "IndexError",
+      "IndexError: tuple index out of range"
+    ],
+    "identifiers": {
+      "functions": [
+        "_split_gcd",
+        "_sqrt_match",
+        "_sqrtdenest0",
+        "_sqrtdenest1",
+        "func",
+        "split_surds",
+        "sqrt",
+        "sqrtdenest"
+      ],
+      "classes": [],
+      "files": [
+        "sympy/simplify/radsimp.py",
+        "sympy/simplify/sqrtdenest.py"
+      ],
+      "exceptions": [
+        "IndexError"
+      ]
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/simplify/tests/test_sqrtdenest.py",
+      "target_source_file": "sympy/simplify/sqrtdenest.py",
+      "test_visible_functions": [
+        "_split_gcd",
+        "_sqrt_match",
+        "_sqrtdenest0",
+        "_sqrtdenest1",
+        "func",
+        "split_surds",
+        "sqrt",
+        "sqrtdenest"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

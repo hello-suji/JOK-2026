@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13439",
+    "model_patch": "--- a/sklearn/tests/test_pipeline.py\n+++ b/sklearn/tests/test_pipeline.py\n@@ -1071,3 +1071,11 @@\n     assert pipeline.memory is None\n\n     shutil.rmtree(cachedir)\n+\n+def test_pipeline_len_behavior_repro():\n+    from sklearn.pipeline import Pipeline\n+    from sklearn.feature_selection import SelectKBest, f_regression\n+\n+    pipe = Pipeline([('selectkbest', SelectKBest(f_regression))])\n+    assert hasattr(pipe, '__len__')\n+    assert len(pipe) == 1\n",
+    "patch_sha256": "9eb2bab89601be2c46b9cb4ab73f026d8ade78cf524f0e725d2363dc501f9e3e"
+  }
+]

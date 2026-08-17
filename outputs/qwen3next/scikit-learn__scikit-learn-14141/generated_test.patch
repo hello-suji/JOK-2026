@@ -1,0 +1,14 @@
+--- a/sklearn/metrics/tests/test_pairwise.py
++++ b/sklearn/metrics/tests/test_pairwise.py
+@@ -1128,3 +1128,11 @@
+
+         assert_allclose(dist, expected_dist_explicit_params)
+         assert_allclose(dist, expected_dist_default_params)
++
++from sklearn.utils import show_versions
++
++def test_show_versions_includes_joblib_repro():
++    # Call the target API and capture the output
++    out = show_versions()
++    # Assert that the output includes 'joblib'
++    assert 'joblib' in out

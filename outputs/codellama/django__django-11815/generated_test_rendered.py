@@ -1,0 +1,28 @@
+from datetime import datetime
+
+from django.test import TestCase
+
+from .models import Article
+
+
+class DefaultTests(TestCase):
+    def test_field_defaults(self):
+        a = Article()
+        now = datetime.now()
+        a.save()
+
+        self.assertIsInstance(a.id, int)
+        self.assertEqual(a.headline, "Default headline")
+        self.assertLess((now - a.pub_date).seconds, 5)
+
+from django.test import TestCase
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class TestCharFieldDefaultValue(TestCase):
+    def test_charfield_default_value_with_translation_repro(self):
+        # Assuming there's an existing model with CharField in the test suite
+        instance = ExampleModel()
+        # Assert that the default value is correctly assigned
+        self.assertEqual(instance.char_field, _('Default Value'))

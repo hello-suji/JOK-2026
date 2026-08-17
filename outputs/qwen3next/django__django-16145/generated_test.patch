@@ -1,0 +1,21 @@
+--- a/tests/utils_tests/test_autoreload.py
++++ b/tests/utils_tests/test_autoreload.py
+@@ -886,3 +886,18 @@
+             snapshot = list(self.reloader.snapshot_files())
+             self.assertEqual(len(snapshot), 1)
+             self.assertEqual(snapshot[0][0], self.existing_file)
++
++from django.test import TestCase, SimpleTestCase
++import sys
++import re
++from django.core.management.commands.runserver import Command as RunserverCommand
++from io import StringIO
++
++
++class TestRunserverOutput(SimpleTestCase):
++    def test_runserver_output_repro(self):
++        with mock.patch('sys.stdout', new_callable=StringIO) as mock_stdout:
++            command = RunserverCommand()
++            command.execute(addrport='0:8000')
++            output = mock_stdout.getvalue()
++            self.assertIn('Starting development server at http://0.0.0.0:8000/', output)

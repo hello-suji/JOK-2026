@@ -1,0 +1,76 @@
+{
+  "instance_id": "sympy__sympy-23262",
+  "observed_behavior": [
+    "Note the missing comma after `1` that causes an integer to be returned instead of a tuple."
+  ],
+  "expected_behavior": [
+    "'def _lambdifygenerated():\\n    return (1,)\\n'",
+    "'def _lambdifygenerated():\\n    return (1)\\n'",
+    "Note the missing comma after `1` that causes an integer to be returned instead of a tuple.",
+    "'def _lambdifygenerated():\\n    return (1, 2)\\n'",
+    "This result is expected.",
+    "Not sure if this is a regression. As this breaks my program which assumes the return type to always be a tuple, could you suggest a workaround from the code generation side? Thank you."
+  ],
+  "repro_conditions": [
+    "from sympy import lambdify",
+    "inspect.getsource(lambdify([], tuple([1])))",
+    "'def _lambdifygenerated():\\n    return (1,)\\n'",
+    "'def _lambdifygenerated():\\n    return (1)\\n'",
+    "inspect.getsource(lambdify([], tuple([1, 2])))",
+    "'def _lambdifygenerated():\\n    return (1, 2)\\n'",
+    "Not sure if this is a regression. As this breaks my program which assumes the return type to always be a tuple, could you suggest a workaround from the code generation side? Thank you."
+  ],
+  "environment": [
+    "Python code printer not respecting tuple with one element",
+    "Thanks for the recent updates in SymPy! I'm trying to update my code to use SymPy 1.10 but ran into an issue with the Python code printer. MWE:"
+  ],
+  "identifiers": {
+    "functions": [
+      "_lambdifygenerated",
+      "getsource",
+      "lambdify"
+    ],
+    "classes": [
+      "SymPy"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Python code printer not respecting tuple with one element\nHi,\n\nThanks for the recent updates in SymPy! I'm trying to update my code to use SymPy 1.10 but ran into an issue with the Python code printer. MWE:\n\n\n```python\nimport inspect\nfrom sympy import lambdify\n\ninspect.getsource(lambdify([], tuple([1])))\n```\nSymPy 1.9 and under outputs:\n```\n'def _lambdifygenerated():\\n    return (1,)\\n'\n```\n\nBut SymPy 1.10 gives\n\n```\n'def _lambdifygenerated():\\n    return (1)\\n'\n```\nNote the missing comma after `1` that causes an integer to be returned instead of a tuple. \n\nFor tuples with two or more elements, the generated code is correct:\n```python\ninspect.getsource(lambdify([], tuple([1, 2])))\n```\nIn SymPy  1.10 and under, outputs:\n\n```\n'def _lambdifygenerated():\\n    return (1, 2)\\n'\n```\nThis result is expected.\n\nNot sure if this is a regression. As this breaks my program which assumes the return type to always be a tuple, could you suggest a workaround from the code generation side? Thank you.",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "import inspect\nfrom sympy import lambdify\n\ninspect.getsource(lambdify([], tuple([1])))",
+      "context_before": "Thanks for the recent updates in SymPy! I'm trying to update my code to use SymPy 1.10 but ran into an issue with the Python code printer. MWE:",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "'def _lambdifygenerated():\\n    return (1,)\\n'",
+      "context_before": "SymPy 1.9 and under outputs:",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "'def _lambdifygenerated():\\n    return (1)\\n'",
+      "context_before": "But SymPy 1.10 gives",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "inspect.getsource(lambdify([], tuple([1, 2])))",
+      "context_before": "For tuples with two or more elements, the generated code is correct:",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "'def _lambdifygenerated():\\n    return (1, 2)\\n'",
+      "context_before": "In SymPy  1.10 and under, outputs:",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/expressions.py",
+      "target_function": "Window",
+      "related_classes": [
+        "DJR_total",
+        "PostgreSQL",
+        "Sum",
+        "F",
+        "Window",
+        "Coalesce",
+        "Number"
+      ],
+      "candidate_test_file": "tests/postgres_tests/test_aggregates.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where Window can be called.",
+      "Use the generated reproduction path that calls aggregate, annotate, asc."
+    ],
+    "execution_stimulus": [
+      "Call Window with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: aggregate, annotate, asc."
+    ],
+    "expected_failure": "Cannot use aggregate over window functions since 4.2",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/expressions.py",
+      "django/db/models/aggregates.py"
+    ],
+    "relevant_test_files": [
+      "tests/postgres_tests/test_aggregates.py",
+      "tests/backends/base/test_features.py",
+      "tests/backends/mysql/test_features.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Sum, F, Window, Coalesce\nfrom tests.postgres_tests.models import Number\n\nclass TestAggregateOverWindowFunction(TestCase):\n    def test_aggregate_over_window_function_repro(self):\n        queryset = Number.objects.annotate(cumul_DJR=Coalesce(Window(Sum('num'), order_by=F('id').asc()), 0.0))\n        result = queryset.aggregate(DJR_total=Sum('num'), cumul_DJR_total=Sum('cumul_DJR'))\n        assert 'DJR_total' in result and 'cumul_DJR_total' in result\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(result) != 'psycopg2.errors.GroupingError: aggregate function calls cannot contain window function calls'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "GroupingError"
+    ],
+    "identifiers": {
+      "functions": [
+        "aggregate",
+        "annotate",
+        "asc"
+      ],
+      "classes": [
+        "DJR_total",
+        "PostgreSQL",
+        "Sum",
+        "F",
+        "Window",
+        "Coalesce",
+        "Number"
+      ],
+      "files": [],
+      "exceptions": [
+        "GroupingError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/postgres_tests/test_aggregates.py",
+      "target_source_file": "django/db/models/expressions.py",
+      "test_visible_functions": [
+        "aggregate",
+        "annotate",
+        "asc"
+      ],
+      "test_visible_classes": [
+        "DJR_total",
+        "Sum",
+        "F",
+        "Window",
+        "Coalesce",
+        "Number"
+      ]
+    }
+  }
+]

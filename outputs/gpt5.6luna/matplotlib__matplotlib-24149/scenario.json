@@ -1,0 +1,109 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/cbook/__init__.py",
+      "target_function": "_safe_first_finite",
+      "related_classes": [
+        "Additional",
+        "BarCollection",
+        "But"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_subplots.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _safe_first_finite can be called."
+    ],
+    "execution_stimulus": [
+      "Call _safe_first_finite with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/cbook/__init__.py",
+      "lib/matplotlib/projections/__init__.py",
+      "lib/matplotlib/__init__.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_subplots.py",
+      "lib/matplotlib/tests/__init__.py",
+      "lib/matplotlib/tests/test_collections.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nimport matplotlib.pyplot as plt\nf, ax = plt.subplots()\nax.bar([np.nan], [np.nan])"
+      },
+      {
+        "language": "python",
+        "code": "### Expected outcome\n\nOn 3.6.0 this returns a `BarCollection` with one Rectangle, having `nan` for `x` and `height`.\n\n### Additional information\n\nI assume it's related to this bullet in the release notes:\n\n- Fix barplot being empty when first element is NaN\n\nBut I don't know the context for it to investigate further (could these link to PRs?)\n\nFurther debugging:"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "IndexError",
+      "KeyError",
+      "RuntimeError",
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_convert_dx",
+        "_safe_first_finite",
+        "asarray",
+        "bar",
+        "bind",
+        "convert_xunits",
+        "func",
+        "get",
+        "get_x",
+        "subplots"
+      ],
+      "classes": [
+        "Additional",
+        "BarCollection",
+        "But",
+        "Further",
+        "NaN",
+        "On",
+        "PRs",
+        "Rectangle",
+        "StopIteration"
+      ],
+      "files": [
+        "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/__init__.py",
+        "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/axes/_axes.py",
+        "/miniconda/envs/py310/lib/python3.10/site-packages/matplotlib/cbook/__init__.py",
+        "10/site-packages/matplotlib/__init__.py",
+        "10/site-packages/matplotlib/axes/_axes.py",
+        "10/site-packages/matplotlib/cbook/__init__.py"
+      ],
+      "exceptions": [
+        "IndexError",
+        "KeyError",
+        "RuntimeError",
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

@@ -1,0 +1,39 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,36 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++import tempfile
++from sphinx.ext.napoleon.docstring import GoogleDocstring
++from sphinx.ext.autodoc import Documenter
++from sphinx.ext.autodoc.directive import AutodocDirective
++from sphinx.ext.autodoc import MethodDocumenter
++from sphinx.ext.autodoc import FunctionDocumenter
++from sphinx.util.docstrings import prepare_docstring
++from pyvista.plotting.plotter import BasePlotter
++
++class TestAddLinesDocstring(unittest.TestCase):
++    def test_add_lines_default_args_repro(self):
++        """Ensure default arguments in add_lines are correctly rendered."""
++        base_plotter = BasePlotter()
++        docstring = """Method docstring.
++
++        Parameters:
++            lines (list): Lines to add.
++            color (tuple): Color of the lines.
++            width (int): Width of the lines.
++            label (str): Label for the lines.
++            name (str): Name of the lines.
++        """
++        documenter = MethodDocumenter(base_plotter.add_lines)
++        documenter.parse_name('add_lines', 'pyvista.plotting.plotter.BasePlotter')
++        documenter.options = {'members': True}
++        documenter.docstrings = prepare_docstring(docstring.split('\n'))
++        documenter.document(['add_lines'], None)
++        rendered_docstring = documenter.directive.result
++        # Check if the default values are correctly rendered
++        assert 'color=(1, 1, 1)' in rendered_docstring
++        assert 'width=5' in rendered_docstring

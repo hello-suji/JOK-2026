@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/conf/__init__.py",
+      "target_function": "lazy",
+      "related_classes": [
+        "Context",
+        "Template"
+      ],
+      "candidate_test_file": "tests/apps/explicit_default_config_app/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls lazy, render."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: lazy, render."
+    ],
+    "expected_failure": "If you try to concatenate a string with a lazy string with the add template filter, the result is always the empty string because the add filter generates an exception (TypeError: can only concatenate str (not \"__proxy__\") to str).",
+    "relevant_source_files": [
+      "django/conf/__init__.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/apps/explicit_default_config_app/__init__.py",
+      "tests/apps/explicit_default_config_empty_apps/__init__.py",
+      "tests/apps/explicit_default_config_mismatch_app/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.utils.functional import lazy\nfrom django.template import Context, Template\n\nclass TestLazyStringConcatenation(TestCase):\n    def test_add_filter_with_lazy_string_repro(self):\n        lazy_string = lazy(lambda: 'world', str)()\n        template = Template(\"{{ 'hello' |add:lazy_string }}\")\n        context = Context({})\n        result = template.render(context)\n        self.assertEqual(result, 'helloworld')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "lazy",
+        "render"
+      ],
+      "classes": [
+        "Context",
+        "Template"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/apps/explicit_default_config_app/__init__.py",
+      "target_source_file": "django/conf/__init__.py",
+      "test_visible_functions": [
+        "lazy",
+        "render"
+      ],
+      "test_visible_classes": [
+        "Context",
+        "Template"
+      ]
+    }
+  }
+]

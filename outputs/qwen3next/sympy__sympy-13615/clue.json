@@ -1,0 +1,38 @@
+{
+  "instance_id": "sympy__sympy-13615",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "`{x, y} \\ [-10,10]` is expected as output."
+  ],
+  "repro_conditions": [
+    "Complement doesn't work when input is a mixture of Symbols and numbers"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "Complement",
+      "FiniteSet",
+      "Interval"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Complement doesn't work when input is a mixture of Symbols and numbers\n```\n>>> a=FiniteSet(x,y,2)\n>>> b=Interval(-10,10)\n>>> Complement(a,b)\n{x, y}\n```\n`{x, y} \\ [-10,10]` is expected as output.",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": ">>> a=FiniteSet(x,y,2)\n>>> b=Interval(-10,10)\n>>> Complement(a,b)\n{x, y}",
+      "context_before": "Complement doesn't work when input is a mixture of Symbols and numbers",
+      "is_system_or_output": false,
+      "interactive_input": "a=FiniteSet(x,y,2)\nb=Interval(-10,10)\nComplement(a,b)",
+      "interactive_output": "{x, y}"
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [
+    "{x, y}"
+  ],
+  "error_keywords": [],
+  "fault_locations": []
+}

@@ -1,0 +1,12 @@
+--- a/astropy/units/tests/test_deprecated.py
++++ b/astropy/units/tests/test_deprecated.py
+@@ -58,3 +58,9 @@
+     assert required_by_vounit.nsolMass not in u.solMass.find_equivalent_units()
+     assert required_by_vounit.nsolRad not in u.solRad.find_equivalent_units()
+     assert required_by_vounit.nsolLum not in u.solLum.find_equivalent_units()
++
++def test_unrecognized_unit_equality_with_none_repro():
++    x = u.Unit('asdf', parse_strict='silent')
++    assert x == None is False
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(x) != 'TypeError: None is not a valid Unit'

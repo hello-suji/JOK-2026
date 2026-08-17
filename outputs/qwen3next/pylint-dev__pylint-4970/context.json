@@ -1,0 +1,456 @@
+{
+  "instance_id": "pylint-dev__pylint-4970",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "40cc2ffd7887959157aaf469e09585ec2be7f528",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/checkers/similar.py",
+      "score": 17,
+      "matched_identifiers": [
+        "check",
+        "disable",
+        "duplicate",
+        "lines"
+      ],
+      "reasons": [
+        "stem_in_issue_text:similar",
+        "source_content_tokens:check,disable,duplicate,lines,min-similarity-lines"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SuccessiveLinesLimits.start",
+        "SuccessiveLinesLimits.end",
+        "LineSetStartCouple.increment",
+        "hash_lineset",
+        "remove_successives",
+        "filter_noncode_lines",
+        "Similar.append_stream",
+        "Similar.run",
+        "Similar.get_map_data",
+        "Similar.combine_mapreduce_data",
+        "stripped_lines",
+        "LineSet.stripped_lines",
+        "LineSet.real_lines",
+        "report_similarities",
+        "SimilarChecker.set_option",
+        "SimilarChecker.open",
+        "SimilarChecker.process_module",
+        "SimilarChecker.close",
+        "SimilarChecker.get_map_data",
+        "SimilarChecker.reduce_map_data",
+        "register",
+        "usage",
+        "Run"
+      ]
+    },
+    {
+      "path": "pylint/checkers/base.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "checking",
+        "disable",
+        "duplicate"
+      ],
+      "reasons": [
+        "source_content_tokens:check,checking,disable,duplicate,lines"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "NamingStyle.get_regex",
+        "in_loop",
+        "in_nested_list",
+        "report_by_type_stats",
+        "redefined_by_decorator",
+        "BasicErrorChecker.visit_classdef",
+        "BasicErrorChecker.visit_assign",
+        "BasicErrorChecker.visit_starred",
+        "BasicErrorChecker.visit_functiondef",
+        "BasicErrorChecker.visit_return",
+        "BasicErrorChecker.visit_yield",
+        "BasicErrorChecker.visit_yieldfrom",
+        "BasicErrorChecker.visit_continue",
+        "BasicErrorChecker.visit_break",
+        "BasicErrorChecker.visit_for",
+        "BasicErrorChecker.visit_while",
+        "BasicErrorChecker.visit_unaryop",
+        "BasicErrorChecker.visit_nonlocal",
+        "BasicErrorChecker.visit_call",
+        "BasicChecker.open",
+        "BasicChecker.visit_if",
+        "BasicChecker.visit_ifexp",
+        "BasicChecker.visit_comprehension",
+        "BasicChecker.visit_module",
+        "BasicChecker.visit_classdef",
+        "BasicChecker.visit_expr",
+        "BasicChecker.visit_lambda",
+        "BasicChecker.visit_functiondef",
+        "BasicChecker.visit_return",
+        "BasicChecker.visit_continue",
+        "BasicChecker.visit_break",
+        "BasicChecker.visit_raise",
+        "BasicChecker.visit_call",
+        "BasicChecker.visit_assert",
+        "BasicChecker.visit_dict",
+        "BasicChecker.visit_tryfinally",
+        "BasicChecker.leave_tryfinally",
+        "BasicChecker.visit_with",
+        "BasicChecker.visit_assign",
+        "BasicChecker.visit_for"
+      ]
+    },
+    {
+      "path": "pylint/checkers/classes.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "checking",
+        "disable",
+        "duplicate"
+      ],
+      "reasons": [
+        "source_content_tokens:check,checking,disable,duplicate,stop"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ScopeAccessMap.set_accessed",
+        "ScopeAccessMap.accessed",
+        "ClassChecker.visit_classdef",
+        "ClassChecker.leave_classdef",
+        "ClassChecker.visit_functiondef",
+        "ClassChecker.leave_functiondef",
+        "ClassChecker.visit_attribute",
+        "ClassChecker.visit_assignattr",
+        "ClassChecker.visit_assign",
+        "ClassChecker.visit_name",
+        "SpecialMethodsChecker.visit_functiondef",
+        "register"
+      ]
+    },
+    {
+      "path": "pylint/checkers/design_analysis.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "context",
+        "disable",
+        "stop"
+      ],
+      "reasons": [
+        "source_content_tokens:check,disable,stop,context,doesn"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MisdesignChecker.open",
+        "MisdesignChecker.visit_classdef",
+        "MisdesignChecker.leave_classdef",
+        "MisdesignChecker.visit_functiondef",
+        "MisdesignChecker.leave_functiondef",
+        "MisdesignChecker.visit_return",
+        "MisdesignChecker.visit_default",
+        "MisdesignChecker.visit_tryexcept",
+        "MisdesignChecker.visit_tryfinally",
+        "MisdesignChecker.visit_if",
+        "MisdesignChecker.visit_while",
+        "register"
+      ]
+    },
+    {
+      "path": "pylint/checkers/exceptions.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "disable",
+        "duplicate",
+        "stop"
+      ],
+      "reasons": [
+        "source_content_tokens:check,disable,duplicate,stop,context"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseVisitor.visit",
+        "BaseVisitor.visit_default",
+        "ExceptionRaiseRefVisitor.visit_name",
+        "ExceptionRaiseRefVisitor.visit_call",
+        "ExceptionRaiseLeafVisitor.visit_const",
+        "ExceptionRaiseLeafVisitor.visit_instance",
+        "ExceptionRaiseLeafVisitor.visit_classdef",
+        "ExceptionRaiseLeafVisitor.visit_tuple",
+        "ExceptionRaiseLeafVisitor.visit_default",
+        "ExceptionsChecker.open",
+        "ExceptionsChecker.visit_raise",
+        "ExceptionsChecker.visit_binop",
+        "ExceptionsChecker.visit_compare",
+        "ExceptionsChecker.visit_tryexcept",
+        "register"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/checkers/unittest_similar.py",
+      "score": 17,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:similar",
+        "token_overlap:checkers,similar",
+        "internal_name_overlap:similar",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_base.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:base",
+        "token_overlap:checkers",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_classes.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:classes",
+        "token_overlap:checkers",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_exceptions.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:exceptions",
+        "token_overlap:checkers",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_design.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "token_overlap:checkers,design",
+        "internal_name_overlap:design",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/checkers/unittest_similar.py:pytest_import_or_conftest",
+      "tests/checkers/unittest_similar.py:top_level_test_functions",
+      "tests/checkers/unittest_classes.py:testcase_class:TestVariablesChecker",
+      "tests/checkers/unittest_design.py:testcase_class:TestDesignChecker",
+      "tests/checkers/unittest_base.py:unittest_or_django_test_import",
+      "tests/checkers/unittest_base.py:testcase_class:TestBaseChecker",
+      "tests/checkers/unittest_base.py:testcase_class:TestComparison",
+      "tests/checkers/unittest_base.py:testcase_class:TestDocstring",
+      "tests/checkers/unittest_base.py:testcase_class:TestMultiNamingStyle",
+      "tests/checkers/unittest_base.py:testcase_class:TestNameChecker",
+      "tests/checkers/unittest_base.py:testcase_class:TestNamePresets",
+      "tests/checkers/unittest_base.py:testcase_class:TestNoSix",
+      "tests/checkers/unittest_exceptions.py:testcase_class:TestExceptionsChecker"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 878,
+  "indexed_test_file_count": 754,
+  "available_imports": {
+    "pylint": [
+      "BaseChecker",
+      "BaseTokenChecker",
+      "DeprecatedMixin",
+      "MapReduceMixin",
+      "__version__",
+      "diff_string",
+      "initialize",
+      "modify_sys_path",
+      "register_plugins",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "version"
+    ],
+    "tests.checkers.unittest_similar": [
+      "test_get_map_data",
+      "test_help",
+      "test_ignore_comments",
+      "test_ignore_docstrings",
+      "test_ignore_imports",
+      "test_ignore_multiline_imports",
+      "test_ignore_nothing",
+      "test_ignore_signatures_class_methods_fail",
+      "test_ignore_signatures_class_methods_pass",
+      "test_ignore_signatures_empty_functions_fail",
+      "test_ignore_signatures_empty_functions_pass",
+      "test_ignore_signatures_fail",
+      "test_ignore_signatures_pass",
+      "test_lines_without_meaningful_content_do_not_trigger_similarity",
+      "test_multiline_imports",
+      "test_no_args",
+      "test_no_hide_code_with_imports"
+    ],
+    "tests.checkers.unittest_classes": [
+      "TestVariablesChecker"
+    ],
+    "tests.checkers.unittest_design": [
+      "TestDesignChecker"
+    ],
+    "tests.checkers.unittest_base": [
+      "TestBaseChecker",
+      "TestComparison",
+      "TestDocstring",
+      "TestMultiNamingStyle",
+      "TestNameChecker",
+      "TestNamePresets",
+      "TestNoSix"
+    ],
+    "tests.checkers.unittest_exceptions": [
+      "TestExceptionsChecker"
+    ],
+    "pylint.checkers.base": [
+      "AnyStyle",
+      "BasicChecker",
+      "BasicErrorChecker",
+      "CamelCaseStyle",
+      "ComparisonChecker",
+      "DocStringChecker",
+      "NameChecker",
+      "NamingStyle",
+      "PascalCaseStyle",
+      "PassChecker",
+      "SnakeCaseStyle",
+      "UpperCaseStyle",
+      "_BasicChecker",
+      "_create_naming_options",
+      "_determine_function_name_type",
+      "_get_break_loop_node",
+      "_get_properties",
+      "_has_abstract_methods",
+      "_infer_dunder_doc_attribute",
+      "_is_multi_naming_match",
+      "_is_one_arg_pos_call",
+      "_loop_exits_early",
+      "_redefines_import",
+      "in_loop",
+      "in_nested_list",
+      "redefined_by_decorator",
+      "register",
+      "report_by_type_stats"
+    ],
+    "pylint.checkers.design_analysis": [
+      "MisdesignChecker",
+      "_count_boolean_expressions",
+      "_count_methods_in_class",
+      "_get_parents",
+      "_is_exempt_from_public_methods",
+      "register"
+    ],
+    "pylint.checkers.similar": [
+      "Commonality",
+      "CplSuccessiveLinesLimits",
+      "LineSet",
+      "LineSetStartCouple",
+      "LineSpecifs",
+      "LinesChunk",
+      "Run",
+      "Similar",
+      "SimilarChecker",
+      "SuccessiveLinesLimits",
+      "filter_noncode_lines",
+      "hash_lineset",
+      "register",
+      "remove_successives",
+      "report_similarities",
+      "stripped_lines",
+      "usage"
+    ],
+    "pylint.checkers": [
+      "initialize",
+      "table_lines_from_stats"
+    ],
+    "pylint.checkers.classes": [
+      "ClassChecker",
+      "ScopeAccessMap",
+      "SpecialMethodsChecker",
+      "_ancestors_to_call",
+      "_called_in_methods",
+      "_check_arg_equality",
+      "_definition_equivalent_to_call",
+      "_different_parameters",
+      "_get_node_type",
+      "_has_bare_super_call",
+      "_has_data_descriptor",
+      "_has_different_parameters",
+      "_has_different_parameters_default_value",
+      "_has_same_layout_slots",
+      "_is_attribute_property",
+      "_is_invalid_base_class",
+      "_positional_parameters",
+      "_safe_infer_call_result",
+      "_scope_default",
+      "_signature_from_arguments",
+      "_signature_from_call",
+      "register"
+    ],
+    "pylint.checkers.exceptions": [
+      "BaseVisitor",
+      "ExceptionRaiseLeafVisitor",
+      "ExceptionRaiseRefVisitor",
+      "ExceptionsChecker",
+      "_annotated_unpack_infer",
+      "_builtin_exceptions",
+      "_is_raising",
+      "register"
+    ]
+  },
+  "test_example_snippet": "def test_ignore_comments() -> None:\n    output = StringIO()\n    with redirect_stdout(output), pytest.raises(SystemExit) as ex:\n        similar.Run([\"--ignore-comments\", SIMILAR1, SIMILAR2])\n    assert ex.value.code == 0\n    assert (\n        output.getvalue().strip()\n        == (\n            f\"\"\"\n10 similar lines in 2 files\n=={SIMILAR1}:[0:11]\n=={SIMILAR2}:[0:11]\n   import one\n   from two import two\n   three\n   four\n   five\n   six\n   # A full line comment\n   seven\n   eight\n   nine\n   ''' ten\nTOTAL lines=62 duplicates=10 percent=16.13\n\"\"\"\n        ).strip()\n    )\n\n\ndef test_ignore_docstrings() -> None:\n    output = StringIO()\n    with redirect_stdout(output), pytest.raises(SystemExit) as ex:\n        similar.Run([\"--ignore-docstrings\", SIMILAR1, SIMILAR2])\n    assert ex.value.code == 0\n    assert (",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

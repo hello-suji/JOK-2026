@@ -1,0 +1,21 @@
+{
+  "instance_id": "sympy__sympy-20916",
+  "observed_behavior": [
+    "pprint unicode does not format subscripts on Greek letters"
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "pprint unicode does not format subscripts on Greek letters\nGood:\n\n[ -t₀⋅w₀   -t₁⋅w₀   -t₂⋅w₀]\n\n\nBad:\n\n[ -t₀⋅ω0   -t₁⋅ω0   -t₂⋅ω0]",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

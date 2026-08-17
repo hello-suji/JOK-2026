@@ -1,0 +1,311 @@
+{
+  "instance_id": "django__django-15851",
+  "repo": "django/django",
+  "base_commit": "b4817d20b9e55df30be0b1b2ca8c8bb6d61aab07",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/backends/postgresql/base.py",
+      "score": 19,
+      "matched_identifiers": [
+        "extra",
+        "select",
+        "some",
+        "table"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "stem_in_issue_text:base",
+        "source_content_tokens:extra,select,some,table,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "psycopg2_version",
+        "DatabaseWrapper.get_database_version",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.ensure_timezone",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.tzinfo_factory",
+        "DatabaseWrapper.chunked_cursor",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.pg_version",
+        "DatabaseWrapper.make_debug_cursor",
+        "CursorDebugWrapper.copy_expert",
+        "CursorDebugWrapper.copy_to"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/client.py",
+      "score": 18,
+      "matched_identifiers": [
+        "database",
+        "dbname",
+        "psql",
+        "table"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:psql,table,database,dbname,options"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseClient.settings_to_cmd_args_env",
+        "DatabaseClient.runshell"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/creation.py",
+      "score": 18,
+      "matched_identifiers": [
+        "database",
+        "dbname",
+        "select",
+        "table"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:select,table,database,dbname,parameters"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseCreation.sql_table_creation_suffix"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/features.py",
+      "score": 18,
+      "matched_identifiers": [
+        "database",
+        "select",
+        "table",
+        "type"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:select,table,type,database,order"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseFeatures.introspected_field_types",
+        "DatabaseFeatures.is_postgresql_13",
+        "DatabaseFeatures.is_postgresql_14"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/introspection.py",
+      "score": 18,
+      "matched_identifiers": [
+        "ignored",
+        "select",
+        "table",
+        "type"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:ignored,select,table,type,database"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseIntrospection.get_field_type",
+        "DatabaseIntrospection.get_table_list",
+        "DatabaseIntrospection.get_table_description",
+        "DatabaseIntrospection.get_sequences",
+        "DatabaseIntrospection.get_relations",
+        "DatabaseIntrospection.get_constraints"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/postgresql/test_creation.py",
+      "score": 17,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:creation",
+        "token_overlap:backends,creation,postgre,postgresql",
+        "internal_name_overlap:creation",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/postgresql/test_introspection.py",
+      "score": 15,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:introspection",
+        "token_overlap:backends,introspection,postgre,postgresql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/test_introspection.py",
+      "score": 11,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:introspection",
+        "token_overlap:introspection,postgre",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_client.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:client",
+        "token_overlap:backends,client",
+        "internal_name_overlap:client",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_creation.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:creation",
+        "token_overlap:backends,creation",
+        "internal_name_overlap:creation",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/postgres_tests/test_introspection.py:unittest_or_django_test_import",
+      "tests/backends/base/test_creation.py:unittest_or_django_test_import",
+      "tests/backends/base/test_creation.py:testcase_class:TestDbCreationTests",
+      "tests/backends/base/test_creation.py:testcase_class:TestDbSignatureTests",
+      "tests/backends/base/test_creation.py:testcase_class:TestDeserializeDbFromString",
+      "tests/backends/base/test_creation.py:testcase_class:TestMarkTests",
+      "tests/backends/base/test_client.py:unittest_or_django_test_import",
+      "tests/backends/postgresql/test_introspection.py:unittest_or_django_test_import",
+      "tests/backends/postgresql/test_creation.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2757,
+  "indexed_test_file_count": 1889,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.postgres_tests.test_introspection": [
+      "InspectDBTests"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "WidgetTest",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.backends.base.test_creation": [
+      "SkipTestClass",
+      "TestDbCreationTests",
+      "TestDbSignatureTests",
+      "TestDeserializeDbFromString",
+      "TestMarkTests",
+      "expected_failure_test_function",
+      "get_connection_copy",
+      "skip_test_function"
+    ],
+    "tests.backends.base.test_client": [
+      "SimpleDatabaseClientTests"
+    ],
+    "tests.backends.postgresql.test_introspection": [
+      "DatabaseSequenceTests"
+    ],
+    "tests.backends.postgresql.test_creation": [
+      "DatabaseCreationTests"
+    ],
+    "django.db": [
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.db.backends.postgresql.base": [
+      "CursorDebugWrapper",
+      "DatabaseWrapper",
+      "psycopg2_version"
+    ],
+    "django.db.backends.postgresql.creation": [
+      "DatabaseCreation"
+    ],
+    "django.db.backends.postgresql.features": [
+      "DatabaseFeatures"
+    ],
+    "django.db.backends.postgresql.introspection": [
+      "DatabaseIntrospection"
+    ],
+    "django.db.backends.postgresql.client": [
+      "DatabaseClient"
+    ]
+  },
+  "test_example_snippet": "    def test_sql_table_creation_suffix_with_none_settings(self):\n        settings = {\"CHARSET\": None, \"TEMPLATE\": None}\n        self.check_sql_table_creation_suffix(settings, \"\")\n\n    def test_sql_table_creation_suffix_with_encoding(self):\n        settings = {\"CHARSET\": \"UTF8\"}\n        self.check_sql_table_creation_suffix(settings, \"WITH ENCODING 'UTF8'\")\n\n    def test_sql_table_creation_suffix_with_template(self):\n        settings = {\"TEMPLATE\": \"template0\"}\n        self.check_sql_table_creation_suffix(settings, 'WITH TEMPLATE \"template0\"')\n\n    def test_sql_table_creation_suffix_with_encoding_and_template(self):\n        settings = {\"CHARSET\": \"UTF8\", \"TEMPLATE\": \"template0\"}\n        self.check_sql_table_creation_suffix(\n            settings, '''WITH ENCODING 'UTF8' TEMPLATE \"template0\"'''\n        )\n\n    def test_sql_table_creation_raises_with_collation(self):\n        settings = {\"COLLATION\": \"test\"}\n        msg = (\n            \"PostgreSQL does not support collation setting at database \"\n            \"creation time.\"\n        )\n        with self.assertRaisesMessage(ImproperlyConfigured, msg):\n            self.check_sql_table_creation_suffix(settings, None)\n\n    def _execute_raise_database_already_exists(self, cursor, parameters, keepdb=False):\n        error = DatabaseError(\"database %s already exists\" % parameters[\"dbname\"])\n        error.pgcode = errorcodes.DUPLICATE_DATABASE\n        raise DatabaseError() from error\n\n    def _execute_raise_permission_denied(self, cursor, parameters, keepdb=False):\n        error = DatabaseError(\"permission denied to create database\")\n        error.pgcode = errorcodes.INSUFFICIENT_PRIVILEGE",
+  "conftest_fixtures": {}
+}

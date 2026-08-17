@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-16333",
+    "model_patch": "--- a/tests/model_forms/models.py\n+++ b/tests/model_forms/models.py\n@@ -521,3 +521,25 @@\n         through=NumbersToDice,\n         limit_choices_to=models.Q(value__gte=1),\n     )\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.contrib.auth.forms import UserCreationForm\n+from django.contrib.auth.models import AbstractUser, Group\n+from django.db import models\n+\n+class TestUserCreationForm(TestCase):\n+    def test_user_creation_form_saves_manytomany_field_repro(self):\n+        class CustomUser(AbstractUser):\n+            groups = models.ManyToManyField(Group)\n+\n+        group = Group.objects.create(name='test_group')\n+        form_data = {\n+            'username': 'testuser',\n+            'password1': 'testpass123',\n+            'password2': 'testpass123',\n+            'groups': [group.pk]\n+        }\n+        form = UserCreationForm(data=form_data)\n+        self.assertTrue(form.is_valid())\n+        user = form.save()\n+        self.assertIn(group, user.groups.all())\n",
+    "patch_sha256": "7560b139bed3a0acffdf6ca3a24b48bb1de856f5ccef3ab7b025579a6ff1b129"
+  }
+]

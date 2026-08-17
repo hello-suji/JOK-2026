@@ -1,0 +1,13 @@
+default_app_config = 'apps.explicit_default_config_app.apps.ExplicitDefaultConfig'
+
+from django.test import TestCase
+from django.utils.functional import lazy
+from django.template import Context, Template
+
+class TestLazyStringConcatenation(TestCase):
+    def test_add_filter_with_lazy_string_repro(self):
+        lazy_string = lazy(lambda: 'world', str)()
+        template = Template("{{ 'hello' |add:lazy_string }}")
+        context = Context({})
+        result = template.render(context)
+        self.assertEqual(result, 'helloworld')

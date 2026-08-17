@@ -1,0 +1,14 @@
+--- a/sklearn/tests/test_base.py
++++ b/sklearn/tests/test_base.py
+@@ -442,3 +442,11 @@
+     estimator_restored = pickle.loads(serialized)
+     assert_equal(estimator_restored.attribute_pickled, 5)
+     assert_equal(estimator_restored._attribute_not_pickled, None)
++
++def test_clone_with_estimator_class_repro():
++    from sklearn.preprocessing import StandardScaler
++    cloned_instance = clone(StandardScaler(with_mean=StandardScaler))
++    assert isinstance(cloned_instance, StandardScaler)
++    assert isinstance(cloned_instance.with_mean, type(StandardScaler))
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(cloned_instance) != "TypeError: get_params() missing 1 required positional argument: 'self'"

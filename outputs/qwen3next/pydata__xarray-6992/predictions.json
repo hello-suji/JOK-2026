@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-6992",
+    "model_patch": "--- a/xarray/tests/test_dataset.py\n+++ b/xarray/tests/test_dataset.py\n@@ -6663,3 +6663,10 @@\n     ds = xr.Dataset(dict(x=da))\n     mapping = {\"y\": da}\n     ds.assign(variables=mapping)\n+\n+def test_len_after_set_reset_index_repro():\n+    ds = xr.Dataset(coords={\"a\": (\"x\", [1, 2, 3]), \"b\": (\"x\", ['a', 'b', 'c'])})\n+    ds_modified = ds.set_index(z=['a', 'b']).reset_index(\"z\", drop=True)\n+    assert len(ds_modified) >= 0\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(ds_modified) != 'ValueError: __len__() should return >= 0'\n",
+    "patch_sha256": "f01db1b069f127ea298f7ab4995c125c3e833e603022fbcb5e5a42c22426f25b"
+  }
+]

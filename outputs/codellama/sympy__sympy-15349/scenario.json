@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/algebras/quaternion.py",
+      "target_function": "to_rotation_matrix",
+      "related_classes": [
+        "Quaternion",
+        "Matrix"
+      ],
+      "candidate_test_file": "sympy/algebras/tests/test_quaternion.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import sympy and necessary functions/classes",
+      "Define a symbol x",
+      "Create a Quaternion object q with cos(x/2), sin(x/2), 0, 0",
+      "Use the generated reproduction path that calls cos, sin, symbols, to_rotation_matrix."
+    ],
+    "execution_stimulus": [
+      "Call q.to_rotation_matrix()",
+      "Apply trigsimp to the result",
+      "Execute the focused target API path: cos, sin, symbols, to_rotation_matrix."
+    ],
+    "expected_failure": "The output matrix has sin(x) in the (2,2) position instead of -sin(x)",
+    "relevant_source_files": [
+      "sympy/algebras/quaternion.py",
+      "sympy/simplify/trigsimp.py",
+      "sympy/core/symbol.py"
+    ],
+    "relevant_test_files": [
+      "sympy/algebras/tests/test_quaternion.py",
+      "sympy/simplify/tests/test_trigsimp.py",
+      "sympy/core/tests/test_expr.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_quaternion_to_rotation_matrix_bug_repro():\n    x = symbols('x')\n    q = Quaternion(cos(x/2), sin(x/2), 0, 0)\n    result = trigsimp(q.to_rotation_matrix())\n    assert result == Matrix([[1, 0, 0], [0, cos(x), -sin(x)], [0, sin(x), cos(x)]])\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"['1', '0', '0']\""
+      },
+      {
+        "language": "python",
+        "code": "def test_quaternion_to_rotation_matrix_bug():\n    from sympy import symbols, Quaternion, trigsimp\n    x = symbols('x')\n    q = Quaternion(cos(x/2), sin(x/2), 0, 0)\n    result = trigsimp(q.to_rotation_matrix())\n    assert result == Matrix([[1, 0, 0], [0, cos(x), sin(x)], [0, sin(x), cos(x)]])"
+      }
+    ],
+    "expected_outputs": [
+      "['1', '0', '0']",
+      "['0', 'cos(x)', '-sin(x)']",
+      "['0', 'sin(x)', 'cos(x)']"
+    ],
+    "actual_outputs": [
+      "['1', '0', '0']",
+      "['0', 'cos(x)', 'sin(x)']",
+      "['0', 'sin(x)', 'cos(x)']"
+    ],
+    "error_keywords": [
+      "incorrect rotation matrix",
+      "sin(x) sign error"
+    ],
+    "identifiers": {
+      "functions": [
+        "to_rotation_matrix",
+        "trigsimp",
+        "cos",
+        "sin",
+        "symbols"
+      ],
+      "classes": [
+        "Quaternion",
+        "Matrix"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/algebras/tests/test_quaternion.py",
+      "target_source_file": "sympy/algebras/quaternion.py",
+      "test_visible_functions": [
+        "cos",
+        "sin",
+        "symbols",
+        "to_rotation_matrix",
+        "trigsimp"
+      ],
+      "test_visible_classes": [
+        "Matrix",
+        "Quaternion"
+      ]
+    }
+  }
+]

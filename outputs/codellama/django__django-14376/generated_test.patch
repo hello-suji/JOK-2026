@@ -1,0 +1,15 @@
+--- a/tests/backends/base/test_base.py
++++ b/tests/backends/base/test_base.py
+@@ -127,3 +127,12 @@
+         self.assertFalse(wrapper.called)
+         self.assertEqual(connection.execute_wrappers, [])
+         self.assertEqual(connections['other'].execute_wrappers, [])
++
++from django.test import TestCase, SimpleTestCase
++from django.db.backends.mysql.base import DatabaseWrapper
++
++class TestMySQLBackendDeprecation(TestCase):
++    def test_successful_connection_with_new_kwargs_repro(self):
++        # Test successful connection using 'NAME' and 'PASSWORD' instead of deprecated 'db' and 'passwd'
++        db_wrapper = DatabaseWrapper({'NAME': 'test_db', 'PASSWORD': 'test_password'})
++        self.assertIsNotNone(db_wrapper.connection)

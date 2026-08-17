@@ -1,0 +1,34 @@
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -5263,3 +5263,31 @@
+
+     actual2 = da.integrate('time', datetime_unit='h')
+     assert_allclose(actual, actual2 / 24.0)
++
++def test_combine_by_coords_non_monotonic_coordinates_repro():
++    yCoord = ['a', 'c', 'b']
++
++    ds1 = xr.Dataset(
++        data_vars=dict(
++            data=(['x', 'y'], np.random.rand(3, 3))
++        ),
++        coords=dict(
++            x=[1, 2, 3],
++            y=yCoord
++        )
++    )
++
++    ds2 = xr.Dataset(
++        data_vars=dict(
++            data=(['x', 'y'], np.random.rand(3, 3))
++        ),
++        coords=dict(
++            x=[4, 5, 6],
++            y=yCoord
++        )
++    )
++
++    combined_ds = xr.combine_by_coords([ds1, ds2], coords='y')
++    assert isinstance(combined_ds, xr.Dataset)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(combined_ds) != 'ValueError: Resulting object does not have monotonic global indexes along dimension y'

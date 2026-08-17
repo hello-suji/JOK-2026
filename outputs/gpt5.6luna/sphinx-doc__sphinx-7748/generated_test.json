@@ -1,0 +1,35 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7748",
+  "scenario_id": "S1",
+  "model_name": "PLACEHOLDER",
+  "repo_path": "",
+  "target_test_file": "",
+  "target_test_file_abspath": "",
+  "target_source_file": "",
+  "insert_mode": "append",
+  "insertion_hint": "",
+  "imports": [],
+  "test_code": "# Placeholder - no generated test",
+  "original_test_file_content": "",
+  "modified_test_file_content": "",
+  "test_patch": "",
+  "raw_response": "",
+  "prompt": "",
+  "patch_sha256": "",
+  "repair_attempted": false,
+  "repair_actions": [],
+  "repair_failed_reason": "",
+  "repair_retry_count": 0,
+  "retry_required_oracle_risks": [],
+  "semantic_risk_flags": [],
+  "prompt_profile": {
+    "temperature": 0.0,
+    "max_tokens": 0,
+    "model": "PLACEHOLDER"
+  },
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  }
+}

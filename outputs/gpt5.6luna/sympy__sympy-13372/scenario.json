@@ -1,0 +1,104 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/evalf.py",
+      "target_function": "evalf",
+      "related_classes": [
+        "Max",
+        "Mul"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_evalf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where evalf can be called.",
+      "Use the generated reproduction path that calls evalf, rf, symbols."
+    ],
+    "execution_stimulus": [
+      "Call evalf with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: evalf, rf, symbols."
+    ],
+    "expected_failure": "UnboundLocalError in evalf",
+    "relevant_source_files": [
+      "sympy/core/evalf.py",
+      "sympy/functions/elementary/miscellaneous.py",
+      "sympy/core/mul.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_evalf.py",
+      "sympy/functions/elementary/tests/test_miscellaneous.py",
+      "sympy/core/tests/test_function.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Mul, Max\n\ndef test_evalf_max_in_multiplication_repro():\n    x, y = symbols('x y')\n    result = Mul(Max(0, y), x, evaluate=False).evalf()\n    assert result != 'x*Max(0, y)'\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'x*Max(0, y)\\nTraceback (most recent call last):\\nFile \"./sympy/core/evalf.py\", line 1285, in evalf\\nrf = evalf_table[x.func]\\nKeyError: Max\\n\\nDuring handling of the above exception, another exception occurred:\\n\\nTraceback (most recent call last):\\nFile \"<stdin>\", line 1, in <module>\\nFile \"./sympy/core/evalf.py\", line 1394, in evalf\\nresult = evalf(self, prec + 4, options)\\nFile \"./sympy/core/evalf.py\", line 1286, in evalf\\nr = rf(x, prec, options)\\nFile \"./sympy/core/evalf.py\", line 538, in evalf_mul\\narg = evalf(arg, prec, options)\\nFile \"./sympy/core/evalf.py\", line 1308, in evalf\\nr = re, im, reprec, imprec\\nUnboundLocalError: local variable \\'reprec\\' referenced before assignment'"
+      },
+      {
+        "language": "python",
+        "code": ">>> Mul(x, Max(0, y), evaluate=False).evalf()\nx*Max(0, y)\n>>> Mul(Max(0, y), x, evaluate=False).evalf()\nTraceback (most recent call last):\n  File \"./sympy/core/evalf.py\", line 1285, in evalf\n    rf = evalf_table[x.func]\nKeyError: Max\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"./sympy/core/evalf.py\", line 1394, in evalf\n    result = evalf(self, prec + 4, options)\n  File \"./sympy/core/evalf.py\", line 1286, in evalf\n    r = rf(x, prec, options)\n  File \"./sympy/core/evalf.py\", line 538, in evalf_mul\n    arg = evalf(arg, prec, options)\n  File \"./sympy/core/evalf.py\", line 1308, in evalf\n    r = re, im, reprec, imprec\nUnboundLocalError: local variable 'reprec' referenced before assignment"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "x*Max(0, y)\nTraceback (most recent call last):\nFile \"./sympy/core/evalf.py\", line 1285, in evalf\nrf = evalf_table[x.func]\nKeyError: Max\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\nFile \"<stdin>\", line 1, in <module>\nFile \"./sympy/core/evalf.py\", line 1394, in evalf\nresult = evalf(self, prec + 4, options)\nFile \"./sympy/core/evalf.py\", line 1286, in evalf\nr = rf(x, prec, options)\nFile \"./sympy/core/evalf.py\", line 538, in evalf_mul\narg = evalf(arg, prec, options)\nFile \"./sympy/core/evalf.py\", line 1308, in evalf\nr = re, im, reprec, imprec\nUnboundLocalError: local variable 'reprec' referenced before assignment"
+    ],
+    "error_keywords": [
+      "KeyError",
+      "NotImplementedError",
+      "UnboundLocalError",
+      "UnboundLocalError: local variable 'reprec' referenced before assignment"
+    ],
+    "identifiers": {
+      "functions": [
+        "evalf",
+        "rf",
+        "symbols"
+      ],
+      "classes": [
+        "Max",
+        "Mul"
+      ],
+      "files": [
+        "sympy/core/evalf.py"
+      ],
+      "exceptions": [
+        "KeyError",
+        "NotImplementedError",
+        "UnboundLocalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_evalf.py",
+      "target_source_file": "sympy/core/evalf.py",
+      "test_visible_functions": [
+        "evalf",
+        "rf",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Max",
+        "Mul"
+      ]
+    }
+  }
+]

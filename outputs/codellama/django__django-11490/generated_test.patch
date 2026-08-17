@@ -1,0 +1,19 @@
+--- a/tests/get_or_create/tests.py
++++ b/tests/get_or_create/tests.py
+@@ -629,3 +629,16 @@
+         msg = "Cannot resolve keyword 'name_in_all_caps' into field. Choices are: id, name, tags"
+         with self.assertRaisesMessage(FieldError, msg):
+             Thing.objects.update_or_create(name_in_all_caps='FRANK', defaults={'name': 'Frank'})
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import Q
++from tests.get_or_create.models import ReservedName
++
++class TestReservedNameQueries(TestCase):
++    def test_composed_queries_with_values_list_repro(self):
++        ReservedName.objects.create(name='a', order=2)
++        qs1 = ReservedName.objects.all()
++        result1 = qs1.union(qs1).values_list('name', 'order').get()
++        result2 = qs1.union(qs1).values_list('order').get()
++        self.assertEqual(result1, ('a', 2))
++        self.assertEqual(result2, (2,))

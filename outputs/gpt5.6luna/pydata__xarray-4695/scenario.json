@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "loc",
+      "related_classes": [
+        "DataArray",
+        "Expecting",
+        "Invalid"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataarray.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import numpy and xarray",
+      "Create a DataArray D2 with dimensions ['dim1', 'method'] and coordinates {'dim1': ['x', 'y'], 'method': ['a', 'b']}",
+      "Use the generated reproduction path that calls zeros, tolist."
+    ],
+    "execution_stimulus": [
+      "Call D2.loc with dict(dim1='x', method='a')",
+      "Execute the focused target API path: zeros, tolist."
+    ],
+    "expected_failure": "Raises ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/resample.py",
+      "xarray/core/accessor_str.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_accessor_dt.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_loc_with_method_dimension_repro():\n    empty = np.zeros((2,2))\n    D2 = xr.DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\n    result = D2.loc[dict(dim1='x', method='a')]\n    assert result.values.tolist() == [[0.0, 0.0]]\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.'"
+      },
+      {
+        "language": "python",
+        "code": "def test_loc_with_method_dimension():\n    import numpy as np\n    from xarray import DataArray\n    empty = np.zeros((2,2))\n    D2 = DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\n    try:\n        D2.loc[dict(dim1='x', method='a')]\n    except ValueError as e:\n        assert str(e) == 'Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest."
+    ],
+    "error_keywords": [
+      "ValueError",
+      "Invalid fill method"
+    ],
+    "identifiers": {
+      "functions": [
+        "loc",
+        "zeros",
+        "tolist"
+      ],
+      "classes": [
+        "DataArray",
+        "Expecting",
+        "Invalid"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataarray.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "zeros",
+        "tolist"
+      ],
+      "test_visible_classes": [
+        "DataArray",
+        "Expecting",
+        "Invalid"
+      ]
+    }
+  }
+]

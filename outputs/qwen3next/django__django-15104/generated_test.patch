@@ -1,0 +1,25 @@
+--- a/tests/migrations/test_auto_gatedetector.py
++++ b/tests/migrations/test_auto_gatedetector.py
+@@ -2948,3 +2948,22 @@
+         migration = migrations.Migration('0001_initial', 'test_app')
+         suggest_name = migration.suggest_name()
+         self.assertIs(suggest_name.startswith('auto_'), True)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.state import ModelState, ProjectState
++from django.db.migrations.autodetector import MigrationAutodetector
++from django.db.models.fields.related import ForeignKey
++
++class TestMigrationAutodetectorWithHardcodedFK(TestCase):
++    def test_hardcoded_fk_detection_repro(self):
++        # Define a model state with a ForeignKey that has a hardcoded reference
++        old_model_state = ModelState('app_label', 'TestModel', [('id', models.AutoField(primary_key=True)), ('fk', ForeignKey('HardcodedModel', on_delete=models.CASCADE))])
++        new_model_state = ModelState('app_label', 'TestModel', [('id', models.AutoField(primary_key=True)), ('fk', ForeignKey('app_label.HardcodedModel', on_delete=models.CASCADE))])
++
++        old_project_state = ProjectState(models={'app_label.TestModel': old_model_state})
++        new_project_state = ProjectState(models={'app_label.TestModel': new_model_state})
++
++        autodetector = MigrationAutodetector(old_project_state, new_project_state)
++        changes = autodetector.changes(graph=loader.graph)
++
++        self.assertEqual(len(changes['app_label']), 1)

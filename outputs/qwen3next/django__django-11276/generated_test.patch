@@ -1,0 +1,15 @@
+--- a/tests/template_backends/test_utils.py
++++ b/tests/template_backends/test_utils.py
+@@ -45,3 +45,12 @@
+         )
+         with self.assertRaisesMessage(ImproperlyConfigured, msg):
+             engines.all()
++
++from django.test import TestCase, SimpleTestCase
++from django.utils.html import escape
++
++class TestEscapeFunction(SimpleTestCase):
++    def test_escape_behavior_repro(self):
++        input_string = '<script>alert("XSS")</script>'
++        expected_output = '&lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;'
++        self.assertEqual(expected_output, escape(input_string))

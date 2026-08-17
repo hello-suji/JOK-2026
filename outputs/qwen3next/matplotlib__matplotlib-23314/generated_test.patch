@@ -1,0 +1,24 @@
+--- a/lib/matplotlib/tests/test_gridspec.py
++++ b/lib/matplotlib/tests/test_gridspec.py
+@@ -35,3 +35,21 @@
+                            width_ratios=(1, 3))
+     assert repr(ss) == \
+         "GridSpec(2, 2, height_ratios=(3, 1), width_ratios=(1, 3))"
++
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++
++
++def test_set_visible_3d_projection_repro():
++    """
++    Addresses issue #23314.
++    See at https://github.com/matplotlib/matplotlib/issues/23314.
++    """
++    fig, (ax1, ax2) = plt.subplots(1, 2, subplot_kw={'projection': '3d'})
++    ax1.scatter(1, 1, 1)
++    ax2.scatter(1, 1, 1, c='r')
++    ax1.set_visible(False)
++
++    assert not ax1.get_visible()
++    assert ax2.get_visible()

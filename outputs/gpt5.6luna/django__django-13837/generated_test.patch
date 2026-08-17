@@ -1,0 +1,21 @@
+--- a/tests/backends/base/test_base.py
++++ b/tests/backends/base/test_base.py
+@@ -127,3 +127,18 @@
+         self.assertFalse(wrapper.called)
+         self.assertEqual(connection.execute_wrappers, [])
+         self.assertEqual(connections['other'].execute_wrappers, [])
++
++from django.test import TestCase, SimpleTestCase
++from django.utils.autoreload import get_child_arguments
++
++class TestAutoreloadGetChildArguments(SimpleTestCase):
++    def test_get_child_arguments_with_m_pkg_repro(self):
++        # Simulate the environment where Python is run as 'python -m pkg'
++        import sys
++        import types
++        sys.modules['__main__'] = types.ModuleType('__main__')
++        sys.modules['__main__'].__spec__ = types.ModuleSpec(name='pkg.submodule', loader=None)
++        sys.modules['__main__'].__spec__.parent = 'pkg'
++
++        args = get_child_arguments()
++        self.assertIn('pkg', args)

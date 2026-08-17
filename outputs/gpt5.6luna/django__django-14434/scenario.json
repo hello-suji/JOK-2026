@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/apps/registry.py",
+      "target_function": "create_sql",
+      "related_classes": [
+        "Table",
+        "Index",
+        "CharField"
+      ],
+      "candidate_test_file": "tests/apps/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls create_sql."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create_sql."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/apps/registry.py",
+      "django/contrib/admin/options.py",
+      "django/contrib/admin/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/apps/models.py",
+      "tests/auth_tests/test_models.py",
+      "tests/migrations/migrations_test_apps/migrated_unapplied_app/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Table, Index, CharField\n\nclass TestUniqueSQLCreation(TestCase):\n    def test_create_unique_sql_with_table_instance_repro(self):\n        table = Table('my_table')\n        column = CharField()\n        index = Index(fields=['name'], name='unique_name')\n        sql_creation = index.create_sql(table, None)\n        self.assertIn('UNIQUE', sql_creation)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create_sql"
+      ],
+      "classes": [
+        "Table",
+        "Index",
+        "CharField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/apps/models.py",
+      "target_source_file": "django/apps/registry.py",
+      "test_visible_functions": [
+        "create_sql"
+      ],
+      "test_visible_classes": [
+        "Table",
+        "Index",
+        "CharField"
+      ]
+    }
+  }
+]

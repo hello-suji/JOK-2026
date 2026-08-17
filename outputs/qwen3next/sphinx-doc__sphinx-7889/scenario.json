@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "_make_subclass",
+      "related_classes": [
+        "TypeVar",
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _make_subclass can be called.",
+      "Use the generated reproduction path that calls tempfile, _make_subclass, join."
+    ],
+    "execution_stimulus": [
+      "Call _make_subclass with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, _make_subclass, join."
+    ],
+    "expected_failure": "Autodoc extension's mock file throws TypeError for generic-typed classes.",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/cmd/build.py",
+      "sphinx/config.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc.mock import _make_subclass\nfrom typing import TypeVar\n\ndef test_make_subclass_with_generic_fails_pre_patch_repro():\n    T = TypeVar('T')\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = srcdir\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctree')\n        buildername = 'html'\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        try:\n            _make_subclass(app, 'GenericClass', (T,), {})\n            assert False, \"Expected TypeError was not raised\"\n        except TypeError:\n            pass"
+      },
+      {
+        "language": "python",
+        "code": "$ git https://github.com/perrygoy/screenpy.git\n$ cd screenpy/docs\n$ python -m venv env\n$ source env/bin/activate\n$ pip install sphinx pyhamcrest selenium typing_extensions\n$ make html"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "_make_subclass",
+        "join"
+      ],
+      "classes": [
+        "TypeVar",
+        "Sphinx",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "tempfile",
+        "_make_subclass",
+        "join"
+      ],
+      "test_visible_classes": [
+        "TypeVar",
+        "Sphinx",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

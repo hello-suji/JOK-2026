@@ -1,0 +1,185 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/files.py",
+      "target_function": "deconstruct",
+      "related_classes": [
+        "FileField",
+        "ImageField",
+        "FileSystemStorage"
+      ],
+      "candidate_test_file": "tests/migrations/test_deprecated_fields.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "from django.core.files.storage import FileSystemStorage",
+      "def get_storage(): return FileSystemStorage(location='/tmp')",
+      "file_field = models.FileField(storage=get_storage)",
+      "Use the generated reproduction path that calls models, deconstruct, callable."
+    ],
+    "execution_stimulus": [
+      "name, path, args, kwargs = file_field.deconstruct()",
+      "Execute the focused target API path: models, deconstruct, callable."
+    ],
+    "expected_failure": "The callable 'get_storage' is evaluated during deconstruction, resulting in the actual storage instance being inlined instead of the callable reference.",
+    "relevant_source_files": [
+      "django/db/models/fields/files.py",
+      "django/forms/fields.py",
+      "django/core/files/storage.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_ordinary_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.db import models\nfrom django.core.files.storage import FileSystemStorage\n\nclass TestFileFieldDeconstructCallableStorage(MigrationTestBase):\n    def test_filefield_deconstruct_callable_storage_repro(self):\n        def get_storage():\n            return FileSystemStorage(location='/tmp')\n        file_field = models.FileField(storage=get_storage)\n        name, path, args, kwargs = file_field.deconstruct()\n        self.assertIn('storage', kwargs)\n        self.assertTrue(callable(kwargs['storage']))"
+      },
+      {
+        "language": "python",
+        "code": "def test_filefield_deconstruct_callable_storage():\n    from django.db import models\n    from django.core.files.storage import FileSystemStorage\n    def get_storage(): return FileSystemStorage(location='/tmp')\n    file_field = models.FileField(storage=get_storage)\n    name, path, args, kwargs = file_field.deconstruct()\n    assert 'storage' in kwargs and callable(kwargs['storage'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "deconstruct",
+        "models",
+        "callable"
+      ],
+      "classes": [
+        "FileField",
+        "FileSystemStorage"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/test_deprecated_fields.py",
+      "target_source_file": "django/db/models/fields/files.py",
+      "test_visible_functions": [
+        "models",
+        "deconstruct",
+        "callable"
+      ],
+      "test_visible_classes": [
+        "FileField",
+        "FileSystemStorage"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/files.py",
+      "target_function": "deconstruct",
+      "related_classes": [
+        "FileField",
+        "ImageField",
+        "FileSystemStorage"
+      ],
+      "candidate_test_file": "tests/migrations/test_deprecated_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "from django.core.files.storage import FileSystemStorage",
+      "def get_storage(): return FileSystemStorage(location='/var/tmp')",
+      "image_field = models.ImageField(storage=get_storage)",
+      "Use the generated reproduction path that calls models, deconstruct, callable."
+    ],
+    "execution_stimulus": [
+      "name, path, args, kwargs = image_field.deconstruct()",
+      "Execute the focused target API path: models, deconstruct, callable."
+    ],
+    "expected_failure": "The callable 'get_storage' is evaluated during deconstruction, resulting in the actual storage instance being inlined instead of the callable reference.",
+    "relevant_source_files": [
+      "django/db/models/fields/files.py",
+      "django/forms/fields.py",
+      "django/core/files/storage.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_ordinary_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.db import models\nfrom django.core.files.storage import FileSystemStorage\n\nclass TestFileFieldDeconstructCallableStorage(MigrationTestBase):\n    def test_filefield_deconstruct_callable_storage_repro(self):\n        def get_storage():\n            return FileSystemStorage(location='/tmp')\n        file_field = models.FileField(storage=get_storage)\n        name, path, args, kwargs = file_field.deconstruct()\n        self.assertIn('storage', kwargs)\n        self.assertTrue(callable(kwargs['storage']))"
+      },
+      {
+        "language": "python",
+        "code": "def test_imagefield_deconstruct_callable_storage():\n    from django.db import models\n    from django.core.files.storage import FileSystemStorage\n    def get_storage(): return FileSystemStorage(location='/var/tmp')\n    image_field = models.ImageField(storage=get_storage)\n    name, path, args, kwargs = image_field.deconstruct()\n    assert 'storage' in kwargs and callable(kwargs['storage'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "deconstruct",
+        "models",
+        "callable"
+      ],
+      "classes": [
+        "ImageField",
+        "FileField",
+        "FileSystemStorage"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/test_deprecated_fields.py",
+      "target_source_file": "django/db/models/fields/files.py",
+      "test_visible_functions": [
+        "models",
+        "deconstruct",
+        "callable"
+      ],
+      "test_visible_classes": [
+        "FileField",
+        "FileSystemStorage"
+      ]
+    }
+  }
+]

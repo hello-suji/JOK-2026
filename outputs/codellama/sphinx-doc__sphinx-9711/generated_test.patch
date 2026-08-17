@@ -1,0 +1,15 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -463,3 +463,12 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++from sphinx.ext.intersphinx import InventoryAdapter
++
++class TestInventoryAdapter(unittest.TestCase):
++    def test_inventory_adapter_initialization_repro(self):
++        """Test that InventoryAdapter initializes correctly with a base URI."""
++        adapter = InventoryAdapter('http://example.com')
++        self.assertEqual(adapter.base_uri, 'http://example.com')

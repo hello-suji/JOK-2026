@@ -1,0 +1,24 @@
+{
+  "instance_id": "django__django-14500",
+  "observed_behavior": [],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "(last modified by Markus Holtermann)",
+    "When unapplying a squashed migration and the replaced migration files are still around, the MigrationExecutor mark the squash migration as unapplied, too, not only the replaced migrations."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "MigrationExecutor"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Squashed migration is not marked as unapplied\nDescription\n\t \n\t\t(last modified by Markus Holtermann)\n\t \nWhen unapplying a squashed migration and the replaced migration files are still around, the MigrationExecutor mark the squash migration as unapplied, too, not only the replaced migrations.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

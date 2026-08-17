@@ -1,0 +1,19 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -113,3 +113,16 @@
+         clone = query.clone()
+         clone.add_select_related(['note', 'creator__extra'])
+         self.assertEqual(query.select_related, {'creator': {}})
++
++from django.test import TestCase
++from django.contrib.auth.models import User
++
++class TestQueryBatchSize(TestCase):
++    def setUp(self):
++        self.max_batch_size = 1000
++        self.batch_size = 500
++        self.objects_to_create = [User(username=f'user{i}') for i in range(1500)]
++
++    def test_bulk_create_batch_size_override_repro(self):
++        created_objects = User.objects.bulk_create(self.objects_to_create, batch_size=self.batch_size)
++        self.assertEqual(len(created_objects), 1500)

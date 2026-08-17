@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/widgets.py",
+      "target_function": "get_context",
+      "related_classes": [
+        "BooleanField",
+        "CheckboxInput",
+        "SplitArrayField",
+        "SplitArrayWidget"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_booleanfield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where get_context can be called.",
+      "Use the generated reproduction path that calls get_context."
+    ],
+    "execution_stimulus": [
+      "Call get_context with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_context."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/forms/widgets.py",
+      "django/contrib/admin/widgets.py",
+      "django/contrib/gis/admin/widgets.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_booleanfield.py",
+      "tests/forms_tests/field_tests/test_nullbooleanfield.py",
+      "tests/forms_tests/field_tests/test_splitdatetimefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.postgres.forms.array import SplitArrayField, SplitArrayWidget\nfrom django.forms.widgets import CheckboxInput\n\nclass TestSplitArrayFieldWithBooleanField(SimpleTestCase):\n    def test_checkbox_input_checked_state_repro(self):\n        initial_data = [False, True, False]\n        split_array_field = SplitArrayField(BooleanField(), size=len(initial_data))\n        split_array_widget = SplitArrayWidget(widget=CheckboxInput(), size=len(initial_data))\n        contexts = [split_array_widget.widget.get_context(name='test', value=value, attrs={})['widget'] for value in initial_data]\n        self.assertNotIn('checked', contexts[0]['attrs'])\n        self.assertIn('checked', contexts[1]['attrs'])\n        self.assertNotIn('checked', contexts[2]['attrs'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_context"
+      ],
+      "classes": [
+        "BooleanField",
+        "CheckboxInput",
+        "SplitArrayField",
+        "SplitArrayWidget"
+      ],
+      "files": [
+        "django/forms/widgets.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_booleanfield.py",
+      "target_source_file": "django/forms/widgets.py",
+      "test_visible_functions": [
+        "get_context"
+      ],
+      "test_visible_classes": [
+        "BooleanField",
+        "CheckboxInput",
+        "SplitArrayField",
+        "SplitArrayWidget"
+      ]
+    }
+  }
+]

@@ -1,0 +1,544 @@
+{
+  "instance_id": "astropy__astropy-7671",
+  "repo": "astropy/astropy",
+  "base_commit": "a7141cd90019b62688d507ae056298507678c058",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/utils/introspection.py",
+      "score": 42,
+      "matched_identifiers": [
+        "call",
+        "dev/astropy/astropy/utils/introspection.py",
+        "distutils",
+        "else",
+        "have_version",
+        "minversion"
+      ],
+      "reasons": [
+        "function_match:minversion",
+        "explicit_file_path_hint:dev/astropy/astropy/utils/introspection.py",
+        "stem_in_issue_text:introspection",
+        "source_content_tokens:call,distutils,else,have_version,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "minversion": "def minversion(module, version, inclusive=True, version_path='__version__'):\n    \"\"\"\n    Returns `True` if the specified Python module satisfies a minimum version\n    requirement, and `False` if not.\n\n    Parameters\n    ----------\n\n    module : module or `str`\n        An imported module of which to check the version, or the name of\n        that module (in which case an import of that module is attempted--\n        if this fails `False` is returned).\n\n    version : `str`\n        The version as a string that this module must have at a minimum (e.g."
+      },
+      "top_level_functions": [
+        "resolve_name",
+        "minversion",
+        "find_current_module",
+        "find_mod_objs",
+        "isinstancemethod"
+      ]
+    },
+    {
+      "path": "astropy/table/bst.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__ge__",
+        "call",
+        "else",
+        "import"
+      ],
+      "reasons": [
+        "function_match:__ge__",
+        "source_content_tokens:__ge__,call,else,import,inclusive"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__ge__": "    def __ge__(self, other):\n        return False\n\n    def __repr__(self):\n        return \"MIN\"\n\n    __le__ = __lt__\n    __ge__ = __gt__\n    __str__ = __repr__\n\n\nclass Epsilon:\n    '''\n    Represents the \"next largest\" version of a given value,\n    so that for all valid comparisons we have"
+      },
+      "top_level_functions": [
+        "Node.replace",
+        "Node.remove",
+        "Node.set",
+        "BST.add",
+        "BST.find",
+        "BST.find_node",
+        "BST.shift_left",
+        "BST.shift_right",
+        "BST.traverse",
+        "BST.items",
+        "BST.sort",
+        "BST.sorted_data",
+        "BST.remove",
+        "BST.is_valid",
+        "BST.range",
+        "BST.range_nodes",
+        "BST.same_prefix",
+        "BST.height",
+        "BST.replace_rows",
+        "FastBase.add",
+        "FastBase.find",
+        "FastBase.remove",
+        "FastBase.shift_left",
+        "FastBase.shift_right",
+        "FastBase.traverse",
+        "FastBase.items",
+        "FastBase.sort",
+        "FastBase.sorted_data",
+        "FastBase.range",
+        "FastBase.replace_rows"
+      ]
+    },
+    {
+      "path": "astropy/table/soco.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__ge__",
+        "else",
+        "import",
+        "other"
+      ],
+      "reasons": [
+        "function_match:__ge__",
+        "source_content_tokens:__ge__,else,import,other"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__ge__": "    def __ge__(self, other):\n        if other.__class__ is Node:\n            return (self.key, self.value) >= (other.key, other.value)\n        return self.key >= other\n\n    __hash__ = None\n\n    def __repr__(self):\n        return 'Node({0!r}, {1!r})'.format(self.key, self.value)\n\n\nclass SCEngine:\n    '''\n    Fast tree-based implementation for indexing, using the\n    ``sortedcontainers`` package."
+      },
+      "top_level_functions": [
+        "SCEngine.add",
+        "SCEngine.find",
+        "SCEngine.remove",
+        "SCEngine.shift_left",
+        "SCEngine.shift_right",
+        "SCEngine.items",
+        "SCEngine.sort",
+        "SCEngine.sorted_data",
+        "SCEngine.range",
+        "SCEngine.replace_rows"
+      ]
+    },
+    {
+      "path": "astropy/table/table.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__ge__",
+        "call",
+        "doesn",
+        "else"
+      ],
+      "reasons": [
+        "function_match:__ge__",
+        "source_content_tokens:__ge__,call,doesn,else,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__ge__": "    def __ge__(self, other):\n        return super().__ge__(other)\n\n    def __eq__(self, other):\n\n        if isinstance(other, Table):\n            other = other.as_array()\n\n        if self.masked:\n            if isinstance(other, np.ma.MaskedArray):\n                result = self.as_array() == other\n            else:\n                # If mask is True, then by definition the row doesn't match\n                # because the other array is not masked.\n                false_mask = np.zeros(1, dtype=[(n, bool) for n in self.dtype.names])"
+      },
+      "top_level_functions": [
+        "descr",
+        "has_info_class",
+        "TableColumns.keys",
+        "TableColumns.values",
+        "TableColumns.isinstance",
+        "TableColumns.not_isinstance",
+        "Table.as_array",
+        "Table.mask",
+        "Table.filled",
+        "Table.indices",
+        "Table.loc",
+        "Table.loc_indices",
+        "Table.iloc",
+        "Table.add_index",
+        "Table.remove_indices",
+        "Table.index_mode",
+        "Table.itercols",
+        "Table.has_mixin_columns",
+        "Table.pprint",
+        "Table.show_in_notebook",
+        "Table.show_in_browser",
+        "Table.pformat",
+        "Table.more",
+        "Table.field",
+        "Table.masked",
+        "Table.ColumnClass",
+        "Table.dtype",
+        "Table.colnames",
+        "Table.keys",
+        "Table.index_column",
+        "Table.add_column",
+        "Table.add_columns",
+        "Table.replace_column",
+        "Table.remove_row",
+        "Table.remove_rows",
+        "Table.remove_column",
+        "Table.remove_columns",
+        "Table.convert_bytestring_to_unicode",
+        "Table.convert_unicode_to_bytestring",
+        "Table.keep_columns"
+      ]
+    },
+    {
+      "path": "astropy/time/core.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__ge__",
+        "call",
+        "doesn",
+        "else"
+      ],
+      "reasons": [
+        "function_match:__ge__",
+        "source_content_tokens:__ge__,call,doesn,else,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__ge__": "    def __ge__(self, other):\n        return self._time_comparison(other, operator.ge)\n\n    def to_datetime(self, timezone=None):\n        tm = self.replicate(format='datetime')\n        return tm._shaped_like_input(tm._time.to_value(timezone))\n\n    to_datetime.__doc__ = TimeDatetime.to_value.__doc__\n\n\nclass TimeDelta(Time):\n    \"\"\"\n    Represent the time difference between two times.\n\n    A TimeDelta object is initialized with one or more times in the ``val``"
+      },
+      "top_level_functions": [
+        "TimeInfo.unit",
+        "TimeInfo.new_like",
+        "Time.now",
+        "Time.writeable",
+        "Time.format",
+        "Time.scale",
+        "Time.precision",
+        "Time.in_subfmt",
+        "Time.out_subfmt",
+        "Time.shape",
+        "Time.jd1",
+        "Time.jd2",
+        "Time.value",
+        "Time.masked",
+        "Time.mask",
+        "Time.light_travel_time",
+        "Time.sidereal_time",
+        "Time.copy",
+        "Time.replicate",
+        "Time.argmin",
+        "Time.argmax",
+        "Time.argsort",
+        "Time.min",
+        "Time.max",
+        "Time.ptp",
+        "Time.sort",
+        "Time.cache",
+        "Time.get_delta_ut1_utc",
+        "Time.to_datetime",
+        "TimeDelta.replicate",
+        "TimeDelta.to_datetime",
+        "TimeDelta.to"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/utils/tests/test_introspection.py",
+      "score": 36,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/utils/tests",
+        "test_name_matches_source_stem:introspection",
+        "token_overlap:introspection",
+        "internal_name_overlap:version",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/table/tests/test_init_table.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/table/tests",
+        "test_name_matches_source_stem:table",
+        "token_overlap:table",
+        "internal_name_overlap:table",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/table/tests/test_table.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/table/tests",
+        "test_name_matches_source_stem:table",
+        "token_overlap:table",
+        "internal_name_overlap:version",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/utils/tests/test_timer.py",
+      "score": 30,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/utils/tests",
+        "token_overlap:time",
+        "internal_name_overlap:time",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/table/tests/test_bst.py",
+      "score": 28,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/table/tests",
+        "test_name_matches_source_stem:bst",
+        "token_overlap:table",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "astropy/table/tests/test_bst.py:pytest_import_or_conftest",
+      "astropy/table/tests/test_bst.py:top_level_test_functions",
+      "astropy/table/tests/test_table.py:pytest_import_or_conftest",
+      "astropy/table/tests/test_table.py:top_level_test_functions",
+      "astropy/table/tests/test_table.py:testcase_class:TestAddColumns",
+      "astropy/table/tests/test_table.py:testcase_class:TestAddLength",
+      "astropy/table/tests/test_table.py:testcase_class:TestAddName",
+      "astropy/table/tests/test_table.py:testcase_class:TestAddPosition",
+      "astropy/table/tests/test_table.py:testcase_class:TestAddRow",
+      "astropy/table/tests/test_table.py:testcase_class:TestArrayColumns",
+      "astropy/table/tests/test_table.py:testcase_class:TestColumnAccess",
+      "astropy/table/tests/test_table.py:testcase_class:TestConvertNumpyArray",
+      "astropy/table/tests/test_table.py:testcase_class:TestEmptyData",
+      "astropy/table/tests/test_table.py:testcase_class:TestInitFromTable",
+      "astropy/table/tests/test_table.py:testcase_class:TestIterator",
+      "astropy/table/tests/test_table.py:testcase_class:TestKeep",
+      "astropy/table/tests/test_table.py:testcase_class:TestMetaTable",
+      "astropy/table/tests/test_table.py:testcase_class:TestNewFromColumns",
+      "astropy/table/tests/test_table.py:testcase_class:TestPandas",
+      "astropy/table/tests/test_table.py:testcase_class:TestRemove"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 712,
+  "indexed_test_file_count": 313,
+  "available_imports": {
+    "astropy": [
+      "BST",
+      "Column",
+      "ColumnGroups",
+      "ColumnInfo",
+      "Conf",
+      "FastBST",
+      "FastRBT",
+      "MaskedColumn",
+      "NdarrayMixin",
+      "QTable",
+      "Row",
+      "SCEngine",
+      "SerializedColumn",
+      "SortedArray",
+      "StringTruncateWarning",
+      "Table",
+      "TableColumns",
+      "TableFormatter",
+      "TableGroups",
+      "TableMergeError",
+      "TableReplaceWarning",
+      "TestRunner",
+      "UnsupportedPythonError",
+      "__module_type__",
+      "_check_numpy",
+      "_config",
+      "_get_bibtex",
+      "_initialize_astropy",
+      "_is_astropy_setup",
+      "_is_astropy_source",
+      "_rebuild_extensions",
+      "hstack",
+      "join",
+      "online_help",
+      "registry",
+      "setdiff",
+      "unique",
+      "vstack",
+      "warn"
+    ],
+    "astropy.time.core": [
+      "OperandTypeError",
+      "ScaleValueError",
+      "Time",
+      "TimeDelta",
+      "TimeDeltaInfo",
+      "TimeInfo",
+      "_check_for_masked_and_fill",
+      "_make_array"
+    ],
+    "astropy.utils.introspection": [
+      "_isinstancemethod",
+      "find_current_module",
+      "find_mod_objs",
+      "isinstancemethod",
+      "minversion",
+      "resolve_name"
+    ],
+    "astropy.table.bst": [
+      "BST",
+      "Epsilon",
+      "FastBase",
+      "MaxValue",
+      "MinValue",
+      "Node"
+    ],
+    "astropy.table": [
+      "Conf"
+    ],
+    "astropy.table.table": [
+      "NdarrayMixin",
+      "QTable",
+      "Table",
+      "TableColumns",
+      "TableReplaceWarning",
+      "descr",
+      "has_info_class"
+    ],
+    "astropy.table.soco": [
+      "Node",
+      "SCEngine"
+    ],
+    "astropy.table.tests.test_bst": [
+      "bst",
+      "get_tree",
+      "test_bst_add",
+      "test_bst_dimensions",
+      "test_bst_duplicate",
+      "test_bst_find",
+      "test_bst_range",
+      "test_bst_remove",
+      "test_bst_traverse",
+      "tree"
+    ],
+    "astropy.table.tests.test_table": [
+      "SetupData",
+      "TestAddColumns",
+      "TestAddLength",
+      "TestAddName",
+      "TestAddPosition",
+      "TestAddRow",
+      "TestArrayColumns",
+      "TestColumnAccess",
+      "TestConvertNumpyArray",
+      "TestEmptyData",
+      "TestInitFromTable",
+      "TestIterator",
+      "TestKeep",
+      "TestMetaTable",
+      "TestNewFromColumns",
+      "TestPandas",
+      "TestRemove",
+      "TestRename",
+      "TestReplaceColumn",
+      "TestReverse",
+      "TestSetMeta",
+      "TestSetTableColumn",
+      "TestSort",
+      "TestTableColumn",
+      "Test__Astropy_Table__",
+      "_assert_copies",
+      "test_copy",
+      "test_copy_masked",
+      "test_copy_protocol",
+      "test_disallow_inequality_comparisons",
+      "test_equality",
+      "test_equality_masked",
+      "test_equality_masked_bug",
+      "test_nested_iteration",
+      "test_primary_key_is_inherited",
+      "test_qtable_read_for_ipac_table_with_char_columns",
+      "test_replace_column_qtable",
+      "test_replace_update_column_via_setitem",
+      "test_replace_update_column_via_setitem_replace_inplace",
+      "test_replace_update_column_via_setitem_warnings_always",
+      "test_replace_update_column_via_setitem_warnings_attributes",
+      "test_replace_update_column_via_setitem_warnings_normal",
+      "test_replace_update_column_via_setitem_warnings_refcount",
+      "test_replace_update_column_via_setitem_warnings_slice",
+      "test_table_deletion",
+      "test_table_init_from_degenerate_arrays",
+      "test_unicode_bytestring_conversion",
+      "test_unicode_content",
+      "test_unicode_policy"
+    ],
+    "astropy.table.tests.test_init_table": [
+      "BaseInitFrom",
+      "BaseInitFromDictLike",
+      "BaseInitFromListLike",
+      "TestInitFromColsList",
+      "TestInitFromDict",
+      "TestInitFromListOfDicts",
+      "TestInitFromListOfLists",
+      "TestInitFromMapping",
+      "TestInitFromNdarrayHomo",
+      "TestInitFromNdarrayStruct",
+      "TestInitFromNone",
+      "TestInitFromOrderedDict",
+      "TestInitFromRow",
+      "TestInitFromRows",
+      "TestInitFromTable",
+      "TestTableColumnsInit",
+      "test_init_and_ref_from_multidim_ndarray"
+    ],
+    "astropy.utils.tests.test_introspection": [
+      "test_find_current_mod",
+      "test_find_mod_objs",
+      "test_minversion",
+      "test_pkg_finder"
+    ],
+    "astropy.utils.tests.test_timer": [
+      "func_to_time",
+      "test_timer"
+    ]
+  },
+  "test_example_snippet": "def test_pkg_finder():\n    \"\"\"\n    Tests that the `find_current_module` function works. Note that\n    this also implicitly tests compat.misc._patched_getmodule\n    \"\"\"\n    mod1 = 'astropy.utils.introspection'\n    mod2 = 'astropy.utils.tests.test_introspection'\n    mod3 = 'astropy.utils.tests.test_introspection'\n    assert find_current_module(0).__name__ == mod1\n    assert find_current_module(1).__name__ == mod2\n    assert find_current_module(0, True).__name__ == mod3\n\n\ndef test_find_current_mod():\n    from sys import getrecursionlimit\n\n    thismodnm = __name__\n\n    assert find_current_module(0) is introspection\n    assert find_current_module(1).__name__ == thismodnm\n    assert find_current_module(getrecursionlimit() + 1) is None\n\n    assert find_current_module(0, True).__name__ == thismodnm\n    assert find_current_module(0, [introspection]).__name__ == thismodnm\n    assert find_current_module(0, ['astropy.utils.introspection']).__name__ == thismodnm\n\n    with pytest.raises(ImportError):\n        find_current_module(0, ['faddfdsasewrweriopunjlfiurrhujnkflgwhu'])\n\n\ndef test_find_mod_objs():\n    lnms, fqns, objs = find_mod_objs('astropy')\n\n    # this import  is after the above call intentionally to make sure\n    # find_mod_objs properly imports astropy on its own",
+  "conftest_fixtures": {
+    "astropy/table/tests/conftest.py": [
+      "Column",
+      "table_types",
+      "table_data",
+      "tableclass",
+      "protocol",
+      "table_type",
+      "mixin_cols",
+      "T1",
+      "operation_table_type"
+    ]
+  }
+}

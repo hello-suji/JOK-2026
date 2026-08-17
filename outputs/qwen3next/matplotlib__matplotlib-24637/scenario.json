@@ -1,0 +1,110 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/figure.py",
+      "target_function": "add_artist",
+      "related_classes": [
+        "AnnotationBbox",
+        "My_label",
+        "OffsetImage"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_offsetbox.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where add_artist can be called.",
+      "Use the generated reproduction path that calls add_artist, get_gid, imread, set_gid."
+    ],
+    "execution_stimulus": [
+      "Call add_artist with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_artist, get_gid, imread, set_gid."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/offsetbox.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_offsetbox.py",
+      "lib/matplotlib/tests/test_artist.py",
+      "lib/matplotlib/tests/test_figure.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.offsetbox import OffsetImage, AnnotationBbox\n\ndef test_annotationbbox_gid_repro():\n    fig, ax = plt.subplots()\n\n    arr_img = plt.imread(\"undraw_flowers_vx06.png\")\n\n    xy = [0.3, 0.55]\n\n    imagebox = OffsetImage(arr_img, zoom=0.1)\n    imagebox.image.axes = ax\n    imagebox.set_gid('image_gid')\n\n    ab = AnnotationBbox(imagebox, xy)\n    ax.add_artist(ab)\n\n    assert ab.get_gid() == 'image_gid'"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib.offsetbox import (OffsetImage, AnnotationBbox)\n\nfig, ax = plt.subplots()\n\narr_img = plt.imread(\"undraw_flowers_vx06.png\")\n\nxy = [0.3, 0.55]\n\nimagebox = OffsetImage(arr_img, zoom=0.1)\nimagebox.image.axes = ax\n\nab = AnnotationBbox(imagebox, xy,\n                    xybox=(120., -80.),\n                    xycoords='data',\n                    boxcoords=\"offset points\",\n                    pad=0.5,\n                    arrowprops=dict(\n                        arrowstyle=\"->\",\n                        connectionstyle=\"angle,angleA=0,angleB=90,rad=3\")\n                    )\nab.set_gid('My_label')\nax.add_artist(ab)\n\nprint(f\"GID = {ab.get_gid()}\")\n\nfig.savefig(\"example.svg\", format=\"svg\")"
+      },
+      {
+        "language": "python",
+        "code": "GID = My_label"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add_artist",
+        "get_gid",
+        "imread",
+        "savefig",
+        "set_gid",
+        "subplots",
+        "matplotlib",
+        "plt",
+        "use"
+      ],
+      "classes": [
+        "AnnotationBbox",
+        "My_label",
+        "OffsetImage"
+      ],
+      "files": [
+        "example.txt"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_offsetbox.py",
+      "target_source_file": "lib/matplotlib/figure.py",
+      "test_visible_functions": [
+        "add_artist",
+        "get_gid",
+        "imread",
+        "set_gid",
+        "subplots",
+        "matplotlib",
+        "plt",
+        "use"
+      ],
+      "test_visible_classes": [
+        "AnnotationBbox",
+        "OffsetImage"
+      ]
+    }
+  }
+]

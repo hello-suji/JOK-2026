@@ -1,0 +1,73 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/__init__.py",
+      "target_function": "execute_from_command_line",
+      "related_classes": [
+        "AutoField",
+        "BigAutoField",
+        "MyBigAutoField"
+      ],
+      "candidate_test_file": "tests/model_fields/test_autofield.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Set DEFAULT_AUTO_FIELD = \"example.core.models.MyBigAutoField\"",
+      "Import necessary Django modules"
+    ],
+    "execution_stimulus": [
+      "Call execute_from_command_line with command line arguments"
+    ],
+    "expected_failure": "ValueError: Primary key 'example.core.models.MyBigAutoField' referred by DEFAULT_AUTO_FIELD must subclass AutoField.",
+    "relevant_source_files": [
+      "django/core/management/__init__.py",
+      "django/db/models/fields/__init__.py",
+      "django/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/__init__.py",
+      "tests/distinct_on_fields/__init__.py",
+      "tests/field_defaults/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_bigautofield_subclass_check_failure():\n    from django.core.management import execute_from_command_line\n    import sys\n    sys.argv = ['manage.py', 'check']\n    try:\n        execute_from_command_line()\n    except ValueError as e:\n        assert str(e) == \"Primary key 'example.core.models.MyBigAutoField' referred by DEFAULT_AUTO_FIELD must subclass AutoField.\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: Primary key 'example.core.models.MyBigAutoField' referred by DEFAULT_AUTO_FIELD must subclass AutoField."
+    ],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "execute_from_command_line"
+      ],
+      "classes": [
+        "AutoField",
+        "BigAutoField",
+        "MyBigAutoField"
+      ]
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  }
+]

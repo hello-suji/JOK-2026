@@ -1,0 +1,471 @@
+{
+  "instance_id": "django__django-16642",
+  "repo": "django/django",
+  "base_commit": "fbe850106b2e4b85f838219cb9e1df95fba6c164",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/http/response.py",
+      "score": 21,
+      "matched_identifiers": [
+        "FileResponse",
+        "content",
+        "fileresponse",
+        "mime",
+        "type"
+      ],
+      "reasons": [
+        "class_match:FileResponse",
+        "stem_in_issue_text:response",
+        "source_content_tokens:fileresponse,mime,type,content,types"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "FileResponse": "class FileResponse(StreamingHttpResponse):\n    \"\"\"\n    A streaming HTTP response class optimized for files.\n    \"\"\"\n\n    block_size = 4096\n\n    def __init__(self, *args, as_attachment=False, filename=\"\", **kwargs):\n        self.as_attachment = as_attachment\n        self.filename = filename\n        self._no_explicit_content_type = (\n            \"content_type\" not in kwargs or kwargs[\"content_type\"] is None\n        )\n        super().__init__(*args, **kwargs)\n",
+        "content": "    def content(self, value):\n        if value:\n            raise AttributeError(\n                \"You cannot set content to a 304 (Not Modified) response\"\n            )\n        self._container = []\n\n\nclass HttpResponseBadRequest(HttpResponse):\n    status_code = 400\n\n\nclass HttpResponseNotFound(HttpResponse):\n    status_code = 404\n"
+      },
+      "top_level_functions": [
+        "ResponseHeaders.pop",
+        "ResponseHeaders.setdefault",
+        "HttpResponseBase.reason_phrase",
+        "HttpResponseBase.charset",
+        "HttpResponseBase.serialize_headers",
+        "HttpResponseBase.has_header",
+        "HttpResponseBase.items",
+        "HttpResponseBase.get",
+        "HttpResponseBase.set_cookie",
+        "HttpResponseBase.setdefault",
+        "HttpResponseBase.set_signed_cookie",
+        "HttpResponseBase.delete_cookie",
+        "HttpResponseBase.make_bytes",
+        "HttpResponseBase.close",
+        "HttpResponseBase.write",
+        "HttpResponseBase.flush",
+        "HttpResponseBase.tell",
+        "HttpResponseBase.readable",
+        "HttpResponseBase.seekable",
+        "HttpResponseBase.writable",
+        "HttpResponseBase.writelines",
+        "HttpResponse.serialize",
+        "HttpResponse.content",
+        "HttpResponse.write",
+        "HttpResponse.tell",
+        "HttpResponse.getvalue",
+        "HttpResponse.writable",
+        "HttpResponse.writelines",
+        "StreamingHttpResponse.content",
+        "StreamingHttpResponse.streaming_content",
+        "StreamingHttpResponse.getvalue",
+        "FileResponse.set_headers",
+        "HttpResponseNotModified.content"
+      ]
+    },
+    {
+      "path": "django/contrib/syndication/views.py",
+      "score": 16,
+      "matched_identifiers": [
+        "content",
+        "improper",
+        "mime",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:improper,mime,type,content,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "add_domain",
+        "Feed.item_title",
+        "Feed.item_description",
+        "Feed.item_link",
+        "Feed.item_enclosures",
+        "Feed.feed_extra_kwargs",
+        "Feed.item_extra_kwargs",
+        "Feed.get_object",
+        "Feed.get_context_data",
+        "Feed.get_feed"
+      ]
+    },
+    {
+      "path": "django/core/checks/security/base.py",
+      "score": 16,
+      "matched_identifiers": [
+        "content",
+        "improper",
+        "open",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:improper,open,type,content,types"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_security_middleware",
+        "check_xframe_options_middleware",
+        "check_sts",
+        "check_sts_include_subdomains",
+        "check_sts_preload",
+        "check_content_type_nosniff",
+        "check_ssl_redirect",
+        "check_secret_key",
+        "check_secret_key_fallbacks",
+        "check_debug",
+        "check_xframe_deny",
+        "check_allowed_hosts",
+        "check_referrer_policy",
+        "check_cross_origin_opener_policy"
+      ]
+    },
+    {
+      "path": "django/core/mail/message.py",
+      "score": 16,
+      "matched_identifiers": [
+        "content",
+        "mime",
+        "open",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:mime,open,type,content,types"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "forbid_multi_line_headers",
+        "sanitize_address",
+        "MIMEMixin.as_string",
+        "MIMEMixin.as_bytes",
+        "SafeMIMEText.set_payload",
+        "EmailMessage.get_connection",
+        "EmailMessage.message",
+        "EmailMessage.recipients",
+        "EmailMessage.send",
+        "EmailMessage.attach",
+        "EmailMessage.attach_file",
+        "EmailMultiAlternatives.attach_alternative"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/makemessages.py",
+      "score": 16,
+      "matched_identifiers": [
+        "content",
+        "improper",
+        "open",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:improper,open,type,content,extension"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_programs",
+        "is_valid_locale",
+        "TranslatableFile.path",
+        "BuildFile.is_templatized",
+        "BuildFile.path",
+        "BuildFile.work_path",
+        "BuildFile.preprocess",
+        "BuildFile.postprocess_messages",
+        "BuildFile.cleanup",
+        "normalize_eols",
+        "write_pot_file",
+        "Command.add_arguments",
+        "Command.handle",
+        "Command.gettext_version",
+        "Command.settings_available",
+        "Command.build_potfiles",
+        "Command.remove_potfiles",
+        "Command.find_files",
+        "Command.process_files",
+        "Command.process_locale_dir",
+        "Command.write_po_file",
+        "Command.copy_plural_forms"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_tests/test_response.py",
+      "score": 11,
+      "matched_identifiers": [
+        "FileResponse"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileResponse",
+        "test_name_matches_source_stem:response",
+        "token_overlap:response",
+        "internal_name_overlap:response",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_views.py",
+      "score": 9,
+      "matched_identifiers": [
+        "FileResponse"
+      ],
+      "reasons": [
+        "test_path_related_to_class:FileResponse",
+        "test_name_matches_source_stem:views",
+        "internal_name_overlap:response",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/messages_tests/base.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:message",
+        "internal_name_overlap:message",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/management/commands/base_command.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:commands,management",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:commands,management",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/messages_tests/base.py:unittest_or_django_test_import",
+      "tests/template_tests/test_response.py:unittest_or_django_test_import",
+      "tests/template_tests/test_response.py:top_level_test_functions",
+      "tests/staticfiles_tests/test_views.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_views.py:testcase_class:TestServeDisabled",
+      "tests/staticfiles_tests/test_views.py:testcase_class:TestServeStatic",
+      "tests/staticfiles_tests/test_views.py:testcase_class:TestServeStaticWithDefaultURL",
+      "tests/staticfiles_tests/test_views.py:testcase_class:TestServeStaticWithURLHelper"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2746,
+  "indexed_test_file_count": 1875,
+  "available_imports": {
+    "django": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpHeaders",
+      "HttpRequest",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseBase",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "QueryDict",
+      "RawPostDataException",
+      "SimpleCookie",
+      "StreamingHttpResponse",
+      "UnreadablePostError",
+      "get_version",
+      "parse_cookie",
+      "setup"
+    ],
+    "tests.messages_tests.base": [
+      "BaseTests",
+      "add_level_messages"
+    ],
+    "tests.template_tests.test_response": [
+      "CacheMiddlewareTest",
+      "CustomURLConfTest",
+      "SimpleTemplateResponseTest",
+      "TemplateResponseTest",
+      "custom_urlconf_middleware",
+      "test_processor"
+    ],
+    "tests.staticfiles_tests.test_views": [
+      "TestServeDisabled",
+      "TestServeStatic",
+      "TestServeStaticWithDefaultURL",
+      "TestServeStaticWithURLHelper"
+    ],
+    "tests.admin_scripts.management.commands.base_command": [
+      "Command"
+    ],
+    "tests.admin_scripts.management.commands.suppress_base_options_command": [
+      "Command"
+    ],
+    "django.http.response": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseBase",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseRedirectBase",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "ResponseHeaders",
+      "StreamingHttpResponse"
+    ],
+    "django.contrib.syndication.views": [
+      "Feed",
+      "FeedDoesNotExist",
+      "add_domain"
+    ],
+    "django.core.mail.message": [
+      "BadHeaderError",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "MIMEMixin",
+      "SafeMIMEMessage",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "sanitize_address"
+    ],
+    "django.core.mail": [
+      "get_connection",
+      "mail_admins",
+      "mail_managers",
+      "send_mail",
+      "send_mass_mail"
+    ],
+    "django.core": [
+      "BadHeaderError",
+      "BaseCommand",
+      "CRITICAL",
+      "CachedDnsName",
+      "CheckMessage",
+      "CommandError",
+      "CommandParser",
+      "Critical",
+      "DEBUG",
+      "DEFAULT_ATTACHMENT_MIME_TYPE",
+      "DNS_NAME",
+      "Debug",
+      "ERROR",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "Error",
+      "INFO",
+      "ImproperlyConfigured",
+      "Info",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "Tags",
+      "WARNING",
+      "Warning",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "forbid_multi_line_headers",
+      "get_close_matches",
+      "get_connection",
+      "handle_default_options",
+      "import_module",
+      "import_string",
+      "mail_admins",
+      "mail_managers",
+      "make_msgid",
+      "register",
+      "run_checks",
+      "send_mail",
+      "send_mass_mail",
+      "settings",
+      "tag_exists"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core.management.commands.makemessages": [
+      "BuildFile",
+      "Command",
+      "TranslatableFile",
+      "check_programs",
+      "is_valid_locale",
+      "normalize_eols",
+      "write_pot_file"
+    ],
+    "django.core.checks.security.base": [
+      "_check_secret_key",
+      "_security_middleware",
+      "_xframe_middleware",
+      "check_allowed_hosts",
+      "check_content_type_nosniff",
+      "check_cross_origin_opener_policy",
+      "check_debug",
+      "check_referrer_policy",
+      "check_secret_key",
+      "check_secret_key_fallbacks",
+      "check_security_middleware",
+      "check_ssl_redirect",
+      "check_sts",
+      "check_sts_include_subdomains",
+      "check_sts_preload",
+      "check_xframe_deny",
+      "check_xframe_options_middleware"
+    ]
+  },
+  "test_example_snippet": "def test_processor(request):\n    return {\"processors\": \"yes\"}\n\n\ntest_processor_name = \"template_tests.test_response.test_processor\"\n\n\n# A test middleware that installs a temporary URLConf\ndef custom_urlconf_middleware(get_response):\n    def middleware(request):\n        request.urlconf = \"template_tests.alternate_urls\"\n        return get_response(request)\n\n    return middleware\n\n\nclass SimpleTemplateResponseTest(SimpleTestCase):\n    def _response(self, template=\"foo\", *args, **kwargs):\n        template = engines[\"django\"].from_string(template)\n        return SimpleTemplateResponse(template, *args, **kwargs)\n\n    def test_template_resolving(self):\n        response = SimpleTemplateResponse(\"first/test.html\")\n        response.render()\n        self.assertEqual(response.content, b\"First template\\n\")\n\n        templates = [\"foo.html\", \"second/test.html\", \"first/test.html\"]\n        response = SimpleTemplateResponse(templates)\n        response.render()\n        self.assertEqual(response.content, b\"Second template\\n\")\n\n        response = self._response()\n        response.render()\n        self.assertEqual(response.content, b\"foo\")\n",
+  "conftest_fixtures": {}
+}

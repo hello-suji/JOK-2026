@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-10466",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -561,3 +561,16 @@\n\n     # explicit title\n     assert html.format('index.html#foons') in content\n+\n+import unittest\n+from sphinx.builders.gettext import Message\n+\n+class TestMessageLocations(unittest.TestCase):\n+    def test_unique_locations_repro(self):\n+        \"\"\"Ensure Message locations are unique.\"\"\"\n+        msg = Message('msgid', 'msgstr')\n+        msg.add_location('../../manual/render/shader_nodes/vector/vector_rotate.rst:38')\n+        msg.add_location('../../manual/modeling/hair.rst:0')\n+        msg.add_location('../../manual/modeling/hair.rst:0')\n+        msg.add_location('../../manual/modeling/hair.rst:0')\n+        self.assertEqual(len(msg.locations), 2)\n",
+    "patch_sha256": "5843c550d2731b127e2953ecdc5758a8b1c513bbd7ba2576843e619016d26bf3"
+  }
+]

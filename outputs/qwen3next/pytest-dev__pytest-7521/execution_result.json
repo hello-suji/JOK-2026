@@ -1,0 +1,24 @@
+{
+  "instance_id": "pytest-dev__pytest-7521",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/qwen/pytest-dev__pytest-7521/predictions.json",
+  "run_id": "sync-pytest-dev__pytest-7521",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/qwen/pytest-dev__pytest-7521/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "pytest-dev__pytest-7521",
+    "--run_id",
+    "debug-pytest-dev__pytest-7521"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "-------------------------------Final Report--------------------------------------\n{'pytest-dev__pytest-7521': {'test_before_patch': {'pytest-dev__pytest-7521::qwen_external_sync': 'FAILED'}, 'test_after_patch': {'pytest-dev__pytest-7521::qwen_external_sync': 'PASSED'}, 'final_score': 1.0, 'resolved': True, 'contributing_functions': ['pytest-dev__pytest-7521::qwen_external_sync']}}\n---------------------------------------------------------------------------------\nFinal score: 1.0\n",
+  "harness_stderr": ""
+}

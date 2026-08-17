@@ -1,0 +1,76 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/commands/loaddata.py",
+      "target_function": "",
+      "related_classes": [
+        "Path",
+        "Command"
+      ],
+      "candidate_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "When FIXTURE_DIRS contains Path instances, the duplicate check in loaddata does not detect duplicates.",
+    "relevant_source_files": [
+      "django/core/management/commands/loaddata.py",
+      "django/contrib/admin/options.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "tests/template_backends/test_django.py",
+      "tests/forms_tests/field_tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom pathlib import Path\nfrom django.core.management.commands.loaddata import Command\n\nclass TestLoadDataCommand(TestCase):\n    def test_duplicate_path_instances_not_detected_repro(self):\n        command = Command()\n        fixture_dir = Path('/path/to/fixtures')\n        command.fixture_dirs = [fixture_dir, fixture_dir]\n        unique_dirs = set(command.fixture_dirs)\n        self.assertEqual(len(unique_dirs), len(command.fixture_dirs))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "Path",
+        "Command"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "target_source_file": "django/core/management/commands/loaddata.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "Command"
+      ]
+    }
+  }
+]

@@ -1,0 +1,18 @@
+--- a/pylint/testutils/lint_module_test.py
++++ b/pylint/testutils/lint_module_test.py
+@@ -234,3 +234,15 @@
+         assert expected_output == actual_output, self.error_msg_for_unequal_output(
+             expected_output, actual_output
+         )
++
++import os
++def test_unused_import_in_assign_false_positive_repro(linter):
++    import astroid
++    from pylint.checkers.base import BasicErrorChecker
++    node = astroid.parse('import os\nX = os.path').body[1]
++    checker = BasicErrorChecker(linter)
++    checker.visit_assign(node)
++    messages = linter.reporter.messages
++    assert not any(msg.msg_id == 'unused-import' for msg in messages)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(checker) != 'W0611: Unused import abc (unused-import)'

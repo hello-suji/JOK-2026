@@ -1,0 +1,448 @@
+{
+  "instance_id": "django__django-16145",
+  "repo": "django/django",
+  "base_commit": "93d4c9ea1de24eb391cb2b3561b6703fd46374df",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/autoreload.py",
+      "score": 20,
+      "matched_identifiers": [
+        "StatReloader",
+        "development",
+        "docs",
+        "http",
+        "server"
+      ],
+      "reasons": [
+        "class_match:StatReloader",
+        "source_content_tokens:development,docs,http,server,changes"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "StatReloader": "class StatReloader(BaseReloader):\n    SLEEP_TIME = 1  # Check for changes once per second.\n\n    def tick(self):\n        mtimes = {}\n        while True:\n            for filepath, mtime in self.snapshot_files():\n                old_time = mtimes.get(filepath)\n                mtimes[filepath] = mtime\n                if old_time is None:\n                    logger.debug(\"File %s first seen with mtime %s\", filepath, mtime)\n                    continue\n                elif mtime > old_time:\n                    logger.debug(\n                        \"File %s previous mtime: %s, current mtime: %s\","
+      },
+      "top_level_functions": [
+        "is_django_module",
+        "is_django_path",
+        "check_errors",
+        "raise_last_exception",
+        "ensure_echo_on",
+        "iter_all_python_module_files",
+        "iter_modules_and_files",
+        "common_roots",
+        "sys_path_directories",
+        "get_child_arguments",
+        "trigger_reload",
+        "restart_with_reloader",
+        "BaseReloader.watch_dir",
+        "BaseReloader.watched_files",
+        "BaseReloader.wait_for_apps_ready",
+        "BaseReloader.run",
+        "BaseReloader.run_loop",
+        "BaseReloader.tick",
+        "BaseReloader.check_availability",
+        "BaseReloader.notify_file_changed",
+        "BaseReloader.should_stop",
+        "BaseReloader.stop",
+        "StatReloader.tick",
+        "StatReloader.snapshot_files",
+        "StatReloader.check_availability",
+        "WatchmanReloader.client",
+        "WatchmanReloader.watched_roots",
+        "WatchmanReloader.update_watches",
+        "WatchmanReloader.request_processed",
+        "WatchmanReloader.tick",
+        "WatchmanReloader.stop",
+        "WatchmanReloader.check_server_status",
+        "WatchmanReloader.check_availability",
+        "get_reloader",
+        "start_django",
+        "run_with_reloader"
+      ]
+    },
+    {
+      "path": "django/contrib/staticfiles/management/commands/runserver.py",
+      "score": 17,
+      "matched_identifiers": [
+        "command",
+        "development",
+        "runserver",
+        "server"
+      ],
+      "reasons": [
+        "stem_in_issue_text:runserver",
+        "source_content_tokens:command,development,runserver,server,manage"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.get_handler"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/runserver.py",
+      "score": 17,
+      "matched_identifiers": [
+        "address",
+        "command",
+        "development",
+        "http"
+      ],
+      "reasons": [
+        "stem_in_issue_text:runserver",
+        "source_content_tokens:address,command,development,http,order"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.execute",
+        "Command.get_handler",
+        "Command.handle",
+        "Command.run",
+        "Command.inner_run"
+      ]
+    },
+    {
+      "path": "django/db/migrations/loader.py",
+      "score": 17,
+      "matched_identifiers": [
+        "consistent",
+        "docs",
+        "http",
+        "order"
+      ],
+      "reasons": [
+        "stem_in_issue_text:loader",
+        "source_content_tokens:consistent,docs,http,order"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MigrationLoader.migrations_module",
+        "MigrationLoader.load_disk",
+        "MigrationLoader.get_migration",
+        "MigrationLoader.get_migration_by_prefix",
+        "MigrationLoader.check_key",
+        "MigrationLoader.add_internal_dependencies",
+        "MigrationLoader.add_external_dependencies",
+        "MigrationLoader.build_graph",
+        "MigrationLoader.check_consistent_history",
+        "MigrationLoader.detect_conflicts",
+        "MigrationLoader.project_state",
+        "MigrationLoader.collect_sql"
+      ]
+    },
+    {
+      "path": "django/utils/http.py",
+      "score": 17,
+      "matched_identifiers": [
+        "address",
+        "browser",
+        "http",
+        "server"
+      ],
+      "reasons": [
+        "stem_in_issue_text:http",
+        "source_content_tokens:address,browser,http,server,doesn"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "urlencode",
+        "http_date",
+        "parse_http_date",
+        "parse_http_date_safe",
+        "base36_to_int",
+        "int_to_base36",
+        "urlsafe_base64_encode",
+        "urlsafe_base64_decode",
+        "parse_etags",
+        "quote_etag",
+        "is_same_domain",
+        "url_has_allowed_host_and_scheme",
+        "escape_leading_slashes",
+        "parse_header_parameters"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/utils_tests/test_autoreload.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:autoreload",
+        "token_overlap:autoreload",
+        "internal_name_overlap:autoreload",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_http.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_loader.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:loader",
+        "token_overlap:loader,migrations",
+        "internal_name_overlap:loader",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_utils.py",
+      "score": 10,
+      "matched_identifiers": [
+        "StatReloader"
+      ],
+      "reasons": [
+        "test_path_related_to_class:StatReloader",
+        "token_overlap:stat,staticfiles",
+        "internal_name_overlap:stat",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_management.py",
+      "score": 9,
+      "matched_identifiers": [
+        "StatReloader"
+      ],
+      "reasons": [
+        "test_path_related_to_class:StatReloader",
+        "token_overlap:management,stat,staticfiles",
+        "internal_name_overlap:stat",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/migrations/test_loader.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_autoreload.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestCheckErrors",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestChildArguments",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestCommonRoots",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestIterModulesAndFiles",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestRaiseLastException",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestSysPathDirectories",
+      "tests/utils_tests/test_autoreload.py:testcase_class:TestUtilities",
+      "tests/utils_tests/test_http.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_management.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollection",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionClear",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionCustomIgnorePatterns",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionDryRun",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionDryRunManifestStaticFilesStorage",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionFilesOverride",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionHelpSubcommand",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionLinks",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionNeverCopyStorage"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2752,
+  "indexed_test_file_count": 1883,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.migrations.test_loader": [
+      "LoaderTests",
+      "PycLoaderTests",
+      "RecorderTests"
+    ],
+    "tests.utils_tests.test_autoreload": [
+      "BaseReloaderTests",
+      "GetReloaderTests",
+      "IntegrationTests",
+      "ReloaderTests",
+      "RestartWithReloaderTests",
+      "RunWithReloaderTests",
+      "StartDjangoTests",
+      "StatReloaderTests",
+      "TestCheckErrors",
+      "TestChildArguments",
+      "TestCommonRoots",
+      "TestIterModulesAndFiles",
+      "TestRaiseLastException",
+      "TestSysPathDirectories",
+      "TestUtilities",
+      "WatchmanReloaderTests",
+      "skip_unless_watchman_available"
+    ],
+    "tests.utils_tests.test_http": [
+      "Base36IntTests",
+      "ETagProcessingTests",
+      "EscapeLeadingSlashesTests",
+      "HttpDateProcessingTests",
+      "IsSameDomainTests",
+      "ParseHeaderParameterTests",
+      "URLEncodeTests",
+      "URLHasAllowedHostAndSchemeTests",
+      "URLSafeBase64Tests"
+    ],
+    "tests.staticfiles_tests.test_management": [
+      "TestCollection",
+      "TestCollectionClear",
+      "TestCollectionCustomIgnorePatterns",
+      "TestCollectionDryRun",
+      "TestCollectionDryRunManifestStaticFilesStorage",
+      "TestCollectionFilesOverride",
+      "TestCollectionHelpSubcommand",
+      "TestCollectionLinks",
+      "TestCollectionNeverCopyStorage",
+      "TestCollectionNoDefaultIgnore",
+      "TestCollectionNonLocalStorage",
+      "TestCollectionOverwriteWarning",
+      "TestCollectionPathLib",
+      "TestCollectionVerbosity",
+      "TestConfiguration",
+      "TestFindStatic",
+      "TestInteractiveMessages",
+      "TestNoFilesCreated",
+      "TestRunserver"
+    ],
+    "tests.staticfiles_tests.test_utils": [
+      "CheckSettingsTests"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.utils.autoreload": [
+      "BaseReloader",
+      "StatReloader",
+      "WatchmanReloader",
+      "WatchmanUnavailable",
+      "check_errors",
+      "common_roots",
+      "ensure_echo_on",
+      "get_child_arguments",
+      "get_reloader",
+      "is_django_module",
+      "is_django_path",
+      "iter_all_python_module_files",
+      "iter_modules_and_files",
+      "raise_last_exception",
+      "restart_with_reloader",
+      "run_with_reloader",
+      "start_django",
+      "sys_path_directories",
+      "trigger_reload"
+    ],
+    "django.utils.http": [
+      "_parseparam",
+      "_remove_unsafe_bytes_from_url",
+      "_url_has_allowed_host_and_scheme",
+      "_urlparse",
+      "_urlsplit",
+      "base36_to_int",
+      "escape_leading_slashes",
+      "http_date",
+      "int_to_base36",
+      "is_same_domain",
+      "parse_etags",
+      "parse_header_parameters",
+      "parse_http_date",
+      "parse_http_date_safe",
+      "quote_etag",
+      "url_has_allowed_host_and_scheme",
+      "urlencode",
+      "urlsafe_base64_decode",
+      "urlsafe_base64_encode"
+    ],
+    "django.contrib.staticfiles.management.commands.runserver": [
+      "Command"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.runserver": [
+      "Command"
+    ],
+    "django.db.migrations.loader": [
+      "MigrationLoader"
+    ]
+  },
+  "test_example_snippet": "class TestIterModulesAndFiles(SimpleTestCase):\n    def import_and_cleanup(self, name):\n        import_module(name)\n        self.addCleanup(lambda: sys.path_importer_cache.clear())\n        self.addCleanup(lambda: sys.modules.pop(name, None))\n\n    def clear_autoreload_caches(self):\n        autoreload.iter_modules_and_files.cache_clear()\n\n    def assertFileFound(self, filename):\n        # Some temp directories are symlinks. Python resolves these fully while\n        # importing.\n        resolved_filename = filename.resolve(strict=True)\n        self.clear_autoreload_caches()\n        # Test uncached access\n        self.assertIn(\n            resolved_filename, list(autoreload.iter_all_python_module_files())\n        )\n        # Test cached access\n        self.assertIn(\n            resolved_filename, list(autoreload.iter_all_python_module_files())\n        )\n        self.assertEqual(autoreload.iter_modules_and_files.cache_info().hits, 1)\n\n    def assertFileNotFound(self, filename):\n        resolved_filename = filename.resolve(strict=True)\n        self.clear_autoreload_caches()\n        # Test uncached access\n        self.assertNotIn(\n            resolved_filename, list(autoreload.iter_all_python_module_files())\n        )\n        # Test cached access\n        self.assertNotIn(\n            resolved_filename, list(autoreload.iter_all_python_module_files())\n        )",
+  "conftest_fixtures": {}
+}

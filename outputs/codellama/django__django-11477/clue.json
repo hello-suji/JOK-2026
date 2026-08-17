@@ -1,0 +1,24 @@
+{
+  "instance_id": "django__django-11477",
+  "observed_behavior": [],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "translate_url() creates an incorrect URL when optional named groups are missing in the URL pattern",
+    "There is a problem when translating urls with absent 'optional' arguments"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "translate_url"
+    ],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "translate_url() creates an incorrect URL when optional named groups are missing in the URL pattern\nDescription\n\t\nThere is a problem when translating urls with absent 'optional' arguments\n(it's seen in test case of the patch)",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

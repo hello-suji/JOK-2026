@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/functions/elementary/miscellaneous.py",
+      "target_function": "Max",
+      "related_classes": [
+        "Empty_set",
+        "Extended_real_numbers",
+        "Max"
+      ],
+      "candidate_test_file": "sympy/functions/combinatorial/tests/test_comb_numbers.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where Max can be called.",
+      "Use the generated reproduction path that calls oo."
+    ],
+    "execution_stimulus": [
+      "Call Max with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: oo."
+    ],
+    "expected_failure": "Right now `Min()` and `Max()` with no arguments raise `ValueError: The Max/Min functions must have arguments.`. It might be mathematically more convenient to have them return `oo` and `-oo`, respectively. See https://en.wikipedia.org/wiki/Empty_set#Extended_real_numbers for why these are valid answers mathematically.",
+    "relevant_source_files": [
+      "sympy/functions/elementary/miscellaneous.py",
+      "sympy/core/function.py",
+      "sympy/core/numbers.py"
+    ],
+    "relevant_test_files": [
+      "sympy/functions/combinatorial/tests/test_comb_numbers.py",
+      "sympy/functions/elementary/tests/test_miscellaneous.py",
+      "sympy/functions/elementary/tests/test_complexes.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import oo\nfrom sympy.functions.elementary.miscellaneous import Max\n\ndef test_max_no_arguments_repro():\n    assert Max() == oo"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "oo"
+      ],
+      "classes": [
+        "Empty_set",
+        "Extended_real_numbers",
+        "Max",
+        "Min"
+      ],
+      "files": [],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/functions/combinatorial/tests/test_comb_numbers.py",
+      "target_source_file": "sympy/functions/elementary/miscellaneous.py",
+      "test_visible_functions": [
+        "oo"
+      ],
+      "test_visible_classes": [
+        "Max"
+      ]
+    }
+  }
+]

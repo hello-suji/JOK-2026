@@ -1,0 +1,20 @@
+--- a/tests/backends/mysql/test_operations.py
++++ b/tests/backends/mysql/test_operations.py
+@@ -45,3 +45,17 @@
+                         'SET FOREIGN_KEY_CHECKS = 1;',
+                     ],
+                 )
++
++from datetime import timedelta
++from django.db.models import F
++from django.test import TestCase
++from django.contrib.auth.models import User
++
++class TestDurationExpressions(TestCase):
++    def test_duration_field_annotation_repro(self):
++        user = User.objects.create_user(username='testuser')
++        User.objects.filter(pk=user.pk).update(last_login=F('last_login') + timedelta(hours=2))
++        annotated_users = User.objects.annotate(duration=F('last_login') - F('date_joined')).filter(pk=user.pk)
++        self.assertEqual(annotated_users.count(), 1)
++        duration = annotated_users.first().duration
++        self.assertEqual(duration.total_seconds(), 7200.0)

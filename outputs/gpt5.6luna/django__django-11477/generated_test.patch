@@ -1,0 +1,15 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -106,3 +106,12 @@
+         self.assertIsInstance(b_isnull, RelatedIsNull)
+         self.assertIsInstance(b_isnull.lhs, SimpleCol)
+         self.assertEqual(b_isnull.lhs.target, ObjectC._meta.get_field('objectb'))
++
++from django.test import TestCase, SimpleTestCase
++from django.urls.resolvers import translate_url
++
++class TestUrlTranslation(SimpleTestCase):
++    def test_translate_url_with_missing_optional_args_repro(self):
++        url_pattern = '/path/(?P<opt_param>\w+)?'
++        result = translate_url(url_pattern, {})
++        self.assertEqual(result, '/path/')

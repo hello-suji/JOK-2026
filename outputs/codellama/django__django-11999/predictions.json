@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11999",
+    "model_patch": "--- a/tests/distinct_on_fields/__init__.py\n+++ b/tests/distinct_on_fields/__init__.py\n@@ -0,0 +1,10 @@\n+\n+\n+from django.test import TestCase\n+\n+class TestFooBarDisplayOverride(TestCase):\n+    def test_get_foo_bar_display_override_repro(self):\n+        instance = FooBar(foo_bar=1)\n+        self.assertEqual(instance.get_foo_bar_display(), \"expected_value\")\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(instance) != 'foo'\n",
+    "patch_sha256": "1346eb0f4beb8178d2fdae4983b5619f5f6ff09eb487c334bc2d9210aa1233d3"
+  }
+]

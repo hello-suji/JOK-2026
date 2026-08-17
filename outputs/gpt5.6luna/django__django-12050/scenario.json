@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "create",
+      "related_classes": [
+        "PickledField",
+        "PickledObject",
+        "PickledFieldGetRegressionTests"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "from django.test import TestCase",
+      "class TestModel(models.Model):",
+      "    data = models.PickledField()",
+      "TestModel.objects.create(data=[1, 2, 3])",
+      "Use the generated reproduction path that calls create, get.",
+      "Use the generated reproduction path that calls create."
+    ],
+    "execution_stimulus": [
+      "result = TestModel.objects.get(data=[1, 2, 3])",
+      "Execute the focused target API path: create, get.",
+      "Execute the focused target API path: create."
+    ],
+    "expected_failure": "The query should raise a DoesNotExist exception because the list is coerced to a tuple, causing a mismatch.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/query.py",
+      "django/apps/registry.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/template_tests/syntax_tests/i18n/test_filters.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_pickledfield_query_coercion():\n    from django.db import models\n    from django.test import TestCase\n    class TestModel(models.Model):\n        data = models.PickledField()\n    TestModel.objects.create(data=[1, 2, 3])\n    with TestCase().assertRaises(TestModel.DoesNotExist):\n        result = TestModel.objects.get(data=[1, 2, 3])"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\n\nfrom .models import PickledObject\n\nclass PickledFieldGetRegressionTests(TestCase):\n    def test_get_uses_pickled_field_prep_value_for_lookup(self):\n        PickledObject.objects.create(data=[1, 2, 3])\n        obj = PickledObject.objects.get(data=[1, 2, 3])\n        self.assertEqual(obj.data, [1, 2, 3])\n"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "DoesNotExist"
+    ],
+    "identifiers": {
+      "functions": [
+        "QuerySet.get",
+        "create"
+      ],
+      "classes": [
+        "PickledField",
+        "PickledObject",
+        "PickledFieldGetRegressionTests"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create"
+      ],
+      "test_visible_classes": [
+        "PickledField",
+        "PickledObject",
+        "PickledFieldGetRegressionTests"
+      ]
+    }
+  }
+]

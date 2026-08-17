@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/io/ascii/html.py",
+      "target_function": "copy",
+      "related_classes": [
+        "Table",
+        "StringIO"
+      ],
+      "candidate_test_file": "astropy/io/ascii/tests/test_html.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import necessary modules: from astropy.table import Table; from io import StringIO",
+      "Create a table: t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))",
+      "Copy the table: tc = t.copy()",
+      "Use the generated reproduction path that calls copy, getvalue, write."
+    ],
+    "execution_stimulus": [
+      "Write the table to HTML with specified format: with StringIO() as sp: tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})",
+      "Get the value of the string buffer: html_output = sp.getvalue()",
+      "Execute the focused target API path: copy, getvalue, write."
+    ],
+    "expected_failure": "The HTML output does not reflect the specified format for column 'a'",
+    "relevant_source_files": [
+      "astropy/io/ascii/html.py",
+      "astropy/table/table.py",
+      "astropy/io/fits/hdu/table.py",
+      "astropy/table/column.py"
+    ],
+    "relevant_test_files": [
+      "astropy/io/fits/tests/test_table.py",
+      "astropy/io/ascii/tests/test_html.py",
+      "astropy/table/tests/test_column.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_html_format_issue_repro():\n    t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))\n    tc = t.copy()\n    with StringIO() as sp:\n        tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})\n        html_output = sp.getvalue()\n    assert '<td>1.23875234858e-24</td>' not in html_output\n    assert '<td>1.24e-24</td>' in html_output\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(html_output) != '<td>1.23875234858e-24</td>'"
+      },
+      {
+        "language": "python",
+        "code": "def test_html_format_issue():\n    from astropy.table import Table\n    from io import StringIO\n    t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))\n    tc = t.copy()\n    with StringIO() as sp:\n        tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})\n        html_output = sp.getvalue()\n    assert '<td>1.23875234858e-24</td>' in html_output"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "<td>1.23875234858e-24</td>"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "Table",
+        "StringIO"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "astropy/io/ascii/tests/test_html.py",
+      "target_source_file": "astropy/io/ascii/html.py",
+      "test_visible_functions": [
+        "copy",
+        "getvalue",
+        "write"
+      ],
+      "test_visible_classes": [
+        "StringIO",
+        "Table"
+      ]
+    }
+  }
+]

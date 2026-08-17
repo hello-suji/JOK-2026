@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-14710",
+    "model_patch": "--- a/sklearn/ensemble/tests/test_gradient_boosting.py\n+++ b/sklearn/ensemble/tests/test_gradient_boosting.py\n@@ -1444,3 +1444,17 @@\n     gbr = GradientBoostingRegressor().fit(X, y)\n     assert_array_equal(gbr.feature_importances_,\n                        np.zeros(10, dtype=np.float64))\n+\n+from sklearn.experimental import enable_hist_gradient_boosting\n+from sklearn.ensemble import HistGradientBoostingClassifier\n+\n+\n+def test_hist_gradient_boosting_with_string_target_and_early_stopping_repro():\n+    X = np.random.randn(100, 10)\n+    y = np.array(['x'] * 50 + ['y'] * 50, dtype=object)\n+    gbrt = HistGradientBoostingClassifier(n_iter_no_change=10)\n+    gbrt.fit(X, y)\n+    score = gbrt.score(X, y)\n+    assert isinstance(score, float)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(score) != \"TypeError: '<' not supported between instances of 'str' and 'float'\"\n",
+    "patch_sha256": "74d92ad60ddba18a5a66e7d14e01ef157818ec16f0fd927b353a24b52d639be5"
+  }
+]

@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/io/ascii/basic.py",
+      "target_function": "read",
+      "related_classes": [
+        "Table",
+        "Unrecognized"
+      ],
+      "candidate_test_file": "astropy/io/ascii/tests/test_c_reader.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import os",
+      "from astropy.table import Table",
+      "qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'",
+      "with open('test.qdp', 'w') as f: f.write(qdp_content)",
+      "Use the generated reproduction path that calls read, open, write.",
+      "Use the generated reproduction path that calls read."
+    ],
+    "execution_stimulus": [
+      "table = Table.read('test.qdp', format='ascii.qdp')",
+      "Execute the focused target API path: read, open, write.",
+      "Execute the focused target API path: read."
+    ],
+    "expected_failure": "Raises ValueError: Unrecognized QDP line: read serr 1 2",
+    "relevant_source_files": [
+      "astropy/io/ascii/basic.py",
+      "astropy/table/table.py",
+      "astropy/io/fits/file.py",
+      "astropy/io/votable/tree.py"
+    ],
+    "relevant_test_files": [
+      "astropy/io/ascii/tests/test_c_reader.py",
+      "astropy/io/votable/tests/tree_test.py",
+      "astropy/io/ascii/tests/test_cds_header_from_readme.py",
+      "astropy/io/fits/tests/test_table.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_qdp_case_insensitivity():\n    import os\n    from astropy.table import Table\n    qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'\n    with open('test.qdp', 'w') as f:\n        f.write(qdp_content)\n    try:\n        table = Table.read('test.qdp', format='ascii.qdp')\n    except ValueError as e:\n        assert str(e) == 'Unrecognized QDP line: read serr 1 2'"
+      },
+      {
+        "language": "python",
+        "code": "def test_qdp_case_insensitivity_repro():\n    qdp_content = 'read serr 1 2\\n1 0.5 1 0.5'\n    with open('test.qdp', 'w') as f:\n        f.write(qdp_content)\n    table = Table.read('test.qdp', format='ascii.qdp')\n    assert len(table) == 1\n    assert len(table.colnames) == 3\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(table) != 'ValueError: Unrecognized QDP line: read serr 1 2'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: Unrecognized QDP line: read serr 1 2"
+    ],
+    "error_keywords": [
+      "ValueError",
+      "Unrecognized QDP line"
+    ],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "Table",
+        "Unrecognized"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "astropy/io/ascii/tests/test_c_reader.py",
+      "target_source_file": "astropy/io/ascii/basic.py",
+      "test_visible_functions": [
+        "read"
+      ],
+      "test_visible_classes": [
+        "Table",
+        "Unrecognized"
+      ]
+    }
+  }
+]

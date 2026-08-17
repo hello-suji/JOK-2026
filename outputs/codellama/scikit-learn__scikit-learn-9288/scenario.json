@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/cluster/k_means_.py",
+      "target_function": "fit",
+      "related_classes": [
+        "Generate",
+        "KMeans",
+        "NumPy",
+        "Run"
+      ],
+      "candidate_test_file": "sklearn/cluster/tests/test_k_means.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where fit can be called.",
+      "Use the generated reproduction path that calls fit, make_blobs, isclose."
+    ],
+    "execution_stimulus": [
+      "Call fit with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: fit, make_blobs, isclose."
+    ],
+    "expected_failure": "If your issue is a usage question, submit it here instead:",
+    "relevant_source_files": [
+      "sklearn/cluster/k_means_.py",
+      "sklearn/feature_extraction/text.py",
+      "sklearn/preprocessing/data.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/cluster/tests/test_k_means.py",
+      "sklearn/feature_extraction/tests/test_text.py",
+      "sklearn/compose/tests/test_column_transformer.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.cluster import KMeans\nfrom sklearn.datasets import make_blobs\nimport numpy as np\n\n\ndef test_kmeans_inertia_consistency_repro():\n    # Generate some data\n    X, y = make_blobs(n_samples=10000, centers=10, n_features=2, random_state=2)\n\n    # Run KMeans with n_jobs=1\n    kmeans_single_job = KMeans(n_clusters=10, random_state=2, n_jobs=1)\n    kmeans_single_job.fit(X)\n    inertia_single_job = kmeans_single_job.inertia_\n\n    # Run KMeans with n_jobs=2\n    kmeans_multi_job = KMeans(n_clusters=10, random_state=2, n_jobs=2)\n    kmeans_multi_job.fit(X)\n    inertia_multi_job = kmeans_multi_job.inertia_\n\n    # Assert that the inertia is approximately the same for both runs\n    assert np.isclose(inertia_single_job, inertia_multi_job, atol=1e-5)"
+      },
+      {
+        "language": "python",
+        "code": "from sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.decomposition import LatentDirichletAllocation\n\ndocs = [\"Help I have a bug\" for i in range(1000)]\n\nvectorizer = CountVectorizer(input=docs, analyzer='word')\nlda_features = vectorizer.fit_transform(docs)\n\nlda_model = LatentDirichletAllocation(\n    n_topics=10,\n    learning_method='online',\n    evaluate_every=10,\n    n_jobs=4,\n)\nmodel = lda_model.fit(lda_features)"
+      },
+      {
+        "language": "python",
+        "code": "from sklearn.cluster import KMeans\nfrom sklearn.datasets import make_blobs\n\n# Generate some data\nX, y = make_blobs(n_samples=10000, centers=10, n_features=2, random_state=2)\n\n# Run KMeans with various n_jobs values\nfor n_jobs in range(1, 5):\n    kmeans = KMeans(n_clusters=10, random_state=2, n_jobs=n_jobs)\n    kmeans.fit(X)\n    print(f'(n_jobs={n_jobs}) kmeans.inertia_ = {kmeans.inertia_}')"
+      },
+      {
+        "language": "python",
+        "code": "(n_jobs=1) kmeans.inertia_ = 17815.060435554242\n(n_jobs=2) kmeans.inertia_ = 17815.060435554242\n(n_jobs=3) kmeans.inertia_ = 17815.060435554242\n(n_jobs=4) kmeans.inertia_ = 17815.060435554242"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "fit",
+        "make_blobs",
+        "isclose"
+      ],
+      "classes": [
+        "Generate",
+        "KMeans",
+        "NumPy",
+        "Run",
+        "SciPy"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/cluster/tests/test_k_means.py",
+      "target_source_file": "sklearn/cluster/k_means_.py",
+      "test_visible_functions": [
+        "fit",
+        "make_blobs",
+        "isclose"
+      ],
+      "test_visible_classes": [
+        "Generate",
+        "KMeans",
+        "NumPy",
+        "Run"
+      ]
+    }
+  }
+]

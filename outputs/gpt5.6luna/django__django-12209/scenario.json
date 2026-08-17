@@ -1,0 +1,76 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "Field.get_pk_value_on_save",
+      "related_classes": [
+        "UUIDField"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from uuid import uuid4",
+      "from django.db import models",
+      "class Sample(models.Model):",
+      "    id = models.UUIDField(primary_key=True, default=uuid4)",
+      "    name = models.CharField(blank=True, max_length=100)"
+    ],
+    "execution_stimulus": [
+      "s0 = Sample.objects.create()",
+      "s1 = Sample(pk=s0.pk, name='Test 1')",
+      "s1.save()"
+    ],
+    "expected_failure": "Two INSERTs occur instead of an INSERT followed by an UPDATE, causing the second INSERT to fail.",
+    "relevant_source_files": [
+      "django/contrib/sessions/backends/base.py",
+      "django/db/models/fields/__init__.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/invalid_models_tests/test_custom_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_uuid_field_default_behavior():\n    from uuid import uuid4\n    from django.db import models\n    class Sample(models.Model):\n        id = models.UUIDField(primary_key=True, default=uuid4)\n        name = models.CharField(blank=True, max_length=100)\n    s0 = Sample.objects.create()\n    s1 = Sample(pk=s0.pk, name='Test 1')\n    try:\n        s1.save()\n        assert False, 'Expected an IntegrityError due to duplicate primary key'\n    except Exception as e:\n        assert 'duplicate key value violates unique constraint' in str(e)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "two INSERTs",
+      "second INSERT fails"
+    ],
+    "error_keywords": [
+      "IntegrityError",
+      "duplicate key value"
+    ],
+    "identifiers": {
+      "functions": [
+        "Field.get_pk_value_on_save"
+      ],
+      "classes": [
+        "UUIDField"
+      ]
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  }
+]

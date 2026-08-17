@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/pyplot.py",
+      "target_function": "date_range",
+      "related_classes": [],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where date_range can be called.",
+      "Use the generated reproduction path that calls pd, matplotlib, plt, check_figures_equal.",
+      "Use the generated reproduction path that calls date_range, plot, pd, matplotlib."
+    ],
+    "execution_stimulus": [
+      "Call date_range with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: pd, matplotlib, plt, check_figures_equal.",
+      "Execute the focused target API path: date_range, plot, pd, matplotlib."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/axes/_axes.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\nmatplotlib.rcParams[\"text.usetex\"] = True\n\ndates = pd.date_range(\"2020-01-01 00:00:00\", end=\"2020-01-01 00:10:00\", periods=100)\ndata = np.random.rand(100)\n\nfig, ax = plt.subplots(constrained_layout=True)\nax.plot(dates, data)\nplt.savefig(matplotlib.__version__ + \".png\")"
+      },
+      {
+        "language": "python",
+        "code": "@check_figures_equal(extensions=[\"png\"])\ndef test_datetime_axis_with_usetex_repro(fig_test, fig_ref):\n    import pandas as pd\n    import numpy as np\n    import matplotlib\n    matplotlib.use('Agg')\n    import matplotlib.pyplot as plt\n\n    np.random.seed(1)\n    matplotlib.rcParams[\"text.usetex\"] = True\n\n    dates = pd.date_range(\"2020-01-01 00:00:00\", end=\"2020-01-01 00:10:00\", periods=100)\n    data = np.random.rand(100)\n\n    ax_test = fig_test.add_subplot()\n    ax_test.plot(dates, data)\n\n    ax_ref = fig_ref.add_subplot()\n    ax_ref.plot(dates, data)\n\n    # Asserting that the number of ticks on both axes are the same\n    assert len(ax_test.get_xticks()) == len(ax_ref.get_xticks())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "date_range",
+        "plot",
+        "savefig",
+        "subplots",
+        "pd",
+        "matplotlib",
+        "plt",
+        "check_figures_equal",
+        "use",
+        "seed",
+        "rand",
+        "add_subplot",
+        "get_xticks"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/pyplot.py",
+      "test_visible_functions": [
+        "date_range",
+        "plot",
+        "pd",
+        "matplotlib",
+        "plt",
+        "check_figures_equal",
+        "use",
+        "seed"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

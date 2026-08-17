@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/cache/backends/redis.py",
+      "target_function": "create_option",
+      "related_classes": [
+        "ModelChoiceIteratorValue",
+        "ModelChoiceField"
+      ],
+      "candidate_test_file": "tests/admin_widgets/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where create_option can be called.",
+      "Use the generated reproduction path that calls create_option, iterator, next."
+    ],
+    "execution_stimulus": [
+      "Call create_option with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create_option, iterator, next."
+    ],
+    "expected_failure": "Recently I migrated from Django 3.0 to Django 3.1. In my code, I add custom data-* attributes to the select widget options. After the upgrade some of those options broke. Error is {TypeError}unhashable type: 'ModelChoiceIteratorValue'.",
+    "relevant_source_files": [
+      "django/core/cache/backends/redis.py",
+      "django/core/serializers/base.py",
+      "django/core/signing.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/admin_widgets/models.py",
+      "tests/forms_tests/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms.models import ModelChoiceField, ModelChoiceIteratorValue\n\n\nclass TestModelChoiceFieldBehavior(TestCase):\n    def test_create_option_with_modelchoiceiteratorvalue_repro(self):\n        field = ModelChoiceField(queryset=User.objects.all())\n        iterator = field.iterator()\n        value = next(iterator)\n        context = field.widget.create_option('name', value, 'label', True, 0)\n        self.assertIn('data-value', context['attrs'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "create_option",
+        "dumps",
+        "iterator",
+        "next"
+      ],
+      "classes": [
+        "ModelChoiceIteratorValue",
+        "ModelChoiceField"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_widgets/models.py",
+      "target_source_file": "django/core/cache/backends/redis.py",
+      "test_visible_functions": [
+        "create_option",
+        "iterator",
+        "next"
+      ],
+      "test_visible_classes": [
+        "ModelChoiceIteratorValue",
+        "ModelChoiceField"
+      ]
+    }
+  }
+]

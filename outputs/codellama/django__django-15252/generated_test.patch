@@ -1,0 +1,26 @@
+--- a/tests/backends/oracle/test_creation.py
++++ b/tests/backends/oracle/test_creation.py
+@@ -92,3 +92,23 @@
+                     # REUSE cannot be used with OMF.
+                     self.assertNotIn('REUSE', tblspace_sql)
+                     self.assertNotIn('REUSE', tblspace_tmp_sql)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.recorder import MigrationRecorder
++from django.db import connections
++from django.db.utils import ConnectionRouter
++
++class TestMigrationRecorder(TestCase):
++    def test_ensure_schema_obey_db_router_rules_repro(self):
++        class Router:
++            def allow_migrate(self, db, app_label, **hints):
++                return db == 'default'
++
++        router = Router()
++        connections['other_db'] = ConnectionHandler({'other_db': {'ENGINE': 'django.db.backends.dummy'}})['other_db']
++        connections['other_db'].router = router
++
++        recorder = MigrationRecorder(connections['other_db'])
++        recorder.ensure_schema()
++
++        self.assertFalse(recorder.has_table())

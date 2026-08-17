@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15467",
+    "model_patch": "--- a/tests/admin_widgets/test_autocomplete_widget.py\n+++ b/tests/admin_widgets/test_autocomplete_widget.py\n@@ -195,3 +195,16 @@\n                         AutocompleteSelect(rel, admin.site).media._js,\n                         list(expected_files),\n                     )\n+\n+from django.contrib import admin\n+from django.test import TestCase\n+from django.utils.translation import gettext_lazy as _\n+\n+class TestCustomEmptyLabel(TestCase):\n+    def test_custom_empty_label_repro(self):\n+        ma = MyModelAdmin(MyModel, admin.site)\n+        field = MyModel._meta.get_field('related_model')\n+        formfield = ma.formfield_for_foreignkey(field, request=None)\n+        self.assertEqual(formfield.empty_label, _('Select related model'))\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(formfield) != \"_('None')\"\n",
+    "patch_sha256": "74fb61c223096d648d1c2b01fec21ce2e17bd66f2b3616a4a1042c595a0cfb2c"
+  }
+]

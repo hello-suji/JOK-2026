@@ -1,0 +1,366 @@
+{
+  "instance_id": "django__django-11206",
+  "repo": "django/django",
+  "base_commit": "571ab44e8a8936014c22e7eebe4948d9611fd7ce",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "decimal",
+        "description",
+        "format",
+        "import"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:decimal,description,format,import,number"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/db/backends/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "decimal",
+        "format",
+        "nformat"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:decimal,nformat,argument,format,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CursorWrapper.callproc",
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "CursorDebugWrapper.execute",
+        "CursorDebugWrapper.executemany",
+        "typecast_date",
+        "typecast_time",
+        "typecast_timestamp",
+        "split_identifier",
+        "truncate_name",
+        "names_digest",
+        "format_number",
+        "strip_quotes"
+      ]
+    },
+    {
+      "path": "django/utils/numberformat.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "decimal",
+        "decimal_pos",
+        "format"
+      ],
+      "reasons": [
+        "stem_in_issue_text:numberformat",
+        "source_content_tokens:decimal,decimal_pos,argument,format,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "format": "def format(number, decimal_sep, decimal_pos=None, grouping=0, thousand_sep='',\n           force_grouping=False, use_l10n=None):\n    \"\"\"\n    Get a number (as a number or string), and return it as a string,\n    using formats defined as arguments:\n\n    * decimal_sep: Decimal separator symbol (for example \".\")\n    * decimal_pos: Number of decimal positions\n    * grouping: Number of digits in every group limited by thousand separator.\n        For non-uniform digit grouping, it can be a sequence with the number\n        of digit group sizes following the format used by the Python locale\n        module in locale.localeconv() LC_NUMERIC grouping (e.g. (3, 2, 0)).\n    * thousand_sep: Thousand separator symbol (for example \",\")\n    \"\"\"\n    use_grouping = (use_l10n or (use_l10n is None and settings.USE_L10N)) and settings.USE_THOUSAND_SEPARATOR"
+      },
+      "top_level_functions": [
+        "format"
+      ]
+    },
+    {
+      "path": "django/apps/config.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "format",
+        "import",
+        "nformat"
+      ],
+      "reasons": [
+        "source_content_tokens:nformat,argument,format,import,point"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AppConfig.create",
+        "AppConfig.get_model",
+        "AppConfig.get_models",
+        "AppConfig.import_models",
+        "AppConfig.ready"
+      ]
+    },
+    {
+      "path": "django/apps/registry.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "format",
+        "import",
+        "internal"
+      ],
+      "reasons": [
+        "source_content_tokens:argument,format,import,internal,number"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_numberformat.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:numberformat",
+        "token_overlap:numberformat",
+        "internal_name_overlap:numberformat",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/apps/staticfiles_config.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "test_name_matches_source_stem:config",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/template_backends/test_utils.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_numberformat.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_numberformat.py:testcase_class:TestNumberFormat",
+      "tests/backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:testcase_class:TestUtils"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2545,
+  "indexed_test_file_count": 1717,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "apps",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.template_backends.test_utils": [
+      "TemplateUtilsTests"
+    ],
+    "tests.utils_tests.test_numberformat": [
+      "TestNumberFormat"
+    ],
+    "tests.backends.test_utils": [
+      "CursorWrapperTests",
+      "TestUtils"
+    ],
+    "tests.staticfiles_tests.apps.staticfiles_config": [
+      "IgnorePatternsAppConfig"
+    ],
+    "django.db": [
+      "DefaultConnectionProxy",
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.apps.config": [
+      "AppConfig"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.utils.numberformat": [
+      "format"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.db.backends.utils": [
+      "CursorDebugWrapper",
+      "CursorWrapper",
+      "format_number",
+      "names_digest",
+      "split_identifier",
+      "strip_quotes",
+      "truncate_name",
+      "typecast_date",
+      "typecast_time",
+      "typecast_timestamp"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

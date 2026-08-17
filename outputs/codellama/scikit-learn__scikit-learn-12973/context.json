@@ -1,0 +1,480 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-12973",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "a7b8b9e9e16d4e15fabda5ae615086c2e1c47d8a",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/linear_model/least_angle.py",
+      "score": 46,
+      "matched_identifiers": [
+        "LassoLarsIC",
+        "copy",
+        "copy_x",
+        "default",
+        "fit",
+        "lasso",
+        "sklearn/linear_model/least_angle.py"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "class_match:LassoLarsIC",
+        "explicit_file_path_hint:sklearn/linear_model/least_angle.py",
+        "stem_in_issue_text:least_angle",
+        "source_content_tokens:copy,copy_x,default,lasso,lassolarsic"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "LassoLarsIC": "class LassoLarsIC(LassoLars):\n    \"\"\"Lasso model fit with Lars using BIC or AIC for model selection\n\n    The optimization objective for Lasso is::\n\n    (1 / (2 * n_samples)) * ||y - Xw||^2_2 + alpha * ||w||_1\n\n    AIC is the Akaike information criterion and BIC is the Bayes\n    Information criterion. Such criteria are useful to select the value\n    of the regularization parameter by making a trade-off between the\n    goodness of fit and the complexity of the model. A good model should\n    explain well the data while being simple.\n\n    Read more in the :ref:`User Guide <least_angle_regression>`.\n",
+        "fit": "    def fit(self, X, y, copy_X=True):\n        \"\"\"Fit the model using X, y as training data.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples, n_features)\n            training data.\n\n        y : array-like, shape (n_samples,)\n            target values. Will be cast to X's dtype if necessary\n\n        copy_X : boolean, optional, default True\n            If ``True``, X will be copied; else, it may be overwritten.\n\n        Returns"
+      },
+      "top_level_functions": [
+        "lars_path",
+        "Lars.fit",
+        "LarsCV.fit",
+        "LassoLarsIC.fit"
+      ]
+    },
+    {
+      "path": "benchmarks/bench_plot_nmf.py",
+      "score": 21,
+      "matched_identifiers": [
+        "argument",
+        "copy",
+        "default",
+        "fit",
+        "self"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "source_content_tokens:copy,default,self,argument,arguments"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None, **params):\n        self.fit_transform(X, **params)\n        return self\n\n    def transform(self, X):\n        check_is_fitted(self, 'components_')\n        H = self.components_\n        W, _, self.n_iter_ = self._fit_transform(X, H=H, update_H=False)\n        return W\n\n    def inverse_transform(self, W):\n        check_is_fitted(self, 'components_')\n        return np.dot(W, self.components_)\n\n    def fit_transform(self, X, y=None, W=None, H=None):"
+      },
+      "top_level_functions": [
+        "_PGNMF.fit",
+        "_PGNMF.transform",
+        "_PGNMF.inverse_transform",
+        "_PGNMF.fit_transform",
+        "plot_results",
+        "bench_one",
+        "run_bench",
+        "load_20news",
+        "load_faces",
+        "build_clfs"
+      ]
+    },
+    {
+      "path": "sklearn/calibration.py",
+      "score": 21,
+      "matched_identifiers": [
+        "assume",
+        "default",
+        "directly",
+        "fit",
+        "self"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "source_content_tokens:assume,default,self,directly,estimator"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y, sample_weight=None):\n        \"\"\"Fit the model using X, y as training data.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples,)\n            Training data.\n\n        y : array-like, shape (n_samples,)\n            Training target.\n\n        sample_weight : array-like, shape = [n_samples] or None\n            Sample weights. If None, then samples are equally weighted.\n\n        Returns"
+      },
+      "top_level_functions": [
+        "CalibratedClassifierCV.fit",
+        "CalibratedClassifierCV.predict_proba",
+        "CalibratedClassifierCV.predict",
+        "_CalibratedClassifier.fit",
+        "_CalibratedClassifier.predict_proba",
+        "_SigmoidCalibration.fit",
+        "_SigmoidCalibration.predict",
+        "calibration_curve"
+      ]
+    },
+    {
+      "path": "sklearn/cluster/affinity_propagation_.py",
+      "score": 21,
+      "matched_identifiers": [
+        "argument",
+        "copy",
+        "default",
+        "fit",
+        "self"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "source_content_tokens:copy,default,self,argument,arguments"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\" Create affinity matrix from negative euclidean distances, then\n        apply affinity propagation clustering.\n\n        Parameters\n        ----------\n\n        X : array-like, shape (n_samples, n_features) or (n_samples, n_samples)\n            Data matrix or, if affinity is ``precomputed``, matrix of\n            similarities / affinities.\n\n        y : Ignored\n\n        \"\"\"\n        X = check_array(X, accept_sparse='csr')"
+      },
+      "top_level_functions": [
+        "affinity_propagation",
+        "AffinityPropagation.fit",
+        "AffinityPropagation.predict"
+      ]
+    },
+    {
+      "path": "sklearn/cluster/bicluster.py",
+      "score": 21,
+      "matched_identifiers": [
+        "break",
+        "default",
+        "estimator",
+        "fit",
+        "self"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "source_content_tokens:default,self,break,estimator,however"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Creates a biclustering for X.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples, n_features)\n\n        y : Ignored\n\n        \"\"\"\n        X = check_array(X, accept_sparse='csr', dtype=np.float64)\n        self._check_parameters()\n        self._fit(X)\n        return self\n"
+      },
+      "top_level_functions": [
+        "BaseSpectral.fit"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/linear_model/tests/test_sgd.py",
+      "score": 32,
+      "matched_identifiers": [
+        "fit"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:linear,sklearn",
+        "internal_name_overlap:least",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/linear_model"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_least_angle.py",
+      "score": 31,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:angle,least,linear,sklearn",
+        "internal_name_overlap:lars",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/linear_model"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_passive_aggressive.py",
+      "score": 30,
+      "matched_identifiers": [
+        "fit"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:linear,sklearn",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/linear_model"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_perceptron.py",
+      "score": 30,
+      "matched_identifiers": [
+        "fit"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "token_overlap:linear,sklearn",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/linear_model"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/cluster/tests/test_bicluster.py",
+      "score": 29,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/cluster/tests",
+        "test_name_matches_source_stem:bicluster",
+        "token_overlap:bicluster,cluster,sklearn",
+        "internal_name_overlap:bicluster",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/cluster/tests/test_bicluster.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_perceptron.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_perceptron.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_least_angle.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_least_angle.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_passive_aggressive.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_passive_aggressive.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_sgd.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_sgd.py:unittest_or_django_test_import",
+      "sklearn/linear_model/tests/test_sgd.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_sgd.py:testcase_class:DenseSGDClassifierTestCase",
+      "sklearn/linear_model/tests/test_sgd.py:testcase_class:DenseSGDRegressorTestCase",
+      "sklearn/linear_model/tests/test_sgd.py:testcase_class:SparseSGDClassifierTestCase",
+      "sklearn/linear_model/tests/test_sgd.py:testcase_class:SparseSGDRegressorTestCase"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 737,
+  "indexed_test_file_count": 194,
+  "available_imports": {
+    "sklearn.calibration": [
+      "CalibratedClassifierCV",
+      "_CalibratedClassifier",
+      "_SigmoidCalibration",
+      "_sigmoid_calibration",
+      "calibration_curve"
+    ],
+    "sklearn": [
+      "ARDRegression",
+      "AffinityPropagation",
+      "AgglomerativeClustering",
+      "BayesianRidge",
+      "Birch",
+      "DBSCAN",
+      "ElasticNet",
+      "ElasticNetCV",
+      "FeatureAgglomeration",
+      "Hinge",
+      "Huber",
+      "HuberRegressor",
+      "KMeans",
+      "Lars",
+      "LarsCV",
+      "Lasso",
+      "LassoCV",
+      "LassoLars",
+      "LassoLarsCV",
+      "LassoLarsIC",
+      "LinearRegression",
+      "Log",
+      "LogisticRegression",
+      "LogisticRegressionCV",
+      "MeanShift",
+      "MiniBatchKMeans",
+      "ModifiedHuber",
+      "MultiTaskElasticNet",
+      "MultiTaskElasticNetCV",
+      "MultiTaskLasso",
+      "MultiTaskLassoCV",
+      "OPTICS",
+      "OrthogonalMatchingPursuit",
+      "OrthogonalMatchingPursuitCV",
+      "PassiveAggressiveClassifier",
+      "PassiveAggressiveRegressor",
+      "Perceptron",
+      "RANSACRegressor",
+      "Ridge",
+      "RidgeCV",
+      "RidgeClassifier",
+      "RidgeClassifierCV",
+      "SGDClassifier",
+      "SGDRegressor",
+      "SpectralBiclustering",
+      "SpectralClustering",
+      "SpectralCoclustering",
+      "SquaredLoss",
+      "TheilSenRegressor",
+      "affinity_propagation",
+      "config_context",
+      "dbscan",
+      "enet_path",
+      "estimate_bandwidth",
+      "get_bin_seeds",
+      "get_config",
+      "k_means",
+      "lars_path",
+      "lasso_path",
+      "linkage_tree",
+      "logistic_regression_path",
+      "mean_shift",
+      "optics",
+      "orthogonal_mp",
+      "orthogonal_mp_gram",
+      "ridge_regression",
+      "set_config",
+      "setup_module",
+      "spectral_clustering",
+      "ward_tree"
+    ],
+    "benchmarks.bench_plot_nmf": [
+      "_PGNMF",
+      "_fit_projected_gradient",
+      "_nls_subproblem",
+      "_norm",
+      "bench_one",
+      "build_clfs",
+      "load_20news",
+      "load_faces",
+      "plot_results",
+      "run_bench"
+    ],
+    "sklearn.linear_model.least_angle": [
+      "Lars",
+      "LarsCV",
+      "LassoLars",
+      "LassoLarsCV",
+      "LassoLarsIC",
+      "_check_copy_and_writeable",
+      "_lars_path_residues",
+      "lars_path"
+    ],
+    "sklearn.cluster.affinity_propagation_": [
+      "AffinityPropagation",
+      "_equal_similarities_and_preferences",
+      "affinity_propagation"
+    ],
+    "sklearn.cluster.bicluster": [
+      "BaseSpectral",
+      "SpectralBiclustering",
+      "SpectralCoclustering",
+      "_bistochastic_normalize",
+      "_log_normalize",
+      "_scale_normalize"
+    ],
+    "sklearn.cluster.tests.test_bicluster": [
+      "MockBiclustering",
+      "_do_bistochastic_test",
+      "_do_scale_test",
+      "_test_shape_indices",
+      "test_bistochastic_normalize",
+      "test_errors",
+      "test_fit_best_piecewise",
+      "test_get_submatrix",
+      "test_log_normalize",
+      "test_perfect_checkerboard",
+      "test_project_and_cluster",
+      "test_scale_normalize",
+      "test_spectral_biclustering",
+      "test_spectral_coclustering"
+    ],
+    "sklearn.linear_model.tests.test_perceptron": [
+      "MyPerceptron",
+      "test_perceptron_accuracy",
+      "test_perceptron_correctness",
+      "test_undefined_methods"
+    ],
+    "sklearn.linear_model.tests.test_least_angle": [
+      "test_all_precomputed",
+      "test_collinearity",
+      "test_estimatorclasses_positive_constraint",
+      "test_lars_add_features",
+      "test_lars_cv",
+      "test_lars_cv_max_iter",
+      "test_lars_lstsq",
+      "test_lars_n_nonzero_coefs",
+      "test_lars_path_positive_constraint",
+      "test_lars_path_readonly_data",
+      "test_lars_precompute",
+      "test_lasso_gives_lstsq_solution",
+      "test_lasso_lars_ic",
+      "test_lasso_lars_path_length",
+      "test_lasso_lars_vs_R_implementation",
+      "test_lasso_lars_vs_lasso_cd",
+      "test_lasso_lars_vs_lasso_cd_early_stopping",
+      "test_lasso_lars_vs_lasso_cd_ill_conditioned",
+      "test_lasso_lars_vs_lasso_cd_ill_conditioned2",
+      "test_lasso_lars_vs_lasso_cd_positive",
+      "test_multitarget",
+      "test_no_path",
+      "test_no_path_all_precomputed",
+      "test_no_path_precomputed",
+      "test_rank_deficient_design",
+      "test_simple",
+      "test_simple_precomputed",
+      "test_singular_matrix"
+    ],
+    "sklearn.linear_model.tests.test_passive_aggressive": [
+      "MyPassiveAggressive",
+      "test_class_weights",
+      "test_classifier_accuracy",
+      "test_classifier_correctness",
+      "test_classifier_partial_fit",
+      "test_classifier_refit",
+      "test_classifier_undefined_methods",
+      "test_equal_class_weight",
+      "test_partial_fit_weight_class_balanced",
+      "test_regressor_correctness",
+      "test_regressor_mse",
+      "test_regressor_partial_fit",
+      "test_regressor_undefined_methods",
+      "test_wrong_class_weight_format",
+      "test_wrong_class_weight_label"
+    ],
+    "sklearn.linear_model.tests.test_sgd": [
+      "CommonTest",
+      "DenseSGDClassifierTestCase",
+      "DenseSGDRegressorTestCase",
+      "SparseSGDClassifier",
+      "SparseSGDClassifierTestCase",
+      "SparseSGDRegressor",
+      "SparseSGDRegressorTestCase",
+      "_test_gradient_common",
+      "test_SGDClassifier_fit_for_all_backends",
+      "test_future_and_deprecation_warnings",
+      "test_gradient_epsilon_insensitive",
+      "test_gradient_hinge",
+      "test_gradient_huber",
+      "test_gradient_log",
+      "test_gradient_modified_huber",
+      "test_gradient_squared_epsilon_insensitive",
+      "test_gradient_squared_hinge",
+      "test_gradient_squared_loss",
+      "test_l1_ratio",
+      "test_large_regularization",
+      "test_multi_core_gridsearch_and_early_stopping",
+      "test_multi_thread_multi_class_and_early_stopping",
+      "test_numerical_stability_large_gradient",
+      "test_tol_and_max_iter_default_values",
+      "test_tol_parameter",
+      "test_underflow_or_overlow"
+    ]
+  },
+  "test_example_snippet": "def test_l1_ratio():\n    # Test if l1 ratio extremes match L1 and L2 penalty settings.\n    X, y = datasets.make_classification(n_samples=1000,\n                                        n_features=100, n_informative=20,\n                                        random_state=1234)\n\n    # test if elasticnet with l1_ratio near 1 gives same result as pure l1\n    est_en = SGDClassifier(alpha=0.001, penalty='elasticnet', tol=None,\n                           max_iter=6, l1_ratio=0.9999999999,\n                           random_state=42).fit(X, y)\n    est_l1 = SGDClassifier(alpha=0.001, penalty='l1', max_iter=6,\n                           random_state=42, tol=None).fit(X, y)\n    assert_array_almost_equal(est_en.coef_, est_l1.coef_)\n\n    # test if elasticnet with l1_ratio near 0 gives same result as pure l2\n    est_en = SGDClassifier(alpha=0.001, penalty='elasticnet', tol=None,\n                           max_iter=6, l1_ratio=0.0000000001,\n                           random_state=42).fit(X, y)\n    est_l2 = SGDClassifier(alpha=0.001, penalty='l2', max_iter=6,\n                           random_state=42, tol=None).fit(X, y)\n    assert_array_almost_equal(est_en.coef_, est_l2.coef_)\n\n\ndef test_underflow_or_overlow():\n    with np.errstate(all='raise'):\n        # Generate some weird data with hugely unscaled features\n        rng = np.random.RandomState(0)\n        n_samples = 100\n        n_features = 10\n\n        X = rng.normal(size=(n_samples, n_features))\n        X[:, :2] *= 1e300\n        assert np.isfinite(X).all()\n\n        # Use MinMaxScaler to scale the data without introducing a numerical",
+  "conftest_fixtures": {}
+}

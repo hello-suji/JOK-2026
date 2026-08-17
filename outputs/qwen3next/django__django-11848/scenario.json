@@ -1,0 +1,76 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/utils.py",
+      "target_function": "parse_http_date",
+      "related_classes": [],
+      "candidate_test_file": "tests/sitemaps_tests/test_http.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls parse_http_date, date."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: parse_http_date, date."
+    ],
+    "expected_failure": "RFC 850 does not mention this, but in RFC 7231 (and there's something similar in RFC 2822), there's the following quote:",
+    "relevant_source_files": [
+      "django/contrib/admin/utils.py",
+      "django/db/backends/utils.py",
+      "django/test/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/sitemaps_tests/test_http.py",
+      "tests/utils_tests/test_http.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.utils.http import parse_http_date\n\nclass TestHttpDateParsing(SitemapTestsBase):\n    def test_parse_http_date_two_digit_year_repro(self):\n        # Test date in the past\n        past_date_str = 'Wed, 21 Oct 70 07:28:00 GMT'\n        parsed_date = parse_http_date(past_date_str)\n        expected_date = date(1970, 10, 21)\n        self.assertEqual(parsed_date.year, expected_date.year)\n        # Test date in the future\n        future_date_str = 'Wed, 21 Oct 69 07:28:00 GMT'\n        parsed_date = parse_http_date(future_date_str)\n        expected_date = date(2069, 10, 21)\n        self.assertEqual(parsed_date.year, expected_date.year)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_http_date",
+        "date"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/sitemaps_tests/test_http.py",
+      "target_source_file": "django/contrib/admin/utils.py",
+      "test_visible_functions": [
+        "parse_http_date",
+        "date"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

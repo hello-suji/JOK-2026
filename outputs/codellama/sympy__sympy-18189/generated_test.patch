@@ -1,0 +1,16 @@
+--- a/sympy/solvers/tests/test_diophantine.py
++++ b/sympy/solvers/tests/test_diophantine.py
+@@ -907,3 +907,13 @@
+     eq = x - 3*y + 2
+     assert diophantine(eq, syms=[y,x]) == set([(t_0, 3*t_0 - 2)])
+     raises(TypeError, lambda: diophantine(eq, syms=set([y,x])))
++
++from sympy import symbols, diophantine
++
++def test_diophantine_permute_order_repro():
++    # Regression focus: diophantine: incomplete results depending on syms order with permute=True
++    n, m = symbols('n m')
++    result_mn = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m, n), permute=True)
++    result_nm = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n, m), permute=True)
++    assert result_mn == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}
++    assert result_nm == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}

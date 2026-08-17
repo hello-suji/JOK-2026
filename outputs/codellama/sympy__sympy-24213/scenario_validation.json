@@ -1,0 +1,109 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:_collect_factor_and_dimension",
+        "target_function verified to exist in source_file",
+        "target_function '_collect_factor_and_dimension' not in AST top_level_functions for sympy/physics/units/unitsystem.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sympy/physics/units/unitsystem.py",
+          "target_function": "_collect_factor_and_dimension",
+          "related_classes": [
+            "Dimension",
+            "Quantity"
+          ],
+          "candidate_test_file": "sympy/physics/units/tests/test_unitsystem.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from sympy.physics import units",
+          "from sympy.physics.units.systems.si import SI",
+          "v1 = units.Quantity('v1')",
+          "SI.set_quantity_dimension(v1, units.velocity)",
+          "SI.set_quantity_scale_factor(v1, 2 * units.meter / units.second)",
+          "a1 = units.Quantity('a1')",
+          "SI.set_quantity_dimension(a1, units.acceleration)",
+          "SI.set_quantity_scale_factor(a1, -9.8 * units.meter / units.second**2)",
+          "t1 = units.Quantity('t1')",
+          "SI.set_quantity_dimension(t1, units.time)",
+          "SI.set_quantity_scale_factor(t1, 5 * units.second)",
+          "expr1 = a1*t1 + v1"
+        ],
+        "execution_stimulus": [
+          "SI._collect_factor_and_dimension(expr1)"
+        ],
+        "expected_failure": "The function raises a ValueError indicating that the dimension of 'v1' is Dimension(velocity), but it should be Dimension(acceleration*time)",
+        "relevant_source_files": [
+          "sympy/physics/units/unitsystem.py",
+          "sympy/physics/units/dimensions.py",
+          "sympy/physics/units/quantities.py"
+        ],
+        "relevant_test_files": [
+          "sympy/physics/units/tests/test_dimensions.py",
+          "sympy/physics/units/tests/test_quantities.py",
+          "sympy/physics/units/tests/test_unitsystem.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "sympy-bin-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_collect_factor_and_dimension_failure():\n    from sympy.physics import units\n    from sympy.physics.units.systems.si import SI\n    v1 = units.Quantity('v1')\n    SI.set_quantity_dimension(v1, units.velocity)\n    SI.set_quantity_scale_factor(v1, 2 * units.meter / units.second)\n    a1 = units.Quantity('a1')\n    SI.set_quantity_dimension(a1, units.acceleration)\n    SI.set_quantity_scale_factor(a1, -9.8 * units.meter / units.second**2)\n    t1 = units.Quantity('t1')\n    SI.set_quantity_dimension(t1, units.time)\n    SI.set_quantity_scale_factor(t1, 5 * units.second)\n    expr1 = a1*t1 + v1\n    try:\n        SI._collect_factor_and_dimension(expr1)\n    except ValueError as e:\n        assert str(e) == 'Dimension of \"v1\" is Dimension(velocity), but it should be Dimension(acceleration*time)'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: Dimension of \"v1\" is Dimension(velocity), but it should be Dimension(acceleration*time)"
+        ],
+        "error_keywords": [
+          "ValueError",
+          "Dimension of \"v1\"",
+          "Dimension(velocity)",
+          "Dimension(acceleration*time)"
+        ],
+        "identifiers": {
+          "functions": [
+            "_collect_factor_and_dimension"
+          ],
+          "classes": [
+            "Dimension",
+            "Quantity"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

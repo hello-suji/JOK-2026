@@ -1,0 +1,22 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -217,3 +217,19 @@
+             repr(JoinPromoter(AND, 3, True)),
+             "JoinPromoter(connector='AND', num_children=3, negated=True)",
+         )
++
++from django.db.models import Value
++from django.test import TestCase
++from django.contrib.auth.models import User
++
++class TestAnnotationAndAliasFilterInSubquery(TestCase):
++    def test_annotation_and_alias_filter_in_subquery_repro(self):
++        User.objects.create(username='testuser1')
++        User.objects.create(username='testuser2')
++        qs = (
++            User.objects.annotate(user_annotate=Value(1))
++            .alias(user_alias=Value(1))
++            .filter(user_annotate=1)
++            .values('user_alias')
++        )
++        self.assertCountEqual(qs, [{'user_alias': 1}, {'user_alias': 1}])

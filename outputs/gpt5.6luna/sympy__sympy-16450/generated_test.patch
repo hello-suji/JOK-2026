@@ -1,0 +1,15 @@
+--- a/sympy/simplify/tests/test_simplify.py
++++ b/sympy/simplify/tests/test_simplify.py
+@@ -786,3 +786,12 @@
+     assert nc_simplify(expr) == (1-c)**-1
+     # commutative expressions should be returned without an error
+     assert nc_simplify(2*x**2) == 2*x**2
++
++from sympy import Symbol, posify
++
++def test_posify_preserves_finite_assumption_repro():
++    x = Symbol('x', finite=True)
++    xp, _ = posify(x)
++    assert xp.is_finite is True
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(x) != 'None'

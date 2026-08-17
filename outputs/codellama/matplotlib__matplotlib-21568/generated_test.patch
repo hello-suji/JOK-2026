@@ -1,0 +1,29 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1226,3 +1226,26 @@
+
+     assert fig.get_label() == 'whole Figure'
+     assert sub_fig.get_label() == 'sub figure'
++
++@check_figures_equal(extensions=["png"])
++def test_datetime_axis_with_usetex_repro(fig_test, fig_ref):
++    import pandas as pd
++    import numpy as np
++    import matplotlib
++    matplotlib.use('Agg')
++    import matplotlib.pyplot as plt
++
++    np.random.seed(1)
++    matplotlib.rcParams["text.usetex"] = True
++
++    dates = pd.date_range("2020-01-01 00:00:00", end="2020-01-01 00:10:00", periods=100)
++    data = np.random.rand(100)
++
++    ax_test = fig_test.add_subplot()
++    ax_test.plot(dates, data)
++
++    ax_ref = fig_ref.add_subplot()
++    ax_ref.plot(dates, data)
++
++    # Asserting that the number of ticks on both axes are the same
++    assert len(ax_test.get_xticks()) == len(ax_ref.get_xticks())

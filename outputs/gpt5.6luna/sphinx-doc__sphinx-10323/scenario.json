@@ -1,0 +1,104 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/directives/code.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "SphinxTestApp",
+        "LiteralInclude",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, join, makedirs, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, join, makedirs, build."
+    ],
+    "expected_failure": "Cannot determine a mechanism to use literalinclude directive with `prepend` or `append` to match code example indentation, as leading whitespace is removed.",
+    "relevant_source_files": [
+      "sphinx/directives/code.py",
+      "sphinx/cmd/build.py",
+      "sphinx/config.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import os\nimport tempfile\nfrom sphinx.testing.util import SphinxTestApp\nfrom sphinx.directives.code import LiteralInclude\n\ndef test_literalinclude_prepend_indentation_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = srcdir\n        os.makedirs(srcdir)\n        sample_code_path = os.path.join(srcdir, 'sample.py')\n        with open(sample_code_path, 'w') as f:\n            f.write('def example_function():\\n    pass')\n        app = SphinxTestApp(srcdir=srcdir, outdir=outdir, doctreedir=doctreedir, confdir=confdir)\n        app.build()\n        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n            html_content = f.read()\n        assert 'def example_function():' in html_content\n        assert '    pass' in html_content"
+      },
+      {
+        "language": "rst",
+        "code": "# hello world\n\nCode examples:\n\n.. literalinclude:: pom.xml\n   :language: xml\n   :prepend:       </plugin>\n   :start-at: <groupId>com.github.ekryd.sortpom</groupId>\n   :end-at: </plugin>"
+      },
+      {
+        "language": "xml",
+        "code": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.0</version>\n        <configuration>\n          <source>1.8</source>\n          <target>1.8</target>\n          <debug>true</debug>\n          <encoding>UTF-8</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>com.github.ekryd.sortpom</groupId>\n        <artifactId>sortpom-maven-plugin</artifactId>\n        <version>2.15.0</version>\n        <configuration>\n          <verifyFailOn>strict</verifyFailOn>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>"
+      },
+      {
+        "language": "xml",
+        "code": "<plugin>\n        <groupId>com.github.ekryd.sortpom</groupId>\n        <artifactId>sortpom-maven-plugin</artifactId>\n        <version>2.15.0</version>\n        <configuration>\n          <verifyFailOn>strict</verifyFailOn>\n        </configuration>\n      </plugin>"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "SphinxTestApp",
+        "LiteralInclude",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/directives/code.py",
+      "test_visible_functions": [
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "SphinxTestApp",
+        "LiteralInclude",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

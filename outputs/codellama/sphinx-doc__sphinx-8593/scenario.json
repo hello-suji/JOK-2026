@@ -1,0 +1,103 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/index.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls unittest, tempfile, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, tempfile, join, makedirs."
+    ],
+    "expected_failure": "autodoc: `:meta public:` does not effect to variables",
+    "relevant_source_files": [
+      "sphinx/domains/index.py",
+      "sphinx/domains/python.py",
+      "sphinx/extension.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "# example.py\n_foo = None  #: :meta public:"
+      },
+      {
+        "language": "python",
+        "code": "# index.rst\n.. automodule:: example\n   :members:"
+      },
+      {
+        "language": "python",
+        "code": "import unittest\nclass TestMetaPublicVariables(unittest.TestCase):\n    def test_meta_public_variable_shown_repro(self):\n        \"\"\":meta public: should affect visibility of variables\"\"\"\n        import tempfile\n        import os\n        from sphinx.application import Sphinx\n        from sphinx.ext.autodoc import DocumenterBridge\n\n        # Create temporary directory and files\n        with tempfile.TemporaryDirectory() as tmpdir:\n            srcdir = os.path.join(tmpdir, 'src')\n            outdir = os.path.join(tmpdir, 'out')\n            doctreedir = os.path.join(tmpdir, 'doctrees')\n            confdir = srcdir\n            buildername = 'text'\n\n            os.makedirs(srcdir)\n            example_py_path = os.path.join(srcdir, 'example.py')\n            index_rst_path = os.path.join(srcdir, 'index.rst')\n\n            # Write example.py\n            with open(example_py_path, 'w') as f:\n                f.write(\"_foo = None  #: :meta public:\\n\")\n\n            # Write index.rst\n            with open(index_rst_path, 'w') as f:\n                f.write(\".. automodule:: example\\n   :members:\\n\")\n\n            # Create Sphinx app\n            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n            app.build()\n\n            # Read the output file\n            with open(os.path.join(outdir, 'index.txt'), 'r') as f:\n                output = f.read()\n\n            # Assert that '_foo' is in the output\n            self.assertIn('_foo', output)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "unittest",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "files": [
+        "example.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/index.py",
+      "test_visible_functions": [
+        "unittest",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

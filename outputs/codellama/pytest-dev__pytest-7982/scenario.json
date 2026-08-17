@@ -1,0 +1,82 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/config/__init__.py",
+      "target_function": "parseconfig",
+      "related_classes": [
+        "Session"
+      ],
+      "candidate_test_file": "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls parseconfig, set_session."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: parseconfig, set_session."
+    ],
+    "expected_failure": "This regressed in b473e515bc57ff1133fe650f1e7e6d7e22e5d841 (included in 6.1.0). For some reason I added a `follow_symlinks=False` in there, I don't remember why, but it does not match the previous behavior and should be removed.",
+    "relevant_source_files": [
+      "src/_pytest/config/__init__.py",
+      "doc/en/conf.py",
+      "src/_pytest/_code/code.py",
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "relevant_test_files": [
+      "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py",
+      "doc/en/example/assertion/test_failures.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_set_session_repro(pytester):\n    config = pytester.parseconfig()\n    session = pytester.Session(config)\n    session.set_session()\n    assert session.config == config"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parseconfig",
+        "set_session"
+      ],
+      "classes": [
+        "Session"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "target_source_file": "src/_pytest/config/__init__.py",
+      "test_visible_functions": [
+        "parseconfig",
+        "set_session"
+      ],
+      "test_visible_classes": [
+        "Session"
+      ]
+    }
+  }
+]

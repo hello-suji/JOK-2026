@@ -1,0 +1,11 @@
+--- a/testing/test_capture.py
++++ b/testing/test_capture.py
+@@ -1580,3 +1580,8 @@
+     )
+     result.stdout.no_fnmatch_line("*Captured stderr call*")
+     result.stdout.no_fnmatch_line("*during collection*")
++
++def test_cafd_includes_carriage_return_repro(capfd):
++    print('Greetings from DOS', end='\r')
++    out, err = capfd.readouterr()
++    assert out.endswith('\r')

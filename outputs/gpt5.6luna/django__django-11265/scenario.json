@@ -1,0 +1,113 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "exclude",
+      "related_classes": [
+        "FilteredRelation",
+        "FieldError",
+        "Q",
+        "Author",
+        "Book",
+        "FilteredRelationExcludeRegressionTests"
+      ],
+      "candidate_test_file": "tests/filtered_relation/tests.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db.models import Q",
+      "from django.test import TestCase",
+      "from .models import Author, Book",
+      "Use the generated reproduction path that calls annotate, exclude, join, create."
+    ],
+    "execution_stimulus": [
+      "author1 = Author.objects.create(name='Alice')",
+      "Book.objects.create(title='poem by alice', author=author1)",
+      "queryset = Author.objects.annotate(book_alice=FilteredRelation('book', condition=Q(book__title__iexact='poem by alice'))).exclude(book_alice__isnull=False)",
+      "Execute the focused target API path: annotate, exclude, join, create."
+    ],
+    "expected_failure": "The test should raise a FieldError on the annotation name 'book_alice'.",
+    "relevant_source_files": [
+      "django/db/models/sql/query.py",
+      "django/db/models/query.py",
+      "django/contrib/admin/tests.py"
+    ],
+    "relevant_test_files": [
+      "tests/filtered_relation/tests.py",
+      "tests/generic_relations/tests.py",
+      "tests/generic_relations_regress/tests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.core.exceptions import FieldError\nfrom django.db.models import FilteredRelation, Q\nfrom django.test import TestCase\n\nfrom .models import Author, Book\n\nclass FilteredRelationExcludeRegressionTests(TestCase):\n    def test_exclude_on_filtered_relation_join_does_not_raise_field_error(self):\n        author = Author.objects.create(name='Alice')\n        Book.objects.create(title='poem by alice', author=author)\n        queryset = Author.objects.annotate(\n            book_alice=FilteredRelation(\n                'book', condition=Q(book__title__iexact='poem by alice')\n            )\n        )\n        try:\n            list(queryset.exclude(book_alice__isnull=False))\n        except FieldError as exc:\n            self.fail('FilteredRelation exclude raised FieldError: %s' % exc)\n"
+      },
+      {
+        "language": "python",
+        "code": "def test_with_join_exclude(self):\n    from django.db.models import Q\n    from .models import Author, Book\n    author1 = Author.objects.create(name='Alice')\n    Book.objects.create(title='poem by alice', author=author1)\n    with self.assertRaises(FieldError):\n        Author.objects.annotate(book_alice=FilteredRelation('book', condition=Q(book__title__iexact='poem by alice'))).exclude(book_alice__isnull=False)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "Traceback (most recent call last):\n ... \nFieldError"
+    ],
+    "error_keywords": [
+      "FieldError"
+    ],
+    "identifiers": {
+      "functions": [
+        "exclude",
+        "annotate",
+        "join",
+        "create",
+        "fail"
+      ],
+      "classes": [
+        "FilteredRelation",
+        "FieldError",
+        "Q",
+        "Author",
+        "Book",
+        "FilteredRelationExcludeRegressionTests"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/filtered_relation/tests.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "annotate",
+        "exclude",
+        "join",
+        "create",
+        "fail"
+      ],
+      "test_visible_classes": [
+        "FilteredRelation",
+        "FieldError",
+        "Q",
+        "Author",
+        "Book",
+        "FilteredRelationExcludeRegressionTests"
+      ]
+    }
+  }
+]

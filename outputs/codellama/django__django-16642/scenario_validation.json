@@ -1,0 +1,114 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.65,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function '__init__' NOT found in source_file — may be hallucinated"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/http/response.py",
+          "target_function": "__init__",
+          "related_classes": [
+            "FileResponse"
+          ],
+          "candidate_test_file": "tests/staticfiles_tests/test_views.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.http import FileResponse",
+          "import os",
+          "with open('test.html.Z', 'wb') as f: f.write(b'test data')"
+        ],
+        "execution_stimulus": [
+          "response = FileResponse(open('test.html.Z', 'rb'))"
+        ],
+        "expected_failure": "The content type is incorrectly set to 'text/html' instead of the correct MIME type for '.Z' files.",
+        "relevant_source_files": [
+          "django/http/response.py",
+          "django/contrib/syndication/views.py",
+          "django/core/checks/security/base.py"
+        ],
+        "relevant_test_files": [
+          "tests/template_tests/test_response.py",
+          "tests/staticfiles_tests/test_views.py",
+          "tests/messages_tests/base.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_file_response_z_content_type():\n    from django.http import FileResponse\n    import os\n    with open('test.html.Z', 'wb') as f: f.write(b'test data')\n    response = FileResponse(open('test.html.Z', 'rb'))\n    assert response['Content-Type'] == 'text/html'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "text/html"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "__init__"
+          ],
+          "classes": [
+            "FileResponse"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S2",
+      "score": 0.65,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function '__init__' NOT found in source_file — may be hallucinated",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+--- a/tests/check_framework/test_model_field_deprecation.py
++++ b/tests/check_framework/test_model_field_deprecation.py
+@@ -82,3 +82,19 @@
+                 id='fields.E999',
+             )
+         ])
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.contrib import admin
++from django.core.exceptions import ImproperlyConfigured
++from django.contrib.admin.checks import _check_list_display_item
++from django.contrib.auth.models import User
++
++class TestPositionFieldCheckFailure(TestCase):
++    def test_position_field_check_failure_repro(self):
++        @admin.register(User)
++        class UserAdmin(admin.ModelAdmin):
++            list_display = ('is_staff',)
++
++        errors = _check_list_display_item(UserAdmin, 'is_staff')
++        assert not errors

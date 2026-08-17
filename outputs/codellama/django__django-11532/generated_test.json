@@ -1,0 +1,31 @@
+{
+  "instance_id": "django__django-11532",
+  "scenario_id": "S1",
+  "model_name": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "repo_path": "data/repos/django",
+  "target_test_file": "tests/utils_tests/test_functional.py",
+  "target_test_file_abspath": "data/repos/django/tests/utils_tests/test_functional.py",
+  "target_source_file": "django/core/mail/message.py",
+  "insert_mode": "append_block",
+  "insertion_hint": "end_of_file",
+  "imports": [],
+  "test_code": "from unittest.mock import patch\n\nfrom django.core.mail import EmailMessage\nfrom django.test import SimpleTestCase\n\nclass EmailUnicodeDNSRegressionTests(SimpleTestCase):\n    @patch('django.core.mail.message.DNS_NAME', '漢字')\n    def test_message_id_uses_punycode_for_non_ascii_dns_name_repro(self):\n        email = EmailMessage('subject', '', 'from@example.com', ['to@example.com'])\n        email.encoding = 'iso-8859-1'\n        message = email.message()\n        self.assertIn('xn--p8s937b', message['Message-ID'])\n",
+  "original_test_file_content": "",
+  "modified_test_file_content": "from unittest.mock import patch\n\nfrom django.core.mail import EmailMessage\nfrom django.test import SimpleTestCase\n\nclass EmailUnicodeDNSRegressionTests(SimpleTestCase):\n    @patch('django.core.mail.message.DNS_NAME', '漢字')\n    def test_message_id_uses_punycode_for_non_ascii_dns_name_repro(self):\n        email = EmailMessage('subject', '', 'from@example.com', ['to@example.com'])\n        email.encoding = 'iso-8859-1'\n        message = email.message()\n        self.assertIn('xn--p8s937b', message['Message-ID'])\n",
+  "test_patch": "--- a/tests/utils_tests/test_functional.py\n+++ b/tests/utils_tests/test_functional.py\n@@ -0,0 +1,12 @@\n+from unittest.mock import patch\n+\n+from django.core.mail import EmailMessage\n+from django.test import SimpleTestCase\n+\n+class EmailUnicodeDNSRegressionTests(SimpleTestCase):\n+    @patch('django.core.mail.message.DNS_NAME', '漢字')\n+    def test_message_id_uses_punycode_for_non_ascii_dns_name_repro(self):\n+        email = EmailMessage('subject', '', 'from@example.com', ['to@example.com'])\n+        email.encoding = 'iso-8859-1'\n+        message = email.message()\n+        self.assertIn('xn--p8s937b', message['Message-ID'])\n",
+  "raw_response": "",
+  "prompt": "",
+  "patch_sha256": "12e70f8c058a34a2b32e2ef4d5ef3c17e64ab2bf4ab784602039e9d01828b133",
+  "repair_attempted": false,
+  "repair_actions": [],
+  "repair_failed_reason": "",
+  "repair_retry_count": 0,
+  "retry_required_oracle_risks": [],
+  "semantic_risk_flags": [],
+  "prompt_profile": {},
+  "token_usage": {
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0
+  }
+}

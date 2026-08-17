@@ -1,0 +1,25 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1392,3 +1392,22 @@
+
+     assert ax.get_xlim() == (1e-1, 1e2)
+     assert fig2.axes[0].get_xlim() == (0, 1)
++
++@check_figures_equal(extensions=["png"])
++def test_colorbar_edges_with_extend_both_repro(fig_test, fig_ref):
++    import matplotlib.colors as mcolors
++
++    my_cmap = mpl.cm.viridis
++    bounds = np.arange(10)
++    nb_colors = len(bounds) + 1
++    colors = my_cmap(np.linspace(100, 255, nb_colors).astype(int))
++    my_cmap, my_norm = mcolors.from_levels_and_colors(bounds, colors, extend='both')
++
++    ax_test = fig_test.add_subplot()
++    cb_test = fig_test.colorbar(mpl.cm.ScalarMappable(norm=my_norm, cmap=my_cmap), ax=ax_test, drawedges=True, extend='both')
++
++    ax_ref = fig_ref.add_subplot()
++    cb_ref = fig_ref.colorbar(mpl.cm.ScalarMappable(norm=my_norm, cmap=my_cmap), ax=ax_ref, drawedges=True, extend='both')
++
++    assert len(cb_test.ax.lines) == len(cb_ref.ax.lines)
++    assert cb_test.ax.lines[0].get_visible() and cb_test.ax.lines[-1].get_visible()

@@ -1,0 +1,49 @@
+from django.db.migrations.operations.base import Operation
+
+
+class TestOperation(Operation):
+    def __init__(self):
+        pass
+
+    def deconstruct(self):
+        return (self.__class__.__name__, [], {})
+
+    @property
+    def reversible(self):
+        return True
+
+    def state_forwards(self, app_label, state):
+        pass
+
+    def database_forwards(self, app_label, schema_editor, from_state, to_state):
+        pass
+
+    def state_backwards(self, app_label, state):
+        pass
+
+    def database_backwards(self, app_label, schema_editor, from_state, to_state):
+        pass
+
+from django.test import TestCase, SimpleTestCase
+from django.db.migrations.operations.models import RenameIndex
+from django.db import migrations
+from django.db import connection
+
+class TestRenameIndexBehavior(TestCase):
+    def test_rename_index_crash_repro(self):
+        # Setup the initial state with an unnamed index
+        original_name = connection.introspection.get_indexes_from_table('pony')[0]['name']
+        rename_op = RenameIndex(model_name='pony', old_name=original_name, new_name='new_pony_test_idx')
+        schema_editor = connection.schema_editor()
+
+        # Apply the rename operation
+        rename_op.database_forwards('app', schema_editor, None, None)
+
+        # Reverse the rename operation
+        rename_op.database_backwards('app', schema_editor, None, None)
+
+        # Re-apply the rename operation again
+        rename_op.database_forwards('app', schema_editor, None, None)
+
+        # Check that the index has been restored to the new name
+        self.assertTrue(connection.introspection.index_name_exists('pony', 'new_pony_test_idx'))

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14369",
+    "model_patch": "--- a/astropy/io/votable/tests/tree_test.py\n+++ b/astropy/io/votable/tests/tree_test.py\n@@ -168,3 +168,29 @@\n     assert 'xmlns=\"http://www.ivoa.net/xml/VOTable/v1.3\"' in xml\n     assert 'xsi:schemaLocation=\"http://www.ivoa.net/xml/VOTable/v1.3 '\n     assert 'http://www.ivoa.net/xml/VOTable/VOTable-1.4.xsd\"' in xml\n+\n+import io\n+from astropy.table import Table\n+\n+def test_cds_composite_units_parsing_repro():\n+    data = \"\"\"\n+Title:\n+Authors:\n+Table:\n+================================================================================\n+Byte-by-byte Description of file: tab.txt\n+--------------------------------------------------------------------------------\n+   Bytes Format Units          \t\tLabel      Explanations\n+--------- ---- --------------- ---------- ------------------------------------------\n+     1-  5 A5  ---            ID         ---\n+     7- 15 E9.3 1e+3 J s / (kpc2 m) SBCONT     ---\n+    17- 25 E9.3 1e-7 J kpc2 / s SBLINE     ---\n+================================================================================\n+ID0001  70.992  38.5104\n+ID0001  13.0512  28.1924\n+ID0001   3.8361  28.1924\n+    \"\"\"\n+    with io.StringIO(data) as f:\n+        dat = Table.read(f, format='ascii.cds')\n+    assert dat['SBCONT'].unit == '1e+3 J s / (kpc2 m)'\n+    assert dat['SBLINE'].unit == '1e-7 J kpc2 / s'\n",
+    "patch_sha256": "3a80ae72d65deb29ae7721ea8781e65cad92a0581c06147c19a2607a34ea2ecb"
+  }
+]

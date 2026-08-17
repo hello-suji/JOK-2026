@@ -1,0 +1,451 @@
+{
+  "instance_id": "django__django-14631",
+  "repo": "django/django",
+  "base_commit": "84400d2e9db7c51fee4e9bb04c028f665b8e7624",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/forms/forms.py",
+      "score": 30,
+      "matched_identifiers": [
+        "BaseForm",
+        "_clean_fields",
+        "baseform",
+        "bound",
+        "boundfield",
+        "changed_data"
+      ],
+      "reasons": [
+        "function_match:changed_data",
+        "function_match:_clean_fields",
+        "class_match:BaseForm",
+        "source_content_tokens:_clean_fields,baseform,bound,boundfield,cached"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BaseForm": "class BaseForm:\n    \"\"\"\n    The main implementation of all the Form logic. Note that this class is\n    different than Form. See the comments by the Form class for more info. Any\n    improvements to the form API should be made to this class, not to the Form\n    class.\n    \"\"\"\n    default_renderer = None\n    field_order = None\n    prefix = None\n    use_required_attribute = True\n\n    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,\n                 initial=None, error_class=ErrorList, label_suffix=None,\n                 empty_permitted=False, field_order=None, use_required_attribute=None, renderer=None):",
+        "_clean_fields": "    def _clean_fields(self):\n        for name, field in self.fields.items():\n            if field.disabled:\n                value = self.get_initial_for_field(field, name)\n            else:\n                value = self._field_data_value(field, self.add_prefix(name))\n            try:\n                if isinstance(field, FileField):\n                    initial = self.get_initial_for_field(field, name)\n                    value = field.clean(value, initial)\n                else:\n                    value = field.clean(value)\n                self.cleaned_data[name] = value\n                if hasattr(self, 'clean_%s' % name):\n                    value = getattr(self, 'clean_%s' % name)()",
+        "changed_data": "    def changed_data(self):\n        data = []\n        for name, field in self.fields.items():\n            data_value = self._field_data_value(field, self.add_prefix(name))\n            if not field.show_hidden_initial:\n                # Use the BoundField's initial as this is the value passed to\n                # the widget.\n                initial_value = self[name].initial\n            else:\n                initial_prefixed_name = self.add_initial_prefix(name)\n                hidden_widget = field.hidden_widget()\n                try:\n                    initial_value = field.to_python(\n                        self._widget_data_value(hidden_widget, initial_prefixed_name)\n                    )"
+      },
+      "top_level_functions": [
+        "BaseForm.order_fields",
+        "BaseForm.errors",
+        "BaseForm.is_valid",
+        "BaseForm.add_prefix",
+        "BaseForm.add_initial_prefix",
+        "BaseForm.as_table",
+        "BaseForm.as_ul",
+        "BaseForm.as_p",
+        "BaseForm.non_field_errors",
+        "BaseForm.add_error",
+        "BaseForm.has_error",
+        "BaseForm.full_clean",
+        "BaseForm.clean",
+        "BaseForm.has_changed",
+        "BaseForm.changed_data",
+        "BaseForm.media",
+        "BaseForm.is_multipart",
+        "BaseForm.hidden_fields",
+        "BaseForm.visible_fields",
+        "BaseForm.get_initial_for_field"
+      ]
+    },
+    {
+      "path": "django/forms/boundfield.py",
+      "score": 23,
+      "matched_identifiers": [
+        "BoundField",
+        "access",
+        "accessing",
+        "bound",
+        "boundfield"
+      ],
+      "reasons": [
+        "class_match:BoundField",
+        "path_contains_class:BoundField",
+        "stem_in_issue_text:boundfield",
+        "source_content_tokens:access,accessing,bound,boundfield,cached"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BoundField": "class BoundField:\n    \"A Field plus data\"\n    def __init__(self, form, field, name):\n        self.form = form\n        self.field = field\n        self.name = name\n        self.html_name = form.add_prefix(name)\n        self.html_initial_name = form.add_initial_prefix(name)\n        self.html_initial_id = form.add_initial_prefix(self.auto_id)\n        if self.field.label is None:\n            self.label = pretty_name(name)\n        else:\n            self.label = self.field.label\n        self.help_text = field.help_text or ''\n"
+      },
+      "top_level_functions": [
+        "BoundField.subwidgets",
+        "BoundField.errors",
+        "BoundField.as_widget",
+        "BoundField.as_text",
+        "BoundField.as_textarea",
+        "BoundField.as_hidden",
+        "BoundField.data",
+        "BoundField.value",
+        "BoundField.label_tag",
+        "BoundField.css_classes",
+        "BoundField.is_hidden",
+        "BoundField.auto_id",
+        "BoundField.id_for_label",
+        "BoundField.initial",
+        "BoundField.build_widget_attrs",
+        "BoundField.widget_type",
+        "BoundWidget.tag",
+        "BoundWidget.template_name",
+        "BoundWidget.id_for_label",
+        "BoundWidget.choice_label"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/forms.py",
+      "score": 21,
+      "matched_identifiers": [
+        "change",
+        "changed",
+        "changed_data",
+        "clean"
+      ],
+      "reasons": [
+        "function_match:changed_data",
+        "source_content_tokens:change,changed,changed_data,clean,disabled"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "clean": "    def clean(self):\n        username = self.cleaned_data.get('username')\n        password = self.cleaned_data.get('password')\n\n        if username is not None and password:\n            self.user_cache = authenticate(self.request, username=username, password=password)\n            if self.user_cache is None:\n                raise self.get_invalid_login_error()\n            else:\n                self.confirm_login_allowed(self.user_cache)\n\n        return self.cleaned_data\n\n    def confirm_login_allowed(self, user):\n        \"\"\"",
+        "changed_data": "    def changed_data(self):\n        data = super().changed_data\n        for name in self.fields:\n            if name not in data:\n                return []\n        return ['password']"
+      },
+      "top_level_functions": [
+        "ReadOnlyPasswordHashWidget.get_context",
+        "ReadOnlyPasswordHashWidget.id_for_label",
+        "UsernameField.to_python",
+        "UsernameField.widget_attrs",
+        "UserCreationForm.clean_password2",
+        "UserCreationForm.save",
+        "AuthenticationForm.clean",
+        "AuthenticationForm.confirm_login_allowed",
+        "AuthenticationForm.get_user",
+        "AuthenticationForm.get_invalid_login_error",
+        "PasswordResetForm.send_mail",
+        "PasswordResetForm.get_users",
+        "PasswordResetForm.save",
+        "SetPasswordForm.clean_new_password2",
+        "SetPasswordForm.save",
+        "PasswordChangeForm.clean_old_password",
+        "AdminPasswordChangeForm.clean_password2",
+        "AdminPasswordChangeForm.save",
+        "AdminPasswordChangeForm.changed_data"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "access",
+        "bound",
+        "cached",
+        "cached_property"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:access,bound,cached,cached_property,callable"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GenericForeignKey.contribute_to_class",
+        "GenericForeignKey.get_filter_kwargs_for_object",
+        "GenericForeignKey.get_forward_related_filter",
+        "GenericForeignKey.check",
+        "GenericForeignKey.get_cache_name",
+        "GenericForeignKey.get_content_type",
+        "GenericForeignKey.get_prefetch_queryset",
+        "GenericRelation.check",
+        "GenericRelation.resolve_related_fields",
+        "GenericRelation.get_path_info",
+        "GenericRelation.get_reverse_path_info",
+        "GenericRelation.value_to_string",
+        "GenericRelation.contribute_to_class",
+        "GenericRelation.set_attributes_from_rel",
+        "GenericRelation.get_internal_type",
+        "GenericRelation.get_content_type",
+        "GenericRelation.get_extra_restriction",
+        "GenericRelation.bulk_related_objects",
+        "ReverseGenericManyToOneDescriptor.related_manager_cls",
+        "create_generic_related_manager"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/db/models/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cached",
+        "could",
+        "description",
+        "different"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:cached,could,description,different,field"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_srid_info",
+        "BaseSpatialField.deconstruct",
+        "BaseSpatialField.db_type",
+        "BaseSpatialField.spheroid",
+        "BaseSpatialField.units",
+        "BaseSpatialField.units_name",
+        "BaseSpatialField.geodetic",
+        "BaseSpatialField.get_placeholder",
+        "BaseSpatialField.get_srid",
+        "BaseSpatialField.get_db_prep_value",
+        "BaseSpatialField.get_raster_prep_value",
+        "BaseSpatialField.get_prep_value",
+        "GeometryField.deconstruct",
+        "GeometryField.contribute_to_class",
+        "GeometryField.formfield",
+        "GeometryField.select_format",
+        "ExtentField.get_internal_type",
+        "ExtentField.select_format",
+        "RasterField.db_type",
+        "RasterField.from_db_value",
+        "RasterField.contribute_to_class",
+        "RasterField.get_transform"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/forms_tests/tests/test_forms.py",
+      "score": 21,
+      "matched_identifiers": [
+        "BaseForm",
+        "test_datetime_clean_initial_callable_disabled"
+      ],
+      "reasons": [
+        "test_function_match:test_datetime_clean_initial_callable_disabled",
+        "test_path_related_to_class:BaseForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_forms.py",
+      "score": 18,
+      "matched_identifiers": [
+        "BaseForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:auth,form,forms",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_datetimefield.py",
+      "score": 17,
+      "matched_identifiers": [
+        "BaseForm",
+        "BoundField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BoundField",
+        "test_path_related_to_class:BaseForm",
+        "token_overlap:datetime,field,form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_splitdatetimefield.py",
+      "score": 17,
+      "matched_identifiers": [
+        "BaseForm",
+        "BoundField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BoundField",
+        "test_path_related_to_class:BaseForm",
+        "token_overlap:datetime,field,form,forms",
+        "internal_name_overlap:field",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_views/test_forms.py",
+      "score": 16,
+      "matched_identifiers": [
+        "BaseForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_views/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:testcase_class:TestDataMixin",
+      "tests/forms_tests/field_tests/test_datetimefield.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_splitdatetimefield.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_forms.py:testcase_class:FormsTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2698,
+  "indexed_test_file_count": 1836,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.admin_views.test_forms": [
+      "AdminAuthenticationFormTests",
+      "AdminFormTests"
+    ],
+    "tests.auth_tests.test_forms": [
+      "AdminPasswordChangeFormTest",
+      "AuthenticationFormTest",
+      "PasswordChangeFormTest",
+      "PasswordResetFormTest",
+      "ReadOnlyPasswordHashTest",
+      "SetPasswordFormTest",
+      "TestDataMixin",
+      "UserChangeFormTest",
+      "UserCreationFormTest"
+    ],
+    "tests.forms_tests.field_tests.test_datetimefield": [
+      "DateTimeFieldTest"
+    ],
+    "tests.forms_tests.field_tests.test_splitdatetimefield": [
+      "SplitDateTimeFieldTest"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "tests.forms_tests.tests.test_forms": [
+      "CustomRenderer",
+      "FormsTestCase",
+      "MultiValueDictLike",
+      "Person",
+      "PersonNew",
+      "RendererTests"
+    ],
+    "django.forms.boundfield": [
+      "BoundField",
+      "BoundWidget"
+    ],
+    "django.forms.forms": [
+      "BaseForm",
+      "DeclarativeFieldsMetaclass",
+      "Form"
+    ],
+    "django.contrib.contenttypes.fields": [
+      "GenericForeignKey",
+      "GenericRel",
+      "GenericRelation",
+      "ReverseGenericManyToOneDescriptor",
+      "create_generic_related_manager"
+    ],
+    "django.contrib.auth.forms": [
+      "AdminPasswordChangeForm",
+      "AuthenticationForm",
+      "PasswordChangeForm",
+      "PasswordResetForm",
+      "ReadOnlyPasswordHashField",
+      "ReadOnlyPasswordHashWidget",
+      "SetPasswordForm",
+      "UserChangeForm",
+      "UserCreationForm",
+      "UsernameField",
+      "_unicode_ci_compare"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.gis.db.models.fields": [
+      "BaseSpatialField",
+      "ExtentField",
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "PointField",
+      "PolygonField",
+      "RasterField",
+      "get_srid_info"
+    ],
+    "django.contrib.gis.db": [
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "PointField",
+      "PolygonField",
+      "RasterField",
+      "aggregates_all",
+      "models_all"
+    ]
+  },
+  "test_example_snippet": "        class TestForm(Form):\n            name = ChoiceField(choices=[])\n\n        field = TestForm()['name']\n        msg = 'BoundField indices must be integers or slices, not str.'\n        with self.assertRaisesMessage(TypeError, msg):\n            field['foo']\n\n    def test_boundfield_bool(self):\n        \"\"\"BoundField without any choices (subwidgets) evaluates to True.\"\"\"\n        class TestForm(Form):\n            name = ChoiceField(choices=[])\n\n        self.assertIs(bool(TestForm()['name']), True)\n\n    def test_forms_with_multiple_choice(self):\n        # MultipleChoiceField is a special case, as its data is required to be a list:\n        class SongForm(Form):\n            name = CharField()\n            composers = MultipleChoiceField()\n\n        f = SongForm(auto_id=False)\n        self.assertHTMLEqual(str(f['composers']), \"\"\"<select multiple name=\"composers\" required>\n</select>\"\"\")\n\n        class SongForm(Form):\n            name = CharField()\n            composers = MultipleChoiceField(choices=[('J', 'John Lennon'), ('P', 'Paul McCartney')])\n\n        f = SongForm(auto_id=False)\n        self.assertHTMLEqual(str(f['composers']), \"\"\"<select multiple name=\"composers\" required>\n<option value=\"J\">John Lennon</option>\n<option value=\"P\">Paul McCartney</option>\n</select>\"\"\")\n        f = SongForm({'name': 'Yesterday', 'composers': ['P']}, auto_id=False)",
+  "conftest_fixtures": {}
+}

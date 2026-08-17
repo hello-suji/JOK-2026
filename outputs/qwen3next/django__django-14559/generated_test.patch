@@ -1,0 +1,14 @@
+--- a/tests/queries/test_bulk_update.py
++++ b/tests/queries/test_bulk_update.py
+@@ -240,3 +240,11 @@
+             obj.json_field = {'c': obj.json_field['a'] + 1}
+         JSONFieldNullable.objects.bulk_update(objs, ['json_field'])
+         self.assertCountEqual(JSONFieldNullable.objects.filter(json_field__has_key='c'), objs)
++
++class TestBulkUpdateReturnValue(BulkUpdateTests):
++    def test_bulk_update_return_value_repro(self):
++        for note in self.notes:
++            note.note = 'test-%s' % note.id
++        updated_count = Note.objects.bulk_update(self.notes, ['note'])
++        self.assertIsNotNone(updated_count)
++        self.assertEqual(updated_count, len(self.notes))

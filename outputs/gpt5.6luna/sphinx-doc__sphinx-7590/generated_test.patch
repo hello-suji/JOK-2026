@@ -1,0 +1,15 @@
+--- a/tests/test_domain_cpp.py
++++ b/tests/test_domain_cpp.py
+@@ -1133,3 +1133,12 @@
+     assert any_role.classes == cpp_any_role.classes, expect
+     assert any_role.classes == expr_role.content_classes['a'], expect
+     assert any_role.classes == texpr_role.content_classes['a'], expect
++
++def test_describe_signature_with_invalid_definition_repro():
++    from sphinx.domains.cpp import describe_signature
++
++    invalid_definition = 'constexpr auto units::si::planck_constant = 6.62607015e-34q_J * 1q_s'
++    result = describe_signature(invalid_definition)
++    assert result == ('', '', '')
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'WARNING: Invalid definition: Expected end of definition. [error at 58]'

@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/figure.py",
+      "target_function": "figure",
+      "related_classes": [
+        "Figure",
+        "MacOSX"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where figure can be called.",
+      "Use the generated reproduction path that calls plt, figure, subfigures, all.",
+      "Use the generated reproduction path that calls figure, plot, subfigures, subplots."
+    ],
+    "execution_stimulus": [
+      "Call figure with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: plt, figure, subfigures, all.",
+      "Execute the focused target API path: figure, plot, subfigures, subplots."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/pyplot.py",
+      "galleries/examples/subplots_axes_and_figures/subfigures.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\n\nfigs = plt.figure().subfigures(2, 2, wspace=0, hspace=0)\nfor fig in figs.flat:\n    fig.subplots().plot([1, 2])\nplt.show()"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\n\ndef test_subfigures_wspace_hspace_repro():\n    fig = plt.figure()\n    subfigs = fig.subfigures(2, 2, wspace=0, hspace=0)\n    for subfig in subfigs.flat:\n        ax = subfig.subplots()\n        ax.plot([1, 2])\n    assert len(subfigs) == 4\n    assert all(isinstance(subfig, plt.Figure) for subfig in subfigs)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "figure",
+        "plot",
+        "show",
+        "subfigures",
+        "subplots",
+        "plt",
+        "isinstance"
+      ],
+      "classes": [
+        "Figure",
+        "MacOSX"
+      ],
+      "files": [
+        "lib/matplotlib/figure.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/figure.py",
+      "test_visible_functions": [
+        "figure",
+        "plot",
+        "subfigures",
+        "subplots",
+        "plt",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "Figure"
+      ]
+    }
+  }
+]

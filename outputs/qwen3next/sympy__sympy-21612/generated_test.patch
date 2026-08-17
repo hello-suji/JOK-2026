@@ -1,0 +1,15 @@
+--- a/sympy/parsing/tests/test_latex.py
++++ b/sympy/parsing/tests/test_latex.py
+@@ -319,3 +319,12 @@
+     for latex_str in FAILING_BAD_STRINGS:
+         with raises(LaTeXParsingError):
+             parse_latex(latex_str)
++
++from sympy.parsing.latex import parse_latex
++from sympy import symbols, Eq
++
++def test_fraction_parsing_with_missing_brackets_repro():
++    a, b, c = symbols('a b c')
++    expr = parse_latex(r'\frac{\frac{a^3+b}{c}}{\frac{1}{c^2}}')
++    expected_expr = ((a**3 + b)/c)/(1/(c**2))
++    assert expr == expected_expr

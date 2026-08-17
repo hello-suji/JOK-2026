@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/symbol.py",
+      "target_function": "hasattr",
+      "related_classes": [
+        "Symbol"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_symbol.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls hasattr, isinstance."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: hasattr, isinstance."
+    ],
+    "expected_failure": "AttributeError                            Traceback (most recent call last)",
+    "relevant_source_files": [
+      "sympy/core/symbol.py",
+      "sympy/printing/pretty/pretty_symbology.py",
+      "sympy/assumptions/assume.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_symbol.py",
+      "sympy/matrices/expressions/tests/test_trace.py",
+      "sympy/core/tests/test_trace.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_symbol_dict_attribute_repro():\n    s = Symbol('s')\n    assert hasattr(s, '__dict__')\n    assert isinstance(s.__dict__, dict)\n    assert s.__dict__ == {}\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(s) != \"---------------------------------------------------------------------------\\nAttributeError                            Traceback (most recent call last)\\n<ipython-input-3-e2060d5eec73> in <module>\\n----> 1 sympy.Symbol('s').__dict__\\n\\nAttributeError: 'Symbol' object has no attribute '__dict__'\\n('name',)\""
+      },
+      {
+        "language": "python",
+        "code": ">>> sympy.Symbol('s').__dict__\n---------------------------------------------------------------------------\nAttributeError                            Traceback (most recent call last)\n<ipython-input-3-e2060d5eec73> in <module>\n----> 1 sympy.Symbol('s').__dict__\n\nAttributeError: 'Symbol' object has no attribute '__dict__'\n>>> sympy.Symbol('s').__slots__\n('name',)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "---------------------------------------------------------------------------\nAttributeError                            Traceback (most recent call last)\n<ipython-input-3-e2060d5eec73> in <module>\n----> 1 sympy.Symbol('s').__dict__\n\nAttributeError: 'Symbol' object has no attribute '__dict__'\n('name',)"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "AttributeError: 'Symbol' object has no attribute '__dict__'"
+    ],
+    "identifiers": {
+      "functions": [
+        "hasattr",
+        "isinstance"
+      ],
+      "classes": [
+        "Symbol"
+      ],
+      "files": [],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_symbol.py",
+      "target_source_file": "sympy/core/symbol.py",
+      "test_visible_functions": [
+        "hasattr",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "Symbol"
+      ]
+    }
+  }
+]

@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "end",
+      "related_classes": [
+        "Attributes",
+        "Optional",
+        "Point",
+        "PyClasslike",
+        "ModuleScanner",
+        "Position",
+        "Square"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where end can be called.",
+      "Use the generated reproduction path that calls end."
+    ],
+    "execution_stimulus": [
+      "Call end with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: end."
+    ],
+    "expected_failure": "A documented type in property's type annotation does not get cross-referenced:",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/ext/autosummary/generate.py",
+      "sphinx/ext/todo.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "py",
+        "code": "from typing import Optional\n\n\nclass Point:\n    \"\"\"\n    A class representing a point.\n\n    Attributes:\n        x: Position X.\n        y: Position Y.\n    \"\"\"\n    x: int\n    y: int\n\n\nclass Square:\n    \"\"\"A class representing a square figure.\"\"\"\n    #: Square's start position (top-left corner).\n    start: Point\n    #: Square width.\n    width: int\n    #: Square height.\n    height: int\n\n    @property\n    def end(self) -> Point:\n        \"\"\"Square's end position (bottom-right corner).\"\"\"\n        return Point(self.start.x + self.width, self.start.y + self.height)\n\n\nclass Rectangle:\n    \"\"\"\n    A class representing a square figure.\n\n    Attributes:\n        start: Rectangle's start position (top-left corner).\n        width: Rectangle width.\n        height: Rectangle width.\n    \"\"\"\n    start: Point\n    width: int\n    height: int\n\n    @property\n    def end(self) -> Point:\n        \"\"\"Rectangle's end position (bottom-right corner).\"\"\"\n        return Point(self.start.x + self.width, self.start.y + self.height)"
+      },
+      {
+        "language": "python",
+        "code": "$ git clone https://github.com/jack1142/sphinx-issue-9585\n$ cd sphinx-issue-9585\n$ pip install sphinx\n$ cd docs\n$ make html\n$ # open _build/html/index.html and see the issue"
+      },
+      {
+        "language": "python",
+        "code": "import re\nfrom typing import Optional\nfrom sphinx.domains.python import PyClasslike\nfrom sphinx.ext.autosummary.generate import ModuleScanner\n\n\nclass Point:\n    \"\"\"\n    A class representing a point.\n\n    Attributes:\n        x: Position X.\n        y: Position Y.\n    \"\"\"\n    x: int\n    y: int\n\n\nclass Square:\n    \"\"\"A class representing a square figure.\"\"\"\n    #: Square's start position (top-left corner).\n    start: Point\n    #: Square width.\n    width: int\n    #: Square height.\n    height: int\n\n    def end(self) -> Point:\n        \"\"\"Calculate the end point of the square.\"\"\"\n        return Point(x=self.start.x + self.width, y=self.start.y + self.height)\n\ndef test_square_end_method_repro():\n    start_point = Point(x=0, y=0)\n    square = Square(start=start_point, width=10, height=20)\n    end_point = square.end()\n    assert end_point.x == 10\n    assert end_point.y == 20"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "end"
+      ],
+      "classes": [
+        "Attributes",
+        "Optional",
+        "Point",
+        "Position",
+        "Rectangle",
+        "Square",
+        "PyClasslike",
+        "ModuleScanner"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "end"
+      ],
+      "test_visible_classes": [
+        "Attributes",
+        "Optional",
+        "Point",
+        "Position",
+        "Square",
+        "PyClasslike",
+        "ModuleScanner"
+      ]
+    }
+  }
+]

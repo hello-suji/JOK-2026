@@ -1,0 +1,395 @@
+{
+  "instance_id": "pylint-dev__pylint-4661",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "1d1619ef913b99b06647d2030bddff4800abdf63",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 17,
+      "matched_identifiers": [
+        "config",
+        "configuration",
+        "local",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:conf",
+        "source_content_tokens:config,local,name,configuration,directories"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "pylint/checkers/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "config",
+        "configuration",
+        "local",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:config,local,name,configuration,constants"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "NamingStyle.get_regex",
+        "in_loop",
+        "in_nested_list",
+        "report_by_type_stats",
+        "redefined_by_decorator",
+        "BasicErrorChecker.visit_classdef",
+        "BasicErrorChecker.visit_assign",
+        "BasicErrorChecker.visit_starred",
+        "BasicErrorChecker.visit_functiondef",
+        "BasicErrorChecker.visit_return",
+        "BasicErrorChecker.visit_yield",
+        "BasicErrorChecker.visit_yieldfrom",
+        "BasicErrorChecker.visit_continue",
+        "BasicErrorChecker.visit_break",
+        "BasicErrorChecker.visit_for",
+        "BasicErrorChecker.visit_while",
+        "BasicErrorChecker.visit_unaryop",
+        "BasicErrorChecker.visit_nonlocal",
+        "BasicErrorChecker.visit_call",
+        "BasicChecker.open",
+        "BasicChecker.visit_if",
+        "BasicChecker.visit_ifexp",
+        "BasicChecker.visit_comprehension",
+        "BasicChecker.visit_module",
+        "BasicChecker.visit_classdef",
+        "BasicChecker.visit_expr",
+        "BasicChecker.visit_lambda",
+        "BasicChecker.visit_functiondef",
+        "BasicChecker.visit_return",
+        "BasicChecker.visit_continue",
+        "BasicChecker.visit_break",
+        "BasicChecker.visit_raise",
+        "BasicChecker.visit_exec",
+        "BasicChecker.visit_call",
+        "BasicChecker.visit_assert",
+        "BasicChecker.visit_dict",
+        "BasicChecker.visit_tryfinally",
+        "BasicChecker.leave_tryfinally",
+        "BasicChecker.visit_with",
+        "BasicChecker.visit_assign"
+      ]
+    },
+    {
+      "path": "pylint/checkers/variables.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cache",
+        "config",
+        "local",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:variables",
+        "source_content_tokens:cache,config,local,name,share"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "in_for_else_branch",
+        "overridden_method",
+        "NamesConsumer.to_consume",
+        "NamesConsumer.consumed",
+        "NamesConsumer.scope_type",
+        "NamesConsumer.mark_as_consumed",
+        "NamesConsumer.get_next_to_consume",
+        "VariablesChecker.visit_for",
+        "VariablesChecker.leave_for",
+        "VariablesChecker.visit_module",
+        "VariablesChecker.leave_module",
+        "VariablesChecker.visit_classdef",
+        "VariablesChecker.leave_classdef",
+        "VariablesChecker.visit_lambda",
+        "VariablesChecker.leave_lambda",
+        "VariablesChecker.visit_generatorexp",
+        "VariablesChecker.leave_generatorexp",
+        "VariablesChecker.visit_dictcomp",
+        "VariablesChecker.leave_dictcomp",
+        "VariablesChecker.visit_setcomp",
+        "VariablesChecker.leave_setcomp",
+        "VariablesChecker.visit_functiondef",
+        "VariablesChecker.leave_functiondef",
+        "VariablesChecker.visit_global",
+        "VariablesChecker.visit_assignname",
+        "VariablesChecker.visit_delname",
+        "VariablesChecker.visit_name",
+        "VariablesChecker.visit_import",
+        "VariablesChecker.visit_importfrom",
+        "VariablesChecker.visit_assign",
+        "VariablesChecker.visit_listcomp",
+        "VariablesChecker.leave_listcomp",
+        "VariablesChecker.leave_assign",
+        "VariablesChecker.leave_with",
+        "VariablesChecker.visit_arguments",
+        "register"
+      ]
+    },
+    {
+      "path": "pylint/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "config",
+        "configuration",
+        "directory",
+        "name"
+      ],
+      "reasons": [
+        "source_content_tokens:config,name,configuration,directory,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "run_pylint",
+        "run_epylint",
+        "run_pyreverse",
+        "run_symilar",
+        "modify_sys_path"
+      ]
+    },
+    {
+      "path": "pylint/checkers/base_checker.py",
+      "score": 16,
+      "matched_identifiers": [
+        "clean",
+        "config",
+        "constants",
+        "name"
+      ],
+      "reasons": [
+        "source_content_tokens:config,name,clean,constants,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseChecker.get_full_documentation",
+        "BaseChecker.add_message",
+        "BaseChecker.check_consistency",
+        "BaseChecker.create_message_definition_from_tuple",
+        "BaseChecker.messages",
+        "BaseChecker.get_message_definition",
+        "BaseChecker.open",
+        "BaseChecker.close",
+        "BaseTokenChecker.process_tokens"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/checkers/unittest_variables.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:variables",
+        "token_overlap:checker,checkers,variables",
+        "internal_name_overlap:variables",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_base.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:base",
+        "token_overlap:checker,checkers",
+        "internal_name_overlap:checker",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/__init__.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:checker,checkers,init",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_classes.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "token_overlap:checker,checkers",
+        "internal_name_overlap:variables",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/checkers/unittest_deprecated.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "token_overlap:checker,checkers",
+        "internal_name_overlap:checker",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/checkers/unittest_classes.py:testcase_class:TestVariablesChecker",
+      "tests/checkers/unittest_base.py:unittest_or_django_test_import",
+      "tests/checkers/unittest_base.py:testcase_class:TestBaseChecker",
+      "tests/checkers/unittest_base.py:testcase_class:TestComparison",
+      "tests/checkers/unittest_base.py:testcase_class:TestDocstring",
+      "tests/checkers/unittest_base.py:testcase_class:TestMultiNamingStyle",
+      "tests/checkers/unittest_base.py:testcase_class:TestNameChecker",
+      "tests/checkers/unittest_base.py:testcase_class:TestNamePresets",
+      "tests/checkers/unittest_base.py:testcase_class:TestNoSix",
+      "tests/checkers/unittest_variables.py:unittest_or_django_test_import",
+      "tests/checkers/unittest_variables.py:testcase_class:TestMissingSubmodule",
+      "tests/checkers/unittest_variables.py:testcase_class:TestVariablesChecker",
+      "tests/checkers/unittest_variables.py:testcase_class:TestVariablesCheckerWithTearDown",
+      "tests/checkers/unittest_deprecated.py:testcase_class:TestDeprecatedChecker"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 841,
+  "indexed_test_file_count": 723,
+  "available_imports": {
+    "pylint": [
+      "BaseChecker",
+      "BaseTokenChecker",
+      "DeprecatedMixin",
+      "MapReduceMixin",
+      "__version__",
+      "diff_string",
+      "initialize",
+      "modify_sys_path",
+      "register_plugins",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "version"
+    ],
+    "tests.checkers.unittest_classes": [
+      "TestVariablesChecker"
+    ],
+    "tests.checkers.unittest_base": [
+      "TestBaseChecker",
+      "TestComparison",
+      "TestDocstring",
+      "TestMultiNamingStyle",
+      "TestNameChecker",
+      "TestNamePresets",
+      "TestNoSix"
+    ],
+    "tests.checkers.unittest_variables": [
+      "TestMissingSubmodule",
+      "TestVariablesChecker",
+      "TestVariablesCheckerWithTearDown"
+    ],
+    "tests.checkers.unittest_deprecated": [
+      "TestDeprecatedChecker",
+      "_DeprecatedChecker"
+    ],
+    "pylint.checkers.base": [
+      "AnyStyle",
+      "BasicChecker",
+      "BasicErrorChecker",
+      "CamelCaseStyle",
+      "ComparisonChecker",
+      "DocStringChecker",
+      "NameChecker",
+      "NamingStyle",
+      "PascalCaseStyle",
+      "PassChecker",
+      "SnakeCaseStyle",
+      "UpperCaseStyle",
+      "_BasicChecker",
+      "_create_naming_options",
+      "_determine_function_name_type",
+      "_get_break_loop_node",
+      "_get_properties",
+      "_has_abstract_methods",
+      "_infer_dunder_doc_attribute",
+      "_is_multi_naming_match",
+      "_is_one_arg_pos_call",
+      "_loop_exits_early",
+      "_redefines_import",
+      "in_loop",
+      "in_nested_list",
+      "redefined_by_decorator",
+      "register",
+      "report_by_type_stats"
+    ],
+    "pylint.checkers": [
+      "initialize",
+      "table_lines_from_stats"
+    ],
+    "pylint.checkers.base_checker": [
+      "BaseChecker",
+      "BaseTokenChecker"
+    ],
+    "pylint.checkers.variables": [
+      "NamesConsumer",
+      "VariablesChecker",
+      "_assigned_locally",
+      "_detect_global_scope",
+      "_find_frame_imports",
+      "_fix_dot_imports",
+      "_flattened_scope_names",
+      "_get_unpacking_extra_info",
+      "_has_locals_call_after_node",
+      "_import_name_is_global",
+      "_infer_name_module",
+      "_is_from_future_import",
+      "_is_type_checking_import",
+      "in_for_else_branch",
+      "overridden_method",
+      "register"
+    ]
+  },
+  "test_example_snippet": "class TestVariablesChecker(CheckerTestCase):\n\n    CHECKER_CLASS = variables.VariablesChecker\n\n    def test_bitbucket_issue_78(self):\n        \"\"\"Issue 78 report a false positive for unused-module\"\"\"\n        module = astroid.parse(\n            \"\"\"\n        from sys import path\n        path += ['stuff']\n        def func():\n            other = 1\n            return len(other)\n        \"\"\"\n        )\n        with self.assertNoMessages():\n            self.walk(module)\n\n    @set_config(ignored_modules=(\"argparse\",))\n    def test_no_name_in_module_skipped(self):\n        \"\"\"Make sure that 'from ... import ...' does not emit a\n        'no-name-in-module' with a module that is configured\n        to be ignored.\n        \"\"\"\n\n        node = astroid.extract_node(\n            \"\"\"\n        from argparse import THIS_does_not_EXIST\n        \"\"\"\n        )\n        with self.assertNoMessages():\n            self.checker.visit_importfrom(node)\n\n    def test_all_elements_without_parent(self):\n        node = astroid.extract_node(\"__all__ = []\")",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

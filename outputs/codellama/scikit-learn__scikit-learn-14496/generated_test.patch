@@ -1,0 +1,16 @@
+--- a/sklearn/neighbors/tests/test_nearest_centroid.py
++++ b/sklearn/neighbors/tests/test_nearest_centroid.py
+@@ -146,3 +146,13 @@
+     clf.fit(X_csr, y)
+     assert_array_equal(clf.centroids_, dense_centroid)
+     assert_array_equal(dense_centroid, [[-1, -1], [1, 1]])
++
++from sklearn.cluster.optics_ import OPTICS
++datasets = datasets.load_iris()
++def test_optics_min_samples_float_repro():
++    data = datasets.data
++    clust = OPTICS(metric='minkowski', n_jobs=-1, min_samples=0.1)
++    clust.fit(data)
++    assert isinstance(clust.core_sample_indices_, np.ndarray)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(clust) != "TypeError: n_neighbors does not take <class 'numpy.float64'> value, enter integer value"

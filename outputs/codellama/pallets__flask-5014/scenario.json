@@ -1,0 +1,60 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/flask/app.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/test_cli.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "It would be helpful if a `ValueError` was raised when trying to do that.",
+    "relevant_source_files": [
+      "src/flask/app.py",
+      "src/flask/helpers.py",
+      "src/flask/scaffold.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_cli.py",
+      "tests/test_helpers.py",
+      "tests/test_apps/cliapp/app.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

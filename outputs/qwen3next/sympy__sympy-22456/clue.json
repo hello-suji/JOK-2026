@@ -1,0 +1,30 @@
+{
+  "instance_id": "sympy__sympy-22456",
+  "observed_behavior": [
+    "Currently, the `codegen.ast` `String` class does not support argument invariance like:",
+    "`expr.func(*expr.args) == expr`, but instead uses the invariance `expr.func(**expr.kwargs()) == expr`."
+  ],
+  "expected_behavior": [
+    "The former should hold for any `Basic` subclass, which `String` is."
+  ],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "func",
+      "kwargs"
+    ],
+    "classes": [
+      "Basic",
+      "String"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Argument invariance of codegen.ast String\nCurrently, the `codegen.ast` `String` class does not support argument invariance like:\n`expr.func(*expr.args) == expr`, but instead uses the invariance `expr.func(**expr.kwargs()) == expr`.\nThe former should hold for any `Basic` subclass, which `String` is.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-14434",
+    "model_patch": "--- a/tests/apps/models.py\n+++ b/tests/apps/models.py\n@@ -15,3 +15,14 @@\n\n     class Meta:\n         apps = new_apps\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.models import Table, Index, CharField\n+\n+class TestUniqueSQLCreation(TestCase):\n+    def test_create_unique_sql_with_table_instance_repro(self):\n+        table = Table('my_table')\n+        column = CharField()\n+        index = Index(fields=['name'], name='unique_name')\n+        sql_creation = index.create_sql(table, None)\n+        self.assertIn('UNIQUE', sql_creation)\n",
+    "patch_sha256": "caa1191b48fdb6313316ba51b08aba006d0d6eeb2b8687c8b47bc76a36583f3f"
+  }
+]

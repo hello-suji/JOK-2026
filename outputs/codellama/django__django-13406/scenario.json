@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "<module>",
+      "related_classes": [
+        "CharField",
+        "JetBrains",
+        "NoneType"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/test_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where <module> can be called."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Normally, the result of the query is and should be a list of dicts, but in this case instances of the model are returned, but their internal state is broken and it is impossible to even access their .id because of a AttributeError: 'NoneType' object has no attribute 'attname' error.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/query_utils.py",
+      "django/contrib/admin/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/contenttypes_tests/test_models.py",
+      "tests/forms_tests/field_tests/test_typedchoicefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "AttributeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_check_parent_chain",
+        "annotate",
+        "create",
+        "dumps",
+        "loads",
+        "values",
+        "values_list"
+      ],
+      "classes": [
+        "CharField",
+        "JetBrains",
+        "NoneType",
+        "PositiveIntegerField",
+        "PyCharm2020"
+      ],
+      "files": [
+        "2/scratches/scratch_20.py",
+        "6/site-packages/django/db/models/base.py",
+        "6/site-packages/django/db/models/query.py",
+        "6/site-packages/django/db/models/query_utils.py",
+        "models.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

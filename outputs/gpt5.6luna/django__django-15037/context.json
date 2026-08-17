@@ -1,0 +1,385 @@
+{
+  "instance_id": "django__django-15037",
+  "repo": "django/django",
+  "base_commit": "dab48b7482295956973879d15bfd4d3bb0718772",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/management/commands/inspectdb.py",
+      "score": 17,
+      "matched_identifiers": [
+        "constraint",
+        "create",
+        "description",
+        "field"
+      ],
+      "reasons": [
+        "stem_in_issue_text:inspectdb",
+        "source_content_tokens:constraint,create,description,field,foreign"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle",
+        "Command.handle_inspection",
+        "Command.normalize_col_name",
+        "Command.get_field_type",
+        "Command.get_meta"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "create",
+        "field",
+        "generated",
+        "other"
+      ],
+      "reasons": [
+        "source_content_tokens:create,field,generated,other,primary"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "create",
+        "description",
+        "field",
+        "foreign"
+      ],
+      "reasons": [
+        "source_content_tokens:create,description,field,foreign,handled"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "create",
+        "description",
+        "field",
+        "foreign"
+      ],
+      "reasons": [
+        "source_content_tokens:create,description,field,foreign,handled"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_spawns_duplicates",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 16,
+      "matched_identifiers": [
+        "constraint",
+        "create",
+        "field",
+        "other"
+      ],
+      "reasons": [
+        "source_content_tokens:constraint,create,field,other,primary"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:options",
+        "token_overlap:commands,management,options",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "internal_name_overlap:global",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_module/__main__.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:main",
+        "token_overlap:main",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_module/main_module.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:main",
+        "token_overlap:main",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_utils.py:unittest_or_django_test_import",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2717,
+  "indexed_test_file_count": 1854,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango50Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.sitemaps_tests.test_utils": [
+      "PingGoogleTests"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.admin_scripts.management.commands.suppress_base_options_command": [
+      "Command"
+    ],
+    "tests.utils_tests.test_module": [
+      "SiteMock"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_spawns_duplicates",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.inspectdb": [
+      "Command"
+    ]
+  },
+  "test_example_snippet": "    def test_something(self, urlopen):\n        ping_google()\n        params = urlencode({'sitemap': 'https://example.com/sitemap-without-entries/sitemap.xml'})\n        full_url = 'https://www.google.com/webmasters/tools/ping?%s' % params\n        urlopen.assert_called_with(full_url)\n\n    @override_settings(ROOT_URLCONF='sitemaps_tests.urls.sitemap_only')\n    def test_get_sitemap_full_url_global(self):\n        self.assertEqual(_get_sitemap_full_url(None), 'https://example.com/sitemap-without-entries/sitemap.xml')\n\n    @override_settings(ROOT_URLCONF='sitemaps_tests.urls.index_only')\n    def test_get_sitemap_full_url_index(self):\n        self.assertEqual(_get_sitemap_full_url(None), 'https://example.com/simple/index.xml')\n\n    @override_settings(ROOT_URLCONF='sitemaps_tests.urls.empty')\n    def test_get_sitemap_full_url_not_detected(self):\n        msg = \"You didn't provide a sitemap_url, and the sitemap URL couldn't be auto-detected.\"\n        with self.assertRaisesMessage(SitemapNotFound, msg):\n            _get_sitemap_full_url(None)\n\n    def test_get_sitemap_full_url_exact_url(self):\n        self.assertEqual(_get_sitemap_full_url('/foo.xml'), 'https://example.com/foo.xml')\n\n    def test_get_sitemap_full_url_insecure(self):\n        self.assertEqual(\n            _get_sitemap_full_url('/foo.xml', sitemap_uses_https=False),\n            'http://example.com/foo.xml'\n        )\n\n    @modify_settings(INSTALLED_APPS={'remove': 'django.contrib.sites'})\n    def test_get_sitemap_full_url_no_sites(self):\n        msg = \"ping_google requires django.contrib.sites, which isn't installed.\"\n        with self.assertRaisesMessage(ImproperlyConfigured, msg):\n            _get_sitemap_full_url(None)",
+  "conftest_fixtures": {}
+}

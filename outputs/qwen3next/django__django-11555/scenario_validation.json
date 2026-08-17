@@ -1,0 +1,97 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:order_by",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/db/models/query.py",
+          "target_function": "order_by",
+          "related_classes": [
+            "OrderBy"
+          ],
+          "candidate_test_file": "tests/queries/test_query.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "from django.db import models",
+          "from django.test import TestCase",
+          "from django.db.models import F",
+          "class ParentModel(models.Model): pass",
+          "class ChildModel(ParentModel): pass",
+          "ParentModel.objects.create()",
+          "ChildModel.objects.create()"
+        ],
+        "execution_stimulus": [
+          "queryset = ParentModel.objects.order_by(F('id').asc())"
+        ],
+        "expected_failure": "The queryset raises an exception because the field is an OrderBy object, not a string, during get_order_dir.",
+        "relevant_source_files": [
+          "django/db/models/query.py",
+          "django/db/models/expressions.py",
+          "django/db/models/sql/query.py"
+        ],
+        "relevant_test_files": [
+          "tests/auth_tests/test_checks.py",
+          "tests/contenttypes_tests/test_checks.py",
+          "tests/modeladmin/test_checks.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_order_by_with_expression_fails():\n    from django.db import models\n    from django.test import TestCase\n    from django.db.models import F\n    class ParentModel(models.Model): pass\n    class ChildModel(ParentModel): pass\n    ParentModel.objects.create()\n    ChildModel.objects.create()\n    with TestCase().assertRaises(Exception):\n        queryset = ParentModel.objects.order_by(F('id').asc())"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [
+          "OrderBy object",
+          "get_order_dir"
+        ],
+        "identifiers": {
+          "functions": [
+            "order_by"
+          ],
+          "classes": [
+            "OrderBy"
+          ]
+        },
+        "oracle_hints": [
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

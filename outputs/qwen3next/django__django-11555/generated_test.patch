@@ -1,0 +1,12 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -106,3 +106,9 @@
+         self.assertIsInstance(b_isnull, RelatedIsNull)
+         self.assertIsInstance(b_isnull.lhs, SimpleCol)
+         self.assertEqual(b_isnull.lhs.target, ObjectC._meta.get_field('objectb'))
++
++from django.test import TestCase, SimpleTestCase
++class TestMultiTableInheritanceOrdering(SimpleTestCase):
++    def test_order_by_with_expression_fails_repro(self):
++        queryset = Author.objects.order_by(F('num').asc())
++        self.assertIsInstance(queryset, Query)

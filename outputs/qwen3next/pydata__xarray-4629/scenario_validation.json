@@ -1,0 +1,98 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name is semantically aligned with target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:merge",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "xarray/core/merge.py",
+          "target_function": "merge",
+          "related_classes": [
+            "Dataset"
+          ],
+          "candidate_test_file": "xarray/tests/test_merge.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "import xarray as xr",
+          "xds1 = xr.Dataset(attrs={'a': 'b'})",
+          "xds2 = xr.Dataset(attrs={'a': 'c'})"
+        ],
+        "execution_stimulus": [
+          "xds3 = xr.merge([xds1, xds2], combine_attrs='override')",
+          "xds3.attrs['a'] = 'd'"
+        ],
+        "expected_failure": "Changing the attribute 'a' in xds3 also changes the attribute 'a' in xds1",
+        "relevant_source_files": [
+          "xarray/core/merge.py",
+          "xarray/core/dataset.py",
+          "xarray/core/coordinates.py"
+        ],
+        "relevant_test_files": [
+          "xarray/tests/test_merge.py",
+          "xarray/tests/test_dataset.py",
+          "xarray/tests/test_backends.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_merge_override_attrs_reference_bug():\n    import xarray as xr\n    xds1 = xr.Dataset(attrs={'a': 'b'})\n    xds2 = xr.Dataset(attrs={'a': 'c'})\n    xds3 = xr.merge([xds1, xds2], combine_attrs='override')\n    xds3.attrs['a'] = 'd'\n    assert xds1.attrs['a'] == 'd'"
+          }
+        ],
+        "expected_outputs": [
+          "d"
+        ],
+        "actual_outputs": [
+          "d"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "merge"
+          ],
+          "classes": [
+            "Dataset"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

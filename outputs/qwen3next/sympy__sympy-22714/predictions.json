@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-22714",
+    "model_patch": "--- a/sympy/physics/vector/tests/test_point.py\n+++ b/sympy/physics/vector/tests/test_point.py\n@@ -309,3 +309,12 @@\n     P1.set_pos(P, A.x+N.x)\n     P1.set_vel(A, 10*A.x)\n     assert P1.vel(N) == 5*N.x + 10*A.x\n+\n+from sympy import S, Integer\n+\n+def test_parse_expr_with_evaluate_false_repro():\n+    with S.evaluate(False):\n+        point_expr = S('Point2D(Integer(1),Integer(2))')\n+        assert point_expr != None\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(point_expr) != 'ValueError: Imaginary coordinates are not permitted.'\n",
+    "patch_sha256": "82c818026e7dbf8203683b80bd4bdb1be3c3c83a8932a8022bbc65c3170d3284"
+  }
+]

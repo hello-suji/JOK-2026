@@ -1,0 +1,116 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/builders/__init__.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Add",
+        "Aug",
+        "DS_Store",
+        "Sphinx"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls unittest, tempfile, abspath, mkdtemp.",
+      "Use the generated reproduction path that calls abspath, unittest, tempfile, mkdtemp."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, tempfile, abspath, mkdtemp.",
+      "Execute the focused target API path: abspath, unittest, tempfile, mkdtemp."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/builders/__init__.py",
+      "sphinx/builders/html/__init__.py",
+      "sphinx/domains/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nimport tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.util.osutil import abspath\n\nclass TestSphinxInitialization(unittest.TestCase):\n    def test_sphinx_initialization_repro(self):\n        \"\"\"Test basic initialization of Sphinx.\"\"\"\n        srcdir = tempfile.mkdtemp()\n        confdir = srcdir\n        outdir = tempfile.mkdtemp()\n        doctreedir = tempfile.mkdtemp()\n        buildername = 'html'\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        self.assertIsNotNone(app)"
+      },
+      {
+        "language": "py",
+        "code": "class Square:\n    \"\"\"A class representing a square figure.\"\"\"\n\n    def __init__(self, width: int, height: int) -> None:\n        self.width = width\n        self.height = height"
+      },
+      {
+        "language": "python",
+        "code": "$ git clone https://github.com/jack1142/sphinx-issue-9575\n$ cd sphinx-issue-9575\n$ pip install sphinx\n$ cd docs\n$ make html\n$ # open _build/html/index.html and see the issue"
+      },
+      {
+        "language": "py",
+        "code": "class Square:\n    \"\"\"A class representing a square figure.\"\"\"\n\n    def __init__(self, width: int, height: int) -> None:\n        self.width = width\n        self.height = height"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "abspath",
+        "insert",
+        "unittest",
+        "tempfile",
+        "mkdtemp"
+      ],
+      "classes": [
+        "Add",
+        "Aug",
+        "DS_Store",
+        "Indices",
+        "Jakub",
+        "Kuczys",
+        "Project",
+        "Sphinx",
+        "Square",
+        "Tue"
+      ],
+      "files": [
+        "docs/conf.py",
+        "sample_package/__init__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/builders/__init__.py",
+      "test_visible_functions": [
+        "abspath",
+        "unittest",
+        "tempfile",
+        "mkdtemp"
+      ],
+      "test_visible_classes": [
+        "Sphinx"
+      ]
+    }
+  }
+]

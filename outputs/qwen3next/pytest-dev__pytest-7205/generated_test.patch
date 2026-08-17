@@ -1,0 +1,20 @@
+--- a/testing/python/show_fixtures_per_test.py
++++ b/testing/python/show_fixtures_per_test.py
+@@ -178,3 +178,17 @@
+     assert result.ret == 0
+
+     result.stdout.fnmatch_lines(["*collected 2 items*"])
++
++def test_bytes_warning_in_show_fixture_action_repro(pytester: Pytester) -> None:
++    pytester.makepyfile(
++        """
++        import pytest
++        @pytest.mark.parametrize('data', [b'Hello World'])
++        def test_data_repro(data):
++            pass
++        """
++    )
++    result = pytester.runpytest('-bb', '--setup-show')
++    assert result.ret == 0
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'BytesWarning: str() on a bytes instance'

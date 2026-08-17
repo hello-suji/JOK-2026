@@ -1,0 +1,20 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,17 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++from typing import Tuple
++
++class TestEmptyTupleAnnotation(unittest.TestCase):
++    def test_empty_tuple_annotation_repro(self):
++        """Test that an empty tuple annotation does not raise IndexError."""
++        def foo() -> Tuple[()]:
++            """Sample text."""
++            return ()
++        result = foo()
++        self.assertEqual(result, ())
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(result) != 'IndexError: pop from empty list'

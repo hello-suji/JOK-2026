@@ -1,0 +1,9 @@
+{
+  "instance_id": "django__django-16899",
+  "failure_type": "NO_COVERAGE",
+  "iterations": 1,
+  "payload": {
+    "instance_id": "django__django-16899",
+    "failure_type": "NO_COVERAGE"
+  }
+}

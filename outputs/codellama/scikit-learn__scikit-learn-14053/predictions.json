@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-14053",
+    "model_patch": "--- a/sklearn/tree/tests/test_export.py\n+++ b/sklearn/tree/tests/test_export.py\n@@ -433,3 +433,14 @@\n                                    \"samples = 6\\nvalue = [3, 3]\")\n     assert nodes[1].get_text() == \"gini = 0.0\\nsamples = 3\\nvalue = [3, 0]\"\n     assert nodes[2].get_text() == \"gini = 0.0\\nsamples = 3\\nvalue = [0, 3]\"\n+\n+def test_export_text_single_feature_repro():\n+    X, y = load_iris(return_X_y=True)\n+    X = X[:, 0].reshape(-1, 1)\n+\n+    tree = DecisionTreeClassifier()\n+    tree.fit(X, y)\n+    tree_text = export_text(tree, feature_names=['sepal_length'])\n+    assert isinstance(tree_text, str)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(tree_text) != 'IndexError: list index out of range'\n",
+    "patch_sha256": "1b5c7f6c7431507c2516cc7bbda8b78a774c85e957fd7f4c28460f6a797609e9"
+  }
+]

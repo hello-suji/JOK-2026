@@ -1,0 +1,18 @@
+--- a/tests/forms_tests/field_tests/test_base.py
++++ b/tests/forms_tests/field_tests/test_base.py
+@@ -40,3 +40,15 @@
+     def test_disabled_field_has_changed_always_false_gate(self):
+         disabled_field = Field(disabled=True)
+         self.assertFalse(disabled_field.has_changed('x', 'y'))
++
++from django.forms.fields import CharField
++from django.test import SimpleTestCase
++
++class TestCharFieldHashImmutability(SimpleTestCase):
++    def test_charfield_hash_change_repro(self):
++        f = CharField(max_length=200)
++        initial_hash = hash(f)
++        d = {f: 1}
++        final_hash = hash(f)
++        self.assertEqual(initial_hash, final_hash)
++        self.assertIn(f, d)

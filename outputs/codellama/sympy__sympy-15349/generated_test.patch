@@ -1,0 +1,14 @@
+--- a/sympy/algebras/tests/test_quaternion.py
++++ b/sympy/algebras/tests/test_quaternion.py
+@@ -120,3 +120,11 @@
+                [sin(theta),  cos(theta), 0, -sin(theta) - cos(theta) + 1],
+                [0,           0,          1,  0],
+                [0,           0,          0,  1]])
++
++def test_quaternion_to_rotation_matrix_bug_repro():
++    x = symbols('x')
++    q = Quaternion(cos(x/2), sin(x/2), 0, 0)
++    result = trigsimp(q.to_rotation_matrix())
++    assert result == Matrix([[1, 0, 0], [0, cos(x), -sin(x)], [0, sin(x), cos(x)]])
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "['1', '0', '0']"

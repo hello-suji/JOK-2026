@@ -1,0 +1,34 @@
+--- a/tests/roots/test-ext-intersphinx-cppdomain/conf.py
++++ b/tests/roots/test-ext-intersphinx-cppdomain/conf.py
+@@ -1 +1,31 @@
+ extensions = ['sphinx.ext.intersphinx']
++
++import unittest
++import tempfile
++import os
++from sphinx.application import Sphinx
++from sphinx.ext.autodoc import DocumenterBridge
++from sphinx.ext.autodoc.typehints import setup
++
++class TestAutodocTypeHints(unittest.TestCase):
++    def test_none_typehint_description_repro(self):
++        with tempfile.TemporaryDirectory() as tmpdir:
++            srcdir = os.path.join(tmpdir, 'src')
++            confdir = os.path.join(tmpdir, 'conf')
++            outdir = os.path.join(tmpdir, 'out')
++            doctreedir = os.path.join(tmpdir, 'doctrees')
++            os.makedirs(srcdir)
++            os.makedirs(confdir)
++
++            with open(os.path.join(srcdir, 'type_hint_test.py'), 'w') as f:
++                f.write('def f1() -> None: return None\ndef f2() -> int: return 42\n')
++
++            with open(os.path.join(confdir, 'conf.py'), 'w') as f:
++                f.write('extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx"]\nintersphinx_mapping = {"python": ("https://docs.python.org/3", None)}\nautodoc_typehints = "description"\n')
++
++            app = Sphinx(srcdir, confdir, outdir, doctreedir, 'html')
++            app.build()
++
++            doctree = app.env.get_doctree('type_hint_test')
++            none_link = doctree.traverse(nodes.reference)[0]['refuri']
++            self.assertEqual(none_link, 'https://docs.python.org/3/library/constants.html#None')

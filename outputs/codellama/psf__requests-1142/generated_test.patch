@@ -1,0 +1,11 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -282,3 +282,8 @@
+
+ if __name__ == '__main__':
+     unittest.main()
++
++def test_get_request_without_content_length_header_repro():
++    req = requests.Request('GET', 'http://example.com')
++    prepared = req.prepare()
++    assert 'Content-Length' not in prepared.headers

@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/models.py",
+      "target_function": "_",
+      "related_classes": [
+        "CharField",
+        "ExampleModel"
+      ],
+      "candidate_test_file": "tests/field_defaults/tests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where _ can be called.",
+      "Use the generated reproduction path that calls models, _.",
+      "Use the generated reproduction path that calls _, models."
+    ],
+    "execution_stimulus": [
+      "Call _ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: models, _.",
+      "Execute the focused target API path: _, models."
+    ],
+    "expected_failure": "Migrations uses value of enum object instead of its name.",
+    "relevant_source_files": [
+      "django/contrib/admin/models.py",
+      "django/contrib/auth/models.py",
+      "django/contrib/contenttypes/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/field_defaults/tests.py",
+      "tests/distinct_on_fields/models.py",
+      "tests/field_defaults/models.py",
+      "tests/update_only_fields/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.db import models\nfrom django.utils.translation import gettext_lazy as _\n\n\nclass TestCharFieldDefaultValue(TestCase):\n    def test_charfield_default_value_with_translation_repro(self):\n        # Assuming there's an existing model with CharField in the test suite\n        instance = ExampleModel()\n        # Assert that the default value is correctly assigned\n        self.assertEqual(instance.char_field, _('Default Value'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_",
+        "__str__",
+        "models"
+      ],
+      "classes": [
+        "CharField",
+        "ExampleModel"
+      ],
+      "files": [
+        "models.py"
+      ],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/field_defaults/tests.py",
+      "target_source_file": "django/contrib/admin/models.py",
+      "test_visible_functions": [
+        "_",
+        "models"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "ExampleModel"
+      ]
+    }
+  }
+]

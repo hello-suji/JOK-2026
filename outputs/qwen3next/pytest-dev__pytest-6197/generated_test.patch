@@ -1,0 +1,14 @@
+--- a/doc/en/example/costlysetup/conftest.py
++++ b/doc/en/example/costlysetup/conftest.py
+@@ -18,3 +18,11 @@
+
+     def finalize(self):
+         del self.timecostly
++
++def test_issue_6197_repro(pytester):
++    foobar_dir = pytester.mkpydir('foobar')
++    foobar_init = foobar_dir.join('__init__.py')
++    foobar_init.write('assert False')
++
++    result = pytester.runpytest()
++    assert result.ret == 0

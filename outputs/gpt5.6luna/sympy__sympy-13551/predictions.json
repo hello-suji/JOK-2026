@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-13551",
+    "model_patch": "--- a/sympy/physics/vector/tests/test_dyadic.py\n+++ b/sympy/physics/vector/tests/test_dyadic.py\n@@ -81,3 +81,10 @@\n     test4 = ((-4 * x * y**2 - 2 * y**3 - 2 * x**2 * y) / (x + y)**2) * dy\n     test4 = test4.simplify()\n     assert (N.x & test4 & N.x) == -2 * y\n+\n+from sympy import symbols, Product, simplify\n+\n+def test_product_incorrect_expression_repro():\n+    n, k = symbols('n k')\n+    p = Product(n + 1 / 2**k, [k, 0, n-1]).doit()\n+    assert simplify(p.subs(n, 2)) == 15/2\n",
+    "patch_sha256": "76b3e8e36476a836882de5e8ae4ffcb60c2450d68cdd9d28aed91b7c29d009b0"
+  }
+]

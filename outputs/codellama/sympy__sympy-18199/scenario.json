@@ -1,0 +1,73 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/solvers/solveset.py",
+      "target_function": "nthroot_mod",
+      "related_classes": [],
+      "candidate_test_file": "sympy/solvers/tests/test_diophantine.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where nthroot_mod can be called.",
+      "Use the generated reproduction path that calls nthroot_mod."
+    ],
+    "execution_stimulus": [
+      "Call nthroot_mod with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: nthroot_mod."
+    ],
+    "expected_failure": "When in the equation x**n = a mod p , when a % p == 0. Then x = 0 mod p is also a root of this equation. But right now `nthroot_mod` does not check for this condition. `nthroot_mod(17*17, 5 , 17)` has a root `0 mod 17`. But it does not return it.",
+    "relevant_source_files": [
+      "sympy/solvers/solveset.py",
+      "sympy/ntheory/residue_ntheory.py",
+      "sympy/core/numbers.py"
+    ],
+    "relevant_test_files": [
+      "sympy/solvers/tests/test_diophantine.py",
+      "sympy/solvers/tests/test_solveset.py",
+      "sympy/core/tests/test_numbers.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.ntheory.residue_ntheory import nthroot_mod\n\ndef test_nthroot_mod_zero_root_repro():\n    roots = nthroot_mod(17*17, 5, 17)\n    assert 0 in roots"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "nthroot_mod"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/solvers/tests/test_diophantine.py",
+      "target_source_file": "sympy/solvers/solveset.py",
+      "test_visible_functions": [
+        "nthroot_mod"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

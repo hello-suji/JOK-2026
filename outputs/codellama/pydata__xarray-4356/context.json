@@ -1,0 +1,572 @@
+{
+  "instance_id": "pydata__xarray-4356",
+  "repo": "pydata/xarray",
+  "base_commit": "e05fddea852d08fc0845f954b79deb9e9f9ff883",
+  "repo_path": "data/repos/pydata__xarray",
+  "candidate_source_files": [
+    {
+      "path": "xarray/core/nanops.py",
+      "score": 37,
+      "matched_identifiers": [
+        "axis",
+        "count",
+        "mask",
+        "min_count",
+        "xarray/core/nanops.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:xarray/core/nanops.py",
+        "stem_in_issue_text:nanops",
+        "source_content_tokens:axis,count,mask,min_count,prod"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "nanmin",
+        "nanmax",
+        "nanargmin",
+        "nanargmax",
+        "nansum",
+        "nanmean",
+        "nanmedian",
+        "nanvar",
+        "nanstd",
+        "nanprod",
+        "nancumsum",
+        "nancumprod"
+      ]
+    },
+    {
+      "path": "xarray/core/dataarray.py",
+      "score": 23,
+      "matched_identifiers": [
+        "DataArray",
+        "axis",
+        "dim_0",
+        "dim_1",
+        "mask"
+      ],
+      "reasons": [
+        "class_match:DataArray",
+        "path_contains_class:DataArray",
+        "stem_in_issue_text:dataarray",
+        "source_content_tokens:axis,dim_0,dim_1,mask,prod"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "DataArray": "class DataArray(AbstractArray, DataWithCoords):\n    \"\"\"N-dimensional array with labeled coordinates and dimensions.\n\n    DataArray provides a wrapper around numpy ndarrays that uses labeled\n    dimensions and coordinates to support metadata aware operations. The API is\n    similar to that for the pandas Series or DataFrame, but DataArray objects\n    can have any number of dimensions, and their contents have fixed data\n    types.\n\n    Additional features over raw numpy arrays:\n\n    - Apply operations over dimensions by name: ``x.sum('time')``.\n    - Select or assign values by integer location (like numpy): ``x[:10]``\n      or by label (like pandas): ``x.loc['2014-01-01']`` or\n      ``x.sel(time='2014-01-01')``."
+      },
+      "top_level_functions": [
+        "DataArray.to_dataset",
+        "DataArray.name",
+        "DataArray.variable",
+        "DataArray.dtype",
+        "DataArray.shape",
+        "DataArray.size",
+        "DataArray.nbytes",
+        "DataArray.ndim",
+        "DataArray.data",
+        "DataArray.values",
+        "DataArray.to_index",
+        "DataArray.dims",
+        "DataArray.loc",
+        "DataArray.attrs",
+        "DataArray.encoding",
+        "DataArray.indexes",
+        "DataArray.coords",
+        "DataArray.reset_coords",
+        "DataArray.load",
+        "DataArray.compute",
+        "DataArray.persist",
+        "DataArray.copy",
+        "DataArray.chunks",
+        "DataArray.chunk",
+        "DataArray.isel",
+        "DataArray.sel",
+        "DataArray.head",
+        "DataArray.tail",
+        "DataArray.thin",
+        "DataArray.broadcast_like",
+        "DataArray.reindex_like",
+        "DataArray.reindex",
+        "DataArray.interp",
+        "DataArray.interp_like",
+        "DataArray.rename",
+        "DataArray.swap_dims",
+        "DataArray.expand_dims",
+        "DataArray.set_index",
+        "DataArray.reset_index",
+        "DataArray.reorder_levels"
+      ]
+    },
+    {
+      "path": "xarray/core/weighted.py",
+      "score": 21,
+      "matched_identifiers": [
+        "additional",
+        "calculate",
+        "count",
+        "mask",
+        "sum"
+      ],
+      "reasons": [
+        "function_match:sum",
+        "source_content_tokens:count,mask,additional,calculate,dataarray"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "sum": "    def sum(\n        self,\n        dim: Optional[Union[Hashable, Iterable[Hashable]]] = None,\n        skipna: Optional[bool] = None,\n        keep_attrs: Optional[bool] = None,\n    ) -> Union[\"DataArray\", \"Dataset\"]:\n\n        return self._implementation(\n            self._weighted_sum, dim=dim, skipna=skipna, keep_attrs=keep_attrs\n        )\n\n    def mean(\n        self,\n        dim: Optional[Union[Hashable, Iterable[Hashable]]] = None,\n        skipna: Optional[bool] = None,"
+      },
+      "top_level_functions": [
+        "Weighted.sum_of_weights",
+        "Weighted.sum",
+        "Weighted.mean"
+      ]
+    },
+    {
+      "path": "doc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "additional",
+        "available",
+        "context",
+        "mask"
+      ],
+      "reasons": [
+        "source_content_tokens:mask,additional,available,context,dataarray"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "xarray/backends/api.py",
+      "score": 16,
+      "matched_identifiers": [
+        "additional",
+        "mask",
+        "prod",
+        "take"
+      ],
+      "reasons": [
+        "source_content_tokens:mask,prod,take,additional,available"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "load_dataset",
+        "load_dataarray",
+        "open_dataset",
+        "open_dataarray",
+        "_MultiFileCloser.close",
+        "open_mfdataset",
+        "to_netcdf",
+        "dump_to_store",
+        "save_mfdataset",
+        "to_zarr"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "xarray/tests/test_dataarray.py",
+      "score": 30,
+      "matched_identifiers": [
+        "DataArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DataArray",
+        "same_module_area:xarray",
+        "same_module_area:xarray",
+        "test_name_matches_source_stem:dataarray",
+        "token_overlap:array,data,dataarray,xarray",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "xarray/tests/test_weighted.py",
+      "score": 28,
+      "matched_identifiers": [
+        "DataArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DataArray",
+        "same_module_area:xarray",
+        "same_module_area:xarray",
+        "test_name_matches_source_stem:weighted",
+        "token_overlap:array,weighted,xarray",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "xarray/tests/test_backends_api.py",
+      "score": 26,
+      "matched_identifiers": [
+        "DataArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DataArray",
+        "same_module_area:xarray",
+        "same_module_area:xarray",
+        "test_name_matches_source_stem:api",
+        "token_overlap:array,backends,xarray",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "xarray/tests/test_backends.py",
+      "score": 22,
+      "matched_identifiers": [
+        "DataArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DataArray",
+        "same_module_area:xarray",
+        "same_module_area:xarray",
+        "token_overlap:array,backends,xarray",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "xarray/tests/test_backends_common.py",
+      "score": 22,
+      "matched_identifiers": [
+        "DataArray"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DataArray",
+        "same_module_area:xarray",
+        "same_module_area:xarray",
+        "token_overlap:array,backends,xarray",
+        "internal_name_overlap:array",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "xarray/tests/test_weighted.py:pytest_import_or_conftest",
+      "xarray/tests/test_weighted.py:top_level_test_functions",
+      "xarray/tests/test_backends_api.py:pytest_import_or_conftest",
+      "xarray/tests/test_backends_api.py:top_level_test_functions",
+      "xarray/tests/test_backends.py:pytest_import_or_conftest",
+      "xarray/tests/test_backends.py:top_level_test_functions",
+      "xarray/tests/test_backends.py:testcase_class:TestCfGrib",
+      "xarray/tests/test_backends.py:testcase_class:TestCommon",
+      "xarray/tests/test_backends.py:testcase_class:TestDask",
+      "xarray/tests/test_backends.py:testcase_class:TestDataArrayToNetCDF",
+      "xarray/tests/test_backends.py:testcase_class:TestEncodingInvalid",
+      "xarray/tests/test_backends.py:testcase_class:TestGenericNetCDFData",
+      "xarray/tests/test_backends.py:testcase_class:TestH5NetCDFData",
+      "xarray/tests/test_backends.py:testcase_class:TestH5NetCDFFileObject",
+      "xarray/tests/test_backends.py:testcase_class:TestH5NetCDFViaDaskData",
+      "xarray/tests/test_backends.py:testcase_class:TestNetCDF3ViaNetCDF4Data",
+      "xarray/tests/test_backends.py:testcase_class:TestNetCDF4ClassicViaNetCDF4Data",
+      "xarray/tests/test_backends.py:testcase_class:TestNetCDF4Data",
+      "xarray/tests/test_backends.py:testcase_class:TestNetCDF4ViaDaskData",
+      "xarray/tests/test_backends.py:testcase_class:TestOpenMFDatasetWithDataVarsAndCoordsKw"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 146,
+  "indexed_test_file_count": 50,
+  "available_imports": {
+    "xarray": [
+      "ALL_DIMS",
+      "AbstractDataStore",
+      "CFTimeIndex",
+      "CachingFileManager",
+      "CfGribDataStore",
+      "Coordinate",
+      "DataArray",
+      "Dataset",
+      "DummyFileManager",
+      "ExplicitlyIndexed",
+      "FileManager",
+      "H5NetCDFStore",
+      "InMemoryDataStore",
+      "IndexVariable",
+      "MergeError",
+      "NetCDF4DataStore",
+      "NioDataStore",
+      "PseudoNetCDFDataStore",
+      "PydapDataStore",
+      "ScipyDataStore",
+      "SerializationWarning",
+      "Variable",
+      "ZarrStore",
+      "__version__",
+      "align",
+      "allclose_or_equiv",
+      "apply_ufunc",
+      "as_variable",
+      "assert_array_equal",
+      "assert_duckarray_allclose",
+      "assert_duckarray_equal",
+      "assert_frame_equal",
+      "broadcast",
+      "cftime_range",
+      "combine_by_coords",
+      "combine_nested",
+      "concat",
+      "contextmanager",
+      "corr",
+      "cov",
+      "decode_cf",
+      "dot",
+      "full_like",
+      "infer_freq",
+      "load_dataarray",
+      "load_dataset",
+      "map_blocks",
+      "merge",
+      "mock",
+      "ones_like",
+      "open_dataarray",
+      "open_dataset",
+      "open_mfdataset",
+      "open_rasterio",
+      "open_zarr",
+      "polyval",
+      "register_dataarray_accessor",
+      "register_dataset_accessor",
+      "save_mfdataset",
+      "set_options",
+      "show_versions",
+      "testing",
+      "tutorial",
+      "ufuncs",
+      "utils",
+      "version",
+      "where",
+      "zeros_like"
+    ],
+    "xarray.tests.test_weighted": [
+      "expected_weighted",
+      "test_weighted_mean_bool",
+      "test_weighted_mean_equal_weights",
+      "test_weighted_mean_nan",
+      "test_weighted_mean_no_nan",
+      "test_weighted_non_DataArray_weights",
+      "test_weighted_operations_3D",
+      "test_weighted_operations_different_shapes",
+      "test_weighted_operations_keep_attr",
+      "test_weighted_operations_keep_attr_da_in_ds",
+      "test_weighted_operations_nonequal_coords",
+      "test_weighted_sum_equal_weights",
+      "test_weighted_sum_nan",
+      "test_weighted_sum_no_nan",
+      "test_weighted_sum_of_weights_bool",
+      "test_weighted_sum_of_weights_nan",
+      "test_weighted_sum_of_weights_no_nan",
+      "test_weighted_weights_nan_raises"
+    ],
+    "xarray.tests.test_backends_api": [
+      "test__get_default_engine"
+    ],
+    "xarray.tests.test_backends": [
+      "CFEncodedBase",
+      "DatasetIOBase",
+      "MiscObject",
+      "NetCDF3Only",
+      "NetCDF4Base",
+      "TestCfGrib",
+      "TestCommon",
+      "TestDask",
+      "TestDataArrayToNetCDF",
+      "TestEncodingInvalid",
+      "TestGenericNetCDFData",
+      "TestH5NetCDFData",
+      "TestH5NetCDFFileObject",
+      "TestH5NetCDFViaDaskData",
+      "TestNetCDF3ViaNetCDF4Data",
+      "TestNetCDF4ClassicViaNetCDF4Data",
+      "TestNetCDF4Data",
+      "TestNetCDF4ViaDaskData",
+      "TestOpenMFDatasetWithDataVarsAndCoordsKw",
+      "TestPseudoNetCDFFormat",
+      "TestPyNio",
+      "TestPydap",
+      "TestPydapOnline",
+      "TestRasterio",
+      "TestScipyFileObject",
+      "TestScipyFilePath",
+      "TestScipyInMemoryData",
+      "TestValidateAttrs",
+      "TestZarrDictStore",
+      "TestZarrDirectoryStore",
+      "ZarrBase",
+      "_assert_no_dates_out_of_range_warning",
+      "chunks",
+      "create_bad_encoded_unsigned_masked_scaled_data",
+      "create_bad_unsigned_masked_scaled_data",
+      "create_boolean_data",
+      "create_encoded_masked_and_scaled_data",
+      "create_encoded_signed_masked_scaled_data",
+      "create_encoded_unsigned_masked_scaled_data",
+      "create_masked_and_scaled_data",
+      "create_signed_masked_scaled_data",
+      "create_tmp_file",
+      "create_tmp_files",
+      "create_tmp_geotiff",
+      "create_unsigned_masked_scaled_data",
+      "file_cache_maxsize",
+      "nfiles",
+      "open_example_dataset",
+      "open_example_mfdataset",
+      "parallel",
+      "readengine",
+      "skip_if_not_engine",
+      "test_encode_zarr_attr_value",
+      "test_extract_zarr_variable_encoding",
+      "test_invalid_netcdf_raises",
+      "test_no_warning_from_dask_effective_get",
+      "test_open_mfdataset_list_attr",
+      "test_open_mfdataset_manyfiles",
+      "test_source_encoding_always_present",
+      "test_use_cftime_false_nonstandard_calendar",
+      "test_use_cftime_false_standard_calendar_in_range",
+      "test_use_cftime_false_standard_calendar_out_of_range",
+      "test_use_cftime_standard_calendar_default_in_range",
+      "test_use_cftime_standard_calendar_default_out_of_range",
+      "test_use_cftime_true"
+    ],
+    "xarray.tests": [
+      "InaccessibleArray",
+      "IndexerMaker",
+      "LooseVersion",
+      "ReturnItem",
+      "UnexpectedDataAccess",
+      "_importorskip",
+      "assert_allclose",
+      "assert_equal",
+      "assert_identical",
+      "raises_regex",
+      "source_ndarray"
+    ],
+    "xarray.tests.test_dataarray": [
+      "TestDataArray",
+      "TestIrisConversion",
+      "TestReduce",
+      "TestReduce1D",
+      "TestReduce2D",
+      "TestReduce3D",
+      "TestReduceND",
+      "da",
+      "da_dask",
+      "test_delete_coords",
+      "test_isin",
+      "test_name_in_masking",
+      "test_ndrolling_construct",
+      "test_ndrolling_reduce",
+      "test_no_dict",
+      "test_raise_no_warning_for_nan_in_binary_ops",
+      "test_rolling_construct",
+      "test_rolling_count_correct",
+      "test_rolling_doc",
+      "test_rolling_exp",
+      "test_rolling_iter",
+      "test_rolling_pandas_compat",
+      "test_rolling_properties",
+      "test_rolling_reduce",
+      "test_rolling_reduce_nonnumeric",
+      "test_rolling_repr",
+      "test_rolling_wrapped_bottleneck",
+      "test_rolling_wrapped_dask",
+      "test_rolling_wrapped_dask_nochunk",
+      "test_subclass_slots",
+      "test_weakref"
+    ],
+    "xarray.tests.test_backends_common": [
+      "DummyArray",
+      "DummyFailure",
+      "test_robust_getitem"
+    ],
+    "xarray.core.weighted": [
+      "DataArrayWeighted",
+      "DatasetWeighted",
+      "Weighted",
+      "_inject_docstring"
+    ],
+    "xarray.core.dataarray": [
+      "DataArray",
+      "_LocIndexer",
+      "_check_data_shape",
+      "_infer_coords_and_dims"
+    ],
+    "xarray.core.nanops": [
+      "_maybe_null_out",
+      "_nan_argminmax_object",
+      "_nan_minmax_object",
+      "_nanmean_ddof_object",
+      "_nanvar_object",
+      "_replace_nan",
+      "nanargmax",
+      "nanargmin",
+      "nancumprod",
+      "nancumsum",
+      "nanmax",
+      "nanmean",
+      "nanmedian",
+      "nanmin",
+      "nanprod",
+      "nanstd",
+      "nansum",
+      "nanvar"
+    ],
+    "xarray.backends.api": [
+      "_MultiFileCloser",
+      "_finalize_store",
+      "_get_default_engine",
+      "_get_default_engine_grib",
+      "_get_default_engine_gz",
+      "_get_default_engine_netcdf",
+      "_get_default_engine_remote_uri",
+      "_get_engine_from_magic_number",
+      "_normalize_path",
+      "_protect_dataset_variables_inplace",
+      "_validate_append_dim_and_encoding",
+      "_validate_attrs",
+      "_validate_dataset_names",
+      "_validate_datatypes_for_zarr_append",
+      "dump_to_store",
+      "load_dataarray",
+      "load_dataset",
+      "open_dataarray",
+      "open_dataset",
+      "open_mfdataset",
+      "save_mfdataset",
+      "to_netcdf",
+      "to_zarr"
+    ]
+  },
+  "test_example_snippet": "class TestDataArray:\n    @pytest.fixture(autouse=True)\n    def setup(self):\n        self.attrs = {\"attr1\": \"value1\", \"attr2\": 2929}\n        self.x = np.random.random((10, 20))\n        self.v = Variable([\"x\", \"y\"], self.x)\n        self.va = Variable([\"x\", \"y\"], self.x, self.attrs)\n        self.ds = Dataset({\"foo\": self.v})\n        self.dv = self.ds[\"foo\"]\n\n        self.mindex = pd.MultiIndex.from_product(\n            [[\"a\", \"b\"], [1, 2]], names=(\"level_1\", \"level_2\")\n        )\n        self.mda = DataArray([0, 1, 2, 3], coords={\"x\": self.mindex}, dims=\"x\")\n\n    def test_repr(self):\n        v = Variable([\"time\", \"x\"], [[1, 2, 3], [4, 5, 6]], {\"foo\": \"bar\"})\n        coords = {\"x\": np.arange(3, dtype=np.int64), \"other\": np.int64(0)}\n        data_array = DataArray(v, coords, name=\"my_variable\")\n        expected = dedent(\n            \"\"\"\\\n            <xarray.DataArray 'my_variable' (time: 2, x: 3)>\n            array([[1, 2, 3],\n                   [4, 5, 6]])\n            Coordinates:\n              * x        (x) int64 0 1 2\n                other    int64 0\n            Dimensions without coordinates: time\n            Attributes:\n                foo:      bar\"\"\"\n        )\n        assert expected == repr(data_array)\n\n    def test_repr_multiindex(self):\n        expected = dedent(",
+  "conftest_fixtures": {
+    "conftest.py": [
+      "add_standard_imports"
+    ]
+  }
+}

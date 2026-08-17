@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-22456",
+    "model_patch": "--- a/sympy/core/tests/test_basic.py\n+++ b/sympy/core/tests/test_basic.py\n@@ -296,3 +296,12 @@\n     raises(TypeError, lambda: e.replace(b*c, c.is_real))\n     raises(TypeError, lambda: e.replace(b.is_real, 1))\n     raises(TypeError, lambda: e.replace(lambda d: d.is_Number, 1))\n+\n+import re\n+def test_string_argument_invariance_repro():\n+    from sympy.core.basic import Basic\n+    from sympy.codegen.ast import String\n+    s = String('example')\n+    reconstructed_s = s.func(*s.args, **s.kwargs)\n+    assert isinstance(reconstructed_s, String)\n+    assert reconstructed_s == s\n",
+    "patch_sha256": "c55287f4746f71cc59c79d1b173bf364a0c23fd8501020eeb146252cb98713bb"
+  }
+]

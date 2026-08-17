@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/nddata/nddata.py",
+      "target_function": "mask",
+      "related_classes": [
+        "NDDataRef",
+        "NoneType"
+      ],
+      "candidate_test_file": "astropy/nddata/tests/test_nddata_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where mask can be called.",
+      "Use the generated reproduction path that calls array, multiply.",
+      "Use the generated reproduction path that calls multiply, array."
+    ],
+    "execution_stimulus": [
+      "Call mask with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: array, multiply.",
+      "Execute the focused target API path: multiply, array."
+    ],
+    "expected_failure": "In v5.3, NDDataRef mask propagation fails when one of the operand does not have a mask",
+    "relevant_source_files": [
+      "astropy/nddata/nddata.py",
+      "astropy/convolution/core.py",
+      "astropy/convolution/kernels.py"
+    ],
+    "relevant_test_files": [
+      "astropy/nddata/tests/test_nddata_base.py",
+      "astropy/nddata/tests/test_bitmask.py",
+      "astropy/nddata/tests/test_compat.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": ">>> import numpy as np\n>>> from astropy.nddata import NDDataRef\n\n>>> array = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])\n>>> mask = np.array([[0, 1, 64], [8, 0, 1], [2, 1, 0]])\n\n>>> nref_nomask = NDDataRef(array)\n>>> nref_mask = NDDataRef(array, mask=mask)\n\n# multiply no mask by constant (no mask * no mask)\n>>> nref_nomask.multiply(1., handle_mask=np.bitwise_or).mask   # returns nothing, no mask,  OK\n\n# multiply no mask by itself (no mask * no mask)\n>>> nref_nomask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask # return nothing, no mask, OK\n\n# multiply mask by constant (mask * no mask)\n>>> nref_mask.multiply(1., handle_mask=np.bitwise_or).mask\n...\nTypeError: unsupported operand type(s) for |: 'int' and 'NoneType'\n\n# multiply mask by itself (mask * mask)\n>>> nref_mask.multiply(nref_mask, handle_mask=np.bitwise_or).mask\narray([[ 0,  1, 64],\n       [ 8,  0,  1],\n       [ 2,  1,  0]])\n\n# multiply mask by no mask (mask * no mask)\n>>> nref_mask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask\n...\nTypeError: unsupported operand type(s) for |: 'int' and 'NoneType'"
+      },
+      {
+        "language": "python",
+        "code": "import numpy as np\nfrom astropy.nddata import NDDataRef\n\ndef test_nddata_masked_operand_with_unmasked_operand_preserves_mask():\n    array = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])\n    mask = np.array([[0, 1, 64], [8, 0, 1], [2, 1, 0]])\n    nref_nomask = NDDataRef(array)\n    nref_mask = NDDataRef(array, mask=mask)\n\n    np.testing.assert_array_equal(nref_mask.multiply(1., handle_mask=np.bitwise_or).mask, mask)\n    np.testing.assert_array_equal(nref_mask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask, mask)\n    assert nref_nomask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask is None\n"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "# multiply no mask by constant (no mask * no mask)\n\n# multiply no mask by itself (no mask * no mask)\n\n# multiply mask by constant (mask * no mask)\nTypeError: unsupported operand type(s) for |: 'int' and 'NoneType'\n\n# multiply mask by itself (mask * mask)\narray([[ 0,  1, 64],\n[ 8,  0,  1],\n[ 2,  1,  0]])\n\n# multiply mask by no mask (mask * no mask)\nTypeError: unsupported operand type(s) for |: 'int' and 'NoneType'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "TypeError: unsupported operand type(s) for |: 'int' and 'NoneType'"
+    ],
+    "identifiers": {
+      "functions": [
+        "multiply",
+        "array"
+      ],
+      "classes": [
+        "NDDataRef",
+        "NoneType"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "astropy/nddata/tests/test_nddata_base.py",
+      "target_source_file": "astropy/nddata/nddata.py",
+      "test_visible_functions": [
+        "multiply",
+        "array"
+      ],
+      "test_visible_classes": [
+        "NDDataRef"
+      ]
+    }
+  }
+]

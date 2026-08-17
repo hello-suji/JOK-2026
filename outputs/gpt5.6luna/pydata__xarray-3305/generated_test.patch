@@ -1,0 +1,11 @@
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -4647,3 +4647,8 @@
+             pass
+
+     assert str(e.value) == "MyArray must explicitly define __slots__"
++
++def test_quantile_keep_attrs_repro():
++    da = xr.DataArray([0, 0], dims="x", attrs={'units': 'K'})
++    result = da.quantile(q=0.5, keep_attrs=True)
++    assert 'units' in result.attrs and result.attrs['units'] == 'K'

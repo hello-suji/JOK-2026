@@ -1,0 +1,109 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:strip_accents_unicode",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sklearn/feature_extraction/text.py",
+          "target_function": "strip_accents_unicode",
+          "related_classes": [
+            "But",
+            "CountVectorizer",
+            "Cython"
+          ],
+          "candidate_test_file": "sklearn/feature_extraction/tests/test_text.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where strip_accents_unicode can be called."
+        ],
+        "execution_stimulus": [
+          "Call strip_accents_unicode with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "strip_accents_unicode fails to strip accents from strings that are already in NFKD form",
+        "relevant_source_files": [
+          "sklearn/feature_extraction/text.py",
+          "sklearn/datasets/species_distributions.py",
+          "setup.py"
+        ],
+        "relevant_test_files": [
+          "sklearn/feature_extraction/tests/test_text.py",
+          "sklearn/feature_extraction/tests/test_dict_vectorizer.py",
+          "sklearn/feature_extraction/tests/test_feature_hasher.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "from sklearn.feature_extraction.text import strip_accents_unicode\n\n# This string contains one code point, \"LATIN SMALL LETTER N WITH TILDE\"\ns1 = chr(241)\n\n# This string contains two code points, \"LATIN SMALL LETTER N\" followed by \"COMBINING TILDE\"\ns2 = chr(110) + chr(771)\n\n# They are visually identical, as expected\nprint(s1) # => ñ\nprint(s2) # => ñ\n\n# The tilde is removed from s1, as expected\nprint(strip_accents_unicode(s1)) # => n\n\n# But strip_accents_unicode returns s2 unchanged\nprint(strip_accents_unicode(s2) == s2) # => True"
+          },
+          {
+            "language": "python",
+            "code": "System:\n    python: 3.7.4 (default, Jul  9 2019, 15:11:16)  [GCC 7.4.0]\nexecutable: /home/dgrady/.local/share/virtualenvs/profiling-data-exploration--DO1bU6C/bin/python3.7\n   machine: Linux-4.4.0-17763-Microsoft-x86_64-with-Ubuntu-18.04-bionic\n\nPython deps:\n       pip: 19.2.2\nsetuptools: 41.2.0\n   sklearn: 0.21.3\n     numpy: 1.17.2\n     scipy: 1.3.1\n    Cython: None\n    pandas: 0.25.1"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "chr",
+            "strip_accents_unicode"
+          ],
+          "classes": [
+            "But",
+            "CountVectorizer",
+            "Cython",
+            "DO1bU6C",
+            "Jul",
+            "Microsoft",
+            "System",
+            "They",
+            "Ubuntu"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

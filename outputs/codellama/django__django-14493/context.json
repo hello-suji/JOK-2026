@@ -1,0 +1,571 @@
+{
+  "instance_id": "django__django-14493",
+  "repo": "django/django",
+  "base_commit": "7272e1963ffdf39c1d4fe225d5425a45dd095d11",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/staticfiles/storage.py",
+      "score": 66,
+      "matched_identifiers": [
+        "7/site-packages/django/contrib/staticfiles/storage.py",
+        "ManifestStaticFilesStorage",
+        "collect",
+        "contrib",
+        "django/contrib/staticfiles/storage.py",
+        "handle",
+        "post_process",
+        "self"
+      ],
+      "reasons": [
+        "function_match:post_process",
+        "class_match:ManifestStaticFilesStorage",
+        "explicit_file_path_hint:7/site-packages/django/contrib/staticfiles/storage.py",
+        "explicit_file_path_hint:django/contrib/staticfiles/storage.py",
+        "stem_in_issue_text:storage",
+        "source_content_tokens:collect,contrib,handle,self,staticfiles"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ManifestStaticFilesStorage": "class ManifestStaticFilesStorage(ManifestFilesMixin, StaticFilesStorage):\n    \"\"\"\n    A static file system storage backend which also saves\n    hashed copies of the files it saves.\n    \"\"\"\n    pass\n\n\nclass ConfiguredStorage(LazyObject):\n    def _setup(self):\n        self._wrapped = get_storage_class(settings.STATICFILES_STORAGE)()\n\n\nstaticfiles_storage = ConfiguredStorage()",
+        "post_process": "    def post_process(self, *args, **kwargs):\n        self.hashed_files = {}\n        yield from super().post_process(*args, **kwargs)\n        if not kwargs.get('dry_run'):\n            self.save_manifest()\n\n    def save_manifest(self):\n        payload = {'paths': self.hashed_files, 'version': self.manifest_version}\n        if self.exists(self.manifest_name):\n            self.delete(self.manifest_name)\n        contents = json.dumps(payload).encode()\n        self._save(self.manifest_name, ContentFile(contents))\n\n    def stored_name(self, name):\n        parsed_name = urlsplit(unquote(name))"
+      },
+      "top_level_functions": [
+        "StaticFilesStorage.path",
+        "HashedFilesMixin.file_hash",
+        "HashedFilesMixin.hashed_name",
+        "HashedFilesMixin.url",
+        "HashedFilesMixin.url_converter",
+        "HashedFilesMixin.post_process",
+        "HashedFilesMixin.clean_name",
+        "HashedFilesMixin.hash_key",
+        "HashedFilesMixin.stored_name",
+        "ManifestFilesMixin.read_manifest",
+        "ManifestFilesMixin.load_manifest",
+        "ManifestFilesMixin.post_process",
+        "ManifestFilesMixin.save_manifest",
+        "ManifestFilesMixin.stored_name"
+      ]
+    },
+    {
+      "path": "django/contrib/staticfiles/management/commands/collectstatic.py",
+      "score": 44,
+      "matched_identifiers": [
+        "7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py",
+        "collect",
+        "collected",
+        "contrib",
+        "handle"
+      ],
+      "reasons": [
+        "function_match:collect",
+        "explicit_file_path_hint:7/site-packages/django/contrib/staticfiles/management/commands/collectstatic.py",
+        "path_contains_function:collect",
+        "stem_in_issue_text:collectstatic",
+        "source_content_tokens:collect,collected,contrib,handle,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "collect": "    def collect(self):\n        \"\"\"\n        Perform the bulk of the work of collectstatic.\n\n        Split off from handle() to facilitate testing.\n        \"\"\"\n        if self.symlink and not self.local:\n            raise CommandError(\"Can't symlink to a remote destination.\")\n\n        if self.clear:\n            self.clear_dir('')\n\n        if self.symlink:\n            handler = self.link_file\n        else:",
+        "handle": "    def handle(self, **options):\n        self.set_options(**options)\n        message = ['\\n']\n        if self.dry_run:\n            message.append(\n                'You have activated the --dry-run option so no files will be modified.\\n\\n'\n            )\n\n        message.append(\n            'You have requested to collect static files at the destination\\n'\n            'location as specified in your settings'\n        )\n\n        if self.is_local_storage() and self.storage.location:\n            destination_path = self.storage.location"
+      },
+      "top_level_functions": [
+        "Command.local",
+        "Command.add_arguments",
+        "Command.set_options",
+        "Command.collect",
+        "Command.handle",
+        "Command.log",
+        "Command.is_local_storage",
+        "Command.clear_dir",
+        "Command.delete_file",
+        "Command.link_file",
+        "Command.copy_file"
+      ]
+    },
+    {
+      "path": "django/core/files/storage.py",
+      "score": 35,
+      "matched_identifiers": [
+        "7/site-packages/django/contrib/staticfiles/storage.py",
+        "django/contrib/staticfiles/storage.py",
+        "kwargs",
+        "local",
+        "self",
+        "storage"
+      ],
+      "reasons": [
+        "file_hint_match:7/site-packages/django/contrib/staticfiles/storage.py",
+        "file_hint_match:django/contrib/staticfiles/storage.py",
+        "stem_in_issue_text:storage",
+        "source_content_tokens:self,storage,kwargs,local,original"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Storage.open",
+        "Storage.save",
+        "Storage.get_valid_name",
+        "Storage.get_alternative_name",
+        "Storage.get_available_name",
+        "Storage.generate_filename",
+        "Storage.path",
+        "Storage.delete",
+        "Storage.exists",
+        "Storage.listdir",
+        "Storage.size",
+        "Storage.url",
+        "Storage.get_accessed_time",
+        "Storage.get_created_time",
+        "Storage.get_modified_time",
+        "FileSystemStorage.base_location",
+        "FileSystemStorage.location",
+        "FileSystemStorage.base_url",
+        "FileSystemStorage.file_permissions_mode",
+        "FileSystemStorage.directory_permissions_mode",
+        "FileSystemStorage.delete",
+        "FileSystemStorage.exists",
+        "FileSystemStorage.listdir",
+        "FileSystemStorage.path",
+        "FileSystemStorage.size",
+        "FileSystemStorage.url",
+        "FileSystemStorage.get_accessed_time",
+        "FileSystemStorage.get_created_time",
+        "FileSystemStorage.get_modified_time",
+        "get_storage_class"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 21,
+      "matched_identifiers": [
+        "collect",
+        "contrib",
+        "handle",
+        "self"
+      ],
+      "reasons": [
+        "function_match:collect",
+        "source_content_tokens:collect,contrib,handle,self,site"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "collect": "    def collect(self, objs, source=None, source_attr=None, **kwargs):\n        for obj in objs:\n            if source_attr and not source_attr.endswith('+'):\n                related_name = source_attr % {\n                    'class': source._meta.model_name,\n                    'app_label': source._meta.app_label,\n                }\n                self.add_edge(getattr(obj, related_name), obj)\n            else:\n                self.add_edge(None, obj)\n            self.model_objs[obj._meta.model].add(obj)\n        try:\n            return super().collect(objs, source_attr=source_attr, **kwargs)\n        except models.ProtectedError as e:\n            self.protected.update(e.protected_objects)"
+      },
+      "top_level_functions": [
+        "lookup_spawns_duplicates",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/db/models/deletion.py",
+      "score": 21,
+      "matched_identifiers": [
+        "collect",
+        "collected",
+        "handle",
+        "self"
+      ],
+      "reasons": [
+        "function_match:collect",
+        "source_content_tokens:collect,collected,handle,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "collect": "    def collect(self, objs, source=None, nullable=False, collect_related=True,\n                source_attr=None, reverse_dependency=False, keep_parents=False,\n                fail_on_restricted=True):\n        \"\"\"\n        Add 'objs' to the collection of objects to be deleted as well as all\n        parent instances.  'objs' must be a homogeneous iterable collection of\n        model instances (e.g. a QuerySet).  If 'collect_related' is True,\n        related objects will be handled by their respective on_delete handler.\n\n        If the call is the result of a cascade, 'source' should be the model\n        that caused it and 'nullable' should be set to True, if the relation\n        can be null.\n\n        If 'reverse_dependency' is True, 'source' will be deleted before the\n        current model, rather than after. (Needed for cascading to parent"
+      },
+      "top_level_functions": [
+        "CASCADE",
+        "PROTECT",
+        "RESTRICT",
+        "SET",
+        "SET_NULL",
+        "SET_DEFAULT",
+        "DO_NOTHING",
+        "get_candidate_relations_to_delete",
+        "Collector.add",
+        "Collector.add_dependency",
+        "Collector.add_field_update",
+        "Collector.add_restricted_objects",
+        "Collector.clear_restricted_objects_from_set",
+        "Collector.clear_restricted_objects_from_queryset",
+        "Collector.can_fast_delete",
+        "Collector.get_del_batches",
+        "Collector.collect",
+        "Collector.related_objects",
+        "Collector.instances_with_model",
+        "Collector.sort",
+        "Collector.delete"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/staticfiles_tests/test_storage.py",
+      "score": 18,
+      "matched_identifiers": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ManifestStaticFilesStorage",
+        "test_path_related_to_class:MyManifestStaticFilesStorage",
+        "test_name_matches_source_stem:storage",
+        "token_overlap:static,staticfiles,storage",
+        "internal_name_overlap:collectstatic",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/storage.py",
+      "score": 17,
+      "matched_identifiers": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ManifestStaticFilesStorage",
+        "test_path_related_to_class:MyManifestStaticFilesStorage",
+        "test_name_matches_source_stem:storage",
+        "token_overlap:static,staticfiles,storage",
+        "internal_name_overlap:storage",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ManifestStaticFilesStorage",
+        "test_path_related_to_class:MyManifestStaticFilesStorage",
+        "test_name_matches_source_stem:utils",
+        "token_overlap:static,staticfiles",
+        "internal_name_overlap:static",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/test_management.py",
+      "score": 12,
+      "matched_identifiers": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ManifestStaticFilesStorage",
+        "test_path_related_to_class:MyManifestStaticFilesStorage",
+        "token_overlap:management,static,staticfiles",
+        "internal_name_overlap:collectstatic",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/cases.py",
+      "score": 10,
+      "matched_identifiers": [
+        "ManifestStaticFilesStorage",
+        "MyManifestStaticFilesStorage"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ManifestStaticFilesStorage",
+        "test_path_related_to_class:MyManifestStaticFilesStorage",
+        "token_overlap:static,staticfiles",
+        "internal_name_overlap:collectstatic",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/staticfiles_tests/test_storage.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionHashedFilesCache",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionManifestStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionNoneHashStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestCollectionSimpleStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestExtraPatternsStorage",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestHashedFiles",
+      "tests/staticfiles_tests/test_storage.py:testcase_class:TestStaticFilePermissions",
+      "tests/staticfiles_tests/test_management.py:unittest_or_django_test_import",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollection",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionClear",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionCustomIgnorePatterns",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionDryRun",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionDryRunManifestStaticFilesStorage",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionExcludeNoDefaultIgnore",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionFilesOverride",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionHelpSubcommand",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionLinks",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionNeverCopyStorage",
+      "tests/staticfiles_tests/test_management.py:testcase_class:TestCollectionNonLocalStorage"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2695,
+  "indexed_test_file_count": 1833,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.staticfiles_tests.storage": [
+      "DummyStorage",
+      "ExtraPatternsStorage",
+      "NeverCopyRemoteStorage",
+      "NoneHashStorage",
+      "PathNotImplementedStorage",
+      "QueryStringStorage",
+      "SimpleStorage"
+    ],
+    "tests.staticfiles_tests.test_storage": [
+      "CustomStaticFilesStorage",
+      "TestCollectionHashedFilesCache",
+      "TestCollectionManifestStorage",
+      "TestCollectionNoneHashStorage",
+      "TestCollectionSimpleStorage",
+      "TestExtraPatternsStorage",
+      "TestHashedFiles",
+      "TestStaticFilePermissions",
+      "hashed_file_path"
+    ],
+    "tests.staticfiles_tests.test_management": [
+      "TestCollection",
+      "TestCollectionClear",
+      "TestCollectionCustomIgnorePatterns",
+      "TestCollectionDryRun",
+      "TestCollectionDryRunManifestStaticFilesStorage",
+      "TestCollectionExcludeNoDefaultIgnore",
+      "TestCollectionFilesOverride",
+      "TestCollectionHelpSubcommand",
+      "TestCollectionLinks",
+      "TestCollectionNeverCopyStorage",
+      "TestCollectionNonLocalStorage",
+      "TestCollectionOverwriteWarning",
+      "TestCollectionPathLib",
+      "TestCollectionVerbosity",
+      "TestConfiguration",
+      "TestFindStatic",
+      "TestInteractiveMessages",
+      "TestNoFilesCreated",
+      "TestRunserver"
+    ],
+    "tests.staticfiles_tests.test_utils": [
+      "CheckSettingsTests"
+    ],
+    "tests.staticfiles_tests.cases": [
+      "BaseStaticFilesMixin",
+      "CollectionTestCase",
+      "StaticFilesTestCase",
+      "TestDefaults"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "ForeignObjectRel",
+      "Func",
+      "ImageField",
+      "JSONField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderBy",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RESTRICT",
+      "RestrictedError",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "enums_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.contrib.staticfiles.storage": [
+      "ConfiguredStorage",
+      "HashedFilesMixin",
+      "ManifestFilesMixin",
+      "ManifestStaticFilesStorage",
+      "StaticFilesStorage"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_spawns_duplicates",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.staticfiles.management.commands.collectstatic": [
+      "Command"
+    ],
+    "django.core.files.storage": [
+      "DefaultStorage",
+      "FileSystemStorage",
+      "Storage",
+      "get_storage_class"
+    ],
+    "django.core": [
+      "File"
+    ],
+    "django.db.models.deletion": [
+      "CASCADE",
+      "Collector",
+      "DO_NOTHING",
+      "PROTECT",
+      "ProtectedError",
+      "RESTRICT",
+      "RestrictedError",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "get_candidate_relations_to_delete"
+    ]
+  },
+  "test_example_snippet": "class TestHashedFiles:\n    hashed_file_path = hashed_file_path\n\n    def tearDown(self):\n        # Clear hashed files to avoid side effects among tests.\n        storage.staticfiles_storage.hashed_files.clear()\n\n    def assertPostCondition(self):\n        \"\"\"\n        Assert post conditions for a test are met. Must be manually called at\n        the end of each test.\n        \"\"\"\n        pass\n\n    def test_template_tag_return(self):\n        self.assertStaticRaises(ValueError, \"does/not/exist.png\", \"/static/does/not/exist.png\")\n        self.assertStaticRenders(\"test/file.txt\", \"/static/test/file.dad0999e4f8f.txt\")\n        self.assertStaticRenders(\"test/file.txt\", \"/static/test/file.dad0999e4f8f.txt\", asvar=True)\n        self.assertStaticRenders(\"cached/styles.css\", \"/static/cached/styles.5e0040571e1a.css\")\n        self.assertStaticRenders(\"path/\", \"/static/path/\")\n        self.assertStaticRenders(\"path/?query\", \"/static/path/?query\")\n        self.assertPostCondition()\n\n    def test_template_tag_simple_content(self):\n        relpath = self.hashed_file_path(\"cached/styles.css\")\n        self.assertEqual(relpath, \"cached/styles.5e0040571e1a.css\")\n        with storage.staticfiles_storage.open(relpath) as relfile:\n            content = relfile.read()\n            self.assertNotIn(b\"cached/other.css\", content)\n            self.assertIn(b\"other.d41d8cd98f00.css\", content)\n        self.assertPostCondition()\n\n    def test_path_ignored_completely(self):\n        relpath = self.hashed_file_path(\"cached/css/ignored.css\")\n        self.assertEqual(relpath, \"cached/css/ignored.554da52152af.css\")",
+  "conftest_fixtures": {}
+}

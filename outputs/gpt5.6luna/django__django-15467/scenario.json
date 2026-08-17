@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/options.py",
+      "target_function": "formfield_for_foreignkey",
+      "related_classes": [
+        "ModelAdmin",
+        "MyModelAdmin"
+      ],
+      "candidate_test_file": "tests/admin_widgets/test_autocomplete_widget.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib import admin",
+      "from django.test import TestCase",
+      "from django.utils.translation import gettext_lazy as _",
+      "from .models import MyModel, RelatedModel",
+      "class MyModelAdmin(admin.ModelAdmin):",
+      "    radio_fields = {'myfield': admin.VERTICAL}",
+      "    def formfield_for_foreignkey(self, db_field, *args, **kwargs):",
+      "        if db_field.name == 'myfield':",
+      "            kwargs['empty_label'] = _('I WANT TO SET MY OWN EMPTY LABEL')",
+      "        return super().formfield_for_foreignkey(db_field, *args, **kwargs)",
+      "site = admin.AdminSite()",
+      "site.register(MyModel, MyModelAdmin)",
+      "Use the generated reproduction path that calls admin, _, get_field, formfield_for_foreignkey.",
+      "Use the generated reproduction path that calls _, formfield_for_foreignkey, get, admin."
+    ],
+    "execution_stimulus": [
+      "formfield = site._registry[MyModel].formfield_for_foreignkey(MyModel._meta.get_field('myfield'), request=None)",
+      "Execute the focused target API path: admin, _, get_field, formfield_for_foreignkey.",
+      "Execute the focused target API path: _, formfield_for_foreignkey, get, admin."
+    ],
+    "expected_failure": "The formfield's empty_label is set to 'None' instead of 'I WANT TO SET MY OWN EMPTY LABEL'",
+    "relevant_source_files": [
+      "django/contrib/admin/options.py",
+      "django/contrib/gis/admin/options.py",
+      "django/db/models/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_widgets/test_autocomplete_widget.py",
+      "tests/admin_views/test_autocomplete_view.py",
+      "tests/admin_widgets/widgetadmin.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_custom_empty_label():\n    from django.contrib import admin\n    from django.test import TestCase\n    from django.utils.translation import gettext_lazy as _\n    from .models import MyModel, RelatedModel\n    class MyModelAdmin(admin.ModelAdmin):\n        radio_fields = {'myfield': admin.VERTICAL}\n        def formfield_for_foreignkey(self, db_field, *args, **kwargs):\n            if db_field.name == 'myfield':\n                kwargs['empty_label'] = _('I WANT TO SET MY OWN EMPTY LABEL')\n            return super().formfield_for_foreignkey(db_field, *args, **kwargs)\n    site = admin.AdminSite()\n    site.register(MyModel, MyModelAdmin)\n    formfield = site._registry[MyModel].formfield_for_foreignkey(MyModel._meta.get_field('myfield'), request=None)\n    assert formfield.empty_label != _('I WANT TO SET MY OWN EMPTY LABEL')"
+      },
+      {
+        "language": "python",
+        "code": "from django.contrib import admin\nfrom django.test import TestCase\nfrom django.utils.translation import gettext_lazy as _\n\nclass TestCustomEmptyLabel(TestCase):\n    def test_custom_empty_label_repro(self):\n        ma = MyModelAdmin(MyModel, admin.site)\n        field = MyModel._meta.get_field('related_model')\n        formfield = ma.formfield_for_foreignkey(field, request=None)\n        self.assertEqual(formfield.empty_label, _('Select related model'))\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(formfield) != \"_('None')\""
+      }
+    ],
+    "expected_outputs": [
+      "_('I WANT TO SET MY OWN EMPTY LABEL')"
+    ],
+    "actual_outputs": [
+      "_('None')"
+    ],
+    "error_keywords": [
+      "empty_label",
+      "formfield_for_foreignkey"
+    ],
+    "identifiers": {
+      "functions": [
+        "formfield_for_foreignkey",
+        "admin",
+        "_",
+        "get_field"
+      ],
+      "classes": [
+        "ModelAdmin",
+        "MyModelAdmin"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_widgets/test_autocomplete_widget.py",
+      "target_source_file": "django/contrib/admin/options.py",
+      "test_visible_functions": [
+        "_",
+        "formfield_for_foreignkey",
+        "get",
+        "admin",
+        "get_field"
+      ],
+      "test_visible_classes": [
+        "ModelAdmin",
+        "MyModelAdmin"
+      ]
+    }
+  }
+]

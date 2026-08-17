@@ -1,0 +1,23 @@
+--- a/tests/backends/postgres/test_client.py
++++ b/tests/backends/postgres/test_client.py
+@@ -0,0 +1,20 @@
++from unittest import mock
++
++from django.db.backends.postgresql.client import DatabaseClient
++
++class DummyConnection:
++    settings_dict = {
++        'NAME': 'dbname',
++        'USER': 'dbuser',
++        'PASSWORD': 'secret',
++        'HOST': 'localhost',
++        'PORT': '5432',
++        'OPTIONS': {},
++    }
++
++def test_postgres_runshell_passes_password_through_subprocess_env_repro():
++    client = DatabaseClient(DummyConnection())
++    with mock.patch('subprocess.run') as run:
++        client.runshell([])
++    env = run.call_args.kwargs.get('env')
++    assert env['PGPASSWORD'] == 'secret'

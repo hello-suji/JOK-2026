@@ -1,0 +1,39 @@
+{
+  "instance_id": "sympy__sympy-19783",
+  "observed_behavior": [
+    "As discussed on the mailing list the following does not work.",
+    "B * Identity #This returns A^\\dagger I"
+  ],
+  "expected_behavior": [
+    "B * Identity #This returns A^\\dagger I"
+  ],
+  "repro_conditions": [
+    "Dagger() * IdentityOperator() is not simplified"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "Dagger",
+      "Identity",
+      "IdentityOperator",
+      "Operator",
+      "Operators"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Dagger() * IdentityOperator() is not simplified\nAs discussed on the mailing list the following does not work.\n```\nfrom sympy.physics.quantum.dagger import Dagger\nfrom sympy.physics.quantum.operator import Operator\nfrom sympy.physics.quantum import IdentityOperator\nA = Operators('A')\nIdentity = IdentityOperator()\nA * Identity #This gives A, correctly\nB = Dagger(A)\nB * Identity #This returns A^\\dagger I \n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "from sympy.physics.quantum.dagger import Dagger\nfrom sympy.physics.quantum.operator import Operator\nfrom sympy.physics.quantum import IdentityOperator\nA = Operators('A')\nIdentity = IdentityOperator()\nA * Identity #This gives A, correctly\nB = Dagger(A)\nB * Identity #This returns A^\\dagger I",
+      "context_before": "As discussed on the mailing list the following does not work.",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

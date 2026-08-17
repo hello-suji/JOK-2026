@@ -1,0 +1,515 @@
+{
+  "instance_id": "django__django-11532",
+  "repo": "django/django",
+  "base_commit": "a5308514fb4bc5086c9a16a8a24a945eeebb073c",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/mail/message.py",
+      "score": 85,
+      "matched_identifiers": [
+        "EmailMessage",
+        "Users/chason/projects/django/django/core/mail/message.py",
+        "__init__",
+        "__setitem__",
+        "append",
+        "ascii",
+        "charset",
+        "django/core/mail/message.py",
+        "forbid_multi_line_headers",
+        "message"
+      ],
+      "reasons": [
+        "function_match:message",
+        "function_match:forbid_multi_line_headers",
+        "class_match:EmailMessage",
+        "explicit_file_path_hint:django/core/mail/message.py",
+        "explicit_file_path_hint:Users/chason/projects/django/django/core/mail/message.py",
+        "path_contains_function:message",
+        "stem_in_issue_text:message",
+        "source_content_tokens:__init__,append,ascii,charset,core",
+        "traceback_fault_location:__setitem__"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "forbid_multi_line_headers": "def forbid_multi_line_headers(name, val, encoding):\n    \"\"\"Forbid multi-line headers to prevent header injection.\"\"\"\n    encoding = encoding or settings.DEFAULT_CHARSET\n    val = str(val)  # val may be lazy\n    if '\\n' in val or '\\r' in val:\n        raise BadHeaderError(\"Header values can't contain newlines (got %r for header %r)\" % (val, name))\n    try:\n        val.encode('ascii')\n    except UnicodeEncodeError:\n        if name.lower() in ADDRESS_HEADERS:\n            val = ', '.join(sanitize_address(addr, encoding) for addr in getaddresses((val,)))\n        else:\n            val = Header(val, encoding).encode()\n    else:\n        if name.lower() == 'subject':",
+        "EmailMessage": "class EmailMessage:\n    \"\"\"A container for email information.\"\"\"\n    content_subtype = 'plain'\n    mixed_subtype = 'mixed'\n    encoding = None     # None => use settings default\n\n    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None,\n                 connection=None, attachments=None, headers=None, cc=None,\n                 reply_to=None):\n        \"\"\"\n        Initialize a single email message (which can be sent to multiple\n        recipients).\n        \"\"\"\n        if to:\n            if isinstance(to, str):",
+        "__setitem__": "    def __setitem__(self, name, val):\n        name, val = forbid_multi_line_headers(name, val, self.encoding)\n        MIMEMultipart.__setitem__(self, name, val)\n\n\nclass EmailMessage:\n    \"\"\"A container for email information.\"\"\"\n    content_subtype = 'plain'\n    mixed_subtype = 'mixed'\n    encoding = None     # None => use settings default\n\n    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None,\n                 connection=None, attachments=None, headers=None, cc=None,\n                 reply_to=None):\n        \"\"\"",
+        "__init__": "    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None,\n                 connection=None, attachments=None, headers=None, alternatives=None,\n                 cc=None, reply_to=None):\n        \"\"\"\n        Initialize a single email message (which can be sent to multiple\n        recipients).\n        \"\"\"\n        super().__init__(\n            subject, body, from_email, to, bcc, connection, attachments,\n            headers, cc, reply_to,\n        )\n        self.alternatives = alternatives or []\n\n    def attach_alternative(self, content, mimetype):\n        \"\"\"Attach an alternative content representation.\"\"\"",
+        "message": "    def message(self):\n        encoding = self.encoding or settings.DEFAULT_CHARSET\n        msg = SafeMIMEText(self.body, self.content_subtype, encoding)\n        msg = self._create_message(msg)\n        msg['Subject'] = self.subject\n        msg['From'] = self.extra_headers.get('From', self.from_email)\n        self._set_list_header_if_not_empty(msg, 'To', self.to)\n        self._set_list_header_if_not_empty(msg, 'Cc', self.cc)\n        self._set_list_header_if_not_empty(msg, 'Reply-To', self.reply_to)\n\n        # Email header names are case-insensitive (RFC 2045), so we have to\n        # accommodate that when doing comparisons.\n        header_names = [key.lower() for key in self.extra_headers]\n        if 'date' not in header_names:\n            # formatdate() uses stdlib methods to format the date, which use"
+      },
+      "top_level_functions": [
+        "forbid_multi_line_headers",
+        "sanitize_address",
+        "MIMEMixin.as_string",
+        "MIMEMixin.as_bytes",
+        "SafeMIMEText.set_payload",
+        "EmailMessage.get_connection",
+        "EmailMessage.message",
+        "EmailMessage.recipients",
+        "EmailMessage.send",
+        "EmailMessage.attach",
+        "EmailMessage.attach_file",
+        "EmailMultiAlternatives.attach_alternative"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/tests.py",
+      "score": 37,
+      "matched_identifiers": [
+        "Users/chason/projects/django/tests/mail/tests.py",
+        "append",
+        "example",
+        "func",
+        "name",
+        "tests/mail/tests.py"
+      ],
+      "reasons": [
+        "file_hint_match:tests/mail/tests.py",
+        "file_hint_match:Users/chason/projects/django/tests/mail/tests.py",
+        "stem_in_issue_text:tests",
+        "source_content_tokens:append,example,func,name,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CSPMiddleware.process_response",
+        "AdminSeleniumTestCase.wait_until",
+        "AdminSeleniumTestCase.wait_for_popup",
+        "AdminSeleniumTestCase.wait_for",
+        "AdminSeleniumTestCase.wait_for_text",
+        "AdminSeleniumTestCase.wait_for_value",
+        "AdminSeleniumTestCase.wait_until_visible",
+        "AdminSeleniumTestCase.wait_until_invisible",
+        "AdminSeleniumTestCase.wait_page_loaded",
+        "AdminSeleniumTestCase.admin_login",
+        "AdminSeleniumTestCase.get_css_value",
+        "AdminSeleniumTestCase.get_select_option",
+        "AdminSeleniumTestCase.assertSelectOptions",
+        "AdminSeleniumTestCase.assertSelectedOptions",
+        "AdminSeleniumTestCase.has_css_class"
+      ]
+    },
+    {
+      "path": "django/utils/functional.py",
+      "score": 23,
+      "matched_identifiers": [
+        "__init__",
+        "append",
+        "args",
+        "encode",
+        "func"
+      ],
+      "reasons": [
+        "function_match:func",
+        "path_contains_function:func",
+        "source_content_tokens:__init__,append,args,encode,func"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "func": "    def func(instance):\n        raise TypeError(\n            'Cannot use cached_property instance without calling '\n            '__set_name__() on it.'\n        )\n\n    def __init__(self, func, name=None):\n        self.real_func = func\n        self.__doc__ = getattr(func, '__doc__')\n\n    def __set_name__(self, owner, name):\n        if self.name is None:\n            self.name = name\n            self.func = self.real_func\n        elif name != self.name:",
+        "__init__": "        def __init__(self, args, kw):\n            self.__args = args\n            self.__kw = kw\n            if not self.__prepared:\n                self.__prepare_class__()\n            self.__class__.__prepared = True\n\n        def __reduce__(self):\n            return (\n                _lazy_proxy_unpickle,\n                (func, self.__args, self.__kw) + resultclasses\n            )\n\n        def __repr__(self):\n            return repr(self.__cast())"
+      },
+      "top_level_functions": [
+        "cached_property.func",
+        "lazy",
+        "lazystr",
+        "keep_lazy",
+        "keep_lazy_text",
+        "new_method_proxy",
+        "unpickle_lazyobject",
+        "partition"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/hashers.py",
+      "score": 21,
+      "matched_identifiers": [
+        "append",
+        "args",
+        "ascii",
+        "core",
+        "encode"
+      ],
+      "reasons": [
+        "function_match:encode",
+        "source_content_tokens:append,args,ascii,core,encode"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "encode": "    def encode(self, password, salt):\n        crypt = self._load_library()\n        assert len(salt) == 2\n        data = crypt.crypt(password, salt)\n        assert data is not None  # A platform like OpenBSD with a dummy crypt module.\n        # we don't need to store the salt, but Django used to do this\n        return \"%s$%s$%s\" % (self.algorithm, '', data)\n\n    def verify(self, password, encoded):\n        crypt = self._load_library()\n        algorithm, salt, data = encoded.split('$', 2)\n        assert algorithm == self.algorithm\n        return constant_time_compare(data, crypt.crypt(password, data))\n\n    def safe_summary(self, encoded):"
+      },
+      "top_level_functions": [
+        "is_password_usable",
+        "check_password",
+        "make_password",
+        "get_hashers",
+        "get_hashers_by_algorithm",
+        "reset_hashers",
+        "get_hasher",
+        "identify_hasher",
+        "mask_hash",
+        "BasePasswordHasher.salt",
+        "BasePasswordHasher.verify",
+        "BasePasswordHasher.encode",
+        "BasePasswordHasher.safe_summary",
+        "BasePasswordHasher.must_update",
+        "BasePasswordHasher.harden_runtime",
+        "PBKDF2PasswordHasher.encode",
+        "PBKDF2PasswordHasher.verify",
+        "PBKDF2PasswordHasher.safe_summary",
+        "PBKDF2PasswordHasher.must_update",
+        "PBKDF2PasswordHasher.harden_runtime",
+        "Argon2PasswordHasher.encode",
+        "Argon2PasswordHasher.verify",
+        "Argon2PasswordHasher.safe_summary",
+        "Argon2PasswordHasher.must_update",
+        "Argon2PasswordHasher.harden_runtime",
+        "BCryptSHA256PasswordHasher.salt",
+        "BCryptSHA256PasswordHasher.encode",
+        "BCryptSHA256PasswordHasher.verify",
+        "BCryptSHA256PasswordHasher.safe_summary",
+        "BCryptSHA256PasswordHasher.must_update",
+        "BCryptSHA256PasswordHasher.harden_runtime",
+        "SHA1PasswordHasher.encode",
+        "SHA1PasswordHasher.verify",
+        "SHA1PasswordHasher.safe_summary",
+        "SHA1PasswordHasher.harden_runtime",
+        "MD5PasswordHasher.encode",
+        "MD5PasswordHasher.verify",
+        "MD5PasswordHasher.safe_summary",
+        "MD5PasswordHasher.harden_runtime",
+        "UnsaltedSHA1PasswordHasher.salt"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geos/libgeos.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__init__",
+        "args",
+        "core",
+        "func"
+      ],
+      "reasons": [
+        "function_match:func",
+        "source_content_tokens:__init__,args,core,func,init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, func_name, *args, restype=None, errcheck=None, argtypes=None, **kwargs):\n        self.func_name = func_name\n        if restype is not None:\n            self.restype = restype\n        if errcheck is not None:\n            self.errcheck = errcheck\n        if argtypes is not None:\n            self.argtypes = argtypes\n        self.args = args\n        self.kwargs = kwargs\n\n    def __call__(self, *args, **kwargs):\n        return self.func(*args, **kwargs)\n\n    @cached_property",
+        "func": "    def func(self):\n        from django.contrib.gis.geos.prototypes.threadsafe import GEOSFunc\n        func = GEOSFunc(self.func_name)\n        func.argtypes = self.argtypes or []\n        func.restype = self.restype\n        if self.errcheck:\n            func.errcheck = self.errcheck\n        return func\n\n\ndef geos_version():\n    \"\"\"Return the string version of the GEOS library.\"\"\"\n    return lgeos.GEOSversion()\n\n"
+      },
+      "top_level_functions": [
+        "load_geos",
+        "notice_h",
+        "error_h",
+        "GEOSFuncFactory.func",
+        "geos_version",
+        "geos_version_tuple"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/utils_tests/test_functional.py",
+      "score": 14,
+      "matched_identifiers": [
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_name_matches_source_stem:functional",
+        "token_overlap:func,functional",
+        "internal_name_overlap:func",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/db_functions/tests.py",
+      "score": 12,
+      "matched_identifiers": [
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_name_matches_source_stem:tests",
+        "token_overlap:func",
+        "internal_name_overlap:multi",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/dispatch/tests.py",
+      "score": 12,
+      "matched_identifiers": [
+        "patch"
+      ],
+      "reasons": [
+        "test_path_contains_function:patch",
+        "test_name_matches_source_stem:tests",
+        "token_overlap:patch",
+        "internal_name_overlap:multi",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_hashers.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:hashers",
+        "token_overlap:auth,hashers",
+        "internal_name_overlap:encode",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_error_messages.py",
+      "score": 9,
+      "matched_identifiers": [
+        "EmailMessage",
+        "message"
+      ],
+      "reasons": [
+        "test_path_contains_function:message",
+        "test_path_related_to_class:EmailMessage",
+        "token_overlap:message",
+        "internal_name_overlap:multi",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/utils_tests/test_functional.py:unittest_or_django_test_import",
+      "tests/dispatch/tests.py:unittest_or_django_test_import",
+      "tests/dispatch/tests.py:testcase_class:ReceiverTestCase",
+      "tests/db_functions/tests.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_hashers.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_hashers.py:testcase_class:TestUtilsHashPass",
+      "tests/auth_tests/test_hashers.py:testcase_class:TestUtilsHashPassArgon2",
+      "tests/forms_tests/tests/test_error_messages.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_error_messages.py:testcase_class:FormsErrorMessagesTestCase",
+      "tests/forms_tests/tests/test_error_messages.py:testcase_class:ModelChoiceFieldErrorMessagesTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2565,
+  "indexed_test_file_count": 1734,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.utils_tests.test_functional": [
+      "FunctionalTests"
+    ],
+    "tests.dispatch.tests": [
+      "Callable",
+      "DispatcherTests",
+      "ReceiverTestCase",
+      "receiver_1_arg"
+    ],
+    "tests.db_functions.tests": [
+      "FunctionTests",
+      "UpperBilateral"
+    ],
+    "tests.auth_tests.test_hashers": [
+      "BasePasswordHasherTests",
+      "PBKDF2SingleIterationHasher",
+      "TestUtilsHashPass",
+      "TestUtilsHashPassArgon2"
+    ],
+    "tests.forms_tests.tests.test_error_messages": [
+      "AssertFormErrorsMixin",
+      "FormsErrorMessagesTestCase",
+      "ModelChoiceFieldErrorMessagesTestCase"
+    ],
+    "django.utils.functional": [
+      "LazyObject",
+      "Promise",
+      "SimpleLazyObject",
+      "_lazy_proxy_unpickle",
+      "cached_property",
+      "keep_lazy",
+      "keep_lazy_text",
+      "lazy",
+      "lazystr",
+      "new_method_proxy",
+      "partition",
+      "unpickle_lazyobject"
+    ],
+    "django.contrib.admin.tests": [
+      "AdminSeleniumTestCase",
+      "CSPMiddleware"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.hashers": [
+      "Argon2PasswordHasher",
+      "BCryptPasswordHasher",
+      "BCryptSHA256PasswordHasher",
+      "BasePasswordHasher",
+      "CryptPasswordHasher",
+      "MD5PasswordHasher",
+      "PBKDF2PasswordHasher",
+      "PBKDF2SHA1PasswordHasher",
+      "SHA1PasswordHasher",
+      "UnsaltedMD5PasswordHasher",
+      "UnsaltedSHA1PasswordHasher",
+      "check_password",
+      "get_hasher",
+      "get_hashers",
+      "get_hashers_by_algorithm",
+      "identify_hasher",
+      "is_password_usable",
+      "make_password",
+      "mask_hash",
+      "reset_hashers"
+    ],
+    "django.contrib.gis.geos.libgeos": [
+      "GEOSContextHandle_t",
+      "GEOSCoordSeq_t",
+      "GEOSFuncFactory",
+      "GEOSGeom_t",
+      "GEOSPrepGeom_t",
+      "error_h",
+      "geos_version",
+      "geos_version_tuple",
+      "load_geos",
+      "notice_h"
+    ],
+    "django.contrib.gis": [
+      "GEOSException",
+      "GEOSGeometry",
+      "GeometryCollection",
+      "LineString",
+      "LinearRing",
+      "MultiLineString",
+      "MultiPoint",
+      "MultiPolygon",
+      "Point",
+      "Polygon",
+      "WKBReader",
+      "WKBWriter",
+      "WKTReader",
+      "WKTWriter",
+      "fromfile",
+      "fromstr",
+      "geos_version",
+      "hex_regex",
+      "wkt_regex"
+    ],
+    "django.core.mail.message": [
+      "BadHeaderError",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "MIMEMixin",
+      "SafeMIMEMessage",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "sanitize_address"
+    ],
+    "django.core.mail": [
+      "get_connection",
+      "mail_admins",
+      "mail_managers",
+      "send_mail",
+      "send_mass_mail"
+    ],
+    "django.core": [
+      "BadHeaderError",
+      "CachedDnsName",
+      "DEFAULT_ATTACHMENT_MIME_TYPE",
+      "DNS_NAME",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "get_connection",
+      "import_string",
+      "mail_admins",
+      "mail_managers",
+      "make_msgid",
+      "send_mail",
+      "send_mass_mail",
+      "settings"
+    ]
+  },
+  "test_example_snippet": "    def test_lazy(self):\n        t = lazy(lambda: tuple(range(3)), list, tuple)\n        for a, b in zip(t(), range(3)):\n            self.assertEqual(a, b)\n\n    def test_lazy_base_class(self):\n        \"\"\"lazy also finds base class methods in the proxy object\"\"\"\n        class Base:\n            def base_method(self):\n                pass\n\n        class Klazz(Base):\n            pass\n\n        t = lazy(lambda: Klazz(), Klazz)()\n        self.assertIn('base_method', dir(t))\n\n    def test_lazy_base_class_override(self):\n        \"\"\"lazy finds the correct (overridden) method implementation\"\"\"\n        class Base:\n            def method(self):\n                return 'Base'\n\n        class Klazz(Base):\n            def method(self):\n                return 'Klazz'\n\n        t = lazy(lambda: Klazz(), Base)()\n        self.assertEqual(t.method(), 'Klazz')\n\n    def test_lazy_object_to_string(self):\n\n        class Klazz:\n            def __str__(self):\n                return \"Î am ā Ǩlâzz.\"",
+  "conftest_fixtures": {}
+}

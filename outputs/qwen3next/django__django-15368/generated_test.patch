@@ -1,0 +1,20 @@
+--- a/tests/migrations/test_state.py
++++ b/tests/migrations/test_state.py
+@@ -1951,3 +1951,17 @@
+         self.assertRelated(P, [M, Q, Z])
+         self.assertRelated(Q, [M, P, Z])
+         self.assertRelated(Z, [M, P, Q])
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import F
++from tests.basic.models import SelfRef
++
++class TestBulkUpdateWithFExpressions(SimpleTestCase):
++    def test_bulk_update_with_plain_F_expressions_repro(self):
++        # Setup
++        o = SelfRef.objects.create(name='Initial Name', c8='Initial C8')
++        o.c8 = F('name')
++        SelfRef.objects.bulk_update([o], ['c8'])
++        o.refresh_from_db()
++        # Assertion
++        self.assertEqual(o.c8, 'Initial Name')

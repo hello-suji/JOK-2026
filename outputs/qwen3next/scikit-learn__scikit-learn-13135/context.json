@@ -1,0 +1,521 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13135",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "a061ada48efccf0845acae17009553e01764452b",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/preprocessing/_discretization.py",
+      "score": 51,
+      "matched_identifiers": [
+        "KBinsDiscretizer",
+        "bins",
+        "fit",
+        "home/sandro/code/scikit-learn/sklearn/preprocessing/_discretization.py",
+        "kbinsdiscretizer",
+        "kmeans",
+        "must",
+        "transform"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:transform",
+        "class_match:KBinsDiscretizer",
+        "explicit_file_path_hint:home/sandro/code/scikit-learn/sklearn/preprocessing/_discretization.py",
+        "stem_in_issue_text:_discretization",
+        "source_content_tokens:bins,kbinsdiscretizer,kmeans,must,ordinal"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "KBinsDiscretizer": "class KBinsDiscretizer(BaseEstimator, TransformerMixin):\n    \"\"\"Bin continuous data into intervals.\n\n    Read more in the :ref:`User Guide <preprocessing_discretization>`.\n\n    Parameters\n    ----------\n    n_bins : int or array-like, shape (n_features,) (default=5)\n        The number of bins to produce. Raises ValueError if ``n_bins < 2``.\n\n    encode : {'onehot', 'onehot-dense', 'ordinal'}, (default='onehot')\n        Method used to encode the transformed result.\n\n        onehot\n            Encode the transformed result with one-hot encoding",
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Fits the estimator.\n\n        Parameters\n        ----------\n        X : numeric array-like, shape (n_samples, n_features)\n            Data to be discretized.\n\n        y : ignored\n\n        Returns\n        -------\n        self\n        \"\"\"\n        X = check_array(X, dtype='numeric')",
+        "transform": "    def transform(self, X):\n        \"\"\"Discretizes the data.\n\n        Parameters\n        ----------\n        X : numeric array-like, shape (n_samples, n_features)\n            Data to be discretized.\n\n        Returns\n        -------\n        Xt : numeric array-like or sparse matrix\n            Data in the binned space.\n        \"\"\"\n        check_is_fitted(self, [\"bin_edges_\"])\n"
+      },
+      "top_level_functions": [
+        "KBinsDiscretizer.fit",
+        "KBinsDiscretizer.transform",
+        "KBinsDiscretizer.inverse_transform"
+      ]
+    },
+    {
+      "path": "sklearn/base.py",
+      "score": 42,
+      "matched_identifiers": [
+        "actual",
+        "arity",
+        "fit_transform",
+        "home/sandro/code/scikit-learn/sklearn/base.py",
+        "valueerror",
+        "versions"
+      ],
+      "reasons": [
+        "function_match:fit_transform",
+        "explicit_file_path_hint:home/sandro/code/scikit-learn/sklearn/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:valueerror,versions,actual,arity,array"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit_transform": "    def fit_transform(self, X, y=None, **fit_params):\n        \"\"\"Fit to data, then transform it.\n\n        Fits transformer to X and y with optional parameters fit_params\n        and returns a transformed version of X.\n\n        Parameters\n        ----------\n        X : numpy array of shape [n_samples, n_features]\n            Training set.\n\n        y : numpy array of shape [n_samples]\n            Target values.\n\n        Returns"
+      },
+      "top_level_functions": [
+        "clone",
+        "BaseEstimator.get_params",
+        "BaseEstimator.set_params",
+        "ClassifierMixin.score",
+        "RegressorMixin.score",
+        "ClusterMixin.fit_predict",
+        "BiclusterMixin.biclusters_",
+        "BiclusterMixin.get_indices",
+        "BiclusterMixin.get_shape",
+        "BiclusterMixin.get_submatrix",
+        "TransformerMixin.fit_transform",
+        "DensityMixin.score",
+        "OutlierMixin.fit_predict",
+        "is_classifier",
+        "is_regressor",
+        "is_outlier_detector"
+      ]
+    },
+    {
+      "path": "sklearn/mixture/base.py",
+      "score": 34,
+      "matched_identifiers": [
+        "array",
+        "fit",
+        "home/sandro/code/scikit-learn/sklearn/base.py",
+        "kmeans",
+        "must",
+        "valueerror"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "file_hint_match:home/sandro/code/scikit-learn/sklearn/base.py",
+        "path_contains_class:Xt",
+        "stem_in_issue_text:base",
+        "source_content_tokens:kmeans,must,valueerror,array,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Estimate model parameters with the EM algorithm.\n\n        The method fits the model ``n_init`` times and sets the parameters with\n        which the model has the largest likelihood or lower bound. Within each\n        trial, the method iterates between E-step and M-step for ``max_iter``\n        times until the change of likelihood or lower bound is less than\n        ``tol``, otherwise, a ``ConvergenceWarning`` is raised.\n        If ``warm_start`` is ``True``, then ``n_init`` is ignored and a single\n        initialization is performed upon the first call. Upon consecutive\n        calls, training starts where it left off.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples, n_features)"
+      },
+      "top_level_functions": [
+        "BaseMixture.fit",
+        "BaseMixture.fit_predict",
+        "BaseMixture.score_samples",
+        "BaseMixture.score",
+        "BaseMixture.predict",
+        "BaseMixture.predict_proba",
+        "BaseMixture.sample"
+      ]
+    },
+    {
+      "path": "sklearn/compose/_column_transformer.py",
+      "score": 33,
+      "matched_identifiers": [
+        "array",
+        "assert",
+        "fit",
+        "fit_transform",
+        "must",
+        "transform",
+        "valueerror"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:transform",
+        "function_match:fit_transform",
+        "path_contains_function:transform",
+        "source_content_tokens:must,valueerror,array,assert,certain"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Fit all transformers using X.\n\n        Parameters\n        ----------\n        X : array-like or DataFrame of shape [n_samples, n_features]\n            Input data, of which specified subsets are used to fit the\n            transformers.\n\n        y : array-like, shape (n_samples, ...), optional\n            Targets for supervised learning.\n\n        Returns\n        -------\n        self : ColumnTransformer",
+        "fit_transform": "    def fit_transform(self, X, y=None):\n        \"\"\"Fit all transformers, transform the data and concatenate results.\n\n        Parameters\n        ----------\n        X : array-like or DataFrame of shape [n_samples, n_features]\n            Input data, of which specified subsets are used to fit the\n            transformers.\n\n        y : array-like, shape (n_samples, ...), optional\n            Targets for supervised learning.\n\n        Returns\n        -------\n        X_t : array-like or sparse matrix, shape (n_samples, sum_n_components)",
+        "transform": "    def transform(self, X):\n        \"\"\"Transform X separately by each transformer, concatenate results.\n\n        Parameters\n        ----------\n        X : array-like or DataFrame of shape [n_samples, n_features]\n            The data to be transformed by subset.\n\n        Returns\n        -------\n        X_t : array-like or sparse matrix, shape (n_samples, sum_n_components)\n            hstack of results of transformers. sum_n_components is the\n            sum of n_components (output dimension) over transformers. If\n            any result is a sparse matrix, everything will be converted to\n            sparse matrices."
+      },
+      "top_level_functions": [
+        "ColumnTransformer.get_params",
+        "ColumnTransformer.set_params",
+        "ColumnTransformer.named_transformers_",
+        "ColumnTransformer.get_feature_names",
+        "ColumnTransformer.fit",
+        "ColumnTransformer.fit_transform",
+        "ColumnTransformer.transform",
+        "make_column_transformer"
+      ]
+    },
+    {
+      "path": "sklearn/feature_extraction/dict_vectorizer.py",
+      "score": 33,
+      "matched_identifiers": [
+        "array",
+        "fit",
+        "fit_transform",
+        "must",
+        "ordinal",
+        "transform",
+        "valueerror"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:transform",
+        "function_match:fit_transform",
+        "path_contains_class:Xt",
+        "source_content_tokens:must,ordinal,valueerror,array,assert"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Learn a list of feature name -> indices mappings.\n\n        Parameters\n        ----------\n        X : Mapping or iterable over Mappings\n            Dict(s) or Mapping(s) from feature names (arbitrary Python\n            objects) to feature values (strings or convertible to dtype).\n        y : (ignored)\n\n        Returns\n        -------\n        self\n        \"\"\"\n        feature_names = []",
+        "fit_transform": "    def fit_transform(self, X, y=None):\n        \"\"\"Learn a list of feature name -> indices mappings and transform X.\n\n        Like fit(X) followed by transform(X), but does not require\n        materializing X in memory.\n\n        Parameters\n        ----------\n        X : Mapping or iterable over Mappings\n            Dict(s) or Mapping(s) from feature names (arbitrary Python\n            objects) to feature values (strings or convertible to dtype).\n        y : (ignored)\n\n        Returns\n        -------",
+        "transform": "    def transform(self, X):\n        \"\"\"Transform feature->value dicts to array or sparse matrix.\n\n        Named features not encountered during fit or fit_transform will be\n        silently ignored.\n\n        Parameters\n        ----------\n        X : Mapping or iterable over Mappings, length = n_samples\n            Dict(s) or Mapping(s) from feature names (arbitrary Python\n            objects) to feature values (strings or convertible to dtype).\n\n        Returns\n        -------\n        Xa : {array, sparse matrix}"
+      },
+      "top_level_functions": [
+        "DictVectorizer.fit",
+        "DictVectorizer.fit_transform",
+        "DictVectorizer.inverse_transform",
+        "DictVectorizer.transform",
+        "DictVectorizer.get_feature_names",
+        "DictVectorizer.restrict"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/compose/tests/test_column_transformer.py",
+      "score": 49,
+      "matched_identifiers": [
+        "fit",
+        "transform"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "test_function_match:transform",
+        "test_path_contains_function:transform",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/compose/tests",
+        "token_overlap:column,compose,sklearn,transform,transformer",
+        "internal_name_overlap:transform",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/preprocessing/tests/test_function_transformer.py",
+      "score": 45,
+      "matched_identifiers": [
+        "transform"
+      ],
+      "reasons": [
+        "test_path_contains_function:transform",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/preprocessing/tests",
+        "token_overlap:preprocessing,sklearn,transform,transformer",
+        "internal_name_overlap:transform",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/preprocessing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/preprocessing/tests/test_base.py",
+      "score": 43,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/preprocessing/tests",
+        "test_name_matches_source_stem:base",
+        "token_overlap:preprocessing,sklearn",
+        "internal_name_overlap:transform",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/preprocessing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/compose/tests/test_target.py",
+      "score": 41,
+      "matched_identifiers": [
+        "fit",
+        "transform"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "test_function_match:transform",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/compose/tests",
+        "token_overlap:compose,sklearn",
+        "internal_name_overlap:transform",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/tests/test_base.py",
+      "score": 40,
+      "matched_identifiers": [
+        "fit"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/tests",
+        "test_name_matches_source_stem:base",
+        "token_overlap:sklearn",
+        "internal_name_overlap:dict",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/tests/test_base.py:top_level_test_functions",
+      "sklearn/preprocessing/tests/test_base.py:pytest_import_or_conftest",
+      "sklearn/preprocessing/tests/test_base.py:top_level_test_functions",
+      "sklearn/preprocessing/tests/test_function_transformer.py:pytest_import_or_conftest",
+      "sklearn/preprocessing/tests/test_function_transformer.py:top_level_test_functions",
+      "sklearn/compose/tests/test_column_transformer.py:pytest_import_or_conftest",
+      "sklearn/compose/tests/test_column_transformer.py:top_level_test_functions",
+      "sklearn/compose/tests/test_target.py:pytest_import_or_conftest",
+      "sklearn/compose/tests/test_target.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 739,
+  "indexed_test_file_count": 195,
+  "available_imports": {
+    "sklearn.base": [
+      "BaseEstimator",
+      "BiclusterMixin",
+      "ClassifierMixin",
+      "ClusterMixin",
+      "DensityMixin",
+      "MetaEstimatorMixin",
+      "OutlierMixin",
+      "RegressorMixin",
+      "TransformerMixin",
+      "_first_and_last_element",
+      "_pprint",
+      "clone",
+      "is_classifier",
+      "is_outlier_detector",
+      "is_regressor"
+    ],
+    "sklearn": [
+      "BayesianGaussianMixture",
+      "Binarizer",
+      "ColumnTransformer",
+      "DictVectorizer",
+      "FeatureHasher",
+      "FunctionTransformer",
+      "GaussianMixture",
+      "Imputer",
+      "KBinsDiscretizer",
+      "KernelCenterer",
+      "LabelBinarizer",
+      "LabelEncoder",
+      "MaxAbsScaler",
+      "MinMaxScaler",
+      "MultiLabelBinarizer",
+      "Normalizer",
+      "OneHotEncoder",
+      "OrdinalEncoder",
+      "PolynomialFeatures",
+      "PowerTransformer",
+      "QuantileTransformer",
+      "RobustScaler",
+      "StandardScaler",
+      "TransformedTargetRegressor",
+      "add_dummy_feature",
+      "binarize",
+      "config_context",
+      "get_config",
+      "grid_to_graph",
+      "image",
+      "img_to_graph",
+      "label_binarize",
+      "make_column_transformer",
+      "maxabs_scale",
+      "minmax_scale",
+      "normalize",
+      "power_transform",
+      "quantile_transform",
+      "robust_scale",
+      "scale",
+      "set_config",
+      "setup_module",
+      "text"
+    ],
+    "sklearn.compose._column_transformer": [
+      "ColumnTransformer",
+      "_check_X",
+      "_check_key_type",
+      "_get_column",
+      "_get_column_indices",
+      "_get_transformer_list",
+      "_is_deprecated_tuple_order",
+      "_is_empty_column_selection",
+      "_validate_transformers",
+      "make_column_transformer"
+    ],
+    "sklearn.feature_extraction.dict_vectorizer": [
+      "DictVectorizer",
+      "_tosequence"
+    ],
+    "sklearn.tests.test_base": [
+      "Buggy",
+      "DontPickleAttributeMixin",
+      "K",
+      "ModifyInitParams",
+      "MultiInheritanceEstimator",
+      "MyEstimator",
+      "NoEstimator",
+      "SingleInheritanceEstimator",
+      "T",
+      "TreeBadVersion",
+      "TreeNoVersion",
+      "VargEstimator",
+      "test_clone",
+      "test_clone_2",
+      "test_clone_buggy",
+      "test_clone_empty_array",
+      "test_clone_estimator_types",
+      "test_clone_nan",
+      "test_clone_pandas_dataframe",
+      "test_clone_sparse_matrices",
+      "test_get_params",
+      "test_is_classifier",
+      "test_pickle_version_no_warning_is_issued_with_non_sklearn_estimator",
+      "test_pickle_version_warning_is_issued_upon_different_version",
+      "test_pickle_version_warning_is_issued_when_no_version_info_in_pickle",
+      "test_pickle_version_warning_is_not_raised_with_matching_version",
+      "test_pickling_when_getstate_is_overwritten_by_mixin",
+      "test_pickling_when_getstate_is_overwritten_by_mixin_outside_of_sklearn",
+      "test_pickling_works_when_getstate_is_overwritten_in_the_child_class",
+      "test_repr",
+      "test_score_sample_weight",
+      "test_set_params",
+      "test_set_params_passes_all_parameters",
+      "test_set_params_updates_valid_params",
+      "test_str"
+    ],
+    "sklearn.mixture.base": [
+      "BaseMixture",
+      "_check_X",
+      "_check_shape"
+    ],
+    "sklearn.preprocessing._discretization": [
+      "KBinsDiscretizer"
+    ],
+    "sklearn.preprocessing.tests.test_base": [
+      "_check_transform_selected",
+      "test_transform_selected",
+      "test_transform_selected_copy_arg",
+      "test_transform_selected_retain_order",
+      "toarray"
+    ],
+    "sklearn.preprocessing.tests.test_function_transformer": [
+      "_make_func",
+      "test_check_inverse",
+      "test_delegate_to_func",
+      "test_function_transformer_frame",
+      "test_function_transformer_future_warning",
+      "test_inverse_transform",
+      "test_kw_arg",
+      "test_kw_arg_reset",
+      "test_kw_arg_update",
+      "test_np_log"
+    ],
+    "sklearn.compose.tests.test_column_transformer": [
+      "DoubleTrans",
+      "SparseMatrixTrans",
+      "Trans",
+      "TransNo2D",
+      "TransRaise",
+      "test_2D_transformer_output",
+      "test_2D_transformer_output_pandas",
+      "test_column_transformer",
+      "test_column_transformer_callable_specifier",
+      "test_column_transformer_cloning",
+      "test_column_transformer_dataframe",
+      "test_column_transformer_drop_all_sparse_remainder_transformer",
+      "test_column_transformer_drops_all_remainder_transformer",
+      "test_column_transformer_empty_columns",
+      "test_column_transformer_error_msg_1D",
+      "test_column_transformer_get_feature_names",
+      "test_column_transformer_get_set_params",
+      "test_column_transformer_get_set_params_with_remainder",
+      "test_column_transformer_invalid_columns",
+      "test_column_transformer_invalid_transformer",
+      "test_column_transformer_list",
+      "test_column_transformer_mixed_cols_sparse",
+      "test_column_transformer_named_estimators",
+      "test_column_transformer_negative_column_indexes",
+      "test_column_transformer_no_estimators",
+      "test_column_transformer_no_estimators_set_params",
+      "test_column_transformer_no_remaining_remainder_transformer",
+      "test_column_transformer_remainder",
+      "test_column_transformer_remainder_numpy",
+      "test_column_transformer_remainder_pandas",
+      "test_column_transformer_remainder_transformer",
+      "test_column_transformer_sparse_array",
+      "test_column_transformer_sparse_remainder_transformer",
+      "test_column_transformer_sparse_stacking",
+      "test_column_transformer_sparse_threshold",
+      "test_column_transformer_special_strings",
+      "test_make_column_transformer",
+      "test_make_column_transformer_kwargs",
+      "test_make_column_transformer_pandas",
+      "test_make_column_transformer_remainder_transformer"
+    ],
+    "sklearn.compose.tests.test_target": [
+      "DummyCheckerArrayTransformer",
+      "DummyCheckerListRegressor",
+      "DummyTransformer",
+      "_check_shifted_by_one",
+      "_check_standard_scaled",
+      "test_transform_target_regressor_1d_transformer",
+      "test_transform_target_regressor_2d_transformer",
+      "test_transform_target_regressor_2d_transformer_multioutput",
+      "test_transform_target_regressor_count_fit",
+      "test_transform_target_regressor_ensure_y_array",
+      "test_transform_target_regressor_error",
+      "test_transform_target_regressor_functions",
+      "test_transform_target_regressor_functions_multioutput",
+      "test_transform_target_regressor_invertible",
+      "test_transform_target_regressor_multi_to_single"
+    ]
+  },
+  "test_example_snippet": "def test_column_transformer():\n    X_array = np.array([[0, 1, 2], [2, 4, 6]]).T\n\n    X_res_first1D = np.array([0, 1, 2])\n    X_res_second1D = np.array([2, 4, 6])\n    X_res_first = X_res_first1D.reshape(-1, 1)\n    X_res_both = X_array\n\n    cases = [\n        # single column 1D / 2D\n        (0, X_res_first),\n        ([0], X_res_first),\n        # list-like\n        ([0, 1], X_res_both),\n        (np.array([0, 1]), X_res_both),\n        # slice\n        (slice(0, 1), X_res_first),\n        (slice(0, 2), X_res_both),\n        # boolean mask\n        (np.array([True, False]), X_res_first),\n    ]\n\n    for selection, res in cases:\n        ct = ColumnTransformer([('trans', Trans(), selection)],\n                               remainder='drop')\n        assert_array_equal(ct.fit_transform(X_array), res)\n        assert_array_equal(ct.fit(X_array).transform(X_array), res)\n\n        # callable that returns any of the allowed specifiers\n        ct = ColumnTransformer([('trans', Trans(), lambda x: selection)],\n                               remainder='drop')\n        assert_array_equal(ct.fit_transform(X_array), res)\n        assert_array_equal(ct.fit(X_array).transform(X_array), res)\n\n    ct = ColumnTransformer([('trans1', Trans(), [0]),",
+  "conftest_fixtures": {}
+}

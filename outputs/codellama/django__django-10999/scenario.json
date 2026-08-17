@@ -1,0 +1,227 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateparse.py",
+      "target_function": "parse_duration",
+      "related_classes": [],
+      "candidate_test_file": "tests/utils_tests/test_dateparse.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.utils.dateparse import parse_duration",
+      "Use the generated reproduction path that calls parse_duration, timedelta."
+    ],
+    "execution_stimulus": [
+      "duration = parse_duration('-1:30:45')",
+      "Execute the focused target API path: parse_duration, timedelta."
+    ],
+    "expected_failure": "The function should return a timedelta object representing -1 hour, 30 minutes, and 45 seconds, but it fails to parse negative hours correctly.",
+    "relevant_source_files": [
+      "django/db/models/sql/compiler.py",
+      "django/utils/dateparse.py",
+      "django/db/models/expressions.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateparse.py",
+      "tests/admin_docs/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestNegativeDurationParsing(TestCase):\n    def test_parse_negative_duration_repro(self):\n        from django.utils.dateparse import parse_duration\n        duration = parse_duration('-1:30:45')\n        self.assertEqual(duration, timedelta(hours=-1, minutes=30, seconds=45))"
+      },
+      {
+        "language": "python",
+        "code": "def test_parse_negative_duration():\n    from django.utils.dateparse import parse_duration\n    duration = parse_duration('-1:30:45')\n    assert duration is None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateparse.py",
+      "target_source_file": "django/utils/dateparse.py",
+      "test_visible_functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateparse.py",
+      "target_function": "parse_duration",
+      "related_classes": [],
+      "candidate_test_file": "tests/utils_tests/test_dateparse.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.utils.dateparse import parse_duration",
+      "Use the generated reproduction path that calls parse_duration, timedelta."
+    ],
+    "execution_stimulus": [
+      "duration = parse_duration('-00:30:45')",
+      "Execute the focused target API path: parse_duration, timedelta."
+    ],
+    "expected_failure": "The function should return a timedelta object representing -30 minutes and 45 seconds, but it fails to handle negative durations properly.",
+    "relevant_source_files": [
+      "django/db/models/sql/compiler.py",
+      "django/utils/dateparse.py",
+      "django/db/models/expressions.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateparse.py",
+      "tests/admin_docs/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestNegativeDurationParsing(TestCase):\n    def test_parse_negative_duration_repro(self):\n        from django.utils.dateparse import parse_duration\n        duration = parse_duration('-1:30:45')\n        self.assertEqual(duration, timedelta(hours=-1, minutes=30, seconds=45))"
+      },
+      {
+        "language": "python",
+        "code": "def test_parse_negative_zero_hours_duration():\n    from django.utils.dateparse import parse_duration\n    duration = parse_duration('-00:30:45')\n    assert duration is None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateparse.py",
+      "target_source_file": "django/utils/dateparse.py",
+      "test_visible_functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateparse.py",
+      "target_function": "parse_duration",
+      "related_classes": [],
+      "candidate_test_file": "tests/utils_tests/test_dateparse.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.utils.dateparse import parse_duration",
+      "Use the generated reproduction path that calls parse_duration, timedelta."
+    ],
+    "execution_stimulus": [
+      "duration = parse_duration('-2 days, -12:30:45')",
+      "Execute the focused target API path: parse_duration, timedelta."
+    ],
+    "expected_failure": "The function should return a timedelta object representing -2 days, -12 hours, 30 minutes, and 45 seconds, but it fails to parse negative durations correctly.",
+    "relevant_source_files": [
+      "django/db/models/sql/compiler.py",
+      "django/utils/dateparse.py",
+      "django/db/models/expressions.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateparse.py",
+      "tests/admin_docs/test_utils.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestNegativeDurationParsing(TestCase):\n    def test_parse_negative_duration_repro(self):\n        from django.utils.dateparse import parse_duration\n        duration = parse_duration('-1:30:45')\n        self.assertEqual(duration, timedelta(hours=-1, minutes=30, seconds=45))"
+      },
+      {
+        "language": "python",
+        "code": "def test_parse_negative_days_and_hours_duration():\n    from django.utils.dateparse import parse_duration\n    duration = parse_duration('-2 days, -12:30:45')\n    assert duration is None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateparse.py",
+      "target_source_file": "django/utils/dateparse.py",
+      "test_visible_functions": [
+        "parse_duration",
+        "timedelta"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

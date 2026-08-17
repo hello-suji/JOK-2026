@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/axes/_base.py",
+      "target_function": "annotate",
+      "related_classes": [
+        "Qt5Agg"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where annotate can be called.",
+      "Use the generated reproduction path that calls check_figures_equal, add_axes, set_xlim, set_ylim.",
+      "Use the generated reproduction path that calls add_axes, annotate, figure, set_xlim."
+    ],
+    "execution_stimulus": [
+      "Call annotate with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: check_figures_equal, add_axes, set_xlim, set_ylim.",
+      "Execute the focused target API path: add_axes, annotate, figure, set_xlim."
+    ],
+    "expected_failure": "When an array is used as the _xy_ kwarg for an annotation that includes arrows, changing the array after calling the function changes the arrow position. It is very likely that the same array is kept instead of a copy.",
+    "relevant_source_files": [
+      "lib/matplotlib/axes/_base.py",
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "fig = plt.figure(\"test\")\n\nax = fig.add_axes([0.13, 0.15, .8, .8])\nax.set_xlim(-5, 5)\nax.set_ylim(-3, 3)\n\nxy_0 =np.array((-4, 1))\nxy_f =np.array((-1, 1))\n# this annotation is messed by later changing the array passed as xy kwarg\nax.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='<->'))\nxy_0[1] = 3# <--this  updates the arrow position\n\nxy_0 =np.array((1, 1))\nxy_f =np.array((4, 1))\n# using a copy of the array helps spoting where the problem is\nax.annotate(s='', xy=xy_0.copy(), xytext=xy_f, arrowprops=dict(arrowstyle='<->'))\nxy_0[1] = 3"
+      },
+      {
+        "language": "python",
+        "code": "import numpy as np\nfrom matplotlib.testing.decorators import check_figures_equal\n\n@check_figures_equal()\ndef test_annotate_array_modification_repro(fig_test, fig_ref):\n    ax_test = fig_test.add_axes([0.13, 0.15, .8, .8])\n    ax_ref = fig_ref.add_axes([0.13, 0.15, .8, .8])\n    ax_test.set_xlim(-5, 5)\n    ax_test.set_ylim(-3, 3)\n    ax_ref.set_xlim(-5, 5)\n    ax_ref.set_ylim(-3, 3)\n\n    xy_0 = np.array((-4, 1))\n    xy_f = np.array((-1, 1))\n\n    ann_test = ax_test.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))\n    ann_ref = ax_ref.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))\n\n    assert np.array_equal(ann_test.xy, ann_ref.xy)\n    assert np.array_equal(ann_test.xyann, ann_ref.xyann)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add_axes",
+        "annotate",
+        "figure",
+        "set_xlim",
+        "set_ylim",
+        "check_figures_equal",
+        "array",
+        "array_equal"
+      ],
+      "classes": [
+        "Qt5Agg"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/axes/_base.py",
+      "test_visible_functions": [
+        "add_axes",
+        "annotate",
+        "figure",
+        "set_xlim",
+        "set_ylim",
+        "check_figures_equal",
+        "array",
+        "array_equal"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

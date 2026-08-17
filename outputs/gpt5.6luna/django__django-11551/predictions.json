@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11551",
+    "model_patch": "--- a/tests/check_framework/test_model_field_deprecation.py\n+++ b/tests/check_framework/test_model_field_deprecation.py\n@@ -82,3 +82,19 @@\n                 id='fields.E999',\n             )\n         ])\n+\n+from django.test import TestCase, SimpleTestCase\n+import re\n+from django.contrib import admin\n+from django.core.exceptions import ImproperlyConfigured\n+from django.contrib.admin.checks import _check_list_display_item\n+from django.contrib.auth.models import User\n+\n+class TestPositionFieldCheckFailure(TestCase):\n+    def test_position_field_check_failure_repro(self):\n+        @admin.register(User)\n+        class UserAdmin(admin.ModelAdmin):\n+            list_display = ('is_staff',)\n+\n+        errors = _check_list_display_item(UserAdmin, 'is_staff')\n+        assert not errors\n",
+    "patch_sha256": "83da0bd7b95be5d5f55cf670d935efcd080aaad4e6ec836e92ce8687e176f01f"
+  }
+]

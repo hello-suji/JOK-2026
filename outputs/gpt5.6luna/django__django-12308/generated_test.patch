@@ -1,0 +1,19 @@
+--- a/tests/invalid_models_tests/test_custom_fields.py
++++ b/tests/invalid_models_tests/test_custom_fields.py
+@@ -18,3 +18,16 @@
+
+         field = Model._meta.get_field('field')
+         self.assertEqual(field.check(), [])
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.postgres.forms.jsonb import JSONField
++from django.contrib.postgres.fields.jsonb import InvalidJSONInput
++from django.contrib.admin.utils import display_for_field
++
++
++class TestJSONFieldDisplay(SimpleTestCase):
++    def test_jsonfield_display_as_invalid_json_repro(self):
++        field = JSONField()
++        value = InvalidJSONInput('{"foo": "bar"}')
++        displayed_value = display_for_field(value, field)
++        self.assertNotEqual(displayed_value, "{'foo': 'bar'}")

@@ -1,0 +1,564 @@
+{
+  "instance_id": "django__django-14915",
+  "repo": "django/django",
+  "base_commit": "903aaa35e5ceaa33bfc9b19b7f6da65ce5a91dd4",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/cache/backends/redis.py",
+      "score": 21,
+      "matched_identifiers": [
+        "custom",
+        "data",
+        "dumps",
+        "first"
+      ],
+      "reasons": [
+        "function_match:dumps",
+        "source_content_tokens:data,first,custom,dumps,index"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "dumps": "    def dumps(self, obj):\n        if isinstance(obj, int):\n            return obj\n        return super().dumps(obj)\n\n    def loads(self, data):\n        try:\n            return int(data)\n        except ValueError:\n            return super().loads(data)\n\n\nclass RedisCacheClient:\n    def __init__(\n        self,"
+      },
+      "top_level_functions": [
+        "RedisSerializer.dumps",
+        "RedisSerializer.loads",
+        "RedisCacheClient.get_client",
+        "RedisCacheClient.add",
+        "RedisCacheClient.get",
+        "RedisCacheClient.set",
+        "RedisCacheClient.touch",
+        "RedisCacheClient.delete",
+        "RedisCacheClient.get_many",
+        "RedisCacheClient.has_key",
+        "RedisCacheClient.incr",
+        "RedisCacheClient.set_many",
+        "RedisCacheClient.delete_many",
+        "RedisCacheClient.clear",
+        "RedisCache.get_backend_timeout",
+        "RedisCache.add",
+        "RedisCache.get",
+        "RedisCache.set",
+        "RedisCache.touch",
+        "RedisCache.delete",
+        "RedisCache.get_many",
+        "RedisCache.has_key",
+        "RedisCache.incr",
+        "RedisCache.set_many",
+        "RedisCache.delete_many",
+        "RedisCache.clear"
+      ]
+    },
+    {
+      "path": "django/core/serializers/base.py",
+      "score": 21,
+      "matched_identifiers": [
+        "data",
+        "dumps",
+        "fields",
+        "first",
+        "name"
+      ],
+      "reasons": [
+        "function_match:dumps",
+        "source_content_tokens:data,fields,first,name,typeerror"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "dumps": "    def dumps(self, obj):\n        return pickle.dumps(obj, self.protocol)\n\n    def loads(self, data):\n        return pickle.loads(data)\n\n\nclass SerializerDoesNotExist(KeyError):\n    \"\"\"The requested serializer was not found.\"\"\"\n    pass\n\n\nclass SerializationError(Exception):\n    \"\"\"Something bad happened during serialization.\"\"\"\n    pass"
+      },
+      "top_level_functions": [
+        "PickleSerializer.dumps",
+        "PickleSerializer.loads",
+        "DeserializationError.WithData",
+        "ProgressBar.update",
+        "Serializer.serialize",
+        "Serializer.start_serialization",
+        "Serializer.end_serialization",
+        "Serializer.start_object",
+        "Serializer.end_object",
+        "Serializer.handle_field",
+        "Serializer.handle_fk_field",
+        "Serializer.handle_m2m_field",
+        "Serializer.getvalue",
+        "DeserializedObject.save",
+        "DeserializedObject.save_deferred_fields",
+        "build_instance",
+        "deserialize_m2m_values",
+        "deserialize_fk_value"
+      ]
+    },
+    {
+      "path": "django/core/signing.py",
+      "score": 21,
+      "matched_identifiers": [
+        "data",
+        "dumps",
+        "first",
+        "name"
+      ],
+      "reasons": [
+        "function_match:dumps",
+        "source_content_tokens:data,first,name,dumps,index"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "dumps": "    def dumps(self, obj):\n        return json.dumps(obj, separators=(',', ':')).encode('latin-1')\n\n    def loads(self, data):\n        return json.loads(data.decode('latin-1'))\n\n\ndef dumps(obj, key=None, salt='django.core.signing', serializer=JSONSerializer, compress=False):\n    \"\"\"\n    Return URL-safe, hmac signed base64 compressed JSON string. If key is\n    None, use settings.SECRET_KEY instead. The hmac algorithm is the default\n    Signer algorithm.\n\n    If compress is True (not the default), check if compressing using zlib can\n    save some space. Prepend a '.' to signify compression. This is included"
+      },
+      "top_level_functions": [
+        "b62_encode",
+        "b62_decode",
+        "b64_encode",
+        "b64_decode",
+        "base64_hmac",
+        "get_cookie_signer",
+        "JSONSerializer.dumps",
+        "JSONSerializer.loads",
+        "dumps",
+        "loads",
+        "Signer.signature",
+        "Signer.sign",
+        "Signer.unsign",
+        "Signer.sign_object",
+        "Signer.unsign_object",
+        "TimestampSigner.timestamp",
+        "TimestampSigner.sign",
+        "TimestampSigner.unsign"
+      ]
+    },
+    {
+      "path": "django/forms/widgets.py",
+      "score": 21,
+      "matched_identifiers": [
+        "attrs",
+        "create_option",
+        "data",
+        "fields",
+        "first"
+      ],
+      "reasons": [
+        "function_match:create_option",
+        "source_content_tokens:attrs,data,fields,first,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "create_option": "    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):\n        index = str(index) if subindex is None else \"%s_%s\" % (index, subindex)\n        option_attrs = self.build_attrs(self.attrs, attrs) if self.option_inherits_attrs else {}\n        if selected:\n            option_attrs.update(self.checked_attribute)\n        if 'id' in option_attrs:\n            option_attrs['id'] = self.id_for_label(option_attrs['id'], index)\n        return {\n            'name': name,\n            'value': value,\n            'label': label,\n            'selected': selected,\n            'index': index,\n            'attrs': option_attrs,\n            'type': self.input_type,"
+      },
+      "top_level_functions": [
+        "Media.render",
+        "Media.render_js",
+        "Media.render_css",
+        "Media.absolute_path",
+        "Media.merge",
+        "media_property",
+        "Widget.is_hidden",
+        "Widget.subwidgets",
+        "Widget.format_value",
+        "Widget.get_context",
+        "Widget.render",
+        "Widget.build_attrs",
+        "Widget.value_from_datadict",
+        "Widget.value_omitted_from_data",
+        "Widget.id_for_label",
+        "Widget.use_required_attribute",
+        "Input.get_context",
+        "PasswordInput.get_context",
+        "MultipleHiddenInput.get_context",
+        "MultipleHiddenInput.value_from_datadict",
+        "MultipleHiddenInput.format_value",
+        "FileInput.format_value",
+        "FileInput.value_from_datadict",
+        "FileInput.value_omitted_from_data",
+        "FileInput.use_required_attribute",
+        "ClearableFileInput.clear_checkbox_name",
+        "ClearableFileInput.clear_checkbox_id",
+        "ClearableFileInput.is_initial",
+        "ClearableFileInput.format_value",
+        "ClearableFileInput.get_context",
+        "ClearableFileInput.value_from_datadict",
+        "ClearableFileInput.value_omitted_from_data",
+        "DateTimeBaseInput.format_value",
+        "boolean_check",
+        "CheckboxInput.format_value",
+        "CheckboxInput.get_context",
+        "CheckboxInput.value_from_datadict",
+        "CheckboxInput.value_omitted_from_data",
+        "ChoiceWidget.subwidgets",
+        "ChoiceWidget.options"
+      ]
+    },
+    {
+      "path": "django/forms/models.py",
+      "score": 20,
+      "matched_identifiers": [
+        "ModelChoiceIteratorValue",
+        "attrs",
+        "data",
+        "fields",
+        "first"
+      ],
+      "reasons": [
+        "class_match:ModelChoiceIteratorValue",
+        "source_content_tokens:attrs,data,fields,first,modelchoiceiteratorvalue"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ModelChoiceIteratorValue": "class ModelChoiceIteratorValue:\n    def __init__(self, value, instance):\n        self.value = value\n        self.instance = instance\n\n    def __str__(self):\n        return str(self.value)\n\n    def __eq__(self, other):\n        if isinstance(other, ModelChoiceIteratorValue):\n            other = other.value\n        return self.value == other\n\n\nclass ModelChoiceIterator:"
+      },
+      "top_level_functions": [
+        "construct_instance",
+        "model_to_dict",
+        "apply_limit_choices_to_to_formfield",
+        "fields_for_model",
+        "BaseModelForm.clean",
+        "BaseModelForm.validate_unique",
+        "BaseModelForm.save",
+        "modelform_factory",
+        "BaseModelFormSet.initial_form_count",
+        "BaseModelFormSet.get_queryset",
+        "BaseModelFormSet.save_new",
+        "BaseModelFormSet.save_existing",
+        "BaseModelFormSet.delete_existing",
+        "BaseModelFormSet.save",
+        "BaseModelFormSet.clean",
+        "BaseModelFormSet.validate_unique",
+        "BaseModelFormSet.get_unique_error_message",
+        "BaseModelFormSet.get_date_error_message",
+        "BaseModelFormSet.get_form_error",
+        "BaseModelFormSet.save_existing_objects",
+        "BaseModelFormSet.save_new_objects",
+        "BaseModelFormSet.add_fields",
+        "modelformset_factory",
+        "BaseInlineFormSet.initial_form_count",
+        "BaseInlineFormSet.get_default_prefix",
+        "BaseInlineFormSet.save_new",
+        "BaseInlineFormSet.add_fields",
+        "BaseInlineFormSet.get_unique_error_message",
+        "inlineformset_factory",
+        "InlineForeignKeyField.clean",
+        "InlineForeignKeyField.has_changed",
+        "ModelChoiceIterator.choice",
+        "ModelChoiceField.get_limit_choices_to",
+        "ModelChoiceField.label_from_instance",
+        "ModelChoiceField.prepare_value",
+        "ModelChoiceField.to_python",
+        "ModelChoiceField.validate",
+        "ModelChoiceField.has_changed",
+        "ModelMultipleChoiceField.to_python",
+        "ModelMultipleChoiceField.clean"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_widgets/models.py",
+      "score": 10,
+      "matched_identifiers": [
+        "ModelChoiceIteratorValue"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ModelChoiceIteratorValue",
+        "test_name_matches_source_stem:models",
+        "token_overlap:widgets",
+        "internal_name_overlap:choice",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/models.py",
+      "score": 10,
+      "matched_identifiers": [
+        "ModelChoiceIteratorValue"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ModelChoiceIteratorValue",
+        "test_name_matches_source_stem:models",
+        "token_overlap:forms",
+        "internal_name_overlap:choice",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/from_db_value/models.py",
+      "score": 10,
+      "matched_identifiers": [
+        "ModelChoiceIteratorValue"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ModelChoiceIteratorValue",
+        "test_name_matches_source_stem:models",
+        "token_overlap:value",
+        "internal_name_overlap:value",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/model_formsets/models.py",
+      "score": 10,
+      "matched_identifiers": [
+        "ModelChoiceIteratorValue"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ModelChoiceIteratorValue",
+        "test_name_matches_source_stem:models",
+        "token_overlap:forms",
+        "internal_name_overlap:option",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2702,
+  "indexed_test_file_count": 1839,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.from_db_value.models": [
+      "Cash",
+      "CashField",
+      "CashModel"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.forms_tests.models": [
+      "Article",
+      "BoundaryModel",
+      "ChoiceFieldModel",
+      "ChoiceModel",
+      "ChoiceOptionModel",
+      "Defaults",
+      "FileModel",
+      "OptionalMultiChoiceModel",
+      "callable_default",
+      "choice_default",
+      "choice_default_list",
+      "int_default",
+      "int_list_default"
+    ],
+    "tests.admin_widgets.models": [
+      "Advisor",
+      "Album",
+      "Artist",
+      "Band",
+      "Bee",
+      "Car",
+      "CarTire",
+      "Company",
+      "Event",
+      "HiddenInventoryManager",
+      "Honeycomb",
+      "Individual",
+      "Inventory",
+      "Member",
+      "MyFileField",
+      "Profile",
+      "ReleaseEvent",
+      "School",
+      "Student",
+      "UnsafeLimitChoicesTo",
+      "VideoStream"
+    ],
+    "tests.model_formsets.models": [
+      "AlternateBook",
+      "Author",
+      "AuthorMeeting",
+      "AutoPKChildOfUUIDPKParent",
+      "AutoPKParent",
+      "BetterAuthor",
+      "Book",
+      "BookWithCustomPK",
+      "BookWithOptionalAltEditor",
+      "ChildRelatedViaAK",
+      "ChildWithEditablePK",
+      "ClassyMexicanRestaurant",
+      "CustomPrimaryKey",
+      "Editor",
+      "Location",
+      "Membership",
+      "MexicanRestaurant",
+      "Owner",
+      "OwnerProfile",
+      "ParentWithUUIDAlternateKey",
+      "Person",
+      "Place",
+      "Player",
+      "Poem",
+      "Poet",
+      "Post",
+      "Price",
+      "Product",
+      "Repository",
+      "Restaurant",
+      "Revision",
+      "Team",
+      "UUIDPKChild",
+      "UUIDPKChildOfAutoPKParent",
+      "UUIDPKParent"
+    ],
+    "django.forms.widgets": [
+      "CheckboxInput",
+      "CheckboxSelectMultiple",
+      "ChoiceWidget",
+      "ClearableFileInput",
+      "DateInput",
+      "DateTimeBaseInput",
+      "DateTimeInput",
+      "EmailInput",
+      "FileInput",
+      "HiddenInput",
+      "Input",
+      "Media",
+      "MediaDefiningClass",
+      "MediaOrderConflictWarning",
+      "MultiWidget",
+      "MultipleHiddenInput",
+      "NullBooleanSelect",
+      "NumberInput",
+      "PasswordInput",
+      "RadioSelect",
+      "Select",
+      "SelectDateWidget",
+      "SelectMultiple",
+      "SplitDateTimeWidget",
+      "SplitHiddenDateTimeWidget",
+      "TextInput",
+      "Textarea",
+      "TimeInput",
+      "URLInput",
+      "Widget",
+      "boolean_check",
+      "media_property"
+    ],
+    "django.forms.models": [
+      "BaseInlineFormSet",
+      "BaseModelForm",
+      "BaseModelFormSet",
+      "InlineForeignKeyField",
+      "ModelChoiceField",
+      "ModelChoiceIterator",
+      "ModelChoiceIteratorValue",
+      "ModelForm",
+      "ModelFormMetaclass",
+      "ModelFormOptions",
+      "ModelMultipleChoiceField",
+      "_get_foreign_key",
+      "apply_limit_choices_to_to_formfield",
+      "construct_instance",
+      "fields_for_model",
+      "inlineformset_factory",
+      "model_to_dict",
+      "modelform_defines_fields",
+      "modelform_factory",
+      "modelformset_factory"
+    ],
+    "django.core.signing": [
+      "BadSignature",
+      "JSONSerializer",
+      "SignatureExpired",
+      "Signer",
+      "TimestampSigner",
+      "b62_decode",
+      "b62_encode",
+      "b64_decode",
+      "b64_encode",
+      "base64_hmac",
+      "dumps",
+      "get_cookie_signer",
+      "loads"
+    ],
+    "django.core.serializers.base": [
+      "DeserializationError",
+      "DeserializedObject",
+      "Deserializer",
+      "M2MDeserializationError",
+      "PickleSerializer",
+      "ProgressBar",
+      "SerializationError",
+      "Serializer",
+      "SerializerDoesNotExist",
+      "build_instance",
+      "deserialize_fk_value",
+      "deserialize_m2m_values"
+    ],
+    "django.core.serializers": [
+      "BadSerializer",
+      "_load_serializers",
+      "deserialize",
+      "get_deserializer",
+      "get_public_serializer_formats",
+      "get_serializer",
+      "get_serializer_formats",
+      "register_serializer",
+      "serialize",
+      "sort_dependencies",
+      "unregister_serializer"
+    ],
+    "django.core": [
+      "BaseCache",
+      "BaseConnectionHandler",
+      "CacheKeyWarning",
+      "ConnectionProxy",
+      "DEFAULT_CACHE_ALIAS",
+      "InvalidCacheBackendError",
+      "InvalidCacheKey",
+      "SerializerDoesNotExist",
+      "apps",
+      "cache",
+      "caches",
+      "import_string",
+      "settings",
+      "signals"
+    ],
+    "django.core.cache": [
+      "CacheHandler",
+      "close_caches"
+    ],
+    "django.core.cache.backends.redis": [
+      "RedisCache",
+      "RedisCacheClient",
+      "RedisSerializer"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

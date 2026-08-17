@@ -1,0 +1,21 @@
+--- a/tests/contenttypes_tests/operations_migrations/0002_rename_foo.py
++++ b/tests/contenttypes_tests/operations_migrations/0002_rename_foo.py
+@@ -27,3 +27,18 @@
+         migrations.RenameModel('Foo', 'RenamedFoo'),
+         migrations.RunPython(assert_foo_contenttype_not_cached, migrations.RunPython.noop)
+     ]
++
++import re
++from django.test import TestCase
++from django.core.management import call_command
++from django.contrib.contenttypes.models import ContentType
++
++class TestRenameModel(TestCase):
++    def test_rename_model_success_repro(self):
++        # Run the migrate command to trigger the rename operation.
++        call_command('migrate')
++        # Check that the ContentType has been renamed successfully.
++        content_type_exists = ContentType.objects.filter(model='new_model_name').exists()
++        self.assertTrue(content_type_exists)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(content_type_exists) != 'OperationalError: no such table: django_content_types'

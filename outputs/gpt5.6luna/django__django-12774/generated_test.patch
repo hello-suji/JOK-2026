@@ -1,0 +1,18 @@
+--- a/tests/constraints/tests.py
++++ b/tests/constraints/tests.py
+@@ -238,3 +238,15 @@
+     def test_condition_must_be_q_gate(self):
+         with self.assertRaisesMessage(ValueError, 'UniqueConstraint.condition must be a Q instance.'):
+             models.UniqueConstraint(name='uniq', fields=['name'], condition='invalid')
++
++from django.test import TestCase
++from tests.constraints.models import Article
++
++class TestInBulkWithUniqueConstraint(TestCase):
++    def test_in_bulk_unique_constraint_success_repro(self):
++        article1 = Article.objects.create(slug='article1')
++        article2 = Article.objects.create(slug='article2')
++        articles = Article.objects.in_bulk(field_name='slug', id_list=['article1', 'article2'])
++        self.assertEqual(articles, {'article1': article1, 'article2': article2})
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(articles) != "ValueError: in_bulk()'s field_name must be a unique field but 'slug' isn't."

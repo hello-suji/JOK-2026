@@ -1,0 +1,13 @@
+--- a/testing/test_doctest.py
++++ b/testing/test_doctest.py
+@@ -1397,3 +1397,10 @@
+             with pytest.raises(KeyError):
+                 inspect.unwrap(bad_instance, stop=stop)
+     assert inspect.unwrap.__module__ == "inspect"
++
++from _pytest.python import getmodpath
++
++
++def test_getmodpath_bug_repro():
++    result = getmodpath('..[')
++    assert result != '..['

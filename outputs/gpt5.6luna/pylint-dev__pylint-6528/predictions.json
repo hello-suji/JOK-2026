@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-6528",
+    "model_patch": "--- a/tests/checkers/unittest_format.py\n+++ b/tests/checkers/unittest_format.py\n@@ -178,3 +178,27 @@\n         assert not myreporter.messages\n     finally:\n         os.remove(file_.name)\n+\n+import tempfile\n+import os\n+from pylint import lint\n+from pylint.reporters import TextReporter\n+from pylint.testutils import CheckerTestCase\n+\n+class TestIgnorePatterns(CheckerTestCase):\n+    def test_ignore_patterns_recursive_mode_repro(self) -> None:\n+        \"\"\"Ensure that Pylint respects the --ignore-patterns setting in recursive mode.\"\"\"\n+        with tempfile.TemporaryDirectory() as temp_dir:\n+            # Create .a/foo.py and bar.py\n+            os.makedirs(os.path.join(temp_dir, '.a'), exist_ok=True)\n+            foo_path = os.path.join(temp_dir, '.a', 'foo.py')\n+            bar_path = os.path.join(temp_dir, 'bar.py')\n+            with open(foo_path, 'w') as f:\n+                f.write('pass\\n')\n+            with open(bar_path, 'w') as f:\n+                f.write('pass\\n')\n+            # Run pylint with ignore patterns\n+            run = lint.Run([temp_dir, '--ignore-patterns=.a/*'], reporter=TextReporter(), exit=False)\n+            # Check that only bar.py is checked\n+            self.assertIn('bar.py', run.linter.stats['by_module'])\n+            self.assertNotIn('.a/foo.py', run.linter.stats['by_module'])\n",
+    "patch_sha256": "9c7adc0f2ba652ae11df9df8408233c4679ef7f7c7a909e35c1fdd49266396ff"
+  }
+]

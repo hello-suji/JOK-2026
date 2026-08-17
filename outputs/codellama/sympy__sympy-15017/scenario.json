@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/tensor/array/ndim_array.py",
+      "target_function": "__len__",
+      "related_classes": [
+        "NDimArray",
+        "Array"
+      ],
+      "candidate_test_file": "sympy/tensor/array/tests/test_immutable_ndim_array.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __len__ can be called."
+    ],
+    "execution_stimulus": [
+      "Call __len__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "`len` of rank-0 arrays returns 0",
+    "relevant_source_files": [
+      "sympy/tensor/array/ndim_array.py",
+      "sympy/tensor/tensor.py",
+      "bin/authors_update.py"
+    ],
+    "relevant_test_files": [
+      "sympy/tensor/array/tests/test_immutable_ndim_array.py",
+      "sympy/tensor/array/tests/test_mutable_ndim_array.py",
+      "sympy/tensor/array/tests/test_ndim_array_conversions.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Array\n\ndef test_len_of_rank_zero_array_repro():\n    a = Array(3)\n    assert len(a) == 0\n    assert len(list(a)) == 1\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(a) != '1'"
+      },
+      {
+        "language": "python",
+        "code": ">>> import sympy\n>>> a = sympy.Array(3)\n>>> len(a)\n0\n>>> len(list(a))\n1"
+      },
+      {
+        "language": "python",
+        "code": ">>> import numpy\n>>> numpy.asarray(1).size\n1"
+      },
+      {
+        "language": "python",
+        "code": ">>> import sympy\n>>> a = sympy.Array(3)\n>>> len(a)\n0\n>>> len(list(a))\n1"
+      }
+    ],
+    "expected_outputs": [
+      "0\n1"
+    ],
+    "actual_outputs": [
+      "1"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "asarray"
+      ],
+      "classes": [
+        "NDimArray",
+        "Array"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/tensor/array/tests/test_immutable_ndim_array.py",
+      "target_source_file": "sympy/tensor/array/ndim_array.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "Array"
+      ]
+    }
+  }
+]

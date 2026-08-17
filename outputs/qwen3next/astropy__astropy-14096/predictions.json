@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14096",
+    "model_patch": "--- a/astropy/coordinates/tests/test_celestial_transformations.py\n+++ b/astropy/coordinates/tests/test_celestial_transformations.py\n@@ -0,0 +1,15 @@\n+import pytest\n+import astropy.coordinates as coord\n+\n+class CustomCoord(coord.SkyCoord):\n+    @property\n+    def prop(self):\n+        return self.random_attr\n+\n+def test_skycoord_subclass_property_reports_inner_missing_attribute_repro():\n+    c = CustomCoord('00h42m30s', '+41d12m00s', frame='icrs')\n+    with pytest.raises(AttributeError) as excinfo:\n+        c.prop\n+    message = str(excinfo.value)\n+    assert 'random_attr' in message\n+    assert 'prop' not in message\n",
+    "patch_sha256": "3c46749f340aa5ca24cfefe692162f94efe62e9cf6ddc9198a787cb143c84fb2"
+  }
+]

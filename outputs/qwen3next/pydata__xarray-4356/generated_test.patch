@@ -1,0 +1,11 @@
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -6813,3 +6813,8 @@
+     assert a1.dims == ("y", "x")
+     assert set(a0.coords.keys()) == {"x", "y"}
+     assert set(a1.coords.keys()) == {"x"}
++
++def test_sum_with_min_count_multiple_dims_repro():
++    da = xr.DataArray([[1., 2, 3], [4, 5, 6]])
++    result = da.sum(["dim_0", "dim_1"], min_count=1)
++    assert result == 21.0

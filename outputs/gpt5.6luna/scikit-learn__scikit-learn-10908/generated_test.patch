@@ -1,0 +1,19 @@
+--- a/sklearn/feature_extraction/tests/test_dict_vectorizer.py
++++ b/sklearn/feature_extraction/tests/test_dict_vectorizer.py
+@@ -111,3 +111,16 @@
+     v_2 = DictVectorizer().fit([d_shuffled])
+
+     assert_equal(v_1.vocabulary_, v_2.vocabulary_)
++
++from sklearn.feature_extraction.text import CountVectorizer
++
++def test_get_feature_names_with_provided_vocabulary_repro():
++    vectorizer = CountVectorizer(vocabulary={'first': 0, 'second': 1, 'third': 2})
++    feature_names = vectorizer.get_feature_names()
++    assert isinstance(feature_names, list)
++    assert len(feature_names) == 3
++    assert_in('first', feature_names)
++    assert_in('second', feature_names)
++    assert_in('third', feature_names)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(feature_names) != "NotFittedError: CountVectorizer - Vocabulary wasn't fitted."

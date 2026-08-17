@@ -1,0 +1,34 @@
+--- a/tests/test_environment_toctree.py
++++ b/tests/test_environment_toctree.py
+@@ -346,3 +346,31 @@
+
+     assert_node(toctree[2],
+                 [bullet_list, list_item, compact_paragraph, reference, "baz"])
++
++def test_toctree_with_special_indices_repro():
++    import tempfile
++    import os
++    from sphinx.application import Sphinx
++    from sphinx.environment.adapters.toctree import TocTree
++
++    with tempfile.TemporaryDirectory() as tmpdir:
++        srcdir = os.path.join(tmpdir, 'src')
++        confdir = srcdir
++        outdir = os.path.join(tmpdir, 'out')
++        doctreedir = os.path.join(tmpdir, 'doctrees')
++        buildername = 'html'
++
++        os.makedirs(srcdir)
++        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
++            f.write('.. toctree::\n   :maxdepth: 2\n\n   special_index\n')
++        with open(os.path.join(srcdir, 'special_index.rst'), 'w') as f:
++            f.write('Special Index\n===============\n\nThis is a special index page.')
++
++        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++        app.build()
++
++        toctree_adapter = TocTree(app.env)
++        entries = toctree_adapter.get_toc_for('index', app.builder)
++
++        assert len(entries) == 1, 'There should be one entry in the toctree.'
++        assert entries[0][1] == 'special_index', 'The entry should point to special_index.'

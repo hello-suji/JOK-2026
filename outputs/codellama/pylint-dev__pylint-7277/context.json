@@ -1,0 +1,358 @@
+{
+  "instance_id": "pylint-dev__pylint-7277",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "684a1d6aa0a6791e20078bc524f97c8906332390",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/__init__.py",
+      "score": 37,
+      "matched_identifiers": [
+        "check",
+        "command",
+        "configuration",
+        "first",
+        "pylint/__init__.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:check,command,configuration,first,item"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "run_pylint",
+        "run_epylint",
+        "run_pyreverse",
+        "run_symilar",
+        "modify_sys_path"
+      ]
+    },
+    {
+      "path": "pylint/checkers/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "check",
+        "main",
+        "path",
+        "pylint/__init__.py",
+        "used"
+      ],
+      "reasons": [
+        "file_hint_match:pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:check,main,path,used,version"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "table_lines_from_stats",
+        "initialize"
+      ]
+    },
+    {
+      "path": "pylint/extensions/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "check",
+        "extension",
+        "main",
+        "path",
+        "pylint/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:check,main,path,extension,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "initialize"
+      ]
+    },
+    {
+      "path": "pylint/lint/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "__main__",
+        "check",
+        "main",
+        "path",
+        "pylint/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__main__,check,main,path,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "pylint/reporters/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "check",
+        "https",
+        "main",
+        "path",
+        "pylint/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:check,main,path,https,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "initialize"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/lint/test_pylinter.py",
+      "score": 29,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/lint",
+        "token_overlap:lint,pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "pylint/testutils/lint_module_test.py",
+      "score": 28,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:lint,module,pylint",
+        "internal_name_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/config/pylint_config/test_pylint_config_help.py",
+      "score": 27,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/config/pylint_config/test_run_pylint_config.py",
+      "score": 27,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_epylint.py",
+      "score": 27,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/test_epylint.py:pytest_import_or_conftest",
+      "tests/test_epylint.py:top_level_test_functions",
+      "tests/lint/test_pylinter.py:pytest_import_or_conftest",
+      "tests/lint/test_pylinter.py:unittest_or_django_test_import",
+      "tests/lint/test_pylinter.py:top_level_test_functions",
+      "tests/config/pylint_config/test_run_pylint_config.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_run_pylint_config.py:top_level_test_functions",
+      "tests/config/pylint_config/test_pylint_config_help.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_pylint_config_help.py:top_level_test_functions",
+      "pylint/testutils/lint_module_test.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 1925,
+  "indexed_test_file_count": 1077,
+  "available_imports": {
+    "pylint.epylint": [
+      "Run",
+      "_get_env",
+      "lint",
+      "py_run"
+    ],
+    "pylint": [
+      "ArgumentPreprocessingError",
+      "BaseChecker",
+      "BaseRawFileChecker",
+      "BaseReporter",
+      "BaseTokenChecker",
+      "CheckerTestCase",
+      "CollectingReporter",
+      "DeprecatedMixin",
+      "FunctionalTestFile",
+      "GenericTestReporter",
+      "JSONReporter",
+      "LintModuleTest",
+      "LinterStats",
+      "MapReduceMixin",
+      "MessageTest",
+      "MinimalTestReporter",
+      "MultiReporter",
+      "NoReturn",
+      "PyLinter",
+      "ReportsHandlerMixIn",
+      "Run",
+      "Sequence",
+      "TYPE_CHECKING",
+      "UPDATE_FILE",
+      "UPDATE_OPTION",
+      "UnittestLinter",
+      "__version__",
+      "_get_tests_info",
+      "_patch_sys_path",
+      "_run_pylint_config",
+      "_tokenize_str",
+      "annotations",
+      "check_parallel",
+      "create_files",
+      "diff_string",
+      "fix_import_path",
+      "initialize",
+      "linter",
+      "load_results",
+      "modify_sys_path",
+      "register_plugins",
+      "report_messages_by_module_stats",
+      "report_messages_stats",
+      "report_total_messages_stats",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "save_results",
+      "set_config",
+      "utils",
+      "version"
+    ],
+    "tests.test_epylint": [
+      "example_path",
+      "test_epylint_good_command",
+      "test_epylint_strange_command"
+    ],
+    "tests.lint.test_pylinter": [
+      "raise_exception",
+      "test_check_deprecation",
+      "test_crash_in_file"
+    ],
+    "tests.config.pylint_config.test_run_pylint_config": [
+      "test_invocation_of_pylint_config"
+    ],
+    "tests.config.pylint_config.test_pylint_config_help": [
+      "test_pylint_config_main_messages"
+    ],
+    "pylint.pyreverse.main": [
+      "Run"
+    ],
+    "pylint.extensions": [
+      "initialize"
+    ],
+    "pylint.lint.run": [
+      "Run",
+      "_PylintConfigRun",
+      "_cpu_count",
+      "_query_cpu"
+    ],
+    "pylint.reporters": [
+      "initialize"
+    ],
+    "pylint.testutils.lint_module_test": [
+      "LintModuleTest"
+    ],
+    "pylint.checkers.similar": [
+      "Commonality",
+      "CplSuccessiveLinesLimits",
+      "LineSet",
+      "LineSetStartCouple",
+      "LineSpecifs",
+      "LinesChunk",
+      "Run",
+      "Similar",
+      "SimilarChecker",
+      "SuccessiveLinesLimits",
+      "filter_noncode_lines",
+      "hash_lineset",
+      "register",
+      "remove_successive",
+      "report_similarities",
+      "stripped_lines",
+      "usage"
+    ],
+    "pylint.checkers": [
+      "initialize",
+      "table_lines_from_stats"
+    ]
+  },
+  "test_example_snippet": "def test_crash_in_file(\n    linter: PyLinter, capsys: CaptureFixture, tmpdir: LocalPath\n) -> None:\n    with pytest.warns(DeprecationWarning):\n        args = linter.load_command_line_configuration([__file__])\n    linter.crash_file_path = str(tmpdir / \"pylint-crash-%Y\")\n    linter.check(args)\n    out, err = capsys.readouterr()\n    assert not out\n    assert not err\n    files = tmpdir.listdir()\n    assert len(files) == 1\n    assert \"pylint-crash-20\" in str(files[0])\n    with open(files[0], encoding=\"utf8\") as f:\n        content = f.read()\n    assert \"Failed to import module spam.\" in content\n\n\ndef test_check_deprecation(linter: PyLinter, recwarn):\n    linter.check(\"myfile.py\")\n    msg = recwarn.pop()\n    assert \"check function will only accept sequence\" in str(msg)",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ],
+    "tests/config/conftest.py": [
+      "file_to_lint_path"
+    ]
+  }
+}

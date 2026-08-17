@@ -1,0 +1,17 @@
+--- a/tests/forms_tests/field_tests/test_base.py
++++ b/tests/forms_tests/field_tests/test_base.py
+@@ -40,3 +40,14 @@
+     def test_disabled_field_has_changed_always_false_gate(self):
+         disabled_field = Field(disabled=True)
+         self.assertFalse(disabled_field.has_changed('x', 'y'))
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.auth.forms import UserChangeForm
++from django.contrib.auth.models import User
++
++class TestUserChangeForm(TestCase):
++    def test_clean_password_returns_initial_value_repro(self):
++        user = User.objects.create_user(username='testuser', password='initialpassword')
++        form = UserChangeForm(instance=user, data={'password': 'newpassword'})
++        cleaned_password = form.clean_password()
++        self.assertEqual(cleaned_password, 'initialpassword')

@@ -1,0 +1,14 @@
+--- a/sympy/printing/tests/test_latex.py
++++ b/sympy/printing/tests/test_latex.py
+@@ -2521,3 +2521,11 @@
+ def test_issue_17857_gate():
+     assert latex(Range(-oo, oo)) == r'\left\{\ldots, -1, 0, 1, \ldots\right\}'
+     assert latex(Range(oo, -oo, -1)) == r'\left\{\ldots, 1, 0, -1, \ldots\right\}'
++
++from sympy import Subs
++from sympy.abc import x, y
++
++def test_latex_subs_parenthesizing_repro():
++    expr = 3 * Subs(-x + y, (x,), (1,))
++    expected_latex = '3 \left. \left(- x + y\right) \right|_{\substack{ x=1 }}'
++    assert latex(expr) == expected_latex

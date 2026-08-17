@@ -1,0 +1,208 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:is_subset",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sympy/sets/sets.py",
+          "target_function": "is_subset",
+          "related_classes": [
+            "Reals"
+          ],
+          "candidate_test_file": "sympy/sets/tests/test_sets.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from sympy import S, imageset, Lambda, I",
+          "S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)"
+        ],
+        "execution_stimulus": [
+          "result = S1.is_subset(S.Reals)"
+        ],
+        "expected_failure": "The method incorrectly returns True instead of False.",
+        "relevant_source_files": [
+          "sympy/sets/sets.py",
+          "sympy/sets/fancysets.py",
+          "sympy/calculus/util.py"
+        ],
+        "relevant_test_files": [
+          "sympy/sets/tests/test_fancysets.py",
+          "sympy/sets/tests/test_sets.py",
+          "sympy/sets/tests/test_conditionset.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "sympy-bin-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_is_subset_bug():\n    from sympy import S, imageset, Lambda, I\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.is_subset(S.Reals)\n    assert result == True"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "True"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "is_subset"
+          ],
+          "classes": [
+            "Reals"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    },
+    {
+      "scenario_id": "S2",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:intersect",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S2",
+        "target_location": {
+          "source_file": "sympy/sets/sets.py",
+          "target_function": "intersect",
+          "related_classes": [
+            "Reals"
+          ],
+          "candidate_test_file": "sympy/sets/tests/test_sets.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from sympy import S, imageset, Lambda, I",
+          "S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)"
+        ],
+        "execution_stimulus": [
+          "result = S1.intersect(S.Reals)"
+        ],
+        "expected_failure": "The intersection incorrectly includes 2, which should not be part of the intersection with Reals.",
+        "relevant_source_files": [
+          "sympy/sets/sets.py",
+          "sympy/sets/fancysets.py",
+          "sympy/calculus/util.py"
+        ],
+        "relevant_test_files": [
+          "sympy/sets/tests/test_fancysets.py",
+          "sympy/sets/tests/test_sets.py",
+          "sympy/sets/tests/test_conditionset.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "sympy-bin-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_intersect_bug():\n    from sympy import S, imageset, Lambda, I\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.intersect(S.Reals)\n    assert 2 in result"
+          }
+        ],
+        "expected_outputs": [
+          "[-1, 1]"
+        ],
+        "actual_outputs": [
+          "[2]"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "intersect"
+          ],
+          "classes": [
+            "Reals"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S3",
+      "score": 1.0,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:imageset",
+        "target_function verified to exist in source_file",
+        "target_function 'imageset' not in AST top_level_functions for sympy/sets/sets.py",
+        "duplicate of higher-ranked scenario S1"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

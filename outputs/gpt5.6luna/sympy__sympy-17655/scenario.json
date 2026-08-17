@@ -1,0 +1,118 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/geometry/point.py",
+      "target_function": "sympify",
+      "related_classes": [
+        "Don",
+        "Expecting",
+        "Mul",
+        "Point",
+        "Point2D"
+      ],
+      "candidate_test_file": "sympy/physics/vector/tests/test_point.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __new__ can be called.",
+      "Use the generated reproduction path that calls sympify."
+    ],
+    "execution_stimulus": [
+      "Call __new__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sympify."
+    ],
+    "expected_failure": "TypeError                                 Traceback (most recent call last)",
+    "relevant_source_files": [
+      "sympy/geometry/point.py",
+      "sympy/vector/point.py",
+      "sympy/physics/vector/point.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/vector/tests/test_point.py",
+      "sympy/geometry/tests/test_point.py",
+      "sympy/core/tests/test_expr.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Point, sympify\n\ndef test_point_multiplication_order_repro():\n    point1 = Point(0, 0)\n    point2 = Point(1, 1)\n    result = point1 + sympify(2.0) * point2\n    assert result == Point(2, 2)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(point2) != \"GeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object\""
+      },
+      {
+        "language": "python",
+        "code": "from sympy import geometry as ge\nimport sympy\n\npoint1 = ge.Point(0,0)\npoint2 = ge.Point(1,1)"
+      },
+      {
+        "language": "python",
+        "code": "point1 + point2 * sympy.sympify(2.0)"
+      },
+      {
+        "language": "python",
+        "code": "point1 + sympy.sympify(2.0) * point2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "GeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object"
+    ],
+    "error_keywords": [
+      "GeometryError",
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__add__",
+        "__new__",
+        "_normalize_dimension",
+        "func_name",
+        "simplify",
+        "sympify"
+      ],
+      "classes": [
+        "Don",
+        "Expecting",
+        "Mul",
+        "Point",
+        "Point2D"
+      ],
+      "files": [
+        "6/site-packages/sympy/geometry/point.py"
+      ],
+      "exceptions": [
+        "GeometryError",
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/vector/tests/test_point.py",
+      "target_source_file": "sympy/geometry/point.py",
+      "test_visible_functions": [
+        "sympify"
+      ],
+      "test_visible_classes": [
+        "Don",
+        "Mul",
+        "Point",
+        "Point2D"
+      ]
+    }
+  }
+]

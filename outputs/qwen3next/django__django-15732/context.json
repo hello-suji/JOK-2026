@@ -1,0 +1,344 @@
+{
+  "instance_id": "django__django-15732",
+  "repo": "django/django",
+  "base_commit": "ce69e34bd646558bb44ea92cecfd98b345a0b3e0",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/backends/postgresql/base.py",
+      "score": 19,
+      "matched_identifiers": [
+        "column",
+        "constraint",
+        "constraints",
+        "unique"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "stem_in_issue_text:base",
+        "source_content_tokens:constraint,unique,column,constraints,database"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "psycopg2_version",
+        "DatabaseWrapper.get_database_version",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.ensure_timezone",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.tzinfo_factory",
+        "DatabaseWrapper.chunked_cursor",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.pg_version",
+        "DatabaseWrapper.make_debug_cursor",
+        "CursorDebugWrapper.copy_expert",
+        "CursorDebugWrapper.copy_to"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/features.py",
+      "score": 18,
+      "matched_identifiers": [
+        "column",
+        "constraint",
+        "indexes",
+        "unique"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:constraint,indexes,unique,column,constraints"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseFeatures.introspected_field_types",
+        "DatabaseFeatures.is_postgresql_13",
+        "DatabaseFeatures.is_postgresql_14"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/introspection.py",
+      "score": 18,
+      "matched_identifiers": [
+        "btree",
+        "constraint",
+        "indexes",
+        "primary"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:btree,constraint,indexes,primary,unique"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseIntrospection.get_field_type",
+        "DatabaseIntrospection.get_table_list",
+        "DatabaseIntrospection.get_table_description",
+        "DatabaseIntrospection.get_sequences",
+        "DatabaseIntrospection.get_relations",
+        "DatabaseIntrospection.get_constraints"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/operations.py",
+      "score": 18,
+      "matched_identifiers": [
+        "cannot",
+        "column",
+        "database",
+        "unique"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:unique,cannot,column,database,field"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseOperations.unification_cast_sql",
+        "DatabaseOperations.date_extract_sql",
+        "DatabaseOperations.date_trunc_sql",
+        "DatabaseOperations.datetime_cast_date_sql",
+        "DatabaseOperations.datetime_cast_time_sql",
+        "DatabaseOperations.datetime_extract_sql",
+        "DatabaseOperations.datetime_trunc_sql",
+        "DatabaseOperations.time_extract_sql",
+        "DatabaseOperations.time_trunc_sql",
+        "DatabaseOperations.deferrable_sql",
+        "DatabaseOperations.fetch_returned_insert_rows",
+        "DatabaseOperations.lookup_cast",
+        "DatabaseOperations.no_limit_value",
+        "DatabaseOperations.prepare_sql_script",
+        "DatabaseOperations.quote_name",
+        "DatabaseOperations.set_time_zone_sql",
+        "DatabaseOperations.sql_flush",
+        "DatabaseOperations.sequence_reset_by_name_sql",
+        "DatabaseOperations.tablespace_sql",
+        "DatabaseOperations.sequence_reset_sql",
+        "DatabaseOperations.prep_for_iexact_query",
+        "DatabaseOperations.max_name_length",
+        "DatabaseOperations.distinct_sql",
+        "DatabaseOperations.last_executed_query",
+        "DatabaseOperations.return_insert_columns",
+        "DatabaseOperations.bulk_insert_sql",
+        "DatabaseOperations.adapt_datefield_value",
+        "DatabaseOperations.adapt_datetimefield_value",
+        "DatabaseOperations.adapt_timefield_value",
+        "DatabaseOperations.adapt_decimalfield_value",
+        "DatabaseOperations.adapt_ipaddressfield_value",
+        "DatabaseOperations.subtract_temporals",
+        "DatabaseOperations.explain_query_prefix",
+        "DatabaseOperations.on_conflict_suffix_sql"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/schema.py",
+      "score": 18,
+      "matched_identifiers": [
+        "column",
+        "constraint",
+        "indexes",
+        "unique"
+      ],
+      "reasons": [
+        "path_contains_class:PostgreSQL",
+        "source_content_tokens:constraint,indexes,unique,column,constraints"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseSchemaEditor.quote_value",
+        "DatabaseSchemaEditor.add_index",
+        "DatabaseSchemaEditor.remove_index"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/postgresql/test_operations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:operations",
+        "token_overlap:backends,operations,postgre,postgresql",
+        "internal_name_overlap:postgresql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/postgresql/test_introspection.py",
+      "score": 15,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:introspection",
+        "token_overlap:backends,introspection,postgre,postgresql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/test_introspection.py",
+      "score": 11,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:introspection",
+        "token_overlap:introspection,postgre",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/test_operations.py",
+      "score": 11,
+      "matched_identifiers": [
+        "PostgreSQL"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PostgreSQL",
+        "test_name_matches_source_stem:operations",
+        "token_overlap:operations,postgre",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_features.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:features",
+        "token_overlap:backends,features",
+        "internal_name_overlap:features",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/postgres_tests/test_introspection.py:unittest_or_django_test_import",
+      "tests/postgres_tests/test_operations.py:unittest_or_django_test_import",
+      "tests/backends/base/test_features.py:unittest_or_django_test_import",
+      "tests/backends/base/test_features.py:testcase_class:TestDatabaseFeatures",
+      "tests/backends/postgresql/test_introspection.py:unittest_or_django_test_import",
+      "tests/backends/postgresql/test_operations.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2749,
+  "indexed_test_file_count": 1882,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.postgres_tests.test_introspection": [
+      "InspectDBTests"
+    ],
+    "tests.postgres_tests.test_operations": [
+      "AddConstraintNotValidTests",
+      "AddIndexConcurrentlyTests",
+      "CreateCollationTests",
+      "CreateExtensionTests",
+      "NoMigrationRouter",
+      "RemoveCollationTests",
+      "RemoveIndexConcurrentlyTests",
+      "ValidateConstraintTests"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "WidgetTest",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.backends.base.test_features": [
+      "TestDatabaseFeatures"
+    ],
+    "tests.backends.postgresql.test_introspection": [
+      "DatabaseSequenceTests"
+    ],
+    "tests.backends.postgresql.test_operations": [
+      "PostgreSQLOperationsTests"
+    ],
+    "django.db": [
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.db.backends.postgresql.base": [
+      "CursorDebugWrapper",
+      "DatabaseWrapper",
+      "psycopg2_version"
+    ],
+    "django.db.backends.postgresql.features": [
+      "DatabaseFeatures"
+    ],
+    "django.db.backends.postgresql.schema": [
+      "DatabaseSchemaEditor"
+    ],
+    "django.db.backends.postgresql.operations": [
+      "DatabaseOperations"
+    ],
+    "django.db.backends.postgresql.introspection": [
+      "DatabaseIntrospection"
+    ]
+  },
+  "test_example_snippet": "    def test_sql_flush(self):\n        self.assertEqual(\n            connection.ops.sql_flush(\n                no_style(),\n                [Person._meta.db_table, Tag._meta.db_table],\n            ),\n            ['TRUNCATE \"backends_person\", \"backends_tag\";'],\n        )\n\n    def test_sql_flush_allow_cascade(self):\n        self.assertEqual(\n            connection.ops.sql_flush(\n                no_style(),\n                [Person._meta.db_table, Tag._meta.db_table],\n                allow_cascade=True,\n            ),\n            ['TRUNCATE \"backends_person\", \"backends_tag\" CASCADE;'],\n        )\n\n    def test_sql_flush_sequences(self):\n        self.assertEqual(\n            connection.ops.sql_flush(\n                no_style(),\n                [Person._meta.db_table, Tag._meta.db_table],\n                reset_sequences=True,\n            ),\n            ['TRUNCATE \"backends_person\", \"backends_tag\" RESTART IDENTITY;'],\n        )\n\n    def test_sql_flush_sequences_allow_cascade(self):\n        self.assertEqual(\n            connection.ops.sql_flush(\n                no_style(),\n                [Person._meta.db_table, Tag._meta.db_table],\n                reset_sequences=True,",
+  "conftest_fixtures": {}
+}

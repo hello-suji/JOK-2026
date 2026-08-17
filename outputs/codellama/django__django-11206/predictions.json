@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11206",
+    "model_patch": "--- a/tests/utils_tests/test_numberformat.py\n+++ b/tests/utils_tests/test_numberformat.py\n@@ -111,3 +111,11 @@\n\n         price = EuroDecimal('1.23')\n         self.assertEqual(nformat(price, ','), '€ 1,23')\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.utils.numberformat import format as nformat\n+\n+class TestNumberFormat(TestCase):\n+    def test_small_decimal_formatting_repro(self):\n+        result = nformat(Decimal('1e-200'), '.', decimal_pos=2)\n+        self.assertEqual(result, '0.00')\n",
+    "patch_sha256": "a333039b9680cc706c52c49137dec7fa925668f7f440cbabe6a7554c970a55e8"
+  }
+]

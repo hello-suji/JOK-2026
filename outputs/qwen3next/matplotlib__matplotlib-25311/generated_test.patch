@@ -1,0 +1,32 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1548,3 +1548,29 @@
+     plt.subplots(1, 2, width_ratios=[1, 2], gridspec_kw=gs)
+     assert gs == gs_orig
+     plt.subplot_mosaic('AB', width_ratios=[1, 2], gridspec_kw=gs)
++
++import matplotlib.pyplot as plt
++import pickle
++from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
++
++@check_figures_equal(extensions=["png"])
++def test_pickle_figure_with_draggable_legend_repro(fig_test, fig_ref):
++    ax_test = fig_test.add_subplot(111)
++    ax_ref = fig_ref.add_subplot(111)
++
++    ax_test.plot([0, 1], [0, 1])
++    ax_ref.plot([0, 1], [0, 1])
++
++    leg_test = ax_test.legend()
++    leg_ref = ax_ref.legend()
++
++    leg_test.set_draggable(True)
++    leg_ref.set_draggable(True)
++
++    canvas_test = FigureCanvasQTAgg(fig_test)
++    canvas_ref = FigureCanvasQTAgg(fig_ref)
++
++    pickled_test = pickle.dumps(canvas_test)
++    pickled_ref = pickle.dumps(canvas_ref)
++
++    assert len(pickled_test) == len(pickled_ref)

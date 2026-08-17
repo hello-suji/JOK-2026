@@ -1,0 +1,16 @@
+--- a/tests/postgres_tests/test_search.py
++++ b/tests/postgres_tests/test_search.py
+@@ -669,3 +669,13 @@
+             '<b>Brave</b>, <b>brave</b>, <b>brave</b>...<br>'
+             '<b>brave</b> <b>Sir</b> <b>Robin</b>',
+         )
++
++from django.db.models import Q, Exists
++from django.db.models.query import QuerySet
++
++class TestQAndExistsOperator(PostgreSQLSimpleTestCase):
++    def test_q_and_exists_operator_repro(self):
++        exists_expr = Exists(QuerySet(model=Character))
++        q_expr = Q()
++        combined_expr = q_expr & exists_expr
++        self.assertIsInstance(combined_expr, Q)

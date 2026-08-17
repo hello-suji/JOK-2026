@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/mixture/base.py",
+      "target_function": "fit_predict",
+      "related_classes": [
+        "GaussianMixture",
+        "Arrays"
+      ],
+      "candidate_test_file": "sklearn/cluster/tests/test_k_means.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import necessary modules: from sklearn.mixture import GaussianMixture, from sklearn.utils.testing import assert_array_equal, import numpy",
+      "Generate random data: X = numpy.random.randn(1000, 5)",
+      "Initialize GaussianMixture with n_components=5 and n_init=5: gm = GaussianMixture(n_components=5, n_init=5)",
+      "Use the generated reproduction path that calls randn, fit_predict, predict.",
+      "Use the generated reproduction path that calls assert_array_equal, fit_predict, predict, randn."
+    ],
+    "execution_stimulus": [
+      "Call fit_predict on the generated data: c1 = gm.fit_predict(X)",
+      "Call predict on the same data: c2 = gm.predict(X)",
+      "Execute the focused target API path: randn, fit_predict, predict.",
+      "Execute the focused target API path: assert_array_equal, fit_predict, predict, randn."
+    ],
+    "expected_failure": "AssertionError due to mismatch between c1 and c2",
+    "relevant_source_files": [
+      "sklearn/cluster/k_means_.py",
+      "sklearn/mixture/base.py",
+      "sklearn/neighbors/lof.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/tests/test_pipeline.py",
+      "sklearn/tests/test_base.py",
+      "sklearn/cluster/tests/test_k_means.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_gaussian_mixture_fit_predict_disagreement():\n    from sklearn.mixture import GaussianMixture\n    from sklearn.utils.testing import assert_array_equal\n    import numpy\n    X = numpy.random.randn(1000, 5)\n    gm = GaussianMixture(n_components=5, n_init=5)\n    c1 = gm.fit_predict(X)\n    c2 = gm.predict(X)\n    assert_array_equal(c1, c2)"
+      },
+      {
+        "language": "python",
+        "code": "from sklearn.mixture import GaussianMixture\nimport numpy\n\ndef test_gaussian_mixture_fit_predict_disagreement_repro():\n    X = numpy.random.randn(1000, 5)\n    gm = GaussianMixture(n_components=5, n_init=5)\n    c1 = gm.fit_predict(X)\n    c2 = gm.predict(X)\n    assert_array_equal(c1, c2)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(c2) != 'Traceback (most recent call last):\\n  File \"test_gm.py\", line 17, in <module>\\n    assert_array_equal(c1,c2)\\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 872, in assert_array_equal\\n    verbose=verbose, header=\\'Arrays are not equal\\')\\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 796, in assert_array_compare\\n    raise AssertionError(msg)\\nAssertionError:\\n\\nArrays are not equal\\n\\n(mismatch 88.6%)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "Traceback (most recent call last):\n  File \"test_gm.py\", line 17, in <module>\n    assert_array_equal(c1,c2)\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 872, in assert_array_equal\n    verbose=verbose, header='Arrays are not equal')\n  File \"/home/scott/.local/lib/python2.7/site-packages/numpy/testing/_private/utils.py\", line 796, in assert_array_compare\n    raise AssertionError(msg)\nAssertionError:\n\nArrays are not equal\n\n(mismatch 88.6%)"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "fit_predict",
+        "predict",
+        "randn"
+      ],
+      "classes": [
+        "GaussianMixture",
+        "Arrays"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/cluster/tests/test_k_means.py",
+      "target_source_file": "sklearn/mixture/base.py",
+      "test_visible_functions": [
+        "assert_array_equal",
+        "fit_predict",
+        "predict",
+        "randn"
+      ],
+      "test_visible_classes": [
+        "Arrays",
+        "GaussianMixture"
+      ]
+    }
+  }
+]

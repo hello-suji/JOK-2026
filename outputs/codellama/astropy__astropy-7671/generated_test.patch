@@ -1,0 +1,14 @@
+--- a/astropy/utils/tests/test_introspection.py
++++ b/astropy/utils/tests/test_introspection.py
+@@ -73,3 +73,11 @@
+         assert minversion(test_module, version)
+     for version in bad_versions:
+         assert not minversion(test_module, version)
++
++def test_minversion_gate_failure_repro():
++    import numpy
++    from astropy.utils import minversion
++    result = minversion('numpy', '1.14dev')
++    assert result is True
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "TypeError: '<' not supported between instances of 'int' and 'str'"

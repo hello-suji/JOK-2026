@@ -1,0 +1,17 @@
+--- a/sympy/physics/units/tests/test_dimensions.py
++++ b/sympy/physics/units/tests/test_dimensions.py
+@@ -148,3 +148,14 @@
+     assert dimsys_SI.get_dimensional_dependencies(Abs(length / length)) == {}
+
+     assert dimsys_SI.get_dimensional_dependencies(sqrt(-1)) == {}
++
++from sympy.physics.units.dimensions import Dimension
++from sympy.physics.units.systems.si import SI
++
++def test_collect_factor_and_dimension_bug_repro():
++    dim = Dimension('test_dim')
++    expr = dim**2
++    factor, dimension = SI.collect_factor_and_dimension(expr)
++    assert dimension == dim**2
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(dim) != 'ValueError: Dimension of "exp(second/(farad*ohm))" is Dimension(time/(capacitance*impedance)), but it should be Dimension(1)'

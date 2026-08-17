@@ -1,0 +1,13 @@
+--- a/tests/utils_tests/test_dateparse.py
++++ b/tests/utils_tests/test_dateparse.py
+@@ -136,3 +136,10 @@
+         for source, expected in test_values:
+             with self.subTest(source=source):
+                 self.assertEqual(parse_duration(source), expected)
++
++from django.test import TestCase, SimpleTestCase
++class TestNegativeDurationParsing(TestCase):
++    def test_parse_negative_duration_repro(self):
++        from django.utils.dateparse import parse_duration
++        duration = parse_duration('-1:30:45')
++        self.assertEqual(duration, timedelta(hours=-1, minutes=30, seconds=45))

@@ -1,0 +1,94 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "optimize_operations",
+      "related_classes": [
+        "AlterModelManagers",
+        "AlterModelOptions",
+        "CreateModel",
+        "MigrationAutodetector",
+        "AutoField",
+        "Manager"
+      ],
+      "candidate_test_file": "tests/bulk_create/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls optimize_operations."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: optimize_operations."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/db/migrations/autodetector.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/bulk_create/models.py",
+      "tests/db_functions/migrations/0002_create_test_models.py",
+      "tests/migrations/migrations_test_apps/with_package_model/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.operations.models import CreateModel, AlterModelManagers\n\n\nclass TestMigrationOptimization(TestCase):\n    def test_create_model_with_managers_optimization_repro(self):\n        create_model = CreateModel(\n            name='MyModel',\n            fields=[\n                ('id', models.AutoField(primary_key=True)),\n            ],\n            managers=[\n                ('objects', models.Manager()),\n            ],\n        )\n        alter_managers = AlterModelManagers(\n            name='MyModel',\n            managers=[\n                ('custom_manager', models.Manager()),\n            ],\n        )\n        optimized_operations = MigrationAutodetector([], []).optimize_operations([create_model, alter_managers])\n        self.assertEqual(len(optimized_operations), 1)\n        self.assertIsInstance(optimized_operations[0], CreateModel)\n        self.assertIn('custom_manager', optimized_operations[0].managers)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "optimize_operations"
+      ],
+      "classes": [
+        "AlterModelManagers",
+        "AlterModelOptions",
+        "CreateModel",
+        "MigrationAutodetector",
+        "AutoField",
+        "Manager"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/bulk_create/models.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [
+        "optimize_operations"
+      ],
+      "test_visible_classes": [
+        "AlterModelManagers",
+        "CreateModel",
+        "MigrationAutodetector",
+        "AutoField",
+        "Manager"
+      ]
+    }
+  }
+]

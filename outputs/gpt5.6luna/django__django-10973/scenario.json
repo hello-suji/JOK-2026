@@ -1,0 +1,269 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/postgres/client.py",
+      "target_function": "runshell",
+      "related_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "candidate_test_file": "tests/backends/postgres/test_client.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import connections",
+      "connection = connections['default']",
+      "Use the generated reproduction path that calls mock, patch, runshell."
+    ],
+    "execution_stimulus": [
+      "connection.client.runshell()",
+      "Execute the focused target API path: mock, patch, runshell."
+    ],
+    "expected_failure": "The runshell method does not use subprocess.run to set PGPASSWORD, leading to potential issues with password handling.",
+    "relevant_source_files": [
+      "django/db/backends/postgres/client.py",
+      "django/test/client.py",
+      "django/db/backends/base/schema.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/postgres/test_client.py",
+      "tests/backends/base/test_schema.py",
+      "tests/backends/mysql/test_schema.py",
+      "tests/backends/base/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from unittest import mock\n\nfrom django.db.backends.postgresql.client import DatabaseClient\n\nclass DummyConnection:\n    settings_dict = {\n        'NAME': 'dbname',\n        'USER': 'dbuser',\n        'PASSWORD': 'secret',\n        'HOST': 'localhost',\n        'PORT': '5432',\n        'OPTIONS': {},\n    }\n\ndef test_postgres_runshell_passes_password_through_subprocess_env():\n    client = DatabaseClient(DummyConnection())\n    with mock.patch('subprocess.run') as run:\n        client.runshell([])\n    env = run.call_args.kwargs.get('env')\n    assert env['PGPASSWORD'] == 'secret'\n"
+      },
+      {
+        "language": "python",
+        "code": "def test_runshell_uses_subprocess_run():\n    from django.db import connections\n    connection = connections['default']\n    original_run = connection.client.runshell\n    def mock_runshell(self):\n        assert 'PGPASSWORD' in self.env\n        original_run()\n    connection.client.runshell = mock_runshell\n    connection.client.runshell()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "runshell",
+        "mock",
+        "patch"
+      ],
+      "classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/postgres/test_client.py",
+      "target_source_file": "django/db/backends/postgres/client.py",
+      "test_visible_functions": [
+        "mock",
+        "patch",
+        "runshell"
+      ],
+      "test_visible_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/postgres/client.py",
+      "target_function": "runshell",
+      "related_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "candidate_test_file": "tests/backends/postgres/test_client.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import connections",
+      "connection = connections['default']",
+      "Use the generated reproduction path that calls mock, patch, runshell."
+    ],
+    "execution_stimulus": [
+      "connection.client.runshell()",
+      "Execute the focused target API path: mock, patch, runshell."
+    ],
+    "expected_failure": "The runshell method does not correctly handle the PGPASSWORD environment variable, causing authentication failures when using subprocess.run.",
+    "relevant_source_files": [
+      "django/db/backends/postgres/client.py",
+      "django/test/client.py",
+      "django/db/backends/base/schema.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/postgres/test_client.py",
+      "tests/backends/base/test_schema.py",
+      "tests/backends/mysql/test_schema.py",
+      "tests/backends/base/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from unittest import mock\n\nfrom django.db.backends.postgresql.client import DatabaseClient\n\nclass DummyConnection:\n    settings_dict = {\n        'NAME': 'dbname',\n        'USER': 'dbuser',\n        'PASSWORD': 'secret',\n        'HOST': 'localhost',\n        'PORT': '5432',\n        'OPTIONS': {},\n    }\n\ndef test_postgres_runshell_passes_password_through_subprocess_env():\n    client = DatabaseClient(DummyConnection())\n    with mock.patch('subprocess.run') as run:\n        client.runshell([])\n    env = run.call_args.kwargs.get('env')\n    assert env['PGPASSWORD'] == 'secret'\n"
+      },
+      {
+        "language": "python",
+        "code": "def test_runshell_sets_correct_env():\n    from django.db import connections\n    import os\n    connection = connections['default']\n    original_run = connection.client.runshell\n    def mock_runshell(self):\n        assert os.environ['PGPASSWORD'] == connection.settings_dict['PASSWORD']\n        original_run()\n    connection.client.runshell = mock_runshell\n    connection.client.runshell()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "runshell",
+        "mock",
+        "patch"
+      ],
+      "classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/postgres/test_client.py",
+      "target_source_file": "django/db/backends/postgres/client.py",
+      "test_visible_functions": [
+        "mock",
+        "patch",
+        "runshell"
+      ],
+      "test_visible_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/postgres/client.py",
+      "target_function": "runshell",
+      "related_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "candidate_test_file": "tests/backends/postgres/test_client.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import connections",
+      "connection = connections['default']",
+      "Use the generated reproduction path that calls mock, patch, runshell."
+    ],
+    "execution_stimulus": [
+      "connection.client.runshell()",
+      "Execute the focused target API path: mock, patch, runshell."
+    ],
+    "expected_failure": "The runshell method does not use subprocess.run, which can lead to less reliable password handling and potential security vulnerabilities.",
+    "relevant_source_files": [
+      "django/db/backends/postgres/client.py",
+      "django/test/client.py",
+      "django/db/backends/base/schema.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/postgres/test_client.py",
+      "tests/backends/base/test_schema.py",
+      "tests/backends/mysql/test_schema.py",
+      "tests/backends/base/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from unittest import mock\n\nfrom django.db.backends.postgresql.client import DatabaseClient\n\nclass DummyConnection:\n    settings_dict = {\n        'NAME': 'dbname',\n        'USER': 'dbuser',\n        'PASSWORD': 'secret',\n        'HOST': 'localhost',\n        'PORT': '5432',\n        'OPTIONS': {},\n    }\n\ndef test_postgres_runshell_passes_password_through_subprocess_env():\n    client = DatabaseClient(DummyConnection())\n    with mock.patch('subprocess.run') as run:\n        client.runshell([])\n    env = run.call_args.kwargs.get('env')\n    assert env['PGPASSWORD'] == 'secret'\n"
+      },
+      {
+        "language": "python",
+        "code": "def test_runshell_uses_subprocess_run_for_security():\n    from django.db import connections\n    import subprocess\n    connection = connections['default']\n    original_run = connection.client.runshell\n    def mock_runshell(self):\n        assert isinstance(subprocess.run.call_args.kwargs['env']['PGPASSWORD'], str)\n        original_run()\n    connection.client.runshell = mock_runshell\n    connection.client.runshell()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "runshell",
+        "mock",
+        "patch"
+      ],
+      "classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/postgres/test_client.py",
+      "target_source_file": "django/db/backends/postgres/client.py",
+      "test_visible_functions": [
+        "mock",
+        "patch",
+        "runshell"
+      ],
+      "test_visible_classes": [
+        "DatabaseClient",
+        "DummyConnection"
+      ]
+    }
+  }
+]

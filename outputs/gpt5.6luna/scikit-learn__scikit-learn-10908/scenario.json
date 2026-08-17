@@ -1,0 +1,110 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/feature_extraction/text.py",
+      "target_function": "get_feature_names",
+      "related_classes": [
+        "And",
+        "Compressed",
+        "CountVectorizer",
+        "Is",
+        "Vocabulary"
+      ],
+      "candidate_test_file": "sklearn/feature_extraction/tests/test_dict_vectorizer.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where get_feature_names can be called.",
+      "Use the generated reproduction path that calls get_feature_names, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call get_feature_names with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_feature_names, isinstance."
+    ],
+    "expected_failure": "CountVectorizer's get_feature_names raise not NotFittedError when the vocabulary parameter is provided",
+    "relevant_source_files": [
+      "sklearn/feature_extraction/text.py",
+      "sklearn/feature_extraction/dict_vectorizer.py",
+      "sklearn/pipeline.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/feature_extraction/tests/test_dict_vectorizer.py",
+      "sklearn/feature_extraction/tests/test_text.py",
+      "sklearn/tests/test_pipeline.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.feature_extraction.text import CountVectorizer\n\ndef test_get_feature_names_with_provided_vocabulary_repro():\n    vectorizer = CountVectorizer(vocabulary={'first': 0, 'second': 1, 'third': 2})\n    feature_names = vectorizer.get_feature_names()\n    assert isinstance(feature_names, list)\n    assert len(feature_names) == 3\n    assert_in('first', feature_names)\n    assert_in('second', feature_names)\n    assert_in('third', feature_names)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(feature_names) != \"NotFittedError: CountVectorizer - Vocabulary wasn't fitted.\""
+      },
+      {
+        "language": "python",
+        "code": "In [1]: from sklearn.feature_extraction.text import CountVectorizer\nIn [2]: vectorizer = CountVectorizer()\nIn [3]: corpus = [\n    ...:     'This is the first document.',\n    ...:     'This is the second second document.',\n    ...:     'And the third one.',\n    ...:     'Is this the first document?',\n    ...: ]\n\nIn [4]: vectorizer.transform(corpus)\nNotFittedError: CountVectorizer - Vocabulary wasn't fitted."
+      },
+      {
+        "language": "python",
+        "code": "In [1]: from sklearn.feature_extraction.text import CountVectorizer\n\nIn [2]: vectorizer = CountVectorizer()\n\nIn [3]: corpus = [\n    ...:     'This is the first document.',\n    ...:     'This is the second second document.',\n    ...:     'And the third one.',\n    ...:     'Is this the first document?',\n    ...: ]\n\nIn [4]: vocabulary = ['and', 'document', 'first', 'is', 'one', 'second', 'the', 'third', 'this']\n\nIn [5]: vectorizer = CountVectorizer(vocabulary=vocabulary)\n\nIn [6]: hasattr(vectorizer, \"vocabulary_\")\nOut[6]: False\n\nIn [7]: vectorizer.get_feature_names()\nNotFittedError: CountVectorizer - Vocabulary wasn't fitted.\n\nIn [8]: vectorizer.transform(corpus)\nOut[8]:\n<4x9 sparse matrix of type '<class 'numpy.int64'>'\n        with 19 stored elements in Compressed Sparse Row format>\n\nIn [9]: hasattr(vectorizer, \"vocabulary_\")\nOut[9]: True"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "NotFittedError: CountVectorizer - Vocabulary wasn't fitted."
+    ],
+    "error_keywords": [
+      "NotFittedError"
+    ],
+    "identifiers": {
+      "functions": [
+        "get_feature_names",
+        "transform",
+        "isinstance"
+      ],
+      "classes": [
+        "And",
+        "Compressed",
+        "CountVectorizer",
+        "CounterVectorizer",
+        "Is",
+        "Row",
+        "Sparse",
+        "Vocabulary"
+      ],
+      "files": [],
+      "exceptions": [
+        "NotFittedError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/feature_extraction/tests/test_dict_vectorizer.py",
+      "target_source_file": "sklearn/feature_extraction/text.py",
+      "test_visible_functions": [
+        "get_feature_names",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "CountVectorizer",
+        "Is",
+        "Vocabulary"
+      ]
+    }
+  }
+]

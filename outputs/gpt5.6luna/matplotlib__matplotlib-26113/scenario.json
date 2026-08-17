@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/axes/_axes.py",
+      "target_function": "hexbin",
+      "related_classes": [
+        "Blues",
+        "Order"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where hexbin can be called.",
+      "Use the generated reproduction path that calls hexbin, multivariate_normal, ones_like, matplotlib."
+    ],
+    "execution_stimulus": [
+      "Call hexbin with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: hexbin, multivariate_normal, ones_like, matplotlib."
+    ],
+    "expected_failure": "**Actual outcome**",
+    "relevant_source_files": [
+      "lib/matplotlib/axes/_axes.py",
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_collections.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib\nmatplotlib.use('Agg')\nimport numpy as np\n\n@check_figures_equal(extensions=[\"png\"])\ndef test_hexbin_mincnt_behavior_repro(fig_test, fig_ref):\n    np.random.seed(42)\n    X, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T\n    Z = np.ones_like(X)\n    extent = [-3., 3., -3., 3.]\n    gridsize = (7, 7)\n\n    ax_test = fig_test.add_subplot()\n    hb_test = ax_test.hexbin(X, Y, C=Z, gridsize=gridsize, extent=extent, mincnt=1)\n\n    ax_ref = fig_ref.add_subplot()\n    hb_ref = ax_ref.hexbin(X, Y, C=Z, gridsize=gridsize, extent=extent, mincnt=1)\n\n    assert len(hb_test.get_offsets()) == len(hb_ref.get_offsets())"
+      },
+      {
+        "language": "python",
+        "code": "from matplotlib import pyplot\nimport numpy as np\n\nnp.random.seed(42)\n\nX, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T\n#Z = (X ** 2 + Y ** 2)\nZ = np.ones_like(X)\n\nextent = [-3., 3., -3., 3.]  # doc: \"Order of scalars is (left, right, bottom, top)\"\ngridsize = (7, 7)  # doc: \"int or (int, int), optional, default is 100\"\n\n# #### no mincnt specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")  # for contrast\n# shows a plot where all gridpoints are shown, even when the values are zero\n\n# #### mincnt=1 specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# *all makes sense, so far*\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### no mincnt specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### mincnt=1 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# hmm, unexpected...\n# shows only a plot where gridpoints containing at least **two** data points are shown(!!!)\n\n# #### mincnt=0 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=0,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown"
+      },
+      {
+        "language": "python",
+        "code": "from matplotlib import pyplot\nimport numpy as np\n\nnp.random.seed(42)\n\nX, Y = np.random.multivariate_normal([0.0, 0.0], [[1.0, 0.1], [0.1, 1.0]], size=250).T\n#Z = (X ** 2 + Y ** 2)\nZ = np.ones_like(X)\n\nextent = [-3., 3., -3., 3.]  # doc: \"Order of scalars is (left, right, bottom, top)\"\ngridsize = (7, 7)  # doc: \"int or (int, int), optional, default is 100\"\n\n# #### no mincnt specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")  # for contrast\n# shows a plot where all gridpoints are shown, even when the values are zero\n\n# #### mincnt=1 specified, no C argument\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# *all makes sense, so far*\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### no mincnt specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown\n\n# #### mincnt=1 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=1,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# hmm, unexpected...\n# shows only a plot where gridpoints containing at least **two** data points are shown(!!!)\n\n# #### mincnt=0 specified, C argument specified\nfig, ax = pyplot.subplots(1, 1)\nax.hexbin(\n    X, Y,\n    C=Z,\n    reduce_C_function=np.sum,\n    mincnt=0,\n    extent=extent,\n    gridsize=gridsize,\n    linewidth=0.0,\n    cmap='Blues',\n)\nax.set_facecolor(\"green\")\n# shows only a plot where gridpoints containing at least one datum are shown"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "hexbin",
+        "multivariate_normal",
+        "ones_like",
+        "set_facecolor",
+        "shown",
+        "subplots",
+        "matplotlib",
+        "use",
+        "check_figures_equal",
+        "seed",
+        "add_subplot",
+        "get_offsets"
+      ],
+      "classes": [
+        "Blues",
+        "Order"
+      ],
+      "files": [
+        "lib/matplotlib/axes/_axes.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/axes/_axes.py",
+      "test_visible_functions": [
+        "hexbin",
+        "multivariate_normal",
+        "ones_like",
+        "matplotlib",
+        "use",
+        "check_figures_equal",
+        "seed",
+        "add_subplot"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

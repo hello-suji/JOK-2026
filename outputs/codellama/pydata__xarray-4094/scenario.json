@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "to_stacked_array",
+      "related_classes": [
+        "DataArray",
+        "Dataset",
+        "You"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataset.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where to_stacked_array can be called.",
+      "Use the generated reproduction path that calls to_stacked_array, to_unstacked_dataset, equals, arange."
+    ],
+    "execution_stimulus": [
+      "Call to_stacked_array with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: to_stacked_array, to_unstacked_dataset, equals, arange."
+    ],
+    "expected_failure": "# MergeError: conflicting values for variable 'y' on objects to be combined. You can skip this check by specifying compat='override'.",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py",
+      "asv_bench/benchmarks/dataarray_missing.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_missing.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "arr = xr.DataArray(\n     np.arange(3),\n     coords=[(\"x\", [0, 1, 2])],\n )\ndata = xr.Dataset({\"a\": arr, \"b\": arr})\nstacked = data.to_stacked_array('y', sample_dims=['x'])\nunstacked = stacked.to_unstacked_dataset('y')\n# MergeError: conflicting values for variable 'y' on objects to be combined. You can skip this check by specifying compat='override'."
+      },
+      {
+        "language": "python",
+        "code": "def test_to_unstacked_dataset_single_dim_variable_repro():\n    arr = xr.DataArray(\n         np.arange(3),\n         coords=[(\"x\", [0, 1, 2])],\n     )\n    data = xr.Dataset({\"a\": arr, \"b\": arr})\n    stacked = data.to_stacked_array('y', sample_dims=['x'])\n    unstacked = stacked.to_unstacked_dataset('y')\n    assert unstacked.equals(data)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "MergeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "to_stacked_array",
+        "to_unstacked_dataset",
+        "equals",
+        "arange"
+      ],
+      "classes": [
+        "DataArray",
+        "Dataset",
+        "You"
+      ],
+      "files": [],
+      "exceptions": [
+        "MergeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataset.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "to_stacked_array",
+        "to_unstacked_dataset",
+        "equals",
+        "arange"
+      ],
+      "test_visible_classes": [
+        "DataArray",
+        "Dataset"
+      ]
+    }
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "instance_id": "sympy__sympy-19346",
+  "observed_behavior": [
+    "However, `srepr` prints the elements in `dict` and `set` wrong."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "Is this behavior intended? If it isn't, fixing it will be an easy job."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "srepr"
+    ],
+    "classes": [
+      "Symbol"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "srepr not printing dict and set properly\n`srepr` prints the element in `list` and `tuple` correctly.\n```python\n>>> from sympy import srepr\n>>> from sympy.abc import x,y\n>>> srepr([x,y])\n[Symbol('x'), Symbol('y')]\n>>> srepr((x,y))\n(Symbol('x'), Symbol('y'))\n```\n\nHowever, `srepr` prints the elements in `dict` and `set` wrong.\n```python\n>>> srepr({x, y})\n{x, y}\n>>> srepr({x: y})\n{x: y}\n```\n\nIs this behavior intended? If it isn't, fixing it will be an easy job.",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": ">>> from sympy import srepr\n>>> from sympy.abc import x,y\n>>> srepr([x,y])\n[Symbol('x'), Symbol('y')]\n>>> srepr((x,y))\n(Symbol('x'), Symbol('y'))",
+      "context_before": "`srepr` prints the element in `list` and `tuple` correctly.",
+      "is_system_or_output": false,
+      "interactive_input": "from sympy import srepr\nfrom sympy.abc import x,y\nsrepr([x,y])\nsrepr((x,y))",
+      "interactive_output": "[Symbol('x'), Symbol('y')]\n(Symbol('x'), Symbol('y'))"
+    },
+    {
+      "language": "python",
+      "code": ">>> srepr({x, y})\n{x, y}\n>>> srepr({x: y})\n{x: y}",
+      "context_before": "However, `srepr` prints the elements in `dict` and `set` wrong.",
+      "is_system_or_output": false,
+      "interactive_input": "srepr({x, y})\nsrepr({x: y})",
+      "interactive_output": "{x, y}\n{x: y}"
+    }
+  ],
+  "expected_outputs": [
+    "[Symbol('x'), Symbol('y')]\n(Symbol('x'), Symbol('y'))"
+  ],
+  "actual_outputs": [
+    "{x, y}\n{x: y}"
+  ],
+  "error_keywords": [],
+  "fault_locations": []
+}

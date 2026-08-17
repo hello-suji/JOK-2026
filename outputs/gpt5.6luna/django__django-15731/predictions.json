@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15731",
+    "model_patch": "--- a/tests/forms_tests/field_tests/__init__.py\n+++ b/tests/forms_tests/field_tests/__init__.py\n@@ -7,3 +7,12 @@\n             f = field\n\n         self.assertHTMLEqual(str(Form()[\"f\"]), to)\n+\n+from django.test import TestCase, SimpleTestCase\n+import inspect\n+from django.forms.fields import CharField\n+\n+class TestCharFieldSignature(TestCase):\n+    def test_charfield_init_signature_repro(self):\n+        sig = inspect.signature(CharField.__init__)\n+        self.assertEqual(list(sig.parameters.keys()), ['self', '*args', '**kwargs'])\n",
+    "patch_sha256": "46b016c23f65bd44fd93b375f6636fa0372bf031399f1a344fc1404a56efb186"
+  }
+]

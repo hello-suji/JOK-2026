@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/matrices/common.py",
+      "target_function": "doit",
+      "related_classes": [
+        "Product"
+      ],
+      "candidate_test_file": "sympy/physics/vector/tests/test_dyadic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where doit can be called.",
+      "Use the generated reproduction path that calls symbols, simplify, doit, subs.",
+      "Use the generated reproduction path that calls doit, simplify, subs, symbols."
+    ],
+    "execution_stimulus": [
+      "Call doit with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, simplify, doit, subs.",
+      "Execute the focused target API path: doit, simplify, subs, symbols."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/matrices/common.py",
+      "sympy/physics/vector/dyadic.py",
+      "sympy/physics/vector/vector.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/vector/tests/test_dyadic.py",
+      "sympy/physics/vector/tests/test_vector.py",
+      "sympy/physics/vector/tests/test_functions.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Product, simplify\n\ndef test_product_incorrect_expression_repro():\n    n, k = symbols('n k')\n    p = Product(n + 1 / 2**k, [k, 0, n-1]).doit()\n    assert simplify(p.subs(n, 2)) == 15/2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "doit",
+        "simplify",
+        "subs",
+        "symbols"
+      ],
+      "classes": [
+        "Product"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/vector/tests/test_dyadic.py",
+      "target_source_file": "sympy/matrices/common.py",
+      "test_visible_functions": [
+        "doit",
+        "simplify",
+        "subs",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Product"
+      ]
+    }
+  }
+]

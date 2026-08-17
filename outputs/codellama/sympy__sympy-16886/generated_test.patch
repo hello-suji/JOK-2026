@@ -1,0 +1,13 @@
+--- a/sympy/crypto/tests/test_crypto.py
++++ b/sympy/crypto/tests/test_crypto.py
+@@ -400,3 +400,10 @@
+     assert 5293 == bg_public_key(67, 79)
+     assert 713 == bg_public_key(23, 31)
+     raises(ValueError, lambda: bg_private_key(13, 17))
++
++def test_encipher_morse_correct_1_mapping_repro():
++    from sympy.crypto.crypto import encipher_morse
++    encoded_value = encipher_morse('1')
++    assert encoded_value == '.----'
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(encoded_value) != '----'

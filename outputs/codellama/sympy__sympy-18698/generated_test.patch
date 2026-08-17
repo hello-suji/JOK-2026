@@ -1,0 +1,14 @@
+--- a/sympy/polys/tests/test_polytools.py
++++ b/sympy/polys/tests/test_polytools.py
+@@ -3333,3 +3333,11 @@
+ def test_issue_18205_gate():
+     assert cancel((2 + I)*(3 - I)) == 7 + I
+     assert cancel((2 + I)*(2 - I)) == 5
++
++def test_sqf_list_bug_repro():
++    from sympy import Poly
++    from sympy.abc import x
++    result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)
++    assert result == (1, [(x**2 + 1, 1), (x - 1, 2), (x - 2, 3), (x - 3, 3)])
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "['1', '[[(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]]']"

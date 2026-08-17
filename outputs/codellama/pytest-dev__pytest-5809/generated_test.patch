@@ -1,0 +1,17 @@
+--- a/testing/test_pastebin.py
++++ b/testing/test_pastebin.py
+@@ -131,3 +131,14 @@
+         assert "lexer=%s" % lexer in data.decode()
+         assert "code=full-paste-contents" in data.decode()
+         assert "expiry=1week" in data.decode()
++
++import pytest
++from _pytest.pastebin import read
++from unittest.mock import patch, MagicMock
++
++def test_pastebin_read_fails_with_http_error_repro() -> None:
++    mock_response = MagicMock()
++    mock_response.read.return_value = b'Sample data'
++    with patch('urllib.request.urlopen', return_value=mock_response):
++        result = read('http://example.com')
++    assert result == b'Sample data'

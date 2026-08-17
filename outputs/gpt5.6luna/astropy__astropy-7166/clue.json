@@ -1,0 +1,25 @@
+{
+  "instance_id": "astropy__astropy-7166",
+  "observed_behavior": [
+    "Inside the InheritDocstrings metaclass it uses `inspect.isfunction` which returns `False` for properties."
+  ],
+  "expected_behavior": [
+    "Inside the InheritDocstrings metaclass it uses `inspect.isfunction` which returns `False` for properties."
+  ],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "InheritDocstrings"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "InheritDocstrings metaclass doesn't work for properties\nInside the InheritDocstrings metaclass it uses `inspect.isfunction` which returns `False` for properties.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

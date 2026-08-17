@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-8638",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -453,3 +453,22 @@\n     stdout, stderr = capsys.readouterr()\n     assert stdout.startswith(\"c:function\\n\")\n     assert stderr == \"\"\n+\n+import unittest\n+class TestVariableLinking(unittest.TestCase):\n+    def test_variable_linking_repro(self):\n+        \"\"\"Ensure that instance variables do not incorrectly link to each other.\"\"\"\n+        from sphinx.application import Sphinx\n+\n+        srcdir = 'tests/roots/test-ext-autodoc/target'\n+        confdir = srcdir\n+        outdir = '_build/html'\n+        doctreedir = '_build/doctrees'\n+\n+        app = Sphinx(srcdir, confdir, outdir, doctreedir, 'html')\n+        app.build()\n+\n+        bar_instance_vars = app.env.domains['py'].data['objects']['bar']\n+        foo_instance_vars = app.env.domains['py'].data['objects']['foo']\n+\n+        self.assertNotEqual(bar_instance_vars, foo_instance_vars)\n",
+    "patch_sha256": "d74510c298b4b5e1b71a163669d68a335e656f818189af1be6c88acfe0b94b7b"
+  }
+]

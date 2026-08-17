@@ -1,0 +1,26 @@
+{
+  "instance_id": "django__django-16819",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "We should reduce AddIndex/RemoveIndex operations when optimizing migration operations."
+  ],
+  "repro_conditions": [
+    "We should reduce AddIndex/RemoveIndex operations when optimizing migration operations."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "AddIndex",
+      "RemoveIndex"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Reduce Add/RemoveIndex migration operations.\nDescription\n\t\nWe should reduce AddIndex/RemoveIndex operations when optimizing migration operations.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-13033",
+    "model_patch": "--- a/astropy/timeseries/tests/test_sampled.py\n+++ b/astropy/timeseries/tests/test_sampled.py\n@@ -418,3 +418,14 @@\n\n     p3 = cls.from_timeseries(ts, 'a', uncertainty=0.1)\n     assert_allclose(p3.dy, 0.1)\n+\n+from astropy.time import Time\n+from astropy.timeseries import TimeSeries\n+\n+\n+def test_remove_required_column_updates_columns_repro():\n+    time = Time([55197., 55198., 55199.], format='mjd')\n+    ts = TimeSeries(time=time, data={'flux': [99.9, 99.8, 99.7]})\n+    ts.add_required_column('flux')\n+    ts.remove_column('flux')\n+    assert 'flux' not in ts.colnames\n",
+    "patch_sha256": "dccb63c664123c2d30bf46f507ca21d0e0a0728192153e2e88dd05ae0eae5151"
+  }
+]

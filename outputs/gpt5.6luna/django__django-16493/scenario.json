@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/files.py",
+      "target_function": "deconstruct",
+      "related_classes": [
+        "FileField",
+        "FileSystemStorage",
+        "MyModel"
+      ],
+      "candidate_test_file": "tests/file_storage/tests.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.core.files.storage import FileSystemStorage, default_storage",
+      "from django.db import models",
+      "import random",
+      "other_storage = FileSystemStorage(location='/media/other')",
+      "def get_storage(): return random.choice([default_storage, other_storage])",
+      "class MyModel(models.Model): my_file = models.FileField(storage=get_storage)",
+      "Use the generated reproduction path that calls get_storage, default_storage, deconstruct."
+    ],
+    "execution_stimulus": [
+      "from django.db.migrations.state import ModelState",
+      "model_state = ModelState.from_model(MyModel)",
+      "deconstructed_field = model_state.fields[0]",
+      "Execute the focused target API path: get_storage, default_storage, deconstruct."
+    ],
+    "expected_failure": "The deconstructed_field does not include the storage=myapp.get_storage callable reference when default_storage is returned by the callable.",
+    "relevant_source_files": [
+      "django/forms/models.py",
+      "django/core/files/storage/filesystem.py",
+      "django/db/models/fields/files.py"
+    ],
+    "relevant_test_files": [
+      "tests/file_storage/tests.py",
+      "tests/model_forms/test_modelchoicefield.py",
+      "tests/file_storage/models.py",
+      "tests/forms_tests/field_tests/test_choicefield.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.core.files.storage import default_storage\nfrom django.db.models.fields.files import FileField\nfrom django.test import TestCase\n\nclass TestFileFieldDeconstruction(TestCase):\n    def test_callable_storage_deconstruction_repro(self):\n        # Regression focus: Callable storage on FileField fails to deconstruct when it returns default_storage\n        other_storage = default_storage\n        def get_storage(): return other_storage\n        file_field = FileField(storage=get_storage)\n        name, path, args, kwargs = file_field.deconstruct()\n        self.assertEqual(name, 'django.db.models.FileField')\n        self.assertEqual(args, [])\n        self.assertIn('storage', kwargs)\n"
+      },
+      {
+        "language": "python",
+        "code": "def test_callable_storage_deconstruction():\n    from django.core.files.storage import FileSystemStorage, default_storage\n    from django.db import models\n    import random\n    other_storage = FileSystemStorage(location='/media/other')\n    def get_storage(): return random.choice([default_storage, other_storage])\n    class MyModel(models.Model): my_file = models.FileField(storage=get_storage)\n    from django.db.migrations.state import ModelState\n    model_state = ModelState.from_model(MyModel)\n    deconstructed_field = model_state.fields[0]\n    assert 'storage' in deconstructed_field[1][1], 'Storage callable reference is missing'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "deconstruct",
+        "get_storage",
+        "default_storage"
+      ],
+      "classes": [
+        "FileField",
+        "FileSystemStorage",
+        "MyModel"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/file_storage/tests.py",
+      "target_source_file": "django/db/models/fields/files.py",
+      "test_visible_functions": [
+        "get_storage",
+        "default_storage",
+        "deconstruct"
+      ],
+      "test_visible_classes": [
+        "FileField"
+      ]
+    }
+  }
+]

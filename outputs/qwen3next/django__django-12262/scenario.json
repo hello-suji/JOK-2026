@@ -1,0 +1,82 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/files/temp.py",
+      "target_function": "hello",
+      "related_classes": [],
+      "candidate_test_file": "tests/admin_inlines/test_templates.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where hello can be called.",
+      "Use the generated reproduction path that calls hello, hi, render_to_string."
+    ],
+    "execution_stimulus": [
+      "Call hello with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: hello, hi, render_to_string."
+    ],
+    "expected_failure": "Custom template tags raise TemplateSyntaxError when keyword-only arguments with defaults are provided.",
+    "relevant_source_files": [
+      "django/core/files/temp.py",
+      "django/core/mail/message.py",
+      "django/core/management/templates.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_inlines/test_templates.py",
+      "tests/auth_tests/test_templates.py",
+      "tests/check_framework/test_templates.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestCustomTemplateTags(SimpleTestCase):\n    def test_hello_with_keyword_argument_repro(self):\n        template_content = '{% load asgi_urls %}{% hello greeting=\"hi\" %}'\n        rendered_content = render_to_string(template_content)\n        self.assertEqual(rendered_content.strip(), 'hi')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TemplateSyntaxError"
+    ],
+    "identifiers": {
+      "functions": [
+        "hello",
+        "hi",
+        "render_to_string"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": [
+        "TemplateSyntaxError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_inlines/test_templates.py",
+      "target_source_file": "django/core/files/temp.py",
+      "test_visible_functions": [
+        "hello",
+        "hi",
+        "render_to_string"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

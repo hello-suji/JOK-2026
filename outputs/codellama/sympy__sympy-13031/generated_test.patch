@@ -1,0 +1,16 @@
+--- a/sympy/matrices/tests/test_commonmatrix.py
++++ b/sympy/matrices/tests/test_commonmatrix.py
+@@ -1330,3 +1330,13 @@
+     x, y = symbols('x y')
+     m = CalculusOnlyMatrix(2, 1, [1/x, y])
+     assert m.limit(x, 5) == Matrix(2, 1, [S(1)/5, y])
++
++from sympy import Matrix
++
++def test_hstack_gate_issue_13031_repro():
++    M1 = Matrix.zeros(0, 0)
++    M2 = Matrix.zeros(0, 1)
++    M3 = Matrix.zeros(0, 2)
++    M4 = Matrix.zeros(0, 3)
++    result = Matrix.hstack(M1, M2, M3, M4)
++    assert result.shape == (0, 6)

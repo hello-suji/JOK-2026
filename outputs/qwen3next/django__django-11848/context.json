@@ -1,0 +1,504 @@
+{
+  "instance_id": "django__django-11848",
+  "repo": "django/django",
+  "base_commit": "f0adf3b9b7a19cdee05368ff0c0c2d087f011180",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "description",
+        "following",
+        "similar",
+        "something"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:similar,something,description,following,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/db/backends/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "check",
+        "digit",
+        "digits",
+        "following"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:check,digit,digits,following,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CursorWrapper.callproc",
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "CursorDebugWrapper.execute",
+        "CursorDebugWrapper.executemany",
+        "CursorDebugWrapper.debug_sql",
+        "typecast_date",
+        "typecast_time",
+        "typecast_timestamp",
+        "split_identifier",
+        "truncate_name",
+        "names_digest",
+        "format_number",
+        "strip_quotes"
+      ]
+    },
+    {
+      "path": "django/test/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "check",
+        "following",
+        "instead",
+        "interpret"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:check,following,instead,interpret,modified"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ContextList.get",
+        "ContextList.keys",
+        "instrumented_test_render",
+        "setup_test_environment",
+        "teardown_test_environment",
+        "setup_databases",
+        "dependency_ordered",
+        "get_unique_databases_and_mirrors",
+        "teardown_databases",
+        "get_runner",
+        "TestContextDecorator.enable",
+        "TestContextDecorator.disable",
+        "TestContextDecorator.decorate_class",
+        "TestContextDecorator.decorate_callable",
+        "override_settings.enable",
+        "override_settings.disable",
+        "override_settings.save_options",
+        "override_settings.decorate_class",
+        "modify_settings.save_options",
+        "modify_settings.enable",
+        "override_system_checks.enable",
+        "override_system_checks.disable",
+        "compare_xml",
+        "CaptureQueriesContext.captured_queries",
+        "ignore_warnings.enable",
+        "ignore_warnings.disable",
+        "extend_sys_path",
+        "isolate_lru_cache",
+        "captured_output",
+        "captured_stdout",
+        "captured_stderr",
+        "captured_stdin",
+        "freeze_time",
+        "require_jinja2",
+        "override_script_prefix.enable",
+        "override_script_prefix.disable",
+        "LoggingCaptureMixin.setUp",
+        "LoggingCaptureMixin.tearDown",
+        "isolate_apps.enable",
+        "isolate_apps.disable"
+      ]
+    },
+    {
+      "path": "django/utils/http.py",
+      "score": 17,
+      "matched_identifiers": [
+        "appears",
+        "check",
+        "coded",
+        "consider"
+      ],
+      "reasons": [
+        "stem_in_issue_text:http",
+        "source_content_tokens:appears,check,coded,consider,digit"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "urlquote",
+        "urlquote_plus",
+        "urlunquote",
+        "urlunquote_plus",
+        "urlencode",
+        "http_date",
+        "parse_http_date",
+        "parse_http_date_safe",
+        "base36_to_int",
+        "int_to_base36",
+        "urlsafe_base64_encode",
+        "urlsafe_base64_decode",
+        "parse_etags",
+        "quote_etag",
+        "is_same_domain",
+        "url_has_allowed_host_and_scheme",
+        "is_safe_url",
+        "limited_parse_qsl",
+        "escape_leading_slashes"
+      ]
+    },
+    {
+      "path": "django/apps/registry.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "following",
+        "similar",
+        "there"
+      ],
+      "reasons": [
+        "source_content_tokens:similar,there,check,following,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_http.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_http.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/urls/http.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_http.py:unittest_or_django_test_import",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_http.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:testcase_class:TestUtils"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2572,
+  "indexed_test_file_count": 1739,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "Client",
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "LiveServerTestCase",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "RequestFactory",
+      "SimpleTestCase",
+      "TestCase",
+      "TransactionTestCase",
+      "apps",
+      "connection",
+      "connections",
+      "get_version",
+      "ignore_warnings",
+      "modify_settings",
+      "override_settings",
+      "override_system_checks",
+      "router",
+      "setup",
+      "signals",
+      "skipIfDBFeature",
+      "skipUnlessAnyDBFeature",
+      "skipUnlessDBFeature",
+      "tag"
+    ],
+    "tests.sitemaps_tests.test_http": [
+      "HTTPSitemapTests"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_http": [
+      "Base36IntTests",
+      "ETagProcessingTests",
+      "EscapeLeadingSlashesTests",
+      "HttpDateProcessingTests",
+      "IsSafeURLTests",
+      "IsSameDomainTests",
+      "URLEncodeTests",
+      "URLQuoteTests",
+      "URLSafeBase64Tests"
+    ],
+    "tests.backends.test_utils": [
+      "CursorWrapperTests",
+      "TestUtils"
+    ],
+    "tests.sitemaps_tests.urls.http": [
+      "DateSiteMap",
+      "EmptySitemap",
+      "FixedLastmodMixedSitemap",
+      "FixedLastmodSitemap",
+      "FixedNewerLastmodSitemap",
+      "SimpleI18nSitemap",
+      "SimplePagedSitemap",
+      "SimpleSitemap",
+      "TimezoneSiteMap",
+      "testmodelview"
+    ],
+    "django.test.utils": [
+      "Approximate",
+      "CaptureQueriesContext",
+      "ContextList",
+      "LoggingCaptureMixin",
+      "TestContextDecorator",
+      "_TestState",
+      "captured_output",
+      "captured_stderr",
+      "captured_stdin",
+      "captured_stdout",
+      "compare_xml",
+      "dependency_ordered",
+      "extend_sys_path",
+      "freeze_time",
+      "get_runner",
+      "get_unique_databases_and_mirrors",
+      "ignore_warnings",
+      "instrumented_test_render",
+      "isolate_apps",
+      "isolate_lru_cache",
+      "modify_settings",
+      "override_script_prefix",
+      "override_settings",
+      "override_system_checks",
+      "register_lookup",
+      "require_jinja2",
+      "setup_databases",
+      "setup_test_environment",
+      "tag",
+      "teardown_databases",
+      "teardown_test_environment"
+    ],
+    "django.db": [
+      "DefaultConnectionProxy",
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.utils.http": [
+      "_url_has_allowed_host_and_scheme",
+      "_urlparse",
+      "_urlsplit",
+      "base36_to_int",
+      "escape_leading_slashes",
+      "http_date",
+      "int_to_base36",
+      "is_safe_url",
+      "is_same_domain",
+      "limited_parse_qsl",
+      "parse_etags",
+      "parse_http_date",
+      "parse_http_date_safe",
+      "quote_etag",
+      "url_has_allowed_host_and_scheme",
+      "urlencode",
+      "urlquote",
+      "urlquote_plus",
+      "urlsafe_base64_decode",
+      "urlsafe_base64_encode",
+      "urlunquote",
+      "urlunquote_plus"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.db.backends.utils": [
+      "CursorDebugWrapper",
+      "CursorWrapper",
+      "format_number",
+      "names_digest",
+      "split_identifier",
+      "strip_quotes",
+      "truncate_name",
+      "typecast_date",
+      "typecast_time",
+      "typecast_timestamp"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

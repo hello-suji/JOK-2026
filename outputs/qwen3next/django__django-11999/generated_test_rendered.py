@@ -1,0 +1,10 @@
+
+
+from django.test import TestCase
+
+class TestFooBarDisplayOverride(TestCase):
+    def test_get_foo_bar_display_override_repro(self):
+        instance = FooBar(foo_bar=1)
+        self.assertEqual(instance.get_foo_bar_display(), "expected_value")
+        # [Tier 2: probe-verified buggy repr — must differ after fix]
+        assert repr(instance) != 'foo'

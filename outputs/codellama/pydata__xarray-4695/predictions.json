@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4695",
+    "model_patch": "--- a/xarray/tests/test_dataarray.py\n+++ b/xarray/tests/test_dataarray.py\n@@ -7015,3 +7015,11 @@\n     x0 = DataArray(np.array([object()]))\n     x1 = deepcopy(x0)\n     assert x0.values[0] is not x1.values[0]\n+\n+def test_loc_with_method_dimension_repro():\n+    empty = np.zeros((2,2))\n+    D2 = xr.DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\n+    result = D2.loc[dict(dim1='x', method='a')]\n+    assert result.values.tolist() == [[0.0, 0.0]]\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != 'ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.'\n",
+    "patch_sha256": "bd1f60eadeeaa3e3741a970d98afb9f0ae4c324eb1d1e515c9bc5cdd8160e3fb"
+  }
+]

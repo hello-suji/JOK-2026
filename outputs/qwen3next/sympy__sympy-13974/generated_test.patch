@@ -1,0 +1,20 @@
+--- a/sympy/physics/quantum/tests/test_tensorproduct.py
++++ b/sympy/physics/quantum/tests/test_tensorproduct.py
+@@ -105,3 +105,17 @@
+                         1.0*A*Dagger(C)*Tr(B*Dagger(D)) +
+                         1.0*C*Dagger(A)*Tr(D*Dagger(B)) +
+                         1.0*C*Dagger(C)*Tr(D*Dagger(D)))
++
++import re
++def test_tensor_product_power_evaluation_repro():
++    from sympy.physics.paulialgebra import Pauli
++    from sympy.core.symbol import Symbol
++    from sympy.physics.quantum.tensorproduct import TensorProduct as TP
++
++    a = Symbol('a', commutative=False)
++    t1 = TP(Pauli(1), Pauli(1))
++    t2 = t1**2
++
++    # Expected behavior after the bug is fixed
++    assert t2.expand() == TP(Pauli(1), Pauli(1)).expand()
++    assert t2.subs(a, 1).expand() == TP(Pauli(1), Pauli(1)).subs(a, 1).expand()

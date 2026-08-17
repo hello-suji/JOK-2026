@@ -1,0 +1,98 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:in_bulk",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/db/models/query.py",
+          "target_function": "in_bulk",
+          "related_classes": [
+            "QuerySet",
+            "UniqueConstraint"
+          ],
+          "candidate_test_file": "tests/queries/test_query.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.test import TestCase",
+          "from tests.constraints.models import Article",
+          "Article.objects.create(slug='article1')",
+          "Article.objects.create(slug='article2')"
+        ],
+        "execution_stimulus": [
+          "result = Article.objects.in_bulk(field_name='slug')"
+        ],
+        "expected_failure": "The test should raise a ValueError indicating that 'slug' is not a unique field.",
+        "relevant_source_files": [
+          "django/db/models/query.py",
+          "django/db/models/manager.py",
+          "django/db/models/sql/query.py"
+        ],
+        "relevant_test_files": [
+          "tests/constraints/models.py",
+          "tests/custom_managers/models.py",
+          "tests/managers_regress/models.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_in_bulk_unique_constraint_failure():\n    from django.test import TestCase\n    from tests.constraints.models import Article\n    Article.objects.create(slug='article1')\n    Article.objects.create(slug='article2')\n    with pytest.raises(ValueError) as excinfo:\n        Article.objects.in_bulk(field_name='slug')\n    assert str(excinfo.value) == \"in_bulk()'s field_name must be a unique field but 'slug' isn't.\""
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: in_bulk()'s field_name must be a unique field but 'slug' isn't."
+        ],
+        "error_keywords": [
+          "ValueError"
+        ],
+        "identifiers": {
+          "functions": [
+            "in_bulk"
+          ],
+          "classes": [
+            "QuerySet",
+            "UniqueConstraint"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "exception_expected",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the expected exception type only; never match exception message text."
+        },
+        "oracle_type": "exception_expected",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

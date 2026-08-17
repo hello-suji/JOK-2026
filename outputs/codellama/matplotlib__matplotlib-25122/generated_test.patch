@@ -1,0 +1,15 @@
+--- a/lib/matplotlib/tests/test_mlab.py
++++ b/lib/matplotlib/tests/test_mlab.py
+@@ -1072,3 +1072,12 @@
+                     sides='onesided')
+     Su_1side = np.append([Su[0]], Su[1:4] + Su[4:][::-1])
+     assert_almost_equal(np.sum(P), np.sum(Su_1side))  # same energy
++
++import numpy as np
++from scipy import signal
++
++def test_flattop_window_correction_repro():
++    window = signal.windows.flattop(512)
++    result = np.abs(window).sum()**2 - window.sum()**2
++    assert result != 0  # This should fail on pre-patch code
++    assert result == 0  # This should pass on post-patch code

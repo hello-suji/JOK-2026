@@ -1,0 +1,263 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "create",
+      "related_classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "candidate_test_file": "tests/custom_pk/fields.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from myapp.models import AutoModel, MyAutoField",
+      "from myapp.utils import MyIntWrapper",
+      "Use the generated reproduction path that calls create."
+    ],
+    "execution_stimulus": [
+      "instance = AutoModel.objects.create()",
+      "Execute the focused target API path: create."
+    ],
+    "expected_failure": "The instance.id should be an instance of MyIntWrapper but is a plain integer.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/gis/db/models/fields.py",
+      "django/contrib/gis/db/models/sql/conversion.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_pk/fields.py",
+      "tests/postgres_tests/fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.custom_pk.fields import AutoModel, MyWrapper\n\nclass TestAutoModelCreation(TestCase):\n    def test_create_returns_wrapped_id_repro(self):\n        instance = AutoModel.objects.create()\n        self.assertIsInstance(instance.id, MyWrapper)"
+      },
+      {
+        "language": "python",
+        "code": "def test_create_returns_wrapped_id():\n    from django.test import TestCase\n    from myapp.models import AutoModel\n    from myapp.utils import MyIntWrapper\n    instance = AutoModel.objects.create()\n    assert isinstance(instance.id, MyIntWrapper)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create"
+      ],
+      "classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/custom_pk/fields.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create"
+      ],
+      "test_visible_classes": [
+        "AutoModel",
+        "MyWrapper"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "create",
+      "related_classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "candidate_test_file": "tests/custom_pk/fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from myapp.models import AutoModel",
+      "from myapp.utils import MyIntWrapper",
+      "Use the generated reproduction path that calls create."
+    ],
+    "execution_stimulus": [
+      "instances = AutoModel.objects.bulk_create([AutoModel(), AutoModel()])",
+      "Execute the focused target API path: create."
+    ],
+    "expected_failure": "The instances' ids should be instances of MyIntWrapper but are plain integers.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/gis/db/models/fields.py",
+      "django/contrib/gis/db/models/sql/conversion.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_pk/fields.py",
+      "tests/postgres_tests/fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.custom_pk.fields import AutoModel, MyWrapper\n\nclass TestAutoModelCreation(TestCase):\n    def test_create_returns_wrapped_id_repro(self):\n        instance = AutoModel.objects.create()\n        self.assertIsInstance(instance.id, MyWrapper)"
+      },
+      {
+        "language": "python",
+        "code": "def test_bulk_create_returns_wrapped_ids():\n    from django.test import TestCase\n    from myapp.models import AutoModel\n    from myapp.utils import MyIntWrapper\n    instances = AutoModel.objects.bulk_create([AutoModel(), AutoModel()])\n    for instance in instances:\n        assert isinstance(instance.id, MyIntWrapper)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "bulk_create",
+        "create"
+      ],
+      "classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/custom_pk/fields.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create"
+      ],
+      "test_visible_classes": [
+        "AutoModel",
+        "MyWrapper"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "create",
+      "related_classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "candidate_test_file": "tests/custom_pk/fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from myapp.models import AutoModel",
+      "from myapp.utils import MyIntWrapper",
+      "Use the generated reproduction path that calls create."
+    ],
+    "execution_stimulus": [
+      "instance = AutoModel.objects.create()",
+      "retrieved_instance = AutoModel.objects.get(id=instance.id)",
+      "Execute the focused target API path: create."
+    ],
+    "expected_failure": "The retrieved_instance.id should be an instance of MyIntWrapper but is a plain integer.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/gis/db/models/fields.py",
+      "django/contrib/gis/db/models/sql/conversion.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_pk/fields.py",
+      "tests/postgres_tests/fields.py",
+      "tests/invalid_models_tests/test_custom_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.custom_pk.fields import AutoModel, MyWrapper\n\nclass TestAutoModelCreation(TestCase):\n    def test_create_returns_wrapped_id_repro(self):\n        instance = AutoModel.objects.create()\n        self.assertIsInstance(instance.id, MyWrapper)"
+      },
+      {
+        "language": "python",
+        "code": "def test_retrieved_id_is_wrapped():\n    from django.test import TestCase\n    from myapp.models import AutoModel\n    from myapp.utils import MyIntWrapper\n    instance = AutoModel.objects.create()\n    retrieved_instance = AutoModel.objects.get(id=instance.id)\n    assert isinstance(retrieved_instance.id, MyIntWrapper)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "from_db_value",
+        "create"
+      ],
+      "classes": [
+        "MyAutoField",
+        "AutoModel",
+        "MyWrapper"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/custom_pk/fields.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create"
+      ],
+      "test_visible_classes": [
+        "AutoModel",
+        "MyWrapper"
+      ]
+    }
+  }
+]

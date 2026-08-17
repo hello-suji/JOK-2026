@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "create",
+      "related_classes": [
+        "ReservedName",
+        "Q"
+      ],
+      "candidate_test_file": "tests/get_or_create/tests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where values can be called.",
+      "Use the generated reproduction path that calls create, get, union, values."
+    ],
+    "execution_stimulus": [
+      "Call values with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, get, union, values."
+    ],
+    "expected_failure": "Composed queries cannot change the list of columns with values()/values_list().",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/compiler.py",
+      "django/contrib/sessions/backends/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/generic_views/test_base.py",
+      "tests/get_or_create/tests.py",
+      "tests/get_or_create/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Q\nfrom tests.get_or_create.models import ReservedName\n\nclass TestReservedNameQueries(TestCase):\n    def test_composed_queries_with_values_list_repro(self):\n        ReservedName.objects.create(name='a', order=2)\n        qs1 = ReservedName.objects.all()\n        result1 = qs1.union(qs1).values_list('name', 'order').get()\n        result2 = qs1.union(qs1).values_list('order').get()\n        self.assertEqual(result1, ('a', 2))\n        self.assertEqual(result2, (2,))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create",
+        "union",
+        "values_list"
+      ],
+      "classes": [
+        "ReservedName",
+        "Q"
+      ],
+      "files": [
+        "compiler.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/get_or_create/tests.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create",
+        "get",
+        "union",
+        "values",
+        "values_list"
+      ],
+      "test_visible_classes": [
+        "ReservedName",
+        "Q"
+      ]
+    }
+  }
+]

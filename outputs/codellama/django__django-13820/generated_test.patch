@@ -1,0 +1,23 @@
+--- a/tests/migrations/test_loader.py
++++ b/tests/migrations/test_loader.py
+@@ -545,3 +545,20 @@
+             )
+             with self.assertRaisesRegex(ImportError, msg):
+                 MigrationLoader(connection)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.loader import MigrationLoader
++
++class TestMigrationLoader(TestCase):
++    def test_load_disk_without_file_attribute_repro(self):
++        # Simulate a module without __file__ attribute
++        class MockModule:
++            __path__ = []
++
++        mock_module = MockModule()
++        loader = MigrationLoader(connections['default'])
++        loader.migrated_apps = {'mock_app': mock_module}
++        loader.disk_migrations = {}
++        loader.load_disk()
++        # Assert that the loader does not raise an error and proceeds correctly
++        self.assertIn('mock_app', loader.disk_migrations)

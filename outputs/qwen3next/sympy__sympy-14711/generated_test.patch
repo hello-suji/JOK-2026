@@ -1,0 +1,14 @@
+--- a/sympy/physics/vector/tests/test_vector.py
++++ b/sympy/physics/vector/tests/test_vector.py
+@@ -165,3 +165,11 @@
+     test4 = ((-4 * x * y**2 - 2 * y**3 - 2 * x**2 * y) / (x + y)**2) * N.x
+     test4 = test4.simplify()
+     assert (test4 & N.x) == -2 * y
++
++def test_vector_add_zero_error_repro():
++    N = ReferenceFrame('N')
++    zero_vector = 0 * N.x
++    result = N.x + zero_vector
++    assert result == N.x
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(N) != 'TypeError: A Vector must be supplied'

@@ -1,0 +1,416 @@
+{
+  "instance_id": "django__django-14089",
+  "repo": "django/django",
+  "base_commit": "d01709aae21de9cd2565b9c52f32732ea28a2d98",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/datastructures.py",
+      "score": 20,
+      "matched_identifiers": [
+        "OrderedSet",
+        "allow",
+        "allowed",
+        "argument",
+        "passed"
+      ],
+      "reasons": [
+        "class_match:OrderedSet",
+        "source_content_tokens:allowed,argument,passed,allow,ordered"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "OrderedSet": "class OrderedSet:\n    \"\"\"\n    A set which keeps the ordering of the inserted items.\n    \"\"\"\n\n    def __init__(self, iterable=None):\n        self.dict = dict.fromkeys(iterable or ())\n\n    def add(self, item):\n        self.dict[item] = None\n\n    def remove(self, item):\n        del self.dict[item]\n\n    def discard(self, item):"
+      },
+      "top_level_functions": [
+        "OrderedSet.add",
+        "OrderedSet.remove",
+        "OrderedSet.discard",
+        "MultiValueDict.get",
+        "MultiValueDict.getlist",
+        "MultiValueDict.setlist",
+        "MultiValueDict.setdefault",
+        "MultiValueDict.setlistdefault",
+        "MultiValueDict.appendlist",
+        "MultiValueDict.items",
+        "MultiValueDict.lists",
+        "MultiValueDict.values",
+        "MultiValueDict.copy",
+        "MultiValueDict.update",
+        "MultiValueDict.dict",
+        "ImmutableList.complain",
+        "CaseInsensitiveMapping.copy"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/decorators.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allow",
+        "allowed",
+        "argument",
+        "passed"
+      ],
+      "reasons": [
+        "source_content_tokens:allowed,argument,passed,allow,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "action",
+        "display",
+        "register"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "adding",
+        "allowed",
+        "argument",
+        "passed"
+      ],
+      "reasons": [
+        "source_content_tokens:allowed,argument,passed,adding,allow"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allow",
+        "allowed",
+        "argument",
+        "passed"
+      ],
+      "reasons": [
+        "source_content_tokens:allowed,argument,passed,allow,calling"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/backends.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allow",
+        "allowed",
+        "argument",
+        "passed"
+      ],
+      "reasons": [
+        "source_content_tokens:allowed,argument,passed,allow,given"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseBackend.authenticate",
+        "BaseBackend.get_user",
+        "BaseBackend.get_user_permissions",
+        "BaseBackend.get_group_permissions",
+        "BaseBackend.get_all_permissions",
+        "BaseBackend.has_perm",
+        "ModelBackend.authenticate",
+        "ModelBackend.user_can_authenticate",
+        "ModelBackend.get_user_permissions",
+        "ModelBackend.get_group_permissions",
+        "ModelBackend.get_all_permissions",
+        "ModelBackend.has_perm",
+        "ModelBackend.has_module_perms",
+        "ModelBackend.with_perm",
+        "ModelBackend.get_user",
+        "AllowAllUsersModelBackend.user_can_authenticate",
+        "RemoteUserBackend.authenticate",
+        "RemoteUserBackend.clean_username",
+        "RemoteUserBackend.configure_user",
+        "AllowAllUsersRemoteUserBackend.user_can_authenticate"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/utils_tests/test_datastructures.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:datastructures",
+        "token_overlap:datastructures",
+        "internal_name_overlap:ordered",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_auth_backends.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:backends",
+        "token_overlap:auth,backends",
+        "internal_name_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_client_regress/auth_backends.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:backends",
+        "token_overlap:auth,backends",
+        "internal_name_overlap:auth",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "token_overlap:backends",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_module/__main__.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:main",
+        "token_overlap:main"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_datastructures.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_auth_backends.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_auth_backends.py:testcase_class:TestObj"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2686,
+  "indexed_test_file_count": 1825,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_datastructures": [
+      "CaseInsensitiveMappingTests",
+      "DictWrapperTests",
+      "ImmutableListTests",
+      "MultiValueDictTests",
+      "OrderedSetTests"
+    ],
+    "tests.auth_tests.test_auth_backends": [
+      "AllowAllUsersModelBackendTest",
+      "AnonymousUserBackendTest",
+      "AuthenticateTests",
+      "BaseBackendTest",
+      "BaseModelBackendTest",
+      "ChangedBackendSettingsTest",
+      "CountingMD5PasswordHasher",
+      "CustomModelBackend",
+      "CustomPermissionsUserModelBackendTest",
+      "CustomUserModelBackendAuthenticateTest",
+      "ExtensionUserModelBackendTest",
+      "ImportedBackendTests",
+      "ImportedModelBackend",
+      "ImproperlyConfiguredUserModelTest",
+      "InActiveUserBackendTest",
+      "ModelBackendTest",
+      "NewModelBackend",
+      "NoBackendsTest",
+      "OtherModelBackend",
+      "PermissionDeniedBackend",
+      "PermissionDeniedBackendTest",
+      "RowlevelBackendTest",
+      "SelectingBackendTests",
+      "SimpleBackend",
+      "SimpleRowlevelBackend",
+      "SkippedBackend",
+      "SkippedBackendWithDecoratedMethod",
+      "TestObj",
+      "TypeErrorBackend",
+      "UUIDUserTests"
+    ],
+    "tests.test_client_regress.auth_backends": [
+      "CustomUserBackend"
+    ],
+    "tests.utils_tests.test_module": [
+      "SiteMock"
+    ],
+    "django.utils.datastructures": [
+      "CaseInsensitiveMapping",
+      "DictWrapper",
+      "ImmutableList",
+      "MultiValueDict",
+      "MultiValueDictKeyError",
+      "OrderedSet",
+      "_destruct_iterable_mapping_values"
+    ],
+    "django.contrib.admin.decorators": [
+      "action",
+      "display",
+      "register"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth.backends": [
+      "AllowAllUsersModelBackend",
+      "AllowAllUsersRemoteUserBackend",
+      "BaseBackend",
+      "ModelBackend",
+      "RemoteUserBackend"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ]
+  },
+  "test_example_snippet": "    def test_init_with_iterable(self):\n        s = OrderedSet([1, 2, 3])\n        self.assertEqual(list(s.dict.keys()), [1, 2, 3])\n\n    def test_remove(self):\n        s = OrderedSet()\n        self.assertEqual(len(s), 0)\n        s.add(1)\n        s.add(2)\n        s.remove(2)\n        self.assertEqual(len(s), 1)\n        self.assertNotIn(2, s)\n\n    def test_discard(self):\n        s = OrderedSet()\n        self.assertEqual(len(s), 0)\n        s.add(1)\n        s.discard(2)\n        self.assertEqual(len(s), 1)\n\n    def test_contains(self):\n        s = OrderedSet()\n        self.assertEqual(len(s), 0)\n        s.add(1)\n        self.assertIn(1, s)\n\n    def test_bool(self):\n        # Refs #23664\n        s = OrderedSet()\n        self.assertFalse(s)\n        s.add(1)\n        self.assertTrue(s)\n\n    def test_len(self):\n        s = OrderedSet()",
+  "conftest_fixtures": {}
+}

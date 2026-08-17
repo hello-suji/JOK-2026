@@ -1,0 +1,116 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/auth/models.py",
+      "target_function": "admin",
+      "related_classes": [
+        "ManyToManyField",
+        "ManyToManyFields",
+        "ReportPhotoInlineModelAdmin",
+        "User",
+        "Permission",
+        "ContentType",
+        "UserAdmin",
+        "TabularInline",
+        "AdminSite"
+      ],
+      "candidate_test_file": "tests/model_fields/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls admin, create_user, get_for_model, get.",
+      "Use the generated reproduction path that calls admin, create_user, get_for_model, add."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: admin, create_user, get_for_model, get.",
+      "Execute the focused target API path: admin, create_user, get_for_model, add."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/contrib/auth/models.py",
+      "django/db/migrations/operations/models.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/models.py",
+      "tests/distinct_on_fields/models.py",
+      "tests/many_to_one/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.auth.models import User, Permission\nfrom django.contrib.contenttypes.models import ContentType\nfrom django.contrib.auth.admin import UserAdmin\nfrom django.contrib import admin\nfrom django.contrib.admin.options import TabularInline\nfrom django.db.models.fields.related import ManyToManyField\n\n\nclass ReportPhotoInlineModelAdmin(TabularInline):\n    model = User.groups.through\n    extra = 1\n\n\nclass TestAdminInlines(TestCase):\n    def setUp(self):\n        self.user = User.objects.create_user(username='viewuser', password='password')\n        content_type = ContentType.objects.get_for_model(User)\n        view_permission = Permission.objects.get(codename='view_user', content_type=content_type)\n        self.user.user_permissions.add(view_permission)\n        self.user.save()\n        self.site = admin.AdminSite()\n        self.user_admin = UserAdmin(User, self.site)\n        self.user_admin.inlines = [ReportPhotoInlineModelAdmin]\n\n    def test_view_only_user_cannot_edit_m2m_inlines_repro(self):\n        request = self.client.get('/admin/auth/user/%s/change/' % self.user.pk)\n        self.assertNotContains(request, 'id_groups-0-TOTAL_FORMS')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "admin",
+        "create_user",
+        "get_for_model",
+        "add",
+        "save"
+      ],
+      "classes": [
+        "ManyToManyField",
+        "ManyToManyFields",
+        "ReportPhotoInlineModelAdmin",
+        "TabularInline",
+        "User",
+        "Permission",
+        "ContentType",
+        "UserAdmin",
+        "AdminSite"
+      ],
+      "files": [
+        "admin.py",
+        "models.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_fields/models.py",
+      "target_source_file": "django/contrib/auth/models.py",
+      "test_visible_functions": [
+        "admin",
+        "create_user",
+        "get_for_model",
+        "add",
+        "save"
+      ],
+      "test_visible_classes": [
+        "ManyToManyField",
+        "ReportPhotoInlineModelAdmin",
+        "TabularInline",
+        "User",
+        "Permission",
+        "ContentType",
+        "UserAdmin",
+        "AdminSite"
+      ]
+    }
+  }
+]

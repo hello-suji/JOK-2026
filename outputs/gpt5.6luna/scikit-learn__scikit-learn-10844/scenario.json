@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/metrics/cluster/supervised.py",
+      "target_function": "fowlkes_mallows_score",
+      "related_classes": [
+        "RuntimeWarning"
+      ],
+      "candidate_test_file": "sklearn/metrics/cluster/tests/test_supervised.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import numpy as np",
+      "from sklearn.metrics.cluster import fowlkes_mallows_score",
+      "labels_true = np.random.randint(0, 1000000, size=1000000)",
+      "labels_pred = np.random.randint(0, 1000000, size=1000000)",
+      "Use the generated reproduction path that calls warnings, randint, isnan, catch_warnings."
+    ],
+    "execution_stimulus": [
+      "score = fowlkes_mallows_score(labels_true, labels_pred)",
+      "Execute the focused target API path: warnings, randint, isnan, catch_warnings."
+    ],
+    "expected_failure": "The function should raise a RuntimeWarning due to large input variables.",
+    "relevant_source_files": [
+      "sklearn/metrics/cluster/supervised.py",
+      "sklearn/feature_extraction/text.py",
+      "benchmarks/bench_plot_nmf.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/metrics/cluster/tests/test_supervised.py",
+      "sklearn/metrics/cluster/tests/test_unsupervised.py",
+      "sklearn/metrics/tests/test_score_objects.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import warnings\n\ndef test_fowlkes_mallows_score_large_input_warning_repro():\n    labels_true = np.random.randint(0, 1000000, size=1000000)\n    labels_pred = np.random.randint(0, 1000000, size=1000000)\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter('always')\n        score = fowlkes_mallows_score(labels_true, labels_pred)\n    assert any(isinstance(warning.message, RuntimeWarning) for warning in w), 'A RuntimeWarning should be raised'\n    assert np.isnan(score), 'The score should be NaN'"
+      },
+      {
+        "language": "python",
+        "code": "def test_fowlkes_mallows_score_large_input_warning():\n    import numpy as np\n    from sklearn.metrics.cluster import fowlkes_mallows_score\n    labels_true = np.random.randint(0, 1000000, size=1000000)\n    labels_pred = np.random.randint(0, 1000000, size=1000000)\n    import warnings\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter('always')\n        score = fowlkes_mallows_score(labels_true, labels_pred)\n        assert len(w) == 1\n        assert issubclass(w[-1].category, RuntimeWarning)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "RuntimeWarning"
+    ],
+    "identifiers": {
+      "functions": [
+        "fowlkes_mallows_score",
+        "warnings",
+        "randint",
+        "isnan",
+        "catch_warnings",
+        "simplefilter",
+        "isinstance"
+      ],
+      "classes": [
+        "RuntimeWarning"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/metrics/cluster/tests/test_supervised.py",
+      "target_source_file": "sklearn/metrics/cluster/supervised.py",
+      "test_visible_functions": [
+        "warnings",
+        "randint",
+        "isnan",
+        "catch_warnings",
+        "simplefilter",
+        "fowlkes_mallows_score",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "RuntimeWarning"
+      ]
+    }
+  }
+]

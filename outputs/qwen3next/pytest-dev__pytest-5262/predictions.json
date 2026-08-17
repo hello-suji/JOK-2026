@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pytest-dev__pytest-5262",
+    "model_patch": "--- a/testing/example_scripts/config/collect_pytest_prefix/test_foo_gate.py\n+++ b/testing/example_scripts/config/collect_pytest_prefix/test_foo_gate.py\n@@ -1,2 +1,12 @@\n def test_foo_gate():\n     pass\n+\n+import pytest\n+from _pytest.capture import EncodedFile\n+\n+def test_encodedfile_write_bytes_repro():\n+    ef = EncodedFile(open('test_output.txt', 'wb'), encoding='utf-8')\n+    ef.write(b'test bytes')\n+    ef.close()\n+    with open('test_output.txt', 'r', encoding='utf-8') as f:\n+        assert f.read() == 'test bytes'\n",
+    "patch_sha256": "fb5da437b90f1a43bba0b1de98605281935d87cb651113ea5e2fc432e7146d02"
+  }
+]

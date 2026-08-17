@@ -1,0 +1,25 @@
+--- a/sklearn/model_selection/tests/test_search.py
++++ b/sklearn/model_selection/tests/test_search.py
+@@ -1579,3 +1579,22 @@
+     grid = GridSearchCV(SVC(gamma='scale'), param_grid={'C': [1]}, cv=KFold(2))
+     # no warning because no stratification and 54 % 2 == 0
+     assert_no_warnings(grid.fit, X, y)
++
++from sklearn.datasets import load_iris
++from sklearn.ensemble import RandomForestClassifier
++from sklearn.model_selection import GridSearchCV
++
++
++def test_refit_gate_time_in_gridsearchcv_repro():
++    X, y = load_iris(return_X_y=True)
++
++    rs = GridSearchCV(
++        estimator=RandomForestClassifier(),
++        param_grid={'n_estimators': [2, 3, 4, 5]}
++    )
++    rs.fit(X, y)
++
++    # Assert that refit_time is available and greater than 0
++    assert 'mean_fit_time' in rs.cv_results_
++    assert len(rs.cv_results_['mean_fit_time']) > 0
++    assert rs.cv_results_['mean_fit_time'].sum() > 0

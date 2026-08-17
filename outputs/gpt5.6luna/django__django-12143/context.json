@@ -1,0 +1,590 @@
+{
+  "instance_id": "django__django-12143",
+  "repo": "django/django",
+  "base_commit": "5573a54d409bb98b5c5acdb308310bed02d392c2",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 57,
+      "matched_identifiers": [
+        "admin/options.py",
+        "django/contrib/admin/options.py",
+        "follow",
+        "since",
+        "some",
+        "sure"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:django/contrib/admin/options.py",
+        "explicit_file_path_hint:admin/options.py",
+        "stem_in_issue_text:options",
+        "source_content_tokens:follow,since,some,sure,_meta"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/admin/options.py",
+      "score": 41,
+      "matched_identifiers": [
+        "admin",
+        "admin/options.py",
+        "contrib",
+        "django/contrib/admin/options.py",
+        "format",
+        "forms"
+      ],
+      "reasons": [
+        "file_hint_match:django/contrib/admin/options.py",
+        "explicit_file_path_hint:admin/options.py",
+        "stem_in_issue_text:options",
+        "source_content_tokens:admin,contrib,format,forms,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoModelAdmin.media",
+        "GeoModelAdmin.formfield_for_dbfield",
+        "GeoModelAdmin.get_map_widget"
+      ]
+    },
+    {
+      "path": "django/db/models/options.py",
+      "score": 37,
+      "matched_identifiers": [
+        "_meta",
+        "admin",
+        "admin/options.py",
+        "django/contrib/admin/options.py",
+        "some",
+        "sure"
+      ],
+      "reasons": [
+        "file_hint_match:django/contrib/admin/options.py",
+        "file_hint_match:admin/options.py",
+        "stem_in_issue_text:options",
+        "source_content_tokens:some,sure,_meta,admin,arguments"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "normalize_together",
+        "make_immutable_fields_list",
+        "Options.label",
+        "Options.label_lower",
+        "Options.app_config",
+        "Options.installed",
+        "Options.contribute_to_class",
+        "Options.add_manager",
+        "Options.add_field",
+        "Options.setup_pk",
+        "Options.setup_proxy",
+        "Options.can_migrate",
+        "Options.verbose_name_raw",
+        "Options.swapped",
+        "Options.managers",
+        "Options.managers_map",
+        "Options.base_manager",
+        "Options.default_manager",
+        "Options.fields",
+        "Options.concrete_fields",
+        "Options.local_concrete_fields",
+        "Options.many_to_many",
+        "Options.related_objects",
+        "Options.fields_map",
+        "Options.get_field",
+        "Options.get_base_chain",
+        "Options.get_parent_list",
+        "Options.get_ancestor_link",
+        "Options.get_path_to_parent",
+        "Options.get_path_from_parent",
+        "Options.get_fields",
+        "Options.db_returning_fields"
+      ]
+    },
+    {
+      "path": "django/db/models/sql/compiler.py",
+      "score": 23,
+      "matched_identifiers": [
+        "compile",
+        "follow",
+        "since",
+        "some",
+        "sure"
+      ],
+      "reasons": [
+        "function_match:compile",
+        "path_contains_function:compile",
+        "source_content_tokens:follow,since,some,sure,_meta"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "compile": "    def compile(self, node):\n        vendor_impl = getattr(node, 'as_' + self.connection.vendor, None)\n        if vendor_impl:\n            sql, params = vendor_impl(self, self.connection)\n        else:\n            sql, params = node.as_sql(self, self.connection)\n        return sql, params\n\n    def get_combinator_sql(self, combinator, all):\n        features = self.connection.features\n        compilers = [\n            query.get_compiler(self.using, self.connection)\n            for query in self.query.combined_queries if not query.is_empty()\n        ]\n        if not features.supports_slicing_ordering_in_compound:"
+      },
+      "top_level_functions": [
+        "SQLCompiler.setup_query",
+        "SQLCompiler.pre_sql_setup",
+        "SQLCompiler.get_group_by",
+        "SQLCompiler.collapse_group_by",
+        "SQLCompiler.get_select",
+        "SQLCompiler.get_order_by",
+        "SQLCompiler.get_extra_select",
+        "SQLCompiler.quote_name_unless_alias",
+        "SQLCompiler.compile",
+        "SQLCompiler.get_combinator_sql",
+        "SQLCompiler.as_sql",
+        "SQLCompiler.get_default_columns",
+        "SQLCompiler.get_distinct",
+        "SQLCompiler.find_ordering_name",
+        "SQLCompiler.get_from_clause",
+        "SQLCompiler.get_related_selections",
+        "SQLCompiler.get_select_for_update_of_arguments",
+        "SQLCompiler.deferred_to_columns",
+        "SQLCompiler.get_converters",
+        "SQLCompiler.apply_converters",
+        "SQLCompiler.results_iter",
+        "SQLCompiler.has_results",
+        "SQLCompiler.execute_sql",
+        "SQLCompiler.as_subquery_condition",
+        "SQLCompiler.explain_query",
+        "SQLInsertCompiler.field_as_sql",
+        "SQLInsertCompiler.prepare_value",
+        "SQLInsertCompiler.pre_save_val",
+        "SQLInsertCompiler.assemble_as_sql",
+        "SQLInsertCompiler.as_sql",
+        "SQLInsertCompiler.execute_sql",
+        "SQLDeleteCompiler.single_alias",
+        "SQLDeleteCompiler.as_sql",
+        "SQLUpdateCompiler.as_sql",
+        "SQLUpdateCompiler.execute_sql",
+        "SQLUpdateCompiler.pre_sql_setup",
+        "SQLAggregateCompiler.as_sql",
+        "cursor_iter"
+      ]
+    },
+    {
+      "path": "django/db/models/expressions.py",
+      "score": 21,
+      "matched_identifiers": [
+        "_meta",
+        "compile",
+        "follow",
+        "since",
+        "some"
+      ],
+      "reasons": [
+        "function_match:compile",
+        "source_content_tokens:follow,since,some,_meta,arguments"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "compile": "    def compile(self, side, compiler, connection):\n        if not isinstance(side, DurationValue):\n            try:\n                output = side.output_field\n            except FieldError:\n                pass\n            else:\n                if output.get_internal_type() == 'DurationField':\n                    sql, params = compiler.compile(side)\n                    return connection.ops.format_for_duration_arithmetic(sql), params\n        return compiler.compile(side)\n\n    def as_sql(self, compiler, connection):\n        connection.ops.check_expression_support(self)\n        expressions = []"
+      },
+      "top_level_functions": [
+        "SQLiteNumericMixin.as_sqlite",
+        "Combinable.bitand",
+        "Combinable.bitleftshift",
+        "Combinable.bitrightshift",
+        "Combinable.bitor",
+        "BaseExpression.get_db_converters",
+        "BaseExpression.get_source_expressions",
+        "BaseExpression.set_source_expressions",
+        "BaseExpression.as_sql",
+        "BaseExpression.contains_aggregate",
+        "BaseExpression.contains_over_clause",
+        "BaseExpression.contains_column_references",
+        "BaseExpression.resolve_expression",
+        "BaseExpression.conditional",
+        "BaseExpression.field",
+        "BaseExpression.output_field",
+        "BaseExpression.convert_value",
+        "BaseExpression.get_lookup",
+        "BaseExpression.get_transform",
+        "BaseExpression.relabeled_clone",
+        "BaseExpression.copy",
+        "BaseExpression.get_group_by_cols",
+        "BaseExpression.get_source_fields",
+        "BaseExpression.asc",
+        "BaseExpression.desc",
+        "BaseExpression.reverse_ordering",
+        "BaseExpression.flatten",
+        "BaseExpression.select_format",
+        "BaseExpression.identity",
+        "CombinedExpression.get_source_expressions",
+        "CombinedExpression.set_source_expressions",
+        "CombinedExpression.as_sql",
+        "CombinedExpression.resolve_expression",
+        "DurationExpression.compile",
+        "DurationExpression.as_sql",
+        "TemporalSubtraction.as_sql",
+        "F.resolve_expression",
+        "F.asc",
+        "F.desc",
+        "ResolvedOuterRef.as_sql"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_tests/filter_tests/test_autoescape.py",
+      "score": 6,
+      "matched_identifiers": [
+        "escape"
+      ],
+      "reasons": [
+        "test_path_contains_function:escape",
+        "token_overlap:escape",
+        "internal_name_overlap:escape",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/filter_tests/test_escape.py",
+      "score": 6,
+      "matched_identifiers": [
+        "escape"
+      ],
+      "reasons": [
+        "test_path_contains_function:escape",
+        "token_overlap:escape",
+        "internal_name_overlap:escape",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/filter_tests/test_escapejs.py",
+      "score": 6,
+      "matched_identifiers": [
+        "escape"
+      ],
+      "reasons": [
+        "test_path_contains_function:escape",
+        "token_overlap:escape",
+        "internal_name_overlap:escape",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/filter_tests/test_force_escape.py",
+      "score": 6,
+      "matched_identifiers": [
+        "escape"
+      ],
+      "reasons": [
+        "test_path_contains_function:escape",
+        "token_overlap:escape",
+        "internal_name_overlap:escape",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/syntax_tests/test_autoescape.py",
+      "score": 6,
+      "matched_identifiers": [
+        "escape"
+      ],
+      "reasons": [
+        "test_path_contains_function:escape",
+        "token_overlap:escape",
+        "internal_name_overlap:escape",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_tests/syntax_tests/test_autoescape.py:unittest_or_django_test_import",
+      "tests/template_tests/filter_tests/test_force_escape.py:unittest_or_django_test_import",
+      "tests/template_tests/filter_tests/test_escapejs.py:unittest_or_django_test_import",
+      "tests/template_tests/filter_tests/test_escape.py:unittest_or_django_test_import",
+      "tests/template_tests/filter_tests/test_autoescape.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2584,
+  "indexed_test_file_count": 1750,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.template_tests.syntax_tests.test_autoescape": [
+      "AutoescapeTagTests"
+    ],
+    "tests.template_tests.filter_tests.test_force_escape": [
+      "ForceEscapeTests",
+      "FunctionTests"
+    ],
+    "tests.template_tests.filter_tests.test_escapejs": [
+      "EscapejsTests",
+      "FunctionTests"
+    ],
+    "tests.template_tests.filter_tests.test_escape": [
+      "EscapeTests",
+      "FunctionTests"
+    ],
+    "tests.template_tests.filter_tests.test_autoescape": [
+      "AutoescapeStringfilterTests"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "DefaultConnectionProxy",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "Func",
+      "ImageField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RESTRICT",
+      "RestrictedError",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "enums_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.utils.html": [
+      "MLStripper",
+      "_strip_once",
+      "avoid_wrapping",
+      "conditional_escape",
+      "escape",
+      "escapejs",
+      "format_html",
+      "format_html_join",
+      "html_safe",
+      "json_script",
+      "linebreaks",
+      "smart_urlquote",
+      "strip_spaces_between_tags",
+      "strip_tags",
+      "urlize"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.gis": [
+      "AdminSite",
+      "GeoModelAdmin",
+      "HORIZONTAL",
+      "ModelAdmin",
+      "OSMGeoAdmin",
+      "OpenLayersWidget",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.admin.options": [
+      "GeoModelAdmin",
+      "OSMGeoAdmin"
+    ],
+    "django.db.models.options": [
+      "Options",
+      "make_immutable_fields_list",
+      "normalize_together"
+    ],
+    "django.db.models.expressions": [
+      "BaseExpression",
+      "Case",
+      "Col",
+      "Combinable",
+      "CombinedExpression",
+      "DurationExpression",
+      "DurationValue",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "Func",
+      "OrderBy",
+      "OuterRef",
+      "Random",
+      "RawSQL",
+      "Ref",
+      "ResolvedOuterRef",
+      "RowRange",
+      "SQLiteNumericMixin",
+      "Star",
+      "Subquery",
+      "TemporalSubtraction",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame"
+    ],
+    "django.db.models.sql.compiler": [
+      "SQLAggregateCompiler",
+      "SQLCompiler",
+      "SQLDeleteCompiler",
+      "SQLInsertCompiler",
+      "SQLUpdateCompiler",
+      "cursor_iter"
+    ],
+    "django.db.models": [
+      "AND",
+      "OR",
+      "Query"
+    ]
+  },
+  "test_example_snippet": "    def test_autoescape_stringfilter01(self):\n        output = self.engine.render_to_string('autoescape-stringfilter01', {'unsafe': UnsafeClass()})\n        self.assertEqual(output, 'You &amp; me')\n\n    @setup({'autoescape-stringfilter02': '{% autoescape off %}{{ unsafe|capfirst }}{% endautoescape %}'})\n    def test_autoescape_stringfilter02(self):\n        output = self.engine.render_to_string('autoescape-stringfilter02', {'unsafe': UnsafeClass()})\n        self.assertEqual(output, 'You & me')\n\n    @setup({'autoescape-stringfilter03': '{{ safe|capfirst }}'})\n    def test_autoescape_stringfilter03(self):\n        output = self.engine.render_to_string('autoescape-stringfilter03', {'safe': SafeClass()})\n        self.assertEqual(output, 'You &gt; me')\n\n    @setup({'autoescape-stringfilter04': '{% autoescape off %}{{ safe|capfirst }}{% endautoescape %}'})\n    def test_autoescape_stringfilter04(self):\n        output = self.engine.render_to_string('autoescape-stringfilter04', {'safe': SafeClass()})\n        self.assertEqual(output, 'You &gt; me')",
+  "conftest_fixtures": {}
+}

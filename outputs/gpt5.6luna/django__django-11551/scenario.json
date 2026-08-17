@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/checks.py",
+      "target_function": "_check_list_display_item",
+      "related_classes": [
+        "ModelAdmin",
+        "PositionField",
+        "ImproperlyConfigured",
+        "User",
+        "UserAdmin"
+      ],
+      "candidate_test_file": "tests/check_framework/test_model_field_deprecation.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "from position.Fields import PositionField",
+      "from django.contrib import admin",
+      "class Thing(models.Model): number = models.IntegerField(default=0); order = PositionField()",
+      "@admin.register(Thing) class ThingAdmin(admin.ModelAdmin): list_display = ('order',)",
+      "Use the generated reproduction path that calls admin, _check_list_display_item, register.",
+      "Use the generated reproduction path that calls _check_list_display_item, register, admin."
+    ],
+    "execution_stimulus": [
+      "admin.site.check()",
+      "Execute the focused target API path: admin, _check_list_display_item, register.",
+      "Execute the focused target API path: _check_list_display_item, register, admin."
+    ],
+    "expected_failure": "admin.E108 is raised on fields accessible only via instance.",
+    "relevant_source_files": [
+      "django/contrib/admin/checks.py",
+      "django/contrib/admin/filters.py",
+      "django/contrib/admin/sites.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/test_manytomanyfield.py",
+      "tests/model_fields/models.py",
+      "tests/check_framework/test_model_field_deprecation.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_position_field_check_failure():\n    from django.db import models\n    from position.Fields import PositionField\n    from django.contrib import admin\n    class Thing(models.Model): number = models.IntegerField(default=0); order = PositionField()\n    @admin.register(Thing)\n    class ThingAdmin(admin.ModelAdmin): list_display = ('order',)\n    errors = admin.site.check()\n    assert any(error.id == 'admin.E108' for error in errors)"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.contrib import admin\nfrom django.core.exceptions import ImproperlyConfigured\nfrom django.contrib.admin.checks import _check_list_display_item\nfrom django.contrib.auth.models import User\n\nclass TestPositionFieldCheckFailure(TestCase):\n    def test_position_field_check_failure_repro(self):\n        @admin.register(User)\n        class UserAdmin(admin.ModelAdmin):\n            list_display = ('is_staff',)\n        \n        errors = _check_list_display_item(UserAdmin, 'is_staff')\n        assert not errors"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "admin.E108"
+    ],
+    "identifiers": {
+      "functions": [
+        "_check_list_display_item",
+        "admin",
+        "register"
+      ],
+      "classes": [
+        "ModelAdmin",
+        "PositionField",
+        "ImproperlyConfigured",
+        "User",
+        "UserAdmin"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/check_framework/test_model_field_deprecation.py",
+      "target_source_file": "django/contrib/admin/checks.py",
+      "test_visible_functions": [
+        "_check_list_display_item",
+        "register",
+        "admin"
+      ],
+      "test_visible_classes": [
+        "ModelAdmin",
+        "PositionField",
+        "ImproperlyConfigured",
+        "User",
+        "UserAdmin"
+      ]
+    }
+  }
+]

@@ -1,0 +1,449 @@
+{
+  "instance_id": "django__django-14771",
+  "repo": "django/django",
+  "base_commit": "4884a87e022056eda10534c13d74e49b8cdda632",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/apps.py",
+      "score": 27,
+      "matched_identifiers": [
+        "appconfig",
+        "checks",
+        "default",
+        "models",
+        "my_app/apps.py"
+      ],
+      "reasons": [
+        "file_hint_match:my_app/apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:models,appconfig,checks,default,default_auto_field"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SimpleAdminConfig.ready",
+        "AdminConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/apps.py",
+      "score": 27,
+      "matched_identifiers": [
+        "appconfig",
+        "checks",
+        "manage",
+        "models",
+        "my_app/apps.py"
+      ],
+      "reasons": [
+        "file_hint_match:my_app/apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:manage,models,appconfig,checks,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AuthConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/apps.py",
+      "score": 27,
+      "matched_identifiers": [
+        "appconfig",
+        "checks",
+        "manage",
+        "models",
+        "my_app/apps.py"
+      ],
+      "reasons": [
+        "file_hint_match:my_app/apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:manage,models,appconfig,checks,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ContentTypesConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/apps.py",
+      "score": 27,
+      "matched_identifiers": [
+        "appconfig",
+        "field",
+        "functions",
+        "models",
+        "my_app/apps.py"
+      ],
+      "reasons": [
+        "file_hint_match:my_app/apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:models,appconfig,field,functions,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "uninstall_if_needed",
+        "PostgresConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/sites/apps.py",
+      "score": 27,
+      "matched_identifiers": [
+        "appconfig",
+        "checks",
+        "manage",
+        "models",
+        "my_app/apps.py"
+      ],
+      "reasons": [
+        "file_hint_match:my_app/apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:manage,models,appconfig,checks,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SitesConfig.ready"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/apps/one_config_app/apps.py",
+      "score": 9,
+      "matched_identifiers": [
+        "AppConfig",
+        "MyAppConfig"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AppConfig",
+        "test_path_related_to_class:MyAppConfig",
+        "test_name_matches_source_stem:apps",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_configs_app/apps.py",
+      "score": 9,
+      "matched_identifiers": [
+        "AppConfig",
+        "MyAppConfig"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AppConfig",
+        "test_path_related_to_class:MyAppConfig",
+        "test_name_matches_source_stem:apps",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_configs_one_default_app/apps.py",
+      "score": 9,
+      "matched_identifiers": [
+        "AppConfig",
+        "MyAppConfig"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AppConfig",
+        "test_path_related_to_class:MyAppConfig",
+        "test_name_matches_source_stem:apps",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/two_default_configs_app/apps.py",
+      "score": 9,
+      "matched_identifiers": [
+        "AppConfig",
+        "MyAppConfig"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AppConfig",
+        "test_path_related_to_class:MyAppConfig",
+        "test_name_matches_source_stem:apps",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/test_apps.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:apps",
+        "token_overlap:postgres",
+        "internal_name_overlap:postgres",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/postgres_tests/test_apps.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2702,
+  "indexed_test_file_count": 1839,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.postgres_tests.test_apps": [
+      "PostgresConfigTests"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "WidgetTest",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.apps.two_configs_app.apps": [
+      "TwoConfig",
+      "TwoConfigBis"
+    ],
+    "tests.apps.two_default_configs_app.apps": [
+      "TwoConfig",
+      "TwoConfigBis"
+    ],
+    "tests.apps.two_configs_one_default_app.apps": [
+      "TwoConfig",
+      "TwoConfigAlt"
+    ],
+    "tests.apps.one_config_app.apps": [
+      "OneConfig"
+    ],
+    "django.apps.config": [
+      "AppConfig"
+    ],
+    "django.utils.autoreload": [
+      "BaseReloader",
+      "StatReloader",
+      "WatchmanReloader",
+      "WatchmanUnavailable",
+      "check_errors",
+      "common_roots",
+      "ensure_echo_on",
+      "get_child_arguments",
+      "get_reloader",
+      "is_django_module",
+      "is_django_path",
+      "iter_all_python_module_files",
+      "iter_modules_and_files",
+      "raise_last_exception",
+      "restart_with_reloader",
+      "run_with_reloader",
+      "start_django",
+      "sys_path_directories",
+      "trigger_reload"
+    ],
+    "django.contrib.postgres.apps": [
+      "PostgresConfig",
+      "uninstall_if_needed"
+    ],
+    "django.contrib.sites.apps": [
+      "SitesConfig"
+    ],
+    "django.contrib.contenttypes.apps": [
+      "ContentTypesConfig"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.apps": [
+      "AdminConfig",
+      "SimpleAdminConfig"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.apps": [
+      "AuthConfig"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_get_naive_now",
+      "_load_field",
+      "_to_naive",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

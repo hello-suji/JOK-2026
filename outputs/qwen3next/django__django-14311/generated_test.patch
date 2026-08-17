@@ -1,0 +1,15 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -177,3 +177,12 @@
+         })
+         template = engine.get_template('hello.html')
+         self.assertEqual(template.render({'name': 'Joe'}), 'Hello Joe!\n')
++
++from django.test import TestCase, SimpleTestCase
++from django.utils.autoreload import get_child_arguments
++
++class TestAutoreloadArguments(TestCase):
++    def test_correct_module_argument_handling_repro(self):
++        args = ['-m', 'foo.bar.baz']
++        processed_args = get_child_arguments(args)
++        self.assertEqual(processed_args, args)

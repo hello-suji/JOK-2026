@@ -1,0 +1,19 @@
+--- a/sklearn/linear_model/tests/test_huber.py
++++ b/sklearn/linear_model/tests/test_huber.py
+@@ -199,3 +199,16 @@
+
+     # The huber model should also fit poorly on the outliers.
+     assert_greater(ridge_outlier_score, huber_outlier_score)
++
++def test_huber_regressor_with_boolean_predictors_repro():
++    # Random data
++    X, y, coef = make_regression(n_samples=200, n_features=2, noise=4.0, coef=True, random_state=0)
++    X_bool = X > 0
++
++    # Fit with boolean predictors
++    huber = HuberRegressor().fit(X_bool, y)
++
++    # Check that the fit was successful by asserting the coefficients are not None
++    assert huber.coef_ is not None
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(huber) != 'TypeError: The numpy boolean negative, the `-` operator, is not supported, use the `~` operator or the logical_not function instead.'

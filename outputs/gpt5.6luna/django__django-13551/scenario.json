@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/auth/tokens.py",
+      "target_function": "create_user",
+      "related_classes": [
+        "PasswordResetTokenGenerator"
+      ],
+      "candidate_test_file": "tests/auth_tests/test_tokens.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.auth.models import User",
+      "from django.contrib.auth.tokens import PasswordResetTokenGenerator",
+      "user = User.objects.create_user(username='testuser', email='test@example.com', password='testpass')",
+      "Use the generated reproduction path that calls create_user, make_token, save, check_token."
+    ],
+    "execution_stimulus": [
+      "token_generator = PasswordResetTokenGenerator()",
+      "token = token_generator.make_token(user)",
+      "user.email = 'newemail@example.com'",
+      "user.save()",
+      "Execute the focused target API path: create_user, make_token, save, check_token."
+    ],
+    "expected_failure": "The password reset token generated before the email change should be rejected after the email change.",
+    "relevant_source_files": [
+      "django/contrib/auth/base_user.py",
+      "django/contrib/auth/tokens.py",
+      "django/db/backends/oracle/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_tokens.py",
+      "tests/backends/base/test_base.py",
+      "tests/generic_views/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_token_rejection_after_email_change():\n    from django.contrib.auth.models import User\n    from django.contrib.auth.tokens import PasswordResetTokenGenerator\n    user = User.objects.create_user(username='testuser', email='test@example.com', password='testpass')\n    token_generator = PasswordResetTokenGenerator()\n    token = token_generator.make_token(user)\n    user.email = 'newemail@example.com'\n    user.save()\n    assert not token_generator.check_token(user, token)"
+      },
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestTokenRejectionAfterEmailChange(TestCase):\n    def test_token_rejection_after_email_change_repro(self):\n        user = User.objects.create_user(username='testuser', email='test@example.com', password='testpass')\n        token_generator = PasswordResetTokenGenerator()\n        token = token_generator.make_token(user)\n        user.email = 'newemail@example.com'\n        user.save()\n        self.assertFalse(token_generator.check_token(user, token))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_make_hash_value",
+        "create_user",
+        "make_token",
+        "save",
+        "check_token"
+      ],
+      "classes": [
+        "PasswordResetTokenGenerator"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/auth_tests/test_tokens.py",
+      "target_source_file": "django/contrib/auth/tokens.py",
+      "test_visible_functions": [
+        "create_user",
+        "make_token",
+        "save",
+        "check_token"
+      ],
+      "test_visible_classes": [
+        "PasswordResetTokenGenerator"
+      ]
+    }
+  }
+]

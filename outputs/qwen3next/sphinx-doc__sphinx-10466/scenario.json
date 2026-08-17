@@ -1,0 +1,103 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/builders/gettext.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "List",
+        "Message",
+        "PoFileParser"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls unittest, add_location."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, add_location."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/builders/gettext.py",
+      "sphinx/builders/__init__.py",
+      "sphinx/builders/html/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nfrom sphinx.builders.gettext import Message\n\nclass TestMessageLocations(unittest.TestCase):\n    def test_unique_locations_repro(self):\n        \"\"\"Ensure Message locations are unique.\"\"\"\n        msg = Message('msgid', 'msgstr')\n        msg.add_location('../../manual/render/shader_nodes/vector/vector_rotate.rst:38')\n        msg.add_location('../../manual/modeling/hair.rst:0')\n        msg.add_location('../../manual/modeling/hair.rst:0')\n        msg.add_location('../../manual/modeling/hair.rst:0')\n        self.assertEqual(len(msg.locations), 2)"
+      },
+      {
+        "language": "python",
+        "code": "#: ../../manual/render/shader_nodes/vector/vector_rotate.rst:38\n#: ../../manual/modeling/hair.rst:0\n#: ../../manual/modeling/hair.rst:0\n#: ../../manual/modeling/hair.rst:0\n#: ../../manual/modeling/metas/properties.rst:92"
+      },
+      {
+        "language": "python",
+        "code": "#: ../../manual/movie_clip/tracking/clip/toolbar/solve.rst:96\n#: ../../manual/physics/dynamic_paint/brush.rst:0\n#: ../../manual/physics/dynamic_paint/brush.rst:0\n#: ../../manual/physics/dynamic_paint/brush.rst:0\n#: ../../manual/physics/dynamic_paint/brush.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/dynamic_paint/canvas.rst:0\n#: ../../manual/physics/fluid/type/domain/cache.rst:0"
+      },
+      {
+        "language": "python",
+        "code": "def __init__(self, text: str, locations: List[Tuple[str, int]], uuids: List[str]):\n        self.text = text\n        # self.locations = locations\n        self.locations = self.uniqueLocation(locations)\n        self.uuids = uuids\n\n    def uniqueLocation(self, locations: List[Tuple[str, int]]):\n        loc_set = set(locations)\n        return list(loc_set)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "_process_comment",
+        "uniqueLocation",
+        "unittest",
+        "add_location"
+      ],
+      "classes": [
+        "List",
+        "Message",
+        "PoFileParser",
+        "Tuple"
+      ],
+      "files": [
+        "sphinx/builders/gettext.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/builders/gettext.py",
+      "test_visible_functions": [
+        "unittest",
+        "add_location"
+      ],
+      "test_visible_classes": [
+        "Message"
+      ]
+    }
+  }
+]

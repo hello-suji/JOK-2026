@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "prefetch_related",
+      "related_classes": [
+        "Prefetch"
+      ],
+      "candidate_test_file": "tests/prefetch_related/test_prefetch_related_objects.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from django.db.models import Prefetch",
+      "from .models import Category, Post",
+      "Category.objects.create(name='Tech')",
+      "Category.objects.create(name='Science')",
+      "tech_category = Category.objects.get(name='Tech')",
+      "science_category = Category.objects.get(name='Science')",
+      "Post.objects.create(title='Tech Post 1', category=tech_category)",
+      "Post.objects.create(title='Tech Post 2', category=tech_category)",
+      "Post.objects.create(title='Tech Post 3', category=tech_category)",
+      "Post.objects.create(title='Science Post 1', category=science_category)",
+      "Use the generated reproduction path that calls prefetch_related, create."
+    ],
+    "execution_stimulus": [
+      "categories = Category.objects.prefetch_related(Prefetch('post_set', queryset=Post.objects.all()[:3], to_attr='example_posts'))",
+      "Execute the focused target API path: prefetch_related, create."
+    ],
+    "expected_failure": "AssertionError: Cannot filter a query once a slice has been taken.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/fields/related.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/prefetch_related/test_prefetch_related_objects.py",
+      "tests/generic_views/test_list.py",
+      "tests/model_options/test_default_related_name.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestPrefetchWithSlice(TestCase):\n    def test_prefetch_with_slice_repro(self):\n        from django.db.models import Prefetch\n\n        author = Author.objects.create(name='Author 1')\n        book1 = Book.objects.create(title='Book 1', author=author)\n        book2 = Book.objects.create(title='Book 2', author=author)\n\n        queryset = Author.objects.prefetch_related(Prefetch('book_set', queryset=Book.objects.all()[:1]))\n        authors = list(queryset)\n\n        self.assertEqual(len(authors), 1)\n        self.assertEqual(len(authors[0].book_set.all()), 1)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(authors) != 'AssertionError: Cannot filter a query once a slice has been taken.'"
+      },
+      {
+        "language": "python",
+        "code": "def test_prefetch_with_slice_fails():\n    from django.test import TestCase\n    from django.db.models import Prefetch\n    from .models import Category, Post\n    Category.objects.create(name='Tech')\n    Category.objects.create(name='Science')\n    tech_category = Category.objects.get(name='Tech')\n    science_category = Category.objects.get(name='Science')\n    Post.objects.create(title='Tech Post 1', category=tech_category)\n    Post.objects.create(title='Tech Post 2', category=tech_category)\n    Post.objects.create(title='Tech Post 3', category=tech_category)\n    Post.objects.create(title='Science Post 1', category=science_category)\n    with pytest.raises(AssertionError) as excinfo:\n        categories = Category.objects.prefetch_related(Prefetch('post_set', queryset=Post.objects.all()[:3], to_attr='example_posts'))\n    assert 'Cannot filter a query once a slice has been taken.' in str(excinfo.value)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AssertionError: Cannot filter a query once a slice has been taken."
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "prefetch_related",
+        "create"
+      ],
+      "classes": [
+        "Prefetch"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/prefetch_related/test_prefetch_related_objects.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "prefetch_related",
+        "create"
+      ],
+      "test_visible_classes": [
+        "Prefetch"
+      ]
+    }
+  }
+]

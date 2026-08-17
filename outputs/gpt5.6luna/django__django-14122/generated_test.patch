@@ -1,0 +1,22 @@
+--- a/tests/backends/mysql/test_operations.py
++++ b/tests/backends/mysql/test_operations.py
+@@ -45,3 +45,19 @@
+                         'SET FOREIGN_KEY_CHECKS = 1;',
+                     ],
+                 )
++
++from django.test import TestCase, SimpleTestCase
++class TestGroupByOrdering(SimpleTestCase):
++    def test_group_by_excludes_meta_ordering_repro(self):
++        # Create some data
++        Person.objects.create(name='Alice', age=30)
++        Person.objects.create(name='Bob', age=30)
++        Person.objects.create(name='Charlie', age=25)
++
++        # Perform aggregation query
++        result = Person.objects.values('age').annotate(count=models.Count('id')).order_by()
++
++        # Assert that the GROUP BY clause does not include the ordering field 'name'
++        query_str = str(result.query)
++        self.assertNotIn('GROUP BY `person`.`name`', query_str)
++        self.assertIn('GROUP BY `person`.`age`', query_str)

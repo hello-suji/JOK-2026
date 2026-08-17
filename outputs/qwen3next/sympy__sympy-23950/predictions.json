@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-23950",
+    "model_patch": "--- a/sympy/functions/elementary/tests/test_piecewise.py\n+++ b/sympy/functions/elementary/tests/test_piecewise.py\n@@ -1532,3 +1532,18 @@\n     x = Symbol('x', real=True)\n     f = Piecewise((-1 / x, x <= 0), (1 / x, True))\n     assert integrate(f, x) == Piecewise((-log(x), x <= 0), (log(x), True))\n+\n+from sympy import Symbol\n+from sympy.sets.contains import Contains\n+from sympy.sets.sets import Reals\n+from sympy.functions.elementary.piecewise import Piecewise\n+\n+def test_piecewise_with_contains_repro():\n+    x = Symbol('x')\n+    piecewise_expr = Piecewise((6, Contains(x, Reals)), (7, True))\n+    # Test the eval method\n+    assert piecewise_expr.eval(subs={x: 5}) == 6\n+    # Test the as_set method\n+    assert piecewise_expr.as_set() == Reals\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(piecewise_expr) != 'Traceback (most recent call last):\\nFile \"<stdin>\", line 1, in <module>\\nFile \"./sympy/functions/elementary/piecewise.py\", line 136, in __new__\\nr = cls.eval(*newargs)\\nFile \"./sympy/functions/elementary/piecewise.py\", line 185, in eval\\nc = c.as_set().as_relational(x)\\nAttributeError: \\'Contains\\' object has no attribute \\'as_relational\\''\n",
+    "patch_sha256": "ff79abbba99efcc8702310ea5d31e68601b2a108b7b5e3a0f14d771b67813b83"
+  }
+]

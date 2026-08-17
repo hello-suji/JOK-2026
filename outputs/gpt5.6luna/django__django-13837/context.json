@@ -1,0 +1,356 @@
+{
+  "instance_id": "django__django-13837",
+  "repo": "django/django",
+  "base_commit": "415f50298f97fb17f841a9df38d995ccf347dfcc",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/__main__.py",
+      "score": 25,
+      "matched_identifiers": [
+        "__main__",
+        "__main__.py",
+        "command"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__main__.py",
+        "stem_in_issue_text:__main__",
+        "source_content_tokens:__main__,command"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "added",
+        "entry",
+        "other",
+        "path"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:entry,other,path,added,always"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 17,
+      "matched_identifiers": [
+        "entry",
+        "other",
+        "path",
+        "than"
+      ],
+      "reasons": [
+        "stem_in_issue_text:main",
+        "source_content_tokens:entry,other,path,than,allow"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geoip2/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "arguments",
+        "directory",
+        "other",
+        "path"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:directory,other,path,arguments,creating"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoIP2.city",
+        "GeoIP2.country_code",
+        "GeoIP2.country_name",
+        "GeoIP2.country",
+        "GeoIP2.coords",
+        "GeoIP2.lon_lat",
+        "GeoIP2.lat_lon",
+        "GeoIP2.geos",
+        "GeoIP2.info",
+        "GeoIP2.open"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "algorithm",
+        "arguments",
+        "built",
+        "other"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:other,algorithm,arguments,built,built-in"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/base/test_base.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/__main__.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/__main__.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/__main__.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_docs/test_utils.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/__main__.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_base.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/__main__.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_docs/test_utils.py:unittest_or_django_test_import",
+      "tests/admin_docs/test_utils.py:testcase_class:TestUtils",
+      "tests/template_backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:testcase_class:TestUtils",
+      "tests/backends/base/test_base.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_base.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2693,
+  "indexed_test_file_count": 1831,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.admin_docs.test_utils": [
+      "TestUtils"
+    ],
+    "tests.template_backends.test_utils": [
+      "TemplateUtilsTests"
+    ],
+    "tests.backends.test_utils": [
+      "CursorWrapperTests",
+      "TestUtils"
+    ],
+    "tests.backends.base.test_base": [
+      "DatabaseWrapperTests",
+      "ExecuteWrapperTests"
+    ],
+    "tests.forms_tests.field_tests.test_base": [
+      "BasicFieldsTests",
+      "DisabledFieldTests"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ],
+    "django.contrib.gis.geoip2.base": [
+      "GeoIP2",
+      "GeoIP2Exception"
+    ],
+    "django.contrib.gis": [
+      "HAS_GEOIP2"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ]
+  },
+  "test_example_snippet": "    def test_initialization_class_attributes(self):\n        \"\"\"\n        The \"initialization\" class attributes like client_class and\n        creation_class should be set on the class and reflected in the\n        corresponding instance attributes of the instantiated backend.\n        \"\"\"\n        conn = connections[DEFAULT_DB_ALIAS]\n        conn_class = type(conn)\n        attr_names = [\n            ('client_class', 'client'),\n            ('creation_class', 'creation'),\n            ('features_class', 'features'),\n            ('introspection_class', 'introspection'),\n            ('ops_class', 'ops'),\n            ('validation_class', 'validation'),\n        ]\n        for class_attr_name, instance_attr_name in attr_names:\n            class_attr_value = getattr(conn_class, class_attr_name)\n            self.assertIsNotNone(class_attr_value)\n            instance_attr_value = getattr(conn, instance_attr_name)\n            self.assertIsInstance(instance_attr_value, class_attr_value)\n\n    def test_initialization_display_name(self):\n        self.assertEqual(BaseDatabaseWrapper.display_name, 'unknown')\n        self.assertNotEqual(connection.display_name, 'unknown')\n\n\nclass ExecuteWrapperTests(TestCase):\n\n    @staticmethod\n    def call_execute(connection, params=None):\n        ret_val = '1' if params is None else '%s'\n        sql = 'SELECT ' + ret_val + connection.features.bare_select_suffix\n        with connection.cursor() as cursor:\n            cursor.execute(sql, params)",
+  "conftest_fixtures": {}
+}

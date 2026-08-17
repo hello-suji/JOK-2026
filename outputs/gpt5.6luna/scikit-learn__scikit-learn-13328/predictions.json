@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13328",
+    "model_patch": "--- a/sklearn/linear_model/tests/test_huber.py\n+++ b/sklearn/linear_model/tests/test_huber.py\n@@ -199,3 +199,16 @@\n\n     # The huber model should also fit poorly on the outliers.\n     assert_greater(ridge_outlier_score, huber_outlier_score)\n+\n+def test_huber_regressor_with_boolean_predictors_repro():\n+    # Random data\n+    X, y, coef = make_regression(n_samples=200, n_features=2, noise=4.0, coef=True, random_state=0)\n+    X_bool = X > 0\n+\n+    # Fit with boolean predictors\n+    huber = HuberRegressor().fit(X_bool, y)\n+\n+    # Check that the fit was successful by asserting the coefficients are not None\n+    assert huber.coef_ is not None\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(huber) != 'TypeError: The numpy boolean negative, the `-` operator, is not supported, use the `~` operator or the logical_not function instead.'\n",
+    "patch_sha256": "45aa59d1bf50105518898a570753b0f6d4561e9132bcd4fecfc6cf7d2b90acc1"
+  }
+]

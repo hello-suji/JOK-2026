@@ -1,0 +1,377 @@
+{
+  "instance_id": "django__django-13344",
+  "repo": "django/django",
+  "base_commit": "e39e727ded673e74016b5d3658d23cbe20234d11",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/middleware/security.py",
+      "score": 26,
+      "matched_identifiers": [
+        "SecurityMiddleware",
+        "http",
+        "httpresponse",
+        "middleware",
+        "process_response",
+        "response"
+      ],
+      "reasons": [
+        "function_match:process_response",
+        "class_match:SecurityMiddleware",
+        "stem_in_issue_text:security",
+        "source_content_tokens:http,httpresponse,middleware,response,security"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "SecurityMiddleware": "class SecurityMiddleware(MiddlewareMixin):\n    # RemovedInDjango40Warning: when the deprecation ends, replace with:\n    #   def __init__(self, get_response):\n    def __init__(self, get_response=None):\n        self._get_response_none_deprecation(get_response)\n        self.sts_seconds = settings.SECURE_HSTS_SECONDS\n        self.sts_include_subdomains = settings.SECURE_HSTS_INCLUDE_SUBDOMAINS\n        self.sts_preload = settings.SECURE_HSTS_PRELOAD\n        self.content_type_nosniff = settings.SECURE_CONTENT_TYPE_NOSNIFF\n        self.xss_filter = settings.SECURE_BROWSER_XSS_FILTER\n        self.redirect = settings.SECURE_SSL_REDIRECT\n        self.redirect_host = settings.SECURE_SSL_HOST\n        self.redirect_exempt = [re.compile(r) for r in settings.SECURE_REDIRECT_EXEMPT]\n        self.referrer_policy = settings.SECURE_REFERRER_POLICY\n        self.get_response = get_response",
+        "process_response": "    def process_response(self, request, response):\n        if (self.sts_seconds and request.is_secure() and\n                'Strict-Transport-Security' not in response):\n            sts_header = \"max-age=%s\" % self.sts_seconds\n            if self.sts_include_subdomains:\n                sts_header = sts_header + \"; includeSubDomains\"\n            if self.sts_preload:\n                sts_header = sts_header + \"; preload\"\n            response['Strict-Transport-Security'] = sts_header\n\n        if self.content_type_nosniff:\n            response.setdefault('X-Content-Type-Options', 'nosniff')\n\n        if self.xss_filter:\n            response.setdefault('X-XSS-Protection', '1; mode=block')"
+      },
+      "top_level_functions": [
+        "SecurityMiddleware.process_request",
+        "SecurityMiddleware.process_response"
+      ]
+    },
+    {
+      "path": "django/contrib/redirects/middleware.py",
+      "score": 22,
+      "matched_identifiers": [
+        "core",
+        "http",
+        "httpresponse",
+        "middleware",
+        "process_response"
+      ],
+      "reasons": [
+        "function_match:process_response",
+        "stem_in_issue_text:middleware",
+        "source_content_tokens:core,http,httpresponse,middleware,response"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "process_response": "    def process_response(self, request, response):\n        # No need to check for a redirect for non-404 responses.\n        if response.status_code != 404:\n            return response\n\n        full_path = request.get_full_path()\n        current_site = get_current_site(request)\n\n        r = None\n        try:\n            r = Redirect.objects.get(site=current_site, old_path=full_path)\n        except Redirect.DoesNotExist:\n            pass\n        if r is None and settings.APPEND_SLASH and not request.path.endswith('/'):\n            try:"
+      },
+      "top_level_functions": [
+        "RedirectFallbackMiddleware.process_response"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/middleware.py",
+      "score": 22,
+      "matched_identifiers": [
+        "core",
+        "http",
+        "middleware",
+        "process_response",
+        "response"
+      ],
+      "reasons": [
+        "function_match:process_response",
+        "stem_in_issue_text:middleware",
+        "source_content_tokens:core,http,middleware,response,async"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "process_response": "    def process_response(self, request, response):\n        \"\"\"\n        If request.session was modified, or if the configuration is to save the\n        session every time, save the changes and set a session cookie or delete\n        the session cookie if the session has been emptied.\n        \"\"\"\n        try:\n            accessed = request.session.accessed\n            modified = request.session.modified\n            empty = request.session.is_empty()\n        except AttributeError:\n            return response\n        # First check if we need to delete this cookie.\n        # The session should be deleted only if the session is entirely empty.\n        if settings.SESSION_COOKIE_NAME in request.COOKIES and empty:"
+      },
+      "top_level_functions": [
+        "SessionMiddleware.process_request",
+        "SessionMiddleware.process_response"
+      ]
+    },
+    {
+      "path": "django/middleware/http.py",
+      "score": 22,
+      "matched_identifiers": [
+        "headers",
+        "http",
+        "middleware",
+        "process_response",
+        "response"
+      ],
+      "reasons": [
+        "function_match:process_response",
+        "stem_in_issue_text:http",
+        "source_content_tokens:http,middleware,response,headers,method"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "process_response": "    def process_response(self, request, response):\n        # It's too late to prevent an unsafe request with a 412 response, and\n        # for a HEAD request, the response body is always empty so computing\n        # an accurate ETag isn't possible.\n        if request.method != 'GET':\n            return response\n\n        if self.needs_etag(response) and not response.has_header('ETag'):\n            set_response_etag(response)\n\n        etag = response.get('ETag')\n        last_modified = response.get('Last-Modified')\n        last_modified = last_modified and parse_http_date_safe(last_modified)\n\n        if etag or last_modified:"
+      },
+      "top_level_functions": [
+        "ConditionalGetMiddleware.process_response",
+        "ConditionalGetMiddleware.needs_etag"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/tests.py",
+      "score": 21,
+      "matched_identifiers": [
+        "method",
+        "middleware",
+        "process_response",
+        "response",
+        "security"
+      ],
+      "reasons": [
+        "function_match:process_response",
+        "source_content_tokens:middleware,response,security,method,middlewaremixin"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "process_response": "    def process_response(self, request, response):\n        response['Content-Security-Policy'] = \"default-src 'self'\"\n        return response\n\n\n@modify_settings(MIDDLEWARE={'append': 'django.contrib.admin.tests.CSPMiddleware'})\nclass AdminSeleniumTestCase(SeleniumTestCase, StaticLiveServerTestCase):\n\n    available_apps = [\n        'django.contrib.admin',\n        'django.contrib.auth',\n        'django.contrib.contenttypes',\n        'django.contrib.sessions',\n        'django.contrib.sites',\n    ]"
+      },
+      "top_level_functions": [
+        "CSPMiddleware.process_response",
+        "AdminSeleniumTestCase.wait_until",
+        "AdminSeleniumTestCase.wait_for_and_switch_to_popup",
+        "AdminSeleniumTestCase.wait_for",
+        "AdminSeleniumTestCase.wait_for_text",
+        "AdminSeleniumTestCase.wait_for_value",
+        "AdminSeleniumTestCase.wait_until_visible",
+        "AdminSeleniumTestCase.wait_until_invisible",
+        "AdminSeleniumTestCase.wait_page_ready",
+        "AdminSeleniumTestCase.wait_page_loaded",
+        "AdminSeleniumTestCase.admin_login",
+        "AdminSeleniumTestCase.select_option",
+        "AdminSeleniumTestCase.deselect_option",
+        "AdminSeleniumTestCase.assertSelectOptions",
+        "AdminSeleniumTestCase.assertSelectedOptions",
+        "AdminSeleniumTestCase.has_css_class"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/middleware/test_security.py",
+      "score": 29,
+      "matched_identifiers": [
+        "DummyMiddleware",
+        "MiddlewareMixin",
+        "SecurityMiddleware",
+        "process_response"
+      ],
+      "reasons": [
+        "test_function_match:process_response",
+        "test_path_related_to_class:DummyMiddleware",
+        "test_path_related_to_class:MiddlewareMixin",
+        "test_path_related_to_class:SecurityMiddleware",
+        "inferred_test_dir_match:tests/middleware",
+        "test_name_matches_source_stem:security",
+        "token_overlap:security",
+        "internal_name_overlap:security",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/middleware/tests.py",
+      "score": 22,
+      "matched_identifiers": [
+        "DummyMiddleware",
+        "MiddlewareMixin",
+        "SecurityMiddleware"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DummyMiddleware",
+        "test_path_related_to_class:MiddlewareMixin",
+        "test_path_related_to_class:SecurityMiddleware",
+        "inferred_test_dir_match:tests/middleware",
+        "test_name_matches_source_stem:tests",
+        "internal_name_overlap:response",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns_reverse/middleware.py",
+      "score": 22,
+      "matched_identifiers": [
+        "DummyMiddleware",
+        "MiddlewareMixin",
+        "SecurityMiddleware",
+        "process_response"
+      ],
+      "reasons": [
+        "test_function_match:process_response",
+        "test_path_related_to_class:DummyMiddleware",
+        "test_path_related_to_class:MiddlewareMixin",
+        "test_path_related_to_class:SecurityMiddleware",
+        "test_name_matches_source_stem:middleware",
+        "internal_name_overlap:response"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/deprecation/test_middleware_mixin.py",
+      "score": 20,
+      "matched_identifiers": [
+        "DummyMiddleware",
+        "MiddlewareMixin",
+        "SecurityMiddleware"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DummyMiddleware",
+        "test_path_related_to_class:MiddlewareMixin",
+        "test_path_related_to_class:SecurityMiddleware",
+        "test_name_matches_source_stem:middleware",
+        "token_overlap:mixin",
+        "internal_name_overlap:mixin",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/flatpages_tests/test_middleware.py",
+      "score": 18,
+      "matched_identifiers": [
+        "DummyMiddleware",
+        "MiddlewareMixin",
+        "SecurityMiddleware"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DummyMiddleware",
+        "test_path_related_to_class:MiddlewareMixin",
+        "test_path_related_to_class:SecurityMiddleware",
+        "test_name_matches_source_stem:middleware",
+        "internal_name_overlap:mixin",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/deprecation/test_middleware_mixin.py:unittest_or_django_test_import",
+      "tests/flatpages_tests/test_middleware.py:unittest_or_django_test_import",
+      "tests/flatpages_tests/test_middleware.py:testcase_class:TestDataMixin",
+      "tests/middleware/test_security.py:unittest_or_django_test_import",
+      "tests/middleware/tests.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2673,
+  "indexed_test_file_count": 1814,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.deprecation.test_middleware_mixin": [
+      "MiddlewareMixinTests"
+    ],
+    "tests.flatpages_tests.test_middleware": [
+      "FlatpageMiddlewareAppendSlashTests",
+      "FlatpageMiddlewareTests",
+      "TestDataMixin"
+    ],
+    "tests.middleware.test_security": [
+      "SecurityMiddlewareTest"
+    ],
+    "tests.middleware.tests": [
+      "BrokenLinkEmailsMiddlewareTest",
+      "CommonMiddlewareTest",
+      "ConditionalGetMiddlewareTest",
+      "ETagGZipMiddlewareTest",
+      "GZipMiddlewareTest",
+      "XFrameOptionsMiddlewareTest",
+      "get_response_404",
+      "get_response_empty"
+    ],
+    "tests.urlpatterns_reverse.middleware": [
+      "ChangeURLconfMiddleware",
+      "NullChangeURLconfMiddleware",
+      "ReverseInnerInResponseMiddleware",
+      "ReverseInnerInStreaming",
+      "ReverseOuterInResponseMiddleware",
+      "ReverseOuterInStreaming"
+    ],
+    "django.http.response": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseBase",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseRedirectBase",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "StreamingHttpResponse"
+    ],
+    "django.middleware.http": [
+      "ConditionalGetMiddleware"
+    ],
+    "django.middleware.security": [
+      "SecurityMiddleware"
+    ],
+    "django.utils.deprecation": [
+      "DeprecationInstanceCheck",
+      "MiddlewareMixin",
+      "RemovedInDjango40Warning",
+      "RemovedInDjango41Warning",
+      "RenameMethodsBase",
+      "warn_about_renamed_method"
+    ],
+    "django.contrib.sessions.middleware": [
+      "SessionMiddleware"
+    ],
+    "django.contrib.redirects.middleware": [
+      "RedirectFallbackMiddleware"
+    ],
+    "django.contrib.admin.tests": [
+      "AdminSeleniumTestCase",
+      "CSPMiddleware"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.core.handlers.asgi": [
+      "ASGIHandler",
+      "ASGIRequest"
+    ]
+  },
+  "test_example_snippet": "    def test_sts_on(self):\n        \"\"\"\n        With SECURE_HSTS_SECONDS=3600, the middleware adds\n        \"Strict-Transport-Security: max-age=3600\" to the response.\n        \"\"\"\n        self.assertEqual(\n            self.process_response(secure=True)[\"Strict-Transport-Security\"],\n            'max-age=3600',\n        )\n\n    @override_settings(SECURE_HSTS_SECONDS=3600)\n    def test_sts_already_present(self):\n        \"\"\"\n        The middleware will not override a \"Strict-Transport-Security\" header\n        already present in the response.\n        \"\"\"\n        response = self.process_response(\n            secure=True,\n            headers={\"Strict-Transport-Security\": \"max-age=7200\"})\n        self.assertEqual(response[\"Strict-Transport-Security\"], \"max-age=7200\")\n\n    @override_settings(SECURE_HSTS_SECONDS=3600)\n    def test_sts_only_if_secure(self):\n        \"\"\"\n        The \"Strict-Transport-Security\" header is not added to responses going\n        over an insecure connection.\n        \"\"\"\n        self.assertNotIn(\"Strict-Transport-Security\", self.process_response(secure=False))\n\n    @override_settings(SECURE_HSTS_SECONDS=0)\n    def test_sts_off(self):\n        \"\"\"\n        With SECURE_HSTS_SECONDS=0, the middleware does not add a\n        \"Strict-Transport-Security\" header to the response.\n        \"\"\"",
+  "conftest_fixtures": {}
+}

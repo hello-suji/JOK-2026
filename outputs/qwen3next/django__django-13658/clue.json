@@ -1,0 +1,37 @@
+{
+  "instance_id": "django__django-13658",
+  "observed_behavior": [
+    "Above \"%(prog)s\" ​refers to sys.argv[0]. Instead, it should refer to self.prog_name. This can fixed as follows:"
+  ],
+  "expected_behavior": [
+    "Above \"%(prog)s\" ​refers to sys.argv[0]. Instead, it should refer to self.prog_name. This can fixed as follows:"
+  ],
+  "repro_conditions": [
+    "if self.prog_name == '__main__.py':",
+    "But then when it needs to parse --pythonpath and --settings, it ​uses the program name from sys.argv:",
+    "I'm aware that execute_from_command_line is a private API, but it'd be really convenient for me if it worked properly in my weird embedded environment where sys.argv[0] is ​incorrectly None. If passing my own argv to execute_from_command_line avoided all the ensuing exceptions, I wouldn't have to modify sys.argv[0] globally as I'm doing in the meantime."
+  ],
+  "environment": [
+    "self.prog_name = 'python -m django'"
+  ],
+  "identifiers": {
+    "functions": [
+      "__init__",
+      "basename"
+    ],
+    "classes": [
+      "CommandParser",
+      "ManagementUtility"
+    ],
+    "files": [
+      "__main__.py"
+    ],
+    "exceptions": []
+  },
+  "raw_issue_text": "ManagementUtility instantiates CommandParser without passing already-computed prog argument\nDescription\n\t\nManagementUtility ​goes to the trouble to parse the program name from the argv it's passed rather than from sys.argv: \n\tdef __init__(self, argv=None):\n\t\tself.argv = argv or sys.argv[:]\n\t\tself.prog_name = os.path.basename(self.argv[0])\n\t\tif self.prog_name == '__main__.py':\n\t\t\tself.prog_name = 'python -m django'\nBut then when it needs to parse --pythonpath and --settings, it ​uses the program name from sys.argv: \n\t\tparser = CommandParser(usage='%(prog)s subcommand [options] [args]', add_help=False, allow_abbrev=False)\nAbove \"%(prog)s\" ​refers to sys.argv[0]. Instead, it should refer to self.prog_name. This can fixed as follows:\n\t\tparser = CommandParser(\n\t\t\tprog=self.prog_name,\n\t\t\tusage='%(prog)s subcommand [options] [args]',\n\t\t\tadd_help=False,\n\t\t\tallow_abbrev=False)\nI'm aware that execute_from_command_line is a private API, but it'd be really convenient for me if it worked properly in my weird embedded environment where sys.argv[0] is ​incorrectly None. If passing my own argv to execute_from_command_line avoided all the ensuing exceptions, I wouldn't have to modify sys.argv[0] globally as I'm doing in the meantime.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

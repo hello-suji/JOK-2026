@@ -1,0 +1,13 @@
+--- a/tests/admin_inlines/test_templates.py
++++ b/tests/admin_inlines/test_templates.py
+@@ -21,3 +21,10 @@
+         output = render_to_string('admin/edit_inline/tabular.html', context)
+         self.assertIn('&quot;prefix&quot;: &quot;my-prefix&quot;', output)
+         self.assertIn('&quot;verbose_name&quot;: &quot;verbose name\\\\&quot;', output)
++
++from django.test import TestCase, SimpleTestCase
++class TestCustomTemplateTags(SimpleTestCase):
++    def test_hello_with_keyword_argument_repro(self):
++        template_content = '{% load asgi_urls %}{% hello greeting="hi" %}'
++        rendered_content = render_to_string(template_content)
++        self.assertEqual(rendered_content.strip(), 'hi')

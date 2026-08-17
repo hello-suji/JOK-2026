@@ -1,0 +1,402 @@
+{
+  "instance_id": "django__django-16502",
+  "repo": "django/django",
+  "base_commit": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/servers/basehttp.py",
+      "score": 20,
+      "matched_identifiers": [
+        "WSGIServer",
+        "broken",
+        "content",
+        "head",
+        "http"
+      ],
+      "reasons": [
+        "class_match:WSGIServer",
+        "source_content_tokens:broken,content,head,http,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "WSGIServer": "class WSGIServer(simple_server.WSGIServer):\n    \"\"\"BaseHTTPServer that implements the Python WSGI protocol\"\"\"\n\n    request_queue_size = 10\n\n    def __init__(self, *args, ipv6=False, allow_reuse_address=True, **kwargs):\n        if ipv6:\n            self.address_family = socket.AF_INET6\n        self.allow_reuse_address = allow_reuse_address\n        super().__init__(*args, **kwargs)\n\n    def handle_error(self, request, client_address):\n        if is_broken_pipe_error():\n            logger.info(\"- Broken pipe from %s\", client_address)\n        else:"
+      },
+      "top_level_functions": [
+        "get_internal_wsgi_application",
+        "is_broken_pipe_error",
+        "WSGIServer.handle_error",
+        "ThreadedWSGIServer.process_request_thread",
+        "ThreadedWSGIServer.close_request",
+        "ServerHandler.cleanup_headers",
+        "ServerHandler.close",
+        "WSGIRequestHandler.address_string",
+        "WSGIRequestHandler.log_message",
+        "WSGIRequestHandler.get_environ",
+        "WSGIRequestHandler.handle",
+        "WSGIRequestHandler.handle_one_request",
+        "run"
+      ]
+    },
+    {
+      "path": "django/apps/config.py",
+      "score": 17,
+      "matched_identifiers": [
+        "doesn",
+        "meta",
+        "name",
+        "title"
+      ],
+      "reasons": [
+        "stem_in_issue_text:config",
+        "source_content_tokens:doesn,meta,name,title,admin"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AppConfig.default_auto_field",
+        "AppConfig.create",
+        "AppConfig.get_model",
+        "AppConfig.get_models",
+        "AppConfig.import_models",
+        "AppConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 17,
+      "matched_identifiers": [
+        "content",
+        "doesn",
+        "http",
+        "meta"
+      ],
+      "reasons": [
+        "stem_in_issue_text:options",
+        "source_content_tokens:content,doesn,http,meta,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/admin.py",
+      "score": 17,
+      "matched_identifiers": [
+        "content",
+        "http",
+        "meta",
+        "name"
+      ],
+      "reasons": [
+        "stem_in_issue_text:admin",
+        "source_content_tokens:content,http,meta,name,title"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GroupAdmin.formfield_for_manytomany",
+        "UserAdmin.get_fieldsets",
+        "UserAdmin.get_form",
+        "UserAdmin.get_urls",
+        "UserAdmin.lookup_allowed",
+        "UserAdmin.add_view",
+        "UserAdmin.user_change_password",
+        "UserAdmin.response_add"
+      ]
+    },
+    {
+      "path": "django/core/handlers/wsgi.py",
+      "score": 17,
+      "matched_identifiers": [
+        "broken",
+        "content",
+        "equiv",
+        "head"
+      ],
+      "reasons": [
+        "stem_in_issue_text:wsgi",
+        "source_content_tokens:broken,content,equiv,head,http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "LimitedStream.read",
+        "LimitedStream.readline",
+        "WSGIRequest.GET",
+        "WSGIRequest.COOKIES",
+        "WSGIRequest.FILES",
+        "get_path_info",
+        "get_script_name",
+        "get_bytes_from_wsgi",
+        "get_str_from_wsgi"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/servers/test_basehttp.py",
+      "score": 15,
+      "matched_identifiers": [
+        "WSGIServer"
+      ],
+      "reasons": [
+        "test_path_related_to_class:WSGIServer",
+        "test_name_matches_source_stem:basehttp",
+        "token_overlap:basehttp,server,servers",
+        "internal_name_overlap:server",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/wsgi/wsgi.py",
+      "score": 8,
+      "matched_identifiers": [
+        "WSGIServer"
+      ],
+      "reasons": [
+        "test_path_related_to_class:WSGIServer",
+        "test_name_matches_source_stem:wsgi",
+        "token_overlap:wsgi",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/servers/test_liveserverthread.py",
+      "score": 7,
+      "matched_identifiers": [
+        "WSGIServer"
+      ],
+      "reasons": [
+        "test_path_related_to_class:WSGIServer",
+        "token_overlap:server,servers",
+        "internal_name_overlap:server",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/servers/tests.py",
+      "score": 7,
+      "matched_identifiers": [
+        "WSGIServer"
+      ],
+      "reasons": [
+        "test_path_related_to_class:WSGIServer",
+        "token_overlap:server,servers",
+        "internal_name_overlap:servers",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/apps/staticfiles_config.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "test_name_matches_source_stem:config",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/servers/test_liveserverthread.py:unittest_or_django_test_import",
+      "tests/servers/tests.py:unittest_or_django_test_import",
+      "tests/servers/tests.py:testcase_class:SingleThreadLiveServerTestCase",
+      "tests/servers/test_basehttp.py:unittest_or_django_test_import",
+      "tests/servers/test_basehttp.py:testcase_class:WSGIRequestHandlerTestCase",
+      "tests/servers/test_basehttp.py:testcase_class:WSGIServerTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2745,
+  "indexed_test_file_count": 1874,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "apps",
+      "get_version",
+      "setup"
+    ],
+    "tests.servers.test_liveserverthread": [
+      "LiveServerThreadTest"
+    ],
+    "tests.servers.tests": [
+      "CloseConnectionTestLiveServerThread",
+      "CloseConnectionTestServer",
+      "FailingLiveServerThread",
+      "LiveServerAddress",
+      "LiveServerBase",
+      "LiveServerDatabase",
+      "LiveServerInMemoryDatabaseLockTest",
+      "LiveServerPort",
+      "LiveServerSingleThread",
+      "LiveServerTestCaseSetupTest",
+      "LiveServerTestCloseConnectionTest",
+      "LiveServerThreadedTests",
+      "LiveServerViews",
+      "SingleThreadLiveServerTestCase",
+      "SingleThreadLiveServerViews"
+    ],
+    "tests.servers.test_basehttp": [
+      "Stub",
+      "WSGIRequestHandlerTestCase",
+      "WSGIServerTestCase"
+    ],
+    "tests.staticfiles_tests.apps.staticfiles_config": [
+      "IgnorePatternsAppConfig"
+    ],
+    "django.apps.config": [
+      "AppConfig"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth.admin": [
+      "GroupAdmin",
+      "UserAdmin"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.core.servers.basehttp": [
+      "ServerHandler",
+      "ThreadedWSGIServer",
+      "WSGIRequestHandler",
+      "WSGIServer",
+      "get_internal_wsgi_application",
+      "is_broken_pipe_error",
+      "run"
+    ],
+    "django.core.handlers.wsgi": [
+      "LimitedStream",
+      "WSGIHandler",
+      "WSGIRequest",
+      "get_bytes_from_wsgi",
+      "get_path_info",
+      "get_script_name",
+      "get_str_from_wsgi"
+    ]
+  },
+  "test_example_snippet": "    def test_log_message(self):\n        request = WSGIRequest(self.request_factory.get(\"/\").environ)\n        request.makefile = lambda *args, **kwargs: BytesIO()\n        handler = WSGIRequestHandler(request, \"192.168.0.2\", None)\n        level_status_codes = {\n            \"info\": [200, 301, 304],\n            \"warning\": [400, 403, 404],\n            \"error\": [500, 503],\n        }\n        for level, status_codes in level_status_codes.items():\n            for status_code in status_codes:\n                # The correct level gets the message.\n                with self.assertLogs(\"django.server\", level.upper()) as cm:\n                    handler.log_message(\"GET %s %s\", \"A\", str(status_code))\n                self.assertIn(\"GET A %d\" % status_code, cm.output[0])\n                # Incorrect levels don't have any messages.\n                for wrong_level in level_status_codes:\n                    if wrong_level != level:\n                        with self.assertLogs(\"django.server\", \"INFO\") as cm:\n                            handler.log_message(\"GET %s %s\", \"A\", str(status_code))\n                        self.assertNotEqual(\n                            cm.records[0].levelname, wrong_level.upper()\n                        )\n\n    def test_https(self):\n        request = WSGIRequest(self.request_factory.get(\"/\").environ)\n        request.makefile = lambda *args, **kwargs: BytesIO()\n\n        handler = WSGIRequestHandler(request, \"192.168.0.2\", None)\n\n        with self.assertLogs(\"django.server\", \"ERROR\") as cm:\n            handler.log_message(\"GET %s %s\", \"\\x16\\x03\", \"4\")\n        self.assertEqual(\n            \"You're accessing the development server over HTTPS, \"\n            \"but it only supports HTTP.\",",
+  "conftest_fixtures": {}
+}

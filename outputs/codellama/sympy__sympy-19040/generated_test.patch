@@ -1,0 +1,15 @@
+--- a/sympy/core/tests/test_expr.py
++++ b/sympy/core/tests/test_expr.py
+@@ -2102,3 +2102,12 @@
+
+     assert (x == BadRepr()) is False
+     assert (x != BadRepr()) is True
++
++def test_factor_extension_bug_repro():
++    from sympy import symbols, expand, factor
++    x, y = symbols('x y')
++    z = expand((x-1)*(y-1))
++    result = factor(z, extension=[I])
++    assert result == (x - 1)*(y - 1)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'x - 1'

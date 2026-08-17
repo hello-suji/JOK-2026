@@ -1,0 +1,81 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/parsing/latex/_parse_latex_antlr.py",
+      "target_function": "parse_latex",
+      "related_classes": [
+        "Eq"
+      ],
+      "candidate_test_file": "sympy/parsing/tests/test_latex.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where parse_latex can be called.",
+      "Use the generated reproduction path that calls parse_latex, symbols."
+    ],
+    "execution_stimulus": [
+      "Call parse_latex with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: parse_latex, symbols."
+    ],
+    "expected_failure": "Latex parsing of fractions yields wrong expression due to missing brackets",
+    "relevant_source_files": [
+      "sympy/parsing/latex/_parse_latex_antlr.py",
+      "sympy/parsing/latex/__init__.py",
+      "sympy/core/expr.py"
+    ],
+    "relevant_test_files": [
+      "sympy/integrals/rubi/parsetools/tests/test_parse.py",
+      "sympy/parsing/tests/test_latex.py",
+      "sympy/parsing/tests/test_latex_deps.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.parsing.latex import parse_latex\nfrom sympy import symbols, Eq\n\ndef test_fraction_parsing_with_missing_brackets_repro():\n    a, b, c = symbols('a b c')\n    expr = parse_latex(r'\\frac{\\frac{a^3+b}{c}}{\\frac{1}{c^2}}')\n    expected_expr = ((a**3 + b)/c)/(1/(c**2))\n    assert expr == expected_expr"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "parse_latex",
+        "symbols"
+      ],
+      "classes": [
+        "Eq"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/parsing/tests/test_latex.py",
+      "target_source_file": "sympy/parsing/latex/_parse_latex_antlr.py",
+      "test_visible_functions": [
+        "parse_latex",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Eq"
+      ]
+    }
+  }
+]

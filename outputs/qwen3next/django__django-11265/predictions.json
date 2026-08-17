@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11265",
+    "model_patch": "--- a/tests/filtered_relation/tests.py\n+++ b/tests/filtered_relation/tests.py\n@@ -0,0 +1,19 @@\n+from django.core.exceptions import FieldError\n+from django.db.models import FilteredRelation, Q\n+from django.test import TestCase\n+\n+from .models import Author, Book\n+\n+class FilteredRelationExcludeRegressionTests(TestCase):\n+    def test_exclude_on_filtered_relation_join_does_not_raise_field_error_repro(self):\n+        author = Author.objects.create(name='Alice')\n+        Book.objects.create(title='poem by alice', author=author)\n+        queryset = Author.objects.annotate(\n+            book_alice=FilteredRelation(\n+                'book', condition=Q(book__title__iexact='poem by alice')\n+            )\n+        )\n+        try:\n+            list(queryset.exclude(book_alice__isnull=False))\n+        except FieldError as exc:\n+            self.fail('FilteredRelation exclude raised FieldError: %s' % exc)\n",
+    "patch_sha256": "7690109bbac903c10bd7290cca0667a61d2e2a4b6c169b58ed2bf1c10c8bf2a5"
+  }
+]

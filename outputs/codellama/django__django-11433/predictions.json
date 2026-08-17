@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11433",
+    "model_patch": "--- a/tests/invalid_models_tests/test_custom_fields.py\n+++ b/tests/invalid_models_tests/test_custom_fields.py\n@@ -18,3 +18,15 @@\n\n         field = Model._meta.get_field('field')\n         self.assertEqual(field.check(), [])\n+\n+from django.test import TestCase\n+from django.contrib.contenttypes.models import ContentType\n+\n+\n+class TestFormFieldDefaultOverwrite(TestCase):\n+    def test_default_overwritten_by_cleaned_data_repro(self):\n+        ct = ContentType.objects.first()\n+        form_data = {'name': 'test_name', 'content_type': ct.pk}\n+        form = TestContentTypeForm(data=form_data)\n+        form.is_valid()\n+        self.assertEqual(form.cleaned_data['name'], 'test_name')\n",
+    "patch_sha256": "6a03167cf12c108a238431c0cd3d0c76436b3b5cba0ef73209d0995767f9eef4"
+  }
+]

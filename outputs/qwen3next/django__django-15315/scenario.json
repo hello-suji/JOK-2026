@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "hash",
+      "related_classes": [
+        "CharField"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db import models",
+      "f = models.CharField(max_length=200)",
+      "d = {f: 1}",
+      "Use the generated reproduction path that calls hash."
+    ],
+    "execution_stimulus": [
+      "class Book(models.Model):",
+      "    title = f",
+      "assert f in d",
+      "Execute the focused target API path: hash."
+    ],
+    "expected_failure": "The test should fail with an AssertionError due to the hash value of the CharField changing after assignment to a model class.",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/contrib/auth/models.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/distinct_on_fields/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.forms.fields import CharField\nfrom django.test import SimpleTestCase\n\nclass TestCharFieldHashImmutability(SimpleTestCase):\n    def test_charfield_hash_change_repro(self):\n        f = CharField(max_length=200)\n        initial_hash = hash(f)\n        d = {f: 1}\n        final_hash = hash(f)\n        self.assertEqual(initial_hash, final_hash)\n        self.assertIn(f, d)"
+      },
+      {
+        "language": "python",
+        "code": "def test_charfield_hash_change():\n    from django.db import models\n    f = models.CharField(max_length=200)\n    d = {f: 1}\n    class Book(models.Model):\n        title = f\n    assert f in d"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__hash__",
+        "hash"
+      ],
+      "classes": [
+        "CharField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "hash"
+      ],
+      "test_visible_classes": [
+        "CharField"
+      ]
+    }
+  }
+]

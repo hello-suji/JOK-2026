@@ -1,0 +1,33 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -570,3 +570,30 @@
+
+     # explicit title
+     assert html.format('index.html#foons') in content
++
++import unittest
++class TestInheritanceDiagramLinks(unittest.TestCase):
++    def test_svg_link_correctness_repro(self):
++        """Ensure SVG links in inheritance diagrams are correctly formed."""
++        import tempfile
++        import os
++        from sphinx.application import Sphinx
++        from sphinx.ext.inheritance_diagram import inheritance_diagram
++
++        srcdir = os.path.join(os.path.dirname(__file__), 'roots', 'test-inheritance-svg')
++        confdir = srcdir
++        outdir = os.path.join(srcdir, '_build', 'html')
++        doctreedir = os.path.join(srcdir, '_build', 'doctrees')
++        buildername = 'html'
++
++        with tempfile.TemporaryDirectory() as tmpdir:
++            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++            app.build()
++
++            svg_path = os.path.join(outdir, 'my_package', 'inheritance.svg')
++            with open(svg_path, 'r') as f:
++                svg_content = f.read()
++
++            # Assert the presence of correctly formed links
++            self.assertIn('href="my_class_1.html#my_package.MyClass1"', svg_content)
++            self.assertIn('href="my_class_2.html#my_package.MyClass2"', svg_content)

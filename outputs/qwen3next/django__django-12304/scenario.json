@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/checks.py",
+      "target_function": "fail",
+      "related_classes": [
+        "YearInSchool"
+      ],
+      "candidate_test_file": "tests/auth_tests/test_checks.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls fail."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: fail."
+    ],
+    "expected_failure": "This is because YearInSchool, being a class, is callable, and Django Templates always call callables with no arguments. The call fails because the required value argument is missing.",
+    "relevant_source_files": [
+      "django/contrib/admin/checks.py",
+      "django/contrib/admin/options.py",
+      "django/contrib/admin/views/main.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_checks.py",
+      "tests/auth_tests/test_models.py",
+      "tests/auth_tests/test_views.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom tests.model_enums.tests import YearInSchool\n\nclass TestYearInSchoolInTemplate(TestCase):\n    def test_year_in_school_callable_issue_repro(self):\n        student = {'year_in_school': YearInSchool.FRESHMAN}\n        context = {'student': student}\n        # Simulate template rendering behavior by calling the callable\n        try:\n            year_in_school_value = context['student']['year_in_school']()\n            self.fail('Expected a TypeError due to callable being called without arguments')\n        except TypeError:\n            pass\n        # Assert the correct non-callable behavior\n        self.assertEqual(context['student']['year_in_school'], YearInSchool.FRESHMAN)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "fail"
+      ],
+      "classes": [
+        "YearInSchool"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/auth_tests/test_checks.py",
+      "target_source_file": "django/contrib/admin/checks.py",
+      "test_visible_functions": [
+        "fail"
+      ],
+      "test_visible_classes": [
+        "YearInSchool"
+      ]
+    }
+  }
+]

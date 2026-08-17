@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "quantile",
+      "related_classes": [
+        "DataArray",
+        "OrderedDict",
+        "Your"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataarray.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where quantile can be called.",
+      "Use the generated reproduction path that calls quantile."
+    ],
+    "execution_stimulus": [
+      "Call quantile with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: quantile."
+    ],
+    "expected_failure": "DataArray.quantile does not honor `keep_attrs`",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py",
+      "xarray/core/groupby.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_groupby.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_quantile_keep_attrs_repro():\n    da = xr.DataArray([0, 0], dims=\"x\", attrs={'units': 'K'})\n    result = da.quantile(q=0.5, keep_attrs=True)\n    assert 'units' in result.attrs and result.attrs['units'] == 'K'"
+      },
+      {
+        "language": "python",
+        "code": "# Your code here\nimport xarray as xr                                                                                                                                                                                 \nda = xr.DataArray([0, 0], dims=\"x\", attrs={'units':'K'})                                                                                                                                            \nout = da.quantile(.9, dim='x', keep_attrs=True)                                                                                                                                                     \nout.attrs"
+      },
+      {
+        "language": "python",
+        "code": "OrderedDict()"
+      },
+      {
+        "language": "python",
+        "code": "OrderedDict([('units', 'K')])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "quantile"
+      ],
+      "classes": [
+        "DataArray",
+        "OrderedDict",
+        "Your"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataarray.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "quantile"
+      ],
+      "test_visible_classes": [
+        "DataArray"
+      ]
+    }
+  }
+]

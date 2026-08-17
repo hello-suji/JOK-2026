@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/deletion.py",
+      "target_function": "delete",
+      "related_classes": [
+        "InnoDB",
+        "MariaDB",
+        "MySQL",
+        "A"
+      ],
+      "candidate_test_file": "tests/delete/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where delete can be called.",
+      "Use the generated reproduction path that calls delete, t, create, count."
+    ],
+    "execution_stimulus": [
+      "Call delete with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: delete, t, create, count."
+    ],
+    "expected_failure": "You cannot refer to a locked table multiple times in a single query using the same name. Use aliases instead, and obtain a separate lock for the table and each alias:",
+    "relevant_source_files": [
+      "django/db/models/deletion.py",
+      "django/contrib/auth/models.py",
+      "django/test/client.py"
+    ],
+    "relevant_test_files": [
+      "tests/save_delete_hooks/models.py",
+      "tests/delete/models.py",
+      "tests/auth_tests/client.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.delete.models import A\n\nclass TestDeletePerformanceRegression(TestCase):\n    def setUp(self):\n        A.objects.create(name='test1')\n        A.objects.create(name='test2')\n\n    def test_delete_with_subquery_performance_repro(self):\n        initial_count = A.objects.count()\n        A.objects.all().delete()\n        final_count = A.objects.count()\n        self.assertEqual(final_count, 0)\n        self.assertNotEqual(initial_count, final_count)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "delete",
+        "t",
+        "create",
+        "count"
+      ],
+      "classes": [
+        "InnoDB",
+        "MariaDB",
+        "MySQL",
+        "A"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/delete/models.py",
+      "target_source_file": "django/db/models/deletion.py",
+      "test_visible_functions": [
+        "delete",
+        "t",
+        "create",
+        "count"
+      ],
+      "test_visible_classes": [
+        "A"
+      ]
+    }
+  }
+]

@@ -1,0 +1,11 @@
+--- a/astropy/modeling/tests/test_separable_gate.py
++++ b/astropy/modeling/tests/test_separable_gate.py
+@@ -148,3 +148,8 @@
+
+     assert not model_c().separable
+     assert np.all(separability_matrix(model_c()) == [True, True])
++
++def test_nested_compoundmodel_separability_matrix_repro():
++    cm = models.Linear1D(10) & models.Linear1D(5)
++    expected_matrix = np.array([[True, False], [False, True]])
++    np.testing.assert_array_equal(separability_matrix(cm), expected_matrix)

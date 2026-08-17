@@ -1,0 +1,27 @@
+--- a/tests/model_forms/test_modelchoicefield.py
++++ b/tests/model_forms/test_modelchoicefield.py
+@@ -373,3 +373,24 @@
+         )
+         with self.assertNumQueries(2):
+             template.render(Context({'form': CategoriesForm()}))
++
++from django.test import TestCase, SimpleTestCase
++class TestQuerySetUnionBehavior(TestCase):
++    def test_union_of_queries_repro(self):
++        # Create articles
++        article1 = Article.objects.create(title='Article 1')
++        article2 = Article.objects.create(title='Article 2')
++        article3 = Article.objects.create(title='Article 3')
++
++        # Create querysets
++        queryset1 = Article.objects.filter(title__startswith='A').order_by('id')
++        queryset2 = Article.objects.filter(id__in=[article2.id, article3.id]).order_by('id')
++
++        # Perform union
++        result_queryset = queryset1.union(queryset2).order_by('id')
++
++        # Expected result
++        expected_ids = [article1.id, article2.id, article3.id]
++
++        # Assert the result
++        self.assertEqual(list(result_queryset.values_list('id', flat=True)), expected_ids)

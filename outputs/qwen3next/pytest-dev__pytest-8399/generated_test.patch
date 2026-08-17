@@ -1,0 +1,25 @@
+--- a/testing/python/show_fixtures_per_test.py
++++ b/testing/python/show_fixtures_per_test.py
+@@ -181,3 +181,22 @@
+     assert result.ret == 0
+
+     result.stdout.fnmatch_lines(["*collected 2 items*"])
++
++def test_setupclass_fixture_visibility_repro(pytester: Pytester) -> None:
++    pytester.makepyfile(
++        """
++        import unittest
++
++        class Tests(unittest.TestCase):
++            @classmethod
++            def setUpClass(cls):
++                pass
++
++            def test_1_repro(self):
++                pass
++        """
++    )
++    result = pytester.runpytest('--fixtures')
++    assert 'unittest_setUpClass_fixture_Tests' not in result.stdout.str()
++    result = pytester.runpytest('--fixtures', '-v')
++    assert 'unittest_setUpClass_fixture_Tests' in result.stdout.str()

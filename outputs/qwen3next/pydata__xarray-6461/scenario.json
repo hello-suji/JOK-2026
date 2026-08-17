@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/computation.py",
+      "target_function": "apply_ufunc",
+      "related_classes": [
+        "DataArray",
+        "Dataset"
+      ],
+      "candidate_test_file": "xarray/tests/test_computation.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where apply_ufunc can be called.",
+      "Use the generated reproduction path that calls apply_ufunc, where, equals."
+    ],
+    "execution_stimulus": [
+      "Call apply_ufunc with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: apply_ufunc, where, equals."
+    ],
+    "expected_failure": "xr.where with scalar as second argument fails with keep_attrs=True",
+    "relevant_source_files": [
+      "xarray/core/computation.py",
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_computation.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_apply_ufunc_with_where_does_not_raise_index_error_repro(self) -> None:\n    data = xr.DataArray([1, 2, 3], dims=['x'])\n    condition = xr.DataArray([True, False, True], dims=['x'])\n    result = xr.apply_ufunc(xr.where, condition, data, 0, keep_attrs=True)\n    expected_result = xr.DataArray([1, 0, 3], dims=['x'])\n    assert result.equals(expected_result)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'IndexError: list index out of range'"
+      },
+      {
+        "language": "python",
+        "code": "import xarray as xr\n\nxr.where(xr.DataArray([1, 2, 3]) > 0, 1, 0)"
+      },
+      {
+        "language": "python",
+        "code": "1809 if keep_attrs is True:\n   1810     # keep the attributes of x, the second parameter, by default to\n   1811     # be consistent with the `where` method of `DataArray` and `Dataset`\n-> 1812     keep_attrs = lambda attrs, context: attrs[1]\n   1814 # alignment for three arguments is complicated, so don't support it yet\n   1815 return apply_ufunc(\n   1816     duck_array_ops.where,\n   1817     cond,\n   (...)\n   1823     keep_attrs=keep_attrs,\n   1824 )\n\nIndexError: list index out of range"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "IndexError: list index out of range"
+    ],
+    "error_keywords": [
+      "IndexError"
+    ],
+    "identifiers": {
+      "functions": [
+        "apply_ufunc",
+        "where",
+        "equals"
+      ],
+      "classes": [
+        "DataArray",
+        "Dataset"
+      ],
+      "files": [],
+      "exceptions": [
+        "IndexError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_computation.py",
+      "target_source_file": "xarray/core/computation.py",
+      "test_visible_functions": [
+        "apply_ufunc",
+        "where",
+        "equals"
+      ],
+      "test_visible_classes": [
+        "DataArray"
+      ]
+    }
+  }
+]

@@ -1,0 +1,291 @@
+{
+  "instance_id": "psf__requests-1142",
+  "repo": "psf/requests",
+  "base_commit": "22623bd8c265b78b161542663ee980738441c307",
+  "repo_path": "data/repos/psf__requests",
+  "candidate_source_files": [
+    {
+      "path": "requests/models.py",
+      "score": 20,
+      "matched_identifiers": [
+        "contains",
+        "content",
+        "content-length",
+        "length"
+      ],
+      "reasons": [
+        "source_content_tokens:content-length,content,length,contains,example",
+        "requests_header_core_file"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "content": "    def content(self):\n        \"\"\"Content of the response, in bytes.\"\"\"\n\n        if self._content is False:\n            # Read the contents.\n            try:\n                if self._content_consumed:\n                    raise RuntimeError(\n                        'The content for this response was already consumed')\n\n                if self.status_code is 0:\n                    self._content = None\n                else:\n                    self._content = bytes().join(self.iter_content(CONTENT_CHUNK_SIZE)) or bytes()\n"
+      },
+      "top_level_functions": [
+        "RequestEncodingMixin.path_url",
+        "RequestHooksMixin.register_hook",
+        "RequestHooksMixin.deregister_hook",
+        "Request.prepare",
+        "PreparedRequest.prepare_method",
+        "PreparedRequest.prepare_url",
+        "PreparedRequest.prepare_headers",
+        "PreparedRequest.prepare_body",
+        "PreparedRequest.prepare_content_length",
+        "PreparedRequest.prepare_auth",
+        "PreparedRequest.prepare_cookies",
+        "PreparedRequest.prepare_hooks",
+        "Response.ok",
+        "Response.apparent_encoding",
+        "Response.iter_content",
+        "Response.iter_lines",
+        "Response.content",
+        "Response.text",
+        "Response.json",
+        "Response.links",
+        "Response.raise_for_status",
+        "Response.close"
+      ]
+    },
+    {
+      "path": "requests/adapters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "contains",
+        "content",
+        "content-length",
+        "length"
+      ],
+      "reasons": [
+        "source_content_tokens:content-length,content,length,contains,header"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseAdapter.send",
+        "BaseAdapter.close",
+        "HTTPAdapter.init_poolmanager",
+        "HTTPAdapter.cert_verify",
+        "HTTPAdapter.build_response",
+        "HTTPAdapter.get_connection",
+        "HTTPAdapter.close",
+        "HTTPAdapter.request_url",
+        "HTTPAdapter.send"
+      ]
+    },
+    {
+      "path": "requests/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "automatically",
+        "content",
+        "length"
+      ],
+      "reasons": [
+        "source_content_tokens:content,length,always,automatically,every"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "dict_to_sequence",
+        "super_len",
+        "get_netrc_auth",
+        "guess_filename",
+        "from_key_val_list",
+        "to_key_val_list",
+        "parse_list_header",
+        "parse_dict_header",
+        "unquote_header_value",
+        "dict_from_cookiejar",
+        "add_dict_to_cookiejar",
+        "get_encodings_from_content",
+        "get_encoding_from_headers",
+        "stream_decode_response_unicode",
+        "iter_slices",
+        "get_unicode_from_response",
+        "stream_decompress",
+        "stream_untransfer",
+        "unquote_unreserved",
+        "requote_uri",
+        "get_environ_proxies",
+        "default_user_agent",
+        "default_headers",
+        "parse_header_links",
+        "guess_json_utf",
+        "prepend_scheme_if_needed"
+      ]
+    },
+    {
+      "path": "requests/packages/charade/hebrewprober.py",
+      "score": 12,
+      "matched_identifiers": [
+        "always",
+        "automatically",
+        "behavior",
+        "example"
+      ],
+      "reasons": [
+        "source_content_tokens:always,automatically,behavior,example,right"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "HebrewProber.reset",
+        "HebrewProber.set_model_probers",
+        "HebrewProber.is_final",
+        "HebrewProber.is_non_final",
+        "HebrewProber.feed",
+        "HebrewProber.get_charset_name",
+        "HebrewProber.get_state"
+      ]
+    },
+    {
+      "path": "requests/packages/urllib3/request.py",
+      "score": 12,
+      "matched_identifiers": [
+        "behavior",
+        "content",
+        "example",
+        "header"
+      ],
+      "reasons": [
+        "stem_in_issue_text:request",
+        "source_content_tokens:content,behavior,example,header,request",
+        "vendored_urllib3_penalty"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "RequestMethods.urlopen",
+        "RequestMethods.request",
+        "RequestMethods.request_encode_url",
+        "RequestMethods.request_encode_body"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "test_requests.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:request,requests",
+        "internal_name_overlap:requests",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "test_requests.py:unittest_or_django_test_import",
+      "test_requests.py:testcase_class:RequestsTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 70,
+  "indexed_test_file_count": 1,
+  "available_imports": {
+    "test_requests": [
+      "RequestsTestCase",
+      "httpbin"
+    ],
+    "requests.utils": [
+      "add_dict_to_cookiejar",
+      "default_headers",
+      "default_user_agent",
+      "dict_from_cookiejar",
+      "dict_to_sequence",
+      "from_key_val_list",
+      "get_encoding_from_headers",
+      "get_encodings_from_content",
+      "get_environ_proxies",
+      "get_netrc_auth",
+      "get_unicode_from_response",
+      "guess_filename",
+      "guess_json_utf",
+      "iter_slices",
+      "parse_dict_header",
+      "parse_header_links",
+      "parse_list_header",
+      "prepend_scheme_if_needed",
+      "requote_uri",
+      "stream_decode_response_unicode",
+      "stream_decompress",
+      "stream_untransfer",
+      "super_len",
+      "to_key_val_list",
+      "unquote_header_value",
+      "unquote_unreserved"
+    ],
+    "requests.adapters": [
+      "BaseAdapter",
+      "HTTPAdapter"
+    ],
+    "requests": [
+      "ConnectionError",
+      "HTTPError",
+      "PreparedRequest",
+      "Request",
+      "RequestException",
+      "Response",
+      "Session",
+      "Timeout",
+      "TooManyRedirects",
+      "URLRequired",
+      "absolute_import",
+      "codes",
+      "delete",
+      "get",
+      "head",
+      "options",
+      "patch",
+      "post",
+      "put",
+      "request",
+      "session",
+      "urllib3",
+      "utils"
+    ],
+    "requests.models": [
+      "PreparedRequest",
+      "Request",
+      "RequestEncodingMixin",
+      "RequestHooksMixin",
+      "Response"
+    ],
+    "requests.packages.charade": [
+      "detect"
+    ],
+    "requests.packages.charade.hebrewprober": [
+      "HebrewProber"
+    ],
+    "requests.packages.urllib3.request": [
+      "RequestMethods"
+    ],
+    "requests.packages.urllib3": [
+      "add_stderr_logger"
+    ],
+    "requests.packages": [
+      "HTTPConnectionPool",
+      "HTTPResponse",
+      "HTTPSConnectionPool",
+      "PoolManager",
+      "ProxyManager",
+      "connection_from_url",
+      "encode_multipart_formdata",
+      "exceptions",
+      "get_host",
+      "make_headers",
+      "proxy_from_url"
+    ]
+  },
+  "test_example_snippet": "    def test_entry_points(self):\n\n        requests.session\n        requests.session().get\n        requests.session().head\n        requests.get\n        requests.head\n        requests.put\n        requests.patch\n        requests.post\n\n    def test_invalid_url(self):\n        self.assertRaises(ValueError, requests.get, 'hiwpefhipowhefopw')\n\n    def test_basic_building(self):\n        req = requests.Request()\n        req.url = 'http://kennethreitz.org/'\n        req.data = {'life': '42'}\n\n        pr = req.prepare()\n        assert pr.url == req.url\n        assert pr.body == 'life=42'\n\n\n    def test_path_is_not_double_encoded(self):\n        request = requests.Request('GET', \"http://0.0.0.0/get/test case\").prepare()\n\n        self.assertEqual(request.path_url, \"/get/test%20case\")\n\n    def test_params_are_added_before_fragment(self):\n        request = requests.Request('GET',\n            \"http://example.com/path#fragment\", params={\"a\": \"b\"}).prepare()\n        self.assertEqual(request.url,\n            \"http://example.com/path?a=b#fragment\")\n        request = requests.Request('GET',",
+  "conftest_fixtures": {}
+}

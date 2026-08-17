@@ -1,0 +1,24 @@
+--- a/pylint/testutils/lint_module_test.py
++++ b/pylint/testutils/lint_module_test.py
+@@ -234,3 +234,21 @@
+         assert expected_output == actual_output, self.error_msg_for_unequal_output(
+             expected_output, actual_output
+         )
++
++from pylint.pyreverse.inspector import project_from_files
++from pylint.pyreverse.diadefslib import DefaultDiadefGenerator
++
++def test_pyreverse_reads_type_hints_repro(project):
++    # Create a temporary module with type hints
++    module_content = """
++class C(object):
++    def __init__(self, a: str = None):
++        self.a = a
++"""
++    project.create_module('temp_module', module_content)
++    generator = DefaultDiadefGenerator(project)
++    generator.process_all()
++    class_def = generator.class_definitions['temp_module.C']
++    init_method = class_def.methods['__init__']
++    assert init_method.args[1].annotation.as_string() == 'str'
++    assert init_method.args[1].default_value == 'None'

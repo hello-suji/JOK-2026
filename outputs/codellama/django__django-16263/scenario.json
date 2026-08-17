@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "count",
+      "related_classes": [
+        "QuerySet",
+        "Count",
+        "Book",
+        "Chapter"
+      ],
+      "candidate_test_file": "tests/template_backends/test_django.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from myapp.models import Book, Chapter",
+      "Book.objects.create(title='Book1')",
+      "Chapter.objects.create(book_id=1)",
+      "Use the generated reproduction path that calls annotate, count, create."
+    ],
+    "execution_stimulus": [
+      "query_with_annotation = Book.objects.annotate(chapter_count=Count('chapters'))",
+      "count_with_annotation = query_with_annotation.count()",
+      "Execute the focused target API path: annotate, count, create."
+    ],
+    "expected_failure": "The count query includes the chapter_count annotation, which is unnecessary and inefficient.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/gis/geos/mutable_list.py",
+      "django/core/paginator.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/queries/test_query.py",
+      "tests/template_tests/syntax_tests/i18n/test_filters.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.models import Count\nfrom myapp.models import Book, Chapter\n\nclass TestQueryOptimization(TemplateStringsTests):\n    def test_count_without_unused_annotation_repro(self):\n        Book.objects.create(title='Book1')\n        Chapter.objects.create(book_id=1)\n        query_with_annotation = Book.objects.annotate(chapter_count=Count('chapters'))\n        count_with_annotation = query_with_annotation.count()\n        self.assertEqual(count_with_annotation, Book.objects.count())"
+      },
+      {
+        "language": "python",
+        "code": "def test_count_with_unused_annotation(self):\n    from django.test import TestCase\n    from myapp.models import Book, Chapter\n    Book.objects.create(title='Book1')\n    Chapter.objects.create(book_id=1)\n    query_with_annotation = Book.objects.annotate(chapter_count=Count('chapters'))\n    count_with_annotation = query_with_annotation.count()\n    self.assertEqual(count_with_annotation, 1)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "count",
+        "annotate",
+        "create"
+      ],
+      "classes": [
+        "QuerySet",
+        "Count",
+        "Book",
+        "Chapter"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/template_backends/test_django.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "annotate",
+        "count",
+        "create"
+      ],
+      "test_visible_classes": [
+        "Count",
+        "Book",
+        "Chapter"
+      ]
+    }
+  }
+]

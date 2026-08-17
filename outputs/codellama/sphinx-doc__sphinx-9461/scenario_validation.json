@@ -1,0 +1,102 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name contains target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:f",
+        "target_function 'f' NOT found in source_file — may be hallucinated",
+        "target_function 'f' not in AST top_level_functions for doc/conf.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "doc/conf.py",
+          "target_function": "f",
+          "related_classes": [
+            "BaseClass",
+            "MetaClass",
+            "SubClass"
+          ],
+          "candidate_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module.",
+          "Set up an environment where f can be called."
+        ],
+        "execution_stimulus": [
+          "Call f with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "**EDIT:** The problem seems to be that `type(BaseClass.baseclass_property)` returns `property`, thus sphinx can just lookup `BaseClass.baseclass_property.__doc__`. However, `type(BaseClass.baseclass_class_property)` returns the type of the returned object, since essentially, a `@classmethod@property` ends up behaving like a class attribute. So Sphinx doesn't really have a chance to extract the docstring.",
+        "relevant_source_files": [
+          "doc/conf.py",
+          "sphinx/builders/texinfo.py",
+          "sphinx/config.py"
+        ],
+        "relevant_test_files": [
+          "tests/roots/test-domain-c-intersphinx/conf.py",
+          "tests/roots/test-domain-cpp-intersphinx/conf.py",
+          "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unknown"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "class A:\n    @classmethod\n    @property\n    def f(cls):\n        \"\"\"Some class property.\"\"\"\n        return \"property\""
+          },
+          {
+            "language": "bash",
+            "code": "git clone https://github.com/randolf-scholz/sphinx_demo\ncd sphinx_demo/docs\nmake html\n# open _build/html/dummy_module.submodule.html"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "f"
+          ],
+          "classes": [
+            "BaseClass",
+            "MetaClass",
+            "SubClass"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-18698",
+    "model_patch": "--- a/sympy/polys/tests/test_polytools.py\n+++ b/sympy/polys/tests/test_polytools.py\n@@ -3333,3 +3333,11 @@\n def test_issue_18205_gate():\n     assert cancel((2 + I)*(3 - I)) == 7 + I\n     assert cancel((2 + I)*(2 - I)) == 5\n+\n+def test_sqf_list_bug_repro():\n+    from sympy import Poly\n+    from sympy.abc import x\n+    result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)\n+    assert result == (1, [(x**2 + 1, 1), (x - 1, 2), (x - 2, 3), (x - 3, 3)])\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != \"['1', '[[(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]]']\"\n",
+    "patch_sha256": "9cc44a214f62b5c37d6200a461649c7ebd0529805816341bb79fd7904a7d1679"
+  }
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "f",
+      "related_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import Sphinx modules",
+      "Define classes mod.A and mod.submod.A",
+      "Set current module to mod.submod",
+      "Use the generated reproduction path that calls f, tempfile, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Create function f with parameters and return types using unqualified names",
+      "Execute the focused target API path: f, tempfile, join, makedirs."
+    ],
+    "expected_failure": "Links to mod.A instead of mod.submod.A for parameter 'a'",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/builders/latex/transforms.py",
+      "sphinx/builders/texinfo.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.util.docutils import SphinxError\n\ndef test_ambiguous_class_lookup_warning_repro():\n    src_content = '''\n.. py:class:: mod.A\n.. py:class:: mod.submod.A\n\n.. py:function:: f()\n\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param mod.A a:\n    :param mod.submod.A b:\n    :rtype: mod.A\n    :rtype: mod.submod.A\n\n.. py:currentmodule:: mod\n\n.. py:function:: f()\n\n    - :py:class:`A`\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param A a:\n'''\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = tmpdir\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(src_content)\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n        with warnings.catch_warnings(record=True) as w:\n            warnings.simplefilter('always')\n            app.build()\n            # [removed: warning presence oracle — assert fixed value/state instead]\n            assert all('more than one target found for cross-reference' in str(warning.message) for warning in w)"
+      },
+      {
+        "language": "python",
+        "code": "def test_ambiguous_class_lookup_warning():\n    from sphinx.ext.autodoc import Documenter\n    from sphinx.testing.util import SphinxTestApp\n    app = SphinxTestApp(buildername='html')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.srcdir = '/path/to/source'\n    app.build()\n    assert 'BUG: links to mod.A instead of mod.submod.A' in app.warnings.getvalue()"
+      }
+    ],
+    "expected_outputs": [
+      "mod.submod.A"
+    ],
+    "actual_outputs": [
+      "mod.A"
+    ],
+    "error_keywords": [
+      "ambiguous class lookup",
+      "false warning"
+    ],
+    "identifiers": {
+      "functions": [
+        "setup",
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "f",
+      "related_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import Sphinx modules",
+      "Define classes mod.A and mod.submod.A",
+      "Set current module to mod",
+      "Use the generated reproduction path that calls f, tempfile, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Create function f with parameters and return types using unqualified names",
+      "Execute the focused target API path: f, tempfile, join, makedirs."
+    ],
+    "expected_failure": "Links to mod.A instead of mod.submod.A for parameter 'a'",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/builders/latex/transforms.py",
+      "sphinx/builders/texinfo.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.util.docutils import SphinxError\n\ndef test_ambiguous_class_lookup_warning_repro():\n    src_content = '''\n.. py:class:: mod.A\n.. py:class:: mod.submod.A\n\n.. py:function:: f()\n\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param mod.A a:\n    :param mod.submod.A b:\n    :rtype: mod.A\n    :rtype: mod.submod.A\n\n.. py:currentmodule:: mod\n\n.. py:function:: f()\n\n    - :py:class:`A`\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param A a:\n'''\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = tmpdir\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(src_content)\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n        with warnings.catch_warnings(record=True) as w:\n            warnings.simplefilter('always')\n            app.build()\n            # [removed: warning presence oracle — assert fixed value/state instead]\n            assert all('more than one target found for cross-reference' in str(warning.message) for warning in w)"
+      },
+      {
+        "language": "python",
+        "code": "def test_unqualified_name_lookup():\n    from sphinx.application import Sphinx\n    app = Sphinx(srcdir='/path/to/source', confdir='/path/to/conf', outdir='/path/to/out', doctreedir='/path/to/doctrees', buildername='html')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.build()\n    assert 'BUG: links to mod.A instead of mod.submod.A' in app.warnings.getvalue()"
+      }
+    ],
+    "expected_outputs": [
+      "mod.submod.A"
+    ],
+    "actual_outputs": [
+      "mod.A"
+    ],
+    "error_keywords": [
+      "unqualified name lookup",
+      "incorrect resolution"
+    ],
+    "identifiers": {
+      "functions": [
+        "setup",
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "f",
+      "related_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "low"
+    },
+    "setup_steps": [
+      "Import Sphinx modules",
+      "Define classes mod.A and mod.submod.A",
+      "Set current module to mod.submod",
+      "Use the generated reproduction path that calls f, tempfile, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Create function f with parameters and return types using unqualified names",
+      "Execute the focused target API path: f, tempfile, join, makedirs."
+    ],
+    "expected_failure": "Links to mod.A instead of mod.submod.A for parameter 'a'",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/builders/latex/transforms.py",
+      "sphinx/builders/texinfo.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.util.docutils import SphinxError\n\ndef test_ambiguous_class_lookup_warning_repro():\n    src_content = '''\n.. py:class:: mod.A\n.. py:class:: mod.submod.A\n\n.. py:function:: f()\n\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param mod.A a:\n    :param mod.submod.A b:\n    :rtype: mod.A\n    :rtype: mod.submod.A\n\n.. py:currentmodule:: mod\n\n.. py:function:: f()\n\n    - :py:class:`A`\n    - :py:class:`mod.A`\n    - :py:class:`mod.submod.A`\n\n    :param A a:\n'''\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = tmpdir\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(src_content)\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')\n        with warnings.catch_warnings(record=True) as w:\n            warnings.simplefilter('always')\n            app.build()\n            # [removed: warning presence oracle — assert fixed value/state instead]\n            assert all('more than one target found for cross-reference' in str(warning.message) for warning in w)"
+      },
+      {
+        "language": "python",
+        "code": "def test_latex_transform_lookup():\n    from sphinx.builders.latex.transforms import LaTeXFootnoteTransform\n    from sphinx.testing.util import SphinxTestApp\n    app = SphinxTestApp(buildername='latex')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.build()\n    assert 'BUG: links to mod.A instead of mod.submod.A' in app.warnings.getvalue()"
+      }
+    ],
+    "expected_outputs": [
+      "mod.submod.A"
+    ],
+    "actual_outputs": [
+      "mod.A"
+    ],
+    "error_keywords": [
+      "latex transform",
+      "incorrect reference"
+    ],
+    "identifiers": {
+      "functions": [
+        "setup",
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "f",
+        "tempfile",
+        "join",
+        "makedirs",
+        "catch_warnings",
+        "simplefilter",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "SphinxError",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

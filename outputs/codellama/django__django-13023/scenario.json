@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/fields.py",
+      "target_function": "to_python",
+      "related_classes": [
+        "DecimalField",
+        "Decimal"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_decimalfield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where to_python can be called.",
+      "Use the generated reproduction path that calls to_python, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call to_python with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: to_python, isinstance."
+    ],
+    "expected_failure": "DecimalField.to_python() raises TypeError on dict values.",
+    "relevant_source_files": [
+      "django/forms/fields.py",
+      "django/db/models/fields/__init__.py",
+      "django/contrib/gis/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_decimalfield.py",
+      "tests/custom_pk/fields.py",
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms.fields import DecimalField\nfrom decimal import Decimal\n\nclass TestDecimalFieldToPython(TestCase):\n    def test_to_python_with_valid_input_repro(self):\n        decimal_field = DecimalField()\n        result = decimal_field.to_python('123.45')\n        assert isinstance(result, Decimal)\n        assert result == Decimal('123.45')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError",
+      "ValidationError"
+    ],
+    "identifiers": {
+      "functions": [
+        "to_python",
+        "isinstance"
+      ],
+      "classes": [
+        "DecimalField",
+        "Decimal"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError",
+        "ValidationError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_decimalfield.py",
+      "target_source_file": "django/forms/fields.py",
+      "test_visible_functions": [
+        "to_python",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "DecimalField",
+        "Decimal"
+      ]
+    }
+  }
+]

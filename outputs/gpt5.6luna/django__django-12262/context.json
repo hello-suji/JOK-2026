@@ -1,0 +1,327 @@
+{
+  "instance_id": "django__django-12262",
+  "repo": "django/django",
+  "base_commit": "69331bb851c34f05bc77e9fc24020fe6908b9cd5",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/files/temp.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "arguments",
+        "keyword",
+        "multiple"
+      ],
+      "reasons": [
+        "stem_in_issue_text:temp",
+        "source_content_tokens:argument,keyword,multiple,arguments,custom"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/core/mail/message.py",
+      "score": 17,
+      "matched_identifiers": [
+        "actually",
+        "argument",
+        "multiple",
+        "raises"
+      ],
+      "reasons": [
+        "stem_in_issue_text:message",
+        "source_content_tokens:actually,argument,multiple,raises,values"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "forbid_multi_line_headers",
+        "sanitize_address",
+        "MIMEMixin.as_string",
+        "MIMEMixin.as_bytes",
+        "SafeMIMEText.set_payload",
+        "EmailMessage.get_connection",
+        "EmailMessage.message",
+        "EmailMessage.recipients",
+        "EmailMessage.send",
+        "EmailMessage.attach",
+        "EmailMessage.attach_file",
+        "EmailMultiAlternatives.attach_alternative"
+      ]
+    },
+    {
+      "path": "django/core/management/templates.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "arguments",
+        "creating",
+        "multiple"
+      ],
+      "reasons": [
+        "stem_in_issue_text:templates",
+        "source_content_tokens:argument,multiple,arguments,creating,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TemplateCommand.add_arguments",
+        "TemplateCommand.handle",
+        "TemplateCommand.handle_template",
+        "TemplateCommand.validate_name",
+        "TemplateCommand.download",
+        "TemplateCommand.splitext",
+        "TemplateCommand.extract",
+        "TemplateCommand.is_url",
+        "TemplateCommand.make_writeable"
+      ]
+    },
+    {
+      "path": "django/apps/config.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "keyword",
+        "multiple",
+        "values"
+      ],
+      "reasons": [
+        "source_content_tokens:argument,keyword,multiple,values,arguments"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AppConfig.create",
+        "AppConfig.get_model",
+        "AppConfig.get_models",
+        "AppConfig.import_models",
+        "AppConfig.ready"
+      ]
+    },
+    {
+      "path": "django/apps/registry.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "keyword",
+        "raises",
+        "since"
+      ],
+      "reasons": [
+        "source_content_tokens:argument,keyword,raises,since,values"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_inlines/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/check_framework/test_templates.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:templates",
+        "token_overlap:temp,templates",
+        "internal_name_overlap:temp",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "token_overlap:temp",
+        "internal_name_overlap:temp",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/staticfiles_tests/apps/staticfiles_config.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "test_name_matches_source_stem:config",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/check_framework/test_templates.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_templates.py:unittest_or_django_test_import",
+      "tests/admin_inlines/test_templates.py:unittest_or_django_test_import",
+      "tests/admin_inlines/test_templates.py:testcase_class:TestTemplates"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2588,
+  "indexed_test_file_count": 1753,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "apps",
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.check_framework.test_templates": [
+      "CheckTemplateSettingsAppDirsTest",
+      "CheckTemplateStringIfInvalidTest"
+    ],
+    "tests.asgi.urls": [
+      "hello",
+      "hello_meta"
+    ],
+    "tests.auth_tests.test_templates": [
+      "AuthTemplateTests"
+    ],
+    "tests.admin_inlines.test_templates": [
+      "TestTemplates"
+    ],
+    "tests.staticfiles_tests.apps.staticfiles_config": [
+      "IgnorePatternsAppConfig"
+    ],
+    "django.apps.config": [
+      "AppConfig"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.core.mail.message": [
+      "BadHeaderError",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "MIMEMixin",
+      "SafeMIMEMessage",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "forbid_multi_line_headers",
+      "sanitize_address"
+    ],
+    "django.core.mail": [
+      "get_connection",
+      "mail_admins",
+      "mail_managers",
+      "send_mail",
+      "send_mass_mail"
+    ],
+    "django.core": [
+      "BadHeaderError",
+      "BaseCommand",
+      "CachedDnsName",
+      "CommandError",
+      "CommandParser",
+      "DEFAULT_ATTACHMENT_MIME_TYPE",
+      "DNS_NAME",
+      "EmailMessage",
+      "EmailMultiAlternatives",
+      "File",
+      "ImproperlyConfigured",
+      "SafeMIMEMultipart",
+      "SafeMIMEText",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "forbid_multi_line_headers",
+      "get_close_matches",
+      "get_connection",
+      "handle_default_options",
+      "import_module",
+      "import_string",
+      "mail_admins",
+      "mail_managers",
+      "make_msgid",
+      "send_mail",
+      "send_mass_mail",
+      "settings"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core.management.templates": [
+      "TemplateCommand"
+    ]
+  },
+  "test_example_snippet": "class TestTemplates(SimpleTestCase):\n    def test_javascript_escaping(self):\n        context = {\n            'inline_admin_formset': {\n                'inline_formset_data': json.dumps({\n                    'formset': {'prefix': 'my-prefix'},\n                    'opts': {'verbose_name': 'verbose name\\\\'},\n                }),\n            },\n        }\n        output = render_to_string('admin/edit_inline/stacked.html', context)\n        self.assertIn('&quot;prefix&quot;: &quot;my-prefix&quot;', output)\n        self.assertIn('&quot;verbose_name&quot;: &quot;verbose name\\\\\\\\&quot;', output)\n\n        output = render_to_string('admin/edit_inline/tabular.html', context)\n        self.assertIn('&quot;prefix&quot;: &quot;my-prefix&quot;', output)\n        self.assertIn('&quot;verbose_name&quot;: &quot;verbose name\\\\\\\\&quot;', output)",
+  "conftest_fixtures": {}
+}

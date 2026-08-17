@@ -1,0 +1,20 @@
+--- a/sklearn/feature_extraction/tests/test_text.py
++++ b/sklearn/feature_extraction/tests/test_text.py
+@@ -1343,3 +1343,17 @@
+            )
+     with pytest.warns(UserWarning, match=msg):
+         vect.fit(train_data)
++
++def test_strip_accents_unicode_nfd_form_repro():
++    # This string contains one code point, "LATIN SMALL LETTER N WITH TILDE"
++    s1 = chr(241)
++
++    # This string contains two code points, "LATIN SMALL LETTER N" followed by "COMBINING TILDE"
++    s2 = chr(110) + chr(771)
++
++    # Expected result after stripping accents
++    expected = 'n'
++
++    # Assert that both strings are normalized to the same string 'n'
++    assert strip_accents_unicode(s1) == expected
++    assert strip_accents_unicode(s2) == expected

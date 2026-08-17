@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-1921",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -1173,3 +1173,10 @@\n\n if __name__ == '__main__':\n     unittest.main()\n+\n+def test_session_remove_accept_encoding_header_repro():\n+    session = requests.Session()\n+    # Do not send Accept-Encoding\n+    session.headers['Accept-Encoding'] = None\n+    prepared_request = session.prepare_request(requests.Request('GET', 'http://example.com'))\n+    assert 'Accept-Encoding' not in prepared_request.headers\n",
+    "patch_sha256": "a5131aa9b32439e9d2f08559f95dc7fbcb4e5005217984184108c7fb9d4e71fb"
+  }
+]

@@ -1,0 +1,260 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/__init__.py",
+      "target_function": "tempfile",
+      "related_classes": [],
+      "candidate_test_file": "tests/checkers/unittest_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import os",
+      "import tempfile",
+      "from pylint import __init__",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, open.",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, exists."
+    ],
+    "execution_stimulus": [
+      "temp_dir = tempfile.mkdtemp()",
+      "os.environ['XDG_DATA_HOME'] = temp_dir",
+      "__init__.open('test_file')",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, open.",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, exists."
+    ],
+    "expected_failure": "The .pylint.d directory is created in the home directory instead of using the XDG_DATA_HOME directory.",
+    "relevant_source_files": [
+      "pylint/__init__.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py",
+      "pylint/checkers/variables.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_variables.py",
+      "tests/checkers/unittest_base.py",
+      "tests/checkers/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_xdg_data_home_compliance():\n    import os\n    import tempfile\n    from pylint import __init__\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_DATA_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      },
+      {
+        "language": "python",
+        "code": "import os\nimport tempfile\nfrom pylint import __init__\n\ndef test_xdg_data_home_compliance_repro():\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_DATA_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/checkers/unittest_base.py",
+      "target_source_file": "pylint/__init__.py",
+      "test_visible_functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/__init__.py",
+      "target_function": "tempfile",
+      "related_classes": [],
+      "candidate_test_file": "tests/checkers/unittest_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import os",
+      "import tempfile",
+      "from pylint import __init__",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, open.",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, exists."
+    ],
+    "execution_stimulus": [
+      "temp_dir = tempfile.mkdtemp()",
+      "os.environ['XDG_CACHE_HOME'] = temp_dir",
+      "__init__.open('test_file')",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, open.",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, exists."
+    ],
+    "expected_failure": "The .pylint.d directory is created in the home directory instead of using the XDG_CACHE_HOME directory.",
+    "relevant_source_files": [
+      "pylint/__init__.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py",
+      "pylint/checkers/variables.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_variables.py",
+      "tests/checkers/unittest_base.py",
+      "tests/checkers/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_xdg_cache_home_compliance():\n    import os\n    import tempfile\n    from pylint import __init__\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_CACHE_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      },
+      {
+        "language": "python",
+        "code": "import os\nimport tempfile\nfrom pylint import __init__\n\ndef test_xdg_data_home_compliance_repro():\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_DATA_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/checkers/unittest_base.py",
+      "target_source_file": "pylint/__init__.py",
+      "test_visible_functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "test_visible_classes": []
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/__init__.py",
+      "target_function": "tempfile",
+      "related_classes": [],
+      "candidate_test_file": "tests/checkers/unittest_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "import os",
+      "import tempfile",
+      "from pylint import __init__",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, open.",
+      "Use the generated reproduction path that calls tempfile, __init__, mkdtemp, exists."
+    ],
+    "execution_stimulus": [
+      "temp_dir = tempfile.mkdtemp()",
+      "os.environ['XDG_CONFIG_HOME'] = temp_dir",
+      "__init__.open('test_file')",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, open.",
+      "Execute the focused target API path: tempfile, __init__, mkdtemp, exists."
+    ],
+    "expected_failure": "The .pylint.d directory is created in the home directory instead of using the XDG_CONFIG_HOME directory.",
+    "relevant_source_files": [
+      "pylint/__init__.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py",
+      "pylint/checkers/variables.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_variables.py",
+      "tests/checkers/unittest_base.py",
+      "tests/checkers/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_xdg_config_home_compliance():\n    import os\n    import tempfile\n    from pylint import __init__\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_CONFIG_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      },
+      {
+        "language": "python",
+        "code": "import os\nimport tempfile\nfrom pylint import __init__\n\ndef test_xdg_data_home_compliance_repro():\n    temp_dir = tempfile.mkdtemp()\n    os.environ['XDG_DATA_HOME'] = temp_dir\n    __init__.open('test_file')\n    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [],
+    "oracle": "The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/checkers/unittest_base.py",
+      "target_source_file": "pylint/__init__.py",
+      "test_visible_functions": [
+        "tempfile",
+        "__init__",
+        "mkdtemp",
+        "exists",
+        "expanduser"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

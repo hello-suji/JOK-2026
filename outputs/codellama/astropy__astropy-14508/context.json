@@ -1,0 +1,506 @@
+{
+  "instance_id": "astropy__astropy-14508",
+  "repo": "astropy/astropy",
+  "base_commit": "a3f4ae6cd24d5ecdf49f213d77b3513dd509a06c",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/io/fits/card.py",
+      "score": 48,
+      "matched_identifiers": [
+        "Card",
+        "_format_float",
+        "astropy/io/fits/card.py",
+        "avoid",
+        "card",
+        "cards"
+      ],
+      "reasons": [
+        "function_match:_format_float",
+        "class_match:Card",
+        "explicit_file_path_hint:astropy/io/fits/card.py",
+        "path_contains_class:Card",
+        "stem_in_issue_text:card",
+        "source_content_tokens:_format_float,avoid,card,cards,comment"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Card": "class Card(_Verify):\n    length = CARD_LENGTH\n    \"\"\"The length of a Card image; should always be 80 for valid FITS files.\"\"\"\n\n    # String for a FITS standard compliant (FSC) keyword.\n    _keywd_FSC_RE = re.compile(r\"^[A-Z0-9_-]{0,%d}$\" % KEYWORD_LENGTH)\n    # This will match any printable ASCII character excluding '='\n    _keywd_hierarch_RE = re.compile(r\"^(?:HIERARCH +)?(?:^[ -<>-~]+ ?)+$\", re.I)\n\n    # A number sub-string, either an integer or a float in fixed or\n    # scientific notation.  One for FSC and one for non-FSC (NFSC) format:\n    # NFSC allows lower case of DE for exponent, allows space between sign,\n    # digits, exponent sign, and exponents\n    _digits_FSC = r\"(\\.\\d+|\\d+(\\.\\d*)?)([DE][+-]?\\d+)?\"\n    _digits_NFSC = r\"(\\.\\d+|\\d+(\\.\\d*)?) *([deDE] *[+-]? *\\d+)?\"",
+        "_format_float": "def _format_float(value):\n    \"\"\"Format a floating number to make sure it gets the decimal point.\"\"\"\n    value_str = f\"{value:.16G}\"\n    if \".\" not in value_str and \"E\" not in value_str:\n        value_str += \".0\"\n    elif \"E\" in value_str:\n        # On some Windows builds of Python (and possibly other platforms?) the\n        # exponent is zero-padded out to, it seems, three digits.  Normalize\n        # the format to pad only to two digits.\n        significand, exponent = value_str.split(\"E\")\n        if exponent[0] in (\"+\", \"-\"):\n            sign = exponent[0]\n            exponent = exponent[1:]\n        else:\n            sign = \"\""
+      },
+      "top_level_functions": [
+        "Card.keyword",
+        "Card.value",
+        "Card.rawkeyword",
+        "Card.rawvalue",
+        "Card.comment",
+        "Card.field_specifier",
+        "Card.image",
+        "Card.is_blank",
+        "Card.fromstring",
+        "Card.normalize_keyword"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/convenience.py",
+      "score": 21,
+      "matched_identifiers": [
+        "avoid",
+        "card",
+        "cards",
+        "comment",
+        "getheader"
+      ],
+      "reasons": [
+        "function_match:getheader",
+        "source_content_tokens:avoid,card,cards,comment,creating"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "getheader": "def getheader(filename, *args, **kwargs):\n    \"\"\"\n    Get the header from an HDU of a FITS file.\n\n    Parameters\n    ----------\n    filename : path-like or file-like\n        File to get header from.  If an opened file object, its mode\n        must be one of the following rb, rb+, or ab+).\n\n    ext, extname, extver\n        The rest of the arguments are for HDU specification.  See the\n        `getdata` documentation for explanations/examples.\n    **kwargs\n        Any additional keyword arguments to be passed to"
+      },
+      "top_level_functions": [
+        "getheader",
+        "getdata",
+        "getval",
+        "setval",
+        "delval",
+        "writeto",
+        "table_to_hdu",
+        "append",
+        "update",
+        "info",
+        "printdiff",
+        "tabledump",
+        "tableload"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/verify.py",
+      "score": 21,
+      "matched_identifiers": [
+        "VerifyWarning",
+        "fits",
+        "hierarch",
+        "import",
+        "verifywarning"
+      ],
+      "reasons": [
+        "class_match:VerifyWarning",
+        "stem_in_issue_text:verify",
+        "source_content_tokens:fits,hierarch,import,verifywarning,warning"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "VerifyWarning": "class VerifyWarning(AstropyUserWarning):\n    \"\"\"\n    Verify warning class.\n    \"\"\"\n\n\nVERIFY_OPTIONS = [\n    \"ignore\",\n    \"warn\",\n    \"exception\",\n    \"fix\",\n    \"silentfix\",\n    \"fix+ignore\",\n    \"fix+warn\",\n    \"fix+exception\","
+      },
+      "top_level_functions": [
+        "_Verify.run_option",
+        "_Verify.verify",
+        "_ErrList.iter_lines"
+      ]
+    },
+    {
+      "path": "astropy/coordinates/representation.py",
+      "score": 19,
+      "matched_identifiers": [
+        "avoid",
+        "creating",
+        "exactly",
+        "float"
+      ],
+      "reasons": [
+        "path_contains_function:repr",
+        "stem_in_issue_text:representation",
+        "source_content_tokens:avoid,creating,exactly,float,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_reprdiff_cls_hash",
+        "BaseRepresentationOrDifferentialInfo.default_format",
+        "BaseRepresentationOrDifferentialInfo.unit",
+        "BaseRepresentationOrDifferentialInfo.new_like",
+        "BaseRepresentationOrDifferential.get_name",
+        "BaseRepresentationOrDifferential.from_cartesian",
+        "BaseRepresentationOrDifferential.to_cartesian",
+        "BaseRepresentationOrDifferential.components",
+        "BaseRepresentationOrDifferential.shape",
+        "BaseRepresentation.differentials",
+        "BaseRepresentation.unit_vectors",
+        "BaseRepresentation.scale_factors",
+        "BaseRepresentation.represent_as",
+        "BaseRepresentation.transform",
+        "BaseRepresentation.with_differentials",
+        "BaseRepresentation.without_differentials",
+        "BaseRepresentation.from_representation",
+        "BaseRepresentation.shape",
+        "BaseRepresentation.norm",
+        "BaseRepresentation.mean",
+        "BaseRepresentation.sum",
+        "BaseRepresentation.dot",
+        "BaseRepresentation.cross",
+        "CartesianRepresentation.unit_vectors",
+        "CartesianRepresentation.scale_factors",
+        "CartesianRepresentation.get_xyz",
+        "CartesianRepresentation.from_cartesian",
+        "CartesianRepresentation.to_cartesian",
+        "CartesianRepresentation.transform",
+        "CartesianRepresentation.norm",
+        "CartesianRepresentation.mean",
+        "CartesianRepresentation.sum",
+        "CartesianRepresentation.dot",
+        "CartesianRepresentation.cross",
+        "UnitSphericalRepresentation.lon",
+        "UnitSphericalRepresentation.lat",
+        "UnitSphericalRepresentation.unit_vectors",
+        "UnitSphericalRepresentation.scale_factors",
+        "UnitSphericalRepresentation.to_cartesian",
+        "UnitSphericalRepresentation.from_cartesian"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/file.py",
+      "score": 17,
+      "matched_identifiers": [
+        "contents",
+        "fits",
+        "format",
+        "however"
+      ],
+      "reasons": [
+        "stem_in_issue_text:file",
+        "source_content_tokens:contents,fits,format,however,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "_File.readable",
+        "_File.read",
+        "_File.readarray",
+        "_File.writable",
+        "_File.write",
+        "_File.writearray",
+        "_File.flush",
+        "_File.seek",
+        "_File.tell",
+        "_File.truncate",
+        "_File.close"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/io/fits/tests/test_convenience.py",
+      "score": 33,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "test_name_matches_source_stem:convenience",
+        "token_overlap:convenience,fits",
+        "internal_name_overlap:warning",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_representation.py",
+      "score": 28,
+      "matched_identifiers": [
+        "repr"
+      ],
+      "reasons": [
+        "test_path_contains_function:repr",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "test_name_matches_source_stem:representation",
+        "token_overlap:coordinates,repr,representation",
+        "internal_name_overlap:repr",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_representation_arithmetic.py",
+      "score": 28,
+      "matched_identifiers": [
+        "repr"
+      ],
+      "reasons": [
+        "test_path_contains_function:repr",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "test_name_matches_source_stem:representation",
+        "token_overlap:coordinates,repr,representation",
+        "internal_name_overlap:repr",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_unit_representation.py",
+      "score": 28,
+      "matched_identifiers": [
+        "repr"
+      ],
+      "reasons": [
+        "test_path_contains_function:repr",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "test_name_matches_source_stem:representation",
+        "token_overlap:coordinates,repr,representation",
+        "internal_name_overlap:repr",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_representation_methods.py",
+      "score": 26,
+      "matched_identifiers": [
+        "repr"
+      ],
+      "reasons": [
+        "test_path_contains_function:repr",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "test_name_matches_source_stem:representation",
+        "token_overlap:coordinates,repr,representation",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "astropy/coordinates/tests/test_representation.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_representation.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestCartesianRepresentation",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestCartesianRepresentationWithDifferential",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestCylindricalRepresentation",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestInfo",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestPhysicsSphericalRepresentation",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestRadialRepresentation",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestSphericalRepresentation",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestUnitSphericalCosLatDifferential",
+      "astropy/coordinates/tests/test_representation.py:testcase_class:TestUnitSphericalRepresentation",
+      "astropy/coordinates/tests/test_representation_methods.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_representation_methods.py:testcase_class:TestManipulation",
+      "astropy/coordinates/tests/test_representation_methods.py:testcase_class:TestSetShape",
+      "astropy/coordinates/tests/test_representation_methods.py:testcase_class:TestShapeFunctions",
+      "astropy/coordinates/tests/test_unit_representation.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_representation_arithmetic.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_representation_arithmetic.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_representation_arithmetic.py:testcase_class:TestArithmetic",
+      "astropy/coordinates/tests/test_representation_arithmetic.py:testcase_class:TestArithmeticWithDifferentials"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 941,
+  "indexed_test_file_count": 431,
+  "available_imports": {
+    "astropy": [
+      "Conf",
+      "Path",
+      "ScienceState",
+      "TestRunner",
+      "__module_type__",
+      "__version__",
+      "_config",
+      "_get_bibtex",
+      "_init_log",
+      "_initialize_astropy",
+      "_teardown_log",
+      "astronomical_constants",
+      "base_constants_version",
+      "find_api_page",
+      "online_help",
+      "physical_constants"
+    ],
+    "astropy.coordinates.representation": [
+      "BaseDifferential",
+      "BaseRepresentation",
+      "BaseRepresentationOrDifferential",
+      "BaseRepresentationOrDifferentialInfo",
+      "BaseSphericalCosLatDifferential",
+      "BaseSphericalDifferential",
+      "CartesianDifferential",
+      "CartesianRepresentation",
+      "CylindricalDifferential",
+      "CylindricalRepresentation",
+      "PhysicsSphericalDifferential",
+      "PhysicsSphericalRepresentation",
+      "RadialDifferential",
+      "RadialRepresentation",
+      "RepresentationInfo",
+      "SphericalCosLatDifferential",
+      "SphericalDifferential",
+      "SphericalRepresentation",
+      "UnitSphericalCosLatDifferential",
+      "UnitSphericalDifferential",
+      "UnitSphericalRepresentation",
+      "_array2string",
+      "_fqn_class",
+      "_invalidate_reprdiff_cls_hash",
+      "_make_getter",
+      "_spherical_op_funcs",
+      "get_reprdiff_cls_hash"
+    ],
+    "astropy.coordinates.tests.test_representation": [
+      "TestCartesianRepresentation",
+      "TestCartesianRepresentationWithDifferential",
+      "TestCylindricalRepresentation",
+      "TestInfo",
+      "TestPhysicsSphericalRepresentation",
+      "TestRadialRepresentation",
+      "TestSphericalRepresentation",
+      "TestUnitSphericalCosLatDifferential",
+      "TestUnitSphericalRepresentation",
+      "components_allclose",
+      "components_equal",
+      "representation_equal",
+      "representation_equal_up_to_angular_type",
+      "setup_function",
+      "teardown_function",
+      "test_cartesian_cylindrical_roundtrip",
+      "test_cartesian_physics_spherical_roundtrip",
+      "test_cartesian_setting_with_other",
+      "test_cartesian_spherical_roundtrip",
+      "test_differential_norm_noncartesian",
+      "test_differential_norm_radial",
+      "test_distance_warning",
+      "test_dtype_preservation_in_indexing",
+      "test_duplicate_warning",
+      "test_minimal_subclass",
+      "test_no_unnecessary_copies",
+      "test_repr_with_differentials",
+      "test_representation_repr",
+      "test_representation_repr_multi_d",
+      "test_representation_str",
+      "test_representation_str_multi_d",
+      "test_spherical_physics_spherical_roundtrip",
+      "test_subclass_representation",
+      "test_to_cartesian",
+      "test_unit_spherical_roundtrip",
+      "test_unitphysics",
+      "unitphysics"
+    ],
+    "astropy.coordinates.tests.test_representation_methods": [
+      "ShapeSetup",
+      "TestManipulation",
+      "TestSetShape",
+      "TestShapeFunctions",
+      "method"
+    ],
+    "astropy.coordinates.tests.test_unit_representation": [
+      "setup_function",
+      "teardown_function",
+      "test_unit_representation_subclass"
+    ],
+    "astropy.coordinates.tests.test_representation_arithmetic": [
+      "TestArithmetic",
+      "TestArithmeticWithDifferentials",
+      "TestCartesianDifferential",
+      "TestCylindricalDifferential",
+      "TestDifferentialConversion",
+      "TestPhysicsSphericalDifferential",
+      "TestRadialDifferential",
+      "TestSphericalDifferential",
+      "TestUnitSphericalDifferential",
+      "TestUnitVectorsAndScales",
+      "assert_differential_allclose",
+      "assert_representation_allclose",
+      "representation_equal",
+      "test_arithmetic_with_differentials_fail",
+      "test_operation_unitspherical_with_rv_fails"
+    ],
+    "astropy.io.fits.file": [
+      "_File",
+      "_is_bz2file",
+      "_normalize_fits_mode"
+    ],
+    "astropy.io.fits.verify": [
+      "VerifyError",
+      "VerifyWarning",
+      "_ErrList",
+      "_Verify"
+    ],
+    "astropy.io.fits.convenience": [
+      "_get_file_mode",
+      "_getext",
+      "_makehdu",
+      "_stat_filename_or_fileobj",
+      "append",
+      "delval",
+      "getdata",
+      "getheader",
+      "getval",
+      "info",
+      "printdiff",
+      "setval",
+      "table_to_hdu",
+      "tabledump",
+      "tableload",
+      "update",
+      "writeto"
+    ],
+    "astropy.io.fits": [
+      "Conf"
+    ],
+    "astropy.io": [
+      "CompImageSection",
+      "FITS_rec",
+      "FITS_record",
+      "GroupData",
+      "Header",
+      "Section",
+      "VerifyError",
+      "_config",
+      "card",
+      "column",
+      "convenience",
+      "hdu",
+      "open"
+    ],
+    "astropy.io.fits.card": [
+      "Card",
+      "Undefined",
+      "_format_float",
+      "_format_value",
+      "_int_or_float",
+      "_pad"
+    ],
+    "astropy.io.fits.tests.test_convenience": [
+      "TestConvenience"
+    ]
+  },
+  "test_example_snippet": "class TestConvenience(FitsTestCase):\n    def test_resource_warning(self):\n        warnings.simplefilter(\"always\", ResourceWarning)\n        _ = fits.getdata(self.data(\"test0.fits\"))\n        _ = fits.getheader(self.data(\"test0.fits\"))\n\n    def test_fileobj_not_closed(self):\n        \"\"\"\n        Tests that file-like objects are not closed after being passed\n        to convenience functions.\n\n        Regression test for https://github.com/astropy/astropy/issues/5063\n        \"\"\"\n\n        f = open(self.data(\"test0.fits\"), \"rb\")\n        _ = fits.getdata(f)\n        assert not f.closed\n\n        f.seek(0)\n        _ = fits.getheader(f)\n        assert not f.closed\n\n        f.close()  # Close it now\n\n    def test_table_to_hdu(self):\n        table = Table(\n            [[1, 2, 3], [\"a\", \"b\", \"c\"], [2.3, 4.5, 6.7]],\n            names=[\"a\", \"b\", \"c\"],\n            dtype=[\"i\", \"U1\", \"f\"],\n        )\n        table[\"a\"].unit = \"m/s\"\n        table[\"b\"].unit = \"not-a-unit\"\n\n        with pytest.warns(\n            u.UnitsWarning, match=\"'not-a-unit' did not parse as fits unit\"",
+  "conftest_fixtures": {
+    "astropy/io/fits/tests/conftest.py": [
+      "home_is_data",
+      "home_is_temp"
+    ],
+    "astropy/conftest.py": [
+      "ignore_matplotlibrc",
+      "fast_thread_switching"
+    ]
+  }
+}

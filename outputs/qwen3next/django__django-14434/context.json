@@ -1,0 +1,462 @@
+{
+  "instance_id": "django__django-14434",
+  "repo": "django/django",
+  "base_commit": "5e04e84d67da8163f365e9f5fcd169e2630e2873",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/apps/registry.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "create",
+        "created",
+        "instance"
+      ],
+      "reasons": [
+        "source_content_tokens:argument,create,created,instance,passed"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "argument",
+        "column",
+        "create"
+      ],
+      "reasons": [
+        "source_content_tokens:always,argument,column,create,created"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "column",
+        "create",
+        "created"
+      ],
+      "reasons": [
+        "source_content_tokens:always,column,create,created,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_spawns_duplicates",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "argument",
+        "column",
+        "columns"
+      ],
+      "reasons": [
+        "source_content_tokens:always,argument,column,columns,create"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/models.py",
+      "score": 16,
+      "matched_identifiers": [
+        "always",
+        "argument",
+        "create",
+        "created"
+      ],
+      "reasons": [
+        "source_content_tokens:always,argument,create,created,instance"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "update_last_login",
+        "PermissionManager.get_by_natural_key",
+        "Permission.natural_key",
+        "GroupManager.get_by_natural_key",
+        "Group.natural_key",
+        "UserManager.create_user",
+        "UserManager.create_superuser",
+        "UserManager.with_perm",
+        "PermissionsMixin.get_user_permissions",
+        "PermissionsMixin.get_group_permissions",
+        "PermissionsMixin.get_all_permissions",
+        "PermissionsMixin.has_perm",
+        "PermissionsMixin.has_perms",
+        "PermissionsMixin.has_module_perms",
+        "AbstractUser.clean",
+        "AbstractUser.get_full_name",
+        "AbstractUser.get_short_name",
+        "AbstractUser.email_user",
+        "AnonymousUser.save",
+        "AnonymousUser.delete",
+        "AnonymousUser.set_password",
+        "AnonymousUser.check_password",
+        "AnonymousUser.groups",
+        "AnonymousUser.user_permissions",
+        "AnonymousUser.get_user_permissions",
+        "AnonymousUser.get_group_permissions",
+        "AnonymousUser.get_all_permissions",
+        "AnonymousUser.has_perm",
+        "AnonymousUser.has_perms",
+        "AnonymousUser.has_module_perms",
+        "AnonymousUser.is_anonymous",
+        "AnonymousUser.is_authenticated",
+        "AnonymousUser.get_username"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/apps/models.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "test_name_matches_source_stem:models"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_models.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:models",
+        "token_overlap:auth",
+        "internal_name_overlap:main",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/apps"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/migrations_test_apps/migrated_unapplied_app/models.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:models",
+        "internal_name_overlap:auth"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/apps.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "internal_name_overlap:auth"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/migrations_test_apps/lookuperror_a/models.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:models"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/auth_tests/test_models.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_models.py:testcase_class:AbstractUserTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:IsActiveTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithNaturalKeysAndMultipleDatabasesTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithNaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:LoadDataWithoutNaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:NaturalKeysTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:TestCreateSuperUserSignals",
+      "tests/auth_tests/test_models.py:testcase_class:UserManagerTestCase",
+      "tests/auth_tests/test_models.py:testcase_class:UserWithPermTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2691,
+  "indexed_test_file_count": 1829,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "apps",
+      "get_version",
+      "setup"
+    ],
+    "tests.apps.models": [
+      "SoAlternative",
+      "TotallyNormal"
+    ],
+    "tests.apps.apps": [
+      "BadConfig",
+      "ModelPKAppsConfig",
+      "MyAdmin",
+      "MyAuth",
+      "NoSuchApp",
+      "NotAConfig",
+      "PlainAppsConfig",
+      "RelabeledAppsConfig"
+    ],
+    "tests.auth_tests.test_models": [
+      "AbstractBaseUserTests",
+      "AbstractUserTestCase",
+      "AnonymousUserTests",
+      "CustomModelBackend",
+      "GroupTests",
+      "IsActiveTestCase",
+      "LoadDataWithNaturalKeysAndMultipleDatabasesTestCase",
+      "LoadDataWithNaturalKeysTestCase",
+      "LoadDataWithoutNaturalKeysTestCase",
+      "NaturalKeysTestCase",
+      "PermissionTests",
+      "TestCreateSuperUserSignals",
+      "UserManagerTestCase",
+      "UserWithPermTestCase"
+    ],
+    "tests.migrations.migrations_test_apps.migrated_unapplied_app.models": [
+      "OtherAuthor"
+    ],
+    "tests.migrations.migrations_test_apps.lookuperror_a.models": [
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_spawns_duplicates",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "display",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.models": [
+      "AbstractUser",
+      "AnonymousUser",
+      "Group",
+      "GroupManager",
+      "Permission",
+      "PermissionManager",
+      "PermissionsMixin",
+      "User",
+      "UserManager",
+      "_user_get_permissions",
+      "_user_has_module_perms",
+      "_user_has_perm",
+      "update_last_login"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ]
+  },
+  "test_example_snippet": "class TestCreateSuperUserSignals(TestCase):\n    \"\"\"\n    Simple test case for ticket #20541\n    \"\"\"\n    def post_save_listener(self, *args, **kwargs):\n        self.signals_count += 1\n\n    def setUp(self):\n        self.signals_count = 0\n        post_save.connect(self.post_save_listener, sender=User)\n\n    def tearDown(self):\n        post_save.disconnect(self.post_save_listener, sender=User)\n\n    def test_create_user(self):\n        User.objects.create_user(\"JohnDoe\")\n        self.assertEqual(self.signals_count, 1)\n\n    def test_create_superuser(self):\n        User.objects.create_superuser(\"JohnDoe\", \"mail@example.com\", \"1\")\n        self.assertEqual(self.signals_count, 1)\n\n\nclass AnonymousUserTests(SimpleTestCase):\n    no_repr_msg = \"Django doesn't provide a DB representation for AnonymousUser.\"\n\n    def setUp(self):\n        self.user = AnonymousUser()\n\n    def test_properties(self):\n        self.assertIsNone(self.user.pk)\n        self.assertEqual(self.user.username, '')\n        self.assertEqual(self.user.get_username(), '')\n        self.assertIs(self.user.is_anonymous, True)\n        self.assertIs(self.user.is_authenticated, False)",
+  "conftest_fixtures": {}
+}

@@ -1,0 +1,112 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected failure is explicit about assertion failure",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:fromstring",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "astropy/io/fits/card.py",
+          "target_function": "fromstring",
+          "related_classes": [
+            "Card",
+            "Should"
+          ],
+          "candidate_test_file": "astropy/io/fits/tests/test_diff.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where fromstring can be called."
+        ],
+        "execution_stimulus": [
+          "Call fromstring with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "The assertion should fail due to the bug described in the issue.",
+        "relevant_source_files": [
+          "astropy/io/fits/card.py",
+          "astropy/io/fits/hdu/base.py",
+          "astropy/io/fits/hdu/hdulist.py"
+        ],
+        "relevant_test_files": [
+          "astropy/io/fits/tests/test_diff.py",
+          "astropy/io/fits/tests/test_hdulist.py",
+          "astropy/io/fits/tests/test_header.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "In [39]: from astropy.io import fits\nIn [40]: for n in range(60, 70):\n    ...:     card1 = fits.Card('CONFIG', \"x\" * n + \"''\")\n    ...:     card2 = fits.Card.fromstring(str(card1))  # Should be the same as card1\n    ...:     print(n, card1.value == card2.value)\n    ...:     if card1.value != card2.value:\n    ...:         print(card1.value)\n    ...:         print(card2.value)"
+          },
+          {
+            "language": "python",
+            "code": "60 True\n61 True\n62 True\n63 True\n64 True\n65 False\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\n66 True\n67 False\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\n68 False\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\n69 False\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'"
+          },
+          {
+            "language": "python",
+            "code": "In [39]: from astropy.io import fits\nIn [40]: for n in range(50, 70):\n    ...:     card1 = fits.Card('CONFIG', \"x\" * n + \"''\" + \"x\"*10)\n    ...:     card2 = fits.Card.fromstring(str(card1))\n    ...:     print(n, len(card1.value), card1.value == card2.value)"
+          },
+          {
+            "language": "python",
+            "code": "50 62 True\n51 63 True\n52 64 True\n53 65 True\n54 66 True\n55 67 False\n56 68 False\n57 69 False\n58 70 False\n59 71 False\n60 72 False\n61 73 False\n62 74 False\n63 75 False\n64 76 True\n65 77 False\n66 78 True\n67 79 False\n68 80 False\n69 81 False"
+          },
+          {
+            "language": "python",
+            "code": "from astropy.io import fits\nfor n in range(60, 70):\n    card1 = fits.Card('CONFIG', \"x\" * n + \"''\")\n    card2 = fits.Card.fromstring(str(card1))\n    print(n, len(card1.value), card1.value == card2.value)\n    if card1.value != card2.value:\n        print(card1.value)\n        print(card2.value)"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "fromstring"
+          ],
+          "classes": [
+            "Card",
+            "Should"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

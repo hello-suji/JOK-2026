@@ -1,0 +1,344 @@
+{
+  "instance_id": "pylint-dev__pylint-6528",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "273a8b25620467c1e5686aa8d2a1dbb8c02c78d0",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/checkers/base/docstring_checker.py",
+      "score": 18,
+      "matched_identifiers": [
+        "c0114",
+        "help",
+        "ignore",
+        "version"
+      ],
+      "reasons": [
+        "path_contains_function:docstring",
+        "source_content_tokens:help,ignore,version,c0114,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DocStringChecker.open",
+        "DocStringChecker.visit_module",
+        "DocStringChecker.visit_classdef",
+        "DocStringChecker.visit_functiondef"
+      ]
+    },
+    {
+      "path": "doc/conf.py",
+      "score": 17,
+      "matched_identifiers": [
+        "give",
+        "help",
+        "ignore",
+        "paths"
+      ],
+      "reasons": [
+        "stem_in_issue_text:conf",
+        "source_content_tokens:give,help,ignore,paths,patterns"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "pylint/checkers/format.py",
+      "score": 17,
+      "matched_identifiers": [
+        "give",
+        "help",
+        "ignore",
+        "same"
+      ],
+      "reasons": [
+        "stem_in_issue_text:format",
+        "source_content_tokens:give,help,ignore,same,these"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TokenWrapper.token",
+        "TokenWrapper.type",
+        "TokenWrapper.start_line",
+        "TokenWrapper.start_col",
+        "TokenWrapper.line",
+        "FormatChecker.new_line",
+        "FormatChecker.process_module",
+        "FormatChecker.process_tokens",
+        "FormatChecker.visit_default",
+        "FormatChecker.check_line_ending",
+        "FormatChecker.check_line_length",
+        "FormatChecker.remove_pylint_option_from_lines",
+        "FormatChecker.is_line_length_check_activated",
+        "FormatChecker.specific_splitlines",
+        "FormatChecker.check_lines",
+        "FormatChecker.check_indent_level",
+        "register"
+      ]
+    },
+    {
+      "path": "doc/exts/pylint_extensions.py",
+      "score": 16,
+      "matched_identifiers": [
+        "documentation",
+        "ignore",
+        "these",
+        "version"
+      ],
+      "reasons": [
+        "source_content_tokens:ignore,these,version,documentation,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "builder_inited",
+        "get_plugins_info",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/exts/pylint_options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "configuration",
+        "help",
+        "ignore",
+        "these"
+      ],
+      "reasons": [
+        "source_content_tokens:help,ignore,these,configuration,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "build_options_page",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/checkers/unittest_format.py",
+      "score": 17,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/checkers",
+        "test_name_matches_source_stem:format",
+        "token_overlap:checker,checkers,format",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/functional/m/missing/missing_docstring.py",
+      "score": 14,
+      "matched_identifiers": [
+        "Missing",
+        "docstring"
+      ],
+      "reasons": [
+        "test_path_contains_function:docstring",
+        "test_path_related_to_class:Missing",
+        "same_module_area:doc",
+        "token_overlap:docstring,missing",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:pylint/checkers"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/functional/m/missing/missing_class_docstring.py",
+      "score": 13,
+      "matched_identifiers": [
+        "Missing",
+        "docstring"
+      ],
+      "reasons": [
+        "test_path_contains_function:docstring",
+        "test_path_related_to_class:Missing",
+        "same_module_area:doc",
+        "token_overlap:docstring,missing",
+        "unrelated_to_explicit_source_area:pylint/checkers"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/functional/m/missing/missing_docstring_new_style.py",
+      "score": 13,
+      "matched_identifiers": [
+        "Missing",
+        "docstring"
+      ],
+      "reasons": [
+        "test_path_contains_function:docstring",
+        "test_path_related_to_class:Missing",
+        "same_module_area:doc",
+        "token_overlap:docstring,missing",
+        "unrelated_to_explicit_source_area:pylint/checkers"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/functional/m/missing/missing_function_docstring.py",
+      "score": 13,
+      "matched_identifiers": [
+        "Missing",
+        "docstring"
+      ],
+      "reasons": [
+        "test_path_contains_function:docstring",
+        "test_path_related_to_class:Missing",
+        "same_module_area:doc",
+        "token_overlap:docstring,missing",
+        "unrelated_to_explicit_source_area:pylint/checkers"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/checkers/unittest_format.py:top_level_test_functions",
+      "tests/checkers/unittest_format.py:testcase_class:TestCheckSpace",
+      "tests/checkers/unittest_format.py:testcase_class:TestSuperfluousParentheses"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 1452,
+  "indexed_test_file_count": 1047,
+  "available_imports": {
+    "pylint": [
+      "BaseChecker",
+      "BaseRawFileChecker",
+      "BaseTokenChecker",
+      "DeprecatedMixin",
+      "LinterStats",
+      "MapReduceMixin",
+      "NoReturn",
+      "Sequence",
+      "TYPE_CHECKING",
+      "__version__",
+      "annotations",
+      "diff_string",
+      "initialize",
+      "modify_sys_path",
+      "register_plugins",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "version"
+    ],
+    "tests.checkers.unittest_format": [
+      "TestCheckSpace",
+      "TestSuperfluousParentheses",
+      "test_disable_global_option_end_of_line"
+    ],
+    "tests.functional.m.missing.missing_class_docstring": [
+      "Klass"
+    ],
+    "tests.functional.m.missing.missing_function_docstring": [
+      "MyClass",
+      "func",
+      "func_two"
+    ],
+    "tests.functional.m.missing.missing_docstring_new_style": [
+      "ClassDocumented",
+      "ClassUndocumented",
+      "OtherClassUndocumented",
+      "UndocumentedClass",
+      "_private_documented",
+      "_private_undocumented",
+      "public_documented",
+      "public_undocumented",
+      "undocumented_function",
+      "undocumented_other_function"
+    ],
+    "tests.functional.m.missing.missing_docstring": [
+      "ClassDocumented",
+      "ClassUndocumented",
+      "DocumentedViaDunderDoc",
+      "Property",
+      "__mangled",
+      "__sizeof__",
+      "_private_documented",
+      "_private_undocumented",
+      "public_documented",
+      "public_undocumented"
+    ],
+    "pylint.checkers.format": [
+      "FormatChecker",
+      "TokenWrapper",
+      "_last_token_on_line_is",
+      "register"
+    ],
+    "pylint.checkers": [
+      "AnyStyle",
+      "BasicChecker",
+      "BasicErrorChecker",
+      "CamelCaseStyle",
+      "ComparisonChecker",
+      "DocStringChecker",
+      "KNOWN_NAME_TYPES_WITH_STYLE",
+      "NameChecker",
+      "NamingStyle",
+      "PascalCaseStyle",
+      "PassChecker",
+      "SnakeCaseStyle",
+      "TYPE_CHECKING",
+      "UpperCaseStyle",
+      "annotations",
+      "initialize",
+      "table_lines_from_stats"
+    ],
+    "pylint.checkers.base.docstring_checker": [
+      "DocStringChecker",
+      "_infer_dunder_doc_attribute"
+    ],
+    "pylint.checkers.base": [
+      "register"
+    ],
+    "doc.exts.pylint_extensions": [
+      "builder_inited",
+      "get_plugins_info",
+      "setup"
+    ],
+    "doc.exts.pylint_options": [
+      "OptionsData",
+      "_create_checker_section",
+      "_get_all_options",
+      "_register_all_checkers_and_extensions",
+      "_write_options_page",
+      "build_options_page",
+      "setup"
+    ]
+  },
+  "test_example_snippet": "class TestSuperfluousParentheses(CheckerTestCase):\n    CHECKER_CLASS = FormatChecker\n\n    def testCheckKeywordParensHandlesValidCases(self) -> None:\n        cases = [\n            \"if foo:\",\n            \"if foo():\",\n            \"if (x and y) or z:\",\n            \"assert foo()\",\n            \"assert ()\",\n            \"if (1, 2) in (3, 4):\",\n            \"if (a or b) in c:\",\n            \"return (x for x in x)\",\n            \"if (x for x in x):\",\n            \"for x in (x for x in x):\",\n            \"not (foo or bar)\",\n            \"not (foo or bar) and baz\",\n            \"return [x for x in (3 if 1 else [4])]\",\n            \"return (x for x in ((3, 4) if 2 > 1 else (5, 6)))\",\n        ]\n        with self.assertNoMessages():\n            for code in cases:\n                self.checker._check_keyword_parentheses(_tokenize_str(code), 0)\n\n    def testCheckKeywordParensHandlesUnnecessaryParens(self) -> None:\n        cases = [\n            (MessageTest(\"superfluous-parens\", line=1, args=\"if\"), \"if (foo):\", 0),\n            (\n                MessageTest(\"superfluous-parens\", line=1, args=\"if\"),\n                \"if ((foo, bar)):\",\n                0,\n            ),\n            (\n                MessageTest(\"superfluous-parens\", line=1, args=\"if\"),\n                \"if (foo(bar)):\",",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

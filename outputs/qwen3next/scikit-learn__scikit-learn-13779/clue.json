@@ -1,0 +1,56 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13779",
+  "observed_behavior": [
+    "AttributeError: 'NoneType' object has no attribute 'fit'"
+  ],
+  "expected_behavior": [
+    "X, y = load_iris(return_X_y=True)"
+  ],
+  "repro_conditions": [
+    "Voting estimator will fail at fit if weights are passed and an estimator is None",
+    "voter = VotingClassifier(",
+    "('rf', RandomForestClassifier())]"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "fit",
+      "load_iris",
+      "ones",
+      "set_params"
+    ],
+    "classes": [
+      "LogisticRegression",
+      "NoneType",
+      "RandomForestClassifier",
+      "VotingClassifier"
+    ],
+    "files": [],
+    "exceptions": [
+      "AttributeError"
+    ]
+  },
+  "raw_issue_text": "Voting estimator will fail at fit if weights are passed and an estimator is None\nBecause we don't check for an estimator to be `None` in `sample_weight` support, `fit` is failing`.\n\n```python\n    X, y = load_iris(return_X_y=True)\n    voter = VotingClassifier(\n        estimators=[('lr', LogisticRegression()),\n                    ('rf', RandomForestClassifier())]\n    )\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n    voter.set_params(lr=None)\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n```\n\n```\nAttributeError: 'NoneType' object has no attribute 'fit'\n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "X, y = load_iris(return_X_y=True)\n    voter = VotingClassifier(\n        estimators=[('lr', LogisticRegression()),\n                    ('rf', RandomForestClassifier())]\n    )\n    voter.fit(X, y, sample_weight=np.ones(y.shape))\n    voter.set_params(lr=None)\n    voter.fit(X, y, sample_weight=np.ones(y.shape))",
+      "context_before": "Because we don't check for an estimator to be `None` in `sample_weight` support, `fit` is failing`.",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "AttributeError: 'NoneType' object has no attribute 'fit'",
+      "context_before": "```",
+      "is_system_or_output": true
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [
+    "AttributeError: 'NoneType' object has no attribute 'fit'"
+  ],
+  "error_keywords": [
+    "AttributeError"
+  ],
+  "fault_locations": []
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11728",
+    "model_patch": "--- a/tests/template_backends/test_django.py\n+++ b/tests/template_backends/test_django.py\n@@ -164,3 +164,11 @@\n     def test_debug_default_template_loaders_gate(self):\n         engine = DjangoTemplates({'DIRS': [], 'APP_DIRS': True, 'NAME': 'django', 'OPTIONS': {}})\n         self.assertEqual(engine.engine.loaders, self.default_loaders)\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.contrib.admindocs.utils import replace_named_groups\n+\n+class TestReplaceNamedGroups(TestCase):\n+    def test_replace_named_groups_missing_trailing_slash_repro(self):\n+        result = replace_named_groups(r'entries/(?P<pk>[^/.]+)/relationships/(?P<related_field>\\w+)')\n+        self.assertEqual(result, 'entries/<pk>/relationships/<related_field>')\n",
+    "patch_sha256": "640baad8d367783b1895d7810c874943fda4a67c223b61091e22918611ebe072"
+  }
+]

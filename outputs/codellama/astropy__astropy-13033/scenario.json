@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/timeseries/core.py",
+      "target_function": "remove_column",
+      "related_classes": [
+        "Time",
+        "TimeSeries"
+      ],
+      "candidate_test_file": "astropy/timeseries/tests/test_sampled.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where remove_column can be called.",
+      "Use the generated reproduction path that calls add_required_column, remove_column.",
+      "Use the generated reproduction path that calls remove_column, add_required_column."
+    ],
+    "execution_stimulus": [
+      "Call remove_column with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_required_column, remove_column.",
+      "Execute the focused target API path: remove_column, add_required_column."
+    ],
+    "expected_failure": "TimeSeries: misleading exception when required column check fails.",
+    "relevant_source_files": [
+      "astropy/timeseries/core.py",
+      "astropy/timeseries/sampled.py",
+      "astropy/time/core.py"
+    ],
+    "relevant_test_files": [
+      "astropy/timeseries/tests/test_sampled.py",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_mle.py",
+      "astropy/timeseries/periodograms/lombscargle/implementations/tests/test_utils.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from astropy.time import Time\nfrom astropy.timeseries import TimeSeries\n\ntime=Time(np.arange(100000, 100003), format='jd')\nts = TimeSeries(time=time, data = {\"flux\": [99.9, 99.8, 99.7]})\nts._required_columns = [\"time\", \"flux\"]                                   \nts.remove_column(\"flux\")"
+      },
+      {
+        "language": "python",
+        "code": "Windows-10-10.0.22000-SP0\nPython 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:21:54) [MSC v.1929 64 bit (AMD64)]\nNumpy 1.22.3\npyerfa 2.0.0.1\nastropy 5.0.3\nScipy 1.8.0\nMatplotlib 3.5.1"
+      },
+      {
+        "language": "python",
+        "code": "from astropy.time import Time\nfrom astropy.timeseries import TimeSeries\n\n\ndef test_remove_required_column_updates_columns_repro():\n    time = Time([55197., 55198., 55199.], format='mjd')\n    ts = TimeSeries(time=time, data={'flux': [99.9, 99.8, 99.7]})\n    ts.add_required_column('flux')\n    ts.remove_column('flux')\n    assert 'flux' not in ts.colnames"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "remove_column",
+        "add_required_column"
+      ],
+      "classes": [
+        "Time",
+        "TimeSeries"
+      ],
+      "files": [],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "astropy/timeseries/tests/test_sampled.py",
+      "target_source_file": "astropy/timeseries/core.py",
+      "test_visible_functions": [
+        "remove_column",
+        "add_required_column"
+      ],
+      "test_visible_classes": [
+        "Time",
+        "TimeSeries"
+      ]
+    }
+  }
+]

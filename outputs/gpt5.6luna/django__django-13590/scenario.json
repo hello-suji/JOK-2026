@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/models.py",
+      "target_function": "datetime",
+      "related_classes": [
+        "NamedTuples",
+        "Range"
+      ],
+      "candidate_test_file": "tests/foreign_object/test_forms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __new__ can be called.",
+      "Use the generated reproduction path that calls datetime, namedtuple, filter, exists."
+    ],
+    "execution_stimulus": [
+      "Call __new__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: datetime, namedtuple, filter, exists."
+    ],
+    "expected_failure": "Upgrading 2.2>3.0 causes named tuples used as arguments to __range to error.",
+    "relevant_source_files": [
+      "django/forms/models.py",
+      "django/db/migrations/operations/base.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/foreign_object/test_forms.py",
+      "tests/forms_tests/tests/test_forms.py",
+      "tests/generic_relations/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport datetime\nfrom collections import namedtuple\n\nclass TestRangeFilterWithNamedTuple(TestCase):\n    def test_range_filter_with_namedtuple_repro(self):\n        Range = namedtuple('Range', ['start', 'end'])\n        date_range = Range(start=datetime.date(2020, 1, 1), end=datetime.date(2020, 12, 31))\n        articles = Article.objects.filter(pub_date__range=date_range)\n        self.assertTrue(articles.exists())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "__new__",
+        "datetime",
+        "namedtuple",
+        "filter",
+        "exists",
+        "date"
+      ],
+      "classes": [
+        "NamedTuples",
+        "Range"
+      ],
+      "files": [],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/foreign_object/test_forms.py",
+      "target_source_file": "django/forms/models.py",
+      "test_visible_functions": [
+        "datetime",
+        "namedtuple",
+        "filter",
+        "exists",
+        "date"
+      ],
+      "test_visible_classes": [
+        "Range"
+      ]
+    }
+  }
+]

@@ -1,0 +1,20 @@
+--- a/tests/forms_tests/tests/test_widgets.py
++++ b/tests/forms_tests/tests/test_widgets.py
+@@ -19,3 +19,17 @@
+         self.selenium.find_element_by_id('submit').click()
+         article = Article.objects.get(pk=article.pk)
+         self.assertEqual(article.content, "\r\nTst\r\n")
++
++from django.test import TestCase, SimpleTestCase
++from django.forms.boundfield import BoundField
++from django.forms.widgets import CheckboxSelectMultiple
++
++
++class TestCheckboxSelectMultipleSubwidgets(TestCase):
++    def test_subwidgets_id_assignment_repro(self):
++        widget = CheckboxSelectMultiple()
++        field = widget.field = type('MockField', (), {'widget': widget})()
++        bound_field = BoundField(field, [], None)
++        attrs = {'id': 'custom_id'}
++        subwidgets = bound_field.subwidgets('html_name', [], attrs=attrs)
++        self.assertEqual(subwidgets[0].data['attrs']['id'], 'custom_id')

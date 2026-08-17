@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "in_bulk",
+      "related_classes": [
+        "QuerySet",
+        "UniqueConstraint",
+        "Article"
+      ],
+      "candidate_test_file": "tests/constraints/tests.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.test import TestCase",
+      "from tests.constraints.models import Article",
+      "Article.objects.create(slug='article1')",
+      "Article.objects.create(slug='article2')",
+      "Use the generated reproduction path that calls in_bulk, create."
+    ],
+    "execution_stimulus": [
+      "result = Article.objects.in_bulk(field_name='slug')",
+      "Execute the focused target API path: in_bulk, create."
+    ],
+    "expected_failure": "The test should raise a ValueError indicating that 'slug' is not a unique field.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/manager.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/constraints/tests.py",
+      "tests/constraints/models.py",
+      "tests/custom_managers/models.py",
+      "tests/managers_regress/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom tests.constraints.models import Article\n\nclass TestInBulkWithUniqueConstraint(TestCase):\n    def test_in_bulk_unique_constraint_success_repro(self):\n        article1 = Article.objects.create(slug='article1')\n        article2 = Article.objects.create(slug='article2')\n        articles = Article.objects.in_bulk(field_name='slug', id_list=['article1', 'article2'])\n        self.assertEqual(articles, {'article1': article1, 'article2': article2})\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(articles) != \"ValueError: in_bulk()'s field_name must be a unique field but 'slug' isn't.\""
+      },
+      {
+        "language": "python",
+        "code": "def test_in_bulk_unique_constraint_failure():\n    from django.test import TestCase\n    from tests.constraints.models import Article\n    Article.objects.create(slug='article1')\n    Article.objects.create(slug='article2')\n    with pytest.raises(ValueError) as excinfo:\n        Article.objects.in_bulk(field_name='slug')\n    assert str(excinfo.value) == \"in_bulk()'s field_name must be a unique field but 'slug' isn't.\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: in_bulk()'s field_name must be a unique field but 'slug' isn't."
+    ],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "in_bulk",
+        "create"
+      ],
+      "classes": [
+        "QuerySet",
+        "UniqueConstraint",
+        "Article"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/constraints/tests.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "in_bulk",
+        "create"
+      ],
+      "test_visible_classes": [
+        "UniqueConstraint",
+        "Article"
+      ]
+    }
+  }
+]

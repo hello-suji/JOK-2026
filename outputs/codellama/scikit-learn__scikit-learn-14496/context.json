@@ -1,0 +1,532 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14496",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "d49a6f13af2f22228d430ac64ac2b518937800d0",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/neighbors/base.py",
+      "score": 47,
+      "matched_identifiers": [
+        "7/site-packages/sklearn/neighbors/base.py",
+        "_fit",
+        "compute",
+        "does",
+        "enter",
+        "fit"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:_fit",
+        "explicit_file_path_hint:7/site-packages/sklearn/neighbors/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:_fit,compute,does,enter,graph"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_fit": "    def _fit(self, X):\n        self._check_algorithm_metric()\n        if self.metric_params is None:\n            self.effective_metric_params_ = {}\n        else:\n            self.effective_metric_params_ = self.metric_params.copy()\n\n        effective_p = self.effective_metric_params_.get('p', self.p)\n        if self.metric in ['wminkowski', 'minkowski']:\n            self.effective_metric_params_['p'] = effective_p\n\n        self.effective_metric_ = self.metric\n        # For minkowski distance, use more efficient methods where available\n        if self.metric == 'minkowski':\n            p = self.effective_metric_params_.pop('p', 2)",
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Fit the model using X as training data\n\n        Parameters\n        ----------\n        X : {array-like, sparse matrix, BallTree, KDTree}\n            Training data. If array or matrix, shape [n_samples, n_features],\n            or [n_samples, n_samples] if metric='precomputed'.\n        \"\"\"\n        return self._fit(X)"
+      },
+      "top_level_functions": [
+        "KNeighborsMixin.kneighbors",
+        "KNeighborsMixin.kneighbors_graph",
+        "RadiusNeighborsMixin.radius_neighbors",
+        "RadiusNeighborsMixin.radius_neighbors_graph",
+        "SupervisedFloatMixin.fit",
+        "SupervisedIntegerMixin.fit",
+        "UnsupervisedMixin.fit"
+      ]
+    },
+    {
+      "path": "sklearn/cluster/optics_.py",
+      "score": 42,
+      "matched_identifiers": [
+        "7/site-packages/sklearn/cluster/optics_.py",
+        "compute",
+        "compute_optics_graph",
+        "does",
+        "fit",
+        "graph"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "explicit_file_path_hint:7/site-packages/sklearn/cluster/optics_.py",
+        "stem_in_issue_text:optics_",
+        "source_content_tokens:compute,compute_optics_graph,does,graph,integer"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "compute_optics_graph": "def compute_optics_graph(X, min_samples, max_eps, metric, p, metric_params,\n                         algorithm, leaf_size, n_jobs):\n    \"\"\"Computes the OPTICS reachability graph.\n\n    Read more in the :ref:`User Guide <optics>`.\n\n    Parameters\n    ----------\n    X : array, shape (n_samples, n_features), or (n_samples, n_samples)  \\\nif metric=’precomputed’.\n        A feature array, or array of distances between samples if\n        metric='precomputed'\n\n    min_samples : int (default=5)\n        The number of samples in a neighborhood for a point to be considered",
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Perform OPTICS clustering\n\n        Extracts an ordered list of points and reachability distances, and\n        performs initial clustering using ``max_eps`` distance specified at\n        OPTICS object instantiation.\n\n        Parameters\n        ----------\n        X : array, shape (n_samples, n_features), or (n_samples, n_samples)  \\\nif metric=’precomputed’.\n            A feature array, or array of distances between samples if\n            metric='precomputed'.\n\n        y : ignored"
+      },
+      "top_level_functions": [
+        "OPTICS.fit",
+        "compute_optics_graph",
+        "cluster_optics_dbscan",
+        "cluster_optics_xi"
+      ]
+    },
+    {
+      "path": "sklearn/decomposition/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/sklearn/neighbors/base.py",
+        "_fit",
+        "compute",
+        "fit",
+        "number",
+        "self"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "file_hint_match:7/site-packages/sklearn/neighbors/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:_fit,compute,number,self,where"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(X, y=None):\n        \"\"\"Placeholder for fit. Subclasses should implement this method!\n\n        Fit the model with X.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples, n_features)\n            Training data, where n_samples is the number of samples and\n            n_features is the number of features.\n\n        Returns\n        -------\n        self : object\n            Returns the instance itself."
+      },
+      "top_level_functions": [
+        "_BasePCA.get_covariance",
+        "_BasePCA.get_precision",
+        "_BasePCA.fit",
+        "_BasePCA.transform",
+        "_BasePCA.inverse_transform"
+      ]
+    },
+    {
+      "path": "sklearn/linear_model/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/sklearn/neighbors/base.py",
+        "_fit",
+        "compute",
+        "enter",
+        "fit",
+        "number"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "file_hint_match:7/site-packages/sklearn/neighbors/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:_fit,compute,enter,number,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y, sample_weight=None):\n        \"\"\"\n        Fit linear model.\n\n        Parameters\n        ----------\n        X : array-like or sparse matrix, shape (n_samples, n_features)\n            Training data\n\n        y : array_like, shape (n_samples, n_targets)\n            Target values. Will be cast to X's dtype if necessary\n\n        sample_weight : numpy array of shape [n_samples]\n            Individual weights for each sample\n"
+      },
+      "top_level_functions": [
+        "make_dataset",
+        "LinearModel.fit",
+        "LinearModel.predict",
+        "LinearClassifierMixin.decision_function",
+        "LinearClassifierMixin.predict",
+        "SparseCoefMixin.densify",
+        "SparseCoefMixin.sparsify",
+        "LinearRegression.fit"
+      ]
+    },
+    {
+      "path": "sklearn/mixture/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "7/site-packages/sklearn/neighbors/base.py",
+        "_fit",
+        "compute",
+        "fit",
+        "float64",
+        "number"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "file_hint_match:7/site-packages/sklearn/neighbors/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:_fit,compute,float64,number,self"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Estimate model parameters with the EM algorithm.\n\n        The method fits the model ``n_init`` times and sets the parameters with\n        which the model has the largest likelihood or lower bound. Within each\n        trial, the method iterates between E-step and M-step for ``max_iter``\n        times until the change of likelihood or lower bound is less than\n        ``tol``, otherwise, a ``ConvergenceWarning`` is raised.\n        If ``warm_start`` is ``True``, then ``n_init`` is ignored and a single\n        initialization is performed upon the first call. Upon consecutive\n        calls, training starts where it left off.\n\n        Parameters\n        ----------\n        X : array-like, shape (n_samples, n_features)"
+      },
+      "top_level_functions": [
+        "BaseMixture.fit",
+        "BaseMixture.fit_predict",
+        "BaseMixture.score_samples",
+        "BaseMixture.score",
+        "BaseMixture.predict",
+        "BaseMixture.predict_proba",
+        "BaseMixture.sample"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/neighbors/tests/test_nearest_centroid.py",
+      "score": 47,
+      "matched_identifiers": [
+        "NearestNeighbours"
+      ],
+      "reasons": [
+        "test_path_related_to_class:NearestNeighbours",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/neighbors/tests",
+        "token_overlap:nearest,neighbors,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/neighbors"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/linear_model/tests/test_base.py",
+      "score": 42,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/linear_model/tests",
+        "test_name_matches_source_stem:base",
+        "token_overlap:linear,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/neighbors/tests/test_ball_tree.py",
+      "score": 42,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/neighbors/tests",
+        "token_overlap:neighbors,sklearn",
+        "internal_name_overlap:neighbors",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/neighbors"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/neighbors/tests/test_dist_metrics.py",
+      "score": 42,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/neighbors/tests",
+        "token_overlap:neighbors,sklearn",
+        "internal_name_overlap:data",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/neighbors"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/neighbors/tests/test_kd_tree.py",
+      "score": 42,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/neighbors/tests",
+        "token_overlap:neighbors,sklearn",
+        "internal_name_overlap:neighbors",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/neighbors"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/neighbors/tests/test_dist_metrics.py:pytest_import_or_conftest",
+      "sklearn/neighbors/tests/test_dist_metrics.py:top_level_test_functions",
+      "sklearn/neighbors/tests/test_kd_tree.py:pytest_import_or_conftest",
+      "sklearn/neighbors/tests/test_kd_tree.py:top_level_test_functions",
+      "sklearn/neighbors/tests/test_ball_tree.py:pytest_import_or_conftest",
+      "sklearn/neighbors/tests/test_ball_tree.py:top_level_test_functions",
+      "sklearn/neighbors/tests/test_nearest_centroid.py:top_level_test_functions",
+      "sklearn/linear_model/tests/test_base.py:pytest_import_or_conftest",
+      "sklearn/linear_model/tests/test_base.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 733,
+  "indexed_test_file_count": 212,
+  "available_imports": {
+    "sklearn": [
+      "ARDRegression",
+      "AffinityPropagation",
+      "AgglomerativeClustering",
+      "BallTree",
+      "BayesianGaussianMixture",
+      "BayesianRidge",
+      "Birch",
+      "DBSCAN",
+      "DictionaryLearning",
+      "DistanceMetric",
+      "ElasticNet",
+      "ElasticNetCV",
+      "FactorAnalysis",
+      "FastICA",
+      "FeatureAgglomeration",
+      "GaussianMixture",
+      "Hinge",
+      "Huber",
+      "HuberRegressor",
+      "IncrementalPCA",
+      "KDTree",
+      "KMeans",
+      "KNeighborsClassifier",
+      "KNeighborsRegressor",
+      "KernelDensity",
+      "KernelPCA",
+      "Lars",
+      "LarsCV",
+      "Lasso",
+      "LassoCV",
+      "LassoLars",
+      "LassoLarsCV",
+      "LassoLarsIC",
+      "LatentDirichletAllocation",
+      "LinearRegression",
+      "LocalOutlierFactor",
+      "Log",
+      "LogisticRegression",
+      "LogisticRegressionCV",
+      "MeanShift",
+      "MiniBatchDictionaryLearning",
+      "MiniBatchKMeans",
+      "MiniBatchSparsePCA",
+      "ModifiedHuber",
+      "MultiTaskElasticNet",
+      "MultiTaskElasticNetCV",
+      "MultiTaskLasso",
+      "MultiTaskLassoCV",
+      "NMF",
+      "NearestCentroid",
+      "NearestNeighbors",
+      "NeighborhoodComponentsAnalysis",
+      "OPTICS",
+      "OrthogonalMatchingPursuit",
+      "OrthogonalMatchingPursuitCV",
+      "PCA",
+      "PassiveAggressiveClassifier",
+      "PassiveAggressiveRegressor",
+      "Perceptron",
+      "RANSACRegressor",
+      "RadiusNeighborsClassifier",
+      "RadiusNeighborsRegressor",
+      "Ridge",
+      "RidgeCV",
+      "RidgeClassifier",
+      "RidgeClassifierCV",
+      "SGDClassifier",
+      "SGDRegressor",
+      "SparseCoder",
+      "SparsePCA",
+      "SpectralBiclustering",
+      "SpectralClustering",
+      "SpectralCoclustering",
+      "SquaredLoss",
+      "TheilSenRegressor",
+      "TruncatedSVD",
+      "VALID_METRICS",
+      "VALID_METRICS_SPARSE",
+      "affinity_propagation",
+      "cluster_optics_dbscan",
+      "cluster_optics_xi",
+      "compute_optics_graph",
+      "config_context",
+      "dbscan",
+      "dict_learning",
+      "dict_learning_online",
+      "enet_path",
+      "estimate_bandwidth",
+      "fastica",
+      "get_bin_seeds",
+      "get_config",
+      "k_means",
+      "kneighbors_graph",
+      "lars_path",
+      "lars_path_gram",
+      "lasso_path",
+      "linkage_tree",
+      "logistic_regression_path",
+      "mean_shift",
+      "non_negative_factorization",
+      "orthogonal_mp",
+      "orthogonal_mp_gram",
+      "radius_neighbors_graph",
+      "randomized_svd",
+      "ridge_regression",
+      "set_config",
+      "setup_module",
+      "sparse_encode",
+      "spectral_clustering",
+      "ward_tree"
+    ],
+    "sklearn.linear_model.base": [
+      "LinearClassifierMixin",
+      "LinearModel",
+      "LinearRegression",
+      "SparseCoefMixin",
+      "_pre_fit",
+      "_preprocess_data",
+      "_rescale_data",
+      "make_dataset"
+    ],
+    "sklearn.cluster.optics_": [
+      "OPTICS",
+      "_compute_core_distances_",
+      "_correct_predecessor",
+      "_extend_region",
+      "_extract_xi_labels",
+      "_set_reach_dist",
+      "_update_filter_sdas",
+      "_validate_size",
+      "_xi_cluster",
+      "cluster_optics_dbscan",
+      "cluster_optics_xi",
+      "compute_optics_graph"
+    ],
+    "sklearn.neighbors.base": [
+      "KNeighborsMixin",
+      "NeighborsBase",
+      "RadiusNeighborsMixin",
+      "SupervisedFloatMixin",
+      "SupervisedIntegerMixin",
+      "UnsupervisedMixin",
+      "_check_weights",
+      "_get_weights",
+      "_tree_query_parallel_helper",
+      "_tree_query_radius_parallel_helper"
+    ],
+    "sklearn.decomposition.base": [
+      "_BasePCA"
+    ],
+    "sklearn.mixture.base": [
+      "BaseMixture",
+      "_check_X",
+      "_check_shape"
+    ],
+    "sklearn.neighbors.tests.test_dist_metrics": [
+      "check_cdist",
+      "check_cdist_bool",
+      "check_pdist",
+      "check_pdist_bool",
+      "check_pickle",
+      "dist_func",
+      "test_bad_pyfunc_metric",
+      "test_cdist",
+      "test_cdist_bool_metric",
+      "test_haversine_metric",
+      "test_input_data_size",
+      "test_pdist",
+      "test_pdist_bool_metrics",
+      "test_pickle",
+      "test_pickle_bool_metrics",
+      "test_pyfunc_metric"
+    ],
+    "sklearn.neighbors.tests.test_kd_tree": [
+      "brute_force_neighbors",
+      "check_neighbors",
+      "check_results",
+      "compute_kernel_slow",
+      "test_gaussian_kde",
+      "test_kd_tree_kde",
+      "test_kd_tree_pickle",
+      "test_kd_tree_query",
+      "test_kd_tree_query_radius",
+      "test_kd_tree_query_radius_distance",
+      "test_kd_tree_two_point",
+      "test_neighbors_heap",
+      "test_node_heap",
+      "test_simultaneous_sort"
+    ],
+    "sklearn.neighbors.tests.test_ball_tree": [
+      "brute_force_neighbors",
+      "compute_kernel_slow",
+      "dist_func",
+      "test_ball_tree_kde",
+      "test_ball_tree_pickle",
+      "test_ball_tree_query",
+      "test_ball_tree_query_metrics",
+      "test_ball_tree_query_radius",
+      "test_ball_tree_query_radius_distance",
+      "test_ball_tree_two_point",
+      "test_gaussian_kde",
+      "test_neighbors_heap",
+      "test_node_heap",
+      "test_query_haversine",
+      "test_simultaneous_sort"
+    ],
+    "sklearn.neighbors.tests.test_nearest_centroid": [
+      "test_classification_toy",
+      "test_iris",
+      "test_iris_shrinkage",
+      "test_manhattan_metric",
+      "test_pickle",
+      "test_precomputed",
+      "test_predict_translated_data",
+      "test_shrinkage_correct",
+      "test_shrinkage_threshold_decoded_y"
+    ],
+    "sklearn.linear_model.tests.test_base": [
+      "test_csr_preprocess_data",
+      "test_dtype_preprocess_data",
+      "test_fit_intercept",
+      "test_fused_types_make_dataset",
+      "test_linear_regression",
+      "test_linear_regression_multiple_outcome",
+      "test_linear_regression_sample_weights",
+      "test_linear_regression_sparse",
+      "test_linear_regression_sparse_equal_dense",
+      "test_linear_regression_sparse_multiple_outcome",
+      "test_preprocess_copy_data_no_checks",
+      "test_preprocess_data",
+      "test_preprocess_data_multioutput",
+      "test_preprocess_data_weighted",
+      "test_raises_value_error_if_sample_weights_greater_than_1d",
+      "test_rescale_data",
+      "test_sparse_preprocess_data_with_return_mean"
+    ]
+  },
+  "test_example_snippet": "def test_classification_toy():\n    # Check classification on a toy dataset, including sparse versions.\n    clf = NearestCentroid()\n    clf.fit(X, y)\n    assert_array_equal(clf.predict(T), true_result)\n\n    # Same test, but with a sparse matrix to fit and test.\n    clf = NearestCentroid()\n    clf.fit(X_csr, y)\n    assert_array_equal(clf.predict(T_csr), true_result)\n\n    # Fit with sparse, test with non-sparse\n    clf = NearestCentroid()\n    clf.fit(X_csr, y)\n    assert_array_equal(clf.predict(T), true_result)\n\n    # Fit with non-sparse, test with sparse\n    clf = NearestCentroid()\n    clf.fit(X, y)\n    assert_array_equal(clf.predict(T_csr), true_result)\n\n    # Fit and predict with non-CSR sparse matrices\n    clf = NearestCentroid()\n    clf.fit(X_csr.tocoo(), y)\n    assert_array_equal(clf.predict(T_csr.tolil()), true_result)\n\n\ndef test_precomputed():\n    clf = NearestCentroid(metric='precomputed')\n    with assert_raises(ValueError):\n        clf.fit(X, y)\n\n\ndef test_iris():\n    # Check consistency on dataset iris.",
+  "conftest_fixtures": {
+    "sklearn/conftest.py": [
+      "pyplot"
+    ]
+  }
+}

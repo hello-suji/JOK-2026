@@ -1,0 +1,44 @@
+--- a/tests/forms_tests/tests/test_formsets.py
++++ b/tests/forms_tests/tests/test_formsets.py
+@@ -1647,3 +1647,41 @@
+         expected_errors = [{'votes': ['This field is required.']}, {'votes': ['This field is required.']}]
+         self.assertEqual(formset1._errors, expected_errors)
+         self.assertEqual(formset2._errors, expected_errors)
++
++from django.forms.formsets import formset_factory
++from django.forms.models import modelformset_factory
++from django.forms import ModelForm
++from django.test import TestCase
++from django.contrib.auth.models import User
++
++class TestModelFormsetEditOnly(TestCase):
++    def test_disallow_new_object_creation_repro(self):
++        # Create a user instance to use in the formset
++        self.user1 = User.objects.create(username='user1')
++
++        # Define a simple ModelForm for User
++        class UserForm(ModelForm):
++            class Meta:
++                model = User
++                fields = ['username']
++
++        # Create a modelformset with extra=0 to disallow new object creation
++        UserFormSet = modelformset_factory(User, form=UserForm, extra=0)
++
++        # Prepare data that includes a new user
++        data = {
++            'form-TOTAL_FORMS': '2',
++            'form-INITIAL_FORMS': '1',
++            'form-MIN_NUM_FORMS': '0',
++            'form-MAX_NUM_FORMS': '1000',
++            'form-0-id': str(self.user1.id),
++            'form-0-username': 'updated_user1',
++            'form-1-id': '',
++            'form-1-username': 'new_user',
++        }
++
++        # Instantiate the formset with the data
++        formset = UserFormSet(data)
++
++        # Assert that the formset is not valid due to the new object creation attempt
++        self.assertFalse(formset.is_valid())

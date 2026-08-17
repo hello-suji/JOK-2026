@@ -1,0 +1,31 @@
+from django import forms
+
+
+class FormFieldAssertionsMixin:
+
+    def assertWidgetRendersTo(self, field, to):
+        class Form(forms.Form):
+            f = field
+        self.assertHTMLEqual(str(Form()['f']), to)
+
+from django.test import TestCase, SimpleTestCase
+from django.db.models import Model, ForeignKey, BooleanField, CharField
+from django.forms.models import ModelForm
+from tests.get_object_or_404.models import Article, ArticleManager
+
+class TestForeignKeyValidation(TestCase):
+    def setUp(self):
+        self.archived_article = Article.objects.create(title='Archived Article', archived=True)
+        self.active_article = Article.objects.create(title='Active Article', archived=False)
+
+    def test_validate_using_base_manager_repro(self):
+        class FavoriteArticle(Model):
+            article = ForeignKey(Article, on_delete=models.CASCADE)
+
+        class FavoriteArticleForm(ModelForm):
+            class Meta:
+                model = FavoriteArticle
+                fields = ['article']
+
+        form = FavoriteArticleForm(data={'article': self.archived_article.pk})
+        self.assertTrue(form.is_valid())

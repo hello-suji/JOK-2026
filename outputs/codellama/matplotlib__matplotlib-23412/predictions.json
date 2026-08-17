@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-23412",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1380,3 +1380,21 @@\n\n     assert ax.get_xlim() == (1e-1, 1e2)\n     assert fig2.axes[0].get_xlim() == (0, 1)\n+\n+import numpy as np\n+import matplotlib.pyplot as plt\n+from matplotlib.patches import Rectangle\n+\n+@check_figures_equal(extensions=[\"png\"])\n+def test_patch_offset_dash_repro(fig_test, fig_ref):\n+    ax_test = fig_test.add_subplot()\n+    ax_ref = fig_ref.add_subplot()\n+\n+    rect_test = Rectangle((0.5, 0.5), 1, 1, alpha=0.5, edgecolor='r', linewidth=4, linestyle=(0, (10, 10)))\n+    rect_ref = Rectangle((0.5, 0.5), 1, 1, alpha=0.5, edgecolor='b', linewidth=4, linestyle=(10, (10, 10)))\n+\n+    ax_test.add_patch(rect_test)\n+    ax_ref.add_patch(rect_ref)\n+\n+    assert rect_test.get_edgecolor() == 'r'\n+    assert rect_ref.get_edgecolor() == 'b'\n",
+    "patch_sha256": "314b3e958d42ab380db510652ed276e2652036ed6eee999179371a7f4e62138b"
+  }
+]

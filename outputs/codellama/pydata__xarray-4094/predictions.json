@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4094",
+    "model_patch": "--- a/xarray/tests/test_dataset.py\n+++ b/xarray/tests/test_dataset.py\n@@ -6219,3 +6219,13 @@\n     ds = Dataset()\n     r = ref(ds)\n     assert r() is ds\n+\n+def test_to_unstacked_dataset_single_dim_variable_repro():\n+    arr = xr.DataArray(\n+         np.arange(3),\n+         coords=[(\"x\", [0, 1, 2])],\n+     )\n+    data = xr.Dataset({\"a\": arr, \"b\": arr})\n+    stacked = data.to_stacked_array('y', sample_dims=['x'])\n+    unstacked = stacked.to_unstacked_dataset('y')\n+    assert unstacked.equals(data)\n",
+    "patch_sha256": "3f9d7a6f419c26db8207c96da53637a96d7dfc354a026a782a2674def17e9585"
+  }
+]

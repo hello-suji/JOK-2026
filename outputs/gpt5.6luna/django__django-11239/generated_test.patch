@@ -1,0 +1,15 @@
+--- a/tests/auth_tests/client.py
++++ b/tests/auth_tests/client.py
+@@ -39,3 +39,12 @@
+     def post(self, path, *args, **kwargs):
+         redirect_url = self._get_password_reset_confirm_redirect_url(path)
+         return super().post(redirect_url, *args, **kwargs)
++
++from django.test import TestCase
++from django.test.client import Client
++
++class TestSessionGetRequest(TestCase):
++    def test_session_get_request_repro(self):
++        client = Client()
++        response = client.get('/some-url/')
++        self.assertEqual(response.status_code, 200)

@@ -1,0 +1,21 @@
+--- a/tests/forms_tests/tests/test_formsets.py
++++ b/tests/forms_tests/tests/test_formsets.py
+@@ -1482,3 +1482,18 @@
+         expected_errors = [{'votes': ['This field is required.']}, {'votes': ['This field is required.']}]
+         self.assertEqual(formset1._errors, expected_errors)
+         self.assertEqual(formset2._errors, expected_errors)
++
++from django.forms.formsets import formset_factory
++from django.forms import Form
++from django.forms.utils import ErrorList
++
++class TestFormsetErrorClass(FormsFormsetTestCase):
++    def test_nonform_css_class_in_formset_errors_repro(self):
++        class SimpleForm(Form):
++            pass
++
++        FormSet = formset_factory(SimpleForm)
++        formset = FormSet()
++        formset.non_form_errors().append('Non-form error')
++        errors = formset.errors
++        self.assertTrue(any(isinstance(error, ErrorList) and 'nonform' in error.as_text() for error in errors))

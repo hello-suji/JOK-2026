@@ -1,0 +1,105 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/views/generic/base.py",
+      "target_function": "as_view",
+      "related_classes": [
+        "View",
+        "HttpResponseNotAllowed",
+        "HttpResponse",
+        "SimpleAsyncPostView"
+      ],
+      "candidate_test_file": "tests/generic_views/test_base.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.views import View",
+      "from django.http import HttpResponseNotAllowed",
+      "class SimpleAsyncPostView(View):",
+      "    async def post(self, request, *args, **kwargs):",
+      "        return HttpResponse('POST request')",
+      "Use the generated reproduction path that calls as_view, post, type."
+    ],
+    "execution_stimulus": [
+      "request = type('Request', (object,), {'method': 'GET'})()",
+      "response = SimpleAsyncPostView.as_view()(request)",
+      "Execute the focused target API path: as_view, post, type."
+    ],
+    "expected_failure": "The test should raise a TypeError due to attempting to await an HttpResponseNotAllowed object.",
+    "relevant_source_files": [
+      "django/core/handlers/base.py",
+      "django/core/handlers/exception.py",
+      "django/views/generic/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/generic_views/test_base.py",
+      "tests/messages_tests/base.py",
+      "tests/backends/postgresql/test_operations.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestAsyncPostView(SimpleTestCase):\n    def test_get_request_to_async_post_view_repro(self):\n        from django.views.generic.base import View\n        from django.http import HttpResponseNotAllowed\n        class SimpleAsyncPostView(View):\n            async def post(self, request, *args, **kwargs):\n                return HttpResponse('POST request')\n        request = type('Request', (object,), {'method': 'GET'})()\n        response = SimpleAsyncPostView.as_view()(request)\n        self.assertIsInstance(response, HttpResponseNotAllowed)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(response) != \"object HttpResponseNotAllowed can't be used in 'await' expression\""
+      },
+      {
+        "language": "python",
+        "code": "def test_get_request_to_async_post_view():\n    from django.views import View\n    from django.http import HttpResponseNotAllowed\n    class SimpleAsyncPostView(View):\n        async def post(self, request, *args, **kwargs):\n            return HttpResponse('POST request')\n    request = type('Request', (object,), {'method': 'GET'})()\n    try:\n        response = SimpleAsyncPostView.as_view()(request)\n    except TypeError as e:\n        assert str(e) == \"object HttpResponseNotAllowed can't be used in 'await' expression\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "object HttpResponseNotAllowed can't be used in 'await' expression"
+    ],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "dispatch",
+        "as_view",
+        "post",
+        "type"
+      ],
+      "classes": [
+        "View",
+        "HttpResponseNotAllowed",
+        "HttpResponse",
+        "SimpleAsyncPostView"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "exception_expected",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the expected exception type only; never match exception message text."
+    },
+    "oracle_type": "exception_expected",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/generic_views/test_base.py",
+      "target_source_file": "django/views/generic/base.py",
+      "test_visible_functions": [
+        "as_view",
+        "post",
+        "type"
+      ],
+      "test_visible_classes": [
+        "HttpResponse",
+        "HttpResponseNotAllowed",
+        "View",
+        "SimpleAsyncPostView"
+      ]
+    }
+  }
+]

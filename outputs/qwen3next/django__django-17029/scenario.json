@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/apps/registry.py",
+      "target_function": "clear_cache",
+      "related_classes": [
+        "Apps"
+      ],
+      "candidate_test_file": "tests/template_backends/test_django.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where clear_cache can be called.",
+      "Use the generated reproduction path that calls cache_clear, clear_cache, get_swappable_settings_name."
+    ],
+    "execution_stimulus": [
+      "Call clear_cache with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: cache_clear, clear_cache, get_swappable_settings_name."
+    ],
+    "expected_failure": "Apps.clear_cache() does not clear get_swappable_settings_name cache.",
+    "relevant_source_files": [
+      "django/apps/registry.py",
+      "django/contrib/contenttypes/models.py",
+      "django/db/migrations/state.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/apps/models.py",
+      "tests/migrations/test_state.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.apps.registry import Apps\n\nclass TestClearCacheBehavior(TemplateStringsTests):\n    def test_get_swappable_settings_name_cache_cleared_repro(self):\n        apps = Apps()\n        original_cache = apps.get_swappable_settings_name('auth.User')\n        apps.clear_cache()\n        cleared_cache = apps.get_swappable_settings_name('auth.User')\n        self.assertNotEqual(original_cache, cleared_cache)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "cache_clear",
+        "clear_cache",
+        "get_swappable_settings_name"
+      ],
+      "classes": [
+        "Apps"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/template_backends/test_django.py",
+      "target_source_file": "django/apps/registry.py",
+      "test_visible_functions": [
+        "cache_clear",
+        "clear_cache",
+        "get_swappable_settings_name"
+      ],
+      "test_visible_classes": [
+        "Apps"
+      ]
+    }
+  }
+]

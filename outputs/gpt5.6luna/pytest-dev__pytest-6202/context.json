@@ -1,0 +1,535 @@
+{
+  "instance_id": "pytest-dev__pytest-6202",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "3a668ea6ff24b0c8f00498c3144c63bac561d925",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/python.py",
+      "score": 52,
+      "matched_identifiers": [
+        "getmodpath",
+        "location",
+        "modpath",
+        "parametrize",
+        "replace",
+        "reportinfo",
+        "src/_pytest/python.py"
+      ],
+      "reasons": [
+        "function_match:getmodpath",
+        "function_match:reportinfo",
+        "function_match:parametrize",
+        "explicit_file_path_hint:src/_pytest/python.py",
+        "stem_in_issue_text:python",
+        "source_content_tokens:getmodpath,location,modpath,replace,reportinfo"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "getmodpath": "    def getmodpath(self, stopatmodule=True, includemodule=False):\n        \"\"\" return python path relative to the containing module. \"\"\"\n        chain = self.listchain()\n        chain.reverse()\n        parts = []\n        for node in chain:\n            if isinstance(node, Instance):\n                continue\n            name = node.name\n            if isinstance(node, Module):\n                name = os.path.splitext(name)[0]\n                if stopatmodule:\n                    if includemodule:\n                        parts.append(name)\n                    break",
+        "reportinfo": "    def reportinfo(self):\n        # XXX caching?\n        obj = self.obj\n        compat_co_firstlineno = getattr(obj, \"compat_co_firstlineno\", None)\n        if isinstance(compat_co_firstlineno, int):\n            # nose compatibility\n            fspath = sys.modules[obj.__module__].__file__\n            if fspath.endswith(\".pyc\"):\n                fspath = fspath[:-1]\n            lineno = compat_co_firstlineno\n        else:\n            fspath, lineno = getfslineno(obj)\n        modpath = self.getmodpath()\n        assert isinstance(lineno, int)\n        return fspath, lineno, modpath",
+        "parametrize": "    def parametrize(self, argnames, argvalues, indirect=False, ids=None, scope=None):\n        \"\"\" Add new invocations to the underlying test function using the list\n        of argvalues for the given argnames.  Parametrization is performed\n        during the collection phase.  If you need to setup expensive resources\n        see about setting indirect to do it rather at test setup time.\n\n        :arg argnames: a comma-separated string denoting one or more argument\n                       names, or a list/tuple of argument strings.\n\n        :arg argvalues: The list of argvalues determines how often a\n            test is invoked with different argument values.  If only one\n            argname was specified argvalues is a list of values.  If N\n            argnames were specified, argvalues must be a list of N-tuples,\n            where each tuple-element specifies a value for its respective\n            argname."
+      },
+      "top_level_functions": [
+        "pyobj_property",
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_generate_tests",
+        "pytest_configure",
+        "pytest_pyfunc_call",
+        "pytest_collect_file",
+        "path_matches_patterns",
+        "pytest_pycollect_makemodule",
+        "pytest_pycollect_makeitem",
+        "pytest_make_parametrize_id",
+        "PyobjMixin.obj",
+        "PyobjMixin.getmodpath",
+        "PyobjMixin.reportinfo",
+        "PyCollector.funcnamefilter",
+        "PyCollector.isnosetest",
+        "PyCollector.classnamefilter",
+        "PyCollector.istestfunction",
+        "PyCollector.istestclass",
+        "PyCollector.collect",
+        "Module.collect",
+        "Package.setup",
+        "Package.gethookproxy",
+        "Package.isinitpath",
+        "Package.collect",
+        "Class.collect",
+        "Instance.collect",
+        "Instance.newinstance",
+        "FunctionMixin.setup",
+        "FunctionMixin.repr_failure",
+        "hasinit",
+        "hasnew",
+        "CallSpec2.copy",
+        "CallSpec2.getparam",
+        "CallSpec2.id",
+        "CallSpec2.setmulti2",
+        "Metafunc.parametrize",
+        "idmaker",
+        "show_fixtures_per_test",
+        "showfixtures"
+      ]
+    },
+    {
+      "path": "src/_pytest/nodes.py",
+      "score": 42,
+      "matched_identifiers": [
+        "location",
+        "replace",
+        "reportinfo",
+        "self",
+        "src/_pytest/nodes.py"
+      ],
+      "reasons": [
+        "function_match:reportinfo",
+        "explicit_file_path_hint:src/_pytest/nodes.py",
+        "stem_in_issue_text:nodes",
+        "source_content_tokens:location,replace,reportinfo,self,_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "reportinfo": "    def reportinfo(self):\n        return self.fspath, None, \"\"\n\n    @property\n    def location(self):\n        try:\n            return self._location\n        except AttributeError:\n            location = self.reportinfo()\n            fspath = self.session._node_location_to_relpath(location[0])\n            location = (fspath, location[1], str(location[2]))\n            self._location = location\n            return location",
+        "location": "    def location(self):\n        try:\n            return self._location\n        except AttributeError:\n            location = self.reportinfo()\n            fspath = self.session._node_location_to_relpath(location[0])\n            location = (fspath, location[1], str(location[2]))\n            self._location = location\n            return location"
+      },
+      "top_level_functions": [
+        "ischildnode",
+        "Node.ihook",
+        "Node.warn",
+        "Node.nodeid",
+        "Node.setup",
+        "Node.teardown",
+        "Node.listchain",
+        "Node.add_marker",
+        "Node.iter_markers",
+        "Node.iter_markers_with_node",
+        "Node.get_closest_marker",
+        "Node.listextrakeywords",
+        "Node.listnames",
+        "Node.addfinalizer",
+        "Node.getparent",
+        "Node.repr_failure",
+        "get_fslocation_from_item",
+        "Collector.collect",
+        "Collector.repr_failure",
+        "Item.add_report_section",
+        "Item.reportinfo",
+        "Item.location"
+      ]
+    },
+    {
+      "path": "src/_pytest/reports.py",
+      "score": 37,
+      "matched_identifiers": [
+        "_pytest",
+        "assert",
+        "location",
+        "self",
+        "src/_pytest/reports.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:src/_pytest/reports.py",
+        "stem_in_issue_text:reports",
+        "source_content_tokens:location,self,_pytest,assert,comes"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "location": "    def location(self):\n        return (self.fspath, None, self.fspath)\n\n    def __repr__(self):\n        return \"<CollectReport {!r} lenresult={} outcome={!r}>\".format(\n            self.nodeid, len(self.result), self.outcome\n        )\n\n\nclass CollectErrorRepr(TerminalRepr):\n    def __init__(self, msg):\n        self.longrepr = msg\n\n    def toterminal(self, out):\n        out.line(self.longrepr, red=True)"
+      },
+      "top_level_functions": [
+        "getslaveinfoline",
+        "BaseReport.toterminal",
+        "BaseReport.get_sections",
+        "BaseReport.longreprtext",
+        "BaseReport.caplog",
+        "BaseReport.capstdout",
+        "BaseReport.capstderr",
+        "BaseReport.fspath",
+        "BaseReport.count_towards_summary",
+        "BaseReport.head_line",
+        "TestReport.from_item_and_call",
+        "CollectReport.location",
+        "CollectErrorRepr.toterminal",
+        "pytest_report_to_serializable",
+        "pytest_report_from_serializable"
+      ]
+    },
+    {
+      "path": "src/_pytest/doctest.py",
+      "score": 21,
+      "matched_identifiers": [
+        "location",
+        "replace",
+        "reportinfo",
+        "self"
+      ],
+      "reasons": [
+        "function_match:reportinfo",
+        "source_content_tokens:location,replace,reportinfo,self,_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "reportinfo": "    def reportinfo(self):\n        return self.fspath, self.dtest.lineno, \"[doctest] %s\" % self.name\n\n\ndef _get_flag_lookup():\n    import doctest\n\n    return dict(\n        DONT_ACCEPT_TRUE_FOR_1=doctest.DONT_ACCEPT_TRUE_FOR_1,\n        DONT_ACCEPT_BLANKLINE=doctest.DONT_ACCEPT_BLANKLINE,\n        NORMALIZE_WHITESPACE=doctest.NORMALIZE_WHITESPACE,\n        ELLIPSIS=doctest.ELLIPSIS,\n        IGNORE_EXCEPTION_DETAIL=doctest.IGNORE_EXCEPTION_DETAIL,\n        COMPARISON_FLAGS=doctest.COMPARISON_FLAGS,\n        ALLOW_UNICODE=_get_allow_unicode_flag(),"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_collect_file",
+        "ReprFailDoctest.toterminal",
+        "DoctestItem.setup",
+        "DoctestItem.runtest",
+        "DoctestItem.repr_failure",
+        "DoctestItem.reportinfo",
+        "get_optionflags",
+        "DoctestTextfile.collect",
+        "DoctestModule.collect",
+        "doctest_namespace"
+      ]
+    },
+    {
+      "path": "src/_pytest/_code/code.py",
+      "score": 17,
+      "matched_identifiers": [
+        "_pytest",
+        "assertionerror",
+        "location",
+        "self"
+      ],
+      "reasons": [
+        "stem_in_issue_text:code",
+        "source_content_tokens:assertionerror,location,self,_pytest,assert"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Code.path",
+        "Code.fullsource",
+        "Code.source",
+        "Code.getargs",
+        "Frame.statement",
+        "Frame.eval",
+        "Frame.exec_",
+        "Frame.repr",
+        "Frame.is_true",
+        "Frame.getargs",
+        "TracebackEntry.set_repr_style",
+        "TracebackEntry.frame",
+        "TracebackEntry.relline",
+        "TracebackEntry.statement",
+        "TracebackEntry.path",
+        "TracebackEntry.locals",
+        "TracebackEntry.getfirstlinesource",
+        "TracebackEntry.getsource",
+        "TracebackEntry.ishidden",
+        "TracebackEntry.name",
+        "Traceback.cut",
+        "Traceback.filter",
+        "Traceback.getcrashentry",
+        "Traceback.recursionindex",
+        "ExceptionInfo.from_exc_info",
+        "ExceptionInfo.from_current",
+        "ExceptionInfo.for_later",
+        "ExceptionInfo.fill_unfilled",
+        "ExceptionInfo.type",
+        "ExceptionInfo.value",
+        "ExceptionInfo.tb",
+        "ExceptionInfo.typename",
+        "ExceptionInfo.traceback",
+        "ExceptionInfo.exconly",
+        "ExceptionInfo.errisinstance",
+        "ExceptionInfo.getrepr",
+        "ExceptionInfo.match",
+        "FormattedExcinfo.repr_args",
+        "FormattedExcinfo.get_source",
+        "FormattedExcinfo.get_exconly"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/code/test_code.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:code",
+        "token_overlap:code",
+        "internal_name_overlap:code",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_doctest.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:doctest",
+        "token_overlap:doctest",
+        "internal_name_overlap:code",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_nodes.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:nodes",
+        "token_overlap:nodes",
+        "internal_name_overlap:pytest",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_reports.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:reports",
+        "token_overlap:reports",
+        "internal_name_overlap:reports",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/nonpython/conftest.py",
+      "score": 6,
+      "matched_identifiers": [
+        "reportinfo"
+      ],
+      "reasons": [
+        "test_function_match:reportinfo",
+        "token_overlap:python",
+        "internal_name_overlap:pytest",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "mixed",
+    "evidence": [
+      "testing/test_nodes.py:pytest_import_or_conftest",
+      "testing/test_nodes.py:top_level_test_functions",
+      "testing/test_reports.py:pytest_import_or_conftest",
+      "testing/test_reports.py:testcase_class:TestHooks",
+      "testing/test_reports.py:testcase_class:TestReportSerialization",
+      "testing/test_doctest.py:pytest_import_or_conftest",
+      "testing/test_doctest.py:top_level_test_functions",
+      "testing/test_doctest.py:testcase_class:TestDoctestAutoUseFixtures",
+      "testing/test_doctest.py:testcase_class:TestDoctestNamespaceFixture",
+      "testing/test_doctest.py:testcase_class:TestDoctestReportingOption",
+      "testing/test_doctest.py:testcase_class:TestDoctestSkips",
+      "testing/test_doctest.py:testcase_class:TestDoctests",
+      "testing/test_doctest.py:testcase_class:TestLiterals",
+      "testing/code/test_code.py:pytest_import_or_conftest",
+      "testing/code/test_code.py:unittest_or_django_test_import",
+      "testing/code/test_code.py:top_level_test_functions",
+      "testing/code/test_code.py:testcase_class:TestExceptionInfo",
+      "testing/code/test_code.py:testcase_class:TestReprFuncArgs",
+      "testing/code/test_code.py:testcase_class:TestTracebackEntry",
+      "doc/en/example/nonpython/conftest.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 203,
+  "indexed_test_file_count": 108,
+  "available_imports": {
+    "testing.test_nodes": [
+      "test__check_initialpaths_for_relpath",
+      "test_ischildnode",
+      "test_std_warn_not_pytestwarning"
+    ],
+    "testing.test_reports": [
+      "TestHooks",
+      "TestReportSerialization"
+    ],
+    "testing.test_doctest": [
+      "Broken",
+      "TestDoctestAutoUseFixtures",
+      "TestDoctestNamespaceFixture",
+      "TestDoctestReportingOption",
+      "TestDoctestSkips",
+      "TestDoctests",
+      "TestLiterals",
+      "test_doctest_mock_objects_dont_recurse_missbehaved",
+      "test_warning_on_unwrap_of_broken_object"
+    ],
+    "src._pytest.python": [
+      "CallSpec2",
+      "Class",
+      "Function",
+      "FunctionDefinition",
+      "FunctionMixin",
+      "Instance",
+      "Metafunc",
+      "Module",
+      "Package",
+      "PyCollector",
+      "PyobjContext",
+      "PyobjMixin",
+      "_ascii_escaped_by_config",
+      "_call_with_optional_argument",
+      "_find_parametrized_scope",
+      "_get_first_non_fixture_func",
+      "_idval",
+      "_idvalset",
+      "_show_fixtures_per_test",
+      "_showfixtures_main",
+      "hasinit",
+      "hasnew",
+      "idmaker",
+      "path_matches_patterns",
+      "pyobj_property",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collect_file",
+      "pytest_configure",
+      "pytest_generate_tests",
+      "pytest_make_parametrize_id",
+      "pytest_pycollect_makeitem",
+      "pytest_pycollect_makemodule",
+      "pytest_pyfunc_call",
+      "show_fixtures_per_test",
+      "showfixtures",
+      "write_docstring"
+    ],
+    "src._pytest.doctest": [
+      "DoctestItem",
+      "DoctestModule",
+      "DoctestTextfile",
+      "MultipleDoctestFailures",
+      "ReprFailDoctest",
+      "_check_all_skipped",
+      "_get_allow_bytes_flag",
+      "_get_allow_unicode_flag",
+      "_get_checker",
+      "_get_continue_on_failure",
+      "_get_flag_lookup",
+      "_get_number_flag",
+      "_get_report_choice",
+      "_get_runner",
+      "_init_runner_class",
+      "_is_doctest",
+      "_is_mocked",
+      "_is_setup_py",
+      "_patch_unwrap_mock_aware",
+      "_setup_fixtures",
+      "doctest_namespace",
+      "get_optionflags",
+      "pytest_addoption",
+      "pytest_collect_file"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "src._pytest.reports": [
+      "BaseReport",
+      "CollectErrorRepr",
+      "CollectReport",
+      "TestReport",
+      "_report_kwargs_from_json",
+      "_report_to_json",
+      "_report_unserialization_failure",
+      "getslaveinfoline",
+      "pytest_report_from_serializable",
+      "pytest_report_to_serializable"
+    ],
+    "src._pytest.nodes": [
+      "Collector",
+      "FSCollector",
+      "File",
+      "Item",
+      "Node",
+      "_check_initialpaths_for_relpath",
+      "_splitnode",
+      "get_fslocation_from_item",
+      "ischildnode"
+    ],
+    "src._pytest._code.code": [
+      "Code",
+      "ExceptionChainRepr",
+      "ExceptionInfo",
+      "ExceptionRepr",
+      "FormattedExcinfo",
+      "Frame",
+      "ReprEntry",
+      "ReprEntryNative",
+      "ReprExceptionInfo",
+      "ReprFileLocation",
+      "ReprFuncArgs",
+      "ReprLocals",
+      "ReprTraceback",
+      "ReprTracebackNative",
+      "TerminalRepr",
+      "Traceback",
+      "TracebackEntry",
+      "filter_traceback",
+      "getrawcode"
+    ],
+    "src._pytest": [
+      "Code",
+      "ExceptionInfo",
+      "Frame",
+      "Source",
+      "Traceback",
+      "compile",
+      "filter_traceback",
+      "getfslineno",
+      "getrawcode"
+    ],
+    "testing.code.test_code": [
+      "TestExceptionInfo",
+      "TestReprFuncArgs",
+      "TestTracebackEntry",
+      "test_code_from_func",
+      "test_code_fullsource",
+      "test_code_getargs",
+      "test_code_gives_back_name_for_not_existing_file",
+      "test_code_source",
+      "test_code_with_class",
+      "test_frame_getargs",
+      "test_frame_getsourcelineno_myself",
+      "test_getstatement_empty_fullsource",
+      "test_ne",
+      "test_unicode_handling",
+      "x"
+    ],
+    "doc.en.example.nonpython.conftest": [
+      "YamlException",
+      "YamlFile",
+      "YamlItem",
+      "pytest_collect_file"
+    ]
+  },
+  "test_example_snippet": "class TestExceptionInfo:\n    def test_bad_getsource(self):\n        try:\n            if False:\n                pass\n            else:\n                assert False\n        except AssertionError:\n            exci = _pytest._code.ExceptionInfo.from_current()\n        assert exci.getrepr()\n\n    def test_from_current_with_missing(self):\n        with pytest.raises(AssertionError, match=\"no current exception\"):\n            _pytest._code.ExceptionInfo.from_current()\n\n\nclass TestTracebackEntry:\n    def test_getsource(self):\n        try:\n            if False:\n                pass\n            else:\n                assert False\n        except AssertionError:\n            exci = _pytest._code.ExceptionInfo.from_current()\n        entry = exci.traceback[0]\n        source = entry.getsource()\n        assert len(source) == 6\n        assert \"assert False\" in source[5]\n\n\nclass TestReprFuncArgs:\n    def test_not_raise_exception_with_mixed_encoding(self, tw_mock):\n        from _pytest._code.code import ReprFuncArgs\n",
+  "conftest_fixtures": {
+    "testing/conftest.py": [
+      "tw_mock",
+      "dummy_yaml_custom_test",
+      "restore_tracing"
+    ]
+  }
+}

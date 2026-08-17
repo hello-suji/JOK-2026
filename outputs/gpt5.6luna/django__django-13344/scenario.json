@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/middleware/security.py",
+      "target_function": "process_response",
+      "related_classes": [
+        "ASGIRequest",
+        "DummyMiddleware",
+        "HttpResponse",
+        "SecurityMiddleware"
+      ],
+      "candidate_test_file": "tests/middleware/test_security.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where process_response can be called.",
+      "Use the generated reproduction path that calls process_response."
+    ],
+    "execution_stimulus": [
+      "Call process_response with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: process_response."
+    ],
+    "expected_failure": "Coroutine passed to the first middleware's process_response() instead of HttpResponse.",
+    "relevant_source_files": [
+      "django/middleware/security.py",
+      "django/contrib/redirects/middleware.py",
+      "django/contrib/sessions/middleware.py"
+    ],
+    "relevant_test_files": [
+      "tests/middleware/test_security.py",
+      "tests/middleware/tests.py",
+      "tests/urlpatterns_reverse/middleware.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.handlers.asgi import ASGIRequest\nfrom django.middleware.security import SecurityMiddleware\nfrom django.http import HttpResponse\n\n\nclass TestSecurityMiddlewareProcessResponse(TestCase):\n    def test_process_response_called_repro(self):\n        request = ASGIRequest()\n        response = HttpResponse('Hello, world!')\n        middleware = SecurityMiddleware()\n        processed_response = middleware.process_response(request, response)\n        self.assertEqual(processed_response.content, b'Hello, world!')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "process_response"
+      ],
+      "classes": [
+        "ASGIRequest",
+        "DummyMiddleware",
+        "HttpResponse",
+        "MiddlewareMixin",
+        "SecurityMiddleware"
+      ],
+      "files": [
+        "settings.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/middleware/test_security.py",
+      "target_source_file": "django/middleware/security.py",
+      "test_visible_functions": [
+        "process_response"
+      ],
+      "test_visible_classes": [
+        "ASGIRequest",
+        "HttpResponse",
+        "SecurityMiddleware"
+      ]
+    }
+  }
+]

@@ -1,0 +1,73 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "show_versions",
+      "related_classes": [],
+      "candidate_test_file": "sklearn/metrics/tests/test_pairwise.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls show_versions."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: show_versions."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sklearn/compose/_column_transformer.py",
+      "sklearn/ensemble/voting.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/ensemble/tests/test_voting.py",
+      "sklearn/metrics/tests/test_pairwise.py",
+      "sklearn/compose/tests/test_column_transformer.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.utils import show_versions\n\ndef test_show_versions_includes_joblib_repro():\n    # Call the target API and capture the output\n    out = show_versions()\n    # Assert that the output includes 'joblib'\n    assert 'joblib' in out"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "show_versions"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/metrics/tests/test_pairwise.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "show_versions"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-14983",
+    "model_patch": "--- a/sklearn/model_selection/tests/test_split.py\n+++ b/sklearn/model_selection/tests/test_split.py\n@@ -1571,3 +1571,10 @@\n             ValueError,\n             match='p=2 must be strictly less than the number of samples=2'):\n         next(cv.split(X, y, groups=[1, 2]))\n+\n+@ignore_warnings\n+def test_repeated_kfold_and_repeated_stratified_kfold_repr_repro():\n+    from sklearn.model_selection import RepeatedKFold, RepeatedStratifiedKFold\n+\n+    assert repr(RepeatedKFold()) == 'RepeatedKFold(n_splits=5, n_repeats=10, random_state=None)'\n+    assert repr(RepeatedStratifiedKFold()) == 'RepeatedStratifiedKFold(n_splits=5, n_repeats=10, random_state=None)'\n",
+    "patch_sha256": "8ef8dc66e0eaf514d3161e04b5a59f9b35bcc114542fddc871c0f9f6b759d659"
+  }
+]

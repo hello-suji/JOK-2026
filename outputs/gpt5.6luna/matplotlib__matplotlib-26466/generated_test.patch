@@ -1,0 +1,27 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1659,3 +1659,24 @@
+     fig.savefig(buf, format='svg')
+     buf.seek(0)
+     assert '<g ' not in buf.read()
++
++import numpy as np
++from matplotlib.testing.decorators import check_figures_equal
++
++@check_figures_equal()
++def test_annotate_array_modification_repro(fig_test, fig_ref):
++    ax_test = fig_test.add_axes([0.13, 0.15, .8, .8])
++    ax_ref = fig_ref.add_axes([0.13, 0.15, .8, .8])
++    ax_test.set_xlim(-5, 5)
++    ax_test.set_ylim(-3, 3)
++    ax_ref.set_xlim(-5, 5)
++    ax_ref.set_ylim(-3, 3)
++
++    xy_0 = np.array((-4, 1))
++    xy_f = np.array((-1, 1))
++
++    ann_test = ax_test.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))
++    ann_ref = ax_ref.annotate(s='', xy=xy_0, xytext=xy_f, arrowprops=dict(arrowstyle='->'))
++
++    assert np.array_equal(ann_test.xy, ann_ref.xy)
++    assert np.array_equal(ann_test.xyann, ann_ref.xyann)

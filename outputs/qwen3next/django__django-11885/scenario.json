@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/related.py",
+      "target_function": "delete",
+      "related_classes": [
+        "ForeignKey",
+        "ManyToManyField",
+        "Collector",
+        "User",
+        "Group"
+      ],
+      "candidate_test_file": "tests/save_delete_hooks/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where delete can be called.",
+      "Use the generated reproduction path that calls models, create, add, collect.",
+      "Use the generated reproduction path that calls delete, models, create, add."
+    ],
+    "execution_stimulus": [
+      "Call delete with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: models, create, add, collect.",
+      "Execute the focused target API path: delete, models, create, add."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/fields/related.py",
+      "django/contrib/auth/models.py",
+      "django/db/models/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/save_delete_hooks/models.py",
+      "tests/model_fields/models.py",
+      "tests/model_fields/test_foreignkey.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db import models\nfrom django.db.models.deletion import Collector\nfrom django.contrib.auth.models import User, Group\n\nclass TestDeleteCascadeCombination(models.TestCase):\n    def setUp(self):\n        self.user1 = User.objects.create(username='user1')\n        self.user2 = User.objects.create(username='user2')\n        self.group1 = Group.objects.create(name='group1')\n        self.group2 = Group.objects.create(name='group2')\n        self.group1.user_set.add(self.user1)\n        self.group2.user_set.add(self.user2)\n        self.group1.user_set.add(self.user2)\n\n    def test_delete_cascade_combination_repro(self):\n        collector = Collector(using='default')\n        collector.collect([self.group1, self.group2])\n        sqls = collector.sqls\n        self.assertEqual(len(sqls), 1)\n        self.assertIn('DELETE FROM auth_user_groups', sqls[0][0])\n        self.assertIn('WHERE auth_user_groups.group_id IN', sqls[0][0])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "delete",
+        "models",
+        "create",
+        "add",
+        "collect"
+      ],
+      "classes": [
+        "ForeignKey",
+        "ManyToManyField",
+        "Collector",
+        "User",
+        "Group"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/save_delete_hooks/models.py",
+      "target_source_file": "django/db/models/fields/related.py",
+      "test_visible_functions": [
+        "delete",
+        "models",
+        "create",
+        "add",
+        "collect"
+      ],
+      "test_visible_classes": [
+        "Collector",
+        "User",
+        "Group"
+      ]
+    }
+  }
+]

@@ -1,0 +1,306 @@
+{
+  "instance_id": "django__django-15098",
+  "repo": "django/django",
+  "base_commit": "2c7846d992ca512d36a73f518205015c88ed088c",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/checks/urls.py",
+      "score": 47,
+      "matched_identifiers": [
+        "format",
+        "path",
+        "patterns",
+        "tshi/urls.py",
+        "urlpatterns",
+        "urls.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:urls.py",
+        "file_hint_match:tshi/urls.py",
+        "stem_in_issue_text:urls",
+        "source_content_tokens:format,path,patterns,urlpatterns,append"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_url_config",
+        "check_resolver",
+        "check_url_namespaces_unique",
+        "get_warning_for_invalid_pattern",
+        "check_url_settings",
+        "E006"
+      ]
+    },
+    {
+      "path": "django/contrib/admindocs/urls.py",
+      "score": 45,
+      "matched_identifiers": [
+        "admin",
+        "path",
+        "patterns",
+        "tshi/urls.py",
+        "urlpatterns",
+        "urls.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:urls.py",
+        "file_hint_match:tshi/urls.py",
+        "stem_in_issue_text:urls",
+        "source_content_tokens:path,patterns,urlpatterns,admin"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/contrib/auth/urls.py",
+      "score": 45,
+      "matched_identifiers": [
+        "admin",
+        "path",
+        "patterns",
+        "tshi/urls.py",
+        "urlpatterns",
+        "urls.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:urls.py",
+        "file_hint_match:tshi/urls.py",
+        "stem_in_issue_text:urls",
+        "source_content_tokens:path,patterns,urlpatterns,admin"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/contrib/flatpages/urls.py",
+      "score": 43,
+      "matched_identifiers": [
+        "path",
+        "patterns",
+        "tshi/urls.py",
+        "urlpatterns",
+        "urls.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:urls.py",
+        "file_hint_match:tshi/urls.py",
+        "stem_in_issue_text:urls",
+        "source_content_tokens:path,patterns,urlpatterns"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "django/contrib/staticfiles/urls.py",
+      "score": 41,
+      "matched_identifiers": [
+        "append",
+        "patterns",
+        "tshi/urls.py",
+        "urlpatterns",
+        "urls.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:urls.py",
+        "file_hint_match:tshi/urls.py",
+        "stem_in_issue_text:urls",
+        "source_content_tokens:patterns,urlpatterns,append"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "staticfiles_urlpatterns"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/urlpatterns/path_base64_urls.py",
+      "score": 11,
+      "matched_identifiers": [
+        "path"
+      ],
+      "reasons": [
+        "test_path_contains_function:path",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:path,patterns",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns/path_dynamic_urls.py",
+      "score": 11,
+      "matched_identifiers": [
+        "path"
+      ],
+      "reasons": [
+        "test_path_contains_function:path",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:path,patterns",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns/path_same_name_urls.py",
+      "score": 11,
+      "matched_identifiers": [
+        "path"
+      ],
+      "reasons": [
+        "test_path_contains_function:path",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:path,patterns",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns/path_urls.py",
+      "score": 11,
+      "matched_identifiers": [
+        "path"
+      ],
+      "reasons": [
+        "test_path_contains_function:path",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:path,patterns",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_client/urls_middleware_urlconf.py",
+      "score": 8,
+      "matched_identifiers": [
+        "LocaleMiddleware"
+      ],
+      "reasons": [
+        "test_path_related_to_class:LocaleMiddleware",
+        "test_name_matches_source_stem:urls",
+        "internal_name_overlap:response",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2724,
+  "indexed_test_file_count": 1859,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.test_client.urls_middleware_urlconf": [
+      "empty_response"
+    ],
+    "django.http.response": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseBase",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseRedirectBase",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "ResponseHeaders",
+      "StreamingHttpResponse"
+    ],
+    "django.middleware.locale": [
+      "LocaleMiddleware"
+    ],
+    "django.contrib.staticfiles.urls": [
+      "staticfiles_urlpatterns"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.core.checks.urls": [
+      "E006",
+      "_load_all_namespaces",
+      "check_resolver",
+      "check_url_config",
+      "check_url_namespaces_unique",
+      "check_url_settings",
+      "get_warning_for_invalid_pattern"
+    ],
+    "django.core": [
+      "CRITICAL",
+      "CheckMessage",
+      "Critical",
+      "DEBUG",
+      "Debug",
+      "ERROR",
+      "Error",
+      "INFO",
+      "Info",
+      "Tags",
+      "WARNING",
+      "Warning",
+      "register",
+      "run_checks",
+      "tag_exists"
+    ],
+    "django.conf.urls.i18n": [
+      "i18n_patterns",
+      "is_language_prefix_patterns_used"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

@@ -1,0 +1,10 @@
+--- a/sympy/series/tests/test_order.py
++++ b/sympy/series/tests/test_order.py
+@@ -446,3 +446,7 @@
+
+ def test_issue_18606_gate():
+     assert unchanged(Order, 0)
++
++def test_false_zero_comparison_repro():
++    assert S(0.0) == S.false
++    assert not (S.false == S(0.0))

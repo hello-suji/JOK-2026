@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "model_patch": "--- a/sklearn/ensemble/tests/test_voting.py\n+++ b/sklearn/ensemble/tests/test_voting.py\n@@ -507,3 +507,21 @@\n             eclf3.transform(X).swapaxes(0, 1).reshape((4, 6)),\n             eclf2.transform(X)\n     )\n+\n+from sklearn.datasets import load_iris\n+from sklearn.ensemble import VotingClassifier, RandomForestClassifier\n+from sklearn.linear_model import LogisticRegression\n+\n+\n+def test_voting_classifier_with_none_estimator_and_weights_repro():\n+    X, y = load_iris(return_X_y=True)\n+    voter = VotingClassifier(\n+        estimators=[('lr', LogisticRegression()),\n+                    ('rf', RandomForestClassifier())]\n+    )\n+    voter.fit(X, y, sample_weight=np.ones(y.shape))\n+    voter.set_params(lr=None)\n+    voter.fit(X, y, sample_weight=np.ones(y.shape))\n+    assert voter.named_estimators['rf'] is not None\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(estimators) != \"AttributeError: 'NoneType' object has no attribute 'fit'\"\n",
+    "patch_sha256": "1105f9918e55a8bad595f38d1908b0f73b78957786a8b0dd81015cc9fe56420c"
+  }
+]

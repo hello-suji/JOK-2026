@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataset.py",
+      "target_function": "stack",
+      "related_classes": [
+        "Dataset",
+        "PandasMultiIndex"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataset.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import xarray and numpy",
+      "Create a Dataset with a coordinate 'a' of dtype 'i4'",
+      "Use the generated reproduction path that calls stack, array."
+    ],
+    "execution_stimulus": [
+      "Stack the coordinate 'a' into a new dimension 'b'",
+      "Compare the dtype of the original 'a' coordinate with the stacked 'a' coordinate",
+      "Execute the focused target API path: stack, array."
+    ],
+    "expected_failure": "The dtype of the stacked 'a' coordinate is 'i8' instead of 'i4'",
+    "relevant_source_files": [
+      "xarray/core/dataset.py",
+      "xarray/core/indexes.py",
+      "xarray/core/dataarray.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_indexes.py",
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_stack_dtype_change_repro():\n    ds = xr.Dataset(coords={'a': np.array([0], dtype='i4')})\n    assert ds['a'].values.dtype == ds.stack(b=('a',))['a'].values.dtype\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(ds) != 'False'"
+      },
+      {
+        "language": "python",
+        "code": "def test_stack_dtype_change():\n    import xarray as xr\n    import numpy as np\n    ds = xr.Dataset(coords={'a': np.array([0], dtype='i4')})\n    assert ds['a'].values.dtype == ds.stack(b=('a',))['a'].values.dtype"
+      }
+    ],
+    "expected_outputs": [
+      "True"
+    ],
+    "actual_outputs": [
+      "False"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "stack",
+        "array"
+      ],
+      "classes": [
+        "Dataset",
+        "PandasMultiIndex"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataset.py",
+      "target_source_file": "xarray/core/dataset.py",
+      "test_visible_functions": [
+        "stack",
+        "array"
+      ],
+      "test_visible_classes": [
+        "Dataset"
+      ]
+    }
+  }
+]

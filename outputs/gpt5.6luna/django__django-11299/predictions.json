@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11299",
+    "model_patch": "--- a/tests/invalid_models_tests/test_deprecated_fields.py\n+++ b/tests/invalid_models_tests/test_deprecated_fields.py\n@@ -37,3 +37,15 @@\n                 id='fields.E901',\n             )],\n         )\n+\n+from django.db.migrations import AddConstraint\n+from django.db.migrations.operations.models import CreateModel\n+from django.db.models import IntegerField, BooleanField\n+from django.db.models.constraints import CheckConstraint\n+from django.test import SimpleTestCase\n+\n+class TestCheckConstraintWithOrAndClauses(SimpleTestCase):\n+    def test_constraint_with_or_and_clauses_repro(self):\n+        constraint = CheckConstraint(check=(Q(field1=True) | Q(field2=False)) & Q(field3__gte=0), name='check_constraint')\n+        operation = AddConstraint('MyModel', constraint)\n+        self.assertEqual(operation.name, 'check_constraint')\n",
+    "patch_sha256": "0eb50d37b783b6c28faa80a4dd0a100db869f1dd29e62a48647d636c5341da08"
+  }
+]

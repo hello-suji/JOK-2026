@@ -1,0 +1,431 @@
+{
+  "instance_id": "sphinx-doc__sphinx-8551",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "57ed10c68057c96491acbd3e62254ccfaf9e3861",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 18,
+      "matched_identifiers": [
+        "fields",
+        "info",
+        "names",
+        "param"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:fields,info,names,param,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/latex/transforms.py",
+      "score": 18,
+      "matched_identifiers": [
+        "info",
+        "names",
+        "refer",
+        "type"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:info,names,refer,type,which"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FootnoteDocnameUpdater.apply",
+        "SubstitutionDefinitionsRemover.apply",
+        "ShowUrlsTransform.run",
+        "ShowUrlsTransform.expand_show_urls",
+        "ShowUrlsTransform.get_docname_for_node",
+        "ShowUrlsTransform.create_footnote",
+        "ShowUrlsTransform.renumber_footnotes",
+        "FootnoteCollector.unknown_visit",
+        "FootnoteCollector.unknown_departure",
+        "FootnoteCollector.visit_footnote",
+        "FootnoteCollector.visit_footnote_reference",
+        "LaTeXFootnoteTransform.run",
+        "LaTeXFootnoteVisitor.unknown_visit",
+        "LaTeXFootnoteVisitor.unknown_departure",
+        "LaTeXFootnoteVisitor.restrict",
+        "LaTeXFootnoteVisitor.unrestrict",
+        "LaTeXFootnoteVisitor.visit_figure",
+        "LaTeXFootnoteVisitor.depart_figure",
+        "LaTeXFootnoteVisitor.visit_term",
+        "LaTeXFootnoteVisitor.depart_term",
+        "LaTeXFootnoteVisitor.visit_caption",
+        "LaTeXFootnoteVisitor.depart_caption",
+        "LaTeXFootnoteVisitor.visit_title",
+        "LaTeXFootnoteVisitor.depart_title",
+        "LaTeXFootnoteVisitor.visit_thead",
+        "LaTeXFootnoteVisitor.depart_thead",
+        "LaTeXFootnoteVisitor.depart_table",
+        "LaTeXFootnoteVisitor.visit_footnote",
+        "LaTeXFootnoteVisitor.depart_footnote",
+        "LaTeXFootnoteVisitor.visit_footnote_reference",
+        "LaTeXFootnoteVisitor.get_footnote_by_reference",
+        "BibliographyTransform.run",
+        "CitationReferenceTransform.run",
+        "MathReferenceTransform.run",
+        "LiteralBlockTransform.run",
+        "DocumentTargetTransform.run",
+        "IndexInSectionTitleTransform.apply",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/texinfo.py",
+      "score": 18,
+      "matched_identifiers": [
+        "info",
+        "names",
+        "refer",
+        "type"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:info,names,refer,type,environment"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TexinfoBuilder.init",
+        "TexinfoBuilder.get_outdated_docs",
+        "TexinfoBuilder.get_target_uri",
+        "TexinfoBuilder.get_relative_uri",
+        "TexinfoBuilder.init_document_data",
+        "TexinfoBuilder.write",
+        "TexinfoBuilder.assemble_doctree",
+        "TexinfoBuilder.finish",
+        "TexinfoBuilder.copy_image_files",
+        "TexinfoBuilder.copy_support_files",
+        "default_texinfo_documents",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 18,
+      "matched_identifiers": [
+        "annotated",
+        "gets",
+        "names",
+        "refer"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:annotated,gets,names,refer,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_unicode",
+        "check_primary_domain",
+        "check_master_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/ext/ifconfig.py",
+      "score": 18,
+      "matched_identifiers": [
+        "info",
+        "names",
+        "resolved",
+        "type"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:info,names,resolved,type"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "IfConfig.run",
+        "process_ifconfig_nodes",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 22,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-setup/doc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-api-set-translator/conf.py",
+      "score": 12,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "internal_name_overlap:latex"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 528,
+  "indexed_test_file_count": 333,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ENUM",
+      "check_confval_types",
+      "check_master_doc",
+      "check_primary_domain",
+      "check_unicode",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "BuildEnvironment",
+      "BuildPhase",
+      "CONFIG_CHANGED_REASON",
+      "CONFIG_OK",
+      "CatalogInfo",
+      "CatalogRepository",
+      "Config",
+      "Dict",
+      "EventManager",
+      "ImageAdapter",
+      "Iterable",
+      "List",
+      "Node",
+      "PIPE",
+      "ParallelTasks",
+      "RemovedInNextVersionWarning",
+      "SEP",
+      "Sequence",
+      "SerialTasks",
+      "Set",
+      "SphinxError",
+      "Tags",
+      "Tuple",
+      "Union",
+      "__",
+      "bold",
+      "directives",
+      "docname_to_domain",
+      "ensuredir",
+      "import_object",
+      "logging",
+      "make_chunks",
+      "nodes",
+      "parallel_available",
+      "path",
+      "progress_message",
+      "read_doc",
+      "relative_uri",
+      "relpath",
+      "roles",
+      "rst",
+      "sphinx_domains",
+      "status_iterator"
+    ],
+    "sphinx.ext.ifconfig": [
+      "IfConfig",
+      "ifconfig",
+      "process_ifconfig_nodes",
+      "setup"
+    ],
+    "sphinx.builders.texinfo": [
+      "TexinfoBuilder",
+      "default_texinfo_documents",
+      "setup"
+    ],
+    "sphinx.builders": [
+      "ADDITIONAL_SETTINGS",
+      "Any",
+      "Builder",
+      "Config",
+      "DEFAULT_SETTINGS",
+      "Dict",
+      "ENUM",
+      "ExtBabel",
+      "ImageAdapter",
+      "Iterable",
+      "LaTeXRenderer",
+      "LaTeXTranslator",
+      "LaTeXWriter",
+      "List",
+      "NoUri",
+      "Node",
+      "OptionParser",
+      "RemovedInSphinx40Warning",
+      "RemovedInSphinx50Warning",
+      "SEP",
+      "SHORTHANDOFF",
+      "Sphinx",
+      "SphinxError",
+      "SphinxFileOutput",
+      "Theme",
+      "ThemeFactory",
+      "Tuple",
+      "Union",
+      "_",
+      "__",
+      "addnodes",
+      "bold",
+      "copy_asset_file",
+      "darkgreen",
+      "format_date",
+      "highlighting",
+      "inline_all_toctrees",
+      "logging",
+      "make_filename_from_project",
+      "new_document",
+      "nodes",
+      "package_dir",
+      "path",
+      "progress_message",
+      "status_iterator",
+      "texescape"
+    ],
+    "sphinx.builders.latex": [
+      "LaTeXBuilder",
+      "default_latex_docclass",
+      "default_latex_documents",
+      "default_latex_engine",
+      "default_latex_use_xindy",
+      "install_packages_for_ja",
+      "patch_settings",
+      "setup",
+      "validate_config_values",
+      "validate_latex_theme_options"
+    ],
+    "sphinx.builders.latex.transforms": [
+      "BibliographyTransform",
+      "CitationReferenceTransform",
+      "DocumentTargetTransform",
+      "FootnoteCollector",
+      "FootnoteDocnameUpdater",
+      "IndexInSectionTitleTransform",
+      "LaTeXFootnoteTransform",
+      "LaTeXFootnoteVisitor",
+      "LiteralBlockTransform",
+      "MathReferenceTransform",
+      "ShowUrlsTransform",
+      "SubstitutionDefinitionsRemover",
+      "setup"
+    ],
+    "tests.roots.test-api-set-translator.conf": [
+      "ConfDirHTMLTranslator",
+      "ConfHTMLTranslator",
+      "ConfJsonTranslator",
+      "ConfLaTeXTranslator",
+      "ConfManualPageTranslator",
+      "ConfPickleTranslator",
+      "ConfPseudoXMLTranslator",
+      "ConfSingleHTMLTranslator",
+      "ConfTexinfoTranslator",
+      "ConfTextTranslator",
+      "ConfXMLTranslator",
+      "setup"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

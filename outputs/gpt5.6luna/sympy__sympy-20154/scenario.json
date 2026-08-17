@@ -1,0 +1,73 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/utilities/iterables.py",
+      "target_function": "partitions",
+      "related_classes": [],
+      "candidate_test_file": "sympy/utilities/tests/test_iterables.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where partitions can be called.",
+      "Use the generated reproduction path that calls partitions."
+    ],
+    "execution_stimulus": [
+      "Call partitions with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: partitions."
+    ],
+    "expected_failure": "I'm wondering if it's really that important for it to do this. It shouldn't be that much of a performance loss to copy the dictionary before yielding it. This behavior is very confusing. It means that something as simple as list(partitions()) will give an apparently wrong result. And it can lead to much more subtle bugs if the partitions are used in a nontrivial way.",
+    "relevant_source_files": [
+      "sympy/utilities/iterables.py",
+      "sympy/combinatorics/partitions.py",
+      "sympy/categories/diagram_drawing.py"
+    ],
+    "relevant_test_files": [
+      "sympy/utilities/tests/test_iterables.py",
+      "sympy/combinatorics/tests/test_partitions.py",
+      "sympy/utilities/tests/test_codegen.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_partitions_reuse_dict_repro():\n    parts = list(partitions(3))\n    assert parts == [{3: 1}, {2: 1, 1: 1}, {1: 3}]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "partitions"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/utilities/tests/test_iterables.py",
+      "target_source_file": "sympy/utilities/iterables.py",
+      "test_visible_functions": [
+        "partitions"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

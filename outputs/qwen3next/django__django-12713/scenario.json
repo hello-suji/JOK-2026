@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/options.py",
+      "target_function": "formfield_for_manytomany",
+      "related_classes": [
+        "BaseModelAdmin",
+        "ManyToManyField"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/test_fields.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.admin.options import BaseModelAdmin",
+      "from django.db import models",
+      "class TestModel(models.Model): pass",
+      "class TestAdmin(BaseModelAdmin): pass",
+      "db_field = models.ManyToManyField(TestModel)",
+      "request = None",
+      "Use the generated reproduction path that calls formfield_for_manytomany, models."
+    ],
+    "execution_stimulus": [
+      "form_field = TestAdmin().formfield_for_manytomany(db_field, request, widget=models.CheckboxSelectMultiple)",
+      "Execute the focused target API path: formfield_for_manytomany, models."
+    ],
+    "expected_failure": "The widget parameter is ignored and the default widget is used instead of CheckboxSelectMultiple.",
+    "relevant_source_files": [
+      "django/contrib/admin/options.py",
+      "django/contrib/auth/admin.py",
+      "django/db/models/fields/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_options/test_default_related_name.py",
+      "tests/model_options/models/default_related_name.py",
+      "tests/contenttypes_tests/test_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.admin.options import BaseModelAdmin\nfrom django.db import models\n\n\nclass TestFormfieldForManyToManyWidget(TestCase):\n    def test_formfield_for_manytomany_widget_ignored_repro(self):\n        class TestAdmin(BaseModelAdmin): pass\n        db_field = models.ManyToManyField(Answer)\n        request = None\n        form_field = TestAdmin().formfield_for_manytomany(db_field, request, widget=models.CheckboxSelectMultiple)\n        self.assertIsInstance(form_field.widget, models.CheckboxSelectMultiple)"
+      },
+      {
+        "language": "python",
+        "code": "def test_formfield_for_manytomany_widget_ignored():\n    from django.contrib.admin.options import BaseModelAdmin\n    from django.db import models\n    class TestModel(models.Model): pass\n    class TestAdmin(BaseModelAdmin): pass\n    db_field = models.ManyToManyField(TestModel)\n    request = None\n    form_field = TestAdmin().formfield_for_manytomany(db_field, request, widget=models.CheckboxSelectMultiple)\n    assert form_field.widget.__class__.__name__ != 'CheckboxSelectMultiple'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "formfield_for_manytomany",
+        "models"
+      ],
+      "classes": [
+        "BaseModelAdmin",
+        "ManyToManyField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/contenttypes_tests/test_fields.py",
+      "target_source_file": "django/contrib/admin/options.py",
+      "test_visible_functions": [
+        "formfield_for_manytomany",
+        "models"
+      ],
+      "test_visible_classes": [
+        "BaseModelAdmin",
+        "ManyToManyField"
+      ]
+    }
+  }
+]

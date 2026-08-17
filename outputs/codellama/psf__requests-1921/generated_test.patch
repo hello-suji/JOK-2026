@@ -1,0 +1,13 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -1173,3 +1173,10 @@
+
+ if __name__ == '__main__':
+     unittest.main()
++
++def test_session_remove_accept_encoding_header_repro():
++    session = requests.Session()
++    # Do not send Accept-Encoding
++    session.headers['Accept-Encoding'] = None
++    prepared_request = session.prepare_request(requests.Request('GET', 'http://example.com'))
++    assert 'Accept-Encoding' not in prepared_request.headers

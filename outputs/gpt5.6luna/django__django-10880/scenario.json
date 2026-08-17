@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "aggregate",
+      "related_classes": [
+        "Count",
+        "Case",
+        "When",
+        "User"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.db.models import Count, Case, When",
+      "from django.test import TestCase",
+      "from tests.modelapp.models import Author",
+      "Use the generated reproduction path that calls create, aggregate."
+    ],
+    "execution_stimulus": [
+      "query = Author.objects.aggregate(count=Count(Case(When(name='John', then=1), default=0), distinct=True))",
+      "Execute the focused target API path: create, aggregate."
+    ],
+    "expected_failure": "A query syntax error occurs due to a missing space between 'DISTINCT' and 'CASE'.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/query.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/base/test_features.py",
+      "tests/backends/mysql/test_features.py",
+      "tests/queries/test_query.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "author_data"
+      ],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Count, Case, When\nfrom django.contrib.auth.models import User\n\nclass TestAggregateWithCaseAndDistinct(TestCase):\n    def test_query_syntax_error_with_condition_and_distinct_repro(self):\n        User.objects.create(username='John')\n        result = User.objects.aggregate(count=Count(Case(When(username='John', then=1), default=0), distinct=True))\n        self.assertIsNotNone(result['count'])"
+      },
+      {
+        "language": "python",
+        "code": "def test_query_syntax_error_with_condition_and_distinct(test_case):\n    from django.db.models import Count, Case, When\n    from tests.modelapp.models import Author\n    with test_case.assertRaises(Exception) as context:\n        Author.objects.aggregate(count=Count(Case(When(name='John', then=1), default=0), distinct=True))\n    test_case.assertIn('syntax error', str(context.exception))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "syntax error"
+    ],
+    "identifiers": {
+      "functions": [
+        "aggregate",
+        "create"
+      ],
+      "classes": [
+        "Count",
+        "Case",
+        "When",
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "create",
+        "aggregate"
+      ],
+      "test_visible_classes": [
+        "Count",
+        "Case",
+        "When",
+        "User"
+      ]
+    }
+  }
+]

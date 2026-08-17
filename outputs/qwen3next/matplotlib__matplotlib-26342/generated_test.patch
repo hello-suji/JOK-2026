@@ -1,0 +1,32 @@
+--- a/lib/matplotlib/tests/test_contour.py
++++ b/lib/matplotlib/tests/test_contour.py
+@@ -823,3 +823,29 @@
+         assert_array_equal(cs.tcolors, [c.get_edgecolor() for c in colls])
+     with pytest.warns(mpl.MatplotlibDeprecationWarning, match="tlinewidths"):
+         assert cs.tlinewidths == [c.get_linewidth() for c in colls]
++
++import matplotlib
++matplotlib.use('Agg')
++import numpy as np
++from matplotlib import pyplot as plt
++from matplotlib.contour import ContourSet
++
++
++def test_contour_set_paths_reproduction_repro():
++
++    x = np.linspace(-3.0, 3.0, 100)
++    y = np.linspace(-3.0, 3.0, 100)
++    X, Y = np.meshgrid(x, y)
++    Z = np.sin(X**2 + Y**2)
++
++    fig, ax = plt.subplots()
++    cs = ax.contour(X, Y, Z)
++
++    original_paths = cs.get_paths()
++    transformed_paths = [path.transformed(cs.axes.transData.inverted()) for path in original_paths]
++
++    # This will fail on pre-patch code because set_paths does not correctly handle the transformation
++    cs.set_paths(transformed_paths)
++
++    updated_paths = cs.get_paths()
++    assert updated_paths != original_paths

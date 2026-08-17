@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11490",
+    "model_patch": "--- a/tests/get_or_create/tests.py\n+++ b/tests/get_or_create/tests.py\n@@ -629,3 +629,16 @@\n         msg = \"Cannot resolve keyword 'name_in_all_caps' into field. Choices are: id, name, tags\"\n         with self.assertRaisesMessage(FieldError, msg):\n             Thing.objects.update_or_create(name_in_all_caps='FRANK', defaults={'name': 'Frank'})\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.models import Q\n+from tests.get_or_create.models import ReservedName\n+\n+class TestReservedNameQueries(TestCase):\n+    def test_composed_queries_with_values_list_repro(self):\n+        ReservedName.objects.create(name='a', order=2)\n+        qs1 = ReservedName.objects.all()\n+        result1 = qs1.union(qs1).values_list('name', 'order').get()\n+        result2 = qs1.union(qs1).values_list('order').get()\n+        self.assertEqual(result1, ('a', 2))\n+        self.assertEqual(result2, (2,))\n",
+    "patch_sha256": "87942cd6926d1eea657e3054ff50f124f22237a61700d18f5391798d8814eb29"
+  }
+]

@@ -1,0 +1,292 @@
+[
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "pylint/checkers/base.py",
+      "target_function": "astroid",
+      "related_classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "candidate_test_file": "pylint/testutils/lint_module_test.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import the necessary modules including abc and ABC.",
+      "Create a sample Python file with the provided code snippet.",
+      "Use the generated reproduction path that calls astroid, visit_assign, any, parse.",
+      "Use the generated reproduction path that calls astroid, visit_assign, parse."
+    ],
+    "execution_stimulus": [
+      "Run pylint on the sample Python file.",
+      "Execute the focused target API path: astroid, visit_assign, any, parse.",
+      "Execute the focused target API path: astroid, visit_assign, parse."
+    ],
+    "expected_failure": "Pylint emits an 'unused-import' warning for the 'abc' module.",
+    "relevant_source_files": [
+      "pylint/extensions/_check_docs_utils.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/extensions/data/docstring.py",
+      "tests/test_epylint.py",
+      "pylint/testutils/lint_module_test.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "linter"
+      ],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_unused_import_false_positive(linter):\n    import abc\n    from abc import ABC\n    X = ...  # type: abc.ABC\n    Y = ...  # type: ABC\n    result = linter.checker.visit_import()\n    assert 'unused-import' in result.messages"
+      },
+      {
+        "language": "python",
+        "code": "import os\ndef test_unused_import_in_assign_false_positive_repro(linter):\n    import astroid\n    from pylint.checkers.base import BasicErrorChecker\n    node = astroid.parse('import os\\nX = os.path').body[1]\n    checker = BasicErrorChecker(linter)\n    checker.visit_assign(node)\n    messages = linter.reporter.messages\n    assert not any(msg.msg_id == 'unused-import' for msg in messages)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(checker) != 'W0611: Unused import abc (unused-import)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "W0611: Unused import abc (unused-import)"
+    ],
+    "error_keywords": [
+      "unused-import"
+    ],
+    "identifiers": {
+      "functions": [
+        "visit_import",
+        "astroid",
+        "visit_assign",
+        "parse"
+      ],
+      "classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "pylint/testutils/lint_module_test.py",
+      "target_source_file": "pylint/checkers/base.py",
+      "test_visible_functions": [
+        "astroid",
+        "visit_assign",
+        "parse"
+      ],
+      "test_visible_classes": [
+        "Unused",
+        "BasicErrorChecker"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "pylint/checkers/base.py",
+      "target_function": "astroid",
+      "related_classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "candidate_test_file": "pylint/testutils/lint_module_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the necessary modules including abc and ABC.",
+      "Create a sample Python file with the provided code snippet.",
+      "Use the generated reproduction path that calls astroid, visit_assign, any, parse.",
+      "Use the generated reproduction path that calls astroid, visit_assign, parse."
+    ],
+    "execution_stimulus": [
+      "Run pylint on the sample Python file.",
+      "Execute the focused target API path: astroid, visit_assign, any, parse.",
+      "Execute the focused target API path: astroid, visit_assign, parse."
+    ],
+    "expected_failure": "Pylint emits an 'unused-import' warning for the 'abc' module.",
+    "relevant_source_files": [
+      "pylint/extensions/_check_docs_utils.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/extensions/data/docstring.py",
+      "tests/test_epylint.py",
+      "pylint/testutils/lint_module_test.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "linter"
+      ],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_unused_import_from_false_positive(linter):\n    import abc\n    from abc import ABC\n    X = ...  # type: abc.ABC\n    Y = ...  # type: ABC\n    result = linter.checker.visit_importfrom()\n    assert 'unused-import' in result.messages"
+      },
+      {
+        "language": "python",
+        "code": "import os\ndef test_unused_import_in_assign_false_positive_repro(linter):\n    import astroid\n    from pylint.checkers.base import BasicErrorChecker\n    node = astroid.parse('import os\\nX = os.path').body[1]\n    checker = BasicErrorChecker(linter)\n    checker.visit_assign(node)\n    messages = linter.reporter.messages\n    assert not any(msg.msg_id == 'unused-import' for msg in messages)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(checker) != 'W0611: Unused import abc (unused-import)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "W0611: Unused import abc (unused-import)"
+    ],
+    "error_keywords": [
+      "unused-import"
+    ],
+    "identifiers": {
+      "functions": [
+        "visit_importfrom",
+        "astroid",
+        "visit_assign",
+        "parse"
+      ],
+      "classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "pylint/testutils/lint_module_test.py",
+      "target_source_file": "pylint/checkers/base.py",
+      "test_visible_functions": [
+        "astroid",
+        "visit_assign",
+        "parse"
+      ],
+      "test_visible_classes": [
+        "Unused",
+        "BasicErrorChecker"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "pylint/checkers/base.py",
+      "target_function": "astroid",
+      "related_classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "candidate_test_file": "pylint/testutils/lint_module_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the necessary modules including abc and ABC.",
+      "Create a sample Python file with the provided code snippet.",
+      "Use the generated reproduction path that calls astroid, visit_assign, any, parse.",
+      "Use the generated reproduction path that calls astroid, visit_assign, parse."
+    ],
+    "execution_stimulus": [
+      "Run pylint on the sample Python file.",
+      "Execute the focused target API path: astroid, visit_assign, any, parse.",
+      "Execute the focused target API path: astroid, visit_assign, parse."
+    ],
+    "expected_failure": "Pylint emits an 'unused-import' warning for the 'abc' module.",
+    "relevant_source_files": [
+      "pylint/extensions/_check_docs_utils.py",
+      "doc/conf.py",
+      "pylint/checkers/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/extensions/data/docstring.py",
+      "tests/test_epylint.py",
+      "pylint/testutils/lint_module_test.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "linter"
+      ],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_unused_import_in_assign_false_positive(linter):\n    import abc\n    from abc import ABC\n    X = ...  # type: abc.ABC\n    Y = ...  # type: ABC\n    result = linter.checker.visit_assign()\n    assert 'unused-import' in result.messages"
+      },
+      {
+        "language": "python",
+        "code": "import os\ndef test_unused_import_in_assign_false_positive_repro(linter):\n    import astroid\n    from pylint.checkers.base import BasicErrorChecker\n    node = astroid.parse('import os\\nX = os.path').body[1]\n    checker = BasicErrorChecker(linter)\n    checker.visit_assign(node)\n    messages = linter.reporter.messages\n    assert not any(msg.msg_id == 'unused-import' for msg in messages)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(checker) != 'W0611: Unused import abc (unused-import)'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "W0611: Unused import abc (unused-import)"
+    ],
+    "error_keywords": [
+      "unused-import"
+    ],
+    "identifiers": {
+      "functions": [
+        "visit_assign",
+        "astroid",
+        "parse"
+      ],
+      "classes": [
+        "BasicErrorChecker",
+        "Unused"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "pylint/testutils/lint_module_test.py",
+      "target_source_file": "pylint/checkers/base.py",
+      "test_visible_functions": [
+        "astroid",
+        "visit_assign",
+        "parse"
+      ],
+      "test_visible_classes": [
+        "Unused",
+        "BasicErrorChecker"
+      ]
+    }
+  }
+]

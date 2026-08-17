@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/management/__init__.py",
+      "target_function": "<module>",
+      "related_classes": [
+        "HoskeOwl",
+        "MyModel",
+        "MyModel2"
+      ],
+      "candidate_test_file": "tests/admin_scripts/management/commands/base_command.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where <module> can be called."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Traceback (most recent call last):",
+    "relevant_source_files": [
+      "django/core/management/__init__.py",
+      "django/core/management/base.py",
+      "django/db/migrations/autodetector.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/base_command.py",
+      "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "tests/migrations/migrations_test_apps/with_package_model/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "KeyError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_detect_changes",
+        "changes",
+        "execute",
+        "execute_from_command_line",
+        "fetch_command",
+        "generate_renamed_fields",
+        "handle",
+        "handle_func",
+        "main",
+        "run_from_argv"
+      ],
+      "classes": [
+        "HoskeOwl",
+        "MyModel",
+        "MyModel2"
+      ],
+      "files": [
+        "django/django/core/management/__init__.py",
+        "django/django/core/management/base.py",
+        "django/django/core/management/commands/makemigrations.py",
+        "django/django/db/migrations/autodetector.py",
+        "manage.py"
+      ],
+      "exceptions": [
+        "KeyError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

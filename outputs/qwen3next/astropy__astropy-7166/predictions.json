@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-7166",
+    "model_patch": "--- a/astropy/utils/tests/test_misc.py\n+++ b/astropy/utils/tests/test_misc.py\n@@ -132,3 +132,20 @@\n     assert misc.dtype_bytes_or_chars(np.dtype(np.int32)) == 4\n     assert misc.dtype_bytes_or_chars(np.array(b'12345').dtype) == 5\n     assert misc.dtype_bytes_or_chars(np.array(u'12345').dtype) == 5\n+\n+from astropy.utils.misc import InheritDocstrings\n+\n+class TestInheritDocstrings:\n+    def test_property_handling_repro(self):\n+        class BaseClass(metaclass=InheritDocstrings):\n+            @property\n+            def prop(self):\n+                \"\"\"Base property docstring.\"\"\"\n+                return 42\n+\n+        class DerivedClass(BaseClass):\n+            @property\n+            def prop(self):\n+                return super().prop\n+\n+        assert DerivedClass.prop.__doc__ == \"Base property docstring.\"\n",
+    "patch_sha256": "ef29d842af4c31e14e5bc477eaf1ba69245b3903ae0b7c4c53023c661da13008"
+  }
+]

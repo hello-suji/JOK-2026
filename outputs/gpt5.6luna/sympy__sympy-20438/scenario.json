@@ -1,0 +1,119 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/basic.py",
+      "target_function": "simplify",
+      "related_classes": [
+        "Complement",
+        "Eq",
+        "Equality",
+        "FiniteSet",
+        "ProductSet"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_basic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where simplify can be called.",
+      "Use the generated reproduction path that calls _eval_simplify, equals, exec, intersection."
+    ],
+    "execution_stimulus": [
+      "Call simplify with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _eval_simplify, equals, exec, intersection."
+    ],
+    "expected_failure": "`is_subset` gives wrong results",
+    "relevant_source_files": [
+      "sympy/core/basic.py",
+      "sympy/core/relational.py",
+      "sympy/simplify/simplify.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_basic.py",
+      "sympy/core/tests/test_relational.py",
+      "sympy/simplify/tests/test_rewrite.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom sympy.sets.sets import FiniteSet, ProductSet\nfrom sympy.core.relational import Eq\n\n\ndef test_simplify_eq_with_productset_and_finiteset_repro():\n    a = FiniteSet(1, 2)\n    b = ProductSet(a, a)\n    c = FiniteSet((1, 1), (1, 2), (2, 1), (2, 2))\n    assert b.intersection(c) == c.intersection(b)\n    assert b.is_subset(c)\n    assert c.is_subset(b)\n    eq = Eq(b, c)\n    simplified_eq = eq.simplify()\n    assert simplified_eq == True\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(simplified_eq) != 'True\\nTrue\\nTraceback (most recent call last):\\nFile \"/usr/lib/python3.6/code.py\", line 91, in runcode\\nexec(code, self.locals)\\nFile \"<console>\", line 1, in <module>\\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py\", line 1655, in simplify\\nreturn simplify(self, **kwargs)\\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py\", line 559, in simplify\\nreturn _eval_simplify(**kwargs)\\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 646, in _eval_simplify\\ne = super(Equality, self)._eval_simplify(**kwargs)\\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 308, in _eval_simplify\\nelif dif.equals(0):  # XXX this is expensive\\nAttributeError: \\'Complement\\' object has no attribute \\'equals\\'\\n2\\n{1, 2}\\n>>>'"
+      },
+      {
+        "language": "python",
+        "code": ">>> a = FiniteSet(1, 2)\n>>> b = ProductSet(a, a)\n>>> c = FiniteSet((1, 1), (1, 2), (2, 1), (2, 2))\n>>> b.intersection(c) == c.intersection(b)\nTrue\n>>> b.is_subset(c)\n>>> c.is_subset(b)\nTrue\n>>> Eq(b, c).simplify()\nTraceback (most recent call last):\n  File \"/usr/lib/python3.6/code.py\", line 91, in runcode\n    exec(code, self.locals)\n  File \"<console>\", line 1, in <module>\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py\", line 1655, in simplify\n    return simplify(self, **kwargs)\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py\", line 559, in simplify\n    return _eval_simplify(**kwargs)\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 646, in _eval_simplify\n    e = super(Equality, self)._eval_simplify(**kwargs)\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 308, in _eval_simplify\n    elif dif.equals(0):  # XXX this is expensive\nAttributeError: 'Complement' object has no attribute 'equals'\n>>> b.rewrite(FiniteSet)\n      2\n{1, 2} \n>>>"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "True\nTrue\nTraceback (most recent call last):\nFile \"/usr/lib/python3.6/code.py\", line 91, in runcode\nexec(code, self.locals)\nFile \"<console>\", line 1, in <module>\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py\", line 1655, in simplify\nreturn simplify(self, **kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py\", line 559, in simplify\nreturn _eval_simplify(**kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 646, in _eval_simplify\ne = super(Equality, self)._eval_simplify(**kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 308, in _eval_simplify\nelif dif.equals(0):  # XXX this is expensive\nAttributeError: 'Complement' object has no attribute 'equals'\n2\n{1, 2}\n>>>"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "AttributeError: 'Complement' object has no attribute 'equals'"
+    ],
+    "identifiers": {
+      "functions": [
+        "_eval_simplify",
+        "equals",
+        "exec",
+        "intersection",
+        "is_subset",
+        "rewrite",
+        "simplify"
+      ],
+      "classes": [
+        "Complement",
+        "Eq",
+        "Equality",
+        "FiniteSet",
+        "ProductSet"
+      ],
+      "files": [
+        "6/code.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_basic.py",
+      "target_source_file": "sympy/core/basic.py",
+      "test_visible_functions": [
+        "_eval_simplify",
+        "equals",
+        "exec",
+        "intersection",
+        "is_subset",
+        "simplify"
+      ],
+      "test_visible_classes": [
+        "Complement",
+        "Eq",
+        "Equality",
+        "FiniteSet",
+        "ProductSet"
+      ]
+    }
+  }
+]

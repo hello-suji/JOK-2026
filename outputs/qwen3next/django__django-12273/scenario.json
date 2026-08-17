@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "create",
+      "related_classes": [
+        "AutoField",
+        "BooleanField",
+        "SaveTestCase",
+        "Model",
+        "Item"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where create can be called.",
+      "Use the generated reproduction path that calls assertTrue, create, save, setUp."
+    ],
+    "execution_stimulus": [
+      "Call create with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: assertTrue, create, save, setUp."
+    ],
+    "expected_failure": "In the attached example code setting the primary key to None does not work (so that the existing object is overwritten on save()).",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/contrib/sessions/backends/base.py",
+      "django/db/models/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/forms_tests/field_tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.db.models import Model, BooleanField, AutoField\n\nclass SaveTestCase(TestCase):\n    def setUp(self):\n        class Item(Model):\n            id = AutoField(primary_key=True)\n            is_active = BooleanField(default=True)\n        self.Item = Item\n        self.item = self.Item.objects.create(is_active=True)\n\n    def test_f_true_repro(self):\n        self.item.is_active = False\n        self.item.save()\n        self.item.refresh_from_db()\n        self.assertTrue(not self.item.is_active)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create",
+        "reset",
+        "save",
+        "setUp",
+        "refresh_from_db"
+      ],
+      "classes": [
+        "AutoField",
+        "BooleanField",
+        "SaveTestCase",
+        "UUIDField",
+        "Model",
+        "Item"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "assertTrue",
+        "create",
+        "save",
+        "setUp",
+        "refresh_from_db"
+      ],
+      "test_visible_classes": [
+        "AutoField",
+        "BooleanField",
+        "SaveTestCase",
+        "Model",
+        "Item"
+      ]
+    }
+  }
+]

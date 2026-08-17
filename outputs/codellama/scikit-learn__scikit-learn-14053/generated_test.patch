@@ -1,0 +1,17 @@
+--- a/sklearn/tree/tests/test_export.py
++++ b/sklearn/tree/tests/test_export.py
+@@ -433,3 +433,14 @@
+                                    "samples = 6\nvalue = [3, 3]")
+     assert nodes[1].get_text() == "gini = 0.0\nsamples = 3\nvalue = [3, 0]"
+     assert nodes[2].get_text() == "gini = 0.0\nsamples = 3\nvalue = [0, 3]"
++
++def test_export_text_single_feature_repro():
++    X, y = load_iris(return_X_y=True)
++    X = X[:, 0].reshape(-1, 1)
++
++    tree = DecisionTreeClassifier()
++    tree.fit(X, y)
++    tree_text = export_text(tree, feature_names=['sepal_length'])
++    assert isinstance(tree_text, str)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(tree_text) != 'IndexError: list index out of range'

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-16263",
+    "model_patch": "--- a/tests/template_backends/test_django.py\n+++ b/tests/template_backends/test_django.py\n@@ -207,3 +207,14 @@\n         )\n         template = engine.get_template(\"hello.html\")\n         self.assertEqual(template.render({\"name\": \"Joe\"}), \"Hello Joe!\\n\")\n+\n+from django.db.models import Count\n+from myapp.models import Book, Chapter\n+\n+class TestQueryOptimization(TemplateStringsTests):\n+    def test_count_without_unused_annotation_repro(self):\n+        Book.objects.create(title='Book1')\n+        Chapter.objects.create(book_id=1)\n+        query_with_annotation = Book.objects.annotate(chapter_count=Count('chapters'))\n+        count_with_annotation = query_with_annotation.count()\n+        self.assertEqual(count_with_annotation, Book.objects.count())\n",
+    "patch_sha256": "483fecda55baa6c89a21fa50ea3a9e04f2f38f129e68b9be5ea010beb1891277"
+  }
+]

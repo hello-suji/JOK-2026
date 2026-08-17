@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-23262",
+    "model_patch": "--- a/sympy/utilities/tests/test_lambdify.py\n+++ b/sympy/utilities/tests/test_lambdify.py\n@@ -1570,3 +1570,10 @@\n def test_deprecated_set_gate():\n     with warns_deprecated_sympy():\n         lambdify({x, y}, x + y)\n+\n+def test_lambdify_tuple_return_repro():\n+    import inspect\n+    from sympy import lambdify\n+\n+    source = inspect.getsource(lambdify([], tuple([1])))\n+    assert source == 'def _lambdifygenerated():\\n    return (1,)\\n'\n",
+    "patch_sha256": "c8768ad3efbc8526e623c3051af7285ca00da83bf23971fd2ae7b7deab5379c5"
+  }
+]

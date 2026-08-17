@@ -1,0 +1,32 @@
+{
+  "instance_id": "sympy__sympy-15809",
+  "observed_behavior": [
+    "Right now `Min()` and `Max()` with no arguments raise `ValueError: The Max/Min functions must have arguments.`. It might be mathematically more convenient to have them return `oo` and `-oo`, respectively. See https://en.wikipedia.org/wiki/Empty_set#Extended_real_numbers for why these are valid answers mathematically."
+  ],
+  "expected_behavior": [
+    "Right now `Min()` and `Max()` with no arguments raise `ValueError: The Max/Min functions must have arguments.`. It might be mathematically more convenient to have them return `oo` and `-oo`, respectively. See https://en.wikipedia.org/wiki/Empty_set#Extended_real_numbers for why these are valid answers mathematically."
+  ],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "Empty_set",
+      "Extended_real_numbers",
+      "Max",
+      "Min"
+    ],
+    "files": [],
+    "exceptions": [
+      "ValueError"
+    ]
+  },
+  "raw_issue_text": "Zero-argument Min() and Max()\nRight now `Min()` and `Max()` with no arguments raise `ValueError: The Max/Min functions must have arguments.`. It might be mathematically more convenient to have them return `oo` and `-oo`, respectively. See https://en.wikipedia.org/wiki/Empty_set#Extended_real_numbers for why these are valid answers mathematically.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [
+    "ValueError"
+  ],
+  "fault_locations": []
+}

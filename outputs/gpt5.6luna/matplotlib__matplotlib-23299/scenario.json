@@ -1,0 +1,291 @@
+[
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "lib/matplotlib/_pylab_helpers.py",
+      "target_function": "plt",
+      "related_classes": [
+        "Gcf"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import matplotlib.pyplot and matplotlib.get_backend",
+      "Create a figure within an rc_context",
+      "Use the generated reproduction path that calls plt, figure, destroy_fig, get_fig.",
+      "Use the generated reproduction path that calls destroy_fig, figure, ion, plt."
+    ],
+    "execution_stimulus": [
+      "Call get_backend()",
+      "Execute the focused target API path: plt, figure, destroy_fig, get_fig.",
+      "Execute the focused target API path: destroy_fig, figure, ion, plt."
+    ],
+    "expected_failure": "The figure should be removed from Gcf.figs, causing an AssertionError when comparing before and after states",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/_pylab_helpers.py",
+      "lib/matplotlib/__init__.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_get_backend_clears_figures():\n    import matplotlib.pyplot as plt\n    from matplotlib import get_backend, rc_context\n    with rc_context():\n        fig2 = plt.figure()\n    before = f'{id(plt._pylab_helpers.Gcf)} {plt._pylab_helpers.Gcf.figs!r}'\n    get_backend()\n    after = f'{id(plt._pylab_helpers.Gcf)} {plt._pylab_helpers.Gcf.figs!r}'\n    assert before == after, '\\n' + before + '\\n' + after"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib._pylab_helpers import Gcf\n\ndef test_destroy_fig_clears_gcf_repro():\n    fig = plt.figure()\n    fig_number = fig.number\n    Gcf.destroy_fig(fig)\n    assert Gcf.get_fig(fig_number) is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(fig) != 'AssertionError:'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AssertionError:"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "get_backend",
+        "rc_context",
+        "plt",
+        "figure",
+        "destroy_fig",
+        "get_fig",
+        "ion"
+      ],
+      "classes": [
+        "Gcf"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/_pylab_helpers.py",
+      "test_visible_functions": [
+        "destroy_fig",
+        "figure",
+        "ion",
+        "plt",
+        "get_fig"
+      ],
+      "test_visible_classes": [
+        "Gcf"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "lib/matplotlib/_pylab_helpers.py",
+      "target_function": "destroy_fig",
+      "related_classes": [
+        "Gcf"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import matplotlib.pyplot and matplotlib.get_backend",
+      "Create a figure within an rc_context",
+      "Use the generated reproduction path that calls plt, figure, destroy_fig, get_fig.",
+      "Use the generated reproduction path that calls destroy_fig, figure, ion, plt."
+    ],
+    "execution_stimulus": [
+      "Call get_backend()",
+      "Execute the focused target API path: plt, figure, destroy_fig, get_fig.",
+      "Execute the focused target API path: destroy_fig, figure, ion, plt."
+    ],
+    "expected_failure": "The figure should be removed from Gcf.figs, leading to an incorrect state where Gcf.figs is empty after the call",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/_pylab_helpers.py",
+      "lib/matplotlib/__init__.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_destroy_fig_after_get_backend():\n    import matplotlib.pyplot as plt\n    from matplotlib import get_backend, rc_context\n    with rc_context():\n        fig2 = plt.figure()\n    get_backend()\n    assert len(plt._pylab_helpers.Gcf.figs) > 0, 'Figures should not be cleared'"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib._pylab_helpers import Gcf\n\ndef test_destroy_fig_clears_gcf_repro():\n    fig = plt.figure()\n    fig_number = fig.number\n    Gcf.destroy_fig(fig)\n    assert Gcf.get_fig(fig_number) is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(fig) != 'AssertionError:'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AssertionError:"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "get_backend",
+        "destroy_fig",
+        "plt",
+        "figure",
+        "get_fig",
+        "ion"
+      ],
+      "classes": [
+        "Gcf"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/_pylab_helpers.py",
+      "test_visible_functions": [
+        "destroy_fig",
+        "figure",
+        "ion",
+        "plt",
+        "get_fig"
+      ],
+      "test_visible_classes": [
+        "Gcf"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "lib/matplotlib/_pylab_helpers.py",
+      "target_function": "figure",
+      "related_classes": [
+        "Gcf"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import matplotlib.pyplot and matplotlib.get_backend",
+      "Create a figure within an rc_context",
+      "Use the generated reproduction path that calls plt, figure, destroy_fig, get_fig.",
+      "Use the generated reproduction path that calls destroy_fig, figure, ion, plt."
+    ],
+    "execution_stimulus": [
+      "Call get_backend()",
+      "Execute the focused target API path: plt, figure, destroy_fig, get_fig.",
+      "Execute the focused target API path: destroy_fig, figure, ion, plt."
+    ],
+    "expected_failure": "The figure should be removed from Gcf.figs, causing an assertion failure when checking the presence of the figure",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/_pylab_helpers.py",
+      "lib/matplotlib/__init__.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_figure_creation_and_get_backend():\n    import matplotlib.pyplot as plt\n    from matplotlib import get_backend, rc_context\n    with rc_context():\n        fig2 = plt.figure()\n    fig_id = id(fig2)\n    get_backend()\n    assert fig_id in [id(fig) for fig in plt._pylab_helpers.Gcf.figs.values()], 'Figure should not be cleared'"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib._pylab_helpers import Gcf\n\ndef test_destroy_fig_clears_gcf_repro():\n    fig = plt.figure()\n    fig_number = fig.number\n    Gcf.destroy_fig(fig)\n    assert Gcf.get_fig(fig_number) is None\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(fig) != 'AssertionError:'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AssertionError:"
+    ],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "figure",
+        "get_backend",
+        "plt",
+        "destroy_fig",
+        "get_fig",
+        "ion"
+      ],
+      "classes": [
+        "Gcf"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/_pylab_helpers.py",
+      "test_visible_functions": [
+        "destroy_fig",
+        "figure",
+        "ion",
+        "plt",
+        "get_fig"
+      ],
+      "test_visible_classes": [
+        "Gcf"
+      ]
+    }
+  }
+]

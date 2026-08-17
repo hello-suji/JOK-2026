@@ -1,0 +1,99 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.67,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function 'database_forwards' NOT found in source_file — may be hallucinated",
+        "target_function 'database_forwards' not in AST top_level_functions for django/db/models/fields/__init__.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/db/models/fields/__init__.py",
+          "target_function": "database_forwards",
+          "related_classes": [
+            "AddConstraint",
+            "AutoField",
+            "BooleanField"
+          ],
+          "candidate_test_file": "tests/check_framework/test_model_field_deprecation.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where database_forwards can be called."
+        ],
+        "execution_stimulus": [
+          "Call database_forwards with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "Including the fully qualified field name fails the migration because when we drop the old table and swap the name of the staging table in place, the constraint fails with a malformed schema exception (on sqlite) saying that the field doesn’t exist on the table. It appears that this has to do with the AND clause items using Col while the OR clause uses SimpleCol. Here is an example of this behavior:",
+        "relevant_source_files": [
+          "django/db/models/fields/__init__.py",
+          "django/db/migrations/operations/models.py",
+          "django/forms/fields.py"
+        ],
+        "relevant_test_files": [
+          "tests/check_framework/test_model_field_deprecation.py",
+          "tests/invalid_models_tests/test_custom_fields.py",
+          "tests/invalid_models_tests/test_deprecated_fields.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "name"
+          ],
+          "classes": [
+            "AddConstraint",
+            "AutoField",
+            "BooleanField",
+            "CheckConstraint",
+            "CreateModel",
+            "IntegerField",
+            "SQLite",
+            "SimpleCol",
+            "TestConstraint"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

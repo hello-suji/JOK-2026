@@ -1,0 +1,14 @@
+--- a/tests/migrations/test_state.py
++++ b/tests/migrations/test_state.py
+@@ -1513,3 +1513,11 @@
+         self.assertRelated(P, [M, Q, Z])
+         self.assertRelated(Q, [M, P, Z])
+         self.assertRelated(Z, [M, P, Q])
++
++from django.db.migrations.state import ProjectState
++from django.test import TestCase
++
++class TestProjectStateInitialization(TestCase):
++    def test_projectstate_init_with_set_repro(self):
++        project_state = ProjectState(real_apps={'app1', 'app2'})
++        self.assertEqual(project_state.real_apps, {'app1', 'app2'})

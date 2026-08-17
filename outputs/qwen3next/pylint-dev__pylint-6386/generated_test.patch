@@ -1,0 +1,13 @@
+--- a/tests/checkers/unittest_similar.py
++++ b/tests/checkers/unittest_similar.py
+@@ -490,3 +490,10 @@
+         similar.Run(["--duplicates=0", SIMILAR1, SIMILAR2])
+     assert ex.value.code == 0
+     assert output.getvalue() == ""
++
++def test_verbose_short_option_requires_argument_repro() -> None:
++    output = StringIO()
++    with redirect_stdout(output), pytest.raises(SystemExit) as ex:
++        similar.Run(['-v', 'mytest.py'])
++    assert ex.value.code != 0
++    assert 'argument --verbose/-v: expected one argument' in output.getvalue()

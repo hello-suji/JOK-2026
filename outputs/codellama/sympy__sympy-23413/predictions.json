@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-23413",
+    "model_patch": "--- a/sympy/matrices/expressions/tests/test_blockmatrix.py\n+++ b/sympy/matrices/expressions/tests/test_blockmatrix.py\n@@ -430,3 +430,10 @@\n                       [  O,  O,  I,  O ],\n                       [  -I,  O,  O,  I ]])\n     assert Ainv == AinvT\n+\n+from sympy import Matrix\n+\n+def test_hnf_row_removal_bug_repro():\n+    matrix = Matrix([[5, 8, 12], [0, 0, 1]])\n+    result = matrix.T.hermite_normal_form().T\n+    assert result.tolist() == [[1, 0, 0], [0, 1, 0]]\n",
+    "patch_sha256": "47793baa31b86e0d60a0ce6ee9656c5bd49e605d5eb99d35a3cf370c30538f2e"
+  }
+]

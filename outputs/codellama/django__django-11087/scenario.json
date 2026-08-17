@@ -1,0 +1,126 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/mysql/base.py",
+      "target_function": "connection",
+      "related_classes": [
+        "MySQL",
+        "MySQLdb",
+        "PyMySQL"
+      ],
+      "candidate_test_file": "tests/backends/base/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where <module> can be called.",
+      "Use the generated reproduction path that calls connection, cursor, execute, fetchall.",
+      "Use the generated reproduction path that calls _fetch_row, decode, execute, connection."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: connection, cursor, execute, fetchall.",
+      "Execute the focused target API path: _fetch_row, decode, execute, connection."
+    ],
+    "expected_failure": "We're in the process of upgrading our Django 1.11 installation from Python 2.7 to Python 3.6, however are hitting an unexpected UnicodeDecodeError during a .delete() run by our daily data purging management command.",
+    "relevant_source_files": [
+      "django/db/backends/mysql/base.py",
+      "django/core/management/base.py",
+      "django/contrib/sessions/backends/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/save_delete_hooks/models.py",
+      "tests/backends/base/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db import connection\nfrom django.test import TestCase\n\nclass TestMySQLUnicodeDecodeError(TestCase):\n    def test_fetch_row_with_unicode_error_repro(self):\n        cursor = connection.cursor()\n        try:\n            cursor.execute('SELECT %s', ['invalid\\xeddata'])\n            cursor.fetchall()\n            row = cursor.fetchone()\n            self.assertIsNone(row)\n        finally:\n            cursor.close()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "UnicodeDecodeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_fetch_all",
+        "_fetch_row",
+        "_iterable_class",
+        "_post_get_result",
+        "_query",
+        "collect",
+        "delete",
+        "errorhandler",
+        "execute",
+        "connection",
+        "cursor",
+        "fetchall",
+        "fetchone"
+      ],
+      "classes": [
+        "MySQL",
+        "MySQLdb",
+        "PyMySQL"
+      ],
+      "files": [
+        "6/site-packages/MySQLdb/connections.py",
+        "6/site-packages/MySQLdb/cursors.py",
+        "6/site-packages/django/core/management/__init__.py",
+        "6/site-packages/django/core/management/base.py",
+        "6/site-packages/django/db/backends/mysql/base.py",
+        "6/site-packages/django/db/backends/utils.py",
+        "6/site-packages/django/db/models/deletion.py",
+        "6/site-packages/django/db/models/query.py",
+        "6/site-packages/django/db/models/sql/compiler.py",
+        "6/site-packages/newrelic/api/function_trace.py",
+        "6/site-packages/newrelic/hooks/database_dbapi2.py",
+        "6/site-packages/newrelic/hooks/framework_django.py",
+        "app/treeherder/model/management/commands/cycle_data.py",
+        "app/treeherder/model/models.py",
+        "manage.py",
+        "treeherder/model/management/commands/cycle_data.py",
+        "treeherder/model/models.py"
+      ],
+      "exceptions": [
+        "UnicodeDecodeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/base/test_base.py",
+      "target_source_file": "django/db/backends/mysql/base.py",
+      "test_visible_functions": [
+        "_fetch_row",
+        "decode",
+        "execute",
+        "connection",
+        "cursor",
+        "fetchall",
+        "fetchone"
+      ],
+      "test_visible_classes": [
+        "MySQL"
+      ]
+    }
+  }
+]

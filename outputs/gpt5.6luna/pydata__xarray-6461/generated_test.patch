@@ -1,0 +1,15 @@
+--- a/xarray/tests/test_computation.py
++++ b/xarray/tests/test_computation.py
+@@ -2067,3 +2067,12 @@
+
+     actual = xr.cross(a, b, dim=dim)
+     xr.testing.assert_duckarray_allclose(expected, actual)
++
++def test_apply_ufunc_with_where_does_not_raise_index_error_repro(self) -> None:
++    data = xr.DataArray([1, 2, 3], dims=['x'])
++    condition = xr.DataArray([True, False, True], dims=['x'])
++    result = xr.apply_ufunc(xr.where, condition, data, 0, keep_attrs=True)
++    expected_result = xr.DataArray([1, 0, 3], dims=['x'])
++    assert result.equals(expected_result)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'IndexError: list index out of range'

@@ -1,0 +1,9 @@
+{
+  "instance_id": "django__django-14792",
+  "failure_type": "WEAK_ALIGNMENT",
+  "iterations": 1,
+  "payload": {
+    "instance_id": "django__django-14792",
+    "failure_type": "WEAK_ALIGNMENT"
+  }
+}

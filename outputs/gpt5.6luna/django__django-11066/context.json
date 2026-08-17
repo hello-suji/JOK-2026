@@ -1,0 +1,579 @@
+{
+  "instance_id": "django__django-11066",
+  "repo": "django/django",
+  "base_commit": "4b45b6c8e4d7c9701a332e80d3b1c84209dc36e2",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/contenttypes/management/__init__.py",
+      "score": 46,
+      "matched_identifiers": [
+        "RenameContentType",
+        "__init__",
+        "_rename",
+        "alias",
+        "atomic",
+        "django/contrib/contenttypes/management/__init__.py"
+      ],
+      "reasons": [
+        "function_match:_rename",
+        "class_match:RenameContentType",
+        "explicit_file_path_hint:django/contrib/contenttypes/management/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__init__,_rename,alias,atomic,connection"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "RenameContentType": "class RenameContentType(migrations.RunPython):\n    def __init__(self, app_label, old_model, new_model):\n        self.app_label = app_label\n        self.old_model = old_model\n        self.new_model = new_model\n        super().__init__(self.rename_forward, self.rename_backward)\n\n    def _rename(self, apps, schema_editor, old_model, new_model):\n        ContentType = apps.get_model('contenttypes', 'ContentType')\n        db = schema_editor.connection.alias\n        if not router.allow_migrate_model(db, ContentType):\n            return\n\n        try:\n            content_type = ContentType.objects.db_manager(db).get_by_natural_key(self.app_label, old_model)",
+        "__init__": "    def __init__(self, app_label, old_model, new_model):\n        self.app_label = app_label\n        self.old_model = old_model\n        self.new_model = new_model\n        super().__init__(self.rename_forward, self.rename_backward)\n\n    def _rename(self, apps, schema_editor, old_model, new_model):\n        ContentType = apps.get_model('contenttypes', 'ContentType')\n        db = schema_editor.connection.alias\n        if not router.allow_migrate_model(db, ContentType):\n            return\n\n        try:\n            content_type = ContentType.objects.db_manager(db).get_by_natural_key(self.app_label, old_model)\n        except ContentType.DoesNotExist:",
+        "_rename": "    def _rename(self, apps, schema_editor, old_model, new_model):\n        ContentType = apps.get_model('contenttypes', 'ContentType')\n        db = schema_editor.connection.alias\n        if not router.allow_migrate_model(db, ContentType):\n            return\n\n        try:\n            content_type = ContentType.objects.db_manager(db).get_by_natural_key(self.app_label, old_model)\n        except ContentType.DoesNotExist:\n            pass\n        else:\n            content_type.model = new_model\n            try:\n                with transaction.atomic(using=db):\n                    content_type.save(update_fields={'model'})"
+      },
+      "top_level_functions": [
+        "RenameContentType.rename_forward",
+        "RenameContentType.rename_backward",
+        "inject_rename_contenttypes_operations",
+        "get_contenttypes_and_models",
+        "create_contenttypes"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/migrate.py",
+      "score": 37,
+      "matched_identifiers": [
+        "actual",
+        "actually",
+        "alias",
+        "migrate.py",
+        "real"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:migrate.py",
+        "stem_in_issue_text:migrate",
+        "source_content_tokens:real,actual,actually,alias,argument"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle",
+        "Command.migration_progress_callback",
+        "Command.sync_apps",
+        "Command.describe_operation"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "accept",
+        "argument",
+        "backend",
+        "configured",
+        "django/contrib/contenttypes/management/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/contrib/contenttypes/management/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:accept,argument,backend,configured,contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "load_backend",
+        "get_backends",
+        "authenticate",
+        "login",
+        "logout",
+        "get_user_model",
+        "get_user",
+        "get_permission_codename",
+        "update_session_auth_hash"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/management/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "alias",
+        "content",
+        "content_type",
+        "contenttypes",
+        "django/contrib/contenttypes/management/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/contrib/contenttypes/management/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:alias,content,content_type,contenttypes,contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "create_permissions",
+        "get_system_username",
+        "get_default_username"
+      ]
+    },
+    {
+      "path": "django/db/models/fields/__init__.py",
+      "score": 27,
+      "matched_identifiers": [
+        "__init__",
+        "accept",
+        "actual",
+        "alias",
+        "django/contrib/contenttypes/management/__init__.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/contrib/contenttypes/management/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__init__,accept,actual,alias,argument"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, verbose_name=None, **kwargs):\n        kwargs['max_length'] = 32\n        super().__init__(verbose_name, **kwargs)\n\n    def deconstruct(self):\n        name, path, args, kwargs = super().deconstruct()\n        del kwargs['max_length']\n        return name, path, args, kwargs\n\n    def get_internal_type(self):\n        return \"UUIDField\"\n\n    def get_prep_value(self, value):\n        value = super().get_prep_value(value)\n        return self.to_python(value)"
+      },
+      "top_level_functions": [
+        "return_None",
+        "Field.check",
+        "Field.get_col",
+        "Field.cached_col",
+        "Field.select_format",
+        "Field.deconstruct",
+        "Field.clone",
+        "Field.get_pk_value_on_save",
+        "Field.to_python",
+        "Field.validators",
+        "Field.run_validators",
+        "Field.validate",
+        "Field.clean",
+        "Field.db_type_parameters",
+        "Field.db_check",
+        "Field.db_type",
+        "Field.rel_db_type",
+        "Field.cast_db_type",
+        "Field.db_parameters",
+        "Field.db_type_suffix",
+        "Field.get_db_converters",
+        "Field.unique",
+        "Field.db_tablespace",
+        "Field.set_attributes_from_name",
+        "Field.contribute_to_class",
+        "Field.get_filter_kwargs_for_object",
+        "Field.get_attname",
+        "Field.get_attname_column",
+        "Field.get_internal_type",
+        "Field.pre_save",
+        "Field.get_prep_value",
+        "Field.get_db_prep_value",
+        "Field.get_db_prep_save",
+        "Field.has_default",
+        "Field.get_default",
+        "Field.get_choices",
+        "Field.value_to_string",
+        "Field.save_form_data",
+        "Field.formfield",
+        "Field.value_from_object"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/contenttypes_tests/operations_migrations/0002_rename_foo.py",
+      "score": 17,
+      "matched_identifiers": [
+        "RenameContentType",
+        "RenameModel",
+        "_rename"
+      ],
+      "reasons": [
+        "test_path_contains_function:_rename",
+        "test_path_related_to_class:RenameModel",
+        "test_path_related_to_class:RenameContentType",
+        "token_overlap:content,contenttypes,rename,type",
+        "internal_name_overlap:content",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/__init__.py",
+      "score": 14,
+      "matched_identifiers": [
+        "RenameContentType"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RenameContentType",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:content,contenttypes,init,type",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/operations_migrations/__init__.py",
+      "score": 14,
+      "matched_identifiers": [
+        "RenameContentType"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RenameContentType",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:content,contenttypes,init,type",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/i18n/contenttypes/__init__.py",
+      "score": 14,
+      "matched_identifiers": [
+        "RenameContentType"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RenameContentType",
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:content,contenttypes,init,type",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/save_delete_hooks/models.py",
+      "score": 13,
+      "matched_identifiers": [
+        "RenameModel",
+        "save"
+      ],
+      "reasons": [
+        "test_function_match:save",
+        "test_path_contains_function:save",
+        "test_path_related_to_class:RenameModel",
+        "token_overlap:save",
+        "internal_name_overlap:init",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2548,
+  "indexed_test_file_count": 1720,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.save_delete_hooks.models": [
+      "Person"
+    ],
+    "tests.contenttypes_tests.operations_migrations.0002_rename_foo": [
+      "Migration",
+      "assert_foo_contenttype_not_cached"
+    ],
+    "django.db.transaction": [
+      "Atomic",
+      "TransactionManagementError",
+      "_non_atomic_requests",
+      "atomic",
+      "clean_savepoints",
+      "commit",
+      "get_autocommit",
+      "get_connection",
+      "get_rollback",
+      "mark_for_rollback_on_error",
+      "non_atomic_requests",
+      "on_commit",
+      "rollback",
+      "savepoint",
+      "savepoint_commit",
+      "savepoint_rollback",
+      "set_autocommit",
+      "set_rollback"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "DefaultConnectionProxy",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "Func",
+      "ImageField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.contrib.auth": [
+      "DEFAULT_DB_ALIAS",
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "create_contenttypes",
+      "exceptions",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "global_apps",
+      "load_backend",
+      "login",
+      "logout",
+      "router",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth.management": [
+      "_get_all_permissions",
+      "_get_builtin_permissions",
+      "create_permissions",
+      "get_default_username",
+      "get_system_username"
+    ],
+    "django.contrib.contenttypes.management": [
+      "RenameContentType",
+      "create_contenttypes",
+      "get_contenttypes_and_models",
+      "inject_rename_contenttypes_operations"
+    ],
+    "django.contrib.contenttypes": [
+      "DEFAULT_DB_ALIAS",
+      "IntegrityError",
+      "global_apps",
+      "migrations",
+      "router",
+      "transaction"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.migrate": [
+      "Command"
+    ],
+    "django.db.migrations.operations.models": [
+      "AddConstraint",
+      "AddIndex",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterTogetherOptionOperation",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "IndexOperation",
+      "ModelOperation",
+      "ModelOptionOperation",
+      "RemoveConstraint",
+      "RemoveIndex",
+      "RenameModel",
+      "_check_for_duplicates"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_load_field",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FieldDoesNotExist",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

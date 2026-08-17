@@ -1,0 +1,30 @@
+--- a/tests/checkers/unittest_format.py
++++ b/tests/checkers/unittest_format.py
+@@ -178,3 +178,27 @@
+         assert not myreporter.messages
+     finally:
+         os.remove(file_.name)
++
++import tempfile
++import os
++from pylint import lint
++from pylint.reporters import TextReporter
++from pylint.testutils import CheckerTestCase
++
++class TestIgnorePatterns(CheckerTestCase):
++    def test_ignore_patterns_recursive_mode_repro(self) -> None:
++        """Ensure that Pylint respects the --ignore-patterns setting in recursive mode."""
++        with tempfile.TemporaryDirectory() as temp_dir:
++            # Create .a/foo.py and bar.py
++            os.makedirs(os.path.join(temp_dir, '.a'), exist_ok=True)
++            foo_path = os.path.join(temp_dir, '.a', 'foo.py')
++            bar_path = os.path.join(temp_dir, 'bar.py')
++            with open(foo_path, 'w') as f:
++                f.write('pass\n')
++            with open(bar_path, 'w') as f:
++                f.write('pass\n')
++            # Run pylint with ignore patterns
++            run = lint.Run([temp_dir, '--ignore-patterns=.a/*'], reporter=TextReporter(), exit=False)
++            # Check that only bar.py is checked
++            self.assertIn('bar.py', run.linter.stats['by_module'])
++            self.assertNotIn('.a/foo.py', run.linter.stats['by_module'])

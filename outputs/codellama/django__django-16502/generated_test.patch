@@ -1,0 +1,14 @@
+--- a/tests/servers/test_basehttp.py
++++ b/tests/servers/test_basehttp.py
+@@ -134,3 +134,11 @@
+                         self.assertEqual(cm.records[0].getMessage(), msg)
+                 finally:
+                     server.server_close()
++
++from django.test import TestCase, SimpleTestCase
++class TestHeadRequestResponse(SimpleTestCase):
++    def test_head_request_has_no_body_repro(self):
++        factory = RequestFactory()
++        request = factory.head('/some-url/')
++        response = self.client.head('/some-url/')
++        self.assertEqual(response.content, b'')

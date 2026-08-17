@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "models",
+      "related_classes": [
+        "AutoField",
+        "CharField",
+        "CreateModel",
+        "ModelState",
+        "MigrationWriter"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls models, from_model, as_string, to_model."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: models, from_model, as_string, to_model."
+    ],
+    "expected_failure": "This refers to test1.models.State, instead of to test1.models.Thing.State.",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/db/migrations/operations/models.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_ordinary_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db import models\nfrom django.test import SimpleTestCase\nfrom django.db.migrations.operations.models import CreateModel\nfrom django.db.models.fields import AutoField, CharField\n\n\nclass TestFieldPath(SimpleTestCase):\n    def test_enum_field_in_model_repro(self):\n        operation = CreateModel(\n            name='MyModel',\n            fields=[\n                ('id', AutoField(primary_key=True)),\n                ('name', CharField(max_length=100)),\n            ],\n        )\n\n        from django.db.migrations.state import ModelState\n        from django.db.migrations.writer import MigrationWriter\n\n        model_state = ModelState.from_model(operation.to_model('app_label'))\n        writer = MigrationWriter(model_state)\n        output = writer.as_string()\n\n        self.assertIn('AutoField', output)\n        self.assertIn('CharField', output)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "models",
+        "from_model",
+        "as_string",
+        "to_model"
+      ],
+      "classes": [
+        "AutoField",
+        "CharField",
+        "CreateModel",
+        "EnumField",
+        "ModelState",
+        "MigrationWriter"
+      ],
+      "files": [
+        "manage.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "models",
+        "from_model",
+        "as_string",
+        "to_model"
+      ],
+      "test_visible_classes": [
+        "AutoField",
+        "CharField",
+        "CreateModel",
+        "ModelState",
+        "MigrationWriter"
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-22080",
+    "model_patch": "--- a/sympy/utilities/tests/test_lambdify.py\n+++ b/sympy/utilities/tests/test_lambdify.py\n@@ -1496,3 +1496,13 @@\n             f = case.lambdify(cse=cse)\n             result = f(*case.num_args)\n             case.assertAllClose(result)\n+\n+from sympy import Mod, lambdify, symbols\n+\n+def test_Mod_lambdify_bug_repro():\n+    x, y = symbols('x y')\n+    expr = -Mod(x, y)\n+    g = lambdify([x, y], expr, modules=[])\n+    assert g(3, 7) != 4\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(g) != '-3\\ndef _lambdifygenerated(x, y):\\nreturn (-mod(x, y))\\n\\n\\n4\\ndef _lambdifygenerated(x, y):\\nreturn (-x % y)'\n",
+    "patch_sha256": "0d83013c819e38814ab78114767a6f325bda0416b3afbc55b2fed1ed29c42841"
+  }
+]

@@ -1,0 +1,19 @@
+--- a/tests/test_application.py
++++ b/tests/test_application.py
+@@ -150,3 +150,16 @@
+     app.builder.build.assert_called_with(expected,
+                                          method='specific',
+                                          summary='3 source files given on command line')
++
++from sphinx.application import Sphinx
++from sphinx.testing.path import path
++
++def test_setup_connects_events_repro():
++    srcdir = path('/path/to/source')
++    outdir = path('/path/to/output')
++    doctreedir = path('/path/to/doctrees')
++    confdir = srcdir
++    app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername='html')
++    app.connect('source-read', lambda app, docname, source: None)
++    app.setup()
++    assert 'source-read' in app.events.listeners['source-read']

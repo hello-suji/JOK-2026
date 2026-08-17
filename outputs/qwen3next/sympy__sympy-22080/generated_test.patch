@@ -1,0 +1,16 @@
+--- a/sympy/utilities/tests/test_lambdify.py
++++ b/sympy/utilities/tests/test_lambdify.py
+@@ -1496,3 +1496,13 @@
+             f = case.lambdify(cse=cse)
+             result = f(*case.num_args)
+             case.assertAllClose(result)
++
++from sympy import Mod, lambdify, symbols
++
++def test_Mod_lambdify_bug_repro():
++    x, y = symbols('x y')
++    expr = -Mod(x, y)
++    g = lambdify([x, y], expr, modules=[])
++    assert g(3, 7) != 4
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(g) != '-3\ndef _lambdifygenerated(x, y):\nreturn (-mod(x, y))\n\n\n4\ndef _lambdifygenerated(x, y):\nreturn (-x % y)'

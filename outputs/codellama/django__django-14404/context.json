@@ -1,0 +1,366 @@
+{
+  "instance_id": "django__django-14404",
+  "repo": "django/django",
+  "base_commit": "de32fe83a2e4a20887972c69a0693b94eb25a88b",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/sites.py",
+      "score": 19,
+      "matched_identifiers": [
+        "catch",
+        "catch_all_view",
+        "path_info",
+        "redirect"
+      ],
+      "reasons": [
+        "function_match:catch_all_view",
+        "source_content_tokens:catch,catch_all_view,path_info,redirect,request"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "catch_all_view": "    def catch_all_view(self, request, url):\n        if settings.APPEND_SLASH and not url.endswith('/'):\n            urlconf = getattr(request, 'urlconf', None)\n            path = '%s/' % request.path_info\n            try:\n                match = resolve(path, urlconf)\n            except Resolver404:\n                pass\n            else:\n                if getattr(match.func, 'should_append_slash', True):\n                    return HttpResponsePermanentRedirect(path)\n        raise Http404\n\n    def _build_app_dict(self, request, label=None):\n        \"\"\""
+      },
+      "top_level_functions": [
+        "AdminSite.check",
+        "AdminSite.register",
+        "AdminSite.unregister",
+        "AdminSite.is_registered",
+        "AdminSite.add_action",
+        "AdminSite.disable_action",
+        "AdminSite.get_action",
+        "AdminSite.actions",
+        "AdminSite.has_permission",
+        "AdminSite.admin_view",
+        "AdminSite.get_urls",
+        "AdminSite.urls",
+        "AdminSite.each_context",
+        "AdminSite.password_change",
+        "AdminSite.password_change_done",
+        "AdminSite.i18n_javascript",
+        "AdminSite.logout",
+        "AdminSite.login",
+        "AdminSite.autocomplete_view",
+        "AdminSite.catch_all_view",
+        "AdminSite.get_app_list",
+        "AdminSite.index",
+        "AdminSite.app_index"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "catch",
+        "force",
+        "force_script_name",
+        "https"
+      ],
+      "reasons": [
+        "source_content_tokens:catch,force,force_script_name,https,instead"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "description",
+        "instead",
+        "modified",
+        "path_info"
+      ],
+      "reasons": [
+        "source_content_tokens:description,instead,modified,path_info,redirect"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/core/handlers/asgi.py",
+      "score": 16,
+      "matched_identifiers": [
+        "catch",
+        "force",
+        "force_script_name",
+        "instead"
+      ],
+      "reasons": [
+        "source_content_tokens:catch,force,force_script_name,instead,path_info"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ASGIRequest.GET",
+        "ASGIRequest.COOKIES",
+        "ASGIHandler.read_body",
+        "ASGIHandler.create_request",
+        "ASGIHandler.handle_uncaught_exception",
+        "ASGIHandler.send_response",
+        "ASGIHandler.chunk_bytes",
+        "ASGIHandler.get_script_prefix"
+      ]
+    },
+    {
+      "path": "django/core/handlers/wsgi.py",
+      "score": 16,
+      "matched_identifiers": [
+        "force",
+        "force_script_name",
+        "https",
+        "instead"
+      ],
+      "reasons": [
+        "source_content_tokens:force,force_script_name,https,instead,patch"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "LimitedStream.read",
+        "LimitedStream.readline",
+        "WSGIRequest.GET",
+        "WSGIRequest.COOKIES",
+        "WSGIRequest.FILES",
+        "get_path_info",
+        "get_script_name",
+        "get_bytes_from_wsgi",
+        "get_str_from_wsgi"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_default_site/sites.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:sites",
+        "token_overlap:sites",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/wsgi/wsgi.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:wsgi",
+        "token_overlap:wsgi",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/handlers/views.py",
+      "score": 3,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:handlers,view",
+        "internal_name_overlap:view",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_docs/test_views.py",
+      "score": 2,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:view",
+        "internal_name_overlap:view",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_docs/test_views.py:unittest_or_django_test_import",
+      "tests/admin_docs/test_views.py:testcase_class:TestFieldType",
+      "tests/admin_docs/test_views.py:testcase_class:TestModelDetailView",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2691,
+  "indexed_test_file_count": 1829,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.admin_docs.test_views": [
+      "AdminDocViewFunctionsTests",
+      "AdminDocViewTests",
+      "AdminDocViewWithMultipleEngines",
+      "CustomField",
+      "DescriptionLackingField",
+      "TestFieldType",
+      "TestModelDetailView"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.admin_default_site.sites": [
+      "CustomAdminSite"
+    ],
+    "tests.handlers.views": [
+      "CoroutineClearingView",
+      "NoResponse",
+      "async_regular",
+      "bad_request",
+      "httpstatus_enum",
+      "in_transaction",
+      "malformed_post",
+      "no_response",
+      "not_in_transaction",
+      "regular",
+      "streaming",
+      "suspicious"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.sites": [
+      "AdminSite",
+      "AlreadyRegistered",
+      "DefaultAdminSite",
+      "NotRegistered"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.core.handlers.asgi": [
+      "ASGIHandler",
+      "ASGIRequest"
+    ],
+    "django.core.handlers.wsgi": [
+      "LimitedStream",
+      "WSGIHandler",
+      "WSGIRequest",
+      "get_bytes_from_wsgi",
+      "get_path_info",
+      "get_script_name",
+      "get_str_from_wsgi"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

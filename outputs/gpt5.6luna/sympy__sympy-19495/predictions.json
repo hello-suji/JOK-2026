@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-19495",
+    "model_patch": "--- a/sympy/sets/tests/test_sets.py\n+++ b/sympy/sets/tests/test_sets.py\n@@ -1581,3 +1581,13 @@\n     assert len(DisjointUnion(FiniteSet(3, 5, 7, 9), FiniteSet(x, y, z))) == 7\n     assert len(DisjointUnion(S.EmptySet, S.EmptySet, FiniteSet(x, y, z), S.EmptySet)) == 3\n     raises(ValueError, lambda: len(DisjointUnion(Interval(0, 1), S.EmptySet)))\n+\n+from sympy import Symbol, Rational, pi, asin, imageset, S, ConditionSet, Contains, Interval\n+\n+def test_imageset_subs_conditionset_repro():\n+    y, n = Symbol('y'), Symbol('n')\n+    img_set = imageset(Lambda(n, 2*n*pi + asin(y)), S.Integers)\n+    cond_set = ConditionSet(Symbol('x'), Contains(y, Interval(-1, 1)), img_set)\n+    substituted_set = cond_set.subs(y, Rational(1, 3))\n+    expected_set = ConditionSet(Symbol('x'), Contains(Rational(1, 3), Interval(-1, 1)), imageset(Lambda(n, 2*n*pi + asin(Rational(1, 3))), S.Integers))\n+    assert substituted_set == expected_set\n",
+    "patch_sha256": "a07456a788e0c71bbf787c90809f37057de2c463b0ff7fedc694eaf85fc2af6a"
+  }
+]

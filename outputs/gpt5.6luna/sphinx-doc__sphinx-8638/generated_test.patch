@@ -1,0 +1,25 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -453,3 +453,22 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++class TestVariableLinking(unittest.TestCase):
++    def test_variable_linking_repro(self):
++        """Ensure that instance variables do not incorrectly link to each other."""
++        from sphinx.application import Sphinx
++
++        srcdir = 'tests/roots/test-ext-autodoc/target'
++        confdir = srcdir
++        outdir = '_build/html'
++        doctreedir = '_build/doctrees'
++
++        app = Sphinx(srcdir, confdir, outdir, doctreedir, 'html')
++        app.build()
++
++        bar_instance_vars = app.env.domains['py'].data['objects']['bar']
++        foo_instance_vars = app.env.domains['py'].data['objects']['foo']
++
++        self.assertNotEqual(bar_instance_vars, foo_instance_vars)

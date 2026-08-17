@@ -1,0 +1,13 @@
+--- a/xarray/tests/test_weighted.py
++++ b/xarray/tests/test_weighted.py
+@@ -309,3 +309,10 @@
+     result = getattr(data.weighted(weights), operation)(keep_attrs=True)
+
+     assert data.a.attrs == result.a.attrs
++
++def test_weighted_mean_with_boolean_weights_repro():
++    dta = xr.DataArray([1., 1., 1.])
++    wgt = xr.DataArray(np.array([1, 1, 0], dtype=np.bool))
++
++    result = dta.weighted(wgt).mean()
++    assert result == 1.0

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-24443",
+    "model_patch": "--- a/sympy/combinatorics/tests/test_homomorphisms.py\n+++ b/sympy/combinatorics/tests/test_homomorphisms.py\n@@ -107,3 +107,10 @@\n     b = Permutation(1,3)\n     G = PermutationGroup([a, b])\n     raises(ValueError, lambda: homomorphism(G, G, [a], [a]))\n+\n+def test_homomorphism_inverted_generator_repro():\n+    D3 = DihedralGroup(3)\n+    T = homomorphism(D3, D3, D3.generators, D3.generators)\n+    assert T.is_identity\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(T) != 'ValueError: The given images do not define a homomorphism'\n",
+    "patch_sha256": "3f1f874e59c963cc6100bad00083f64d7faa2c6a3411f1e9e3e0ea63e3785030"
+  }
+]

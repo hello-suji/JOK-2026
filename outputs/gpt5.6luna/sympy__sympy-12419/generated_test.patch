@@ -1,0 +1,24 @@
+--- a/sympy/assumptions/tests/test_refine.py
++++ b/sympy/assumptions/tests/test_refine.py
+@@ -161,3 +161,21 @@
+
+     mock_obj = MockExpr()
+     assert refine(mock_obj)
++
++from sympy import Symbol, MatrixSymbol, assuming, Q, refine, Sum, symbols
++
++
++def test_sum_of_identity_matrix_elements_repro():
++    n = Symbol('n', integer=True, positive=True)
++    i, j = symbols('i j', integer=True)
++    M = MatrixSymbol('M', n, n)
++
++    e = None
++    with assuming(Q.orthogonal(M)):
++        e = refine((M.T * M).doit())
++
++    # Calculate the sum of all elements in the matrix
++    total_sum = Sum(Sum(e[i, j], (j, 0, n-1)), (i, 0, n-1)).doit()
++
++    # Expected sum of elements in an n x n identity matrix is n
++    assert total_sum == n

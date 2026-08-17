@@ -1,0 +1,98 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.76,
+      "decision": "accept",
+      "reasons": [
+        "missing required fields",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name contains target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "doc/development/tutorials/examples/todo.py",
+          "target_function": "",
+          "related_classes": [
+            "MyClass1",
+            "MyClass2"
+          ],
+          "candidate_test_file": "tests/test_ext_intersphinx.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Reproduce the input conditions described in the issue."
+        ],
+        "execution_stimulus": [
+          "Execute the reproduction code from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "This issue does not happen in the default (png?) mode.",
+        "relevant_source_files": [
+          "doc/development/tutorials/examples/todo.py",
+          "sphinx/builders/text.py",
+          "sphinx/cmd/build.py"
+        ],
+        "relevant_test_files": [
+          "tests/test_ext_intersphinx.py",
+          "tests/test_build_text.py",
+          "tests/roots/test-domain-c-intersphinx/conf.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "http://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_1.html\nhttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_2.html"
+          },
+          {
+            "language": "python",
+            "code": "http://localhost:63342/sphix_svg_bug/docs_build/index.html\n\tthis is correct\n\t../my_package/my_class_1.html#my_package.MyClass1\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_1.html#my_package.MyClass1\n\t../my_package/my_class_2.html#my_package.MyClass2\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_package/my_class_2.html#my_package.MyClass2"
+          },
+          {
+            "language": "python",
+            "code": "http://localhost:63342/sphix_svg_bug/docs_build/my_package/index.html\n\tthis is incorrect\n\t../my_class_1.html#my_package.MyClass1\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_class_1.html#my_package.MyClass1\n\t../my_class_2.html#my_package.MyClass2\n\t\thttp://localhost:63342/sphix_svg_bug/docs_build/my_class_2.html#my_package.MyClass2"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [],
+          "classes": [
+            "MyClass1",
+            "MyClass2"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

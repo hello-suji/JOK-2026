@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "NumpyDocstring"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls unittest."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest."
+    ],
+    "expected_failure": "Render error when combining multiple input parameters in docstring",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/ext/doctest.py",
+      "sphinx/ext/extlinks.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nfrom sphinx.ext.napoleon import NumpyDocstring\n\nclass TestNumpyDocstringParameters(unittest.TestCase):\n    def test_multiple_parameters_same_line_repro(self):\n        docstring = \"\"\"\n        Parameters\n        ----------\n        x1, x2 : array_like\n            Input arrays, description of `x1`, `x2`.\n        \"\"\"\n        parsed_docstring = NumpyDocstring(docstring)\n        parameters = parsed_docstring['Parameters']\n        self.assertEqual(len(parameters), 1)\n        self.assertIn('x1, x2', parameters)\n        self.assertEqual(parameters['x1, x2'][0]['type'], 'array_like')\n        self.assertEqual(parameters['x1, x2'][0]['description'], 'Input arrays, description of `x1`, `x2`.')\n"
+      },
+      {
+        "language": "python",
+        "code": "x1, x2 : array_like\n    Input arrays, description of `x1`, `x2`."
+      },
+      {
+        "language": "python",
+        "code": "x1, x2 : array_like, optional\n    Input arrays, description of `x1`, `x2`."
+      },
+      {
+        "language": "python",
+        "code": "extensions = [\n    \"sphinx.ext.autodoc\",\n    \"sphinx.ext.todo\",\n    \"sphinx.ext.coverage\",\n    \"sphinx.ext.extlinks\",\n    \"sphinx.ext.intersphinx\",\n    \"sphinx.ext.mathjax\",\n    \"sphinx.ext.viewcode\",\n    \"sphinx.ext.napoleon\",\n    \"nbsphinx\",\n    \"sphinx.ext.mathjax\",\n    \"sphinxcontrib.bibtex\",\n    \"sphinx.ext.doctest\",\n]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "unittest"
+      ],
+      "classes": [
+        "NumpyDocstring"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest"
+      ],
+      "test_visible_classes": [
+        "NumpyDocstring"
+      ]
+    }
+  }
+]

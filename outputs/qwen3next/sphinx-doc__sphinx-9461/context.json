@@ -1,0 +1,381 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9461",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "939c7bb7ff7c53a4d27df067cea637540f0e1dad",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__name__",
+        "docstring",
+        "document",
+        "name"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:__name__,docstring,document,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/builders/texinfo.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__name__",
+        "document",
+        "extract",
+        "name"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:__name__,document,extract,name"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "TexinfoBuilder.init",
+        "TexinfoBuilder.get_outdated_docs",
+        "TexinfoBuilder.get_target_uri",
+        "TexinfoBuilder.get_relative_uri",
+        "TexinfoBuilder.init_document_data",
+        "TexinfoBuilder.write",
+        "TexinfoBuilder.assemble_doctree",
+        "TexinfoBuilder.finish",
+        "TexinfoBuilder.copy_image_files",
+        "TexinfoBuilder.copy_support_files",
+        "default_texinfo_documents",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__name__",
+        "annotations",
+        "classmethod",
+        "does"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:__name__,annotations,classmethod,does,just"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "convert_highlight_options",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_primary_domain",
+        "check_root_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/transforms/__init__.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__name__",
+        "document",
+        "fine",
+        "name"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:__name__,document,fine,name,property"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SphinxTransform.app",
+        "SphinxTransform.env",
+        "SphinxTransform.config",
+        "SphinxTransformer.set_environment",
+        "SphinxTransformer.apply_transforms",
+        "DefaultSubstitutions.apply",
+        "MoveModuleTargets.apply",
+        "HandleCodeBlocks.apply",
+        "AutoNumbering.apply",
+        "SortIds.apply",
+        "ApplySourceWorkaround.apply",
+        "AutoIndexUpgrader.apply",
+        "ExtraTranslatableNodes.apply",
+        "UnreferencedFootnotesDetector.apply",
+        "DoctestTransform.apply",
+        "FigureAligner.apply",
+        "FilterSystemMessages.apply",
+        "SphinxContentsFilter.visit_image",
+        "SphinxSmartQuotes.apply",
+        "SphinxSmartQuotes.is_available",
+        "SphinxSmartQuotes.get_tokens",
+        "DoctreeReadEvent.apply",
+        "ManpageLink.apply",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/transforms/i18n.py",
+      "score": 18,
+      "matched_identifiers": [
+        "__name__",
+        "behavior",
+        "document",
+        "extract"
+      ],
+      "reasons": [
+        "path_contains_function:f",
+        "source_content_tokens:__name__,behavior,document,extract,following"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "publish_msgstr",
+        "PreserveTranslatableMessages.apply",
+        "Locale.apply",
+        "RemoveTranslatableInline.apply",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "score": 22,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "score": 22,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 22,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "f"
+      ],
+      "reasons": [
+        "test_path_contains_function:f",
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 548,
+  "indexed_test_file_count": 358,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ConfigValue",
+      "ENUM",
+      "check_confval_types",
+      "check_primary_domain",
+      "check_root_doc",
+      "convert_highlight_options",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "BuildEnvironment",
+      "BuildPhase",
+      "CONFIG_CHANGED_REASON",
+      "CONFIG_OK",
+      "CatalogInfo",
+      "CatalogRepository",
+      "Config",
+      "ContentsFilter",
+      "Dict",
+      "Element",
+      "EventManager",
+      "Generator",
+      "ImageAdapter",
+      "Iterable",
+      "List",
+      "Node",
+      "NodeMatcher",
+      "Optional",
+      "PIPE",
+      "ParallelTasks",
+      "RemovedInNextVersionWarning",
+      "RemovedInSphinx60Warning",
+      "SEP",
+      "Sequence",
+      "SerialTasks",
+      "Set",
+      "SmartQuotes",
+      "SphinxError",
+      "TYPE_CHECKING",
+      "Tags",
+      "Text",
+      "Transform",
+      "Transformer",
+      "Tuple",
+      "Type",
+      "Union",
+      "_",
+      "__",
+      "addnodes",
+      "apply_source_workaround",
+      "bold",
+      "directives",
+      "docname_to_domain",
+      "docutils",
+      "ensuredir",
+      "format_date",
+      "import_object",
+      "is_smartquotable",
+      "logging",
+      "make_chunks",
+      "new_document",
+      "nodes",
+      "normalize_language_tag",
+      "parallel_available",
+      "path",
+      "progress_message",
+      "read_doc",
+      "relative_uri",
+      "relpath",
+      "roles",
+      "rst",
+      "smartchars",
+      "sphinx_domains",
+      "status_iterator"
+    ],
+    "sphinx.builders.texinfo": [
+      "TexinfoBuilder",
+      "default_texinfo_documents",
+      "setup"
+    ],
+    "sphinx.builders": [
+      "Builder"
+    ],
+    "sphinx.transforms": [
+      "ApplySourceWorkaround",
+      "AutoIndexUpgrader",
+      "AutoNumbering",
+      "DefaultSubstitutions",
+      "DoctestTransform",
+      "DoctreeReadEvent",
+      "ExtraTranslatableNodes",
+      "FigureAligner",
+      "FilterSystemMessages",
+      "HandleCodeBlocks",
+      "ManpageLink",
+      "MoveModuleTargets",
+      "SortIds",
+      "SphinxContentsFilter",
+      "SphinxSmartQuotes",
+      "SphinxTransform",
+      "SphinxTransformer",
+      "UnreferencedFootnotesDetector",
+      "setup"
+    ],
+    "sphinx.transforms.i18n": [
+      "Locale",
+      "PreserveTranslatableMessages",
+      "RemoveTranslatableInline",
+      "publish_msgstr",
+      "setup"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "instance_id": "sympy__sympy-18189",
+  "observed_behavior": [],
+  "expected_behavior": [],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "diophantine"
+    ],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "diophantine: incomplete results depending on syms order with permute=True\n```\nIn [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}\n```\n\ndiophantine: incomplete results depending on syms order with permute=True\n```\nIn [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}\n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "In [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}",
+      "context_before": "diophantine: incomplete results depending on syms order with permute=True",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "In [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}",
+      "context_before": "diophantine: incomplete results depending on syms order with permute=True",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

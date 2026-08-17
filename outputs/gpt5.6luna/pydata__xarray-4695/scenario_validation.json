@@ -1,0 +1,95 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.91,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "partial class overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:loc",
+        "target_function 'loc' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "xarray/core/dataarray.py",
+          "target_function": "loc",
+          "related_classes": [
+            "DataArray"
+          ],
+          "candidate_test_file": "xarray/tests/test_dataarray.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "Import numpy and xarray",
+          "Create a DataArray D2 with dimensions ['dim1', 'method'] and coordinates {'dim1': ['x', 'y'], 'method': ['a', 'b']}"
+        ],
+        "execution_stimulus": [
+          "Call D2.loc with dict(dim1='x', method='a')"
+        ],
+        "expected_failure": "Raises ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.",
+        "relevant_source_files": [
+          "xarray/core/dataarray.py",
+          "xarray/core/resample.py",
+          "xarray/core/accessor_str.py"
+        ],
+        "relevant_test_files": [
+          "xarray/tests/test_dataarray.py",
+          "xarray/tests/test_dataset.py",
+          "xarray/tests/test_accessor_dt.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_loc_with_method_dimension():\n    import numpy as np\n    from xarray import DataArray\n    empty = np.zeros((2,2))\n    D2 = DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\n    try:\n        D2.loc[dict(dim1='x', method='a')]\n    except ValueError as e:\n        assert str(e) == 'Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest.'"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest."
+        ],
+        "error_keywords": [
+          "ValueError",
+          "Invalid fill method"
+        ],
+        "identifiers": {
+          "functions": [
+            "loc"
+          ],
+          "classes": [
+            "DataArray"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

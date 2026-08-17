@@ -1,0 +1,458 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7757",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "212fd67b9f0b4fae6a7c3501fdf1a9a5b2801329",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "sphinx/cmd/build.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "build",
+        "context",
+        "default"
+      ],
+      "reasons": [
+        "stem_in_issue_text:build",
+        "source_content_tokens:argument,build,context,default,document"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "handle_exception",
+        "jobs_argument",
+        "get_parser",
+        "make_main",
+        "build_main",
+        "main"
+      ]
+    },
+    {
+      "path": "sphinx/domains/python.py",
+      "score": 17,
+      "matched_identifiers": [
+        "additional",
+        "argument",
+        "build",
+        "context"
+      ],
+      "reasons": [
+        "stem_in_issue_text:python",
+        "source_content_tokens:additional,argument,build,context,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "type_to_xref",
+        "PyXrefMixin.make_xref",
+        "PyXrefMixin.make_xrefs",
+        "PyField.make_xref",
+        "PyTypedField.make_xref",
+        "PyObject.get_signature_prefix",
+        "PyObject.needs_arglist",
+        "PyObject.handle_signature",
+        "PyObject.get_index_text",
+        "PyObject.add_target_and_index",
+        "PyObject.before_content",
+        "PyObject.after_content",
+        "PyModulelevel.run",
+        "PyModulelevel.needs_arglist",
+        "PyModulelevel.get_index_text",
+        "PyFunction.get_signature_prefix",
+        "PyFunction.needs_arglist",
+        "PyFunction.add_target_and_index",
+        "PyFunction.get_index_text",
+        "PyDecoratorFunction.run",
+        "PyDecoratorFunction.handle_signature",
+        "PyDecoratorFunction.needs_arglist",
+        "PyVariable.handle_signature",
+        "PyVariable.get_index_text",
+        "PyClasslike.get_signature_prefix",
+        "PyClasslike.get_index_text",
+        "PyClassmember.run",
+        "PyClassmember.needs_arglist",
+        "PyClassmember.get_signature_prefix",
+        "PyClassmember.get_index_text",
+        "PyMethod.needs_arglist",
+        "PyMethod.get_signature_prefix",
+        "PyMethod.get_index_text",
+        "PyClassMethod.run",
+        "PyStaticMethod.run",
+        "PyDecoratorMethod.run",
+        "PyDecoratorMethod.handle_signature",
+        "PyDecoratorMethod.needs_arglist",
+        "PyAttribute.handle_signature",
+        "PyAttribute.get_index_text"
+      ]
+    },
+    {
+      "path": "sphinx/writers/text.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "build",
+        "default",
+        "document"
+      ],
+      "reasons": [
+        "stem_in_issue_text:text",
+        "source_content_tokens:argument,build,default,document,result"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Cell.wrap",
+        "Table.add_row",
+        "Table.set_separator",
+        "Table.add_cell",
+        "Table.cell_width",
+        "Table.cells",
+        "Table.rewrap",
+        "Table.physical_lines_for_line",
+        "my_wrap",
+        "TextWriter.translate",
+        "TextTranslator.add_text",
+        "TextTranslator.new_state",
+        "TextTranslator.end_state",
+        "TextTranslator.visit_document",
+        "TextTranslator.depart_document",
+        "TextTranslator.visit_section",
+        "TextTranslator.depart_section",
+        "TextTranslator.visit_topic",
+        "TextTranslator.depart_topic",
+        "TextTranslator.visit_rubric",
+        "TextTranslator.depart_rubric",
+        "TextTranslator.visit_compound",
+        "TextTranslator.depart_compound",
+        "TextTranslator.visit_glossary",
+        "TextTranslator.depart_glossary",
+        "TextTranslator.visit_title",
+        "TextTranslator.get_section_number_string",
+        "TextTranslator.depart_title",
+        "TextTranslator.visit_subtitle",
+        "TextTranslator.depart_subtitle",
+        "TextTranslator.visit_attribution",
+        "TextTranslator.depart_attribution",
+        "TextTranslator.visit_desc",
+        "TextTranslator.depart_desc",
+        "TextTranslator.visit_desc_signature",
+        "TextTranslator.depart_desc_signature",
+        "TextTranslator.visit_desc_signature_line",
+        "TextTranslator.depart_desc_signature_line",
+        "TextTranslator.visit_desc_name",
+        "TextTranslator.depart_desc_name"
+      ]
+    },
+    {
+      "path": "doc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "additional",
+        "build",
+        "default",
+        "document"
+      ],
+      "reasons": [
+        "source_content_tokens:additional,build,default,document,extensions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/development/tutorials/examples/recipe.py",
+      "score": 16,
+      "matched_identifiers": [
+        "argument",
+        "build",
+        "default",
+        "describe"
+      ],
+      "reasons": [
+        "source_content_tokens:argument,build,default,describe,extra"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "RecipeDirective.handle_signature",
+        "RecipeDirective.add_target_and_index",
+        "IngredientIndex.generate",
+        "RecipeIndex.generate",
+        "RecipeDomain.get_full_qualified_name",
+        "RecipeDomain.get_objects",
+        "RecipeDomain.resolve_xref",
+        "RecipeDomain.add_recipe",
+        "setup"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 23,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_ext_intersphinx.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:sphinx",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "score": 17,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_build_text.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "test_name_matches_source_stem:text",
+        "token_overlap:build,text",
+        "internal_name_overlap:build",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:sphinx/cmd"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_build_gettext.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:build",
+        "token_overlap:build,text",
+        "internal_name_overlap:build",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:sphinx/cmd"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/test_build_text.py:pytest_import_or_conftest",
+      "tests/test_build_text.py:top_level_test_functions",
+      "tests/test_ext_intersphinx.py:pytest_import_or_conftest",
+      "tests/test_ext_intersphinx.py:unittest_or_django_test_import",
+      "tests/test_ext_intersphinx.py:top_level_test_functions",
+      "tests/test_ext_intersphinx.py:testcase_class:TestStripBasicAuth",
+      "tests/test_build_gettext.py:pytest_import_or_conftest",
+      "tests/test_build_gettext.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 501,
+  "indexed_test_file_count": 307,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "tests.test_build_text": [
+      "test_lineblock",
+      "test_list_items_in_admonition",
+      "test_maxwitdh_with_prefix",
+      "test_nonascii_maxwidth",
+      "test_nonascii_table",
+      "test_nonascii_title_line",
+      "test_secnums",
+      "test_table_builder",
+      "test_table_cell",
+      "test_table_separator",
+      "test_table_with_colspan",
+      "test_table_with_colspan_and_rowspan",
+      "test_table_with_colspan_left",
+      "test_table_with_empty_cell",
+      "test_table_with_rowspan",
+      "with_text_app"
+    ],
+    "tests.test_ext_intersphinx": [
+      "TestStripBasicAuth",
+      "fake_node",
+      "reference_check",
+      "test_fetch_inventory_redirection",
+      "test_getsafeurl_authed",
+      "test_getsafeurl_authed_having_port",
+      "test_getsafeurl_unauthed",
+      "test_inspect_main_file",
+      "test_inspect_main_noargs",
+      "test_inspect_main_url",
+      "test_inventory_not_having_version",
+      "test_load_mappings_fallback",
+      "test_load_mappings_warnings",
+      "test_missing_reference",
+      "test_missing_reference_cppdomain",
+      "test_missing_reference_jsdomain",
+      "test_missing_reference_pydomain",
+      "test_missing_reference_stddomain"
+    ],
+    "tests.test_build_gettext": [
+      "test_build_gettext",
+      "test_gettext_disable_index_entries",
+      "test_gettext_index_entries",
+      "test_gettext_template",
+      "test_gettext_template_msgid_order_in_sphinxpot",
+      "test_msgfmt"
+    ],
+    "sphinx": [
+      "Any",
+      "Callable",
+      "Dict",
+      "Element",
+      "Inliner",
+      "Iterable",
+      "List",
+      "NamedTuple",
+      "Node",
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "RoleFunction",
+      "SphinxError",
+      "Tuple",
+      "Union",
+      "XRefRole",
+      "_",
+      "cast",
+      "nodes",
+      "path",
+      "pending_xref",
+      "system_message"
+    ],
+    "sphinx.cmd.build": [
+      "build_main",
+      "get_parser",
+      "handle_exception",
+      "jobs_argument",
+      "main",
+      "make_main"
+    ],
+    "sphinx.writers.text": [
+      "Cell",
+      "Table",
+      "TextTranslator",
+      "TextWrapper",
+      "TextWriter",
+      "my_wrap"
+    ],
+    "sphinx.domains.python": [
+      "PyAttribute",
+      "PyClassMethod",
+      "PyClasslike",
+      "PyClassmember",
+      "PyCurrentModule",
+      "PyDecoratorFunction",
+      "PyDecoratorMethod",
+      "PyDecoratorMixin",
+      "PyField",
+      "PyFunction",
+      "PyGroupedField",
+      "PyMethod",
+      "PyModule",
+      "PyModulelevel",
+      "PyObject",
+      "PyStaticMethod",
+      "PyTypedField",
+      "PyVariable",
+      "PyXRefRole",
+      "PyXrefMixin",
+      "PythonDomain",
+      "PythonModuleIndex",
+      "_parse_annotation",
+      "_parse_arglist",
+      "_pseudo_parse_arglist",
+      "builtin_resolver",
+      "filter_meta_fields",
+      "setup",
+      "type_to_xref"
+    ],
+    "sphinx.domains": [
+      "Domain",
+      "Index",
+      "ObjType"
+    ],
+    "tests.roots.test-ext-autosummary-imported_members.autosummary_dummy_package.autosummary_dummy_module": [
+      "Bar",
+      "foo"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.example.sphinx": [
+      "DummyClass"
+    ],
+    "tests.roots.test-ext-autodoc.target.pep570": [
+      "bar",
+      "baz",
+      "foo",
+      "qux"
+    ],
+    "tests.roots.test-ext-autodoc.target.sort_by_all": [
+      "Bar",
+      "Quux",
+      "baz",
+      "foo",
+      "foobar",
+      "qux"
+    ],
+    "tests.roots.test-ext-autodoc.target.decorator": [
+      "Bar",
+      "deco1",
+      "deco2",
+      "foo"
+    ],
+    "doc.development.tutorials.examples.recipe": [
+      "IngredientIndex",
+      "RecipeDirective",
+      "RecipeDomain",
+      "RecipeIndex",
+      "setup"
+    ]
+  },
+  "test_example_snippet": "class TestStripBasicAuth(unittest.TestCase):\n    \"\"\"Tests for sphinx.ext.intersphinx._strip_basic_auth()\"\"\"\n    def test_auth_stripped(self):\n        \"\"\"basic auth creds stripped from URL containing creds\"\"\"\n        url = 'https://user:12345@domain.com/project/objects.inv'\n        expected = 'https://domain.com/project/objects.inv'\n        actual = _strip_basic_auth(url)\n        self.assertEqual(expected, actual)\n\n    def test_no_auth(self):\n        \"\"\"url unchanged if param doesn't contain basic auth creds\"\"\"\n        url = 'https://domain.com/project/objects.inv'\n        expected = 'https://domain.com/project/objects.inv'\n        actual = _strip_basic_auth(url)\n        self.assertEqual(expected, actual)\n\n    def test_having_port(self):\n        \"\"\"basic auth creds correctly stripped from URL containing creds even if URL\n        contains port\"\"\"\n        url = 'https://user:12345@domain.com:8080/project/objects.inv'\n        expected = 'https://domain.com:8080/project/objects.inv'\n        actual = _strip_basic_auth(url)\n        self.assertEqual(expected, actual)\n\n\ndef test_getsafeurl_authed():\n    \"\"\"_get_safe_url() with a url with basic auth\"\"\"\n    url = 'https://user:12345@domain.com/project/objects.inv'\n    expected = 'https://user@domain.com/project/objects.inv'\n    actual = _get_safe_url(url)\n    assert expected == actual\n\n\ndef test_getsafeurl_authed_having_port():\n    \"\"\"_get_safe_url() with a url with basic auth having port\"\"\"",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

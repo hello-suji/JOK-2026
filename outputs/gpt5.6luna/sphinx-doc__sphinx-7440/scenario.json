@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/directives/other.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "MySQL",
+        "Sphinx"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, unittest, mkdtemp, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, unittest, mkdtemp, build."
+    ],
+    "expected_failure": "Warning, treated as error:",
+    "relevant_source_files": [
+      "sphinx/directives/other.py",
+      "sphinx/domains/python.py",
+      "sphinx/writers/html.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nimport unittest\n\n\nclass TestMySQLClass(unittest.TestCase):\n    def test_mysql_class_behavior_repro(self):\n        srcdir = tempfile.mkdtemp()\n        confdir = srcdir\n        outdir = tempfile.mkdtemp()\n        doctreedir = tempfile.mkdtemp()\n        buildername = 'html'\n\n        with open(os.path.join(srcdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\"sphinx.ext.autodoc\"]\\n')\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n\n        # Assuming the expected behavior is that the build completes without errors\n        self.assertEqual(app.statuscode, 0)"
+      },
+      {
+        "language": "python",
+        "code": "Warning, treated as error:\ndoc/glossary.rst:243:duplicate term description of mysql, other instance in glossary"
+      },
+      {
+        "language": "python",
+        "code": "$ git clone --depth 1 https://github.com/phpmyadmin/phpmyadmin.git\n$ cd doc\n$ pip install 'Sphinx'\n$ make html"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "unittest",
+        "mkdtemp",
+        "build",
+        "join"
+      ],
+      "classes": [
+        "MySQL",
+        "Sphinx"
+      ],
+      "files": [
+        "travis.yml"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/directives/other.py",
+      "test_visible_functions": [
+        "tempfile",
+        "unittest",
+        "mkdtemp",
+        "build",
+        "join"
+      ],
+      "test_visible_classes": [
+        "MySQL",
+        "Sphinx"
+      ]
+    }
+  }
+]

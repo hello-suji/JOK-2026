@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-13615",
+    "model_patch": "--- a/sympy/sets/tests/test_sets.py\n+++ b/sympy/sets/tests/test_sets.py\n@@ -1058,3 +1058,13 @@\n\n     soln = Intersection(S.Reals, FiniteSet(x), evaluate=False)\n     assert Intersection(FiniteSet(x), S.Reals) == soln\n+\n+from sympy import FiniteSet, Interval, Complement\n+from sympy.abc import x, y\n+def test_complement_mixture_of_symbols_and_numbers_repro():\n+    a = FiniteSet(x, y, 2)\n+    b = Interval(-10, 10)\n+    result = Complement(a, b)\n+    assert result == Complement(FiniteSet(x, y, 2), Interval(-10, 10))\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != '{x, y}'\n",
+    "patch_sha256": "ccad2901598396cff40adcf49b6c4bcc5c9b34678bf2c1856fdf48972365497d"
+  }
+]

@@ -1,0 +1,22 @@
+exclude_patterns = ['_build']
+extensions = [
+	'sphinx.ext.intersphinx',
+]
+
+import tempfile
+import os
+from sphinx.application import Sphinx
+from sphinx.ext.napoleon.docstring import GoogleDocstring
+
+def foo(text):
+    """Bar
+
+    :param text: a text
+    :type text: bytes | str
+
+    """
+
+def test_union_types_support_repro():
+    docstring = GoogleDocstring(foo.__doc__, config=None)
+    parsed = docstring.parse()
+    assert 'bytes | str' in parsed['params']['text']

@@ -1,0 +1,67 @@
+{
+  "instance_id": "astropy__astropy-13033",
+  "observed_behavior": [
+    "TimeSeries: misleading exception when required column check fails.",
+    "### Actual behavior",
+    "The actual exception message is confusing:",
+    "`ValueError: TimeSeries object is invalid - expected 'time' as the first columns but found 'time'`"
+  ],
+  "expected_behavior": [
+    "### Expected behavior",
+    "`ValueError: TimeSeries object is invalid - expected 'time' as the first columns but found 'time'`"
+  ],
+  "repro_conditions": [
+    "TimeSeries: misleading exception when required column check fails.",
+    "<!-- This comments are hidden when you submit the issue,",
+    "<!-- Please have a search on our GitHub repository to see if a similar",
+    "If a similar issue is closed, have a quick look to see if you are satisfied",
+    "If not please go ahead and open an issue! -->",
+    "For a `TimeSeries` object that has additional required columns (in addition to `time`), when codes mistakenly try to remove a required column, the exception it produces is misleading.",
+    "The actual exception message is confusing:",
+    "### Steps to Reproduce",
+    "<!-- Ideally a code example could be provided so we can run it ourselves. -->",
+    "<!-- If you are pasting code, use triple backticks (```) around",
+    "<!-- If necessary, sanitize your screen output to be pasted so you do not",
+    "<!-- Even if you do not think this is necessary, it is useful information for the maintainers."
+  ],
+  "environment": [
+    "<!-- Please check that the development version still produces the same bug.",
+    "You can install development version with",
+    "Windows-10-10.0.22000-SP0",
+    "Python 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:21:54) [MSC v.1929 64 bit (AMD64)]"
+  ],
+  "identifiers": {
+    "functions": [
+      "remove_column"
+    ],
+    "classes": [
+      "Time",
+      "TimeSeries"
+    ],
+    "files": [],
+    "exceptions": [
+      "ValueError"
+    ]
+  },
+  "raw_issue_text": "TimeSeries: misleading exception when required column check fails.\n<!-- This comments are hidden when you submit the issue,\nso you do not need to remove them! -->\n\n<!-- Please be sure to check out our contributing guidelines,\nhttps://github.com/astropy/astropy/blob/main/CONTRIBUTING.md .\nPlease be sure to check out our code of conduct,\nhttps://github.com/astropy/astropy/blob/main/CODE_OF_CONDUCT.md . -->\n\n<!-- Please have a search on our GitHub repository to see if a similar\nissue has already been posted.\nIf a similar issue is closed, have a quick look to see if you are satisfied\nby the resolution.\nIf not please go ahead and open an issue! -->\n\n<!-- Please check that the development version still produces the same bug.\nYou can install development version with\npip install git+https://github.com/astropy/astropy\ncommand. -->\n\n### Description\n<!-- Provide a general description of the bug. -->\n\nFor a `TimeSeries` object that has additional required columns (in addition to `time`), when codes mistakenly try to remove a required column, the exception it produces is misleading.\n\n### Expected behavior\n<!-- What did you expect to happen. -->\nAn exception that informs the users required columns are missing.\n\n### Actual behavior\nThe actual exception message is confusing:\n`ValueError: TimeSeries object is invalid - expected 'time' as the first columns but found 'time'`\n\n### Steps to Reproduce\n<!-- Ideally a code example could be provided so we can run it ourselves. -->\n<!-- If you are pasting code, use triple backticks (```) around\nyour code snippet. -->\n<!-- If necessary, sanitize your screen output to be pasted so you do not\nreveal secrets like tokens and passwords. -->\n\n```python\nfrom astropy.time import Time\nfrom astropy.timeseries import TimeSeries\n\ntime=Time(np.arange(100000, 100003), format='jd')\nts = TimeSeries(time=time, data = {\"flux\": [99.9, 99.8, 99.7]})\nts._required_columns = [\"time\", \"flux\"]                                   \nts.remove_column(\"flux\")\n\n```\n\n### System Details\n<!-- Even if you do not think this is necessary, it is useful information for the maintainers.\nPlease run the following snippet and paste the output below:\nimport platform; print(platform.platform())\nimport sys; print(\"Python\", sys.version)\nimport numpy; print(\"Numpy\", numpy.__version__)\nimport erfa; print(\"pyerfa\", erfa.__version__)\nimport astropy; print(\"astropy\", astropy.__version__)\nimport scipy; print(\"Scipy\", scipy.__version__)\nimport matplotlib; print(\"Matplotlib\", matplotlib.__version__)\n-->\n```\nWindows-10-10.0.22000-SP0\nPython 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:21:54) [MSC v.1929 64 bit (AMD64)]\nNumpy 1.22.3\npyerfa 2.0.0.1\nastropy 5.0.3\nScipy 1.8.0\nMatplotlib 3.5.1\n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "from astropy.time import Time\nfrom astropy.timeseries import TimeSeries\n\ntime=Time(np.arange(100000, 100003), format='jd')\nts = TimeSeries(time=time, data = {\"flux\": [99.9, 99.8, 99.7]})\nts._required_columns = [\"time\", \"flux\"]                                   \nts.remove_column(\"flux\")",
+      "context_before": "reveal secrets like tokens and passwords. -->",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "Windows-10-10.0.22000-SP0\nPython 3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:21:54) [MSC v.1929 64 bit (AMD64)]\nNumpy 1.22.3\npyerfa 2.0.0.1\nastropy 5.0.3\nScipy 1.8.0\nMatplotlib 3.5.1",
+      "context_before": "-->",
+      "is_system_or_output": true
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [
+    "ValueError"
+  ],
+  "fault_locations": []
+}

@@ -1,0 +1,609 @@
+{
+  "instance_id": "django__django-12193",
+  "repo": "django/django",
+  "base_commit": "3fb7c12158a2402f0f80824f6778112071235803",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/forms/widgets.py",
+      "score": 46,
+      "matched_identifiers": [
+        "CheckboxInput",
+        "always",
+        "attrs",
+        "booleanfield",
+        "checked",
+        "django/forms/widgets.py",
+        "get_context"
+      ],
+      "reasons": [
+        "function_match:get_context",
+        "class_match:CheckboxInput",
+        "explicit_file_path_hint:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:checked,always,attrs,booleanfield,checkboxinput"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "CheckboxInput": "class CheckboxInput(Input):\n    input_type = 'checkbox'\n    template_name = 'django/forms/widgets/checkbox.html'\n\n    def __init__(self, attrs=None, check_test=None):\n        super().__init__(attrs)\n        # check_test is a callable that takes a value and returns True\n        # if the checkbox should be checked for that value.\n        self.check_test = boolean_check if check_test is None else check_test\n\n    def format_value(self, value):\n        \"\"\"Only return the 'value' attribute if value isn't empty.\"\"\"\n        if value is True or value is False or value is None or value == '':\n            return\n        return str(value)",
+        "get_context": "    def get_context(self, name, value, attrs):\n        context = super().get_context(name, value, attrs)\n        date_context = {}\n        year_choices = [(i, str(i)) for i in self.years]\n        if not self.is_required:\n            year_choices.insert(0, self.year_none_value)\n        year_name = self.year_field % name\n        date_context['year'] = self.select_widget(attrs, choices=year_choices).get_context(\n            name=year_name,\n            value=context['widget']['value']['year'],\n            attrs={**context['widget']['attrs'], 'id': 'id_%s' % year_name},\n        )\n        month_choices = list(self.months.items())\n        if not self.is_required:\n            month_choices.insert(0, self.month_none_value)"
+      },
+      "top_level_functions": [
+        "Media.render",
+        "Media.render_js",
+        "Media.render_css",
+        "Media.absolute_path",
+        "Media.merge",
+        "media_property",
+        "Widget.is_hidden",
+        "Widget.subwidgets",
+        "Widget.format_value",
+        "Widget.get_context",
+        "Widget.render",
+        "Widget.build_attrs",
+        "Widget.value_from_datadict",
+        "Widget.value_omitted_from_data",
+        "Widget.id_for_label",
+        "Widget.use_required_attribute",
+        "Input.get_context",
+        "PasswordInput.get_context",
+        "MultipleHiddenInput.get_context",
+        "MultipleHiddenInput.value_from_datadict",
+        "MultipleHiddenInput.format_value",
+        "FileInput.format_value",
+        "FileInput.value_from_datadict",
+        "FileInput.value_omitted_from_data",
+        "ClearableFileInput.clear_checkbox_name",
+        "ClearableFileInput.clear_checkbox_id",
+        "ClearableFileInput.is_initial",
+        "ClearableFileInput.format_value",
+        "ClearableFileInput.get_context",
+        "ClearableFileInput.value_from_datadict",
+        "ClearableFileInput.use_required_attribute",
+        "ClearableFileInput.value_omitted_from_data",
+        "DateTimeBaseInput.format_value",
+        "boolean_check",
+        "CheckboxInput.format_value",
+        "CheckboxInput.get_context",
+        "CheckboxInput.value_from_datadict",
+        "CheckboxInput.value_omitted_from_data",
+        "ChoiceWidget.subwidgets",
+        "ChoiceWidget.options"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/widgets.py",
+      "score": 32,
+      "matched_identifiers": [
+        "attrs",
+        "context",
+        "django/forms/widgets.py",
+        "forms",
+        "get_context"
+      ],
+      "reasons": [
+        "function_match:get_context",
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attrs,context,forms,get_context,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get_context": "    def get_context(self, name, value, attrs):\n        try:\n            self.validator(value if value else '')\n            url_valid = True\n        except ValidationError:\n            url_valid = False\n        context = super().get_context(name, value, attrs)\n        context['current_label'] = _('Currently:')\n        context['change_label'] = _('Change:')\n        context['widget']['href'] = smart_urlquote(context['widget']['value']) if value else ''\n        context['url_valid'] = url_valid\n        return context\n\n\nclass AdminIntegerFieldWidget(forms.NumberInput):"
+      },
+      "top_level_functions": [
+        "FilteredSelectMultiple.media",
+        "FilteredSelectMultiple.get_context",
+        "AdminSplitDateTime.get_context",
+        "url_params_from_lookup_dict",
+        "ForeignKeyRawIdWidget.get_context",
+        "ForeignKeyRawIdWidget.base_url_parameters",
+        "ForeignKeyRawIdWidget.url_parameters",
+        "ForeignKeyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.get_context",
+        "ManyToManyRawIdWidget.url_parameters",
+        "ManyToManyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.value_from_datadict",
+        "ManyToManyRawIdWidget.format_value",
+        "RelatedFieldWidgetWrapper.is_hidden",
+        "RelatedFieldWidgetWrapper.media",
+        "RelatedFieldWidgetWrapper.get_related_url",
+        "RelatedFieldWidgetWrapper.get_context",
+        "RelatedFieldWidgetWrapper.value_from_datadict",
+        "RelatedFieldWidgetWrapper.value_omitted_from_data",
+        "RelatedFieldWidgetWrapper.id_for_label",
+        "AdminURLFieldWidget.get_context",
+        "AutocompleteMixin.get_url",
+        "AutocompleteMixin.build_attrs",
+        "AutocompleteMixin.optgroups",
+        "AutocompleteMixin.media"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/admin/widgets.py",
+      "score": 32,
+      "matched_identifiers": [
+        "array",
+        "attrs",
+        "context",
+        "django/forms/widgets.py",
+        "forms",
+        "get_context"
+      ],
+      "reasons": [
+        "function_match:get_context",
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:array,attrs,context,forms,get_context"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get_context": "    def get_context(self, name, value, attrs):\n        # Update the template parameters with any attributes passed in.\n        if attrs:\n            self.params.update(attrs)\n            self.params['editable'] = self.params['modifiable']\n        else:\n            self.params['editable'] = True\n\n        # Defaulting the WKT value to a blank string -- this\n        # will be tested in the JavaScript and the appropriate\n        # interface will be constructed.\n        self.params['wkt'] = ''\n\n        # If a string reaches here (via a validation error on another\n        # field) then just reconstruct the Geometry."
+      },
+      "top_level_functions": [
+        "OpenLayersWidget.get_context",
+        "OpenLayersWidget.map_options"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/forms/widgets.py",
+      "score": 32,
+      "matched_identifiers": [
+        "attrs",
+        "context",
+        "django/forms/widgets.py",
+        "forms",
+        "get_context"
+      ],
+      "reasons": [
+        "function_match:get_context",
+        "file_hint_match:django/forms/widgets.py",
+        "stem_in_issue_text:widgets",
+        "source_content_tokens:attrs,context,forms,get_context,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get_context": "    def get_context(self, name, value, attrs):\n        context = super().get_context(name, value, attrs)\n        # If a string reaches here (via a validation error on another\n        # field) then just reconstruct the Geometry.\n        if value and isinstance(value, str):\n            value = self.deserialize(value)\n\n        if value:\n            # Check that srid of value and map match\n            if value.srid and value.srid != self.map_srid:\n                try:\n                    ogr = value.ogr\n                    ogr.transform(self.map_srid)\n                    value = ogr\n                except gdal.GDALException as err:"
+      },
+      "top_level_functions": [
+        "BaseGeometryWidget.serialize",
+        "BaseGeometryWidget.deserialize",
+        "BaseGeometryWidget.get_context",
+        "OpenLayersWidget.serialize",
+        "OpenLayersWidget.deserialize"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/forms/array.py",
+      "score": 26,
+      "matched_identifiers": [
+        "SplitArrayField",
+        "array",
+        "attrs",
+        "context",
+        "final",
+        "get_context"
+      ],
+      "reasons": [
+        "function_match:get_context",
+        "class_match:SplitArrayField",
+        "stem_in_issue_text:array",
+        "source_content_tokens:array,attrs,context,final,final_attrs"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "SplitArrayField": "class SplitArrayField(forms.Field):\n    default_error_messages = {\n        'item_invalid': _('Item %(nth)s in the array did not validate:'),\n    }\n\n    def __init__(self, base_field, size, *, remove_trailing_nulls=False, **kwargs):\n        self.base_field = base_field\n        self.size = size\n        self.remove_trailing_nulls = remove_trailing_nulls\n        widget = SplitArrayWidget(widget=base_field.widget, size=size)\n        kwargs.setdefault('widget', widget)\n        super().__init__(**kwargs)\n\n    def _remove_trailing_nulls(self, values):\n        index = None",
+        "get_context": "    def get_context(self, name, value, attrs=None):\n        attrs = {} if attrs is None else attrs\n        context = super().get_context(name, value, attrs)\n        if self.is_localized:\n            self.widget.is_localized = self.is_localized\n        value = value or []\n        context['widget']['subwidgets'] = []\n        final_attrs = self.build_attrs(attrs)\n        id_ = final_attrs.get('id')\n        for i in range(max(len(value), self.size)):\n            try:\n                widget_value = value[i]\n            except IndexError:\n                widget_value = None\n            if id_:"
+      },
+      "top_level_functions": [
+        "SimpleArrayField.clean",
+        "SimpleArrayField.prepare_value",
+        "SimpleArrayField.to_python",
+        "SimpleArrayField.validate",
+        "SimpleArrayField.run_validators",
+        "SimpleArrayField.has_changed",
+        "SplitArrayWidget.is_hidden",
+        "SplitArrayWidget.value_from_datadict",
+        "SplitArrayWidget.value_omitted_from_data",
+        "SplitArrayWidget.id_for_label",
+        "SplitArrayWidget.get_context",
+        "SplitArrayWidget.media",
+        "SplitArrayWidget.needs_multipart_form",
+        "SplitArrayField.to_python",
+        "SplitArrayField.clean",
+        "SplitArrayField.has_changed"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/forms_tests/field_tests/test_booleanfield.py",
+      "score": 15,
+      "matched_identifiers": [
+        "BooleanField",
+        "SplitArrayField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SplitArrayField",
+        "test_path_related_to_class:BooleanField",
+        "token_overlap:boolean,field,forms",
+        "internal_name_overlap:boolean",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_nullbooleanfield.py",
+      "score": 15,
+      "matched_identifiers": [
+        "BooleanField",
+        "SplitArrayField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SplitArrayField",
+        "test_path_related_to_class:BooleanField",
+        "token_overlap:boolean,field,forms",
+        "internal_name_overlap:boolean",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_splitdatetimefield.py",
+      "score": 15,
+      "matched_identifiers": [
+        "BooleanField",
+        "SplitArrayField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SplitArrayField",
+        "test_path_related_to_class:BooleanField",
+        "token_overlap:field,forms,split",
+        "internal_name_overlap:split",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_base.py",
+      "score": 13,
+      "matched_identifiers": [
+        "BooleanField",
+        "SplitArrayField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SplitArrayField",
+        "test_path_related_to_class:BooleanField",
+        "token_overlap:field,forms",
+        "internal_name_overlap:field",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_charfield.py",
+      "score": 13,
+      "matched_identifiers": [
+        "BooleanField",
+        "SplitArrayField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SplitArrayField",
+        "test_path_related_to_class:BooleanField",
+        "token_overlap:field,forms",
+        "internal_name_overlap:field",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/forms_tests/field_tests/test_booleanfield.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_base.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_splitdatetimefield.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_nullbooleanfield.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_charfield.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2585,
+  "indexed_test_file_count": 1752,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.forms_tests.field_tests.test_booleanfield": [
+      "BooleanFieldTest"
+    ],
+    "tests.forms_tests.field_tests.test_base": [
+      "BasicFieldsTests",
+      "DisabledFieldTests"
+    ],
+    "tests.forms_tests.field_tests.test_splitdatetimefield": [
+      "SplitDateTimeFieldTest"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "tests.forms_tests.field_tests.test_nullbooleanfield": [
+      "NullBooleanFieldTest"
+    ],
+    "tests.forms_tests.field_tests.test_charfield": [
+      "CharFieldTest"
+    ],
+    "django.forms.fields": [
+      "BaseTemporalField",
+      "BooleanField",
+      "CallableChoiceIterator",
+      "CharField",
+      "ChoiceField",
+      "ComboField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Field",
+      "FileField",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "ImageField",
+      "IntegerField",
+      "MultiValueField",
+      "MultipleChoiceField",
+      "NullBooleanField",
+      "RegexField",
+      "SlugField",
+      "SplitDateTimeField",
+      "TimeField",
+      "TypedChoiceField",
+      "TypedMultipleChoiceField",
+      "URLField",
+      "UUIDField"
+    ],
+    "django.forms.widgets": [
+      "CheckboxInput",
+      "CheckboxSelectMultiple",
+      "ChoiceWidget",
+      "ClearableFileInput",
+      "DateInput",
+      "DateTimeBaseInput",
+      "DateTimeInput",
+      "EmailInput",
+      "FileInput",
+      "HiddenInput",
+      "Input",
+      "Media",
+      "MediaDefiningClass",
+      "MediaOrderConflictWarning",
+      "MultiWidget",
+      "MultipleHiddenInput",
+      "NullBooleanSelect",
+      "NumberInput",
+      "PasswordInput",
+      "RadioSelect",
+      "Select",
+      "SelectDateWidget",
+      "SelectMultiple",
+      "SplitDateTimeWidget",
+      "SplitHiddenDateTimeWidget",
+      "TextInput",
+      "Textarea",
+      "TimeInput",
+      "URLInput",
+      "Widget",
+      "boolean_check",
+      "media_property"
+    ],
+    "django.contrib.admin.widgets": [
+      "AdminBigIntegerFieldWidget",
+      "AdminDateWidget",
+      "AdminEmailInputWidget",
+      "AdminFileWidget",
+      "AdminIntegerFieldWidget",
+      "AdminRadioSelect",
+      "AdminSplitDateTime",
+      "AdminTextInputWidget",
+      "AdminTextareaWidget",
+      "AdminTimeWidget",
+      "AdminURLFieldWidget",
+      "AdminUUIDInputWidget",
+      "AutocompleteMixin",
+      "AutocompleteSelect",
+      "AutocompleteSelectMultiple",
+      "FilteredSelectMultiple",
+      "ForeignKeyRawIdWidget",
+      "ManyToManyRawIdWidget",
+      "RelatedFieldWidgetWrapper",
+      "url_params_from_lookup_dict"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.forms.widgets": [
+      "BaseGeometryWidget",
+      "OSMWidget",
+      "OpenLayersWidget"
+    ],
+    "django.contrib.gis": [
+      "AdminSite",
+      "BaseGeometryWidget",
+      "GeoModelAdmin",
+      "GeometryCollectionField",
+      "GeometryField",
+      "HORIZONTAL",
+      "LineStringField",
+      "ModelAdmin",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "OSMGeoAdmin",
+      "OSMWidget",
+      "OpenLayersWidget",
+      "PointField",
+      "PolygonField",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "register",
+      "site"
+    ],
+    "django.contrib.gis.admin.widgets": [
+      "OpenLayersWidget"
+    ],
+    "django.contrib.postgres.forms.array": [
+      "SimpleArrayField",
+      "SplitArrayField",
+      "SplitArrayWidget"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_load_field",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ]
+  },
+  "test_example_snippet": "    def test_booleanfield_clean_1(self):\n        f = BooleanField()\n        with self.assertRaisesMessage(ValidationError, \"'This field is required.'\"):\n            f.clean('')\n        with self.assertRaisesMessage(ValidationError, \"'This field is required.'\"):\n            f.clean(None)\n        self.assertTrue(f.clean(True))\n        with self.assertRaisesMessage(ValidationError, \"'This field is required.'\"):\n            f.clean(False)\n        self.assertTrue(f.clean(1))\n        with self.assertRaisesMessage(ValidationError, \"'This field is required.'\"):\n            f.clean(0)\n        self.assertTrue(f.clean('Django rocks'))\n        self.assertTrue(f.clean('True'))\n        with self.assertRaisesMessage(ValidationError, \"'This field is required.'\"):\n            f.clean('False')\n\n    def test_booleanfield_clean_2(self):\n        f = BooleanField(required=False)\n        self.assertIs(f.clean(''), False)\n        self.assertIs(f.clean(None), False)\n        self.assertIs(f.clean(True), True)\n        self.assertIs(f.clean(False), False)\n        self.assertIs(f.clean(1), True)\n        self.assertIs(f.clean(0), False)\n        self.assertIs(f.clean('1'), True)\n        self.assertIs(f.clean('0'), False)\n        self.assertIs(f.clean('Django rocks'), True)\n        self.assertIs(f.clean('False'), False)\n        self.assertIs(f.clean('false'), False)\n        self.assertIs(f.clean('FaLsE'), False)\n\n    def test_boolean_picklable(self):\n        self.assertIsInstance(pickle.loads(pickle.dumps(BooleanField())), BooleanField)\n",
+  "conftest_fixtures": {}
+}

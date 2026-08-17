@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/related.py",
+      "target_function": "_",
+      "related_classes": [
+        "BigAutoField",
+        "ForeignKey",
+        "MySQL"
+      ],
+      "candidate_test_file": "tests/migrations/deprecated_field_migrations/0001_initial.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where _ can be called.",
+      "Use the generated reproduction path that calls _, varchar, connection, execute."
+    ],
+    "execution_stimulus": [
+      "Call _ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _, varchar, connection, execute."
+    ],
+    "expected_failure": "Errors with db_collation – no propagation to foreignkeys",
+    "relevant_source_files": [
+      "django/db/models/fields/related.py",
+      "django/db/models/fields/__init__.py",
+      "django/conf/global_settings.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/deprecated_field_migrations/0001_initial.py",
+      "tests/migrations/test_add_many_to_many_field_initial/0001_initial.py",
+      "tests/migrations/test_add_many_to_many_field_initial/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.db import connection\n\nclass TestCollationPropagation(TestCase):\n    def test_foreign_key_collation_propagation_repro(self):\n        # Simulate the scenario where Account.id has db_collation set\n        with connection.cursor() as cursor:\n            cursor.execute(\"\"\"\n                CREATE TABLE `b_manage_account` (\n                    `id` varchar(22) COLLATE `utf8_bin` NOT NULL,\n                    PRIMARY KEY (`id`)\n                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n            \"\"\")\n            cursor.execute(\"\"\"\n                CREATE TABLE `b_manage_address` (\n                    `id` varchar(22) NOT NULL,\n                    `account_id` varchar(22) NOT NULL,\n                    PRIMARY KEY (`id`),\n                    FOREIGN KEY (`account_id`) REFERENCES `b_manage_account`(`id`)\n                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n            \"\"\")\n            cursor.execute(\"\"\"\n                CREATE TABLE `b_manage_profile` (\n                    `id` varchar(22) NOT NULL,\n                    `account_id` varchar(22) NULL,\n                    PRIMARY KEY (`id`),\n                    FOREIGN KEY (`account_id`) REFERENCES `b_manage_account`(`id`)\n                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;\n            \"\"\")\n\n        # Check if the foreign keys were created with the correct collation\n        cursor.execute(\"SHOW CREATE TABLE b_manage_address\")\n        address_table_create = cursor.fetchone()[1]\n        self.assertIn('COLLATE `utf8_bin`', address_table_create)\n\n        cursor.execute(\"SHOW CREATE TABLE b_manage_profile\")\n        profile_table_create = cursor.fetchone()[1]\n        self.assertIn('COLLATE `utf8_bin`', profile_table_create)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_",
+        "varchar",
+        "connection",
+        "execute",
+        "cursor",
+        "fetchone"
+      ],
+      "classes": [
+        "BigAutoField",
+        "ForeignKey",
+        "MySQL",
+        "OneToOneField",
+        "ShortUUIDField"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/deprecated_field_migrations/0001_initial.py",
+      "target_source_file": "django/db/models/fields/related.py",
+      "test_visible_functions": [
+        "_",
+        "varchar",
+        "connection",
+        "execute",
+        "cursor",
+        "fetchone"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

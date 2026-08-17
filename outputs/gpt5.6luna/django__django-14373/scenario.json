@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "datetime",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.utils.dateformat import DateFormat",
+      "import datetime",
+      "Use the generated reproduction path that calls datetime."
+    ],
+    "execution_stimulus": [
+      "date = datetime.datetime(999, 1, 1)",
+      "formatter = DateFormat(date)",
+      "formatted_date = formatter.format('Y')",
+      "Execute the focused target API path: datetime."
+    ],
+    "expected_failure": "The Y specifier does not return a four-digit year padded with zeros for years less than 1000.",
+    "relevant_source_files": [
+      "django/utils/dateformat.py",
+      "django/template/defaultfilters.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/template_backends/test_django.py",
+      "tests/utils_tests/test_dateformat.py",
+      "tests/forms_tests/tests/test_utils.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_year_formatting_below_1000_repro():\n    from django.utils.dateformat import DateFormat\n    from datetime import datetime\n    df = DateFormat(datetime(999, 1, 1))\n    formatted_date = df.format('Y')\n    assert formatted_date == '0999'"
+      },
+      {
+        "language": "python",
+        "code": "def test_year_formatting_below_1000():\n    from django.utils.dateformat import DateFormat\n    import datetime\n    date = datetime.datetime(999, 1, 1)\n    formatter = DateFormat(date)\n    formatted_date = formatter.format('Y')\n    assert formatted_date != '0999'"
+      }
+    ],
+    "expected_outputs": [
+      "0999"
+    ],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Formatter.format",
+        "datetime"
+      ],
+      "classes": [
+        "DateFormat"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "tests/utils_tests/test_dateformat.py",
+      "target_source_file": "django/utils/dateformat.py",
+      "test_visible_functions": [
+        "datetime"
+      ],
+      "test_visible_classes": [
+        "DateFormat"
+      ]
+    }
+  }
+]

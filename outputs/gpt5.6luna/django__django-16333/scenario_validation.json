@@ -1,0 +1,100 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:save",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/contrib/auth/forms.py",
+          "target_function": "save",
+          "related_classes": [
+            "UserCreationForm",
+            "ManyToManyField",
+            "ModelMultipleChoiceField"
+          ],
+          "candidate_test_file": "tests/model_forms/models.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.contrib.auth.models import AbstractUser",
+          "from django.db import models",
+          "from django.contrib.auth.forms import UserCreationForm",
+          "class CustomUser(AbstractUser): groups = models.ManyToManyField('auth.Group')",
+          "form_data = {'username': 'testuser', 'password1': 'testpass123', 'password2': 'testpass123', 'groups': [1]}"
+        ],
+        "execution_stimulus": [
+          "form = UserCreationForm(data=form_data)",
+          "form.is_valid()",
+          "user = form.save()"
+        ],
+        "expected_failure": "The groups ManyToMany field data is not saved to the user instance.",
+        "relevant_source_files": [
+          "django/forms/models.py",
+          "django/contrib/auth/forms.py",
+          "django/contrib/auth/models.py"
+        ],
+        "relevant_test_files": [
+          "tests/forms_tests/field_tests/test_base.py",
+          "tests/model_forms/models.py",
+          "tests/forms_tests/field_tests/test_choicefield.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [
+            "group"
+          ],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_user_creation_form_saves_manytomany_field():\n    from django.contrib.auth.models import AbstractUser\n    from django.db import models\n    from django.contrib.auth.forms import UserCreationForm\n    class CustomUser(AbstractUser):\n        groups = models.ManyToManyField('auth.Group')\n    form_data = {'username': 'testuser', 'password1': 'testpass123', 'password2': 'testpass123', 'groups': [1]}\n    form = UserCreationForm(data=form_data)\n    form.is_valid()\n    user = form.save()\n    assert user.groups.count() == 0"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "save"
+          ],
+          "classes": [
+            "UserCreationForm",
+            "ManyToManyField",
+            "ModelMultipleChoiceField"
+          ]
+        },
+        "oracle_hints": [
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

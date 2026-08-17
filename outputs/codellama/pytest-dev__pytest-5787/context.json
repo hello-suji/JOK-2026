@@ -1,0 +1,360 @@
+{
+  "instance_id": "pytest-dev__pytest-5787",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "955e54221008aba577ecbaefa15679f6777d3bf8",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/python.py",
+      "score": 17,
+      "matched_identifiers": [
+        "auto",
+        "exception",
+        "last",
+        "nicely"
+      ],
+      "reasons": [
+        "stem_in_issue_text:python",
+        "source_content_tokens:auto,exception,last,nicely,pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pyobj_property",
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_generate_tests",
+        "pytest_configure",
+        "pytest_pyfunc_call",
+        "pytest_collect_file",
+        "path_matches_patterns",
+        "pytest_pycollect_makemodule",
+        "pytest_pycollect_makeitem",
+        "pytest_make_parametrize_id",
+        "PyobjMixin.obj",
+        "PyobjMixin.getmodpath",
+        "PyobjMixin.reportinfo",
+        "PyCollector.funcnamefilter",
+        "PyCollector.isnosetest",
+        "PyCollector.classnamefilter",
+        "PyCollector.istestfunction",
+        "PyCollector.istestclass",
+        "PyCollector.collect",
+        "Module.collect",
+        "Package.setup",
+        "Package.gethookproxy",
+        "Package.isinitpath",
+        "Package.collect",
+        "Class.collect",
+        "Instance.collect",
+        "Instance.newinstance",
+        "FunctionMixin.setup",
+        "FunctionMixin.repr_failure",
+        "hasinit",
+        "hasnew",
+        "CallSpec2.copy",
+        "CallSpec2.getparam",
+        "CallSpec2.id",
+        "CallSpec2.setmulti2",
+        "Metafunc.parametrize",
+        "idmaker",
+        "show_fixtures_per_test",
+        "showfixtures"
+      ]
+    },
+    {
+      "path": "src/pytest.py",
+      "score": 17,
+      "matched_identifiers": [
+        "following",
+        "pytest",
+        "setup",
+        "trace"
+      ],
+      "reasons": [
+        "stem_in_issue_text:pytest",
+        "source_content_tokens:pytest,setup,trace,following,include"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "doc/en/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "auto",
+        "last",
+        "pytest",
+        "setup"
+      ],
+      "reasons": [
+        "source_content_tokens:auto,last,pytest,setup,another"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "setup": "def setup(app):\n    # from sphinx.ext.autodoc import cut_lines\n    # app.connect('autodoc-process-docstring', cut_lines(4, what=['module']))\n    app.add_object_type(\n        \"confval\",\n        \"confval\",\n        objname=\"configuration value\",\n        indextemplate=\"pair: %s; configuration value\",\n    )"
+      },
+      "top_level_functions": [
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/en/example/assertion/failure_demo.py",
+      "score": 16,
+      "matched_identifiers": [
+        "exception",
+        "nicely",
+        "pytest",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:exception,nicely,pytest,valueerror,except"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "otherfunc",
+        "somefunc",
+        "otherfunc_multi",
+        "test_generative",
+        "TestFailing.test_simple",
+        "TestFailing.test_simple_multiline",
+        "TestFailing.test_not",
+        "TestSpecialisedExplanations.test_eq_text",
+        "TestSpecialisedExplanations.test_eq_similar_text",
+        "TestSpecialisedExplanations.test_eq_multiline_text",
+        "TestSpecialisedExplanations.test_eq_long_text",
+        "TestSpecialisedExplanations.test_eq_long_text_multiline",
+        "TestSpecialisedExplanations.test_eq_list",
+        "TestSpecialisedExplanations.test_eq_list_long",
+        "TestSpecialisedExplanations.test_eq_dict",
+        "TestSpecialisedExplanations.test_eq_set",
+        "TestSpecialisedExplanations.test_eq_longer_list",
+        "TestSpecialisedExplanations.test_in_list",
+        "TestSpecialisedExplanations.test_not_in_text_multiline",
+        "TestSpecialisedExplanations.test_not_in_text_single",
+        "TestSpecialisedExplanations.test_not_in_text_single_long",
+        "TestSpecialisedExplanations.test_not_in_text_single_long_term",
+        "TestSpecialisedExplanations.test_eq_dataclass",
+        "TestSpecialisedExplanations.test_eq_attrs",
+        "test_attribute",
+        "test_attribute_instance",
+        "test_attribute_failure",
+        "test_attribute_multiple",
+        "globf",
+        "TestRaises.test_raises",
+        "TestRaises.test_raises_doesnt",
+        "TestRaises.test_raise",
+        "TestRaises.test_tupleerror",
+        "TestRaises.test_reinterpret_fails_with_print_for_the_fun_of_it",
+        "TestRaises.test_some_error",
+        "TestRaises.func1",
+        "test_dynamic_compile_shows_nicely",
+        "TestMoreErrors.test_complex_error",
+        "TestMoreErrors.test_z1_unpack_error",
+        "TestMoreErrors.test_z2_type_error"
+      ]
+    },
+    {
+      "path": "src/_pytest/_argcomplete.py",
+      "score": 16,
+      "matched_identifiers": [
+        "another",
+        "auto",
+        "just",
+        "setup"
+      ],
+      "reasons": [
+        "source_content_tokens:auto,just,setup,another,direct"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "doc/en/example/assertion/test_failures.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example,failure",
+        "internal_name_overlap:failure",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "internal_name_overlap:pytest",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/nonpython/conftest.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:example,python",
+        "internal_name_overlap:failure",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/test_hello_world.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/test_setup_flow_example.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "doc/en/example/assertion/test_failures.py:top_level_test_functions",
+      "doc/en/example/assertion/test_setup_flow_example.py:testcase_class:TestStateFullThing",
+      "doc/en/example/nonpython/conftest.py:pytest_import_or_conftest",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py:top_level_test_functions",
+      "doc/en/example/assertion/global_testmodule_config/conftest.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 202,
+  "indexed_test_file_count": 107,
+  "available_imports": {
+    "src._pytest.python": [
+      "CallSpec2",
+      "Class",
+      "Function",
+      "FunctionDefinition",
+      "FunctionMixin",
+      "Instance",
+      "Metafunc",
+      "Module",
+      "Package",
+      "PyCollector",
+      "PyobjContext",
+      "PyobjMixin",
+      "_ascii_escaped_by_config",
+      "_call_with_optional_argument",
+      "_find_parametrized_scope",
+      "_get_first_non_fixture_func",
+      "_idval",
+      "_idvalset",
+      "_show_fixtures_per_test",
+      "_showfixtures_main",
+      "hasinit",
+      "hasnew",
+      "idmaker",
+      "path_matches_patterns",
+      "pyobj_property",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collect_file",
+      "pytest_configure",
+      "pytest_generate_tests",
+      "pytest_make_parametrize_id",
+      "pytest_pycollect_makeitem",
+      "pytest_pycollect_makemodule",
+      "pytest_pyfunc_call",
+      "show_fixtures_per_test",
+      "showfixtures",
+      "write_docstring"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "src._pytest._argcomplete": [
+      "FastFilesCompleter"
+    ],
+    "doc.en.conf": [
+      "setup"
+    ],
+    "doc.en.example.assertion.test_failures": [
+      "test_failure_demo_fails_properly"
+    ],
+    "doc.en.example.assertion.test_setup_flow_example": [
+      "TestStateFullThing",
+      "setup_module",
+      "teardown_module"
+    ],
+    "doc.en.example.assertion.failure_demo": [
+      "TestCustomAssertMsg",
+      "TestFailing",
+      "TestMoreErrors",
+      "TestRaises",
+      "TestSpecialisedExplanations",
+      "globf",
+      "otherfunc",
+      "otherfunc_multi",
+      "somefunc",
+      "test_attribute",
+      "test_attribute_failure",
+      "test_attribute_instance",
+      "test_attribute_multiple",
+      "test_dynamic_compile_shows_nicely",
+      "test_generative"
+    ],
+    "doc.en.example.nonpython.conftest": [
+      "YamlException",
+      "YamlFile",
+      "YamlItem",
+      "pytest_collect_file"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.test_hello_world": [
+      "test_func"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.conftest": [
+      "pytest_runtest_setup"
+    ]
+  },
+  "test_example_snippet": "def test_failure_demo_fails_properly(testdir):\n    target = testdir.tmpdir.join(failure_demo.basename)\n    failure_demo.copy(target)\n    failure_demo.copy(testdir.tmpdir.join(failure_demo.basename))\n    result = testdir.runpytest(target, syspathinsert=True)\n    result.stdout.fnmatch_lines([\"*44 failed*\"])\n    assert result.ret != 0",
+  "conftest_fixtures": {}
+}

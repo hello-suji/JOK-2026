@@ -1,0 +1,13 @@
+--- a/tests/utils_tests/test_date_gateformat_gate.py
++++ b/tests/utils_tests/test_date_gateformat_gate.py
+@@ -194,3 +194,10 @@
+                     dateformat.format(datetime(2000, 1, 1, hour), 'g'),
+                     expected,
+                 )
++
++def test_year_formatting_below_1000_repro():
++    from django.utils.dateformat import DateFormat
++    from datetime import datetime
++    df = DateFormat(datetime(999, 1, 1))
++    formatted_date = df.format('Y')
++    assert formatted_date == '0999'

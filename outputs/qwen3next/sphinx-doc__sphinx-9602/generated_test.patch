@@ -1,0 +1,17 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -463,3 +463,14 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++from typing import Any, Dict, List, Optional, Tuple
++import unittest
++from typing import Any, Dict, List, Optional, Tuple
++import typing
++from sphinx.domains.python import type_to_xref
++
++class TestLiteralNitpickWarning(unittest.TestCase):
++    def test_literal_nitpick_warning_repro(self):
++        result = type_to_xref('typing.Literal[True]', None)
++        self.assertNotIn('nitpick', result)

@@ -1,0 +1,113 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/matrices/matrices.py",
+      "target_function": "det",
+      "related_classes": [
+        "AppData",
+        "NaN",
+        "Matrix"
+      ],
+      "candidate_test_file": "sympy/matrices/expressions/tests/test_determinant.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __lt__ can be called.",
+      "Use the generated reproduction path that calls det, symbols, nan, f."
+    ],
+    "execution_stimulus": [
+      "Call __lt__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: det, symbols, nan, f."
+    ],
+    "expected_failure": "Traceback (most recent call last):",
+    "relevant_source_files": [
+      "sympy/matrices/matrices.py",
+      "sympy/core/expr.py",
+      "sympy/matrices/expressions/determinant.py"
+    ],
+    "relevant_test_files": [
+      "sympy/matrices/expressions/tests/test_determinant.py",
+      "sympy/matrices/tests/test_immutable.py",
+      "sympy/matrices/expressions/tests/test_dotproduct.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Matrix, nan\n\ndef test_det_with_nan_repro():\n    a = symbols('a')\n    f = lambda n: Matrix([[i + a*j for i in range(n)] for j in range(n)]).det()\n    result = f(5)\n    assert not (result.has(nan) or result.is_nan)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_eval_det_bareiss",
+        "_eval_determinant",
+        "_handle_creation_inputs",
+        "_new",
+        "as_coeff_Mul",
+        "bareiss",
+        "cancel",
+        "det",
+        "do",
+        "doit",
+        "symbols",
+        "nan",
+        "f",
+        "has"
+      ],
+      "classes": [
+        "AppData",
+        "NaN",
+        "Matrix"
+      ],
+      "files": [
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/core/expr.py",
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/core/exprtools.py",
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/matrices/expressions/determinant.py",
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/matrices/immutable.py",
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/matrices/matrices.py",
+        "Users/E/AppData/Local/Programs/Python/Python36/lib/site-packages/sympy/polys/polytools.py"
+      ],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/matrices/expressions/tests/test_determinant.py",
+      "target_source_file": "sympy/matrices/matrices.py",
+      "test_visible_functions": [
+        "det",
+        "symbols",
+        "nan",
+        "f",
+        "has"
+      ],
+      "test_visible_classes": [
+        "NaN",
+        "Matrix"
+      ]
+    }
+  }
+]

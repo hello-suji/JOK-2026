@@ -1,0 +1,20 @@
+--- a/sympy/matrices/tests/test_commonmatrix.py
++++ b/sympy/matrices/tests/test_commonmatrix.py
+@@ -1332,3 +1332,17 @@
+     x, y = symbols('x y')
+     m = CalculusOnlyMatrix(2, 1, [1/x, y])
+     assert m.limit(x, 5) == Matrix(2, 1, [S(1)/5, y])
++
++from sympy.matrices.densetools import eye, ones
++
++def test_col_insert_gate_issue_13647_repro():
++    M = eye(6)
++    V = 2 * ones(6, 2)
++    result = M.col_insert(0, V)
++    expected = Matrix([[2, 2, 1, 0, 0, 0, 0, 0],
++                       [2, 2, 0, 1, 0, 0, 0, 0],
++                       [2, 2, 0, 0, 1, 0, 0, 0],
++                       [2, 2, 0, 0, 0, 1, 0, 0],
++                       [2, 2, 0, 0, 0, 0, 1, 0],
++                       [2, 2, 0, 0, 0, 0, 0, 1]])
++    assert result == expected

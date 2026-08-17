@@ -1,0 +1,78 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "requests/models.py",
+      "target_function": "prepare",
+      "related_classes": [
+        "Request"
+      ],
+      "candidate_test_file": "test_requests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls prepare."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: prepare."
+    ],
+    "expected_failure": "For example http://amazon.com returns 503 for every get request that contains 'content-length' header.",
+    "relevant_source_files": [
+      "requests/models.py",
+      "requests/adapters.py",
+      "requests/utils.py"
+    ],
+    "relevant_test_files": [
+      "test_requests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_get_request_without_content_length_header_repro():\n    req = requests.Request('GET', 'http://example.com')\n    prepared = req.prepare()\n    assert 'Content-Length' not in prepared.headers"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "prepare"
+      ],
+      "classes": [
+        "Request"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "test_requests.py",
+      "target_source_file": "requests/models.py",
+      "test_visible_functions": [
+        "prepare"
+      ],
+      "test_visible_classes": [
+        "Request"
+      ]
+    }
+  }
+]

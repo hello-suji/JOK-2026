@@ -1,0 +1,90 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Sphinx",
+        "PyFunction"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls unittest, tempfile, mkdtemp, build."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: unittest, tempfile, mkdtemp, build."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/ext/autosummary/generate.py",
+      "sphinx/ext/intersphinx.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import unittest\nimport tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.domains.python import PyFunction\n\nclass TestParamRendering(unittest.TestCase):\n    def test_param_dict_str_str_rendering_repro(self):\n        srcdir = tempfile.mkdtemp()\n        confdir = srcdir\n        outdir = tempfile.mkdtemp()\n        doctreedir = tempfile.mkdtemp()\n        buildername = 'html'\n\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write('''\n.. autofunction:: my_module.my_function\n''')\n\n        with open(os.path.join(srcdir, 'my_module.py'), 'w') as f:\n            f.write('''\ndef my_function(opc_meta):\n    \"\"\"\n    :param dict(str, str) opc_meta: (optional)\n    \"\"\"\n    pass\n''')\n\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('''\nextensions = ['sphinx.ext.autodoc']\n''')\n\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n\n        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n            html_content = f.read()\n\n        self.assertIn('opc_meta (dict(str, str))', html_content)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "unittest",
+        "tempfile",
+        "mkdtemp",
+        "build",
+        "join"
+      ],
+      "classes": [
+        "Sphinx",
+        "PyFunction"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest",
+        "tempfile",
+        "mkdtemp",
+        "build",
+        "join"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "PyFunction"
+      ]
+    }
+  }
+]

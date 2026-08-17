@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11790",
+    "model_patch": "--- a/tests/auth_tests/test_forms.py\n+++ b/tests/auth_tests/test_forms.py\n@@ -1048,3 +1048,12 @@\n         for field_name, autocomplete in tests:\n             with self.subTest(field_name=field_name, autocomplete=autocomplete):\n                 self.assertEqual(form.fields[field_name].widget.attrs['autocomplete'], autocomplete)\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.contrib.auth.forms import AuthenticationForm\n+\n+class TestAuthenticationForm(TestCase):\n+    def test_username_max_length_attribute_repro(self):\n+        form = AuthenticationForm()\n+        self.assertIn('maxlength', form.fields['username'].widget.attrs)\n+        self.assertEqual(form.fields['username'].widget.attrs['maxlength'], 150)\n",
+    "patch_sha256": "c244767cdf569d2b099cd57fead5f2f792b2524afa89883448f9da1d8569e07f"
+  }
+]

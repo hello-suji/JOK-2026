@@ -1,0 +1,467 @@
+{
+  "instance_id": "astropy__astropy-14598",
+  "repo": "astropy/astropy",
+  "base_commit": "80c3854a5f4f4a6ab86c03d9db7854767fcd83c1",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/io/fits/card.py",
+      "score": 28,
+      "matched_identifiers": [
+        "Card",
+        "different",
+        "fromstring",
+        "into",
+        "null",
+        "position"
+      ],
+      "reasons": [
+        "function_match:fromstring",
+        "class_match:Card",
+        "path_contains_class:Card",
+        "stem_in_issue_text:card",
+        "source_content_tokens:different,into,null,position,quotes"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Card": "class Card(_Verify):\n    length = CARD_LENGTH\n    \"\"\"The length of a Card image; should always be 80 for valid FITS files.\"\"\"\n\n    # String for a FITS standard compliant (FSC) keyword.\n    _keywd_FSC_RE = re.compile(r\"^[A-Z0-9_-]{0,%d}$\" % KEYWORD_LENGTH)\n    # This will match any printable ASCII character excluding '='\n    _keywd_hierarch_RE = re.compile(r\"^(?:HIERARCH +)?(?:^[ -<>-~]+ ?)+$\", re.I)\n\n    # A number sub-string, either an integer or a float in fixed or\n    # scientific notation.  One for FSC and one for non-FSC (NFSC) format:\n    # NFSC allows lower case of DE for exponent, allows space between sign,\n    # digits, exponent sign, and exponents\n    _digits_FSC = r\"(\\.\\d+|\\d+(\\.\\d*)?)([DE][+-]?\\d+)?\"\n    _digits_NFSC = r\"(\\.\\d+|\\d+(\\.\\d*)?) *([deDE] *[+-]? *\\d+)?\"",
+        "fromstring": "    def fromstring(cls, image):\n        \"\"\"\n        Construct a `Card` object from a (raw) string. It will pad the string\n        if it is not the length of a card image (80 columns).  If the card\n        image is longer than 80 columns, assume it contains ``CONTINUE``\n        card(s).\n        \"\"\"\n        card = cls()\n        if isinstance(image, bytes):\n            # FITS supports only ASCII, but decode as latin1 and just take all\n            # bytes for now; if it results in mojibake due to e.g. UTF-8\n            # encoded data in a FITS header that's OK because it shouldn't be\n            # there in the first place\n            image = image.decode(\"latin1\")\n"
+      },
+      "top_level_functions": [
+        "Card.keyword",
+        "Card.value",
+        "Card.rawkeyword",
+        "Card.rawvalue",
+        "Card.comment",
+        "Card.field_specifier",
+        "Card.image",
+        "Card.is_blank",
+        "Card.fromstring",
+        "Card.normalize_keyword"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/hdu/base.py",
+      "score": 21,
+      "matched_identifiers": [
+        "different",
+        "fromstring",
+        "into",
+        "larger",
+        "position"
+      ],
+      "reasons": [
+        "function_match:fromstring",
+        "source_content_tokens:different,into,larger,position,single"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fromstring": "    def fromstring(cls, data, checksum=False, ignore_missing_end=False, **kwargs):\n        \"\"\"\n        Creates a new HDU object of the appropriate type from a string\n        containing the HDU's entire header and, optionally, its data.\n\n        Note: When creating a new HDU from a string without a backing file\n        object, the data of that HDU may be read-only.  It depends on whether\n        the underlying string was an immutable Python str/bytes object, or some\n        kind of read-write memory buffer such as a `memoryview`.\n\n        Parameters\n        ----------\n        data : str, bytearray, memoryview, ndarray\n            A byte string containing the HDU's header and data.\n"
+      },
+      "top_level_functions": [
+        "_BaseHDU.header",
+        "_BaseHDU.name",
+        "_BaseHDU.ver",
+        "_BaseHDU.level",
+        "_BaseHDU.is_image",
+        "_BaseHDU.register_hdu",
+        "_BaseHDU.unregister_hdu",
+        "_BaseHDU.match_header",
+        "_BaseHDU.fromstring",
+        "_BaseHDU.readfrom",
+        "_BaseHDU.writeto",
+        "_CorruptedHDU.size",
+        "_CorruptedHDU.verify",
+        "_NonstandardHDU.match_header",
+        "_NonstandardHDU.size",
+        "_NonstandardHDU.data",
+        "_ValidHDU.match_header",
+        "_ValidHDU.size",
+        "_ValidHDU.filebytes",
+        "_ValidHDU.fileinfo",
+        "_ValidHDU.copy",
+        "_ValidHDU.req_cards",
+        "_ValidHDU.add_datasum",
+        "_ValidHDU.add_checksum",
+        "_ValidHDU.verify_datasum",
+        "_ValidHDU.verify_checksum",
+        "ExtensionHDU.match_header",
+        "ExtensionHDU.writeto",
+        "NonstandardExtHDU.match_header",
+        "NonstandardExtHDU.data"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/hdu/hdulist.py",
+      "score": 21,
+      "matched_identifiers": [
+        "config",
+        "fromstring",
+        "into",
+        "position",
+        "single"
+      ],
+      "reasons": [
+        "function_match:fromstring",
+        "source_content_tokens:config,into,position,single,string"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fromstring": "    def fromstring(cls, data, **kwargs):\n        \"\"\"\n        Creates an `HDUList` instance from a string or other in-memory data\n        buffer containing an entire FITS file.  Similar to\n        :meth:`HDUList.fromfile`, but does not accept the mode or memmap\n        arguments, as they are only relevant to reading from a file on disk.\n\n        This is useful for interfacing with other libraries such as CFITSIO,\n        and may also be useful for streaming applications.\n\n        Parameters\n        ----------\n        data : str, buffer-like, etc.\n            A string or other memory buffer containing an entire FITS file.\n            Buffer-like objects include :class:`~bytes`, :class:`~bytearray`,"
+      },
+      "top_level_functions": [
+        "fitsopen",
+        "HDUList.fromfile",
+        "HDUList.fromstring",
+        "HDUList.fileinfo",
+        "HDUList.pop",
+        "HDUList.insert",
+        "HDUList.append",
+        "HDUList.index_of",
+        "HDUList.readall",
+        "HDUList.flush",
+        "HDUList.update_extend",
+        "HDUList.writeto",
+        "HDUList.close",
+        "HDUList.info",
+        "HDUList.filename"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/header.py",
+      "score": 21,
+      "matched_identifiers": [
+        "different",
+        "fromstring",
+        "gives",
+        "included",
+        "into"
+      ],
+      "reasons": [
+        "function_match:fromstring",
+        "source_content_tokens:different,gives,included,into,null"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fromstring": "    def fromstring(cls, data, sep=\"\"):\n        \"\"\"\n        Creates an HDU header from a byte string containing the entire header\n        data.\n\n        Parameters\n        ----------\n        data : str or bytes\n           String or bytes containing the entire header.  In the case of bytes\n           they will be decoded using latin-1 (only plain ASCII characters are\n           allowed in FITS headers but latin-1 allows us to retain any invalid\n           bytes that might appear in malformatted FITS files).\n\n        sep : str, optional\n            The string separating cards from each other, such as a newline.  By"
+      },
+      "top_level_functions": [
+        "Header.cards",
+        "Header.comments",
+        "Header.fromstring",
+        "Header.fromfile",
+        "Header.tostring",
+        "Header.tofile",
+        "Header.fromtextfile",
+        "Header.totextfile",
+        "Header.clear",
+        "Header.copy",
+        "Header.fromkeys",
+        "Header.get",
+        "Header.set",
+        "Header.items",
+        "Header.keys",
+        "Header.values",
+        "Header.pop",
+        "Header.popitem",
+        "Header.setdefault",
+        "Header.update",
+        "Header.append",
+        "Header.extend",
+        "Header.count",
+        "Header.index",
+        "Header.insert",
+        "Header.remove",
+        "Header.rename_keyword",
+        "Header.add_history",
+        "Header.add_comment",
+        "Header.add_blank",
+        "Header.strip",
+        "Header.data_size",
+        "Header.data_size_padded",
+        "_BasicHeader.index",
+        "_BasicHeader.data_size",
+        "_BasicHeader.data_size_padded",
+        "_BasicHeader.fromfile"
+      ]
+    },
+    {
+      "path": "astropy/io/fits/diff.py",
+      "score": 17,
+      "matched_identifiers": [
+        "different",
+        "included",
+        "null",
+        "occurs"
+      ],
+      "reasons": [
+        "stem_in_issue_text:diff",
+        "source_content_tokens:different,included,null,occurs,position"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "_BaseDiff.fromdiff",
+        "_BaseDiff.identical",
+        "_BaseDiff.report",
+        "report_diff_keyword_attr"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/io/fits/tests/test_diff.py",
+      "score": 33,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy/io/fits",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "test_name_matches_source_stem:diff",
+        "token_overlap:diff,fits",
+        "internal_name_overlap:card",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/io/fits/tests/test_hdulist.py",
+      "score": 33,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy/io/fits",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "test_name_matches_source_stem:hdulist",
+        "token_overlap:fits,hdulist",
+        "internal_name_overlap:card",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/io/fits/tests/test_header.py",
+      "score": 33,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy/io/fits",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "test_name_matches_source_stem:header",
+        "token_overlap:fits,header",
+        "internal_name_overlap:card",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/io/fits/tests/test_fitsdiff.py",
+      "score": 27,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy/io/fits",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "token_overlap:diff,fits",
+        "internal_name_overlap:card",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/io/fits/tests/test_fitsheader.py",
+      "score": 27,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:astropy/io",
+        "same_module_area:astropy/io/fits",
+        "inferred_test_dir_match:astropy/io/fits/tests",
+        "token_overlap:fits,header",
+        "internal_name_overlap:fits",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/io"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "astropy/io/fits/tests/test_header.py:pytest_import_or_conftest",
+      "astropy/io/fits/tests/test_header.py:top_level_test_functions",
+      "astropy/io/fits/tests/test_header.py:testcase_class:TestHeaderFunctions",
+      "astropy/io/fits/tests/test_header.py:testcase_class:TestRecordValuedKeywordCards",
+      "astropy/io/fits/tests/test_diff.py:pytest_import_or_conftest",
+      "astropy/io/fits/tests/test_diff.py:top_level_test_functions",
+      "astropy/io/fits/tests/test_diff.py:testcase_class:TestDiff",
+      "astropy/io/fits/tests/test_fitsheader.py:pytest_import_or_conftest",
+      "astropy/io/fits/tests/test_fitsheader.py:testcase_class:TestFITSheader_script",
+      "astropy/io/fits/tests/test_hdulist.py:pytest_import_or_conftest",
+      "astropy/io/fits/tests/test_hdulist.py:testcase_class:TestHDUListFunctions",
+      "astropy/io/fits/tests/test_fitsdiff.py:pytest_import_or_conftest",
+      "astropy/io/fits/tests/test_fitsdiff.py:top_level_test_functions",
+      "astropy/io/fits/tests/test_fitsdiff.py:testcase_class:TestFITSDiff_script",
+      "astropy/io/fits/tests/test_fitsdiff.py:testcase_class:Test_FITSDiff"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 941,
+  "indexed_test_file_count": 432,
+  "available_imports": {
+    "astropy": [
+      "Conf",
+      "Path",
+      "ScienceState",
+      "TestRunner",
+      "__module_type__",
+      "__version__",
+      "_config",
+      "_get_bibtex",
+      "_init_log",
+      "_initialize_astropy",
+      "_teardown_log",
+      "astronomical_constants",
+      "base_constants_version",
+      "find_api_page",
+      "online_help",
+      "physical_constants"
+    ],
+    "astropy.io.fits.header": [
+      "Header",
+      "_BasicHeader",
+      "_BasicHeaderCards",
+      "_CardAccessor",
+      "_DelayedHeader",
+      "_HeaderCommentaryCards",
+      "_HeaderComments",
+      "_block_size",
+      "_check_padding",
+      "_hdr_data_size",
+      "_pad_length"
+    ],
+    "astropy.io.fits.diff": [
+      "FITSDiff",
+      "HDUDiff",
+      "HeaderDiff",
+      "ImageDataDiff",
+      "RawDataDiff",
+      "TableDataDiff",
+      "_BaseDiff",
+      "report_diff_keyword_attr"
+    ],
+    "astropy.io.fits": [
+      "BITPIX2DTYPE",
+      "BinTableHDU",
+      "CompImageHDU",
+      "Conf",
+      "DELAYED",
+      "DTYPE2BITPIX",
+      "FitsHDU",
+      "Group",
+      "GroupData",
+      "GroupsHDU",
+      "HDUList",
+      "ImageHDU",
+      "PrimaryHDU",
+      "StreamingHDU",
+      "TableHDU",
+      "register_hdu",
+      "unregister_hdu"
+    ],
+    "astropy.io": [
+      "CompImageSection",
+      "FITS_rec",
+      "FITS_record",
+      "GroupData",
+      "Header",
+      "Section",
+      "VerifyError",
+      "_config",
+      "card",
+      "column",
+      "convenience",
+      "hdu",
+      "open"
+    ],
+    "astropy.io.fits.card": [
+      "Card",
+      "Undefined",
+      "_format_float",
+      "_format_value",
+      "_int_or_float",
+      "_pad"
+    ],
+    "astropy.io.fits.hdu.base": [
+      "ExtensionHDU",
+      "InvalidHDUException",
+      "NonstandardExtHDU",
+      "_BaseHDU",
+      "_CorruptedHDU",
+      "_Delayed",
+      "_NonstandardHDU",
+      "_ValidHDU",
+      "_hdu_class_from_header"
+    ],
+    "astropy.io.fits.hdu.hdulist": [
+      "HDUList",
+      "fitsopen"
+    ],
+    "astropy.io.fits.tests.test_header": [
+      "TestHeaderFunctions",
+      "TestRecordValuedKeywordCards",
+      "test_init_with_dict",
+      "test_init_with_header",
+      "test_init_with_ordereddict",
+      "test_shallow_copy",
+      "test_subclass"
+    ],
+    "astropy.io.fits.tests.test_diff": [
+      "DummyNonstandardExtHDU",
+      "TestDiff",
+      "test_fitsdiff_hdu_name",
+      "test_fitsdiff_no_hdu_name",
+      "test_fitsdiff_with_names",
+      "test_rawdatadiff_diff_with_rtol"
+    ],
+    "astropy.io.fits.tests.test_fitsheader": [
+      "TestFITSheader_script"
+    ],
+    "astropy.io.fits.tests.test_hdulist": [
+      "TestHDUListFunctions"
+    ],
+    "astropy.io.fits.tests.test_fitsdiff": [
+      "TestFITSDiff_script",
+      "Test_FITSDiff",
+      "test_fitsdiff_openfile"
+    ]
+  },
+  "test_example_snippet": "class TestDiff(FitsTestCase):\n    def test_identical_headers(self):\n        ha = Header([(\"A\", 1), (\"B\", 2), (\"C\", 3)])\n        hb = ha.copy()\n        assert HeaderDiff(ha, hb).identical\n        assert HeaderDiff(ha.tostring(), hb.tostring()).identical\n\n        with pytest.raises(TypeError):\n            HeaderDiff(1, 2)\n\n    def test_slightly_different_headers(self):\n        ha = Header([(\"A\", 1), (\"B\", 2), (\"C\", 3)])\n        hb = ha.copy()\n        hb[\"C\"] = 4\n        assert not HeaderDiff(ha, hb).identical\n\n    def test_common_keywords(self):\n        ha = Header([(\"A\", 1), (\"B\", 2), (\"C\", 3)])\n        hb = ha.copy()\n        hb[\"C\"] = 4\n        hb[\"D\"] = (5, \"Comment\")\n        assert HeaderDiff(ha, hb).common_keywords == [\"A\", \"B\", \"C\"]\n\n    def test_different_keyword_count(self):\n        ha = Header([(\"A\", 1), (\"B\", 2), (\"C\", 3)])\n        hb = ha.copy()\n        del hb[\"B\"]\n        diff = HeaderDiff(ha, hb)\n        assert not diff.identical\n        assert diff.diff_keyword_count == (3, 2)\n\n        # But make sure the common keywords are at least correct\n        assert diff.common_keywords == [\"A\", \"C\"]\n\n    def test_different_keywords(self):",
+  "conftest_fixtures": {
+    "astropy/io/fits/tests/conftest.py": [
+      "home_is_data",
+      "home_is_temp"
+    ],
+    "astropy/conftest.py": [
+      "ignore_matplotlibrc",
+      "fast_thread_switching"
+    ]
+  }
+}

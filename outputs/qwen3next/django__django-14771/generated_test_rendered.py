@@ -1,0 +1,14 @@
+from django.apps import AppConfig
+
+
+class OneConfig(AppConfig):
+    name = 'apps.one_config_app'
+
+from django.test import TestCase, SimpleTestCase
+from django.utils.autoreload import StatReloader
+
+class TestAutoReloaderOptions(TestCase):
+    def test_passes_x_options_repro(self):
+        reloader = StatReloader()
+        args = reloader.get_child_arguments()
+        self.assertIn('-X', args)

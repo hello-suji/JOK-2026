@@ -1,0 +1,17 @@
+--- a/pylint/testutils/lint_module_test.py
++++ b/pylint/testutils/lint_module_test.py
+@@ -316,3 +316,14 @@
+         assert expected_output == actual_output, self.error_msg_for_unequal_output(
+             expected_output, actual_output
+         )
++
++import sys
++import os
++import runpy
++
++def test_pylint_removes_first_item_from_sys_path_repro(linter):
++    original_sys_path = sys.path.copy()
++    sys.path.insert(0, "something")
++    runpy.run_module('pylint', run_name="__main__", alter_sys=True)
++    assert sys.path[0] in ("", ".", os.getcwd())
++    sys.path = original_sys_path

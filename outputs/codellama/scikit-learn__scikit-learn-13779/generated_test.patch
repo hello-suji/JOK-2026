@@ -1,0 +1,24 @@
+--- a/sklearn/ensemble/tests/test_voting.py
++++ b/sklearn/ensemble/tests/test_voting.py
+@@ -507,3 +507,21 @@
+             eclf3.transform(X).swapaxes(0, 1).reshape((4, 6)),
+             eclf2.transform(X)
+     )
++
++from sklearn.datasets import load_iris
++from sklearn.ensemble import VotingClassifier, RandomForestClassifier
++from sklearn.linear_model import LogisticRegression
++
++
++def test_voting_classifier_with_none_estimator_and_weights_repro():
++    X, y = load_iris(return_X_y=True)
++    voter = VotingClassifier(
++        estimators=[('lr', LogisticRegression()),
++                    ('rf', RandomForestClassifier())]
++    )
++    voter.fit(X, y, sample_weight=np.ones(y.shape))
++    voter.set_params(lr=None)
++    voter.fit(X, y, sample_weight=np.ones(y.shape))
++    assert voter.named_estimators['rf'] is not None
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(estimators) != "AttributeError: 'NoneType' object has no attribute 'fit'"

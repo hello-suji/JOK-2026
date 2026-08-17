@@ -1,0 +1,23 @@
+--- a/tests/prefetch_related/test_prefetch_related_objects.py
++++ b/tests/prefetch_related/test_prefetch_related_objects.py
+@@ -155,3 +155,20 @@
+
+         with self.assertNumQueries(0):
+             self.assertCountEqual(book1.authors.all(), [self.author1, self.author2])
++
++from django.test import TestCase, SimpleTestCase
++class TestPrefetchWithSlice(TestCase):
++    def test_prefetch_with_slice_repro(self):
++        from django.db.models import Prefetch
++
++        author = Author.objects.create(name='Author 1')
++        book1 = Book.objects.create(title='Book 1', author=author)
++        book2 = Book.objects.create(title='Book 2', author=author)
++
++        queryset = Author.objects.prefetch_related(Prefetch('book_set', queryset=Book.objects.all()[:1]))
++        authors = list(queryset)
++
++        self.assertEqual(len(authors), 1)
++        self.assertEqual(len(authors[0].book_set.all()), 1)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(authors) != 'AssertionError: Cannot filter a query once a slice has been taken.'

@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/printing/latex.py",
+      "target_function": "latex",
+      "related_classes": [
+        "Integral"
+      ],
+      "candidate_test_file": "sympy/printing/tests/test_latex.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where latex can be called.",
+      "Use the generated reproduction path that calls latex, symbols."
+    ],
+    "execution_stimulus": [
+      "Call latex with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: latex, symbols."
+    ],
+    "expected_failure": "Is there a reason why the user cannot supply the `mul_symbol` of their choosing? Or are the 4 choices a historical artifact? I'm willing to attempt making a PR to allow `mul_symbol` to be arbitrary (and backwards-compatible) if such a PR would be considered.",
+    "relevant_source_files": [
+      "sympy/printing/latex.py",
+      "sympy/integrals/integrals.py",
+      "sympy/integrals/deltafunctions.py"
+    ],
+    "relevant_test_files": [
+      "sympy/printing/tests/test_latex.py",
+      "sympy/integrals/tests/test_heurisch.py",
+      "sympy/integrals/tests/test_deltafunctions.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import symbols, Integral, latex\n\ndef test_custom_mul_symbol_repro():\n    x, y = symbols('x y')\n    expr = 3 * x**2 * y\n    integral_expr = Integral(2 * x**2 * y, x)\n    assert latex(expr, mul_symbol='\\,') == '3 \\, x^{2} \\, y'\n    assert latex(integral_expr) == '\\int 2 x^{2} y\\, dx'\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(integral_expr) != \"'\\\\\\\\int 2 x^{2} y\\\\\\\\, dx' # This thin space is sympy's current behavior\""
+      },
+      {
+        "language": "python",
+        "code": ">>> latex(3*x**2*y)\n'3 \\\\, x^{2} \\\\, y' # I typed the thin spaces in after the fact"
+      },
+      {
+        "language": "python",
+        "code": ">>> latex(Integral(2*x**2*y, x))\n'\\\\int 2 x^{2} y\\\\, dx' # This thin space is sympy's current behavior"
+      }
+    ],
+    "expected_outputs": [
+      "'3 \\\\, x^{2} \\\\, y' # I typed the thin spaces in after the fact"
+    ],
+    "actual_outputs": [
+      "'\\\\int 2 x^{2} y\\\\, dx' # This thin space is sympy's current behavior"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "latex",
+        "symbols"
+      ],
+      "classes": [
+        "Integral"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/printing/tests/test_latex.py",
+      "target_source_file": "sympy/printing/latex.py",
+      "test_visible_functions": [
+        "latex",
+        "symbols"
+      ],
+      "test_visible_classes": [
+        "Integral"
+      ]
+    }
+  }
+]

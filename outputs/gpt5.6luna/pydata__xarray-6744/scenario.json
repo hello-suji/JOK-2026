@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "mean",
+      "related_classes": [
+        "DataArray",
+        "DataArrayRolling",
+        "Option"
+      ],
+      "candidate_test_file": "xarray/tests/test_rolling.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls mean, rolling, array, allclose."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: mean, rolling, array, allclose."
+    ],
+    "expected_failure": "This returns the following values, as expected:",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/rolling.py",
+      "xarray/core/rolling_exp.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_rolling.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_dataset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "class TestDataArrayRolling:\n    def test_center_kwarg_manual_iteration_repro(self) -> None:\n        my_data = xr.DataArray(np.arange(1, 10), dims=\"x\")\n        expected_result = np.array([np.nan, 2., 3., 4., 5., 6., 7., 8., np.nan])\n        rolling_obj = my_data.rolling(x=3, center=True)\n        manual_result = np.array([rolling_obj.mean().isel(x=i).values for i in range(len(my_data))])\n        assert np.allclose(manual_result, expected_result, equal_nan=True)"
+      },
+      {
+        "language": "python",
+        "code": "import xarray as xr\nimport numpy as np\n\nmy_data = xr.DataArray(np.arange(1,10), dims=\"x\")\n\n# Option 1: take a center-justified rolling average\nresult1 = my_data.rolling(x=3, center=True).mean().values\nresult1"
+      },
+      {
+        "language": "python",
+        "code": "array([nan,  2.,  3.,  4.,  5.,  6.,  7.,  8., nan])"
+      },
+      {
+        "language": "python",
+        "code": "# Option 2: try to manually iterate, but the result is not centered\nmy_data_rolling = my_data.rolling(x=3, center=True)\nresult2 = [window.mean().values.item() for label, window in my_data_rolling]\nresult2"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "item",
+        "mean",
+        "rolling",
+        "array",
+        "allclose",
+        "arange",
+        "isel"
+      ],
+      "classes": [
+        "DataArray",
+        "DataArrayRolling",
+        "Option"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_rolling.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "mean",
+        "rolling",
+        "array",
+        "allclose",
+        "arange",
+        "isel"
+      ],
+      "test_visible_classes": [
+        "DataArray",
+        "DataArrayRolling"
+      ]
+    }
+  }
+]

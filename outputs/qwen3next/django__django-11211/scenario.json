@@ -1,0 +1,103 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "prefetch_related",
+      "related_classes": [
+        "UUIDField",
+        "GenericForeignKey",
+        "ContentType"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/test_fields.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.contenttypes.models import ContentType",
+      "from django.db import models",
+      "import uuid",
+      "class Foo(models.Model): id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)",
+      "class Bar(models.Model): foo_content_type = models.ForeignKey(ContentType, related_name='actor', on_delete=models.CASCADE, db_index=True); foo_object_id = models.CharField(max_length=255, db_index=True); foo = GenericForeignKey('foo_content_type', 'foo_object_id')",
+      "foo_instance = Foo.objects.create()",
+      "bar_instance = Bar.objects.create(foo_content_type=ContentType.objects.get_for_model(Foo), foo_object_id=str(foo_instance.id))",
+      "Use the generated reproduction path that calls prefetch_related, models, uuid, create."
+    ],
+    "execution_stimulus": [
+      "queryset = Bar.objects.all().prefetch_related('foo')",
+      "Execute the focused target API path: prefetch_related, models, uuid, create."
+    ],
+    "expected_failure": "The 'foo' attribute in the queryset is None instead of the Foo instance.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/fields/__init__.py",
+      "django/forms/fields.py",
+      "django/contrib/contenttypes/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/model_fields/test_foreignkey.py",
+      "tests/forms_tests/field_tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.contrib.contenttypes.models import ContentType\nfrom django.db import models\nimport uuid\n\n\nclass TestPrefetchRelatedWithGFKAndUUID(TestCase):\n    def setUp(self):\n        self.foo_instance = Answer.objects.create()\n        self.bar_instance = Question.objects.create(\n            content_type=ContentType.objects.get_for_model(Answer),\n            object_id=str(self.foo_instance.id)\n        )\n\n    def test_prefetch_related_with_gfk_and_uuid_repro(self):\n        queryset = Question.objects.all().prefetch_related('content_object')\n        bar = queryset.first()\n        self.assertIsNotNone(bar.content_object)\n        self.assertEqual(bar.content_object, self.foo_instance)\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(bar) != 'None'"
+      },
+      {
+        "language": "python",
+        "code": "def test_prefetch_related_with_gfk_and_uuid():\n    from django.contrib.contenttypes.models import ContentType\n    from django.db import models\n    import uuid\n    class Foo(models.Model): id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)\n    class Bar(models.Model): foo_content_type = models.ForeignKey(ContentType, related_name='actor', on_delete=models.CASCADE, db_index=True); foo_object_id = models.CharField(max_length=255, db_index=True); foo = GenericForeignKey('foo_content_type', 'foo_object_id')\n    foo_instance = Foo.objects.create()\n    bar_instance = Bar.objects.create(foo_content_type=ContentType.objects.get_for_model(Foo), foo_object_id=str(foo_instance.id))\n    queryset = Bar.objects.all().prefetch_related('foo')\n    assert queryset.first().foo is not None"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "None"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "prefetch_related",
+        "models",
+        "uuid",
+        "create",
+        "get_for_model"
+      ],
+      "classes": [
+        "UUIDField",
+        "GenericForeignKey",
+        "ContentType"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/contenttypes_tests/test_fields.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "prefetch_related",
+        "models",
+        "uuid",
+        "create",
+        "get_for_model"
+      ],
+      "test_visible_classes": [
+        "ContentType"
+      ]
+    }
+  }
+]

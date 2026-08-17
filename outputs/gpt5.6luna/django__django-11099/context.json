@@ -1,0 +1,442 @@
+{
+  "instance_id": "django__django-11099",
+  "repo": "django/django",
+  "base_commit": "d26b2424437dabeeca94d7900b37d2df4410da0c",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/auth/validators.py",
+      "score": 23,
+      "matched_identifiers": [
+        "ASCIIUsernameValidator",
+        "UnicodeUsernameValidator",
+        "asciiusernamevalidator",
+        "characters",
+        "regex",
+        "unicodeusernamevalidator"
+      ],
+      "reasons": [
+        "class_match:UnicodeUsernameValidator",
+        "class_match:ASCIIUsernameValidator",
+        "stem_in_issue_text:validators",
+        "source_content_tokens:asciiusernamevalidator,characters,regex,unicodeusernamevalidator,usernamevalidator"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ASCIIUsernameValidator": "class ASCIIUsernameValidator(validators.RegexValidator):\n    regex = r'^[\\w.@+-]+$'\n    message = _(\n        'Enter a valid username. This value may contain only English letters, '\n        'numbers, and @/./+/-/_ characters.'\n    )\n    flags = re.ASCII\n\n\n@deconstructible\nclass UnicodeUsernameValidator(validators.RegexValidator):\n    regex = r'^[\\w.@+-]+$'\n    message = _(\n        'Enter a valid username. This value may contain only letters, '\n        'numbers, and @/./+/-/_ characters.'",
+        "UnicodeUsernameValidator": "class UnicodeUsernameValidator(validators.RegexValidator):\n    regex = r'^[\\w.@+-]+$'\n    message = _(\n        'Enter a valid username. This value may contain only letters, '\n        'numbers, and @/./+/-/_ characters.'\n    )\n    flags = 0"
+      },
+      "top_level_functions": []
+    },
+    {
+      "path": "django/core/validators.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allow",
+        "characters",
+        "example",
+        "known"
+      ],
+      "reasons": [
+        "stem_in_issue_text:validators",
+        "source_content_tokens:allow,characters,example,known,match"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "validate_integer",
+        "EmailValidator.validate_domain_part",
+        "validate_ipv4_address",
+        "validate_ipv6_address",
+        "validate_ipv46_address",
+        "ip_address_validators",
+        "int_list_validator",
+        "BaseValidator.compare",
+        "BaseValidator.clean",
+        "MaxValueValidator.compare",
+        "MinValueValidator.compare",
+        "MinLengthValidator.compare",
+        "MinLengthValidator.clean",
+        "MaxLengthValidator.compare",
+        "MaxLengthValidator.clean",
+        "get_available_image_extensions",
+        "validate_image_file_extension"
+      ]
+    },
+    {
+      "path": "django/apps/registry.py",
+      "score": 16,
+      "matched_identifiers": [
+        "accept",
+        "avoid",
+        "change",
+        "changed"
+      ],
+      "reasons": [
+        "source_content_tokens:accept,avoid,change,changed,contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allow",
+        "avoid",
+        "behavior",
+        "contrib"
+      ],
+      "reasons": [
+        "source_content_tokens:allow,avoid,behavior,contrib,example"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/filters.py",
+      "score": 16,
+      "matched_identifiers": [
+        "allow",
+        "change",
+        "contrib",
+        "example"
+      ],
+      "reasons": [
+        "source_content_tokens:allow,change,contrib,example,known"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ListFilter.has_output",
+        "ListFilter.choices",
+        "ListFilter.queryset",
+        "ListFilter.expected_parameters",
+        "SimpleListFilter.has_output",
+        "SimpleListFilter.value",
+        "SimpleListFilter.lookups",
+        "SimpleListFilter.expected_parameters",
+        "SimpleListFilter.choices",
+        "FieldListFilter.has_output",
+        "FieldListFilter.queryset",
+        "FieldListFilter.register",
+        "FieldListFilter.create",
+        "RelatedFieldListFilter.include_empty_choice",
+        "RelatedFieldListFilter.has_output",
+        "RelatedFieldListFilter.expected_parameters",
+        "RelatedFieldListFilter.field_choices",
+        "RelatedFieldListFilter.choices",
+        "BooleanFieldListFilter.expected_parameters",
+        "BooleanFieldListFilter.choices",
+        "ChoicesFieldListFilter.expected_parameters",
+        "ChoicesFieldListFilter.choices",
+        "DateFieldListFilter.expected_parameters",
+        "DateFieldListFilter.choices",
+        "AllValuesFieldListFilter.expected_parameters",
+        "AllValuesFieldListFilter.choices",
+        "RelatedOnlyFieldListFilter.field_choices"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/test_validators.py",
+      "score": 19,
+      "matched_identifiers": [
+        "ASCIIUsernameValidator",
+        "UnicodeUsernameValidator",
+        "UsernameValidator"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UnicodeUsernameValidator",
+        "test_path_related_to_class:ASCIIUsernameValidator",
+        "test_path_related_to_class:UsernameValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:auth,validator",
+        "internal_name_overlap:username",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_validators.py",
+      "score": 17,
+      "matched_identifiers": [
+        "ASCIIUsernameValidator",
+        "UnicodeUsernameValidator",
+        "UsernameValidator"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UnicodeUsernameValidator",
+        "test_path_related_to_class:ASCIIUsernameValidator",
+        "test_path_related_to_class:UsernameValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/validation/test_validators.py",
+      "score": 17,
+      "matched_identifiers": [
+        "ASCIIUsernameValidator",
+        "UnicodeUsernameValidator",
+        "UsernameValidator"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UnicodeUsernameValidator",
+        "test_path_related_to_class:ASCIIUsernameValidator",
+        "test_path_related_to_class:UsernameValidator",
+        "test_name_matches_source_stem:validators",
+        "token_overlap:validator",
+        "internal_name_overlap:validator",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/models/with_integer_username.py",
+      "score": 12,
+      "matched_identifiers": [
+        "ASCIIUsernameValidator",
+        "UnicodeUsernameValidator",
+        "UsernameValidator"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UnicodeUsernameValidator",
+        "test_path_related_to_class:ASCIIUsernameValidator",
+        "test_path_related_to_class:UsernameValidator",
+        "token_overlap:auth,username",
+        "internal_name_overlap:username",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/validation/test_validators.py:unittest_or_django_test_import",
+      "tests/validation/test_validators.py:testcase_class:TestModelsWithValidators",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_validators.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_validators.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_validators.py:testcase_class:TestFieldWithValidators"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2548,
+  "indexed_test_file_count": 1720,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango31Warning",
+      "apps",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.validation.test_validators": [
+      "TestModelsWithValidators"
+    ],
+    "tests.validation": [
+      "ValidationAssertions"
+    ],
+    "tests": [
+      "ValidationError"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.auth_tests.test_validators": [
+      "CommonPasswordValidatorTest",
+      "MinimumLengthValidatorTest",
+      "NumericPasswordValidatorTest",
+      "PasswordValidationTest",
+      "UserAttributeSimilarityValidatorTest",
+      "UsernameValidatorsTests"
+    ],
+    "tests.auth_tests.models.with_integer_username": [
+      "IntegerUsernameUser",
+      "IntegerUsernameUserManager"
+    ],
+    "tests.auth_tests": [
+      "CustomPermissionsUser",
+      "CustomUser",
+      "CustomUserNonUniqueUsername",
+      "CustomUserWithFK",
+      "CustomUserWithoutIsActiveField",
+      "Email",
+      "ExtensionUser",
+      "IntegerUsernameUser",
+      "IsActiveTestUser1",
+      "MinimalUser",
+      "NoPasswordUser",
+      "Proxy",
+      "UUIDUser",
+      "UserProxy",
+      "UserWithDisabledLastLoginField"
+    ],
+    "tests.forms_tests.tests.test_validators": [
+      "TestFieldWithValidators"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.core.validators": [
+      "BaseValidator",
+      "DecimalValidator",
+      "EmailValidator",
+      "FileExtensionValidator",
+      "MaxLengthValidator",
+      "MaxValueValidator",
+      "MinLengthValidator",
+      "MinValueValidator",
+      "ProhibitNullCharactersValidator",
+      "RegexValidator",
+      "URLValidator",
+      "_lazy_re_compile",
+      "get_available_image_extensions",
+      "int_list_validator",
+      "ip_address_validators",
+      "validate_image_file_extension",
+      "validate_integer",
+      "validate_ipv46_address",
+      "validate_ipv4_address",
+      "validate_ipv6_address"
+    ],
+    "django.contrib.admin.filters": [
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "ListFilter",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.auth.validators": [
+      "ASCIIUsernameValidator",
+      "UnicodeUsernameValidator"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ]
+  },
+  "test_example_snippet": "        class TestUser(models.Model):\n            pass\n\n            @property\n            def username(self):\n                return 'foobar'\n\n        with self.assertRaises(ValidationError) as cm:\n            UserAttributeSimilarityValidator().validate('foobar', user=TestUser()),\n        self.assertEqual(cm.exception.messages, ['The password is too similar to the username.'])\n\n    def test_help_text(self):\n        self.assertEqual(\n            UserAttributeSimilarityValidator().get_help_text(),\n            \"Your password can't be too similar to your other personal information.\"\n        )\n\n\nclass CommonPasswordValidatorTest(SimpleTestCase):\n    def test_validate(self):\n        expected_error = \"This password is too common.\"\n        self.assertIsNone(CommonPasswordValidator().validate('a-safe-password'))\n\n        with self.assertRaises(ValidationError) as cm:\n            CommonPasswordValidator().validate('godzilla')\n        self.assertEqual(cm.exception.messages, [expected_error])\n\n    def test_validate_custom_list(self):\n        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'common-passwords-custom.txt')\n        validator = CommonPasswordValidator(password_list_path=path)\n        expected_error = \"This password is too common.\"\n        self.assertIsNone(validator.validate('a-safe-password'))\n\n        with self.assertRaises(ValidationError) as cm:\n            validator.validate('from-my-custom-list')",
+  "conftest_fixtures": {}
+}

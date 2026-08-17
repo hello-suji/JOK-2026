@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-12585",
+    "model_patch": "--- a/sklearn/tests/test_base.py\n+++ b/sklearn/tests/test_base.py\n@@ -442,3 +442,11 @@\n     estimator_restored = pickle.loads(serialized)\n     assert_equal(estimator_restored.attribute_pickled, 5)\n     assert_equal(estimator_restored._attribute_not_pickled, None)\n+\n+def test_clone_with_estimator_class_repro():\n+    from sklearn.preprocessing import StandardScaler\n+    cloned_instance = clone(StandardScaler(with_mean=StandardScaler))\n+    assert isinstance(cloned_instance, StandardScaler)\n+    assert isinstance(cloned_instance.with_mean, type(StandardScaler))\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(cloned_instance) != \"TypeError: get_params() missing 1 required positional argument: 'self'\"\n",
+    "patch_sha256": "05753b8b4164095811a8d7077f81e26884230f867482320fb24fd9f8c485f5f9"
+  }
+]

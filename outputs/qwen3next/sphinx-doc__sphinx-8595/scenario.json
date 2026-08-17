@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "bar",
+      "related_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where bar can be called.",
+      "Use the generated reproduction path that calls bar, baz, foo, tempfile."
+    ],
+    "execution_stimulus": [
+      "Call bar with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: bar, baz, foo, tempfile."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sphinx/domains/python.py",
+      "sphinx/ext/napoleon/docstring.py",
+      "sphinx/writers/text.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "tests/test_ext_intersphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc import DocumenterBridge\n\ndef test_empty_all_attribute_ignored_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctrees')\n        confdir = srcdir\n        os.makedirs(srcdir)\n        example_content = \"\"\"__all__ = []\n\ndef foo():\n    \\\"docstring\\\"\n\ndef bar():\n    \\\"docstring\\\"\n\ndef baz():\n    \\\"docstring\\\"\"\"\"\n        index_rst_content = \"\"\".. automodule:: example\n   :members:\"\"\"\n        with open(os.path.join(srcdir, 'example.py'), 'w') as f:\n            f.write(example_content)\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(index_rst_content)\n        with open(os.path.join(confdir, 'conf.py'), 'w') as f:\n            f.write('extensions = [\\\"sphinx.ext.autodoc\\\"]\\n')\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, 'text')\n        app.build()\n        output_path = os.path.join(outdir, 'index.txt')\n        with open(output_path, 'r') as f:\n            output = f.read()\n        assert 'foo' not in output\n        assert 'bar' not in output\n        assert 'baz' not in output"
+      },
+      {
+        "language": "python",
+        "code": "# example.py\n__all__ = []\n\n\ndef foo():\n    \"docstring\"\n\n\ndef bar():\n    \"docstring\"\n\n\ndef baz():\n    \"docstring\""
+      },
+      {
+        "language": "python",
+        "code": "# index.rst\n.. automodule:: example\n   :members:"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "bar",
+        "baz",
+        "foo",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ],
+      "files": [
+        "example.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "bar",
+        "baz",
+        "foo",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Sphinx",
+        "DocumenterBridge",
+        "TemporaryDirectory"
+      ]
+    }
+  }
+]

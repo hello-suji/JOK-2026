@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11163",
+    "model_patch": "--- a/tests/forms_tests/tests/test_utils.py\n+++ b/tests/forms_tests/tests/test_utils.py\n@@ -163,3 +163,13 @@\n         e = ErrorList(['Invalid username.'])\n         self.assertTrue(hasattr(ErrorList, '__html__'))\n         self.assertEqual(str(e), e.__html__())\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.forms.models import model_to_dict\n+from django.contrib.auth.models import User\n+\n+class TestModelToDictBehavior(SimpleTestCase):\n+    def test_model_to_dict_with_empty_fields_repro(self):\n+        instance = User(username='testuser')\n+        result = model_to_dict(instance, fields=[])\n+        self.assertEqual(result, {})\n",
+    "patch_sha256": "d2804e1a0e5b2c532f0d76bde3b4610146c5165c2142ca749e3ad798d1a1a9c9"
+  }
+]

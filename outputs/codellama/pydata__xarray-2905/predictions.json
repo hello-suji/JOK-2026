@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-2905",
+    "model_patch": "--- a/xarray/tests/test_dataarray.py\n+++ b/xarray/tests/test_dataarray.py\n@@ -7119,3 +7119,20 @@\n     x0 = DataArray(np.array([object()]))\n     x1 = deepcopy(x0)\n     assert x0.values[0] is not x1.values[0]\n+\n+def test_dataarray_loc_assignment_coercion_repro():\n+    import numpy as np\n+    import xarray as xr\n+\n+    class HasValues:\n+        def __init__(self):\n+            self.values = 5\n+\n+    data_array = xr.DataArray(np.array([None]), dims=['dim_0'])\n+    has_values_instance = HasValues()\n+    data_array.loc[0] = has_values_instance\n+\n+    assert isinstance(data_array.values[0], HasValues)\n+    assert data_array.values[0].values == 5\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(has_values_instance) != 'array([array(5)], dtype=object)'\n",
+    "patch_sha256": "57a9412ae24c6b52a819731bfac5bdb05a5b9dea0cc604ff8d0ac604b37816a8"
+  }
+]

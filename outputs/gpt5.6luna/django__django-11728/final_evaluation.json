@@ -1,0 +1,12 @@
+{
+  "instance_id": "django__django-11728",
+  "final_score": 1.0,
+  "admitted_to_final_set": true,
+  "match_status": "MATCHED",
+  "before_patch_outcome": "FAIL",
+  "after_patch_outcome": "PASS",
+  "f_to_p": true,
+  "payload": {
+    "instance_id": "django__django-11728"
+  }
+}

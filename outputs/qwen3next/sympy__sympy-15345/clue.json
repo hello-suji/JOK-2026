@@ -1,0 +1,36 @@
+{
+  "instance_id": "sympy__sympy-15345",
+  "observed_behavior": [
+    "mathematica_code gives wrong output with Max",
+    "then I would expect the output `'Max[x,2]'` which is valid Mathematica code but instead I get `'Max(2, x)'` which is not valid Mathematica code."
+  ],
+  "expected_behavior": [],
+  "repro_conditions": [
+    "If I run the code"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "mathematica_code",
+      "symbols"
+    ],
+    "classes": [
+      "Max"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "mathematica_code gives wrong output with Max\nIf I run the code\n\n```\nx = symbols('x')\nmathematica_code(Max(x,2))\n```\n\nthen I would expect the output `'Max[x,2]'` which is valid Mathematica code but instead I get `'Max(2, x)'` which is not valid Mathematica code.",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "x = symbols('x')\nmathematica_code(Max(x,2))",
+      "context_before": "If I run the code",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

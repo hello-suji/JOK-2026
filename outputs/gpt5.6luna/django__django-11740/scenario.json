@@ -1,0 +1,115 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/models.py",
+      "target_function": "_",
+      "related_classes": [
+        "CharField",
+        "ForeignKey",
+        "NLi1cDgAJ",
+        "MigrationAutodetector",
+        "NonInteractiveMigrationQuestioner",
+        "ModelState",
+        "ProjectState",
+        "UUIDField"
+      ],
+      "candidate_test_file": "tests/model_fields/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _ can be called.",
+      "Use the generated reproduction path that calls uuid, models, add_model, _detect_changes.",
+      "Use the generated reproduction path that calls _, uuid, models, add_model."
+    ],
+    "execution_stimulus": [
+      "Call _ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: uuid, models, add_model, _detect_changes.",
+      "Execute the focused target API path: _, uuid, models, add_model."
+    ],
+    "expected_failure": "Change uuid field to FK does not create dependency",
+    "relevant_source_files": [
+      "django/contrib/admin/models.py",
+      "django/contrib/auth/models.py",
+      "django/contrib/contenttypes/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/model_fields/models.py",
+      "tests/model_fields/test_foreignkey.py",
+      "tests/distinct_on_fields/models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import uuid\n\nfrom django.db import models\nfrom django.db.migrations.autodetector import MigrationAutodetector\nfrom django.db.migrations.questioner import NonInteractiveMigrationQuestioner\nfrom django.db.migrations.state import ModelState, ProjectState\n\n\ndef test_uuidfield_to_foreignkey_creates_cross_app_dependency():\n    before = ProjectState()\n    before.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.UUIDField(null=True, blank=True)),\n    ]))\n    before.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    after = ProjectState()\n    after.add_model(ModelState('testapp1', 'App1', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n        ('another_app', models.ForeignKey('testapp2.App2', null=True, blank=True, on_delete=models.SET_NULL)),\n    ]))\n    after.add_model(ModelState('testapp2', 'App2', [\n        ('id', models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)),\n    ]))\n    changes = MigrationAutodetector(before, after, NonInteractiveMigrationQuestioner())._detect_changes()\n    dependencies = changes['testapp1'][0].dependencies\n    assert ('testapp2', '__first__') in dependencies\n"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_",
+        "uuid",
+        "models",
+        "add_model",
+        "_detect_changes"
+      ],
+      "classes": [
+        "CharField",
+        "ForeignKey",
+        "NLi1cDgAJ",
+        "UUIDField",
+        "MigrationAutodetector",
+        "NonInteractiveMigrationQuestioner",
+        "ModelState",
+        "ProjectState"
+      ],
+      "files": [
+        "models.py"
+      ],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/model_fields/models.py",
+      "target_source_file": "django/contrib/admin/models.py",
+      "test_visible_functions": [
+        "_",
+        "uuid",
+        "models",
+        "add_model",
+        "_detect_changes"
+      ],
+      "test_visible_classes": [
+        "ForeignKey",
+        "UUIDField",
+        "MigrationAutodetector",
+        "NonInteractiveMigrationQuestioner",
+        "ModelState",
+        "ProjectState"
+      ]
+    }
+  }
+]

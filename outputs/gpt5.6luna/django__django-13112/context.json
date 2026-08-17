@@ -1,0 +1,531 @@
+{
+  "instance_id": "django__django-13112",
+  "repo": "django/django",
+  "base_commit": "09914ccf688974e068941f55412b930729bafa06",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/admin/apps.py",
+      "score": 37,
+      "matched_identifiers": [
+        "admin",
+        "apps.py",
+        "contrib",
+        "default",
+        "self"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:admin,contrib,default,self,sites"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SimpleAdminConfig.ready",
+        "AdminConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/apps.py",
+      "score": 37,
+      "matched_identifiers": [
+        "apps.py",
+        "auth",
+        "contrib",
+        "manage",
+        "migrate"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:auth,contrib,manage,migrate,post"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AuthConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/apps.py",
+      "score": 37,
+      "matched_identifiers": [
+        "apps.py",
+        "contenttypes",
+        "contrib",
+        "manage",
+        "migrate"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:contenttypes,contrib,manage,migrate,post"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ContentTypesConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/apps.py",
+      "score": 37,
+      "matched_identifiers": [
+        "apps.py",
+        "contrib",
+        "installed",
+        "kwargs",
+        "post"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:contrib,installed,kwargs,post,reverse"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "uninstall_if_needed",
+        "PostgresConfig.ready"
+      ]
+    },
+    {
+      "path": "django/contrib/sites/apps.py",
+      "score": 37,
+      "matched_identifiers": [
+        "apps.py",
+        "contrib",
+        "default",
+        "manage",
+        "migrate"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:apps.py",
+        "stem_in_issue_text:apps",
+        "source_content_tokens:contrib,default,manage,migrate,post"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SitesConfig.ready"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/model_fields/test_foreignkey.py",
+      "score": 25,
+      "matched_identifiers": [
+        "CharField",
+        "DateTimeField",
+        "ForeignKey",
+        "GenericIPAddressField",
+        "ManyToManyField",
+        "RichTextField",
+        "SlugField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CharField",
+        "test_path_related_to_class:DateTimeField",
+        "test_path_related_to_class:ManyToManyField",
+        "test_path_related_to_class:RichTextField",
+        "test_path_related_to_class:ForeignKey",
+        "test_path_related_to_class:SlugField",
+        "test_path_related_to_class:GenericIPAddressField",
+        "token_overlap:field,foreign",
+        "internal_name_overlap:text",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/custom_pk/fields.py",
+      "score": 24,
+      "matched_identifiers": [
+        "CharField",
+        "DateTimeField",
+        "GenericIPAddressField",
+        "ManyToManyField",
+        "RichTextField",
+        "SlugField",
+        "__str__"
+      ],
+      "reasons": [
+        "test_function_match:__str__",
+        "test_path_related_to_class:CharField",
+        "test_path_related_to_class:DateTimeField",
+        "test_path_related_to_class:ManyToManyField",
+        "test_path_related_to_class:RichTextField",
+        "test_path_related_to_class:SlugField",
+        "test_path_related_to_class:GenericIPAddressField",
+        "token_overlap:field",
+        "internal_name_overlap:field",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_datetimefield.py",
+      "score": 24,
+      "matched_identifiers": [
+        "CharField",
+        "DateTimeField",
+        "GenericIPAddressField",
+        "ManyToManyField",
+        "RichTextField",
+        "SlugField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CharField",
+        "test_path_related_to_class:DateTimeField",
+        "test_path_related_to_class:ManyToManyField",
+        "test_path_related_to_class:RichTextField",
+        "test_path_related_to_class:SlugField",
+        "test_path_related_to_class:GenericIPAddressField",
+        "token_overlap:date,field,time",
+        "internal_name_overlap:date",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_splitdatetimefield.py",
+      "score": 24,
+      "matched_identifiers": [
+        "CharField",
+        "DateTimeField",
+        "GenericIPAddressField",
+        "ManyToManyField",
+        "RichTextField",
+        "SlugField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CharField",
+        "test_path_related_to_class:DateTimeField",
+        "test_path_related_to_class:ManyToManyField",
+        "test_path_related_to_class:RichTextField",
+        "test_path_related_to_class:SlugField",
+        "test_path_related_to_class:GenericIPAddressField",
+        "token_overlap:date,field,time",
+        "internal_name_overlap:date",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/model_fields/test_datetimefield.py",
+      "score": 24,
+      "matched_identifiers": [
+        "CharField",
+        "DateTimeField",
+        "GenericIPAddressField",
+        "ManyToManyField",
+        "RichTextField",
+        "SlugField"
+      ],
+      "reasons": [
+        "test_path_related_to_class:CharField",
+        "test_path_related_to_class:DateTimeField",
+        "test_path_related_to_class:ManyToManyField",
+        "test_path_related_to_class:RichTextField",
+        "test_path_related_to_class:SlugField",
+        "test_path_related_to_class:GenericIPAddressField",
+        "token_overlap:date,field,time",
+        "internal_name_overlap:date",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/model_fields/test_datetimefield.py:unittest_or_django_test_import",
+      "tests/model_fields/test_foreignkey.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_datetimefield.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_splitdatetimefield.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2647,
+  "indexed_test_file_count": 1793,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.custom_pk.fields": [
+      "MyAutoField",
+      "MyWrapper"
+    ],
+    "tests.model_fields.test_datetimefield": [
+      "DateTimeFieldTests",
+      "ValidationTest"
+    ],
+    "tests.model_fields.test_foreignkey": [
+      "ForeignKeyTests"
+    ],
+    "tests.forms_tests.field_tests.test_datetimefield": [
+      "DateTimeFieldTest"
+    ],
+    "tests.forms_tests.field_tests.test_splitdatetimefield": [
+      "SplitDateTimeFieldTest"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "django.urls.base": [
+      "clear_script_prefix",
+      "clear_url_caches",
+      "get_script_prefix",
+      "get_urlconf",
+      "is_valid_path",
+      "resolve",
+      "reverse",
+      "set_script_prefix",
+      "set_urlconf",
+      "translate_url"
+    ],
+    "django.forms.fields": [
+      "BaseTemporalField",
+      "BooleanField",
+      "CallableChoiceIterator",
+      "CharField",
+      "ChoiceField",
+      "ComboField",
+      "DateField",
+      "DateTimeField",
+      "DateTimeFormatsIterator",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Field",
+      "FileField",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "ImageField",
+      "IntegerField",
+      "InvalidJSONInput",
+      "JSONField",
+      "JSONString",
+      "MultiValueField",
+      "MultipleChoiceField",
+      "NullBooleanField",
+      "RegexField",
+      "SlugField",
+      "SplitDateTimeField",
+      "TimeField",
+      "TypedChoiceField",
+      "TypedMultipleChoiceField",
+      "URLField",
+      "UUIDField"
+    ],
+    "django.apps.config": [
+      "AppConfig"
+    ],
+    "django.contrib.postgres.apps": [
+      "PostgresConfig",
+      "uninstall_if_needed"
+    ],
+    "django.contrib.sites.apps": [
+      "SitesConfig"
+    ],
+    "django.contrib.contenttypes.apps": [
+      "ContentTypesConfig"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.apps": [
+      "AdminConfig",
+      "SimpleAdminConfig"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib.auth.apps": [
+      "AuthConfig"
+    ],
+    "django.db.models.fields.related": [
+      "ForeignKey",
+      "ForeignObject",
+      "ManyToManyField",
+      "OneToOneField",
+      "RelatedField",
+      "create_many_to_many_intermediary_model",
+      "lazy_related_operation",
+      "resolve_relation"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_load_field",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ]
+  },
+  "test_example_snippet": "    def test_callable_default(self):\n        \"\"\"A lazy callable may be used for ForeignKey.default.\"\"\"\n        a = Foo.objects.create(id=1, a='abc', d=Decimal('12.34'))\n        b = Bar.objects.create(b='bcd')\n        self.assertEqual(b.a, a)\n\n    @skipIfDBFeature('interprets_empty_strings_as_nulls')\n    def test_empty_string_fk(self):\n        \"\"\"\n        Empty strings foreign key values don't get converted to None (#19299).\n        \"\"\"\n        char_model_empty = PrimaryKeyCharModel.objects.create(string='')\n        fk_model_empty = FkToChar.objects.create(out=char_model_empty)\n        fk_model_empty = FkToChar.objects.select_related('out').get(id=fk_model_empty.pk)\n        self.assertEqual(fk_model_empty.out, char_model_empty)\n\n    @isolate_apps('model_fields')\n    def test_warning_when_unique_true_on_fk(self):\n        class Foo(models.Model):\n            pass\n\n        class FKUniqueTrue(models.Model):\n            fk_field = models.ForeignKey(Foo, models.CASCADE, unique=True)\n\n        model = FKUniqueTrue()\n        expected_warnings = [\n            checks.Warning(\n                'Setting unique=True on a ForeignKey has the same effect as using a OneToOneField.',\n                hint='ForeignKey(unique=True) is usually better served by a OneToOneField.',\n                obj=FKUniqueTrue.fk_field.field,\n                id='fields.W342',\n            )\n        ]\n        warnings = model.check()\n        self.assertEqual(warnings, expected_warnings)",
+  "conftest_fixtures": {}
+}

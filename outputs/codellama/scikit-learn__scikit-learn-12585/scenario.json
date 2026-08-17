@@ -1,0 +1,97 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/base.py",
+      "target_function": "clone",
+      "related_classes": [
+        "StandardScaler"
+      ],
+      "candidate_test_file": "sklearn/tests/test_base.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sklearn.preprocessing import StandardScaler",
+      "from sklearn.base import clone",
+      "Use the generated reproduction path that calls clone, isinstance, type.",
+      "Use the generated reproduction path that calls clone, get_params, isinstance, type."
+    ],
+    "execution_stimulus": [
+      "clone(StandardScaler(with_mean=StandardScaler))",
+      "Execute the focused target API path: clone, isinstance, type.",
+      "Execute the focused target API path: clone, get_params, isinstance, type."
+    ],
+    "expected_failure": "TypeError: get_params() missing 1 required positional argument: 'self'",
+    "relevant_source_files": [
+      "sklearn/base.py",
+      "sklearn/datasets/base.py",
+      "sklearn/decomposition/base.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/tests/test_base.py",
+      "sklearn/linear_model/tests/test_base.py",
+      "sklearn/datasets/tests/test_base.py",
+      "sklearn/ensemble/tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_clone_with_estimator_class():\n    from sklearn.preprocessing import StandardScaler\n    from sklearn.base import clone\n    try:\n        clone(StandardScaler(with_mean=StandardScaler))\n    except TypeError as e:\n        assert str(e) == \"get_params() missing 1 required positional argument: 'self'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_clone_with_estimator_class_repro():\n    from sklearn.preprocessing import StandardScaler\n    cloned_instance = clone(StandardScaler(with_mean=StandardScaler))\n    assert isinstance(cloned_instance, StandardScaler)\n    assert isinstance(cloned_instance.with_mean, type(StandardScaler))\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(cloned_instance) != \"TypeError: get_params() missing 1 required positional argument: 'self'\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: get_params() missing 1 required positional argument: 'self'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "get_params",
+      "missing 1 required positional argument: 'self'"
+    ],
+    "identifiers": {
+      "functions": [
+        "clone",
+        "isinstance",
+        "type",
+        "get_params"
+      ],
+      "classes": [
+        "StandardScaler"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/tests/test_base.py",
+      "target_source_file": "sklearn/base.py",
+      "test_visible_functions": [
+        "clone",
+        "get_params",
+        "isinstance",
+        "type"
+      ],
+      "test_visible_classes": [
+        "StandardScaler"
+      ]
+    }
+  }
+]

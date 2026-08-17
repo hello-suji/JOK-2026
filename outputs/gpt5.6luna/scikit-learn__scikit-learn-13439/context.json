@@ -1,0 +1,531 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-13439",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "a62775e99f2a5ea3d51db7160fad783f6cd8a4c5",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/pipeline.py",
+      "score": 23,
+      "matched_identifiers": [
+        "Pipeline",
+        "anova",
+        "anova_filter",
+        "linear",
+        "pipe"
+      ],
+      "reasons": [
+        "class_match:Pipeline",
+        "path_contains_class:Pipeline",
+        "stem_in_issue_text:pipeline",
+        "source_content_tokens:anova,linear,pipe,anova_filter,classification"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Pipeline": "class Pipeline(_BaseComposition):\n    \"\"\"Pipeline of transforms with a final estimator.\n\n    Sequentially apply a list of transforms and a final estimator.\n    Intermediate steps of the pipeline must be 'transforms', that is, they\n    must implement fit and transform methods.\n    The final estimator only needs to implement fit.\n    The transformers in the pipeline can be cached using ``memory`` argument.\n\n    The purpose of the pipeline is to assemble several steps that can be\n    cross-validated together while setting different parameters.\n    For this, it enables setting parameters of the various steps using their\n    names and the parameter name separated by a '__', as in the example below.\n    A step's estimator may be replaced entirely by setting the parameter\n    with its name to another estimator, or a transformer removed by setting"
+      },
+      "top_level_functions": [
+        "Pipeline.get_params",
+        "Pipeline.set_params",
+        "Pipeline.named_steps",
+        "Pipeline.fit",
+        "Pipeline.fit_transform",
+        "Pipeline.predict",
+        "Pipeline.fit_predict",
+        "Pipeline.predict_proba",
+        "Pipeline.decision_function",
+        "Pipeline.predict_log_proba",
+        "Pipeline.transform",
+        "Pipeline.inverse_transform",
+        "Pipeline.score",
+        "Pipeline.classes_",
+        "make_pipeline",
+        "FeatureUnion.get_params",
+        "FeatureUnion.set_params",
+        "FeatureUnion.get_feature_names",
+        "FeatureUnion.fit",
+        "FeatureUnion.fit_transform",
+        "FeatureUnion.transform",
+        "make_union"
+      ]
+    },
+    {
+      "path": "sklearn/datasets/samples_generator.py",
+      "score": 22,
+      "matched_identifiers": [
+        "__len__",
+        "classification",
+        "compatible",
+        "linear",
+        "make_classification"
+      ],
+      "reasons": [
+        "function_match:make_classification",
+        "stem_in_issue_text:samples_generator",
+        "source_content_tokens:linear,__len__,classification,compatible,datasets"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "make_classification": "def make_classification(n_samples=100, n_features=20, n_informative=2,\n                        n_redundant=2, n_repeated=0, n_classes=2,\n                        n_clusters_per_class=2, weights=None, flip_y=0.01,\n                        class_sep=1.0, hypercube=True, shift=0.0, scale=1.0,\n                        shuffle=True, random_state=None):\n    \"\"\"Generate a random n-class classification problem.\n\n    This initially creates clusters of points normally distributed (std=1)\n    about vertices of an ``n_informative``-dimensional hypercube with sides of\n    length ``2*class_sep`` and assigns an equal number of clusters to each\n    class. It introduces interdependence between these features and adds\n    various types of further noise to the data.\n\n    Without shuffling, ``X`` horizontally stacks features in the following\n    order: the primary ``n_informative`` features, followed by ``n_redundant``"
+      },
+      "top_level_functions": [
+        "make_classification",
+        "make_multilabel_classification",
+        "make_hastie_10_2",
+        "make_regression",
+        "make_circles",
+        "make_moons",
+        "make_blobs",
+        "make_friedman1",
+        "make_friedman2",
+        "make_friedman3",
+        "make_low_rank_matrix",
+        "make_sparse_coded_signal",
+        "make_sparse_uncorrelated",
+        "make_spd_matrix",
+        "make_sparse_spd_matrix",
+        "make_swiss_roll",
+        "make_s_curve",
+        "make_gaussian_quantiles",
+        "make_biclusters",
+        "make_checkerboard"
+      ]
+    },
+    {
+      "path": "sklearn/feature_selection/univariate_selection.py",
+      "score": 20,
+      "matched_identifiers": [
+        "SelectKBest",
+        "anova",
+        "classification",
+        "datasets",
+        "linear"
+      ],
+      "reasons": [
+        "class_match:SelectKBest",
+        "source_content_tokens:anova,linear,classification,datasets,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "SelectKBest": "class SelectKBest(_BaseFilter):\n    \"\"\"Select features according to the k highest scores.\n\n    Read more in the :ref:`User Guide <univariate_feature_selection>`.\n\n    Parameters\n    ----------\n    score_func : callable\n        Function taking two arrays X and y, and returning a pair of arrays\n        (scores, pvalues) or a single array with scores.\n        Default is f_classif (see below \"See also\"). The default function only\n        works with classification tasks.\n\n    k : int or \"all\", optional, default=10\n        Number of top features to select."
+      },
+      "top_level_functions": [
+        "f_oneway",
+        "f_classif",
+        "chi2",
+        "f_regression",
+        "_BaseFilter.fit"
+      ]
+    },
+    {
+      "path": "examples/feature_selection/plot_feature_selection_pipeline.py",
+      "score": 18,
+      "matched_identifiers": [
+        "anova",
+        "anova_filter",
+        "linear",
+        "pipe"
+      ],
+      "reasons": [
+        "path_contains_class:Pipeline",
+        "source_content_tokens:anova,linear,pipe,anova_filter,classification"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "setup.py",
+      "score": 17,
+      "matched_identifiers": [
+        "clang",
+        "darwin",
+        "default",
+        "description"
+      ],
+      "reasons": [
+        "stem_in_issue_text:setup",
+        "source_content_tokens:clang,darwin,default,description,executable"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CleanCommand.run",
+        "get_openmp_flag",
+        "build_ext_subclass.build_extensions",
+        "configuration",
+        "get_numpy_status",
+        "setup_package"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/tests/test_pipeline.py",
+      "score": 30,
+      "matched_identifiers": [
+        "Pipeline"
+      ],
+      "reasons": [
+        "test_path_related_to_class:Pipeline",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/tests",
+        "test_name_matches_source_stem:pipeline",
+        "token_overlap:pipeline,sklearn",
+        "internal_name_overlap:pipeline",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/feature_selection/tests/test_base.py",
+      "score": 28,
+      "matched_identifiers": [
+        "SelectKBest"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SelectKBest",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/feature_selection/tests",
+        "token_overlap:feature,select,selection,sklearn",
+        "internal_name_overlap:select",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/feature_selection/tests/test_chi2.py",
+      "score": 28,
+      "matched_identifiers": [
+        "SelectKBest"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SelectKBest",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/feature_selection/tests",
+        "token_overlap:feature,select,selection,sklearn",
+        "internal_name_overlap:feature",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/feature_selection/tests/test_feature_select.py",
+      "score": 28,
+      "matched_identifiers": [
+        "SelectKBest"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SelectKBest",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/feature_selection/tests",
+        "token_overlap:feature,select,selection,sklearn",
+        "internal_name_overlap:feature",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/feature_selection/tests/test_from_model.py",
+      "score": 28,
+      "matched_identifiers": [
+        "SelectKBest"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SelectKBest",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/feature_selection/tests",
+        "token_overlap:feature,select,selection,sklearn",
+        "internal_name_overlap:feature",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/tests/test_pipeline.py:pytest_import_or_conftest",
+      "sklearn/tests/test_pipeline.py:top_level_test_functions",
+      "sklearn/feature_selection/tests/test_feature_select.py:top_level_test_functions",
+      "sklearn/feature_selection/tests/test_base.py:top_level_test_functions",
+      "sklearn/feature_selection/tests/test_chi2.py:top_level_test_functions",
+      "sklearn/feature_selection/tests/test_from_model.py:pytest_import_or_conftest",
+      "sklearn/feature_selection/tests/test_from_model.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 747,
+  "indexed_test_file_count": 196,
+  "available_imports": {
+    "setup": [
+      "CleanCommand",
+      "build_ext_subclass",
+      "configuration",
+      "get_numpy_status",
+      "get_openmp_flag",
+      "setup_package"
+    ],
+    "sklearn.pipeline": [
+      "FeatureUnion",
+      "Pipeline",
+      "_fit_one_transformer",
+      "_fit_transform_one",
+      "_name_estimators",
+      "_transform_one",
+      "make_pipeline",
+      "make_union"
+    ],
+    "sklearn": [
+      "GenericUnivariateSelect",
+      "RFE",
+      "RFECV",
+      "SelectFdr",
+      "SelectFpr",
+      "SelectFromModel",
+      "SelectFwe",
+      "SelectKBest",
+      "SelectPercentile",
+      "VarianceThreshold",
+      "chi2",
+      "clear_data_home",
+      "config_context",
+      "dump_svmlight_file",
+      "f_classif",
+      "f_oneway",
+      "f_regression",
+      "fetch_20newsgroups",
+      "fetch_20newsgroups_vectorized",
+      "fetch_california_housing",
+      "fetch_covtype",
+      "fetch_kddcup99",
+      "fetch_lfw_pairs",
+      "fetch_lfw_people",
+      "fetch_mldata",
+      "fetch_olivetti_faces",
+      "fetch_openml",
+      "fetch_rcv1",
+      "fetch_species_distributions",
+      "get_config",
+      "get_data_home",
+      "load_boston",
+      "load_breast_cancer",
+      "load_diabetes",
+      "load_digits",
+      "load_files",
+      "load_iris",
+      "load_linnerud",
+      "load_sample_image",
+      "load_sample_images",
+      "load_svmlight_file",
+      "load_svmlight_files",
+      "load_wine",
+      "make_biclusters",
+      "make_blobs",
+      "make_checkerboard",
+      "make_circles",
+      "make_classification",
+      "make_friedman1",
+      "make_friedman2",
+      "make_friedman3",
+      "make_gaussian_quantiles",
+      "make_hastie_10_2",
+      "make_low_rank_matrix",
+      "make_moons",
+      "make_multilabel_classification",
+      "make_regression",
+      "make_s_curve",
+      "make_sparse_coded_signal",
+      "make_sparse_spd_matrix",
+      "make_sparse_uncorrelated",
+      "make_spd_matrix",
+      "make_swiss_roll",
+      "mldata_filename",
+      "mutual_info_classif",
+      "mutual_info_regression",
+      "set_config",
+      "setup_module"
+    ],
+    "sklearn.datasets.samples_generator": [
+      "_generate_hypercube",
+      "_shuffle",
+      "make_biclusters",
+      "make_blobs",
+      "make_checkerboard",
+      "make_circles",
+      "make_classification",
+      "make_friedman1",
+      "make_friedman2",
+      "make_friedman3",
+      "make_gaussian_quantiles",
+      "make_hastie_10_2",
+      "make_low_rank_matrix",
+      "make_moons",
+      "make_multilabel_classification",
+      "make_regression",
+      "make_s_curve",
+      "make_sparse_coded_signal",
+      "make_sparse_spd_matrix",
+      "make_sparse_uncorrelated",
+      "make_spd_matrix",
+      "make_swiss_roll"
+    ],
+    "sklearn.feature_selection.univariate_selection": [
+      "GenericUnivariateSelect",
+      "SelectFdr",
+      "SelectFpr",
+      "SelectFwe",
+      "SelectKBest",
+      "SelectPercentile",
+      "_BaseFilter",
+      "_chisquare",
+      "_clean_nans",
+      "chi2",
+      "f_classif",
+      "f_oneway",
+      "f_regression"
+    ],
+    "sklearn.tests.test_pipeline": [
+      "DummyEstimatorParams",
+      "DummyMemory",
+      "DummyTransf",
+      "FitParamT",
+      "Mult",
+      "NoFit",
+      "NoInvTransf",
+      "NoTrans",
+      "Transf",
+      "TransfFitParams",
+      "WrongDummyMemory",
+      "test_classes_property",
+      "test_feature_union",
+      "test_feature_union_feature_names",
+      "test_feature_union_parallel",
+      "test_feature_union_weights",
+      "test_fit_predict_on_pipeline",
+      "test_fit_predict_on_pipeline_without_fit_predict",
+      "test_fit_predict_with_intermediate_fit_params",
+      "test_make_pipeline",
+      "test_make_pipeline_memory",
+      "test_make_union",
+      "test_make_union_kwargs",
+      "test_pipeline_correctly_adjusts_steps",
+      "test_pipeline_ducktyping",
+      "test_pipeline_fit_params",
+      "test_pipeline_fit_transform",
+      "test_pipeline_index",
+      "test_pipeline_init",
+      "test_pipeline_init_tuple",
+      "test_pipeline_memory",
+      "test_pipeline_methods_anova",
+      "test_pipeline_methods_pca_svm",
+      "test_pipeline_methods_preprocessing_svm",
+      "test_pipeline_named_steps",
+      "test_pipeline_raise_set_params_error",
+      "test_pipeline_sample_weight_supported",
+      "test_pipeline_sample_weight_unsupported",
+      "test_pipeline_slice",
+      "test_pipeline_transform",
+      "test_pipeline_with_cache_attribute",
+      "test_pipeline_wrong_memory",
+      "test_predict_with_predict_params",
+      "test_set_feature_union_step_drop",
+      "test_set_feature_union_steps",
+      "test_set_params_nested_pipeline",
+      "test_set_pipeline_step_passthrough",
+      "test_set_pipeline_steps",
+      "test_step_name_validation"
+    ],
+    "sklearn.feature_selection.tests.test_feature_select": [
+      "assert_best_scores_kept",
+      "test_boundary_case_ch2",
+      "test_f_classif",
+      "test_f_classif_constant_feature",
+      "test_f_classif_multi_class",
+      "test_f_oneway_ints",
+      "test_f_oneway_vs_scipy_stats",
+      "test_f_regression",
+      "test_f_regression_center",
+      "test_f_regression_input_dtype",
+      "test_invalid_k",
+      "test_invalid_percentile",
+      "test_mutual_info_classif",
+      "test_mutual_info_regression",
+      "test_nans",
+      "test_no_feature_selected",
+      "test_score_func_error",
+      "test_scorefunc_multilabel",
+      "test_select_fdr_regression",
+      "test_select_fwe_regression",
+      "test_select_heuristics_classif",
+      "test_select_heuristics_regression",
+      "test_select_kbest_all",
+      "test_select_kbest_classif",
+      "test_select_kbest_regression",
+      "test_select_kbest_zero",
+      "test_select_percentile_classif",
+      "test_select_percentile_classif_sparse",
+      "test_select_percentile_regression",
+      "test_select_percentile_regression_full",
+      "test_selectkbest_tiebreaking",
+      "test_selectpercentile_tiebreaking",
+      "test_tied_pvalues",
+      "test_tied_scores"
+    ],
+    "sklearn.feature_selection.tests.test_base": [
+      "StepSelector",
+      "test_get_support",
+      "test_inverse_transform_dense",
+      "test_inverse_transform_sparse",
+      "test_transform_dense",
+      "test_transform_sparse"
+    ],
+    "sklearn.feature_selection.tests.test_chi2": [
+      "mkchi2",
+      "test_chi2",
+      "test_chi2_coo",
+      "test_chi2_negative",
+      "test_chi2_unused_feature",
+      "test_chisquare"
+    ],
+    "sklearn.feature_selection.tests.test_from_model": [
+      "FixedImportanceEstimator",
+      "test_2d_coef",
+      "test_calling_fit_reinitializes",
+      "test_coef_default_threshold",
+      "test_feature_importances",
+      "test_input_estimator_unchanged",
+      "test_invalid_input",
+      "test_max_features",
+      "test_max_features_dim",
+      "test_max_features_error",
+      "test_max_features_tiebreak",
+      "test_partial_fit",
+      "test_prefit",
+      "test_sample_weight",
+      "test_threshold_and_max_features",
+      "test_threshold_string",
+      "test_threshold_without_refitting"
+    ]
+  },
+  "test_example_snippet": "def test_pipeline_init():\n    # Test the various init parameters of the pipeline.\n    assert_raises(TypeError, Pipeline)\n    # Check that we can't instantiate pipelines with objects without fit\n    # method\n    assert_raises_regex(TypeError,\n                        'Last step of Pipeline should implement fit '\n                        'or be the string \\'passthrough\\''\n                        '.*NoFit.*',\n                        Pipeline, [('clf', NoFit())])\n    # Smoke test with only an estimator\n    clf = NoTrans()\n    pipe = Pipeline([('svc', clf)])\n    assert_equal(pipe.get_params(deep=True),\n                 dict(svc__a=None, svc__b=None, svc=clf,\n                      **pipe.get_params(deep=False)))\n\n    # Check that params are set\n    pipe.set_params(svc__a=0.1)\n    assert_equal(clf.a, 0.1)\n    assert_equal(clf.b, None)\n    # Smoke test the repr:\n    repr(pipe)\n\n    # Test with two objects\n    clf = SVC()\n    filter1 = SelectKBest(f_classif)\n    pipe = Pipeline([('anova', filter1), ('svc', clf)])\n\n    # Check that we can't instantiate with non-transformers on the way\n    # Note that NoTrans implements fit, but not transform\n    assert_raises_regex(TypeError,\n                        'All intermediate steps should be transformers'\n                        '.*\\\\bNoTrans\\\\b.*',\n                        Pipeline, [('t', NoTrans()), ('svc', clf)])",
+  "conftest_fixtures": {}
+}

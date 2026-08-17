@@ -1,0 +1,9 @@
+from django.test import TestCase
+
+from .models import PickledObject
+
+class PickledFieldGetRegressionTests(TestCase):
+    def test_get_uses_pickled_field_prep_value_for_lookup_repro(self):
+        PickledObject.objects.create(data=[1, 2, 3])
+        obj = PickledObject.objects.get(data=[1, 2, 3])
+        self.assertEqual(obj.data, [1, 2, 3])

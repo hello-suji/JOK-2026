@@ -1,0 +1,98 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/combinatorics/homomorphisms.py",
+      "target_function": "homomorphism",
+      "related_classes": [
+        "DihedralGroup",
+        "PermutationGroup",
+        "PermutationGroups"
+      ],
+      "candidate_test_file": "sympy/combinatorics/tests/test_homomorphisms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _check_homomorphism can be called.",
+      "Use the generated reproduction path that calls homomorphism."
+    ],
+    "execution_stimulus": [
+      "Call _check_homomorphism with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: homomorphism."
+    ],
+    "expected_failure": "ValueError: The given images do not define a homomorphism",
+    "relevant_source_files": [
+      "sympy/combinatorics/homomorphisms.py",
+      "sympy/polys/agca/homomorphisms.py",
+      "sympy/combinatorics/perm_groups.py"
+    ],
+    "relevant_test_files": [
+      "sympy/combinatorics/tests/test_homomorphisms.py",
+      "sympy/combinatorics/tests/test_fp_groups.py",
+      "sympy/combinatorics/tests/test_free_groups.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_homomorphism_inverted_generator_repro():\n    D3 = DihedralGroup(3)\n    T = homomorphism(D3, D3, D3.generators, D3.generators)\n    assert T.is_identity\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(T) != 'ValueError: The given images do not define a homomorphism'"
+      },
+      {
+        "language": "python",
+        "code": "In [1]: from sympy.combinatorics import *\n   ...: from sympy.combinatorics.homomorphisms import homomorphism\n   ...: D3 = DihedralGroup(3)\n   ...: T = homomorphism(D3, D3, D3.generators, D3.generators)\n\nValueError: The given images do not define a homomorphism"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "ValueError: The given images do not define a homomorphism"
+    ],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_image",
+        "homomorphism"
+      ],
+      "classes": [
+        "DihedralGroup",
+        "PermutationGroup",
+        "PermutationGroups"
+      ],
+      "files": [
+        "sympy/combinatorics/homomorphisms.py"
+      ],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/combinatorics/tests/test_homomorphisms.py",
+      "target_source_file": "sympy/combinatorics/homomorphisms.py",
+      "test_visible_functions": [
+        "homomorphism"
+      ],
+      "test_visible_classes": [
+        "DihedralGroup"
+      ]
+    }
+  }
+]

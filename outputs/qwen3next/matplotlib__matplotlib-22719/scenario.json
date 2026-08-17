@@ -1,0 +1,116 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/artist.py",
+      "target_function": "convert_xunits",
+      "related_classes": [
+        "ConversionInterface",
+        "Failed",
+        "MatplotlibDeprecationWarning"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_artist.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where convert_xunits can be called.",
+      "Use the generated reproduction path that calls convert, convert_xunits, plot, subplots."
+    ],
+    "execution_stimulus": [
+      "Call convert_xunits with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: convert, convert_xunits, plot, subplots."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/artist.py",
+      "lib/matplotlib/axis.py",
+      "lib/matplotlib/pyplot.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_artist.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_units.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_convert_xunits_with_empty_data_repro():\n    f, ax = plt.subplots()\n    ax.xaxis.update_units([\"a\", \"b\"])\n    ax.plot([], [])\n    # Assert that no ConversionError is raised and the plot is created successfully\n    assert len(ax.lines) == 1\n    assert ax.lines[0].get_data() == ([], [])"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nf, ax = plt.subplots()\nax.xaxis.update_units([\"a\", \"b\"])\nax.plot([], [])"
+      },
+      {
+        "language": "python",
+        "code": "</details>\n\nAdditionally, the problem is not solved by doing what the warning message suggests:"
+      },
+      {
+        "language": "python",
+        "code": "<details>"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ConversionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "convert",
+        "convert_units",
+        "convert_xunits",
+        "convert_yunits",
+        "plot",
+        "subplots",
+        "update_units",
+        "value",
+        "get_data"
+      ],
+      "classes": [
+        "ConversionInterface",
+        "Failed",
+        "MatplotlibDeprecationWarning"
+      ],
+      "files": [
+        "9/site-packages/matplotlib/artist.py",
+        "9/site-packages/matplotlib/axis.py",
+        "var/folders/pk/kq0vw6sj3ssd914z55j1qmzc0000gn/T/ipykernel_7392/1079091550.py"
+      ],
+      "exceptions": [
+        "ConversionError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_artist.py",
+      "target_source_file": "lib/matplotlib/artist.py",
+      "test_visible_functions": [
+        "convert",
+        "convert_xunits",
+        "plot",
+        "subplots",
+        "update_units",
+        "get_data"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

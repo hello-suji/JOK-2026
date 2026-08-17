@@ -1,0 +1,22 @@
+--- a/testing/test_setuponly.py
++++ b/testing/test_setuponly.py
+@@ -316,3 +316,19 @@
+         sys.executable, "-bb", "-m", "pytest", "--setup-show", str(test_file)
+     )
+     assert result.ret == 0
++
++import pytest
++from _pytest.debugging import post_mortem
++from _pytest.outcomes import OutcomeException
++
++def test_post_mortem_with_undefined_variable_repro(tmp_path, monkeypatch):
++    test_file = tmp_path / 'test_example.py'
++    test_file.write_text('''
++def test_one_repro():
++    undefined_var
++''')
++    monkeypatch.setattr('pdb.Pdb.post_mortem', lambda *args: None)
++    result = pytester.runpytest(test_file)
++    assert result.ret == 1
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "NameError: name 'undefined_var' is not defined"

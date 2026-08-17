@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/linear_model/ridge.py",
+      "target_function": "__init__",
+      "related_classes": [
+        "RidgeClassifierCV",
+        "NumPy",
+        "NotFittedError"
+      ],
+      "candidate_test_file": "sklearn/linear_model/tests/test_ridge.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import necessary modules: numpy and sklearn.linear_model",
+      "Create random data using numpy for X and y",
+      "Use the generated reproduction path that calls __init__, fit, normal, randn."
+    ],
+    "execution_stimulus": [
+      "Initialize RidgeClassifierCV with store_cv_values=True",
+      "Call fit method with X and y",
+      "Execute the focused target API path: __init__, fit, normal, randn."
+    ],
+    "expected_failure": "TypeError: __init__() got an unexpected keyword argument 'store_cv_values'",
+    "relevant_source_files": [
+      "sklearn/linear_model/ridge.py",
+      "sklearn/linear_model/base.py",
+      "sklearn/mixture/base.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/linear_model/tests/test_ridge.py",
+      "sklearn/linear_model/tests/test_passive_aggressive.py",
+      "sklearn/linear_model/tests/test_perceptron.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_RidgeClassifierCV_store_cv_values_error_repro():\n    from sklearn.exceptions import NotFittedError\n    import numpy as np\n    n = 100\n    x = np.random.randn(n, 30)\n    y = np.random.randint(0, 2, size=n)\n    \n    rr = RidgeClassifierCV(alphas=np.arange(0.1, 1000, 0.1), normalize=True)\n    rr.fit(x, y)\n    assert hasattr(rr, 'cv_values_')\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(rr) != \"TypeError: __init__() got an unexpected keyword argument 'store_cv_values'\""
+      },
+      {
+        "language": "python",
+        "code": "def test_RidgeClassifierCV_store_cv_values_error():\n    import numpy as np\n    from sklearn import linear_model as lm\n    \n    n = 100\n    x = np.random.randn(n, 30)\n    y = np.random.normal(size=n)\n    \n    try:\n        rr = lm.RidgeClassifierCV(alphas=np.arange(0.1, 1000, 0.1), normalize=True, store_cv_values=True).fit(x, y)\n    except TypeError as e:\n        assert str(e) == \"__init__() got an unexpected keyword argument 'store_cv_values'\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "TypeError: __init__() got an unexpected keyword argument 'store_cv_values'"
+    ],
+    "error_keywords": [
+      "TypeError",
+      "unexpected keyword argument 'store_cv_values'"
+    ],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "fit",
+        "normal",
+        "randn",
+        "randint",
+        "hasattr",
+        "arange"
+      ],
+      "classes": [
+        "RidgeClassifierCV",
+        "NumPy",
+        "NotFittedError"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/linear_model/tests/test_ridge.py",
+      "target_source_file": "sklearn/linear_model/ridge.py",
+      "test_visible_functions": [
+        "__init__",
+        "fit",
+        "normal",
+        "randn",
+        "randint",
+        "hasattr",
+        "arange"
+      ],
+      "test_visible_classes": [
+        "NumPy",
+        "RidgeClassifierCV",
+        "NotFittedError"
+      ]
+    }
+  }
+]

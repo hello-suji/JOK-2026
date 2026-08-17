@@ -1,0 +1,22 @@
+--- a/tests/forms_tests/field_tests/test_base.py
++++ b/tests/forms_tests/field_tests/test_base.py
+@@ -39,3 +39,19 @@
+     def test_disabled_field_has_changed_always_false_gate(self):
+         disabled_field = Field(disabled=True)
+         self.assertFalse(disabled_field.has_changed("x", "y"))
++
++from django.forms import CharField, Form
++from django.forms.formsets import formset_factory
++from django.test import TestCase
++
++class TestFormSetAddFields(TestCase):
++    def test_add_fields_with_none_index_repro(self):
++        class MyForm(Form):
++            field1 = CharField()
++
++        MyFormSet = formset_factory(MyForm, can_delete=True, can_delete_extra=False)
++        formset = MyFormSet()
++        empty_form = formset.empty_form
++        # This should not raise a TypeError
++        empty_form.add_fields(empty_form, 0)
++        self.assertEqual(len(empty_form.fields), 2)  # Assuming the default management form fields are added

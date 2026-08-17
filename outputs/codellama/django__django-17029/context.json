@@ -1,0 +1,540 @@
+{
+  "instance_id": "django__django-17029",
+  "repo": "django/django",
+  "base_commit": "953f29f700a60fc09b08b2c2270c12c447490c6a",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/apps/registry.py",
+      "score": 22,
+      "matched_identifiers": [
+        "alter",
+        "cache",
+        "cache_clear",
+        "clear",
+        "clear_cache"
+      ],
+      "reasons": [
+        "function_match:clear_cache",
+        "stem_in_issue_text:registry",
+        "source_content_tokens:clear,alter,cache,cache_clear,caches"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "clear_cache": "    def clear_cache(self):\n        \"\"\"\n        Clear all internal caches, for methods that alter the app registry.\n\n        This is mostly used in tests.\n        \"\"\"\n        # Call expire cache on each model. This will purge\n        # the relation tree and the fields cache.\n        self.get_models.cache_clear()\n        if self.ready:\n            # Circumvent self.get_models() to prevent that the cache is refilled.\n            # This particularly prevents that an empty value is cached while cloning.\n            for app_config in self.app_configs.values():\n                for model in app_config.get_models(include_auto_created=True):\n                    model._meta._expire_cache()"
+      },
+      "top_level_functions": [
+        "Apps.populate",
+        "Apps.check_apps_ready",
+        "Apps.check_models_ready",
+        "Apps.get_app_configs",
+        "Apps.get_app_config",
+        "Apps.get_models",
+        "Apps.get_model",
+        "Apps.register_model",
+        "Apps.is_installed",
+        "Apps.get_containing_app_config",
+        "Apps.get_registered_model",
+        "Apps.get_swappable_settings_name",
+        "Apps.set_available_apps",
+        "Apps.unset_available_apps",
+        "Apps.set_installed_apps",
+        "Apps.unset_installed_apps",
+        "Apps.clear_cache",
+        "Apps.lazy_model_operation",
+        "Apps.do_pending_operations"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/models.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cache",
+        "clear",
+        "clear_cache",
+        "methods"
+      ],
+      "reasons": [
+        "function_match:clear_cache",
+        "source_content_tokens:clear,cache,clear_cache,methods,state"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "clear_cache": "    def clear_cache(self):\n        \"\"\"\n        Clear out the content-type cache.\n        \"\"\"\n        self._cache.clear()\n\n    def _add_to_cache(self, using, ct):\n        \"\"\"Insert a ContentType into the cache.\"\"\"\n        # Note it's possible for ContentType objects to be stale; model_class()\n        # will return None. Hence, there is no reliance on\n        # model._meta.app_label here, just using the model fields instead.\n        key = (ct.app_label, ct.model)\n        self._cache.setdefault(using, {})[key] = ct\n        self._cache.setdefault(using, {})[ct.id] = ct\n"
+      },
+      "top_level_functions": [
+        "ContentTypeManager.get_by_natural_key",
+        "ContentTypeManager.get_for_model",
+        "ContentTypeManager.get_for_models",
+        "ContentTypeManager.get_for_id",
+        "ContentTypeManager.clear_cache",
+        "ContentType.name",
+        "ContentType.app_labeled_name",
+        "ContentType.model_class",
+        "ContentType.get_object_for_this_type",
+        "ContentType.get_all_objects_for_this_type",
+        "ContentType.natural_key"
+      ]
+    },
+    {
+      "path": "django/db/migrations/state.py",
+      "score": 17,
+      "matched_identifiers": [
+        "alter",
+        "cache",
+        "caches",
+        "clear"
+      ],
+      "reasons": [
+        "stem_in_issue_text:state",
+        "source_content_tokens:clear,alter,cache,caches,clear_cache"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_related_models_tuples",
+        "get_related_models_recursive",
+        "ProjectState.relations",
+        "ProjectState.add_model",
+        "ProjectState.remove_model",
+        "ProjectState.rename_model",
+        "ProjectState.alter_model_options",
+        "ProjectState.remove_model_options",
+        "ProjectState.alter_model_managers",
+        "ProjectState.add_index",
+        "ProjectState.remove_index",
+        "ProjectState.rename_index",
+        "ProjectState.add_constraint",
+        "ProjectState.remove_constraint",
+        "ProjectState.add_field",
+        "ProjectState.remove_field",
+        "ProjectState.alter_field",
+        "ProjectState.rename_field",
+        "ProjectState.reload_model",
+        "ProjectState.reload_models",
+        "ProjectState.update_model_field_relation",
+        "ProjectState.resolve_model_field_relations",
+        "ProjectState.resolve_model_relations",
+        "ProjectState.resolve_fields_and_relations",
+        "ProjectState.get_concrete_model_key",
+        "ProjectState.clone",
+        "ProjectState.clear_delayed_apps_cache",
+        "ProjectState.apps",
+        "ProjectState.from_apps",
+        "AppConfigStub.import_models",
+        "StateApps.bulk_update",
+        "StateApps.render_multiple",
+        "StateApps.clone",
+        "StateApps.register_model",
+        "StateApps.unregister_model",
+        "ModelState.name_lower",
+        "ModelState.get_field",
+        "ModelState.from_model",
+        "ModelState.construct_managers",
+        "ModelState.clone"
+      ]
+    },
+    {
+      "path": "django/db/models/fields/files.py",
+      "score": 17,
+      "matched_identifiers": [
+        "alter",
+        "cache",
+        "clear",
+        "cleared"
+      ],
+      "reasons": [
+        "stem_in_issue_text:files",
+        "source_content_tokens:clear,alter,cache,cleared,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FieldFile.path",
+        "FieldFile.url",
+        "FieldFile.size",
+        "FieldFile.open",
+        "FieldFile.save",
+        "FieldFile.delete",
+        "FieldFile.closed",
+        "FieldFile.close",
+        "FileField.check",
+        "FileField.deconstruct",
+        "FileField.get_internal_type",
+        "FileField.get_prep_value",
+        "FileField.pre_save",
+        "FileField.contribute_to_class",
+        "FileField.generate_filename",
+        "FileField.save_form_data",
+        "FileField.formfield",
+        "ImageFieldFile.delete",
+        "ImageField.check",
+        "ImageField.deconstruct",
+        "ImageField.contribute_to_class",
+        "ImageField.update_dimension_fields",
+        "ImageField.formfield"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "cache",
+        "caches",
+        "https",
+        "internal"
+      ],
+      "reasons": [
+        "source_content_tokens:cache,caches,https,internal,previous"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/apps/models.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "inferred_test_dir_match:tests/apps",
+        "test_name_matches_source_stem:models"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_state.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:state",
+        "token_overlap:migrations,state",
+        "internal_name_overlap:fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/apps"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/test_models.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:models",
+        "token_overlap:contenttypes",
+        "internal_name_overlap:contenttypes",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/apps"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/migrations_test_apps/lookuperror_a/models.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:models",
+        "token_overlap:migrations"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/contenttypes_tests/test_models.py:unittest_or_django_test_import",
+      "tests/contenttypes_tests/test_models.py:testcase_class:TestRouter",
+      "tests/migrations/test_state.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2755,
+  "indexed_test_file_count": 1882,
+  "available_imports": {
+    "django": [
+      "AppConfig",
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "ImproperlyConfigured",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "LazyObject",
+      "NotSupportedError",
+      "OperationalError",
+      "Path",
+      "ProgrammingError",
+      "RemovedInDjango51Warning",
+      "apps",
+      "connection",
+      "connections",
+      "empty",
+      "get_version",
+      "global_settings",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.contenttypes_tests.test_models": [
+      "ContentTypesMultidbTests",
+      "ContentTypesTests",
+      "TestRouter"
+    ],
+    "tests.migrations.test_state": [
+      "ModelStateTests",
+      "RelatedModelsTests",
+      "StateRelationsTests",
+      "StateTests"
+    ],
+    "tests.apps.models": [
+      "SoAlternative",
+      "TotallyNormal"
+    ],
+    "tests.migrations.migrations_test_apps.lookuperror_a.models": [
+      "A1",
+      "A2",
+      "A3",
+      "A4"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "ForeignObjectRel",
+      "Func",
+      "ImageField",
+      "JSONField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Migration",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderBy",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RESTRICT",
+      "RestrictedError",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "enums_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals",
+      "swappable_dependency"
+    ],
+    "django.apps.registry": [
+      "Apps"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.contenttypes.models": [
+      "ContentType",
+      "ContentTypeManager"
+    ],
+    "django.db.migrations.state": [
+      "AppConfigStub",
+      "ModelState",
+      "ProjectState",
+      "StateApps",
+      "_get_app_label_and_model_name",
+      "_get_related_models",
+      "get_related_models_recursive",
+      "get_related_models_tuples"
+    ],
+    "django.db.models.fields": [
+      "AutoField",
+      "AutoFieldMeta",
+      "AutoFieldMixin",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeCheckMixin",
+      "DateTimeField",
+      "DecimalField",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveIntegerRelDbTypeMixin",
+      "PositiveSmallIntegerField",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_empty",
+      "_get_naive_now",
+      "_load_field",
+      "_to_naive",
+      "return_None"
+    ],
+    "django.db.models": [
+      "AutoField",
+      "BLANK_CHOICE_DASH",
+      "BigAutoField",
+      "BigIntegerField",
+      "BinaryField",
+      "BooleanField",
+      "CharField",
+      "ChoicesMeta",
+      "CommaSeparatedIntegerField",
+      "DateField",
+      "DateTimeField",
+      "DecimalField",
+      "DeferredAttribute",
+      "DictWrapper",
+      "DurationField",
+      "EmailField",
+      "Empty",
+      "Field",
+      "FilePathField",
+      "FloatField",
+      "GenericIPAddressField",
+      "IPAddressField",
+      "IntegerField",
+      "LOOKUP_SEP",
+      "NOT_PROVIDED",
+      "NullBooleanField",
+      "PositiveBigIntegerField",
+      "PositiveIntegerField",
+      "PositiveSmallIntegerField",
+      "Promise",
+      "RegisterLookupMixin",
+      "SlugField",
+      "SmallAutoField",
+      "SmallIntegerField",
+      "TextField",
+      "TimeField",
+      "URLField",
+      "UUIDField",
+      "_",
+      "apps",
+      "b64decode",
+      "b64encode",
+      "cached_property",
+      "capfirst",
+      "checks",
+      "clean_ipv6_address",
+      "connection",
+      "connections",
+      "duration_microseconds",
+      "duration_string",
+      "exceptions",
+      "forms",
+      "is_iterable",
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time",
+      "partialmethod",
+      "router",
+      "settings",
+      "timezone",
+      "total_ordering",
+      "validators"
+    ],
+    "django.db.models.fields.files": [
+      "FieldFile",
+      "FileDescriptor",
+      "FileField",
+      "ImageField",
+      "ImageFieldFile",
+      "ImageFileDescriptor"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates(\n            {\n                \"DIRS\": [],\n                \"APP_DIRS\": False,\n                \"NAME\": \"django\",\n                \"OPTIONS\": {\n                    \"context_processors\": [test_processor_name],\n                },\n            }\n        )\n\n        template = engine.from_string(\"{{ processors }}\")\n        request = self.request_factory.get(\"/\")\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, \"yes\")\n\n        # Context overrides context processors\n        content = template.render({\"processors\": \"no\"}, request)\n        self.assertEqual(content, \"no\")\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates(\n            {\n                \"DIRS\": [],\n                \"APP_DIRS\": False,\n                \"NAME\": \"django\",\n                \"OPTIONS\": {},\n            }\n        )\n        template = engine.from_string(\"\")",
+  "conftest_fixtures": {}
+}

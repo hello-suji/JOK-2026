@@ -1,0 +1,96 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.96,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus is too abstract",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function verified to exist in source_file",
+        "target_function '_check_list_display_item' not in AST top_level_functions for django/contrib/admin/checks.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/contrib/admin/checks.py",
+          "target_function": "_check_list_display_item",
+          "related_classes": [
+            "ModelAdmin",
+            "PositionField"
+          ],
+          "candidate_test_file": "tests/model_fields/test_manytomanyfield.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.db import models",
+          "from position.Fields import PositionField",
+          "from django.contrib import admin",
+          "class Thing(models.Model): number = models.IntegerField(default=0); order = PositionField()",
+          "@admin.register(Thing) class ThingAdmin(admin.ModelAdmin): list_display = ('order',)"
+        ],
+        "execution_stimulus": [
+          "admin.site.check()"
+        ],
+        "expected_failure": "admin.E108 is raised on fields accessible only via instance.",
+        "relevant_source_files": [
+          "django/contrib/admin/checks.py",
+          "django/contrib/admin/filters.py",
+          "django/contrib/admin/sites.py"
+        ],
+        "relevant_test_files": [
+          "tests/model_fields/test_manytomanyfield.py",
+          "tests/model_fields/models.py",
+          "tests/check_framework/test_model_field_deprecation.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_position_field_check_failure():\n    from django.db import models\n    from position.Fields import PositionField\n    from django.contrib import admin\n    class Thing(models.Model): number = models.IntegerField(default=0); order = PositionField()\n    @admin.register(Thing)\n    class ThingAdmin(admin.ModelAdmin): list_display = ('order',)\n    errors = admin.site.check()\n    assert any(error.id == 'admin.E108' for error in errors)"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [
+          "admin.E108"
+        ],
+        "identifiers": {
+          "functions": [
+            "_check_list_display_item"
+          ],
+          "classes": [
+            "ModelAdmin",
+            "PositionField"
+          ]
+        },
+        "oracle_hints": [
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "last_resort_structural",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

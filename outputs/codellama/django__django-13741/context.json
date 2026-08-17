@@ -1,0 +1,496 @@
+{
+  "instance_id": "django__django-13741",
+  "repo": "django/django",
+  "base_commit": "d746f28949c009251a8741ba03d156964050717f",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/auth/forms.py",
+      "score": 25,
+      "matched_identifiers": [
+        "ReadOnlyPasswordHashField",
+        "UserChangeForm",
+        "clean",
+        "clean_password",
+        "contrib",
+        "custom"
+      ],
+      "reasons": [
+        "class_match:ReadOnlyPasswordHashField",
+        "class_match:UserChangeForm",
+        "stem_in_issue_text:forms",
+        "source_content_tokens:clean,clean_password,contrib,custom,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "ReadOnlyPasswordHashField": "class ReadOnlyPasswordHashField(forms.Field):\n    widget = ReadOnlyPasswordHashWidget\n\n    def __init__(self, *args, **kwargs):\n        kwargs.setdefault(\"required\", False)\n        super().__init__(*args, **kwargs)\n\n    def bound_data(self, data, initial):\n        # Always return initial because the widget doesn't\n        # render an input field.\n        return initial\n\n    def has_changed(self, initial, data):\n        return False\n",
+        "UserChangeForm": "class UserChangeForm(forms.ModelForm):\n    password = ReadOnlyPasswordHashField(\n        label=_(\"Password\"),\n        help_text=_(\n            'Raw passwords are not stored, so there is no way to see this '\n            'user’s password, but you can change the password using '\n            '<a href=\"{}\">this form</a>.'\n        ),\n    )\n\n    class Meta:\n        model = User\n        fields = '__all__'\n        field_classes = {'username': UsernameField}\n",
+        "clean_password": "    def clean_password(self):\n        # Regardless of what the user provides, return the initial value.\n        # This is done here, rather than on the field, because the\n        # field does not have access to the initial value\n        return self.initial.get('password')\n\n\nclass AuthenticationForm(forms.Form):\n    \"\"\"\n    Base class for authenticating users. Extend this to get a form that accepts\n    username/password logins.\n    \"\"\"\n    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))\n    password = forms.CharField(\n        label=_(\"Password\"),",
+        "clean": "    def clean(self):\n        username = self.cleaned_data.get('username')\n        password = self.cleaned_data.get('password')\n\n        if username is not None and password:\n            self.user_cache = authenticate(self.request, username=username, password=password)\n            if self.user_cache is None:\n                raise self.get_invalid_login_error()\n            else:\n                self.confirm_login_allowed(self.user_cache)\n\n        return self.cleaned_data\n\n    def confirm_login_allowed(self, user):\n        \"\"\""
+      },
+      "top_level_functions": [
+        "ReadOnlyPasswordHashWidget.get_context",
+        "ReadOnlyPasswordHashField.bound_data",
+        "ReadOnlyPasswordHashField.has_changed",
+        "UsernameField.to_python",
+        "UsernameField.widget_attrs",
+        "UserCreationForm.clean_password2",
+        "UserCreationForm.save",
+        "UserChangeForm.clean_password",
+        "AuthenticationForm.clean",
+        "AuthenticationForm.confirm_login_allowed",
+        "AuthenticationForm.get_user",
+        "AuthenticationForm.get_invalid_login_error",
+        "PasswordResetForm.send_mail",
+        "PasswordResetForm.get_users",
+        "PasswordResetForm.save",
+        "SetPasswordForm.clean_new_password2",
+        "SetPasswordForm.save",
+        "PasswordChangeForm.clean_old_password",
+        "AdminPasswordChangeForm.clean_password2",
+        "AdminPasswordChangeForm.save",
+        "AdminPasswordChangeForm.changed_data"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geoip2/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "clean",
+        "contrib",
+        "could"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:argument,clean,contrib,could,custom"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoIP2.city",
+        "GeoIP2.country_code",
+        "GeoIP2.country_name",
+        "GeoIP2.country",
+        "GeoIP2.coords",
+        "GeoIP2.lon_lat",
+        "GeoIP2.lat_lon",
+        "GeoIP2.geos",
+        "GeoIP2.info",
+        "GeoIP2.open"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "attribute",
+        "contrib",
+        "could"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:argument,attribute,contrib,could,custom"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "attribute",
+        "changes",
+        "custom"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:argument,attribute,changes,custom,customizing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    },
+    {
+      "path": "django/db/backends/base/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "argument",
+        "attribute",
+        "clean",
+        "default"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:argument,attribute,clean,default,disable"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseDatabaseWrapper.ensure_timezone",
+        "BaseDatabaseWrapper.timezone",
+        "BaseDatabaseWrapper.timezone_name",
+        "BaseDatabaseWrapper.queries_logged",
+        "BaseDatabaseWrapper.queries",
+        "BaseDatabaseWrapper.get_connection_params",
+        "BaseDatabaseWrapper.get_new_connection",
+        "BaseDatabaseWrapper.init_connection_state",
+        "BaseDatabaseWrapper.create_cursor",
+        "BaseDatabaseWrapper.connect",
+        "BaseDatabaseWrapper.check_settings",
+        "BaseDatabaseWrapper.ensure_connection",
+        "BaseDatabaseWrapper.cursor",
+        "BaseDatabaseWrapper.commit",
+        "BaseDatabaseWrapper.rollback",
+        "BaseDatabaseWrapper.close",
+        "BaseDatabaseWrapper.savepoint",
+        "BaseDatabaseWrapper.savepoint_rollback",
+        "BaseDatabaseWrapper.savepoint_commit",
+        "BaseDatabaseWrapper.clean_savepoints",
+        "BaseDatabaseWrapper.get_autocommit",
+        "BaseDatabaseWrapper.set_autocommit",
+        "BaseDatabaseWrapper.get_rollback",
+        "BaseDatabaseWrapper.set_rollback",
+        "BaseDatabaseWrapper.validate_no_atomic_block",
+        "BaseDatabaseWrapper.validate_no_broken_transaction",
+        "BaseDatabaseWrapper.constraint_checks_disabled",
+        "BaseDatabaseWrapper.disable_constraint_checking",
+        "BaseDatabaseWrapper.enable_constraint_checking",
+        "BaseDatabaseWrapper.check_constraints",
+        "BaseDatabaseWrapper.is_usable",
+        "BaseDatabaseWrapper.close_if_unusable_or_obsolete",
+        "BaseDatabaseWrapper.allow_thread_sharing",
+        "BaseDatabaseWrapper.inc_thread_sharing",
+        "BaseDatabaseWrapper.dec_thread_sharing",
+        "BaseDatabaseWrapper.validate_thread_sharing",
+        "BaseDatabaseWrapper.prepare_database",
+        "BaseDatabaseWrapper.wrap_database_errors",
+        "BaseDatabaseWrapper.chunked_cursor",
+        "BaseDatabaseWrapper.make_debug_cursor"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/forms_tests/field_tests/test_base.py",
+      "score": 18,
+      "matched_identifiers": [
+        "ReadOnlyPasswordHashField",
+        "UserChangeForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:ReadOnlyPasswordHashField",
+        "test_path_related_to_class:UserChangeForm",
+        "test_name_matches_source_stem:base",
+        "token_overlap:field,form,forms",
+        "internal_name_overlap:field",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_forms.py",
+      "score": 15,
+      "matched_identifiers": [
+        "UserChangeForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UserChangeForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:auth,form,forms",
+        "internal_name_overlap:read",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_views/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "UserChangeForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UserChangeForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:auth",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/flatpages_tests/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "UserChangeForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UserChangeForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/foreign_object/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "UserChangeForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:UserChangeForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_views/test_forms.py:unittest_or_django_test_import",
+      "tests/flatpages_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:testcase_class:TestDataMixin",
+      "tests/foreign_object/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_base.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2687,
+  "indexed_test_file_count": 1826,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.admin_views.test_forms": [
+      "AdminAuthenticationFormTests"
+    ],
+    "tests.flatpages_tests.test_forms": [
+      "FlatpageAdminFormTests"
+    ],
+    "tests.auth_tests.test_forms": [
+      "AdminPasswordChangeFormTest",
+      "AuthenticationFormTest",
+      "PasswordChangeFormTest",
+      "PasswordResetFormTest",
+      "ReadOnlyPasswordHashTest",
+      "SetPasswordFormTest",
+      "TestDataMixin",
+      "UserChangeFormTest",
+      "UserCreationFormTest"
+    ],
+    "tests.foreign_object.test_forms": [
+      "FormsTests"
+    ],
+    "tests.forms_tests.field_tests.test_base": [
+      "BasicFieldsTests",
+      "DisabledFieldTests"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "django.db": [
+      "DefaultConnectionProxy",
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.contrib.auth.forms": [
+      "AdminPasswordChangeForm",
+      "AuthenticationForm",
+      "PasswordChangeForm",
+      "PasswordResetForm",
+      "ReadOnlyPasswordHashField",
+      "ReadOnlyPasswordHashWidget",
+      "SetPasswordForm",
+      "UserChangeForm",
+      "UserCreationForm",
+      "UsernameField",
+      "_unicode_ci_compare"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "PermissionDenied",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "rotate_token",
+      "sensitive_variables",
+      "settings",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.gis.geoip2.base": [
+      "GeoIP2",
+      "GeoIP2Exception"
+    ],
+    "django.contrib.gis": [
+      "HAS_GEOIP2"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.db.backends.base.base": [
+      "BaseDatabaseWrapper"
+    ]
+  },
+  "test_example_snippet": "        class TestForm(Form):\n            field1 = CustomChoiceField(choices=[])\n            field2 = CustomChoiceField(choices=[])\n\n        f = TestForm()\n        f.fields['field1'].choices = [('1', '1')]\n        f.fields['field2'].choices = [('2', '2')]\n        self.assertEqual(f.fields['field1'].widget.choices, [('1', '1')])\n        self.assertEqual(f.fields['field2'].widget.choices, [('2', '2')])\n\n\nclass DisabledFieldTests(SimpleTestCase):\n    def test_disabled_field_has_changed_always_false(self):\n        disabled_field = Field(disabled=True)\n        self.assertFalse(disabled_field.has_changed('x', 'y'))",
+  "conftest_fixtures": {}
+}

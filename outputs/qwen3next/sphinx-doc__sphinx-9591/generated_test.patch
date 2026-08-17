@@ -1,0 +1,44 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -463,3 +463,41 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import re
++from typing import Optional
++from sphinx.domains.python import PyClasslike
++from sphinx.ext.autosummary.generate import ModuleScanner
++
++
++class Point:
++    """
++    A class representing a point.
++
++    Attributes:
++        x: Position X.
++        y: Position Y.
++    """
++    x: int
++    y: int
++
++
++class Square:
++    """A class representing a square figure."""
++    #: Square's start position (top-left corner).
++    start: Point
++    #: Square width.
++    width: int
++    #: Square height.
++    height: int
++
++    def end(self) -> Point:
++        """Calculate the end point of the square."""
++        return Point(x=self.start.x + self.width, y=self.start.y + self.height)
++
++def test_square_end_method_repro():
++    start_point = Point(x=0, y=0)
++    square = Square(start=start_point, width=10, height=20)
++    end_point = square.end()
++    assert end_point.x == 10
++    assert end_point.y == 20

@@ -1,0 +1,401 @@
+{
+  "instance_id": "pytest-dev__pytest-7432",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "e6e300e729dd33956e5448d8be9a0b1540b4e53a",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/skipping.py",
+      "score": 37,
+      "matched_identifiers": [
+        "_pytest",
+        "makereport",
+        "mark",
+        "pytest",
+        "src/_pytest/skipping.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:src/_pytest/skipping.py",
+        "stem_in_issue_text:skipping",
+        "source_content_tokens:_pytest,makereport,mark,pytest,pytest_runtest_makereport"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "evaluate_condition",
+        "evaluate_skip_marks",
+        "evaluate_xfail_marks",
+        "pytest_runtest_setup",
+        "pytest_runtest_call",
+        "pytest_runtest_makereport",
+        "pytest_report_teststatus"
+      ]
+    },
+    {
+      "path": "doc/en/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "_pytest",
+        "assert",
+        "mark",
+        "pytest"
+      ],
+      "reasons": [
+        "source_content_tokens:_pytest,mark,pytest,assert,example"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "configure_logging",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/en/example/assertion/failure_demo.py",
+      "score": 16,
+      "matched_identifiers": [
+        "_pytest",
+        "assert",
+        "mark",
+        "pytest"
+      ],
+      "reasons": [
+        "source_content_tokens:_pytest,mark,pytest,assert,import"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "otherfunc",
+        "somefunc",
+        "otherfunc_multi",
+        "test_generative",
+        "TestFailing.test_simple",
+        "TestFailing.test_simple_multiline",
+        "TestFailing.test_not",
+        "TestSpecialisedExplanations.test_eq_text",
+        "TestSpecialisedExplanations.test_eq_similar_text",
+        "TestSpecialisedExplanations.test_eq_multiline_text",
+        "TestSpecialisedExplanations.test_eq_long_text",
+        "TestSpecialisedExplanations.test_eq_long_text_multiline",
+        "TestSpecialisedExplanations.test_eq_list",
+        "TestSpecialisedExplanations.test_eq_list_long",
+        "TestSpecialisedExplanations.test_eq_dict",
+        "TestSpecialisedExplanations.test_eq_set",
+        "TestSpecialisedExplanations.test_eq_longer_list",
+        "TestSpecialisedExplanations.test_in_list",
+        "TestSpecialisedExplanations.test_not_in_text_multiline",
+        "TestSpecialisedExplanations.test_not_in_text_single",
+        "TestSpecialisedExplanations.test_not_in_text_single_long",
+        "TestSpecialisedExplanations.test_not_in_text_single_long_term",
+        "TestSpecialisedExplanations.test_eq_dataclass",
+        "TestSpecialisedExplanations.test_eq_attrs",
+        "test_attribute",
+        "test_attribute_instance",
+        "test_attribute_failure",
+        "test_attribute_multiple",
+        "globf",
+        "TestRaises.test_raises",
+        "TestRaises.test_raises_doesnt",
+        "TestRaises.test_raise",
+        "TestRaises.test_tupleerror",
+        "TestRaises.test_reinterpret_fails_with_print_for_the_fun_of_it",
+        "TestRaises.test_some_error",
+        "TestRaises.func1",
+        "test_dynamic_compile_shows_nicely",
+        "TestMoreErrors.test_complex_error",
+        "TestMoreErrors.test_z1_unpack_error",
+        "TestMoreErrors.test_z2_type_error"
+      ]
+    },
+    {
+      "path": "src/_pytest/_code/code.py",
+      "score": 16,
+      "matched_identifiers": [
+        "_pytest",
+        "adding",
+        "mark",
+        "pytest"
+      ],
+      "reasons": [
+        "source_content_tokens:_pytest,adding,mark,pytest,assert"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Code.path",
+        "Code.fullsource",
+        "Code.source",
+        "Code.getargs",
+        "Frame.statement",
+        "Frame.eval",
+        "Frame.exec_",
+        "Frame.repr",
+        "Frame.is_true",
+        "Frame.getargs",
+        "TracebackEntry.set_repr_style",
+        "TracebackEntry.frame",
+        "TracebackEntry.relline",
+        "TracebackEntry.statement",
+        "TracebackEntry.path",
+        "TracebackEntry.locals",
+        "TracebackEntry.getfirstlinesource",
+        "TracebackEntry.getsource",
+        "TracebackEntry.ishidden",
+        "TracebackEntry.name",
+        "Traceback.cut",
+        "Traceback.filter",
+        "Traceback.getcrashentry",
+        "Traceback.recursionindex",
+        "ExceptionInfo.from_exc_info",
+        "ExceptionInfo.from_current",
+        "ExceptionInfo.for_later",
+        "ExceptionInfo.fill_unfilled",
+        "ExceptionInfo.type",
+        "ExceptionInfo.value",
+        "ExceptionInfo.tb",
+        "ExceptionInfo.typename",
+        "ExceptionInfo.traceback",
+        "ExceptionInfo.exconly",
+        "ExceptionInfo.errisinstance",
+        "ExceptionInfo.getrepr",
+        "ExceptionInfo.match",
+        "FormattedExcinfo.repr_args",
+        "FormattedExcinfo.get_source",
+        "FormattedExcinfo.get_exconly"
+      ]
+    },
+    {
+      "path": "src/_pytest/_code/source.py",
+      "score": 16,
+      "matched_identifiers": [
+        "_pytest",
+        "assert",
+        "import",
+        "pytest"
+      ],
+      "reasons": [
+        "source_content_tokens:_pytest,pytest,assert,import,itself"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Source.strip",
+        "Source.putaround",
+        "Source.indent",
+        "Source.getstatement",
+        "Source.getstatementrange",
+        "Source.deindent",
+        "Source.isparseable",
+        "Source.compile",
+        "compile_",
+        "findsource",
+        "getrawcode",
+        "getsource",
+        "deindent",
+        "get_statement_startend2",
+        "getstatementrange_ast"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "doc/en/example/assertion/test_failures.py",
+      "score": 16,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example,failure",
+        "internal_name_overlap:failure",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "internal_name_overlap:pytest",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/test_hello_world.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/test_setup_flow_example.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:assertion,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/nonpython/conftest.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example",
+        "same_module_area:doc",
+        "token_overlap:example",
+        "internal_name_overlap:failure",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "doc/en/example/assertion/test_failures.py:top_level_test_functions",
+      "doc/en/example/assertion/test_setup_flow_example.py:testcase_class:TestStateFullThing",
+      "doc/en/example/nonpython/conftest.py:pytest_import_or_conftest",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py:top_level_test_functions",
+      "doc/en/example/assertion/global_testmodule_config/conftest.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 214,
+  "indexed_test_file_count": 116,
+  "available_imports": {
+    "src._pytest.skipping": [
+      "Skip",
+      "Xfail",
+      "evaluate_condition",
+      "evaluate_skip_marks",
+      "evaluate_xfail_marks",
+      "pytest_addoption",
+      "pytest_configure",
+      "pytest_report_teststatus",
+      "pytest_runtest_call",
+      "pytest_runtest_makereport",
+      "pytest_runtest_setup"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "src._pytest._code.source": [
+      "Source",
+      "compile_",
+      "deindent",
+      "findsource",
+      "get_statement_startend2",
+      "getrawcode",
+      "getsource",
+      "getstatementrange_ast"
+    ],
+    "src._pytest._code.code": [
+      "Code",
+      "ExceptionChainRepr",
+      "ExceptionInfo",
+      "ExceptionRepr",
+      "FormattedExcinfo",
+      "Frame",
+      "ReprEntry",
+      "ReprEntryNative",
+      "ReprExceptionInfo",
+      "ReprFileLocation",
+      "ReprFuncArgs",
+      "ReprLocals",
+      "ReprTraceback",
+      "ReprTracebackNative",
+      "TerminalRepr",
+      "Traceback",
+      "TracebackEntry",
+      "filter_traceback",
+      "getfslineno"
+    ],
+    "src._pytest": [
+      "Code",
+      "ExceptionInfo",
+      "Frame",
+      "Source",
+      "Traceback",
+      "TracebackEntry",
+      "compile",
+      "filter_traceback",
+      "getfslineno",
+      "getrawcode"
+    ],
+    "doc.en.conf": [
+      "configure_logging",
+      "setup"
+    ],
+    "doc.en.example.assertion.test_failures": [
+      "test_failure_demo_fails_properly"
+    ],
+    "doc.en.example.assertion.test_setup_flow_example": [
+      "TestStateFullThing",
+      "setup_module",
+      "teardown_module"
+    ],
+    "doc.en.example.assertion.failure_demo": [
+      "TestCustomAssertMsg",
+      "TestFailing",
+      "TestMoreErrors",
+      "TestRaises",
+      "TestSpecialisedExplanations",
+      "globf",
+      "otherfunc",
+      "otherfunc_multi",
+      "somefunc",
+      "test_attribute",
+      "test_attribute_failure",
+      "test_attribute_instance",
+      "test_attribute_multiple",
+      "test_dynamic_compile_shows_nicely",
+      "test_generative"
+    ],
+    "doc.en.example.nonpython.conftest": [
+      "YamlException",
+      "YamlFile",
+      "YamlItem",
+      "pytest_collect_file"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.test_hello_world": [
+      "test_func"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.conftest": [
+      "pytest_runtest_setup"
+    ]
+  },
+  "test_example_snippet": "def test_failure_demo_fails_properly(testdir):\n    target = testdir.tmpdir.join(failure_demo.basename)\n    failure_demo.copy(target)\n    failure_demo.copy(testdir.tmpdir.join(failure_demo.basename))\n    result = testdir.runpytest(target, syspathinsert=True)\n    result.stdout.fnmatch_lines([\"*44 failed*\"])\n    assert result.ret != 0",
+  "conftest_fixtures": {}
+}

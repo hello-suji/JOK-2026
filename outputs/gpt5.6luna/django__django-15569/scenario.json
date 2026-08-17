@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query_utils.py",
+      "target_function": "_unregister_lookup",
+      "related_classes": [
+        "RegisterLookupMixin",
+        "SchemaTests",
+        "Lookup",
+        "IsNull"
+      ],
+      "candidate_test_file": "tests/lookup/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _unregister_lookup can be called.",
+      "Use the generated reproduction path that calls _unregister_lookup, register_lookup, unregister_lookup, process_lhs."
+    ],
+    "execution_stimulus": [
+      "Call _unregister_lookup with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _unregister_lookup, register_lookup, unregister_lookup, process_lhs."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/query_utils.py",
+      "django/contrib/admin/utils.py",
+      "django/contrib/admin/views/main.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_lookups/models.py",
+      "tests/lookup/models.py",
+      "tests/auth_tests/test_models.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.models.query_utils import RegisterLookupMixin\nfrom django.db.models.lookups import Lookup\n\nclass TestUnregisterLookupCacheClearing(RegisterLookupMixin):\n    def test_cache_cleared_after_unregister_lookup_repro(self):\n        # Define a simple lookup for testing\n        class IsNull(Lookup):\n            lookup_name = 'isnull'\n            def as_sql(self, compiler, connection):\n                lhs, lhs_params = self.process_lhs(compiler, connection)\n                rhs, rhs_params = self.process_rhs(compiler, connection)\n                params = lhs_params + rhs_params\n                return '%s IS NULL' % lhs, params\n\n        # Register a lookup to populate the cache\n        self.register_lookup(IsNull)\n        \n        # Unregister the lookup\n        self.unregister_lookup(IsNull)\n        \n        # Check if the cache is cleared\n        self.assertNotIn('isnull', self.lookup_cache)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_unregister_lookup",
+        "register_lookup",
+        "unregister_lookup",
+        "process_lhs",
+        "process_rhs"
+      ],
+      "classes": [
+        "RegisterLookupMixin",
+        "SchemaTests",
+        "Lookup",
+        "IsNull"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/lookup/models.py",
+      "target_source_file": "django/db/models/query_utils.py",
+      "test_visible_functions": [
+        "_unregister_lookup",
+        "register_lookup",
+        "unregister_lookup",
+        "process_lhs",
+        "process_rhs"
+      ],
+      "test_visible_classes": [
+        "RegisterLookupMixin",
+        "Lookup",
+        "IsNull"
+      ]
+    }
+  }
+]

@@ -1,0 +1,311 @@
+{
+  "instance_id": "django__django-12708",
+  "repo": "django/django",
+  "base_commit": "447980e72ac01da1594dd3373a03ba40b7ee6f80",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/backends/base/schema.py",
+      "score": 42,
+      "matched_identifiers": [
+        "_delete_composed_index",
+        "_uniq",
+        "actually",
+        "django/db/backends/base/schema.py",
+        "valueerror"
+      ],
+      "reasons": [
+        "function_match:_delete_composed_index",
+        "explicit_file_path_hint:django/db/backends/base/schema.py",
+        "stem_in_issue_text:schema",
+        "source_content_tokens:valueerror,_delete_composed_index,_uniq,actually,alone"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_delete_composed_index": "    def _delete_composed_index(self, model, fields, constraint_kwargs, sql):\n        meta_constraint_names = {constraint.name for constraint in model._meta.constraints}\n        meta_index_names = {constraint.name for constraint in model._meta.indexes}\n        columns = [model._meta.get_field(field).column for field in fields]\n        constraint_names = self._constraint_names(\n            model, columns, exclude=meta_constraint_names | meta_index_names,\n            **constraint_kwargs\n        )\n        if len(constraint_names) != 1:\n            raise ValueError(\"Found wrong number (%s) of constraints for %s(%s)\" % (\n                len(constraint_names),\n                model._meta.db_table,\n                \", \".join(columns),\n            ))\n        self.execute(self._delete_constraint_sql(sql, model, constraint_names[0]))"
+      },
+      "top_level_functions": [
+        "BaseDatabaseSchemaEditor.execute",
+        "BaseDatabaseSchemaEditor.quote_name",
+        "BaseDatabaseSchemaEditor.table_sql",
+        "BaseDatabaseSchemaEditor.column_sql",
+        "BaseDatabaseSchemaEditor.skip_default",
+        "BaseDatabaseSchemaEditor.prepare_default",
+        "BaseDatabaseSchemaEditor.effective_default",
+        "BaseDatabaseSchemaEditor.quote_value",
+        "BaseDatabaseSchemaEditor.create_model",
+        "BaseDatabaseSchemaEditor.delete_model",
+        "BaseDatabaseSchemaEditor.add_index",
+        "BaseDatabaseSchemaEditor.remove_index",
+        "BaseDatabaseSchemaEditor.add_constraint",
+        "BaseDatabaseSchemaEditor.remove_constraint",
+        "BaseDatabaseSchemaEditor.alter_unique_together",
+        "BaseDatabaseSchemaEditor.alter_index_together",
+        "BaseDatabaseSchemaEditor.alter_db_table",
+        "BaseDatabaseSchemaEditor.alter_db_tablespace",
+        "BaseDatabaseSchemaEditor.add_field",
+        "BaseDatabaseSchemaEditor.remove_field",
+        "BaseDatabaseSchemaEditor.alter_field",
+        "BaseDatabaseSchemaEditor.remove_procedure"
+      ]
+    },
+    {
+      "path": "django/db/backends/mysql/schema.py",
+      "score": 32,
+      "matched_identifiers": [
+        "_delete_composed_index",
+        "_uniq",
+        "backends",
+        "composed",
+        "django/db/backends/base/schema.py"
+      ],
+      "reasons": [
+        "function_match:_delete_composed_index",
+        "file_hint_match:django/db/backends/base/schema.py",
+        "stem_in_issue_text:schema",
+        "source_content_tokens:_delete_composed_index,_uniq,backends,composed,create"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_delete_composed_index": "    def _delete_composed_index(self, model, fields, *args):\n        \"\"\"\n        MySQL can remove an implicit FK index on a field when that field is\n        covered by another index like a unique_together. \"covered\" here means\n        that the more complex index starts like the simpler one.\n        http://bugs.mysql.com/bug.php?id=37910 / Django ticket #24757\n        We check here before removing the [unique|index]_together if we have to\n        recreate a FK index.\n        \"\"\"\n        first_field = model._meta.get_field(fields[0])\n        if first_field.get_internal_type() == 'ForeignKey':\n            constraint_names = self._constraint_names(model, [first_field.column], index=True)\n            if not constraint_names:\n                self.execute(self._create_index_sql(model, [first_field], suffix=\"\"))\n        return super()._delete_composed_index(model, fields, *args)"
+      },
+      "top_level_functions": [
+        "DatabaseSchemaEditor.sql_delete_check",
+        "DatabaseSchemaEditor.sql_rename_column",
+        "DatabaseSchemaEditor.quote_value",
+        "DatabaseSchemaEditor.skip_default",
+        "DatabaseSchemaEditor.add_field"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/db/backends/spatialite/schema.py",
+      "score": 27,
+      "matched_identifiers": [
+        "backends",
+        "constraints",
+        "create",
+        "creation",
+        "django/db/backends/base/schema.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/base/schema.py",
+        "stem_in_issue_text:schema",
+        "source_content_tokens:backends,constraints,create,creation,delete"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SpatialiteSchemaEditor.geo_quote_name",
+        "SpatialiteSchemaEditor.column_sql",
+        "SpatialiteSchemaEditor.remove_geometry_metadata",
+        "SpatialiteSchemaEditor.create_model",
+        "SpatialiteSchemaEditor.delete_model",
+        "SpatialiteSchemaEditor.add_field",
+        "SpatialiteSchemaEditor.remove_field",
+        "SpatialiteSchemaEditor.alter_db_table"
+      ]
+    },
+    {
+      "path": "django/db/backends/oracle/schema.py",
+      "score": 27,
+      "matched_identifiers": [
+        "_uniq",
+        "backends",
+        "constraints",
+        "create",
+        "django/db/backends/base/schema.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/base/schema.py",
+        "stem_in_issue_text:schema",
+        "source_content_tokens:_uniq,backends,constraints,create,delete"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseSchemaEditor.quote_value",
+        "DatabaseSchemaEditor.remove_field",
+        "DatabaseSchemaEditor.delete_model",
+        "DatabaseSchemaEditor.alter_field",
+        "DatabaseSchemaEditor.normalize_name",
+        "DatabaseSchemaEditor.prepare_default"
+      ]
+    },
+    {
+      "path": "django/db/backends/postgresql/schema.py",
+      "score": 27,
+      "matched_identifiers": [
+        "backends",
+        "constraints",
+        "create",
+        "delete",
+        "django/db/backends/base/schema.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/base/schema.py",
+        "stem_in_issue_text:schema",
+        "source_content_tokens:backends,constraints,create,delete,different"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseSchemaEditor.quote_value",
+        "DatabaseSchemaEditor.add_index",
+        "DatabaseSchemaEditor.remove_index"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/backends/mysql/test_schema.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:schema",
+        "token_overlap:backends,mysql,schema",
+        "internal_name_overlap:schema",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_schema.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:schema",
+        "token_overlap:backends,schema",
+        "internal_name_overlap:schema",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/mysql/test_operations.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:backends,mysql",
+        "internal_name_overlap:mysql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/oracle/test_creation.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:backends,oracle",
+        "internal_name_overlap:oracle",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/oracle/test_introspection.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:backends,oracle",
+        "internal_name_overlap:index",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/backends/oracle/test_introspection.py:unittest_or_django_test_import",
+      "tests/backends/oracle/test_creation.py:unittest_or_django_test_import",
+      "tests/backends/base/test_schema.py:unittest_or_django_test_import",
+      "tests/backends/mysql/test_schema.py:unittest_or_django_test_import",
+      "tests/backends/mysql/test_operations.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2611,
+  "indexed_test_file_count": 1774,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.backends.oracle.test_introspection": [
+      "DatabaseSequenceTests"
+    ],
+    "tests.backends.oracle.test_creation": [
+      "DatabaseCreationTests"
+    ],
+    "tests.backends.base.test_schema": [
+      "SchemaEditorTests"
+    ],
+    "tests.backends.mysql.test_schema": [
+      "SchemaEditorTests"
+    ],
+    "tests.backends.mysql.test_operations": [
+      "MySQLOperationsTests"
+    ],
+    "django.db": [
+      "DefaultConnectionProxy",
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.contrib.gis.db.backends.spatialite.schema": [
+      "SpatialiteSchemaEditor"
+    ],
+    "django.db.backends.oracle.schema": [
+      "DatabaseSchemaEditor"
+    ],
+    "django.db.backends.base.schema": [
+      "BaseDatabaseSchemaEditor",
+      "_all_related_fields",
+      "_is_relevant_relation",
+      "_related_non_m2m_objects"
+    ],
+    "django.db.backends.postgresql.schema": [
+      "DatabaseSchemaEditor"
+    ],
+    "django.db.backends.mysql.schema": [
+      "DatabaseSchemaEditor"
+    ]
+  },
+  "test_example_snippet": "    def test_quote_value(self):\n        import MySQLdb\n        editor = connection.schema_editor()\n        tested_values = [\n            ('string', \"'string'\"),\n            (42, '42'),\n            (1.754, '1.754e0' if MySQLdb.version_info >= (1, 3, 14) else '1.754'),\n            (False, b'0' if MySQLdb.version_info >= (1, 4, 0) else '0'),\n        ]\n        for value, expected in tested_values:\n            with self.subTest(value=value):\n                self.assertEqual(editor.quote_value(value), expected)",
+  "conftest_fixtures": {}
+}

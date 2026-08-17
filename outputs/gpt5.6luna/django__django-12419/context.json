@@ -1,0 +1,399 @@
+{
+  "instance_id": "django__django-12419",
+  "repo": "django/django",
+  "base_commit": "7fa1a93c6c8109010a6ff3f604fda83b604e0e97",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/http.py",
+      "score": 17,
+      "matched_identifiers": [
+        "default",
+        "header",
+        "origin",
+        "same"
+      ],
+      "reasons": [
+        "stem_in_issue_text:http",
+        "source_content_tokens:origin,same,default,header,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "urlquote",
+        "urlquote_plus",
+        "urlunquote",
+        "urlunquote_plus",
+        "urlencode",
+        "http_date",
+        "parse_http_date",
+        "parse_http_date_safe",
+        "base36_to_int",
+        "int_to_base36",
+        "urlsafe_base64_encode",
+        "urlsafe_base64_decode",
+        "parse_etags",
+        "quote_etag",
+        "is_same_domain",
+        "url_has_allowed_host_and_scheme",
+        "is_safe_url",
+        "limited_parse_qsl",
+        "escape_leading_slashes"
+      ]
+    },
+    {
+      "path": "django/views/decorators/http.py",
+      "score": 17,
+      "matched_identifiers": [
+        "change",
+        "default",
+        "depend",
+        "same"
+      ],
+      "reasons": [
+        "stem_in_issue_text:http",
+        "source_content_tokens:same,change,default,depend,header"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "require_http_methods",
+        "condition",
+        "etag",
+        "last_modified"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "default",
+        "depend",
+        "origin",
+        "same"
+      ],
+      "reasons": [
+        "source_content_tokens:origin,same,default,depend,en-us"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/helpers.py",
+      "score": 16,
+      "matched_identifiers": [
+        "change",
+        "default",
+        "depend",
+        "origin"
+      ],
+      "reasons": [
+        "source_content_tokens:origin,change,default,depend,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AdminForm.errors",
+        "AdminForm.non_field_errors",
+        "AdminForm.media",
+        "Fieldset.media",
+        "Fieldline.errors",
+        "AdminField.label_tag",
+        "AdminField.errors",
+        "AdminReadonlyField.label_tag",
+        "AdminReadonlyField.contents",
+        "InlineAdminFormSet.fields",
+        "InlineAdminFormSet.inline_formset_data",
+        "InlineAdminFormSet.forms",
+        "InlineAdminFormSet.non_form_errors",
+        "InlineAdminFormSet.media",
+        "InlineAdminForm.needs_explicit_pk_field",
+        "InlineAdminForm.pk_field",
+        "InlineAdminForm.fk_field",
+        "InlineAdminForm.deletion_field",
+        "InlineAdminForm.ordering_field"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "applications",
+        "origin",
+        "same"
+      ],
+      "reasons": [
+        "source_content_tokens:origin,same,added,applications,change"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_scripts/test_django_admin_py.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_http.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_http.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "internal_name_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/urls/http.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:http",
+        "token_overlap:http",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_http.py:unittest_or_django_test_import",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_http.py:unittest_or_django_test_import",
+      "tests/admin_scripts/test_django_admin_py.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2593,
+  "indexed_test_file_count": 1758,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango40Warning",
+      "URLValidator",
+      "ValidationError",
+      "View",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.sitemaps_tests.test_http": [
+      "HTTPSitemapTests"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_http": [
+      "Base36IntTests",
+      "ETagProcessingTests",
+      "EscapeLeadingSlashesTests",
+      "HttpDateProcessingTests",
+      "IsSafeURLTests",
+      "IsSameDomainTests",
+      "URLEncodeTests",
+      "URLQuoteTests",
+      "URLSafeBase64Tests"
+    ],
+    "tests.admin_scripts.test_django_admin_py": [
+      "DeprecationTests"
+    ],
+    "tests.sitemaps_tests.urls.http": [
+      "DateSiteMap",
+      "EmptySitemap",
+      "FixedLastmodMixedSitemap",
+      "FixedLastmodSitemap",
+      "FixedNewerLastmodSitemap",
+      "SimpleI18nSitemap",
+      "SimplePagedSitemap",
+      "SimpleSitemap",
+      "TimezoneSiteMap",
+      "testmodelview"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.utils.http": [
+      "_url_has_allowed_host_and_scheme",
+      "_urlparse",
+      "_urlsplit",
+      "base36_to_int",
+      "escape_leading_slashes",
+      "http_date",
+      "int_to_base36",
+      "is_safe_url",
+      "is_same_domain",
+      "limited_parse_qsl",
+      "parse_etags",
+      "parse_http_date",
+      "parse_http_date_safe",
+      "quote_etag",
+      "url_has_allowed_host_and_scheme",
+      "urlencode",
+      "urlquote",
+      "urlquote_plus",
+      "urlsafe_base64_decode",
+      "urlsafe_base64_encode",
+      "urlunquote",
+      "urlunquote_plus"
+    ],
+    "django.views.decorators.http": [
+      "condition",
+      "etag",
+      "last_modified",
+      "require_http_methods"
+    ],
+    "django.contrib.admin.helpers": [
+      "ActionForm",
+      "AdminErrorList",
+      "AdminField",
+      "AdminForm",
+      "AdminReadonlyField",
+      "Fieldline",
+      "Fieldset",
+      "InlineAdminForm",
+      "InlineAdminFormSet",
+      "InlineFieldset"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ]
+  },
+  "test_example_snippet": "    def test_django_admin_py_deprecated(self):\n        _, err = self._run_test(['-Wd', self.django_admin_py, '--version'])\n        self.assertIn(self.DEPRECATION_MESSAGE, err)\n\n    def test_main_not_deprecated(self):\n        _, err = self._run_test(['-Wd', '-m', 'django', '--version'])\n        self.assertNotIn(self.DEPRECATION_MESSAGE, err)\n\n    def test_django_admin_py_equivalent_main(self):\n        django_admin_py_out, _ = self._run_test([self.django_admin_py, '--version'])\n        django_out, _ = self._run_test(['-m', 'django', '--version'])\n        self.assertEqual(django_admin_py_out, django_out)",
+  "conftest_fixtures": {}
+}

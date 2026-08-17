@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-2931",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -1739,3 +1739,14 @@\n\n if __name__ == '__main__':\n     unittest.main()\n+\n+from unittest.mock import MagicMock\n+from requests.models import PreparedRequest\n+\n+def test_put_with_binary_payload_repro():\n+    session = MagicMock()\n+    prepared_request = PreparedRequest()\n+    prepared_request.prepare(method='PUT', url='http://httpbin.org/put', data=u\"ööö\".encode(\"utf-8\"))\n+    session.send.return_value.status_code = 200\n+    response = session.send(prepared_request)\n+    assert response.status_code == 200\n",
+    "patch_sha256": "c8f3dd26bf757ef52be8cc6fb716c8e8dc0d4ee1ba02f2397dd5957dfe1b9eb7"
+  }
+]

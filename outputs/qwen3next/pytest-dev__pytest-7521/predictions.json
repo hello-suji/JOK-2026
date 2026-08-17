@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pytest-dev__pytest-7521",
+    "model_patch": "--- a/testing/test_capture.py\n+++ b/testing/test_capture.py\n@@ -1580,3 +1580,8 @@\n     )\n     result.stdout.no_fnmatch_line(\"*Captured stderr call*\")\n     result.stdout.no_fnmatch_line(\"*during collection*\")\n+\n+def test_cafd_includes_carriage_return_repro(capfd):\n+    print('Greetings from DOS', end='\\r')\n+    out, err = capfd.readouterr()\n+    assert out.endswith('\\r')\n",
+    "patch_sha256": "973835c7411f14b7673348cbe15232c86323045efcf6198e0551a20809d83106"
+  }
+]

@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/optimizer.py",
+      "target_function": "optimize",
+      "related_classes": [
+        "AddField",
+        "AlterField",
+        "CharField",
+        "MigrationOptimizer"
+      ],
+      "candidate_test_file": "tests/migrations/test_optimizer.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db import migrations, models",
+      "from django.db.migrations.optimizer import MigrationOptimizer",
+      "operations = [migrations.AddField(model_name='book', name='title', field=models.CharField(max_length=256, null=True)), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True)), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help')), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help', default=None))]",
+      "Use the generated reproduction path that calls optimize."
+    ],
+    "execution_stimulus": [
+      "optimizer = MigrationOptimizer('app_label')",
+      "optimized_operations = optimizer.optimize(operations, 'app_label')",
+      "Execute the focused target API path: optimize."
+    ],
+    "expected_failure": "The optimized_operations should contain all AlterField operations but it does not.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/fields.py",
+      "django/db/migrations/optimizer.py",
+      "django/forms/fields.py"
+    ],
+    "relevant_test_files": [
+      "tests/migrations/test_optimizer.py",
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/invalid_models_tests/test_custom_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "class TestMigrationOptimizer(OptimizerTests):\n    def test_optimizer_does_not_reduce_multiple_alterfield_repro(self):\n        operations = [\n            migrations.AddField(model_name='book', name='title', field=models.CharField(max_length=256, null=True)),\n            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True)),\n            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help')),\n            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help', default=None))\n        ]\n        optimizer = MigrationOptimizer()\n        optimized_operations = optimizer.optimize(operations, 'app_label')\n        self.assertEqual(len(optimized_operations), 4)"
+      },
+      {
+        "language": "python",
+        "code": "def test_optimizer_does_not_reduce_multiple_alterfield():\n    from django.db import migrations, models\n    from django.db.migrations.optimizer import MigrationOptimizer\n    operations = [migrations.AddField(model_name='book', name='title', field=models.CharField(max_length=256, null=True)), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True)), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help')), migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help', default=None))]\n    optimizer = MigrationOptimizer('app_label')\n    optimized_operations = optimizer.optimize(operations, 'app_label')\n    assert len(optimized_operations) > 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "optimize"
+      ],
+      "classes": [
+        "AddField",
+        "AlterField",
+        "CharField",
+        "MigrationOptimizer"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/migrations/test_optimizer.py",
+      "target_source_file": "django/db/migrations/optimizer.py",
+      "test_visible_functions": [
+        "optimize"
+      ],
+      "test_visible_classes": [
+        "AddField",
+        "AlterField",
+        "CharField",
+        "MigrationOptimizer"
+      ]
+    }
+  }
+]

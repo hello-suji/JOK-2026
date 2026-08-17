@@ -1,0 +1,73 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "isympy.py",
+      "target_function": "",
+      "related_classes": [
+        "Rational"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_expr.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Rational calc value error",
+    "relevant_source_files": [
+      "isympy.py",
+      "sympy/__init__.py",
+      "sympy/assumptions/ask.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_expr.py",
+      "sympy/assumptions/tests/__init__.py",
+      "sympy/core/tests/test_function.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Rational\n\ndef test_rational_calc_value_error_repro():\n    assert Rational('0.5', '100') == Rational(1, 200)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "Rational"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_expr.py",
+      "target_source_file": "isympy.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "Rational"
+      ]
+    }
+  }
+]

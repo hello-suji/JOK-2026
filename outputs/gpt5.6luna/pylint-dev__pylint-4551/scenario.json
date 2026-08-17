@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/pyreverse/diagrams.py",
+      "target_function": "__init__",
+      "related_classes": [
+        "String",
+        "DefaultDiadefGenerator"
+      ],
+      "candidate_test_file": "pylint/testutils/lint_module_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls __init__, project_from_files, create_module, process_all."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: __init__, project_from_files, create_module, process_all."
+    ],
+    "expected_failure": "It seems that pyreverse does not read python type hints (as defined by [PEP 484](https://www.python.org/dev/peps/pep-0484/)), and this does not help when you use `None` as a default value :",
+    "relevant_source_files": [
+      "pylint/pyreverse/diagrams.py",
+      "pylint/pyreverse/diadefslib.py",
+      "pylint/pyreverse/inspector.py"
+    ],
+    "relevant_test_files": [
+      "pylint/testutils/lint_module_test.py",
+      "tests/unittest_pyreverse_inspector.py",
+      "tests/functional/m/missing/missing_docstring.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from pylint.pyreverse.inspector import project_from_files\nfrom pylint.pyreverse.diadefslib import DefaultDiadefGenerator\n\ndef test_pyreverse_reads_type_hints_repro(project):\n    # Create a temporary module with type hints\n    module_content = \"\"\"\nclass C(object):\n    def __init__(self, a: str = None):\n        self.a = a\n\"\"\"\n    project.create_module('temp_module', module_content)\n    generator = DefaultDiadefGenerator(project)\n    generator.process_all()\n    class_def = generator.class_definitions['temp_module.C']\n    init_method = class_def.methods['__init__']\n    assert init_method.args[1].annotation.as_string() == 'str'\n    assert init_method.args[1].default_value == 'None'"
+      },
+      {
+        "language": "python",
+        "code": "class C(object):\n    def __init__(self, a: str = None):\n        self.a = a"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "project_from_files",
+        "create_module",
+        "process_all",
+        "as_string"
+      ],
+      "classes": [
+        "String",
+        "DefaultDiadefGenerator"
+      ],
+      "files": [
+        "pylint-script.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "pylint/testutils/lint_module_test.py",
+      "target_source_file": "pylint/pyreverse/diagrams.py",
+      "test_visible_functions": [
+        "__init__",
+        "project_from_files",
+        "create_module",
+        "process_all",
+        "as_string"
+      ],
+      "test_visible_classes": [
+        "String",
+        "DefaultDiadefGenerator"
+      ]
+    }
+  }
+]

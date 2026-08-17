@@ -1,0 +1,508 @@
+{
+  "instance_id": "django__django-16454",
+  "repo": "django/django",
+  "base_commit": "1250483ebf73f7a82ff820b94092c63ce4238264",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/management/base.py",
+      "score": 72,
+      "matched_identifiers": [
+        "BaseCommand",
+        "CommandParser",
+        "Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "add_arguments",
+        "argparse",
+        "arguments",
+        "base",
+        "commanderror",
+        "error",
+        "handle"
+      ],
+      "reasons": [
+        "function_match:handle",
+        "function_match:add_arguments",
+        "function_match:error",
+        "class_match:CommandParser",
+        "class_match:BaseCommand",
+        "explicit_file_path_hint:Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:argparse,arguments,base,commanderror,core",
+        "traceback_fault_location:error"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "CommandParser": "class CommandParser(ArgumentParser):\n    \"\"\"\n    Customized ArgumentParser class to improve some error messages and prevent\n    SystemExit in several occasions, as SystemExit is unacceptable when a\n    command is called programmatically.\n    \"\"\"\n\n    def __init__(\n        self, *, missing_args_message=None, called_from_command_line=None, **kwargs\n    ):\n        self.missing_args_message = missing_args_message\n        self.called_from_command_line = called_from_command_line\n        super().__init__(**kwargs)\n\n    def parse_args(self, args=None, namespace=None):",
+        "BaseCommand": "class BaseCommand:\n    \"\"\"\n    The base class from which all management commands ultimately\n    derive.\n\n    Use this class if you want access to all of the mechanisms which\n    parse the command-line arguments and work out what code to call in\n    response; if you don't need to change any of that behavior,\n    consider using one of the subclasses defined in this file.\n\n    If you are interested in overriding/customizing various aspects of\n    the command-parsing and -execution behavior, the normal flow works\n    as follows:\n\n    1. ``django-admin`` or ``manage.py`` loads the command class",
+        "error": "    def error(self, message):\n        if self.called_from_command_line:\n            super().error(message)\n        else:\n            raise CommandError(\"Error: %s\" % message)\n\n\ndef handle_default_options(options):\n    \"\"\"\n    Include any default options that all commands should accept here\n    so that ManagementUtility can handle them before searching for\n    user commands.\n    \"\"\"\n    if options.settings:\n        os.environ[\"DJANGO_SETTINGS_MODULE\"] = options.settings",
+        "add_arguments": "    def add_arguments(self, parser):\n        parser.add_argument(\"args\", metavar=self.label, nargs=\"+\")\n\n    def handle(self, *labels, **options):\n        output = []\n        for label in labels:\n            label_output = self.handle_label(label, **options)\n            if label_output:\n                output.append(label_output)\n        return \"\\n\".join(output)\n\n    def handle_label(self, label, **options):\n        \"\"\"\n        Perform the command's actions for ``label``, which will be the\n        string as given on the command line.",
+        "handle": "    def handle(self, *labels, **options):\n        output = []\n        for label in labels:\n            label_output = self.handle_label(label, **options)\n            if label_output:\n                output.append(label_output)\n        return \"\\n\".join(output)\n\n    def handle_label(self, label, **options):\n        \"\"\"\n        Perform the command's actions for ``label``, which will be the\n        string as given on the command line.\n        \"\"\"\n        raise NotImplementedError(\n            \"subclasses of LabelCommand must provide a handle_label() method\""
+      },
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.add_base_argument",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    },
+    {
+      "path": "django/template/base.py",
+      "score": 32,
+      "matched_identifiers": [
+        "Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "arguments",
+        "base",
+        "core",
+        "create",
+        "error"
+      ],
+      "reasons": [
+        "function_match:error",
+        "file_hint_match:Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:arguments,base,core,create,following"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "error": "    def error(self, token, e):\n        \"\"\"\n        Return an exception annotated with the originating token. Since the\n        parser can be called recursively, check if a token is already set. This\n        ensures the innermost token is highlighted if an exception occurs,\n        e.g. a compile error within the body of an if statement.\n        \"\"\"\n        if not isinstance(e, Exception):\n            e = TemplateSyntaxError(e)\n        if not hasattr(e, \"token\"):\n            e.token = token\n        return e\n\n    def invalid_block_tag(self, token, command, parse_until=None):\n        if parse_until:"
+      },
+      "top_level_functions": [
+        "Origin.loader_name",
+        "Template.render",
+        "Template.compile_nodelist",
+        "Template.get_exception_info",
+        "linebreak_iter",
+        "Token.split_contents",
+        "Lexer.tokenize",
+        "Lexer.create_token",
+        "DebugLexer.tokenize",
+        "Parser.parse",
+        "Parser.skip_past",
+        "Parser.extend_nodelist",
+        "Parser.error",
+        "Parser.invalid_block_tag",
+        "Parser.unclosed_block_tag",
+        "Parser.next_token",
+        "Parser.prepend_token",
+        "Parser.delete_first_token",
+        "Parser.add_library",
+        "Parser.compile_filter",
+        "Parser.find_filter",
+        "FilterExpression.resolve",
+        "FilterExpression.args_check",
+        "Variable.resolve",
+        "Node.render",
+        "Node.render_annotated",
+        "Node.get_nodes_by_type",
+        "NodeList.render",
+        "NodeList.get_nodes_by_type",
+        "TextNode.render",
+        "TextNode.render_annotated",
+        "render_value_in_context",
+        "VariableNode.render",
+        "token_kwargs"
+      ]
+    },
+    {
+      "path": "django/contrib/contenttypes/management/commands/remove_stale_contenttypes.py",
+      "score": 28,
+      "matched_identifiers": [
+        "add_arguments",
+        "arguments",
+        "base",
+        "core",
+        "handle",
+        "manage"
+      ],
+      "reasons": [
+        "function_match:handle",
+        "function_match:add_arguments",
+        "path_contains_function:_",
+        "source_content_tokens:arguments,base,core,manage,management"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "add_arguments": "    def add_arguments(self, parser):\n        parser.add_argument(\n            \"--noinput\",\n            \"--no-input\",\n            action=\"store_false\",\n            dest=\"interactive\",\n            help=\"Tells Django to NOT prompt the user for input of any kind.\",\n        )\n        parser.add_argument(\n            \"--database\",\n            default=DEFAULT_DB_ALIAS,\n            help='Nominates the database to use. Defaults to the \"default\" database.',\n        )\n        parser.add_argument(\n            \"--include-stale-apps\",",
+        "handle": "    def handle(self, **options):\n        db = options[\"database\"]\n        include_stale_apps = options[\"include_stale_apps\"]\n        interactive = options[\"interactive\"]\n        verbosity = options[\"verbosity\"]\n\n        if not router.allow_migrate_model(db, ContentType):\n            return\n        ContentType.objects.clear_cache()\n\n        apps_content_types = itertools.groupby(\n            ContentType.objects.using(db).order_by(\"app_label\", \"model\"),\n            lambda obj: obj.app_label,\n        )\n        for app_label, content_types in apps_content_types:"
+      },
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle",
+        "NoFastDeleteCollector.can_fast_delete"
+      ]
+    },
+    {
+      "path": "django/contrib/sitemaps/management/commands/ping_google.py",
+      "score": 28,
+      "matched_identifiers": [
+        "add_arguments",
+        "arguments",
+        "base",
+        "core",
+        "handle",
+        "manage"
+      ],
+      "reasons": [
+        "function_match:handle",
+        "function_match:add_arguments",
+        "path_contains_function:_",
+        "source_content_tokens:arguments,base,core,manage,management"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "add_arguments": "    def add_arguments(self, parser):\n        parser.add_argument(\"sitemap_url\", nargs=\"?\")\n        parser.add_argument(\"--sitemap-uses-http\", action=\"store_true\")\n\n    def handle(self, *args, **options):\n        ping_google(\n            sitemap_url=options[\"sitemap_url\"],\n            sitemap_uses_https=not options[\"sitemap_uses_http\"],\n        )",
+        "handle": "    def handle(self, *args, **options):\n        ping_google(\n            sitemap_url=options[\"sitemap_url\"],\n            sitemap_uses_https=not options[\"sitemap_uses_http\"],\n        )"
+      },
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geoip2/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "arguments",
+        "base",
+        "core",
+        "name"
+      ],
+      "reasons": [
+        "file_hint_match:Users/chainz/Documents/Projects/django/django/core/management/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:arguments,base,core,name,required"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeoIP2.city",
+        "GeoIP2.country_code",
+        "GeoIP2.country_name",
+        "GeoIP2.country",
+        "GeoIP2.coords",
+        "GeoIP2.lon_lat",
+        "GeoIP2.lat_lon",
+        "GeoIP2.geos",
+        "GeoIP2.info",
+        "GeoIP2.open"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_scripts/management/commands/base_command.py",
+      "score": 31,
+      "matched_identifiers": [
+        "BaseCommand",
+        "CommandParser",
+        "_",
+        "add_arguments",
+        "handle"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_function_match:handle",
+        "test_function_match:add_arguments",
+        "test_path_related_to_class:CommandParser",
+        "test_path_related_to_class:BaseCommand",
+        "test_name_matches_source_stem:base",
+        "token_overlap:command,commands,management",
+        "internal_name_overlap:command",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "score": 31,
+      "matched_identifiers": [
+        "BaseCommand",
+        "CommandParser",
+        "_",
+        "add_arguments",
+        "handle"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_function_match:handle",
+        "test_function_match:add_arguments",
+        "test_path_related_to_class:CommandParser",
+        "test_path_related_to_class:BaseCommand",
+        "test_name_matches_source_stem:base",
+        "token_overlap:command,commands,management",
+        "internal_name_overlap:command",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/subparser.py",
+      "score": 30,
+      "matched_identifiers": [
+        "ArgumentParser",
+        "BaseCommand",
+        "CommandParser",
+        "_",
+        "add_arguments",
+        "handle"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_function_match:handle",
+        "test_function_match:add_arguments",
+        "test_path_related_to_class:ArgumentParser",
+        "test_path_related_to_class:CommandParser",
+        "test_path_related_to_class:BaseCommand",
+        "token_overlap:command,commands,management,parser",
+        "internal_name_overlap:command",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/subparser_dest.py",
+      "score": 30,
+      "matched_identifiers": [
+        "ArgumentParser",
+        "BaseCommand",
+        "CommandParser",
+        "_",
+        "add_arguments",
+        "handle"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_function_match:handle",
+        "test_function_match:add_arguments",
+        "test_path_related_to_class:ArgumentParser",
+        "test_path_related_to_class:CommandParser",
+        "test_path_related_to_class:BaseCommand",
+        "token_overlap:command,commands,management,parser",
+        "internal_name_overlap:command",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/subparser_required.py",
+      "score": 30,
+      "matched_identifiers": [
+        "ArgumentParser",
+        "BaseCommand",
+        "CommandParser",
+        "_",
+        "add_arguments",
+        "handle"
+      ],
+      "reasons": [
+        "test_path_contains_function:_",
+        "test_function_match:handle",
+        "test_function_match:add_arguments",
+        "test_path_related_to_class:ArgumentParser",
+        "test_path_related_to_class:CommandParser",
+        "test_path_related_to_class:BaseCommand",
+        "token_overlap:command,commands,management,parser",
+        "internal_name_overlap:command",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2745,
+  "indexed_test_file_count": 1874,
+  "available_imports": {
+    "django": [
+      "Context",
+      "ContextPopException",
+      "Engine",
+      "EngineHandler",
+      "Library",
+      "Node",
+      "NodeList",
+      "Origin",
+      "RequestContext",
+      "Template",
+      "TemplateDoesNotExist",
+      "TemplateSyntaxError",
+      "Variable",
+      "VariableDoesNotExist",
+      "autoreload",
+      "engines",
+      "get_version",
+      "setup"
+    ],
+    "tests.admin_scripts.management.commands.base_command": [
+      "Command"
+    ],
+    "tests.admin_scripts.management.commands.suppress_base_options_command": [
+      "Command"
+    ],
+    "tests.user_commands.management.commands.subparser_dest": [
+      "Command"
+    ],
+    "tests.user_commands.management.commands.subparser_required": [
+      "Command"
+    ],
+    "tests.user_commands.management.commands.subparser": [
+      "Command"
+    ],
+    "django.template.base": [
+      "DebugLexer",
+      "FilterExpression",
+      "Lexer",
+      "Node",
+      "NodeList",
+      "Origin",
+      "Parser",
+      "Template",
+      "TextNode",
+      "Token",
+      "TokenType",
+      "Variable",
+      "VariableDoesNotExist",
+      "VariableNode",
+      "linebreak_iter",
+      "render_value_in_context",
+      "token_kwargs"
+    ],
+    "django.contrib.messages.api": [
+      "MessageFailure",
+      "add_message",
+      "debug",
+      "error",
+      "get_level",
+      "get_messages",
+      "info",
+      "set_level",
+      "success",
+      "warning"
+    ],
+    "django.contrib.sitemaps": [
+      "GenericSitemap",
+      "Sitemap",
+      "SitemapNotFound",
+      "_get_sitemap_full_url",
+      "ping_google"
+    ],
+    "django.contrib": [
+      "ImproperlyConfigured",
+      "NoReverseMatch",
+      "django_apps",
+      "paginator",
+      "reverse",
+      "settings",
+      "translation",
+      "urlencode",
+      "urlopen"
+    ],
+    "django.contrib.sitemaps.management.commands.ping_google": [
+      "Command"
+    ],
+    "django.contrib.contenttypes.management": [
+      "RenameContentType",
+      "create_contenttypes",
+      "get_contenttypes_and_models",
+      "inject_rename_contenttypes_operations"
+    ],
+    "django.contrib.contenttypes": [
+      "DEFAULT_DB_ALIAS",
+      "IntegrityError",
+      "global_apps",
+      "migrations",
+      "router",
+      "transaction"
+    ],
+    "django.contrib.contenttypes.management.commands.remove_stale_contenttypes": [
+      "Command",
+      "NoFastDeleteCollector"
+    ],
+    "django.contrib.gis.geoip2.base": [
+      "GeoIP2",
+      "GeoIP2Exception"
+    ],
+    "django.contrib.gis": [
+      "HAS_GEOIP2"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

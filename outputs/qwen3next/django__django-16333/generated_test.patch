@@ -1,0 +1,28 @@
+--- a/tests/model_forms/models.py
++++ b/tests/model_forms/models.py
+@@ -521,3 +521,25 @@
+         through=NumbersToDice,
+         limit_choices_to=models.Q(value__gte=1),
+     )
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.auth.forms import UserCreationForm
++from django.contrib.auth.models import AbstractUser, Group
++from django.db import models
++
++class TestUserCreationForm(TestCase):
++    def test_user_creation_form_saves_manytomany_field_repro(self):
++        class CustomUser(AbstractUser):
++            groups = models.ManyToManyField(Group)
++
++        group = Group.objects.create(name='test_group')
++        form_data = {
++            'username': 'testuser',
++            'password1': 'testpass123',
++            'password2': 'testpass123',
++            'groups': [group.pk]
++        }
++        form = UserCreationForm(data=form_data)
++        self.assertTrue(form.is_valid())
++        user = form.save()
++        self.assertIn(group, user.groups.all())

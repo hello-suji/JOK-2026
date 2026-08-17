@@ -1,0 +1,125 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/views/autocomplete.py",
+      "target_function": "get",
+      "related_classes": [
+        "AutocompleteJsonView",
+        "CustomAutocompleteJsonView",
+        "JsonResponse",
+        "HttpRequest",
+        "User",
+        "ContentType",
+        "ModelAdmin",
+        "Permission"
+      ],
+      "candidate_test_file": "tests/admin_views/custom_has_permission_admin.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where get can be called.",
+      "Use the generated reproduction path that calls create_user, save, get_for_model, create.",
+      "Use the generated reproduction path that calls get, create_user, save, get_for_model."
+    ],
+    "execution_stimulus": [
+      "Call get with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create_user, save, get_for_model, create.",
+      "Execute the focused target API path: get, create_user, save, get_for_model."
+    ],
+    "expected_failure": "The solutions is simple, side-effect- and risk-free: adding a result customization extension point to get() by moving the lines that construct the results inside JsonResponse constructor to a separate method. So instead of",
+    "relevant_source_files": [
+      "django/contrib/admin/views/autocomplete.py",
+      "django/views/generic/base.py",
+      "django/views/generic/list.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_views/custom_has_permission_admin.py",
+      "tests/admin_views/customadmin.py",
+      "tests/admin_widgets/test_autocomplete_widget.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.admin.views.autocomplete import AutocompleteJsonView\nfrom django.http import HttpRequest\nfrom django.test import TestCase\nfrom django.contrib.auth.models import User\nfrom django.contrib.contenttypes.models import ContentType\nfrom django.contrib.auth.models import Permission\n\n\nclass TestAutocompleteJsonView(TestCase):\n    def setUp(self):\n        self.user = User.objects.create_user(username='testuser', password='testpass')\n        self.user.is_staff = True\n        self.user.save()\n        content_type = ContentType.objects.get_for_model(User)\n        permission = Permission.objects.create(codename='view_user', name='Can view user', content_type=content_type)\n        self.user.user_permissions.add(permission)\n        self.client.login(username='testuser', password='testpass')\n\n    def test_custom_extra_fields_in_autocomplete_response_repro(self):\n        request = HttpRequest()\n        request.GET = {'term': 'test'}\n        request.user = self.user\n        view = AutocompleteJsonView()\n        view.model_admin = admin.ModelAdmin(User, admin.site)\n        view.queryset = User.objects.all()\n        response = view.get(request)\n        self.assertIn('notes', response.json()['results'][0])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "as_view",
+        "get_context_data",
+        "get_queryset",
+        "get_urls",
+        "has_next",
+        "has_perm",
+        "match",
+        "path",
+        "process_request",
+        "create_user",
+        "save",
+        "get_for_model",
+        "create",
+        "add",
+        "login",
+        "json"
+      ],
+      "classes": [
+        "AutocompleteJsonView",
+        "CustomAutocompleteJsonView",
+        "JsonResponse",
+        "ModelAdmin",
+        "MyModelAdmin",
+        "PermissionDenied",
+        "HttpRequest",
+        "User",
+        "ContentType",
+        "Permission"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_views/custom_has_permission_admin.py",
+      "target_source_file": "django/contrib/admin/views/autocomplete.py",
+      "test_visible_functions": [
+        "get",
+        "create_user",
+        "save",
+        "get_for_model",
+        "create",
+        "add",
+        "login",
+        "json"
+      ],
+      "test_visible_classes": [
+        "AutocompleteJsonView",
+        "ModelAdmin",
+        "HttpRequest",
+        "User",
+        "ContentType",
+        "Permission"
+      ]
+    }
+  }
+]

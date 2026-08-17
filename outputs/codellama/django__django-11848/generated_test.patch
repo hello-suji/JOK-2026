@@ -1,0 +1,21 @@
+--- a/tests/sitemaps_tests/test_http.py
++++ b/tests/sitemaps_tests/test_http.py
+@@ -275,3 +275,18 @@
+
+ </urlset>"""
+         self.assertXMLEqual(response.content.decode(), expected_content)
++
++from django.utils.http import parse_http_date
++
++class TestHttpDateParsing(SitemapTestsBase):
++    def test_parse_http_date_two_digit_year_repro(self):
++        # Test date in the past
++        past_date_str = 'Wed, 21 Oct 70 07:28:00 GMT'
++        parsed_date = parse_http_date(past_date_str)
++        expected_date = date(1970, 10, 21)
++        self.assertEqual(parsed_date.year, expected_date.year)
++        # Test date in the future
++        future_date_str = 'Wed, 21 Oct 69 07:28:00 GMT'
++        parsed_date = parse_http_date(future_date_str)
++        expected_date = date(2069, 10, 21)
++        self.assertEqual(parsed_date.year, expected_date.year)

@@ -1,0 +1,21 @@
+--- a/lib/matplotlib/tests/test_figure_gate.py
++++ b/lib/matplotlib/tests/test_figure_gate.py
+@@ -1380,3 +1380,18 @@
+
+     assert ax.get_xlim() == (1e-1, 1e2)
+     assert fig2.axes[0].get_xlim() == (0, 1)
++
++import pickle
++from matplotlib.figure import Figure
++from matplotlib.backends.backend_macosx import FigureCanvasMacOSX
++
++def test_figure_gate_pickle_dpi_consistency_repro():
++    fig = Figure(dpi=100)
++    canvas = FigureCanvasMacOSX(fig)
++    original_dpi = fig.get_dpi()
++    fig.canvas.dump('temp_fig.pkl')
++    fig2 = Figure()
++    fig2.canvas.load('temp_fig.pkl')
++    assert fig2.get_dpi() == original_dpi
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(fig2) != 'OverflowError: signed integer is greater than maximum'

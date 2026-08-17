@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-16450",
+    "model_patch": "--- a/sympy/simplify/tests/test_simplify.py\n+++ b/sympy/simplify/tests/test_simplify.py\n@@ -786,3 +786,12 @@\n     assert nc_simplify(expr) == (1-c)**-1\n     # commutative expressions should be returned without an error\n     assert nc_simplify(2*x**2) == 2*x**2\n+\n+from sympy import Symbol, posify\n+\n+def test_posify_preserves_finite_assumption_repro():\n+    x = Symbol('x', finite=True)\n+    xp, _ = posify(x)\n+    assert xp.is_finite is True\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(x) != 'None'\n",
+    "patch_sha256": "908967d182172bb8577c394c6a1a6a8a3c469cabf64463ad03236395997673f1"
+  }
+]

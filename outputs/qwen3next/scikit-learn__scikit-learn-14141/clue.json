@@ -1,0 +1,26 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14141",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "joblib should be added to the dependencies listed in show_versions or added to the issue template when sklearn version is > 0.20."
+  ],
+  "repro_conditions": [
+    "joblib should be added to the dependencies listed in show_versions or added to the issue template when sklearn version is > 0.20."
+  ],
+  "environment": [
+    "Add joblib in show_versions",
+    "joblib should be added to the dependencies listed in show_versions or added to the issue template when sklearn version is > 0.20."
+  ],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Add joblib in show_versions\njoblib should be added to the dependencies listed in show_versions or added to the issue template when sklearn version is > 0.20.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

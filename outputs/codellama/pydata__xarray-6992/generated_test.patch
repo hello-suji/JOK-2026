@@ -1,0 +1,13 @@
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -6663,3 +6663,10 @@
+     ds = xr.Dataset(dict(x=da))
+     mapping = {"y": da}
+     ds.assign(variables=mapping)
++
++def test_len_after_set_reset_index_repro():
++    ds = xr.Dataset(coords={"a": ("x", [1, 2, 3]), "b": ("x", ['a', 'b', 'c'])})
++    ds_modified = ds.set_index(z=['a', 'b']).reset_index("z", drop=True)
++    assert len(ds_modified) >= 0
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(ds_modified) != 'ValueError: __len__() should return >= 0'

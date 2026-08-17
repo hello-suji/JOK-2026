@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11095",
+    "model_patch": "--- a/tests/admin_inlines/__init__.py\n+++ b/tests/admin_inlines/__init__.py\n@@ -0,0 +1,23 @@\n+\n+\n+from django.contrib import admin\n+from django.test import TestCase\n+from django.contrib.auth.models import User\n+from tests.admin_inlines.models import Author, Book\n+\n+class TestCustomModelAdmin(TestCase):\n+    def test_get_inline_instances_dynamic_behavior_repro(self):\n+        class CustomModelAdmin(admin.ModelAdmin):\n+            def get_inlines(self, request, obj=None):\n+                if obj and obj.name == 'John Doe':\n+                    return [BookInline]\n+                return []\n+\n+        class BookInline(admin.TabularInline):\n+            model = Book\n+\n+        self.client.force_login(User.objects.create_superuser('superuser', 'email@example.com', 'password'))\n+        request = self.client.get('/admin/admin_inlines/author/').wsgi_request\n+        obj = Author.objects.create(name='John Doe')\n+        inline_instances = CustomModelAdmin(Book).get_inline_instances(request, obj)\n+        self.assertEqual(len(inline_instances), 1)\n",
+    "patch_sha256": "6a95e0a75c73e85325a1cf8d77abcadba51f3def109576c0a1101e238c22dde9"
+  }
+]

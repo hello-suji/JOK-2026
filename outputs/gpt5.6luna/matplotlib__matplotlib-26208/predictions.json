@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-26208",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1611,3 +1611,26 @@\n     fig = plt.figure(layout=mpl.layout_engine.ConstrainedLayoutEngine(**params))\n     with pytest.warns(PendingDeprecationWarning, match=\"will be deprecated\"):\n         assert fig.get_constrained_layout_pads() == expected\n+\n+@check_figures_equal(extensions=[\"png\"])\n+def test_stackplot_twinx_datalim_issue_repro(fig_test, fig_ref):\n+    import matplotlib\n+    matplotlib.use('Agg')\n+    import matplotlib.pyplot as plt\n+\n+    df1_index = ['16 May', '17 May']  # == df2_index\n+    df1_values = [-22.717708333333402, 26.584999999999937]\n+    df2_values = [-0.08501399999999998, -2.9833019999999966]\n+\n+    ax1_test = fig_test.subplots()\n+    ax1_test.stackplot(df1_index, df1_values)\n+    ax2_test = ax1_test.twinx()\n+    ax2_test.plot(df2_index, df2_values)\n+\n+    ax1_ref = fig_ref.subplots()\n+    ax1_ref.stackplot(df1_index, df1_values)\n+    ax2_ref = ax1_ref.twinx()\n+    ax2_ref.plot(df2_index, df2_values)\n+\n+    assert not np.isinf(ax1_test.dataLim.intervaly).any(), \"Data limits should not be inf\"\n+    assert not np.isinf(ax1_ref.dataLim.intervaly).any(), \"Data limits should not be inf\"\n",
+    "patch_sha256": "60d3b7c0cce75905bd9eb5f2e3e845b14df28cbe918a677cebcfc7d7a3d0cc98"
+  }
+]

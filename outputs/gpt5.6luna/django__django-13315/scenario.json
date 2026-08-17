@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/related.py",
+      "target_function": "create",
+      "related_classes": [
+        "ForeignKey",
+        "Q",
+        "ModelForm",
+        "Author",
+        "Book",
+        "BookForm",
+        "Meta"
+      ],
+      "candidate_test_file": "tests/foreign_object/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls create, values_list."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, values_list."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/fields/related.py",
+      "django/contrib/admin/options.py",
+      "django/db/models/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/foreign_object/__init__.py",
+      "tests/foreign_object/models/__init__.py",
+      "tests/model_options/test_default_related_name.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import Q\nfrom django.forms import ModelForm\n\nfrom foreign_object.models import Author, Book\n\nclass TestForeignKeyFormfield(TestCase):\n    def setUp(self):\n        self.author1 = Author.objects.create(name='Alice')\n        self.author2 = Author.objects.create(name='Bob')\n        self.author3 = Author.objects.create(name='Alice')\n        Book.objects.create(author=self.author1)\n        Book.objects.create(author=self.author2)\n        Book.objects.create(author=self.author3)\n\n    def test_formfield_with_q_object_duplicates_repro(self):\n        class BookForm(ModelForm):\n            class Meta:\n                model = Book\n                fields = '__all__'\n\n        form = BookForm()\n        choices = form.fields['author'].queryset.values_list('id', 'name')\n        unique_choices = set(choices)\n        self.assertEqual(len(choices), len(unique_choices))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "create",
+        "values_list"
+      ],
+      "classes": [
+        "ForeignKey",
+        "Q",
+        "ModelForm",
+        "Author",
+        "Book",
+        "BookForm",
+        "Meta"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/foreign_object/__init__.py",
+      "target_source_file": "django/db/models/fields/related.py",
+      "test_visible_functions": [
+        "create",
+        "values_list"
+      ],
+      "test_visible_classes": [
+        "ForeignKey",
+        "Q",
+        "ModelForm",
+        "Author",
+        "Book",
+        "BookForm",
+        "Meta"
+      ]
+    }
+  }
+]

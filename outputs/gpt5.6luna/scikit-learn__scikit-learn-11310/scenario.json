@@ -1,0 +1,92 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/grid_search.py",
+      "target_function": "fit",
+      "related_classes": [
+        "BaseSearchCV",
+        "GridSearchCV",
+        "OpenML",
+        "RandomForestClassifier"
+      ],
+      "candidate_test_file": "sklearn/model_selection/tests/test_search.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where fit can be called.",
+      "Use the generated reproduction path that calls fit, load_iris."
+    ],
+    "execution_stimulus": [
+      "Call fit with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: fit, load_iris."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sklearn/grid_search.py",
+      "sklearn/model_selection/_search.py",
+      "sklearn/ensemble/forest.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/model_selection/tests/test_search.py",
+      "sklearn/tests/test_grid_search.py",
+      "sklearn/tests/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.datasets import load_iris\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import GridSearchCV\n\n\ndef test_refit_time_in_gridsearchcv_repro():\n    X, y = load_iris(return_X_y=True)\n\n    rs = GridSearchCV(\n        estimator=RandomForestClassifier(),\n        param_grid={'n_estimators': [2, 3, 4, 5]}\n    )\n    rs.fit(X, y)\n\n    # Assert that refit_time is available and greater than 0\n    assert 'mean_fit_time' in rs.cv_results_\n    assert len(rs.cv_results_['mean_fit_time']) > 0\n    assert rs.cv_results_['mean_fit_time'].sum() > 0"
+      },
+      {
+        "language": "python",
+        "code": "import sklearn.datasets\nimport sklearn.model_selection\nimport sklearn.ensemble\n\nX, y = sklearn.datasets.load_iris(return_X_y=True)\n\nrs = sklearn.model_selection.GridSearchCV(\n    estimator=sklearn.ensemble.RandomForestClassifier(),\n    param_grid={'n_estimators': [2, 3, 4, 5]}\n)\nrs.fit(X, y)\nprint(rs.cv_results_['mean_fit_time'])\nprint(rs.cv_results_['mean_score_time'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "fit",
+        "load_iris"
+      ],
+      "classes": [
+        "BaseSearchCV",
+        "GridSearchCV",
+        "OpenML",
+        "RandomForestClassifier"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sklearn/model_selection/tests/test_search.py",
+      "target_source_file": "sklearn/grid_search.py",
+      "test_visible_functions": [
+        "fit",
+        "load_iris"
+      ],
+      "test_visible_classes": [
+        "GridSearchCV",
+        "RandomForestClassifier"
+      ]
+    }
+  }
+]

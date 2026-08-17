@@ -1,0 +1,14 @@
+--- a/tests/test_runner/test_discover_runner.py
++++ b/tests/test_runner/test_discover_runner.py
+@@ -304,3 +304,11 @@
+         databases, output = self.get_databases(['test_runner_apps.databases.tests.NoDatabaseTests'])
+         self.assertEqual(databases, set())
+         self.assertIn(self.skip_msg + 'default, other', output)
++
++from django.test import TestCase, SimpleTestCase
++class TestStringMethods(SimpleTestCase):
++    def test_lstrip_behavior_repro(self):
++        test_string = '   hello world'
++        stripped_string = test_string.lstrip()
++        self.assertIsInstance(stripped_string, str)
++        self.assertTrue(stripped_string.startswith('h'))

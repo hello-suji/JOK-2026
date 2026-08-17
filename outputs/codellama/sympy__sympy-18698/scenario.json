@@ -1,0 +1,171 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/polys/polytools.py",
+      "target_function": "sqf_list",
+      "related_classes": [
+        "Poly"
+      ],
+      "candidate_test_file": "sympy/polys/tests/test_polytools.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Poly",
+      "from sympy.abc import x",
+      "Use the generated reproduction path that calls sqf_list, x."
+    ],
+    "execution_stimulus": [
+      "result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)",
+      "Execute the focused target API path: sqf_list, x."
+    ],
+    "expected_failure": "The function returns (1, [(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]) instead of (1, [(x**2 + 1, 1), (x - 1, 2), (x - 2, 3), (x - 3, 3)])",
+    "relevant_source_files": [
+      "sympy/polys/polytools.py",
+      "sympy/combinatorics/perm_groups.py",
+      "sympy/core/function.py"
+    ],
+    "relevant_test_files": [
+      "sympy/polys/tests/test_polytools.py",
+      "sympy/core/tests/test_numbers.py",
+      "sympy/polys/tests/test_densebasic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_sqf_list_bug_repro():\n    from sympy import Poly\n    from sympy.abc import x\n    result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)\n    assert result == (1, [(x**2 + 1, 1), (x - 1, 2), (x - 2, 3), (x - 3, 3)])\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"['1', '[[(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]]']\""
+      },
+      {
+        "language": "python",
+        "code": "def test_sqf_list_bug():\n    from sympy import Poly\n    from sympy.abc import x\n    result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)\n    assert result == (1, [(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "['1', '[[(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]]']"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "sqf_list",
+        "x"
+      ],
+      "classes": [
+        "Poly"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "sympy/polys/tests/test_polytools.py",
+      "target_source_file": "sympy/polys/polytools.py",
+      "test_visible_functions": [
+        "sqf_list",
+        "x"
+      ],
+      "test_visible_classes": [
+        "Poly"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/polys/polytools.py",
+      "target_function": "sqf_list",
+      "related_classes": [
+        "Poly"
+      ],
+      "candidate_test_file": "sympy/polys/tests/test_polytools.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import Poly",
+      "from sympy.abc import x",
+      "Use the generated reproduction path that calls sqf_list, x."
+    ],
+    "execution_stimulus": [
+      "result = sqf_list(x**5 - 2*x**4 - 2*x**3 + 4*x**2 + x - 2)",
+      "Execute the focused target API path: sqf_list, x."
+    ],
+    "expected_failure": "The function should return (1, [(x - 2, 1), (x**2 - 1, 2)]) but the actual output might differ",
+    "relevant_source_files": [
+      "sympy/polys/polytools.py",
+      "sympy/combinatorics/perm_groups.py",
+      "sympy/core/function.py"
+    ],
+    "relevant_test_files": [
+      "sympy/polys/tests/test_polytools.py",
+      "sympy/core/tests/test_numbers.py",
+      "sympy/polys/tests/test_densebasic.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_sqf_list_bug_repro():\n    from sympy import Poly\n    from sympy.abc import x\n    result = sqf_list((x**2 + 1) * (x - 1)**2 * (x - 2)**3 * (x - 3)**3)\n    assert result == (1, [(x**2 + 1, 1), (x - 1, 2), (x - 2, 3), (x - 3, 3)])\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"['1', '[[(x**2 + 1, 1), (x - 1, 2), (x - 3, 3), (x - 2, 3)]]']\""
+      },
+      {
+        "language": "python",
+        "code": "def test_sqf_list_correctness():\n    from sympy import Poly\n    from sympy.abc import x\n    result = sqf_list(x**5 - 2*x**4 - 2*x**3 + 4*x**2 + x - 2)\n    assert result == (1, [(x - 2, 1), (x**2 - 1, 2)])"
+      }
+    ],
+    "expected_outputs": [
+      "['1', '[[(x - 2, 1), (x**2 - 1, 2)]]']"
+    ],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "sqf_list",
+        "x"
+      ],
+      "classes": [
+        "Poly"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For numpy/list/array outputs, use np.testing.assert_array_equal or assert_allclose, never plain assert ==."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For numpy/list/array outputs, use np.testing.assert_array_equal or assert_allclose, never plain assert ==. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/polys/tests/test_polytools.py",
+      "target_source_file": "sympy/polys/polytools.py",
+      "test_visible_functions": [
+        "sqf_list",
+        "x"
+      ],
+      "test_visible_classes": [
+        "Poly"
+      ]
+    }
+  }
+]

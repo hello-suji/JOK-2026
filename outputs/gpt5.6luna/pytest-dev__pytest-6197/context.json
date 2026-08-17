@@ -1,0 +1,374 @@
+{
+  "instance_id": "pytest-dev__pytest-6197",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "e856638ba086fcf5bebf1bebea32d5cf78de87b4",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/assertion/__init__.py",
+      "score": 47,
+      "matched_identifiers": [
+        "__init__",
+        "__init__.py",
+        "foobar/__init__.py",
+        "init",
+        "pytest",
+        "running"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__init__.py",
+        "file_hint_match:foobar/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__init__,init,pytest,running,assert"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, config, mode):\n        self.mode = mode\n        self.trace = config.trace.root.get(\"assertion\")\n        self.hook = None  # type: Optional[rewrite.AssertionRewritingHook]\n\n\ndef install_importhook(config):\n    \"\"\"Try to install the rewrite hook, raise SystemError if it fails.\"\"\"\n    config._assertstate = AssertionState(config, \"rewrite\")\n    config._assertstate.hook = hook = rewrite.AssertionRewritingHook(config)\n    sys.meta_path.insert(0, hook)\n    config._assertstate.trace(\"installed rewrite import hook\")\n\n    def undo():\n        hook = config._assertstate.hook"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "register_assert_rewrite",
+        "DummyRewriteHook.mark_rewrite",
+        "install_importhook",
+        "pytest_collection",
+        "pytest_runtest_setup",
+        "pytest_runtest_teardown",
+        "pytest_sessionfinish"
+      ]
+    },
+    {
+      "path": "src/_pytest/config/__init__.py",
+      "score": 47,
+      "matched_identifiers": [
+        "__init__",
+        "__init__.py",
+        "assertionerror",
+        "foobar/__init__.py",
+        "init",
+        "pytest"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__init__.py",
+        "file_hint_match:foobar/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:__init__,assertionerror,init,pytest,assert"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, pluginmanager, *, invocation_params=None):\n        from .argparsing import Parser, FILE_OR_DIR\n\n        if invocation_params is None:\n            invocation_params = self.InvocationParams(\n                args=(), plugins=None, dir=Path().resolve()\n            )\n\n        self.option = argparse.Namespace()\n        self.invocation_params = invocation_params\n\n        _a = FILE_OR_DIR\n        self._parser = Parser(\n            usage=\"%(prog)s [options] [{}] [{}] [...]\".format(_a, _a),\n            processopt=self._processopt,"
+      },
+      "top_level_functions": [
+        "main",
+        "filename_arg",
+        "directory_arg",
+        "get_config",
+        "get_plugin_manager",
+        "PytestPluginManager.parse_hookimpl_opts",
+        "PytestPluginManager.parse_hookspec_opts",
+        "PytestPluginManager.register",
+        "PytestPluginManager.getplugin",
+        "PytestPluginManager.hasplugin",
+        "PytestPluginManager.pytest_configure",
+        "PytestPluginManager.consider_preparse",
+        "PytestPluginManager.consider_pluginarg",
+        "PytestPluginManager.consider_conftest",
+        "PytestPluginManager.consider_env",
+        "PytestPluginManager.consider_module",
+        "PytestPluginManager.import_plugin",
+        "Config.invocation_dir",
+        "Config.add_cleanup",
+        "Config.get_terminal_writer",
+        "Config.pytest_cmdline_parse",
+        "Config.notify_exception",
+        "Config.cwd_relative_nodeid",
+        "Config.fromdictargs",
+        "Config.pytest_load_initial_conftests",
+        "Config.parse",
+        "Config.addinivalue_line",
+        "Config.getini",
+        "Config.getoption",
+        "Config.getvalue",
+        "Config.getvalueorskip",
+        "setns",
+        "create_terminal_writer"
+      ]
+    },
+    {
+      "path": "src/_pytest/mark/__init__.py",
+      "score": 41,
+      "matched_identifiers": [
+        "__init__.py",
+        "assert",
+        "collect",
+        "collection",
+        "foobar/__init__.py",
+        "pytest"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__init__.py",
+        "file_hint_match:foobar/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:pytest,assert,collect,collection"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "param",
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "deselect_by_keyword",
+        "deselect_by_mark",
+        "pytest_collection_modifyitems",
+        "pytest_configure",
+        "pytest_unconfigure"
+      ]
+    },
+    {
+      "path": "doc/en/example/costlysetup/sub_a/__init__.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__.py",
+        "foobar/__init__.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__init__.py",
+        "file_hint_match:foobar/__init__.py",
+        "stem_in_issue_text:__init__"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "doc/en/example/costlysetup/sub_b/__init__.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__.py",
+        "foobar/__init__.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:__init__.py",
+        "file_hint_match:foobar/__init__.py",
+        "stem_in_issue_text:__init__"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "doc/en/example/costlysetup/conftest.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example/costlysetup",
+        "same_module_area:doc/en/example/costlysetup",
+        "token_overlap:costlysetup,example",
+        "internal_name_overlap:costlysetup",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/costlysetup/sub_a/test_quick.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example/costlysetup",
+        "same_module_area:doc/en/example/costlysetup",
+        "token_overlap:costlysetup,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/costlysetup/sub_b/test_two.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc/en/example/costlysetup",
+        "same_module_area:doc/en/example/costlysetup",
+        "token_overlap:costlysetup,example",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/collect/collect_init_tests/tests/__init__.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:example,init",
+        "internal_name_overlap:init",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/example_scripts/collect/package_infinite_recursion/tests/__init__.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:__init__",
+        "token_overlap:example,init",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "testing/example_scripts/collect/collect_init_tests/tests/__init__.py:top_level_test_functions",
+      "doc/en/example/costlysetup/conftest.py:pytest_import_or_conftest",
+      "doc/en/example/costlysetup/sub_b/test_two.py:top_level_test_functions",
+      "doc/en/example/costlysetup/sub_a/test_quick.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 203,
+  "indexed_test_file_count": 108,
+  "available_imports": {
+    "src._pytest.main": [
+      "ExitCode",
+      "FSHookProxy",
+      "Failed",
+      "Interrupted",
+      "NoMatch",
+      "Session",
+      "_bestrelpath_cache",
+      "_in_venv",
+      "_main",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collection",
+      "pytest_collection_modifyitems",
+      "pytest_ignore_collect",
+      "pytest_runtestloop",
+      "wrap_session"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "src._pytest.config": [
+      "Config",
+      "ConftestImportFailure",
+      "Notset",
+      "PytestPluginManager",
+      "_assertion_supported",
+      "_ensure_removed_sysmodule",
+      "_fail_on_non_top_pytest_plugins",
+      "_get_plugin_specs_as_list",
+      "_iter_rewritable_modules",
+      "_prepareconfig",
+      "_strtobool",
+      "_warn_about_missing_assertion",
+      "cmdline",
+      "create_terminal_writer",
+      "directory_arg",
+      "filename_arg",
+      "get_config",
+      "get_plugin_manager",
+      "main",
+      "setns"
+    ],
+    "src._pytest": [
+      "Any",
+      "Callable",
+      "Dict",
+      "EMPTY_PARAMETERSET_OPTION",
+      "ExceptionInfo",
+      "HookimplMarker",
+      "HookspecMarker",
+      "List",
+      "MARK_GEN",
+      "Mark",
+      "MarkDecorator",
+      "MarkGenerator",
+      "Optional",
+      "ParameterSet",
+      "Path",
+      "PluginManager",
+      "PrintHelp",
+      "PytestConfigWarning",
+      "Sequence",
+      "Set",
+      "Skipped",
+      "TracebackType",
+      "Tuple",
+      "UsageError",
+      "Version",
+      "determine_setup",
+      "exists",
+      "fail",
+      "filter_traceback",
+      "get_empty_parameterset_mark",
+      "importlib_metadata",
+      "lru_cache",
+      "matchkeyword",
+      "matchmark",
+      "rewrite",
+      "truncate",
+      "util"
+    ],
+    "src._pytest.assertion": [
+      "AssertionState",
+      "DummyRewriteHook",
+      "install_importhook",
+      "pytest_addoption",
+      "pytest_collection",
+      "pytest_runtest_setup",
+      "pytest_runtest_teardown",
+      "pytest_sessionfinish",
+      "register_assert_rewrite"
+    ],
+    "src._pytest.mark": [
+      "deselect_by_keyword",
+      "deselect_by_mark",
+      "param",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collection_modifyitems",
+      "pytest_configure",
+      "pytest_unconfigure"
+    ],
+    "testing.example_scripts.collect.collect_init_tests.tests": [
+      "test_init"
+    ],
+    "doc.en.example.costlysetup.conftest": [
+      "CostlySetup",
+      "setup"
+    ],
+    "doc.en.example.costlysetup.sub_b.test_two": [
+      "test_something",
+      "test_something_more"
+    ],
+    "doc.en.example.costlysetup.sub_a.test_quick": [
+      "test_quick"
+    ]
+  },
+  "test_example_snippet": "def test_quick(setup):\n    pass",
+  "conftest_fixtures": {
+    "doc/en/example/costlysetup/conftest.py": [
+      "setup"
+    ]
+  }
+}

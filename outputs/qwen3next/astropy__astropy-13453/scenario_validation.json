@@ -1,0 +1,94 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "reproduction_code references target_function:write",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "astropy/io/ascii/html.py",
+          "target_function": "write",
+          "related_classes": [
+            "Table",
+            "StringIO"
+          ],
+          "candidate_test_file": "astropy/io/ascii/tests/test_html.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "Import necessary modules: from astropy.table import Table; from io import StringIO",
+          "Create a table: t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))",
+          "Copy the table: tc = t.copy()"
+        ],
+        "execution_stimulus": [
+          "Write the table to HTML with specified format: with StringIO() as sp: tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})",
+          "Get the value of the string buffer: html_output = sp.getvalue()"
+        ],
+        "expected_failure": "The HTML output does not reflect the specified format for column 'a'",
+        "relevant_source_files": [
+          "astropy/table/table.py",
+          "astropy/io/fits/hdu/table.py",
+          "astropy/table/column.py"
+        ],
+        "relevant_test_files": [
+          "astropy/io/fits/tests/test_table.py",
+          "astropy/io/ascii/tests/test_html.py",
+          "astropy/table/tests/test_column.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_html_format_issue():\n    from astropy.table import Table\n    from io import StringIO\n    t = Table([(1.23875234858e-24, 3.2348748432e-15), (2, 4)], names=('a', 'b'))\n    tc = t.copy()\n    with StringIO() as sp:\n        tc.write(sp, format='html', formats={'a': lambda x: f'{x:.2e}'})\n        html_output = sp.getvalue()\n    assert '<td>1.23875234858e-24</td>' in html_output"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "<td>1.23875234858e-24</td>"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "write"
+          ],
+          "classes": [
+            "Table",
+            "StringIO"
+          ]
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

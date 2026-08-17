@@ -1,0 +1,13 @@
+--- a/tests/backends/postgresql/test_operations.py
++++ b/tests/backends/postgresql/test_operations.py
+@@ -48,3 +48,10 @@
+             ),
+             ['TRUNCATE "backends_person", "backends_tag" RESTART IDENTITY CASCADE;'],
+         )
++
++from django.db.models import Count
++
++class TestAnnotateOrderedProperty(PostgreSQLOperationsTests):
++    def test_annotate_ordered_property_repro(self):
++        qs = Person.objects.annotate(num_tags=Count('tag'))
++        self.assertFalse(qs.ordered)

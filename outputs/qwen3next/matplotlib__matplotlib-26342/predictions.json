@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-26342",
+    "model_patch": "--- a/lib/matplotlib/tests/test_contour.py\n+++ b/lib/matplotlib/tests/test_contour.py\n@@ -823,3 +823,29 @@\n         assert_array_equal(cs.tcolors, [c.get_edgecolor() for c in colls])\n     with pytest.warns(mpl.MatplotlibDeprecationWarning, match=\"tlinewidths\"):\n         assert cs.tlinewidths == [c.get_linewidth() for c in colls]\n+\n+import matplotlib\n+matplotlib.use('Agg')\n+import numpy as np\n+from matplotlib import pyplot as plt\n+from matplotlib.contour import ContourSet\n+\n+\n+def test_contour_set_paths_reproduction_repro():\n+\n+    x = np.linspace(-3.0, 3.0, 100)\n+    y = np.linspace(-3.0, 3.0, 100)\n+    X, Y = np.meshgrid(x, y)\n+    Z = np.sin(X**2 + Y**2)\n+\n+    fig, ax = plt.subplots()\n+    cs = ax.contour(X, Y, Z)\n+\n+    original_paths = cs.get_paths()\n+    transformed_paths = [path.transformed(cs.axes.transData.inverted()) for path in original_paths]\n+\n+    # This will fail on pre-patch code because set_paths does not correctly handle the transformation\n+    cs.set_paths(transformed_paths)\n+\n+    updated_paths = cs.get_paths()\n+    assert updated_paths != original_paths\n",
+    "patch_sha256": "6d183b6d0d9d8d3ce938534dd1b4cf1a729eff36874e8f64769b70cb624ca9cb"
+  }
+]

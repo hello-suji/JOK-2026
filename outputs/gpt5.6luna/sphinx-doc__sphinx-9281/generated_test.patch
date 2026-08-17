@@ -1,0 +1,22 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -453,3 +453,19 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++from sphinx.domains.python import ugly_enum_func
++from enum import Enum
++
++class MyEnum(Enum):
++    ValueA = 1
++
++
++class TestUglyEnumFunc(unittest.TestCase):
++    def test_enum_rendering_repro(self):
++        """Ensure Enum values are rendered correctly in function signatures."""
++        enum_value = MyEnum.ValueA
++        rendered_value = ugly_enum_func(enum_value)
++        # Expected behavior: Enum values should be rendered in a clean format, e.g., 'ValueA'
++        assert rendered_value == 'ValueA'

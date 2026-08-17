@@ -1,0 +1,13 @@
+--- a/sympy/printing/tests/test_pycode.py
++++ b/sympy/printing/tests/test_pycode.py
+@@ -96,3 +96,10 @@
+     n = NumPyPrinter()
+
+     assert n._print_seq(range(2)) == '(0, 1,)'
++
++from sympy import IndexedBase
++from sympy.printing.pycode import pycode
++
++def test_PythonCodePrinter_Indexed_repro():
++    p = IndexedBase("p")
++    assert pycode(p[0]) == 'p[0]'

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-20859",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1163,3 +1163,13 @@\n\n     assert fig.get_label() == 'whole Figure'\n     assert sub_fig.get_label() == 'sub figure'\n+\n+import matplotlib.pyplot as plt\n+\n+def test_subfigure_legend_success_repro():\n+    fig = plt.figure()\n+    subfig = fig.subfigures()\n+    ax = subfig.subplots()\n+    ax.plot([0, 1, 2], [0, 1, 2], label='test')\n+    legend = subfig.legend()\n+    assert isinstance(legend, plt.Legend)\n",
+    "patch_sha256": "21c98e3a1dc43dbedd45440f8c5663da4b255e84d57b7ac6386e09f38b7e7066"
+  }
+]

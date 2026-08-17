@@ -1,0 +1,25 @@
+{
+  "instance_id": "django__django-14373",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "The Y specifier for django.utils.dateformat.DateFormat is supposed to always return a four-digit year padded with zeros. This doesn't seem to be the case for year < 1000."
+  ],
+  "repro_conditions": [
+    "The Y specifier for django.utils.dateformat.DateFormat is supposed to always return a four-digit year padded with zeros. This doesn't seem to be the case for year < 1000."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "DateFormat"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "DateFormat.Y() is not zero-padded.\nDescription\n\t\nThe Y specifier for django.utils.dateformat.DateFormat is supposed to always return a four-digit year padded with zeros. This doesn't seem to be the case for year < 1000.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

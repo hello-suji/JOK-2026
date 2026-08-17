@@ -1,0 +1,113 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/options.py",
+      "target_function": "changelist_view",
+      "related_classes": [
+        "ChangeList",
+        "User",
+        "ModelAdmin",
+        "ContentType",
+        "AdminSite"
+      ],
+      "candidate_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.contrib import admin",
+      "from django.test import TestCase",
+      "from django.db import transaction",
+      "from django.contrib.auth.models import User",
+      "from django.contrib.admin.options import ModelAdmin",
+      "from django.contrib.contenttypes.models import ContentType",
+      "Use the generated reproduction path that calls admin, transaction, create_superuser, login."
+    ],
+    "execution_stimulus": [
+      "admin_site = admin.AdminSite()",
+      "model_admin = ModelAdmin(ContentType, admin_site)",
+      "request = self.client.get('/admin/contenttypes/contenttype/')",
+      "response = model_admin.changelist_view(request)",
+      "Execute the focused target API path: admin, transaction, create_superuser, login."
+    ],
+    "expected_failure": "The changelist_view does not wrap its operations in a transaction, leading to potential inconsistent database states if an error occurs during processing.",
+    "relevant_source_files": [
+      "django/contrib/admin/options.py",
+      "django/core/management/base.py",
+      "django/db/backends/base/base.py",
+      "django/db/backends/oracle/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "tests/backends/base/test_base.py",
+      "tests/generic_views/test_base.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "auth.user"
+      ],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib import admin\nfrom django.test import TestCase\nfrom django.db import transaction\nfrom django.contrib.auth.models import User\nfrom django.contrib.admin.options import ModelAdmin\nfrom django.contrib.contenttypes.models import ContentType\n\nclass TestChangelistViewTransactionHandling(TestCase):\n    def setUp(self):\n        self.user = User.objects.create_superuser('superuser', 'email@example.com', 'password')\n        self.client.login(username='superuser', password='password')\n        self.admin_site = admin.AdminSite()\n        self.model_admin = ModelAdmin(ContentType, self.admin_site)\n\n    def test_changelist_view_transaction_handling_repro(self):\n        request = self.client.get('/admin/contenttypes/contenttype/')\n        response = self.model_admin.changelist_view(request)\n        self.assertTrue(transaction.get_connection().in_atomic_block)"
+      },
+      {
+        "language": "python",
+        "code": "def test_changelist_view_transaction_handling(self):\n    from django.contrib import admin\n    from django.test import TestCase\n    from django.db import transaction\n    from django.contrib.auth.models import User\n    from django.contrib.admin.options import ModelAdmin\n    from django.contrib.contenttypes.models import ContentType\n    admin_site = admin.AdminSite()\n    model_admin = ModelAdmin(ContentType, admin_site)\n    request = self.client.get('/admin/contenttypes/contenttype/')\n    with transaction.atomic():\n        response = model_admin.changelist_view(request)\n        self.assertTrue(transaction.get_connection().in_atomic_block)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "changelist_view",
+        "admin",
+        "transaction",
+        "create_superuser",
+        "login",
+        "get_connection"
+      ],
+      "classes": [
+        "ModelAdmin",
+        "ChangeList",
+        "User",
+        "ContentType",
+        "AdminSite"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "target_source_file": "django/contrib/admin/options.py",
+      "test_visible_functions": [
+        "admin",
+        "transaction",
+        "create_superuser",
+        "login",
+        "changelist_view",
+        "get_connection"
+      ],
+      "test_visible_classes": [
+        "User",
+        "ModelAdmin",
+        "ContentType",
+        "AdminSite"
+      ]
+    }
+  }
+]

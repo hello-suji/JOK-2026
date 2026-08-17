@@ -1,0 +1,438 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9258",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "06107f838c28ab6ca6bfc2cc208e15997fcb2146",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "sphinx/ext/napoleon/docstring.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "param",
+        "text",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:docstring",
+        "source_content_tokens:param,text,type,attribute,docstring"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GoogleDocstring.lines"
+      ]
+    },
+    {
+      "path": "sphinx/writers/html.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "param",
+        "text",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:html",
+        "source_content_tokens:param,text,type,attribute,multiple"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "multiply_length",
+        "HTMLWriter.translate",
+        "HTMLTranslator.visit_start_of_file",
+        "HTMLTranslator.depart_start_of_file",
+        "HTMLTranslator.visit_desc",
+        "HTMLTranslator.depart_desc",
+        "HTMLTranslator.visit_desc_signature",
+        "HTMLTranslator.depart_desc_signature",
+        "HTMLTranslator.visit_desc_signature_line",
+        "HTMLTranslator.depart_desc_signature_line",
+        "HTMLTranslator.visit_desc_content",
+        "HTMLTranslator.depart_desc_content",
+        "HTMLTranslator.visit_desc_inline",
+        "HTMLTranslator.depart_desc_inline",
+        "HTMLTranslator.visit_desc_name",
+        "HTMLTranslator.depart_desc_name",
+        "HTMLTranslator.visit_desc_addname",
+        "HTMLTranslator.depart_desc_addname",
+        "HTMLTranslator.visit_desc_type",
+        "HTMLTranslator.depart_desc_type",
+        "HTMLTranslator.visit_desc_returns",
+        "HTMLTranslator.depart_desc_returns",
+        "HTMLTranslator.visit_desc_parameterlist",
+        "HTMLTranslator.depart_desc_parameterlist",
+        "HTMLTranslator.visit_desc_parameter",
+        "HTMLTranslator.depart_desc_parameter",
+        "HTMLTranslator.visit_desc_optional",
+        "HTMLTranslator.depart_desc_optional",
+        "HTMLTranslator.visit_desc_annotation",
+        "HTMLTranslator.depart_desc_annotation",
+        "HTMLTranslator.visit_versionmodified",
+        "HTMLTranslator.depart_versionmodified",
+        "HTMLTranslator.visit_reference",
+        "HTMLTranslator.visit_number_reference",
+        "HTMLTranslator.depart_number_reference",
+        "HTMLTranslator.visit_comment",
+        "HTMLTranslator.visit_admonition",
+        "HTMLTranslator.visit_seealso",
+        "HTMLTranslator.depart_seealso",
+        "HTMLTranslator.get_secnumber"
+      ]
+    },
+    {
+      "path": "sphinx/writers/text.py",
+      "score": 17,
+      "matched_identifiers": [
+        "attribute",
+        "param",
+        "text",
+        "type"
+      ],
+      "reasons": [
+        "stem_in_issue_text:text",
+        "source_content_tokens:param,text,type,attribute,multiple"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Cell.wrap",
+        "Table.add_row",
+        "Table.set_separator",
+        "Table.add_cell",
+        "Table.cell_width",
+        "Table.cells",
+        "Table.rewrap",
+        "Table.physical_lines_for_line",
+        "my_wrap",
+        "TextWriter.translate",
+        "TextTranslator.add_text",
+        "TextTranslator.new_state",
+        "TextTranslator.end_state",
+        "TextTranslator.visit_document",
+        "TextTranslator.depart_document",
+        "TextTranslator.visit_section",
+        "TextTranslator.depart_section",
+        "TextTranslator.visit_topic",
+        "TextTranslator.depart_topic",
+        "TextTranslator.visit_rubric",
+        "TextTranslator.depart_rubric",
+        "TextTranslator.visit_compound",
+        "TextTranslator.depart_compound",
+        "TextTranslator.visit_glossary",
+        "TextTranslator.depart_glossary",
+        "TextTranslator.visit_title",
+        "TextTranslator.get_section_number_string",
+        "TextTranslator.depart_title",
+        "TextTranslator.visit_subtitle",
+        "TextTranslator.depart_subtitle",
+        "TextTranslator.visit_attribution",
+        "TextTranslator.depart_attribution",
+        "TextTranslator.visit_desc",
+        "TextTranslator.depart_desc",
+        "TextTranslator.visit_desc_signature",
+        "TextTranslator.depart_desc_signature",
+        "TextTranslator.visit_desc_signature_line",
+        "TextTranslator.depart_desc_signature_line",
+        "TextTranslator.visit_desc_content",
+        "TextTranslator.depart_desc_content"
+      ]
+    },
+    {
+      "path": "doc/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "docstring",
+        "param",
+        "text",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:param,text,type,docstring,https"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "doc/usage/extensions/example_google.py",
+      "score": 16,
+      "matched_identifiers": [
+        "acceptable",
+        "param",
+        "text",
+        "type"
+      ],
+      "reasons": [
+        "source_content_tokens:param,text,type,acceptable,attribute"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "function_with_types_in_docstring",
+        "function_with_pep484_type_annotations",
+        "module_level_function",
+        "example_generator",
+        "ExampleClass.readonly_property",
+        "ExampleClass.readwrite_property",
+        "ExampleClass.example_method"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_ext_napoleon_docstring.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:docstring",
+        "token_overlap:docstring,napoleon",
+        "internal_name_overlap:google",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:sphinx/ext"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:example,sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/test_ext_napoleon_docstring.py:pytest_import_or_conftest",
+      "tests/test_ext_napoleon_docstring.py:unittest_or_django_test_import",
+      "tests/test_ext_napoleon_docstring.py:testcase_class:TestNumpyDocstring"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 543,
+  "indexed_test_file_count": 353,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "tests.test_ext_napoleon_docstring": [
+      "BaseDocstringTest",
+      "GoogleDocstringTest",
+      "InlineAttributeTest",
+      "NamedtupleSubclass",
+      "NamedtupleSubclassTest",
+      "NumpyDocstringTest",
+      "TestNumpyDocstring",
+      "warns"
+    ],
+    "sphinx": [
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "path"
+    ],
+    "sphinx.writers.html": [
+      "HTMLTranslator",
+      "HTMLWriter",
+      "multiply_length"
+    ],
+    "sphinx.writers.text": [
+      "Cell",
+      "Table",
+      "TextTranslator",
+      "TextWrapper",
+      "TextWriter",
+      "my_wrap"
+    ],
+    "sphinx.ext.napoleon": [
+      "Config",
+      "_patch_python_domain",
+      "_process_docstring",
+      "_skip_member",
+      "setup"
+    ],
+    "sphinx.ext": [
+      "Any",
+      "Dict",
+      "GoogleDocstring",
+      "List",
+      "NumpyDocstring",
+      "Sphinx",
+      "__version__",
+      "inspect"
+    ],
+    "sphinx.ext.napoleon.docstring": [
+      "GoogleDocstring",
+      "NumpyDocstring",
+      "_convert_numpy_type_spec",
+      "_convert_type_spec",
+      "_recombine_set_tokens",
+      "_token_type",
+      "_tokenize_type_spec"
+    ],
+    "tests.roots.test-directive-code.target": [
+      "Bar",
+      "Foo",
+      "Qux",
+      "bar",
+      "block_start_with_blank",
+      "block_start_with_comment"
+    ],
+    "tests.roots.test-ext-autodoc.autodoc_dummy_bar": [
+      "Bar"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.test": [
+      "Bar",
+      "Baz",
+      "Foo",
+      "Qux"
+    ],
+    "tests.roots.test-ext-autosummary-imported_members.autosummary_dummy_package.autosummary_dummy_module": [
+      "Bar",
+      "foo"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.example.sphinx": [
+      "DummyClass"
+    ],
+    "tests.roots.test-ext-autodoc.target.pep570": [
+      "bar",
+      "baz",
+      "foo",
+      "qux"
+    ],
+    "tests.roots.test-ext-autodoc.target.preserve_defaults": [
+      "Class",
+      "foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.sort_by_all": [
+      "Bar",
+      "Quux",
+      "baz",
+      "foo",
+      "foobar",
+      "qux"
+    ],
+    "tests.roots.test-ext-autodoc.target.name_mangling": [
+      "Bar",
+      "Foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.slots": [
+      "Bar",
+      "Baz",
+      "Foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.metadata": [
+      "foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.decorator": [
+      "Bar",
+      "Baz",
+      "Quux",
+      "Qux",
+      "_Metaclass",
+      "deco1",
+      "deco2",
+      "foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.overload": [
+      "Bar",
+      "Baz",
+      "Foo",
+      "Math",
+      "Meta",
+      "sum"
+    ],
+    "tests.roots.test-ext-autodoc.target.classes": [
+      "Bar",
+      "Baz",
+      "Foo",
+      "Quux",
+      "Qux"
+    ],
+    "tests.roots.test-ext-autodoc.target.instance_variable": [
+      "Bar",
+      "Foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.empty_all": [
+      "bar",
+      "baz",
+      "foo"
+    ],
+    "tests.roots.test-ext-autodoc.target.name_conflict": [
+      "foo"
+    ],
+    "tests.roots.test-ext-autodoc.target": [
+      "bar"
+    ],
+    "doc.usage.extensions.example_google": [
+      "ExampleClass",
+      "ExampleError",
+      "ExamplePEP526Class",
+      "example_generator",
+      "function_with_pep484_type_annotations",
+      "function_with_types_in_docstring",
+      "module_level_function"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

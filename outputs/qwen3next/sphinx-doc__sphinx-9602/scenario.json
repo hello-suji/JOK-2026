@@ -1,0 +1,307 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "type_to_xref",
+      "related_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import typing and sphinx.domains.python",
+      "Define a function with Literal type annotations",
+      "Use the generated reproduction path that calls unittest, typing, type_to_xref."
+    ],
+    "execution_stimulus": [
+      "Call type_to_xref with a Literal[True] type annotation",
+      "Execute the focused target API path: unittest, typing, type_to_xref."
+    ],
+    "expected_failure": "Nitpick warning is raised for Literal[True] as it treats True as a py:class",
+    "relevant_source_files": [
+      "setup.py",
+      "sphinx/cmd/build.py",
+      "sphinx/domains/python.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_literal_nitpick_warning():\n    import typing\n    from sphinx.domains.python import type_to_xref\n    result = type_to_xref('typing.Literal[True]', None)\n    assert 'nitpick' in result"
+      },
+      {
+        "language": "python",
+        "code": "from typing import Any, Dict, List, Optional, Tuple\nimport unittest\nfrom typing import Any, Dict, List, Optional, Tuple\nimport typing\nfrom sphinx.domains.python import type_to_xref\n\nclass TestLiteralNitpickWarning(unittest.TestCase):\n    def test_literal_nitpick_warning_repro(self):\n        result = type_to_xref('typing.Literal[True]', None)\n        self.assertNotIn('nitpick', result)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "nitpick"
+    ],
+    "identifiers": {
+      "functions": [
+        "type_to_xref",
+        "unittest",
+        "typing"
+      ],
+      "classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest",
+        "typing",
+        "type_to_xref"
+      ],
+      "test_visible_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import typing and sphinx.domains.python",
+      "Define a function with Literal type annotations",
+      "Use the generated reproduction path that calls unittest, typing, type_to_xref."
+    ],
+    "execution_stimulus": [
+      "Call PyTypedField.make_xref with a Literal[False] type annotation",
+      "Execute the focused target API path: unittest, typing, type_to_xref."
+    ],
+    "expected_failure": "Nitpick warning is raised for Literal[False] as it treats False as a py:class",
+    "relevant_source_files": [
+      "setup.py",
+      "sphinx/cmd/build.py",
+      "sphinx/domains/python.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_literal_false_nitpick_warning():\n    import typing\n    from sphinx.domains.python import PyTypedField\n    field = PyTypedField()\n    result = field.make_xref(None, 'typing.Literal[False]')\n    assert 'nitpick' in result"
+      },
+      {
+        "language": "python",
+        "code": "from typing import Any, Dict, List, Optional, Tuple\nimport unittest\nfrom typing import Any, Dict, List, Optional, Tuple\nimport typing\nfrom sphinx.domains.python import type_to_xref\n\nclass TestLiteralNitpickWarning(unittest.TestCase):\n    def test_literal_nitpick_warning_repro(self):\n        result = type_to_xref('typing.Literal[True]', None)\n        self.assertNotIn('nitpick', result)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "nitpick"
+    ],
+    "identifiers": {
+      "functions": [
+        "PyTypedField.make_xref",
+        "unittest",
+        "typing",
+        "type_to_xref"
+      ],
+      "classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest",
+        "typing",
+        "type_to_xref"
+      ],
+      "test_visible_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/domains/python.py",
+      "target_function": "unittest",
+      "related_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "candidate_test_file": "tests/test_ext_intersphinx.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import typing and sphinx.domains.python",
+      "Define a function with Literal type annotations",
+      "Use the generated reproduction path that calls unittest, typing, type_to_xref."
+    ],
+    "execution_stimulus": [
+      "Call PyObject.handle_signature with a function having Literal type annotations",
+      "Execute the focused target API path: unittest, typing, type_to_xref."
+    ],
+    "expected_failure": "Nitpick warning is raised for Literal values as they are treated as py:class",
+    "relevant_source_files": [
+      "setup.py",
+      "sphinx/cmd/build.py",
+      "sphinx/domains/python.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_handle_signature_with_literals():\n    import typing\n    from sphinx.domains.python import PyObject\n    def foo(x: typing.Literal[True]) -> int: pass\n    obj = PyObject('foo', foo)\n    result = obj.handle_signature(None, None)\n    assert 'nitpick' in result"
+      },
+      {
+        "language": "python",
+        "code": "from typing import Any, Dict, List, Optional, Tuple\nimport unittest\nfrom typing import Any, Dict, List, Optional, Tuple\nimport typing\nfrom sphinx.domains.python import type_to_xref\n\nclass TestLiteralNitpickWarning(unittest.TestCase):\n    def test_literal_nitpick_warning_repro(self):\n        result = type_to_xref('typing.Literal[True]', None)\n        self.assertNotIn('nitpick', result)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "nitpick"
+    ],
+    "identifiers": {
+      "functions": [
+        "PyObject.handle_signature",
+        "unittest",
+        "typing",
+        "type_to_xref"
+      ],
+      "classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_ext_intersphinx.py",
+      "target_source_file": "sphinx/domains/python.py",
+      "test_visible_functions": [
+        "unittest",
+        "typing",
+        "type_to_xref"
+      ],
+      "test_visible_classes": [
+        "Literal",
+        "Any",
+        "Dict",
+        "List",
+        "Optional",
+        "Tuple"
+      ]
+    }
+  }
+]

@@ -1,0 +1,16 @@
+--- a/tests/queries/test_query.py
++++ b/tests/queries/test_query.py
+@@ -91,3 +91,13 @@
+         self.assertIsInstance(b_isnull, RelatedIsNull)
+         self.assertIsInstance(b_isnull.lhs, SimpleCol)
+         self.assertEqual(b_isnull.lhs.target, ObjectC._meta.get_field('objectb'))
++
++from django.test import TestCase, SimpleTestCase
++from django.db.models import Count, Case, When
++from django.contrib.auth.models import User
++
++class TestAggregateWithCaseAndDistinct(TestCase):
++    def test_query_syntax_error_with_condition_and_distinct_repro(self):
++        User.objects.create(username='John')
++        result = User.objects.aggregate(count=Count(Case(When(username='John', then=1), default=0), distinct=True))
++        self.assertIsNotNone(result['count'])

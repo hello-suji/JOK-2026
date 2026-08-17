@@ -1,0 +1,21 @@
+--- a/tests/admin_views/test_actions.py
++++ b/tests/admin_views/test_actions.py
+@@ -529,3 +529,18 @@
+             reverse("admin:admin_views_subscriber_changelist"), delete_confirmation_data
+         )
+         self.assertEqual(response.status_code, 403)
++
++from django.contrib.admin.templatetags.admin_modify import submit_row
++from django.contrib.auth.models import User
++from django.test import TestCase
++from django.urls import reverse
++
++class TestSubmitRowPermissions(TestCase):
++    def setUp(self):
++        self.user = User.objects.create_user(username='testuser', password='testpass')
++        self.user.user_permissions.clear()
++        self.client.login(username='testuser', password='testpass')
++
++    def test_submit_row_without_add_permission_repro(self):
++        response = self.client.get(reverse('admin:auth_user_change', args=(self.user.id,)))
++        self.assertNotContains(response, 'Save as new')

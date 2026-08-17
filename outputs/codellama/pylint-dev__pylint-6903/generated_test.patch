@@ -1,0 +1,13 @@
+--- a/tests/lint/test_pylinter.py
++++ b/tests/lint/test_pylinter.py
+@@ -48,3 +48,10 @@
+         assert len(files) == 1
+         assert "pylint-crash-20" in str(files[0])
+         assert any(m.symbol == "astroid-error" for m in linter.reporter.messages)
++
++@patch('pylint.lint.parallel.Pool')
++def test_pylint_handles_zero_jobs_repro(mock_pool, linter: PyLinter) -> None:
++    # Regression focus: Running pylint in Kubernetes Pod with --jobs=0 fails
++    mock_pool.side_effect = ValueError('Number of jobs must be greater than zero')
++    result = linter.check(['--jobs', '0', '--verbose', 'my_package'])
++    assert result == 0

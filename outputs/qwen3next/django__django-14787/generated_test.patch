@@ -1,0 +1,36 @@
+--- a/tests/utils_tests/test_functional.py
++++ b/tests/utils_tests/test_functional.py
+@@ -265,3 +265,33 @@
+
+         self.assertEqual(Foo.foo, 456)
+         self.assertEqual(Foo().foo, 456)
++
++from django.test import TestCase, SimpleTestCase
++from functools import partial
++from django.utils.decorators import method_decorator
++from django.utils.functional import wraps
++import logging
++
++
++def logger(func):
++    @wraps(func)
++    def inner(*args, **kwargs):
++        try:
++            result = func(*args, **kwargs)
++        except Exception as e:
++            result = str(e)
++        finally:
++            logging.debug(f"{func.__name__} called with args: {args} and kwargs: {kwargs} resulting: {result}")
++        return result
++    return inner
++
++class TestMethodDecoratorWithPartial(SimpleTestCase):
++    def test_method_decorator_with_partial_repro(self):
++        class Test:
++            @method_decorator(partial(logger))
++            def hello_world(self):
++                return "hello"
++        test_instance = Test()
++        self.assertEqual(test_instance.hello_world(), "hello")
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(test_instance) != "AttributeError: 'functools.partial' object has no attribute '__name__'"

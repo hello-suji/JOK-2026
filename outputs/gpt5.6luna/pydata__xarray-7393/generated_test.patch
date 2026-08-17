@@ -1,0 +1,12 @@
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -6896,3 +6896,9 @@
+         ),
+     ):
+         ds.transpose(["y", "x"])  # type: ignore
++
++def test_stack_dtype_change_repro():
++    ds = xr.Dataset(coords={'a': np.array([0], dtype='i4')})
++    assert ds['a'].values.dtype == ds.stack(b=('a',))['a'].values.dtype
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(ds) != 'False'

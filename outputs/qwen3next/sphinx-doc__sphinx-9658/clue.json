@@ -1,0 +1,48 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9658",
+  "observed_behavior": [
+    "Example: In the docs for `alibi_detect.utils.pytorch.kernels.DeepKernel` in this readthedocs build https://seldon--338.org.readthedocs.build/projects/alibi-detect/en/338/api/alibi_detect.utils.pytorch.kernels.html, the base class is listed as \"Bases: `torch.nn.`\" instead of \"Bases: `torch.nn.Module`\"."
+  ],
+  "expected_behavior": [
+    "### Expected behavior",
+    "The \"Bases\" section should report `torch.nn.Module` not `torch.nn.`."
+  ],
+  "repro_conditions": [
+    "Inherited classes not correctly documented when mocked",
+    "We're experiencing an issue when documenting classes that inherit mocked classes. However, classes which inherit other classes from our own package are ok.",
+    "Example: In the docs for `alibi_detect.utils.pytorch.kernels.DeepKernel` in this readthedocs build https://seldon--338.org.readthedocs.build/projects/alibi-detect/en/338/api/alibi_detect.utils.pytorch.kernels.html, the base class is listed as \"Bases: `torch.nn.`\" instead of \"Bases: `torch.nn.Module`\".",
+    "### How to Reproduce",
+    "\"sphinx.ext.ifconfig\","
+  ],
+  "environment": [
+    "This issue appears to be dependent on the `sphinx` version:",
+    "Ubuntu 18.04 (used by readthedocs/build:6.0)",
+    "### Python version",
+    "### Sphinx version"
+  ],
+  "identifiers": {
+    "functions": [],
+    "classes": [
+      "Bases",
+      "DeepKernel",
+      "SeldonIO"
+    ],
+    "files": [
+      "requirements/docs.txt"
+    ],
+    "exceptions": []
+  },
+  "raw_issue_text": "Inherited classes not correctly documented when mocked\n### Describe the bug\n\nWe're experiencing an issue when documenting classes that inherit mocked classes. However, classes which inherit other classes from our own package are ok.\n\nThis issue appears to be dependent on the `sphinx` version:\n\n- `sphinx<3.0`: Everything is OK. \n- `sphinx>=3.0 < 3.4.2`: Classes that inherit mocked classes are not documented. (see [sphinx #8164](https://github.com/sphinx-doc/sphinx/issues/8164)). This is fixed in `sphinx 3.4.2`. \n- `sphinx>=3.4.2`: The previously missing classes are now documented, but there is a problem with the \"Bases\" section in the docs. \n \nExample: In the docs for `alibi_detect.utils.pytorch.kernels.DeepKernel` in this readthedocs build https://seldon--338.org.readthedocs.build/projects/alibi-detect/en/338/api/alibi_detect.utils.pytorch.kernels.html, the base class is listed as \"Bases: `torch.nn.`\" instead of \"Bases: `torch.nn.Module`\". \n\n\n### How to Reproduce\n\n```\n$ git clone https://github.com/ascillitoe/alibi-detect.git\n$ cd alibi-detect\n$ pip install -r requirements/docs.txt\n$ make build_docs\n$ # open doc/_build/html/api/alibi_detect.utils.pytorch.kernels.html and see \"Bases\" section.\n```\n\n\n### Expected behavior\n\nThe \"Bases\" section should report `torch.nn.Module` not `torch.nn.`. \n\ni.e. see\nhttps://seldon--325.org.readthedocs.build/projects/alibi-detect/en/325/api/alibi_detect.utils.pytorch.kernels.html\n\n### Your project\n\nhttps://github.com/ascillitoe/alibi-detect/tree/feature_sphinx4\n\n### Screenshots\n\n### Screenshot with `sphinx==4.2`\n![sphinx_problem](https://user-images.githubusercontent.com/32061685/133816582-ca162b07-41c7-4b8e-98ea-781e7c659229.png)\n\n### Screenshot with `sphinx<3.0`\n![sphinx_working](https://user-images.githubusercontent.com/32061685/133816065-6291ce1b-96cf-4b0f-9648-7f993fc15611.png)\n\n\n\n### OS\n\nUbuntu 18.04 (used by readthedocs/build:6.0)\n\n### Python version\n\n3.8.11\n\n### Sphinx version\n\n`>=3.4.2`\n\n### Sphinx extensions\n\n    [\"sphinx.ext.autodoc\",\n    \"sphinx.ext.doctest\",\n    \"sphinx.ext.intersphinx\",\n    \"sphinx.ext.todo\",\n    \"sphinx.ext.coverage\",\n    \"sphinx.ext.mathjax\",\n    \"sphinx.ext.ifconfig\",\n    \"sphinx.ext.viewcode\",\n    \"sphinx.ext.napoleon\",\n    \"sphinx_autodoc_typehints\",\n    \"sphinxcontrib.apidoc\", \n    \"nbsphinx\",\n    \"nbsphinx_link\",  \n    \"myst_parser\"]\n\n\n### Extra tools\n\n_No response_\n\n### Additional context\n\ndemo PR:\nhttps://github.com/SeldonIO/alibi-detect/pull/338\n\nreadthedocs demo build:\nhttps://seldon--338.org.readthedocs.build/projects/alibi-detect/en/338/api/alibi_detect.utils.pytorch.kernels.html",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "$ git clone https://github.com/ascillitoe/alibi-detect.git\n$ cd alibi-detect\n$ pip install -r requirements/docs.txt\n$ make build_docs\n$ # open doc/_build/html/api/alibi_detect.utils.pytorch.kernels.html and see \"Bases\" section.",
+      "context_before": "### How to Reproduce",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

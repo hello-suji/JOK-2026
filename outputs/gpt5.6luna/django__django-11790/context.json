@@ -1,0 +1,497 @@
+{
+  "instance_id": "django__django-11790",
+  "repo": "django/django",
+  "base_commit": "b1d6b35e146aea83b171c1b921178bbaae2795ed",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/auth/forms.py",
+      "score": 20,
+      "matched_identifiers": [
+        "AuthenticationForm",
+        "authenticationform",
+        "doesn",
+        "field",
+        "username"
+      ],
+      "reasons": [
+        "class_match:AuthenticationForm",
+        "source_content_tokens:doesn,field,username,authenticationform,email"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "AuthenticationForm": "class AuthenticationForm(forms.Form):\n    \"\"\"\n    Base class for authenticating users. Extend this to get a form that accepts\n    username/password logins.\n    \"\"\"\n    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True}))\n    password = forms.CharField(\n        label=_(\"Password\"),\n        strip=False,\n        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}),\n    )\n\n    error_messages = {\n        'invalid_login': _(\n            \"Please enter a correct %(username)s and password. Note that both \""
+      },
+      "top_level_functions": [
+        "ReadOnlyPasswordHashWidget.get_context",
+        "ReadOnlyPasswordHashField.bound_data",
+        "ReadOnlyPasswordHashField.has_changed",
+        "UsernameField.to_python",
+        "UsernameField.widget_attrs",
+        "UserCreationForm.clean_password2",
+        "UserCreationForm.save",
+        "UserChangeForm.clean_password",
+        "AuthenticationForm.clean",
+        "AuthenticationForm.confirm_login_allowed",
+        "AuthenticationForm.get_user",
+        "AuthenticationForm.get_invalid_login_error",
+        "PasswordResetForm.send_mail",
+        "PasswordResetForm.get_users",
+        "PasswordResetForm.save",
+        "SetPasswordForm.clean_new_password2",
+        "SetPasswordForm.save",
+        "PasswordChangeForm.clean_old_password",
+        "AdminPasswordChangeForm.clean_password2",
+        "AdminPasswordChangeForm.save",
+        "AdminPasswordChangeForm.changed_data"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "attribute",
+        "description",
+        "doesn",
+        "field"
+      ],
+      "reasons": [
+        "source_content_tokens:doesn,field,attribute,description,email"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 16,
+      "matched_identifiers": [
+        "attribute",
+        "description",
+        "doesn",
+        "field"
+      ],
+      "reasons": [
+        "source_content_tokens:doesn,field,attribute,description,groups"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/widgets.py",
+      "score": 16,
+      "matched_identifiers": [
+        "attribute",
+        "doesn",
+        "email",
+        "field"
+      ],
+      "reasons": [
+        "source_content_tokens:doesn,field,attribute,email,groups"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FilteredSelectMultiple.media",
+        "FilteredSelectMultiple.get_context",
+        "AdminSplitDateTime.get_context",
+        "url_params_from_lookup_dict",
+        "ForeignKeyRawIdWidget.get_context",
+        "ForeignKeyRawIdWidget.base_url_parameters",
+        "ForeignKeyRawIdWidget.url_parameters",
+        "ForeignKeyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.get_context",
+        "ManyToManyRawIdWidget.url_parameters",
+        "ManyToManyRawIdWidget.label_and_url_for_value",
+        "ManyToManyRawIdWidget.value_from_datadict",
+        "ManyToManyRawIdWidget.format_value",
+        "RelatedFieldWidgetWrapper.is_hidden",
+        "RelatedFieldWidgetWrapper.media",
+        "RelatedFieldWidgetWrapper.get_related_url",
+        "RelatedFieldWidgetWrapper.get_context",
+        "RelatedFieldWidgetWrapper.value_from_datadict",
+        "RelatedFieldWidgetWrapper.value_omitted_from_data",
+        "RelatedFieldWidgetWrapper.id_for_label",
+        "AdminURLFieldWidget.get_context",
+        "AutocompleteMixin.get_url",
+        "AutocompleteMixin.build_attrs",
+        "AutocompleteMixin.optgroups",
+        "AutocompleteMixin.media"
+      ]
+    },
+    {
+      "path": "django/contrib/auth/backends.py",
+      "score": 16,
+      "matched_identifiers": [
+        "attribute",
+        "doesn",
+        "field",
+        "username"
+      ],
+      "reasons": [
+        "source_content_tokens:doesn,field,username,attribute,groups"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseBackend.authenticate",
+        "BaseBackend.get_user",
+        "BaseBackend.get_user_permissions",
+        "BaseBackend.get_group_permissions",
+        "BaseBackend.get_all_permissions",
+        "BaseBackend.has_perm",
+        "ModelBackend.authenticate",
+        "ModelBackend.user_can_authenticate",
+        "ModelBackend.get_user_permissions",
+        "ModelBackend.get_group_permissions",
+        "ModelBackend.get_all_permissions",
+        "ModelBackend.has_perm",
+        "ModelBackend.has_module_perms",
+        "ModelBackend.with_perm",
+        "ModelBackend.get_user",
+        "AllowAllUsersModelBackend.user_can_authenticate",
+        "RemoteUserBackend.authenticate",
+        "RemoteUserBackend.clean_username",
+        "RemoteUserBackend.configure_user",
+        "AllowAllUsersRemoteUserBackend.user_can_authenticate"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/auth_tests/test_forms.py",
+      "score": 15,
+      "matched_identifiers": [
+        "AuthenticationForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AuthenticationForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:auth,form,forms",
+        "internal_name_overlap:auth",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_views/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AuthenticationForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AuthenticationForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:auth",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/flatpages_tests/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AuthenticationForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AuthenticationForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/foreign_object/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AuthenticationForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AuthenticationForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_forms.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AuthenticationForm"
+      ],
+      "reasons": [
+        "test_path_related_to_class:AuthenticationForm",
+        "test_name_matches_source_stem:forms",
+        "token_overlap:form,forms",
+        "internal_name_overlap:form",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_views/test_forms.py:unittest_or_django_test_import",
+      "tests/flatpages_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_forms.py:testcase_class:TestDataMixin",
+      "tests/foreign_object/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_forms.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_forms.py:testcase_class:FormsTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2571,
+  "indexed_test_file_count": 1738,
+  "available_imports": {
+    "django": [
+      "get_version",
+      "setup"
+    ],
+    "tests.admin_views.test_forms": [
+      "AdminAuthenticationFormTests"
+    ],
+    "tests.flatpages_tests.test_forms": [
+      "FlatpageAdminFormTests"
+    ],
+    "tests.auth_tests.test_forms": [
+      "AdminPasswordChangeFormTest",
+      "AuthenticationFormTest",
+      "PasswordChangeFormTest",
+      "PasswordResetFormTest",
+      "ReadOnlyPasswordHashTest",
+      "SetPasswordFormTest",
+      "TestDataMixin",
+      "UserChangeFormTest",
+      "UserCreationFormTest"
+    ],
+    "tests.foreign_object.test_forms": [
+      "FormsTests"
+    ],
+    "tests.forms_tests.tests.test_forms": [
+      "CustomRenderer",
+      "FormsTestCase",
+      "MultiValueDictLike",
+      "Person",
+      "PersonNew",
+      "RendererTests"
+    ],
+    "django.contrib.admin.widgets": [
+      "AdminBigIntegerFieldWidget",
+      "AdminDateWidget",
+      "AdminEmailInputWidget",
+      "AdminFileWidget",
+      "AdminIntegerFieldWidget",
+      "AdminRadioSelect",
+      "AdminSplitDateTime",
+      "AdminTextInputWidget",
+      "AdminTextareaWidget",
+      "AdminTimeWidget",
+      "AdminURLFieldWidget",
+      "AdminUUIDInputWidget",
+      "AutocompleteMixin",
+      "AutocompleteSelect",
+      "AutocompleteSelectMultiple",
+      "FilteredSelectMultiple",
+      "ForeignKeyRawIdWidget",
+      "ManyToManyRawIdWidget",
+      "RelatedFieldWidgetWrapper",
+      "url_params_from_lookup_dict"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_changed_field_labels_from_form",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ImproperlyConfigured",
+      "ListFilter",
+      "ModelAdmin",
+      "PermissionDenied",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "constant_time_compare",
+      "django_apps",
+      "import_string",
+      "register",
+      "rotate_token",
+      "settings",
+      "site",
+      "user_logged_in",
+      "user_logged_out",
+      "user_login_failed"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.contrib.auth.backends": [
+      "AllowAllUsersModelBackend",
+      "AllowAllUsersRemoteUserBackend",
+      "BaseBackend",
+      "ModelBackend",
+      "RemoteUserBackend"
+    ],
+    "django.contrib.auth.forms": [
+      "AdminPasswordChangeForm",
+      "AuthenticationForm",
+      "PasswordChangeForm",
+      "PasswordResetForm",
+      "ReadOnlyPasswordHashField",
+      "ReadOnlyPasswordHashWidget",
+      "SetPasswordForm",
+      "UserChangeForm",
+      "UserCreationForm",
+      "UsernameField"
+    ],
+    "django.contrib.auth": [
+      "_clean_credentials",
+      "_get_backends",
+      "_get_user_session_key",
+      "authenticate",
+      "get_backends",
+      "get_permission_codename",
+      "get_user",
+      "get_user_model",
+      "load_backend",
+      "login",
+      "logout",
+      "update_session_auth_hash"
+    ]
+  },
+  "test_example_snippet": "class TestDataMixin:\n\n    @classmethod\n    def setUpTestData(cls):\n        cls.u1 = User.objects.create_user(username='testclient', password='password', email='testclient@example.com')\n        cls.u2 = User.objects.create_user(username='inactive', password='password', is_active=False)\n        cls.u3 = User.objects.create_user(username='staff', password='password')\n        cls.u4 = User.objects.create(username='empty_password', password='')\n        cls.u5 = User.objects.create(username='unmanageable_password', password='$')\n        cls.u6 = User.objects.create(username='unknown_password', password='foo$bar')\n\n\nclass UserCreationFormTest(TestDataMixin, TestCase):\n\n    def test_user_already_exists(self):\n        data = {\n            'username': 'testclient',\n            'password1': 'test123',\n            'password2': 'test123',\n        }\n        form = UserCreationForm(data)\n        self.assertFalse(form.is_valid())\n        self.assertEqual(form[\"username\"].errors,\n                         [str(User._meta.get_field('username').error_messages['unique'])])\n\n    def test_invalid_data(self):\n        data = {\n            'username': 'jsmith!',\n            'password1': 'test123',\n            'password2': 'test123',\n        }\n        form = UserCreationForm(data)\n        self.assertFalse(form.is_valid())\n        validator = next(v for v in User._meta.get_field('username').validators if v.code == 'invalid')\n        self.assertEqual(form[\"username\"].errors, [str(validator.message)])",
+  "conftest_fixtures": {}
+}

@@ -1,0 +1,15 @@
+--- a/sympy/polys/tests/test_rings.py
++++ b/sympy/polys/tests/test_rings.py
+@@ -1420,3 +1420,12 @@
+     R, x = ring('x', FF(2))
+     p = x**6 + x**5 + x**4 + x**3 + 1
+     assert p._pow_multinomial(4) == x**24 + x**20 + x**16 + x**12 + 1
++
++def test_PolyElement_as_expr_with_custom_symbols_repro():
++    R, x, y, z = ring("x,y,z", ZZ)
++    f = 3*x**2*y - x*y*z + 7*z**3 + 1
++    U, V, W = symbols("u,v,w")
++    expr = f.as_expr(U, V, W)
++    assert expr == 3*U**2*V - U*V*W + 7*W**3 + 1
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(expr) != '3*x**2*y - x*y*z + 7*z**3 + 1'

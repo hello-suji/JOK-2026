@@ -1,0 +1,603 @@
+{
+  "instance_id": "sympy__sympy-16766",
+  "repo": "sympy/sympy",
+  "base_commit": "b8fe457a02cc24b3470ff678d0099c350b7fef43",
+  "repo_path": "data/repos/sympy__sympy",
+  "candidate_source_files": [
+    {
+      "path": "sympy/printing/pycode.py",
+      "score": 28,
+      "matched_identifiers": [
+        "PythonCodePrinter",
+        "import",
+        "indexed",
+        "method",
+        "pycode"
+      ],
+      "reasons": [
+        "function_match:pycode",
+        "class_match:PythonCodePrinter",
+        "path_contains_function:pycode",
+        "stem_in_issue_text:pycode",
+        "source_content_tokens:import,indexed,method,pycode,pythoncodeprinter"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "PythonCodePrinter": "class PythonCodePrinter(AbstractPythonCodePrinter):\n\n    def _print_sign(self, e):\n        return '(0.0 if {e} == 0 else {f}(1, {e}))'.format(\n            f=self._module_format('math.copysign'), e=self._print(e.args[0]))\n\n    def _print_Not(self, expr):\n        PREC = precedence(expr)\n        return self._operators['not'] + self.parenthesize(expr.args[0], PREC)\n\n    def _print_Indexed(self, expr):\n        base = expr.args[0]\n        index = expr.args[1:]\n        return \"{}[{}]\".format(str(base), \", \".join([self._print(ind) for ind in index]))\n",
+        "pycode": "def pycode(expr, **settings):\n    \"\"\" Converts an expr to a string of Python code\n\n    Parameters\n    ==========\n\n    expr : Expr\n        A SymPy expression.\n    fully_qualified_modules : bool\n        Whether or not to write out full module names of functions\n        (``math.sin`` vs. ``sin``). default: ``True``.\n\n    Examples\n    ========\n"
+      },
+      "top_level_functions": [
+        "pycode"
+      ]
+    },
+    {
+      "path": "sympy/tensor/indexed.py",
+      "score": 27,
+      "matched_identifiers": [
+        "Indexed",
+        "IndexedBase",
+        "following",
+        "import",
+        "indexed",
+        "indexedbase"
+      ],
+      "reasons": [
+        "class_match:IndexedBase",
+        "class_match:Indexed",
+        "path_contains_class:Indexed",
+        "stem_in_issue_text:indexed",
+        "source_content_tokens:following,import,indexed,indexedbase,method"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "Indexed": "class Indexed(Expr):\n    \"\"\"Represents a mathematical object with indices.\n\n    >>> from sympy import Indexed, IndexedBase, Idx, symbols\n    >>> i, j = symbols('i j', cls=Idx)\n    >>> Indexed('A', i, j)\n    A[i, j]\n\n    It is recommended that ``Indexed`` objects be created via ``IndexedBase``:\n\n    >>> A = IndexedBase('A')\n    >>> Indexed('A', i, j) == A[i, j]\n    True\n\n    \"\"\"",
+        "IndexedBase": "class IndexedBase(Expr, NotIterable):\n    \"\"\"Represent the base or stem of an indexed object\n\n    The IndexedBase class represent an array that contains elements. The main purpose\n    of this class is to allow the convenient creation of objects of the Indexed\n    class.  The __getitem__ method of IndexedBase returns an instance of\n    Indexed.  Alone, without indices, the IndexedBase class can be used as a\n    notation for e.g. matrix equations, resembling what you could do with the\n    Symbol class.  But, the IndexedBase class adds functionality that is not\n    available for Symbol instances:\n\n      -  An IndexedBase object can optionally store shape information.  This can\n         be used in to check array conformance and conditions for numpy\n         broadcasting.  (TODO)\n      -  An IndexedBase object implements syntactic sugar that allows easy symbolic"
+      },
+      "top_level_functions": [
+        "Indexed.name",
+        "Indexed.base",
+        "Indexed.indices",
+        "Indexed.rank",
+        "Indexed.shape",
+        "Indexed.ranges",
+        "Indexed.free_symbols",
+        "Indexed.expr_free_symbols",
+        "IndexedBase.name",
+        "IndexedBase.shape",
+        "IndexedBase.strides",
+        "IndexedBase.offset",
+        "IndexedBase.label",
+        "Idx.label",
+        "Idx.lower",
+        "Idx.upper",
+        "Idx.name",
+        "Idx.free_symbols"
+      ]
+    },
+    {
+      "path": "sympy/utilities/lambdify.py",
+      "score": 24,
+      "matched_identifiers": [
+        "following",
+        "import",
+        "indexed",
+        "lambdify"
+      ],
+      "reasons": [
+        "function_match:lambdify",
+        "path_contains_function:lambdify",
+        "stem_in_issue_text:lambdify",
+        "source_content_tokens:following,import,indexed,lambdify,method"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "lambdify": "def lambdify(args, expr, modules=None, printer=None, use_imps=True,\n             dummify=False):\n    \"\"\"\n    Translates a SymPy expression into an equivalent numeric function\n\n    For example, to convert the SymPy expression ``sin(x) + cos(x)`` to an\n    equivalent NumPy function that numerically evaluates it:\n\n    >>> from sympy import sin, cos, symbols, lambdify\n    >>> import numpy as np\n    >>> x = symbols('x')\n    >>> expr = sin(x) + cos(x)\n    >>> expr\n    sin(x) + cos(x)\n    >>> f = lambdify(x, expr, 'numpy')"
+      },
+      "top_level_functions": [
+        "lambdify",
+        "lambdastr",
+        "_EvaluatorPrinter.doprint",
+        "implemented_function"
+      ]
+    },
+    {
+      "path": "sympy/printing/printer.py",
+      "score": 22,
+      "matched_identifiers": [
+        "_print",
+        "following",
+        "import",
+        "method",
+        "sympy"
+      ],
+      "reasons": [
+        "function_match:_print",
+        "stem_in_issue_text:printer",
+        "source_content_tokens:following,import,method,sympy,_print"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_print": "    def _print(self, expr, **kwargs):\n        \"\"\"Internal dispatcher\n\n        Tries the following concepts to print an expression:\n            1. Let the object print itself if it knows how.\n            2. Take the best fitting method defined in the printer.\n            3. As fall-back use the emptyPrinter method for the printer.\n        \"\"\"\n        self._print_level += 1\n        try:\n            # If the printer defines a name for a printing method\n            # (Printer.printmethod) and the object knows for itself how it\n            # should be printed, use that method.\n            if (self.printmethod and hasattr(expr, self.printmethod)\n                    and not isinstance(expr, BasicMeta)):"
+      },
+      "top_level_functions": [
+        "printer_context",
+        "Printer.set_global_settings",
+        "Printer.order",
+        "Printer.doprint"
+      ]
+    },
+    {
+      "path": "sympy/physics/continuum_mechanics/beam.py",
+      "score": 21,
+      "matched_identifiers": [
+        "import",
+        "join",
+        "method",
+        "supported",
+        "sympy"
+      ],
+      "reasons": [
+        "function_match:join",
+        "source_content_tokens:import,method,supported,sympy,format"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "join": "    def join(self, beam, via=\"fixed\"):\n        \"\"\"\n        This method joins two beams to make a new composite beam system.\n        Passed Beam class instance is attached to the right end of calling\n        object. This method can be used to form beams having Discontinuous\n        values of Elastic modulus or Second moment.\n\n        Parameters\n        ==========\n        beam : Beam class object\n            The Beam object which would be connected to the right of calling\n            object.\n        via : String\n            States the way two Beam object would get connected\n            - For axially fixed Beams, via=\"fixed\""
+      },
+      "top_level_functions": [
+        "Beam.reaction_loads",
+        "Beam.length",
+        "Beam.variable",
+        "Beam.elastic_modulus",
+        "Beam.second_moment",
+        "Beam.boundary_conditions",
+        "Beam.bc_slope",
+        "Beam.bc_deflection",
+        "Beam.join",
+        "Beam.apply_support",
+        "Beam.apply_load",
+        "Beam.remove_load",
+        "Beam.load",
+        "Beam.applied_loads",
+        "Beam.solve_for_reaction_loads",
+        "Beam.shear_force",
+        "Beam.max_shear_force",
+        "Beam.bending_moment",
+        "Beam.max_bmoment",
+        "Beam.point_cflexure",
+        "Beam.slope",
+        "Beam.deflection",
+        "Beam.max_deflection",
+        "Beam.plot_shear_force",
+        "Beam.plot_bending_moment",
+        "Beam.plot_slope",
+        "Beam.plot_deflection",
+        "Beam.plot_loading_results",
+        "Beam3D.shear_modulus",
+        "Beam3D.second_moment",
+        "Beam3D.area",
+        "Beam3D.load_vector",
+        "Beam3D.moment_load_vector",
+        "Beam3D.boundary_conditions",
+        "Beam3D.apply_load",
+        "Beam3D.apply_moment_load",
+        "Beam3D.apply_support",
+        "Beam3D.solve_for_reaction_loads",
+        "Beam3D.shear_force",
+        "Beam3D.axial_force"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sympy/printing/tests/test_pycode.py",
+      "score": 49,
+      "matched_identifiers": [
+        "PythonCodePrinter",
+        "pycode"
+      ],
+      "reasons": [
+        "test_path_contains_function:pycode",
+        "test_path_related_to_class:PythonCodePrinter",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/printing/tests",
+        "test_name_matches_source_stem:pycode",
+        "token_overlap:code,print,printing,pycode,sympy",
+        "internal_name_overlap:python",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/printing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/physics/continuum_mechanics/tests/test_beam.py",
+      "score": 41,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sympy/physics",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/physics/continuum_mechanics/tests",
+        "test_name_matches_source_stem:beam",
+        "token_overlap:beam,continuum,mechanics,physics,sympy",
+        "internal_name_overlap:beam",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/tensor/tests/test_indexed.py",
+      "score": 40,
+      "matched_identifiers": [
+        "Indexed",
+        "IndexedBase"
+      ],
+      "reasons": [
+        "test_path_related_to_class:IndexedBase",
+        "test_path_related_to_class:Indexed",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/tensor/tests",
+        "test_name_matches_source_stem:indexed",
+        "token_overlap:indexed,sympy,tensor",
+        "internal_name_overlap:indexed",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/printing/tests/test_ccode.py",
+      "score": 39,
+      "matched_identifiers": [
+        "PythonCodePrinter"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PythonCodePrinter",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/printing/tests",
+        "token_overlap:code,print,printing,sympy",
+        "internal_name_overlap:code",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/printing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sympy/printing/tests/test_codeprinter.py",
+      "score": 39,
+      "matched_identifiers": [
+        "PythonCodePrinter"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PythonCodePrinter",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "same_module_area:sympy",
+        "inferred_test_dir_match:sympy/printing/tests",
+        "token_overlap:code,print,printer,printing,sympy",
+        "internal_name_overlap:printer",
+        "has_test_functions",
+        "explicit_source_area_match:sympy/printing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sympy/tensor/tests/test_indexed.py:pytest_import_or_conftest",
+      "sympy/tensor/tests/test_indexed.py:top_level_test_functions",
+      "sympy/printing/tests/test_ccode.py:pytest_import_or_conftest",
+      "sympy/printing/tests/test_ccode.py:top_level_test_functions",
+      "sympy/printing/tests/test_codeprinter.py:pytest_import_or_conftest",
+      "sympy/printing/tests/test_codeprinter.py:top_level_test_functions",
+      "sympy/printing/tests/test_pycode.py:pytest_import_or_conftest",
+      "sympy/printing/tests/test_pycode.py:top_level_test_functions",
+      "sympy/physics/continuum_mechanics/tests/test_beam.py:pytest_import_or_conftest",
+      "sympy/physics/continuum_mechanics/tests/test_beam.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "sympy-bin-test"
+  },
+  "indexed_file_count": 1310,
+  "indexed_test_file_count": 558,
+  "available_imports": {
+    "sympy": [
+      "Array",
+      "DenseNDimArray",
+      "Idx",
+      "ImmutableDenseNDimArray",
+      "ImmutableSparseNDimArray",
+      "Indexed",
+      "IndexedBase",
+      "MutableDenseNDimArray",
+      "MutableSparseNDimArray",
+      "NDimArray",
+      "SparseNDimArray",
+      "StrPrinter",
+      "TableForm",
+      "__sympy_debug",
+      "__version__",
+      "absolute_import",
+      "capture",
+      "cartes",
+      "ccode",
+      "cxxcode",
+      "default_sort_key",
+      "derive_by_array",
+      "dict_merge",
+      "doctest",
+      "dotprint",
+      "fcode",
+      "filldedent",
+      "flatten",
+      "get_contraction_structure",
+      "get_indices",
+      "glsl_code",
+      "group",
+      "has_dups",
+      "has_variety",
+      "init_printing",
+      "init_session",
+      "interactive_traversal",
+      "jscode",
+      "julia_code",
+      "lambdify",
+      "latex",
+      "mathematica_code",
+      "mathml",
+      "mdft",
+      "memoize_property",
+      "mgamma",
+      "minkowski_tensor",
+      "msigma",
+      "multiline_latex",
+      "numbered_symbols",
+      "octave_code",
+      "ordered",
+      "pager_print",
+      "permutedims",
+      "plot",
+      "plot_backends",
+      "plot_implicit",
+      "postfixes",
+      "postorder_traversal",
+      "pprint",
+      "pprint_try_use_unicode",
+      "pprint_use_unicode",
+      "prefixes",
+      "pretty",
+      "pretty_print",
+      "preview",
+      "print_ccode",
+      "print_fcode",
+      "print_function",
+      "print_glsl",
+      "print_gtk",
+      "print_jscode",
+      "print_latex",
+      "print_mathml",
+      "print_python",
+      "print_rcode",
+      "print_tree",
+      "public",
+      "pycode",
+      "python",
+      "rcode",
+      "reshape",
+      "rotations",
+      "rust_code",
+      "sift",
+      "source",
+      "srepr",
+      "sstr",
+      "sstrrepr",
+      "subsets",
+      "take",
+      "tensorcontraction",
+      "tensorproduct",
+      "test",
+      "textplot",
+      "threaded",
+      "timed",
+      "topological_sort",
+      "unflatten",
+      "units",
+      "variations",
+      "xthreaded"
+    ],
+    "sympy.printing.printer": [
+      "Printer",
+      "printer_context"
+    ],
+    "sympy.printing.pycode": [
+      "AbstractPythonCodePrinter",
+      "MpmathPrinter",
+      "NumPyPrinter",
+      "PythonCodePrinter",
+      "SciPyPrinter",
+      "SymPyPrinter",
+      "_print_known_const",
+      "_print_known_func",
+      "pycode"
+    ],
+    "sympy.plotting.experimental_lambdify": [
+      "Lambdifier",
+      "experimental_lambdify",
+      "lambdify",
+      "vectorized_lambdify"
+    ],
+    "sympy.utilities.lambdify": [
+      "_EvaluatorPrinter",
+      "_TensorflowEvaluatorPrinter",
+      "_get_namespace",
+      "_imp_namespace",
+      "_import",
+      "_module_present",
+      "implemented_function",
+      "lambdastr",
+      "lambdify"
+    ],
+    "sympy.tensor.indexed": [
+      "Idx",
+      "IndexException",
+      "Indexed",
+      "IndexedBase"
+    ],
+    "sympy.core.tests.test_operations": [
+      "join",
+      "test_AssocOp_flatten",
+      "test_issue_14025",
+      "test_lattice_make_args",
+      "test_lattice_print",
+      "test_lattice_shortcircuit",
+      "test_lattice_simple"
+    ],
+    "sympy.tensor.tests.test_indexed": [
+      "test_Idx_bounds",
+      "test_Idx_construction",
+      "test_Idx_fixed_bounds",
+      "test_Idx_func_args",
+      "test_Idx_inequalities",
+      "test_Idx_inequalities_current_fails",
+      "test_Idx_properties",
+      "test_Idx_subs",
+      "test_IndexedBase_shape",
+      "test_IndexedBase_subs",
+      "test_IndexedBase_sugar",
+      "test_Indexed_coeff",
+      "test_Indexed_constructor",
+      "test_Indexed_func_args",
+      "test_Indexed_properties",
+      "test_Indexed_shape_precedence",
+      "test_Indexed_subs",
+      "test_Subs_with_Indexed",
+      "test_complex_indices",
+      "test_complicated_derivative_with_Indexed",
+      "test_differentiation",
+      "test_indexed_is_constant",
+      "test_indexed_series",
+      "test_issue_12533",
+      "test_issue_12780",
+      "test_not_interable"
+    ],
+    "sympy.printing.tests.test_ccode": [
+      "test_C89CodePrinter",
+      "test_C99CodePrinter",
+      "test_C99CodePrinter__precision",
+      "test_C99CodePrinter__precision_f80",
+      "test_C99CodePrinter_custom_type",
+      "test_CCodePrinter",
+      "test_Element",
+      "test_MatrixElement_printing",
+      "test_Matrix_printing",
+      "test_ccode_Assignment",
+      "test_ccode_Declaration",
+      "test_ccode_For",
+      "test_ccode_ITE",
+      "test_ccode_Indexed",
+      "test_ccode_Indexed_without_looking_for_contraction",
+      "test_ccode_Integer",
+      "test_ccode_Max",
+      "test_ccode_Max_Min",
+      "test_ccode_Min_performance",
+      "test_ccode_Piecewise",
+      "test_ccode_Piecewise_deep",
+      "test_ccode_Pow",
+      "test_ccode_Rational",
+      "test_ccode_Relational",
+      "test_ccode_Type",
+      "test_ccode_boolean",
+      "test_ccode_codegen_ast",
+      "test_ccode_constants_mathh",
+      "test_ccode_constants_other",
+      "test_ccode_exceptions",
+      "test_ccode_functions",
+      "test_ccode_inline_function",
+      "test_ccode_loops_add",
+      "test_ccode_loops_addfactor",
+      "test_ccode_loops_matrix_vector",
+      "test_ccode_loops_multiple_contractions",
+      "test_ccode_loops_multiple_terms",
+      "test_ccode_math_macros",
+      "test_ccode_reserved_words",
+      "test_ccode_settings",
+      "test_ccode_sign",
+      "test_ccode_sinc",
+      "test_ccode_sqrt",
+      "test_ccode_standard",
+      "test_ccode_user_functions",
+      "test_dereference_printing",
+      "test_dummy_loops",
+      "test_get_math_macros",
+      "test_printmethod",
+      "test_subclass_CCodePrinter"
+    ],
+    "sympy.printing.tests.test_codeprinter": [
+      "setup_test_printer",
+      "test_issue_15791",
+      "test_print_Dummy",
+      "test_print_Symbol"
+    ],
+    "sympy.printing.tests.test_pycode": [
+      "CustomPrintedObject",
+      "test_MpmathPrinter",
+      "test_NumPyPrinter",
+      "test_NumPyPrinter_print_seq",
+      "test_PythonCodePrinter",
+      "test_SciPyPrinter",
+      "test_codegen_ast_nodes",
+      "test_issue_14283",
+      "test_printmethod",
+      "test_pycode_reserved_words"
+    ],
+    "sympy.physics.continuum_mechanics.beam": [
+      "Beam",
+      "Beam3D"
+    ],
+    "sympy.physics": [
+      "Beam"
+    ],
+    "sympy.physics.continuum_mechanics.tests.test_beam": [
+      "test_Beam",
+      "test_Beam3D",
+      "test_apply_support",
+      "test_beam_units",
+      "test_composite_beam",
+      "test_insufficient_bconditions",
+      "test_max_bmoment",
+      "test_max_deflection",
+      "test_max_shear_force",
+      "test_parabolic_loads",
+      "test_point_cflexure",
+      "test_remove_load",
+      "test_statically_indeterminate",
+      "test_variable_moment"
+    ]
+  },
+  "test_example_snippet": "def test_PythonCodePrinter():\n    prntr = PythonCodePrinter()\n    assert not prntr.module_imports\n    assert prntr.doprint(x**y) == 'x**y'\n    assert prntr.doprint(Mod(x, 2)) == 'x % 2'\n    assert prntr.doprint(And(x, y)) == 'x and y'\n    assert prntr.doprint(Or(x, y)) == 'x or y'\n    assert not prntr.module_imports\n    assert prntr.doprint(pi) == 'math.pi'\n    assert prntr.module_imports == {'math': {'pi'}}\n    assert prntr.doprint(acos(x)) == 'math.acos(x)'\n    assert prntr.doprint(Assignment(x, 2)) == 'x = 2'\n    assert prntr.doprint(Piecewise((1, Eq(x, 0)),\n                        (2, x>6))) == '((1) if (x == 0) else (2) if (x > 6) else None)'\n    assert prntr.doprint(Piecewise((2, Le(x, 0)),\n                        (3, Gt(x, 0)), evaluate=False)) == '((2) if (x <= 0) else'\\\n                                                        ' (3) if (x > 0) else None)'\n    assert prntr.doprint(sign(x)) == '(0.0 if x == 0 else math.copysign(1, x))'\n    assert prntr.doprint(p[0, 1]) == 'p[0, 1]'\n\n\ndef test_MpmathPrinter():\n    p = MpmathPrinter()\n    assert p.doprint(sign(x)) == 'mpmath.sign(x)'\n    assert p.doprint(Rational(1, 2)) == 'mpmath.mpf(1)/mpmath.mpf(2)'\n\ndef test_NumPyPrinter():\n    p = NumPyPrinter()\n    assert p.doprint(sign(x)) == 'numpy.sign(x)'\n    A = MatrixSymbol(\"A\", 2, 2)\n    assert p.doprint(A**(-1)) == \"numpy.linalg.inv(A)\"\n    assert p.doprint(A**5) == \"numpy.linalg.matrix_power(A, 5)\"\n\n\ndef test_SciPyPrinter():",
+  "conftest_fixtures": {
+    "sympy/conftest.py": [
+      "file_clear_cache",
+      "check_disabled"
+    ]
+  }
+}

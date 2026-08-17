@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "exclude",
+      "related_classes": [
+        "OuterRef",
+        "Exists"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where exclude can be called.",
+      "Use the generated reproduction path that calls annotate, exclude, filter, exists."
+    ],
+    "execution_stimulus": [
+      "Call exclude with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: annotate, exclude, filter, exists."
+    ],
+    "expected_failure": "OuterRef in exclude() or ~Q() uses wrong model.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/expressions.py",
+      "django/db/models/sql/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/queries/test_query.py",
+      "tests/template_tests/annotated_tag_function.py",
+      "tests/admin_docs/test_utils.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.models import OuterRef, Exists\n\nclass TestExcludeWithOuterRef(TestCase):\n    def test_exclude_with_outerref_repro(self):\n        # Using existing models from the imports\n        qs = Item.objects.annotate(\n            foo=Exists(\n                Item.objects.exclude(tags__category_id=OuterRef('pk'))\n            )\n        ).filter(foo=True)\n\n        # Ensure no ValueError is raised and the queryset is evaluated correctly\n        try:\n            list(qs)\n        except ValueError:\n            self.fail('ValueError raised when using OuterRef in exclude()')\n\n        # Assert that the queryset is not empty, indicating correct filtering\n        self.assertTrue(qs.exists())\n        # [Tier 2: probe-verified buggy repr — must differ after fix]\n        assert repr(foo) != 'ValueError: This queryset contains a reference to an outer query'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [
+        "annotate",
+        "exclude",
+        "filter",
+        "exists",
+        "fail"
+      ],
+      "classes": [
+        "OuterRef",
+        "Exists"
+      ],
+      "files": [],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "annotate",
+        "exclude",
+        "filter",
+        "exists",
+        "fail"
+      ],
+      "test_visible_classes": [
+        "OuterRef",
+        "Exists"
+      ]
+    }
+  }
+]

@@ -1,0 +1,15 @@
+--- a/sympy/tensor/array/tests/test_immutable_ndim_array.py
++++ b/sympy/tensor/array/tests/test_immutable_ndim_array.py
+@@ -384,3 +384,12 @@
+     arr = ImmutableDenseNDimArray([1, 2, 3])
+     # This should NOT raise an exception:
+     hash(arr)
++
++from sympy import Array
++
++def test_len_of_rank_zero_array_repro():
++    a = Array(3)
++    assert len(a) == 0
++    assert len(list(a)) == 1
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(a) != '1'

@@ -1,0 +1,22 @@
+--- a/lib/matplotlib/tests/test_transforms.py
++++ b/lib/matplotlib/tests/test_transforms.py
+@@ -744,3 +744,19 @@
+         ax.plot(x, np.exp(-(x**2) / 2) / np.sqrt(2 * np.pi))
+         fig.canvas.draw()
+         ax.set_yscale('linear')
++
++import matplotlib
++import matplotlib.pyplot as plt
++from matplotlib import rcParams
++
++
++def test_offsettext_color_based_on_labelcolor_repro():
++    matplotlib.use('Agg')
++    rcParams.update({'ytick.labelcolor': 'red'})
++    fig = plt.figure()
++    ax = fig.add_subplot(1, 1, 1)
++    ax.plot([1.01e9, 1.02e9, 1.03e9])
++    ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
++    fig.canvas.draw()
++    offset_text = ax.yaxis.get_offset_text()
++    assert offset_text.get_color() == 'red'

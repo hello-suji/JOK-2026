@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-25287",
+    "model_patch": "--- a/lib/matplotlib/tests/test_transforms.py\n+++ b/lib/matplotlib/tests/test_transforms.py\n@@ -744,3 +744,19 @@\n         ax.plot(x, np.exp(-(x**2) / 2) / np.sqrt(2 * np.pi))\n         fig.canvas.draw()\n         ax.set_yscale('linear')\n+\n+import matplotlib\n+import matplotlib.pyplot as plt\n+from matplotlib import rcParams\n+\n+\n+def test_offsettext_color_based_on_labelcolor_repro():\n+    matplotlib.use('Agg')\n+    rcParams.update({'ytick.labelcolor': 'red'})\n+    fig = plt.figure()\n+    ax = fig.add_subplot(1, 1, 1)\n+    ax.plot([1.01e9, 1.02e9, 1.03e9])\n+    ax.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))\n+    fig.canvas.draw()\n+    offset_text = ax.yaxis.get_offset_text()\n+    assert offset_text.get_color() == 'red'\n",
+    "patch_sha256": "858ad20023ccab68bb575f8abddfd57b4b036708e7deeb3ed34a2ac3e0211219"
+  }
+]

@@ -1,0 +1,14 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,11 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++from sphinx.domains.python import PyFunction
++
++def test_handle_signature_positional_only_argument_repro():
++    node = PyFunction('function', {}, None)
++    sig = 'func(/, arg1, arg2=42)'
++    ret = node.handle_signature(sig, 'path')
++    assert ret == ('func', '(arg1, arg2=42)')

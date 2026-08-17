@@ -1,0 +1,21 @@
+--- a/tests/delete/models.py
++++ b/tests/delete/models.py
+@@ -205,3 +205,18 @@
+
+ class GenericDeleteBottomParent(models.Model):
+     generic_delete_bottom = models.ForeignKey(GenericDeleteBottom, on_delete=models.CASCADE)
++
++from django.test import TestCase
++from tests.delete.models import A
++
++class TestDeletePerformanceRegression(TestCase):
++    def setUp(self):
++        A.objects.create(name='test1')
++        A.objects.create(name='test2')
++
++    def test_delete_with_subquery_performance_repro(self):
++        initial_count = A.objects.count()
++        A.objects.all().delete()
++        final_count = A.objects.count()
++        self.assertEqual(final_count, 0)
++        self.assertNotEqual(initial_count, final_count)

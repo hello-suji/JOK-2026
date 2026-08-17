@@ -1,0 +1,29 @@
+--- a/tests/lookup/models.py
++++ b/tests/lookup/models.py
+@@ -108,3 +108,26 @@
+         to_fields=["id", "product"],
+         on_delete=models.CASCADE,
+     )
++
++from django.db.models.query_utils import RegisterLookupMixin
++from django.db.models.lookups import Lookup
++
++class TestUnregisterLookupCacheClearing(RegisterLookupMixin):
++    def test_cache_cleared_after_unregister_lookup_repro(self):
++        # Define a simple lookup for testing
++        class IsNull(Lookup):
++            lookup_name = 'isnull'
++            def as_sql(self, compiler, connection):
++                lhs, lhs_params = self.process_lhs(compiler, connection)
++                rhs, rhs_params = self.process_rhs(compiler, connection)
++                params = lhs_params + rhs_params
++                return '%s IS NULL' % lhs, params
++
++        # Register a lookup to populate the cache
++        self.register_lookup(IsNull)
++
++        # Unregister the lookup
++        self.unregister_lookup(IsNull)
++
++        # Check if the cache is cleared
++        self.assertNotIn('isnull', self.lookup_cache)

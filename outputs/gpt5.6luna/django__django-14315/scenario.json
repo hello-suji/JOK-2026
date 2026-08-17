@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/mysql/base.py",
+      "target_function": "runshell_env",
+      "related_classes": [
+        "DatabaseWrapper"
+      ],
+      "candidate_test_file": "tests/backends/base/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls runshell_env."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: runshell_env."
+    ],
+    "expected_failure": "postgresql client returns empty dict instead of None for env",
+    "relevant_source_files": [
+      "django/db/backends/mysql/base.py",
+      "django/db/backends/oracle/base.py",
+      "django/db/backends/postgresql/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/base/test_base.py",
+      "tests/backends/mysql/test_operations.py",
+      "tests/backends/oracle/test_creation.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.backends.postgresql.base import DatabaseWrapper\n\nclass TestPostgreSQLRunShell(TestCase):\n    def test_runshell_env_repro(self):\n        db_wrapper = DatabaseWrapper({})\n        env = db_wrapper.runshell_env()\n        self.assertIsNot(env, {})"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "runshell_env"
+      ],
+      "classes": [
+        "DatabaseWrapper"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/base/test_base.py",
+      "target_source_file": "django/db/backends/mysql/base.py",
+      "test_visible_functions": [
+        "runshell_env"
+      ],
+      "test_visible_classes": [
+        "DatabaseWrapper"
+      ]
+    }
+  }
+]

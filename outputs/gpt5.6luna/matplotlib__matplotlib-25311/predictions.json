@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-25311",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1548,3 +1548,29 @@\n     plt.subplots(1, 2, width_ratios=[1, 2], gridspec_kw=gs)\n     assert gs == gs_orig\n     plt.subplot_mosaic('AB', width_ratios=[1, 2], gridspec_kw=gs)\n+\n+import matplotlib.pyplot as plt\n+import pickle\n+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg\n+\n+@check_figures_equal(extensions=[\"png\"])\n+def test_pickle_figure_with_draggable_legend_repro(fig_test, fig_ref):\n+    ax_test = fig_test.add_subplot(111)\n+    ax_ref = fig_ref.add_subplot(111)\n+\n+    ax_test.plot([0, 1], [0, 1])\n+    ax_ref.plot([0, 1], [0, 1])\n+\n+    leg_test = ax_test.legend()\n+    leg_ref = ax_ref.legend()\n+\n+    leg_test.set_draggable(True)\n+    leg_ref.set_draggable(True)\n+\n+    canvas_test = FigureCanvasQTAgg(fig_test)\n+    canvas_ref = FigureCanvasQTAgg(fig_ref)\n+\n+    pickled_test = pickle.dumps(canvas_test)\n+    pickled_ref = pickle.dumps(canvas_ref)\n+\n+    assert len(pickled_test) == len(pickled_ref)\n",
+    "patch_sha256": "497a8a4906a833bbdcc3565cd8e8b6ea24b6d3127f27806d2d109ba78cd1bbb0"
+  }
+]

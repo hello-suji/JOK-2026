@@ -1,0 +1,14 @@
+--- a/lib/matplotlib/tests/test_artist.py
++++ b/lib/matplotlib/tests/test_artist.py
+@@ -372,3 +372,11 @@
+         pass
+
+     assert MyArtist4.set is MyArtist3.set
++
++def test_convert_xunits_with_empty_data_repro():
++    f, ax = plt.subplots()
++    ax.xaxis.update_units(["a", "b"])
++    ax.plot([], [])
++    # Assert that no ConversionError is raised and the plot is created successfully
++    assert len(ax.lines) == 1
++    assert ax.lines[0].get_data() == ([], [])

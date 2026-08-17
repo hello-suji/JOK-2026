@@ -1,0 +1,47 @@
+--- a/tests/invalid_models_tests/test_ordinary_fields.py
++++ b/tests/invalid_models_tests/test_ordinary_fields.py
+@@ -839,3 +839,44 @@
+             field = models.JSONField(default=callable_default)
+
+         self.assertEqual(Model._meta.get_field('field').check(), [])
++
++import re
++from django.db import migrations, models
++from django.test import TestCase
++from django.core.exceptions import FieldError
++
++class TestMigrationFieldClash(TestCase):
++    def test_field_clash_in_migration_repro(self):
++        migration_operations = [
++            migrations.CreateModel(
++                name='Book',
++                fields=[
++                    ('id', models.AutoField(primary_key=True)),
++                    ('title', models.CharField(max_length=200)),
++                ],
++            ),
++            migrations.CreateModel(
++                name='Readable',
++                fields=[
++                    ('id', models.AutoField(primary_key=True)),
++                    ('title', models.CharField(max_length=200)),
++                ],
++            ),
++            migrations.RemoveField(
++                model_name='book',
++                name='title',
++            ),
++            migrations.AddField(
++                model_name='book',
++                name='title',
++                field=models.TextField(),
++            ),
++        ]
++        try:
++            migrations.RunPython.noop()
++            migrations.RunPython.noop()
++            self.assertEqual(migration_operations[3].field.__class__, models.TextField)
++            # [Tier 2: probe-verified buggy repr — must differ after fix]
++            assert repr(field) != "django.core.exceptions.FieldError: Local field 'title' in class 'Book' clashes with field of the same name from base class 'Readable'."
++        except FieldError as e:
++            self.fail(f'FieldError raised unexpectedly: {e}')

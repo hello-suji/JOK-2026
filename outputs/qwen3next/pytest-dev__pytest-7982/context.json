@@ -1,0 +1,477 @@
+{
+  "instance_id": "pytest-dev__pytest-7982",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "a7e38c5c61928033a2dc1915cbee8caa8544a4d0",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "doc/en/conf.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "coming",
+        "directories",
+        "directory"
+      ],
+      "reasons": [
+        "source_content_tokens:added,coming,directories,directory,match"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "configure_logging",
+        "setup"
+      ]
+    },
+    {
+      "path": "src/_pytest/_code/code.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "follow",
+        "included",
+        "match"
+      ],
+      "reasons": [
+        "source_content_tokens:follow,added,included,match,previous"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "match": "    def match(self, regexp: Union[str, Pattern[str]]) -> \"Literal[True]\":\n        \"\"\"Check whether the regular expression `regexp` matches the string\n        representation of the exception using :func:`python:re.search`.\n\n        If it matches `True` is returned, otherwise an `AssertionError` is raised.\n        \"\"\"\n        __tracebackhide__ = True\n        msg = \"Regex pattern {!r} does not match {!r}.\"\n        if regexp == str(self.value):\n            msg += \" Did you mean to `re.escape()` the regex?\"\n        assert re.search(regexp, str(self.value)), msg.format(regexp, str(self.value))\n        # Return True to allow for \"assert excinfo.match()\".\n        return True\n\n"
+      },
+      "top_level_functions": [
+        "Code.path",
+        "Code.fullsource",
+        "Code.source",
+        "Code.getargs",
+        "Frame.statement",
+        "Frame.eval",
+        "Frame.repr",
+        "Frame.getargs",
+        "TracebackEntry.set_repr_style",
+        "TracebackEntry.frame",
+        "TracebackEntry.relline",
+        "TracebackEntry.statement",
+        "TracebackEntry.path",
+        "TracebackEntry.locals",
+        "TracebackEntry.getfirstlinesource",
+        "TracebackEntry.getsource",
+        "TracebackEntry.ishidden",
+        "TracebackEntry.name",
+        "Traceback.cut",
+        "Traceback.filter",
+        "Traceback.getcrashentry",
+        "Traceback.recursionindex",
+        "ExceptionInfo.from_exc_info",
+        "ExceptionInfo.from_current",
+        "ExceptionInfo.for_later",
+        "ExceptionInfo.fill_unfilled",
+        "ExceptionInfo.type",
+        "ExceptionInfo.value",
+        "ExceptionInfo.tb",
+        "ExceptionInfo.typename",
+        "ExceptionInfo.traceback",
+        "ExceptionInfo.exconly",
+        "ExceptionInfo.errisinstance",
+        "ExceptionInfo.getrepr",
+        "ExceptionInfo.match",
+        "FormattedExcinfo.repr_args",
+        "FormattedExcinfo.get_source",
+        "FormattedExcinfo.get_exconly",
+        "FormattedExcinfo.repr_locals",
+        "FormattedExcinfo.repr_traceback_entry"
+      ]
+    },
+    {
+      "path": "src/_pytest/assertion/rewrite.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "directories",
+        "directory",
+        "follow"
+      ],
+      "reasons": [
+        "source_content_tokens:follow,added,directories,directory,match"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "AssertionRewritingHook.set_session",
+        "AssertionRewritingHook.find_spec",
+        "AssertionRewritingHook.create_module",
+        "AssertionRewritingHook.exec_module",
+        "AssertionRewritingHook.mark_rewrite",
+        "AssertionRewritingHook.get_data",
+        "rewrite_asserts",
+        "set_location",
+        "AssertionRewriter.run",
+        "AssertionRewriter.is_rewrite_disabled",
+        "AssertionRewriter.variable",
+        "AssertionRewriter.assign",
+        "AssertionRewriter.display",
+        "AssertionRewriter.helper",
+        "AssertionRewriter.builtin",
+        "AssertionRewriter.explanation_param",
+        "AssertionRewriter.push_format_context",
+        "AssertionRewriter.pop_format_context",
+        "AssertionRewriter.generic_visit",
+        "AssertionRewriter.visit_Assert",
+        "AssertionRewriter.visit_Name",
+        "AssertionRewriter.visit_BoolOp",
+        "AssertionRewriter.visit_UnaryOp",
+        "AssertionRewriter.visit_BinOp",
+        "AssertionRewriter.visit_Call",
+        "AssertionRewriter.visit_Starred",
+        "AssertionRewriter.visit_Attribute",
+        "AssertionRewriter.visit_Compare",
+        "try_makedirs",
+        "get_cache_dir"
+      ]
+    },
+    {
+      "path": "src/_pytest/config/__init__.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "collected",
+        "directories",
+        "symlinks"
+      ],
+      "reasons": [
+        "source_content_tokens:symlinks,added,collected,directories,directory"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "filter_traceback_for_conftest_import_failure",
+        "main",
+        "console_main",
+        "filename_arg",
+        "directory_arg",
+        "get_config",
+        "get_plugin_manager",
+        "PytestPluginManager.parse_hookimpl_opts",
+        "PytestPluginManager.parse_hookspec_opts",
+        "PytestPluginManager.register",
+        "PytestPluginManager.getplugin",
+        "PytestPluginManager.hasplugin",
+        "PytestPluginManager.pytest_configure",
+        "PytestPluginManager.consider_preparse",
+        "PytestPluginManager.consider_pluginarg",
+        "PytestPluginManager.consider_conftest",
+        "PytestPluginManager.consider_env",
+        "PytestPluginManager.consider_module",
+        "PytestPluginManager.import_plugin",
+        "Config.invocation_dir",
+        "Config.rootpath",
+        "Config.rootdir",
+        "Config.inipath",
+        "Config.inifile",
+        "Config.add_cleanup",
+        "Config.get_terminal_writer",
+        "Config.pytest_cmdline_parse",
+        "Config.notify_exception",
+        "Config.cwd_relative_nodeid",
+        "Config.fromdictargs",
+        "Config.pytest_load_initial_conftests",
+        "Config.pytest_collection",
+        "Config.parse",
+        "Config.issue_config_time_warning",
+        "Config.addinivalue_line",
+        "Config.getini",
+        "Config.getoption",
+        "Config.getvalue",
+        "Config.getvalueorskip",
+        "create_terminal_writer"
+      ]
+    },
+    {
+      "path": "src/_pytest/config/argparsing.py",
+      "score": 16,
+      "matched_identifiers": [
+        "added",
+        "follow",
+        "followed",
+        "match"
+      ],
+      "reasons": [
+        "source_content_tokens:follow,added,followed,match,pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Parser.processoption",
+        "Parser.getgroup",
+        "Parser.addoption",
+        "Parser.parse",
+        "Parser.parse_setoption",
+        "Parser.parse_known_args",
+        "Parser.parse_known_and_unknown_args",
+        "Parser.addini",
+        "Argument.names",
+        "Argument.attrs",
+        "OptionGroup.addoption",
+        "MyOptionParser.error",
+        "MyOptionParser.parse_args"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "score": 15,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc",
+        "token_overlap:assertion",
+        "internal_name_overlap:pytest",
+        "explicit_source_area_match:doc/en"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/global_testmodule_config/test_hello_world.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc",
+        "token_overlap:assertion",
+        "has_test_functions",
+        "explicit_source_area_match:doc/en"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/test_failures.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc",
+        "token_overlap:assertion",
+        "has_test_functions",
+        "explicit_source_area_match:doc/en"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/assertion/test_setup_flow_example.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc",
+        "token_overlap:assertion",
+        "has_test_functions",
+        "explicit_source_area_match:doc/en"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "doc/en/example/nonpython/conftest.py",
+      "score": 13,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:doc",
+        "internal_name_overlap:pytest",
+        "explicit_source_area_match:doc/en"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "doc/en/example/assertion/test_failures.py:top_level_test_functions",
+      "doc/en/example/assertion/test_setup_flow_example.py:testcase_class:TestStateFullThing",
+      "doc/en/example/nonpython/conftest.py:pytest_import_or_conftest",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py:top_level_test_functions",
+      "doc/en/example/assertion/global_testmodule_config/conftest.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 223,
+  "indexed_test_file_count": 116,
+  "available_imports": {
+    "src": [
+      "__version__"
+    ],
+    "src._pytest.config.argparsing": [
+      "Argument",
+      "ArgumentError",
+      "DropShorterLongHelpFormatter",
+      "MyOptionParser",
+      "OptionGroup",
+      "Parser"
+    ],
+    "src._pytest.config": [
+      "Config",
+      "ConftestImportFailure",
+      "ExitCode",
+      "Notset",
+      "PytestPluginManager",
+      "_args_converter",
+      "_assertion_supported",
+      "_ensure_removed_sysmodule",
+      "_get_plugin_specs_as_list",
+      "_iter_rewritable_modules",
+      "_prepareconfig",
+      "_strtobool",
+      "apply_warning_filters",
+      "cmdline",
+      "console_main",
+      "create_terminal_writer",
+      "directory_arg",
+      "filename_arg",
+      "filter_traceback_for_conftest_import_failure",
+      "get_config",
+      "get_plugin_manager",
+      "main",
+      "parse_warning_filter"
+    ],
+    "src._pytest": [
+      "Any",
+      "Callable",
+      "Code",
+      "Config",
+      "Dict",
+      "ExceptionInfo",
+      "Frame",
+      "Generator",
+      "HookimplMarker",
+      "HookspecMarker",
+      "IO",
+      "ImportMode",
+      "Item",
+      "Iterable",
+      "Iterator",
+      "List",
+      "Optional",
+      "Parser",
+      "Path",
+      "PluginManager",
+      "PrintHelp",
+      "PytestConfigWarning",
+      "Sequence",
+      "Set",
+      "Skipped",
+      "Source",
+      "Store",
+      "TYPE_CHECKING",
+      "TerminalWriter",
+      "TextIO",
+      "Traceback",
+      "TracebackEntry",
+      "TracebackType",
+      "Tuple",
+      "Type",
+      "Union",
+      "UsageError",
+      "assertstate_key",
+      "bestrelpath",
+      "determine_setup",
+      "fail",
+      "filter_traceback",
+      "final",
+      "getfslineno",
+      "getrawcode",
+      "hookimpl",
+      "import_path",
+      "importlib_metadata",
+      "lru_cache",
+      "rewrite",
+      "truncate",
+      "util"
+    ],
+    "src._pytest.assertion.rewrite": [
+      "AssertionRewriter",
+      "AssertionRewritingHook",
+      "_call_assertion_pass",
+      "_call_reprcompare",
+      "_check_if_assertion_pass_impl",
+      "_format_assertmsg",
+      "_format_boolop",
+      "_get_assertion_exprs",
+      "_read_pyc",
+      "_rewrite_test",
+      "_saferepr",
+      "_should_repr_global_name",
+      "_write_pyc_fp",
+      "get_cache_dir",
+      "rewrite_asserts",
+      "set_location",
+      "try_makedirs"
+    ],
+    "src._pytest.assertion": [
+      "AssertionState",
+      "DummyRewriteHook",
+      "install_importhook",
+      "pytest_addoption",
+      "pytest_assertrepr_compare",
+      "pytest_collection",
+      "pytest_runtest_protocol",
+      "pytest_sessionfinish",
+      "register_assert_rewrite"
+    ],
+    "src._pytest._code.code": [
+      "Code",
+      "ExceptionChainRepr",
+      "ExceptionInfo",
+      "ExceptionRepr",
+      "FormattedExcinfo",
+      "Frame",
+      "ReprEntry",
+      "ReprEntryNative",
+      "ReprExceptionInfo",
+      "ReprFileLocation",
+      "ReprFuncArgs",
+      "ReprLocals",
+      "ReprTraceback",
+      "ReprTracebackNative",
+      "TerminalRepr",
+      "Traceback",
+      "TracebackEntry",
+      "filter_traceback",
+      "getfslineno"
+    ],
+    "doc.en.conf": [
+      "configure_logging",
+      "setup"
+    ],
+    "doc.en.example.assertion.test_failures": [
+      "test_failure_demo_fails_properly"
+    ],
+    "doc.en.example.assertion.test_setup_flow_example": [
+      "TestStateFullThing",
+      "setup_module",
+      "teardown_module"
+    ],
+    "doc.en.example.nonpython.conftest": [
+      "YamlException",
+      "YamlFile",
+      "YamlItem",
+      "pytest_collect_file"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.test_hello_world": [
+      "test_func"
+    ],
+    "doc.en.example.assertion.global_testmodule_config.conftest": [
+      "pytest_runtest_setup"
+    ]
+  },
+  "test_example_snippet": "def test_func():\n    pass",
+  "conftest_fixtures": {}
+}

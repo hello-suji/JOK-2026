@@ -1,0 +1,18 @@
+--- a/sklearn/linear_model/tests/test_least_angle.py
++++ b/sklearn/linear_model/tests/test_least_angle.py
+@@ -686,3 +686,15 @@
+
+     assert_array_almost_equal(r2, skl_betas2, decimal=12)
+     ###########################################################################
++
++from sklearn.linear_model.least_angle import LassoLarsIC
++
++def test_lassolarsic_copy_x_behavior_repro():
++    # Now there are two values (potentially contradicting each other) for copy_X and each one is used once. Therefore
++    X = np.array([[1, 2], [3, 4]])
++    y = np.array([1, 2])
++    model = LassoLarsIC(copy_X=True)
++    model.fit(X, y)
++    assert model.copy_X == True
++    model.fit(X, y, copy_X=False)
++    assert model.copy_X == False

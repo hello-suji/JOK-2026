@@ -1,0 +1,13 @@
+--- a/xarray/tests/test_dataset.py
++++ b/xarray/tests/test_dataset.py
+@@ -6983,3 +6983,10 @@
+     ds = xr.Dataset(dict(x=da))
+     mapping = {"y": da}
+     ds.assign(variables=mapping)
++
++def test_chunk_gates_attribute_does_not_load_entire_dataset_into_memory_repro():
++    url = "https://ncsa.osn.xsede.org/Pangeo/pangeo-forge/swot_adac/FESOM/surf/fma.zarr"
++    ds = xr.open_dataset(url, engine='zarr')
++    chunks = ds.chunks
++    assert isinstance(chunks, dict)
++    assert all(isinstance(dim_chunks, tuple) for dim_chunks in chunks.values())

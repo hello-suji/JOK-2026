@@ -1,0 +1,14 @@
+--- a/tests/auth_tests/test_templates.py
++++ b/tests/auth_tests/test_templates.py
+@@ -124,3 +124,11 @@
+             response, "<title>Password change successful | Django site admin</title>"
+         )
+         self.assertContains(response, "<h1>Password change successful</h1>")
++
++from django.test import TestCase, SimpleTestCase
++from django.template.autoreload import template_changed
++
++class TestTemplateAutoreload(TestCase):
++    def test_template_changed_with_empty_dirs_repro(self):
++        result = template_changed(sender=None, filepath='path/to/file')
++        self.assertFalse(result)

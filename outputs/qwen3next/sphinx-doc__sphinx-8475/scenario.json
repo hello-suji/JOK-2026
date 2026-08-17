@@ -1,0 +1,91 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/builders/linkcheck.py",
+      "target_function": "requests",
+      "related_classes": [
+        "TooManyRedirects",
+        "URLs",
+        "CheckExternalLinksBuilder"
+      ],
+      "candidate_test_file": "tests/test_build_linkcheck.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls requests, mock, patch, check_uri."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: requests, mock, patch, check_uri."
+    ],
+    "expected_failure": "Subject: linkcheck - fallback to GET requests when HEAD requests returns Too Many Redirects",
+    "relevant_source_files": [
+      "sphinx/builders/linkcheck.py",
+      "sphinx/application.py",
+      "sphinx/builders/epub3.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_build_linkcheck.py",
+      "tests/test_ext_intersphinx.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_head_too_many_redirects_fallback_get_repro():\n    from sphinx.builders.linkcheck import CheckExternalLinksBuilder\n    import requests\n    import unittest.mock as mock\n\n    with mock.patch('requests.head') as mock_head, mock.patch('requests.get') as mock_get:\n        mock_head.side_effect = requests.exceptions.TooManyRedirects()\n        mock_get.return_value.status_code = 200\n\n        builder = CheckExternalLinksBuilder(None, None, None, None)\n        result = builder.check_uri('https://example.com')\n\n        mock_head.assert_called_once_with('https://example.com', allow_redirects=False)\n        mock_get.assert_called_once_with('https://example.com', allow_redirects=True)\n        assert result == (True, '')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "requests",
+        "mock",
+        "patch",
+        "check_uri"
+      ],
+      "classes": [
+        "TooManyRedirects",
+        "URLs",
+        "CheckExternalLinksBuilder"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/test_build_linkcheck.py",
+      "target_source_file": "sphinx/builders/linkcheck.py",
+      "test_visible_functions": [
+        "requests",
+        "mock",
+        "patch",
+        "check_uri"
+      ],
+      "test_visible_classes": [
+        "TooManyRedirects",
+        "CheckExternalLinksBuilder"
+      ]
+    }
+  }
+]

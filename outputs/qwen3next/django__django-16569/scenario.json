@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/formsets.py",
+      "target_function": "add_fields",
+      "related_classes": [
+        "CharField",
+        "FormSet",
+        "MyForm",
+        "MyFormSet",
+        "Form"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where add_fields can be called.",
+      "Use the generated reproduction path that calls add_fields, empty_form, formset_factory."
+    ],
+    "execution_stimulus": [
+      "Call add_fields with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_fields, empty_form, formset_factory."
+    ],
+    "expected_failure": "Formsets' add_fields() method fails in some circumstances if the argument index is None.",
+    "relevant_source_files": [
+      "django/forms/formsets.py",
+      "django/views/generic/base.py",
+      "django/conf/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/test_base.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.forms import CharField, Form\nfrom django.forms.formsets import formset_factory\nfrom django.test import TestCase\n\nclass TestFormSetAddFields(TestCase):\n    def test_add_fields_with_none_index_repro(self):\n        class MyForm(Form):\n            field1 = CharField()\n\n        MyFormSet = formset_factory(MyForm, can_delete=True, can_delete_extra=False)\n        formset = MyFormSet()\n        empty_form = formset.empty_form\n        # This should not raise a TypeError\n        empty_form.add_fields(empty_form, 0)\n        self.assertEqual(len(empty_form.fields), 2)  # Assuming the default management form fields are added"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "add_fields",
+        "basename",
+        "configure",
+        "empty_form",
+        "formset_factory",
+        "setup",
+        "splitext"
+      ],
+      "classes": [
+        "CharField",
+        "FormSet",
+        "MyForm",
+        "MyFormSet",
+        "NoneType",
+        "Form"
+      ],
+      "files": [
+        "django/forms/formsets.py"
+      ],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_base.py",
+      "target_source_file": "django/forms/formsets.py",
+      "test_visible_functions": [
+        "add_fields",
+        "empty_form",
+        "formset_factory"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "FormSet",
+        "MyForm",
+        "MyFormSet",
+        "Form"
+      ]
+    }
+  }
+]

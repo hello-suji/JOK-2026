@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/files/storage.py",
+      "target_function": "seek",
+      "related_classes": [
+        "CentOS",
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "TemporaryUploadedFile"
+      ],
+      "candidate_test_file": "tests/staticfiles_tests/test_storage.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls write, seek, save, path.",
+      "Use the generated reproduction path that calls seek, save, path, oct."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: write, seek, save, path.",
+      "Execute the focused target API path: seek, save, path, oct."
+    ],
+    "expected_failure": "As far as I can see, the ​File Uploads documentation page does not mention any permission issues.",
+    "relevant_source_files": [
+      "django/core/files/storage.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/staticfiles_tests/test_storage.py",
+      "tests/staticfiles_tests/storage.py",
+      "tests/file_storage/test_generate_filename.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.files.storage import FileSystemStorage\nfrom django.core.files.uploadedfile import TemporaryUploadedFile\nimport os\n\nclass TestFileUploadPermissions(TestCase):\n    def test_default_file_permissions_repro(self):\n        fs = FileSystemStorage()\n        temp_file = TemporaryUploadedFile('temp.txt', 'text/plain', 100, 'utf-8')\n        temp_file.write(b'test content')\n        temp_file.seek(0)\n        name = fs.save('test.txt', temp_file)\n        file_path = fs.path(name)\n        # Check the file permissions\n        permissions = oct(os.stat(file_path).st_mode)[-3:]\n        self.assertEqual(permissions, '644')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "seek",
+        "save",
+        "path",
+        "oct",
+        "stat"
+      ],
+      "classes": [
+        "CentOS",
+        "FileSystemStorage",
+        "MemoryUploadedFile",
+        "NamedTemporaryFile",
+        "TemporaryUploadedFile"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/staticfiles_tests/test_storage.py",
+      "target_source_file": "django/core/files/storage.py",
+      "test_visible_functions": [
+        "seek",
+        "save",
+        "path",
+        "oct",
+        "stat"
+      ],
+      "test_visible_classes": [
+        "FileSystemStorage",
+        "TemporaryUploadedFile"
+      ]
+    }
+  }
+]

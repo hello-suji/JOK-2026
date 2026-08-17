@@ -1,0 +1,17 @@
+--- a/lib/matplotlib/tests/test_figure.py
++++ b/lib/matplotlib/tests/test_figure.py
+@@ -1110,3 +1110,14 @@
+     assert fig.waitforbuttonpress() is True
+     Timer(.1, fig.canvas.button_press_event, (0, 0, 1)).start()
+     assert fig.waitforbuttonpress() is False
++
++@check_figures_equal(extensions=["png"])
++def test_spanselector_limits_issue_repro(fig_test, fig_ref):
++    ax_test = fig_test.add_subplot()
++    ax_ref = fig_ref.add_subplot()
++    ax_test.plot([10, 20], [10, 20])
++    ax_ref.plot([10, 20], [10, 20])
++    ss_test = SpanSelector(ax_test, print, "horizontal", interactive=True)
++    ss_ref = SpanSelector(ax_ref, print, "horizontal", interactive=False)
++    assert ax_test.get_xlim() == ax_ref.get_xlim()
++    assert ax_test.get_ylim() == ax_ref.get_ylim()

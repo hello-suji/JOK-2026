@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/sql/query.py",
+      "target_function": "test_checkpolicywarning_by_fields",
+      "related_classes": [
+        "BigAutoField",
+        "BooleanField",
+        "CharField"
+      ],
+      "candidate_test_file": "tests/contenttypes_tests/test_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where test_checkpolicywarning_by_fields can be called."
+    ],
+    "execution_stimulus": [
+      "Call test_checkpolicywarning_by_fields with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Queryset raises NotSupportedError when RHS has filterable=False attribute.",
+    "relevant_source_files": [
+      "django/db/models/sql/query.py",
+      "django/db/models/query.py",
+      "django/db/models/manager.py"
+    ],
+    "relevant_test_files": [
+      "tests/contenttypes_tests/test_fields.py",
+      "tests/custom_pk/fields.py",
+      "tests/forms_tests/field_tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "NotSupportedError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_",
+        "__str__",
+        "_add_q",
+        "_filter_or_exclude",
+        "add_q",
+        "build_filter",
+        "check_filterable",
+        "get_queryset"
+      ],
+      "classes": [
+        "BigAutoField",
+        "BooleanField",
+        "CharField",
+        "DateTimeField",
+        "ForeignKey",
+        "ProductMetaData",
+        "ProductMetaDataType",
+        "TextField"
+      ],
+      "files": [
+        "8/site-packages/django/db/models/manager.py",
+        "8/site-packages/django/db/models/query.py",
+        "8/site-packages/django/db/models/sql/query.py",
+        "backoffice/backoffice/adminpricing/tests/test_pw.py"
+      ],
+      "exceptions": [
+        "NotSupportedError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

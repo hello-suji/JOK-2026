@@ -1,0 +1,10 @@
+{
+  "instance_id": "astropy__astropy-14096",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/qwen/astropy__astropy-14096/predictions.json",
+  "run_id": "sync-astropy__astropy-14096",
+  "harness_command": [],
+  "harness_returncode": 0,
+  "harness_stdout": "-------------------------------Final Report--------------------------------------\n{'astropy__astropy-14096': {'test_before_patch': {'astropy__astropy-14096::qwen_external_sync': 'FAILED'}, 'test_after_patch': {'astropy__astropy-14096::qwen_external_sync': 'PASSED'}, 'final_score': 1.0, 'resolved': True, 'contributing_functions': ['astropy__astropy-14096::qwen_external_sync']}}\n---------------------------------------------------------------------------------\nFinal score: 1.0\n",
+  "harness_stderr": ""
+}

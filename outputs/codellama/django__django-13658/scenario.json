@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/__main__.py",
+      "target_function": "main_help_text",
+      "related_classes": [
+        "CommandParser",
+        "ManagementUtility"
+      ],
+      "candidate_test_file": "tests/admin_scripts/complex_app/management/commands/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where main_help_text can be called.",
+      "Use the generated reproduction path that calls main_help_text."
+    ],
+    "execution_stimulus": [
+      "Call main_help_text with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: main_help_text."
+    ],
+    "expected_failure": "Above \"%(prog)s\" ​refers to sys.argv[0]. Instead, it should refer to self.prog_name. This can fixed as follows:",
+    "relevant_source_files": [
+      "django/__main__.py",
+      "django/core/management/__init__.py",
+      "django/core/management/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/complex_app/management/commands/__init__.py",
+      "tests/admin_scripts/management/commands/__init__.py",
+      "tests/admin_scripts/simple_app/management/commands/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport sys\nimport re\nfrom django.core.management import ManagementUtility\n\n\nclass TestManagementUtility(TestCase):\n    def test_prog_name_usage_repro(self):\n        # Simulate an incorrect sys.argv[0]\n        utility = ManagementUtility(['incorrect_script.py', 'help'])\n        help_text = utility.main_help_text()\n        self.assertIn('incorrect_script.py', help_text)\n        self.assertNotIn('python -m django', help_text)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "basename",
+        "main_help_text"
+      ],
+      "classes": [
+        "CommandParser",
+        "ManagementUtility"
+      ],
+      "files": [
+        "__main__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/complex_app/management/commands/__init__.py",
+      "target_source_file": "django/__main__.py",
+      "test_visible_functions": [
+        "main_help_text"
+      ],
+      "test_visible_classes": [
+        "ManagementUtility"
+      ]
+    }
+  }
+]

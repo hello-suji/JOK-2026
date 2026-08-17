@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-13496",
+    "model_patch": "--- a/sklearn/ensemble/tests/test_forest.py\n+++ b/sklearn/ensemble/tests/test_forest.py\n@@ -1359,3 +1359,19 @@\n     # Try to fit and predict.\n     clf.fit(X, y)\n     clf.predict(X)\n+\n+def test_isolation_forest_warm_start_repro():\n+    from sklearn.ensemble import IsolationForest\n+\n+    # Initialize IsolationForest without warm_start\n+    iso_forest = IsolationForest(n_estimators=10, random_state=42)\n+    iso_forest.fit(np.random.rand(100, 2))\n+    initial_n_estimators = len(iso_forest.estimators_)\n+\n+    # Enable warm_start and add more estimators\n+    iso_forest.set_params(warm_start=True, n_estimators=20)\n+    iso_forest.fit(np.random.rand(100, 2))\n+    updated_n_estimators = len(iso_forest.estimators_)\n+\n+    # Assert that the number of estimators has increased\n+    assert updated_n_estimators == 20\n",
+    "patch_sha256": "c9c5578fbdca56bf0d9cec5fcdde613f3045eef5bedb3ff20fa4894a2f32e44f"
+  }
+]

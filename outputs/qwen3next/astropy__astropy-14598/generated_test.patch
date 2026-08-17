@@ -1,0 +1,12 @@
+--- a/astropy/io/fits/tests/test_diff.py
++++ b/astropy/io/fits/tests/test_diff.py
+@@ -932,3 +932,9 @@
+
+     assert "...and at 1 more indices." in str1
+     assert "...and at 1 more indices." not in str2
++
++def test_double_single_quote_handling_repro():
++    for n in range(60, 70):
++        card1 = fits.Card('CONFIG', "x" * n + "''")
++        card2 = fits.Card.fromstring(str(card1))  # Should be the same as card1
++        assert card1.value == card2.value, f"Mismatch at length {n}: {card1.value} != {card2.value}"

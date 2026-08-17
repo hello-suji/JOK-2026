@@ -1,0 +1,32 @@
+--- a/tests/model_fields/test_foreignkey.py
++++ b/tests/model_fields/test_foreignkey.py
+@@ -156,3 +156,29 @@
+         with self.assertRaisesMessage(TypeError, msg):
+             class MyModel(models.Model):
+                 child = models.ForeignKey(1, models.CASCADE)
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.admin import AdminSite
++from django.contrib.admin.options import ModelAdmin
++from django.urls import reverse
++from django.utils.html import quote
++
++
++class TestForeignKeyURLs(TestCase):
++    def test_reverse_and_quote_usage_repro(self):
++        # Create a custom admin site
++        custom_admin_site = AdminSite(name='custom-admin')
++
++        # Register a model with the custom admin site
++        class RelatedModel(ModelAdmin):
++            pass
++
++        custom_admin_site.register(RelatedModel)
++
++        # Generate a URL using reverse and quote
++        url = reverse('admin:custom-admin_relatedmodel_changelist')
++        quoted_url = quote(url)
++
++        # Assert that the URL and quoted URL are as expected
++        assert url == '/custom-admin/relatedmodel/'
++        assert quoted_url == '/custom-admin/relatedmodel/'

@@ -1,0 +1,83 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "bulk_create",
+      "related_classes": [
+        "User"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls bulk_create."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: bulk_create."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/query.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_hashers.py",
+      "tests/queries/test_query.py",
+      "tests/forms_tests/tests/test_widgets.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.contrib.auth.models import User\n\nclass TestQueryBatchSize(TestCase):\n    def setUp(self):\n        self.max_batch_size = 1000\n        self.batch_size = 500\n        self.objects_to_create = [User(username=f'user{i}') for i in range(1500)]\n\n    def test_bulk_create_batch_size_override_repro(self):\n        created_objects = User.objects.bulk_create(self.objects_to_create, batch_size=self.batch_size)\n        self.assertEqual(len(created_objects), 1500)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "bulk_create"
+      ],
+      "classes": [
+        "User"
+      ],
+      "files": [
+        "2.2.x/django/db/models/query.py",
+        "x/django/db/models/query.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "bulk_create"
+      ],
+      "test_visible_classes": [
+        "User"
+      ]
+    }
+  }
+]

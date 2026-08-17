@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/conf/__init__.py",
+      "target_function": "iter_modules",
+      "related_classes": [],
+      "candidate_test_file": "tests/apps/default_config_app/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where iter_modules can be called.",
+      "Use the generated reproduction path that calls iter_modules, find_commands, join, makedirs."
+    ],
+    "execution_stimulus": [
+      "Call iter_modules with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: iter_modules, find_commands, join, makedirs."
+    ],
+    "expected_failure": "However, in #23406 migration file discovery was changed to use pkgutil.iter_modules (), instead of direct filesystem access. pkgutil. iter_modules() uses the package's __path__ list, which exists on implicit namespace packages.",
+    "relevant_source_files": [
+      "django/conf/__init__.py",
+      "django/core/management/__init__.py",
+      "django/db/models/fields/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/apps/default_config_app/__init__.py",
+      "tests/migrations/migrations_test_apps/conflicting_app_with_dependencies/__init__.py",
+      "tests/migrations/migrations_test_apps/conflicting_app_with_dependencies/migrations/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.management import find_commands\nfrom pkgutil import iter_modules\nimport os\n\nclass TestMigrationFileDiscovery(TestCase):\n    def test_iter_modules_without_init_py_repro(self):\n        # Create a temporary directory to simulate a package without __init__.py\n        temp_dir = os.path.join(os.path.dirname(__file__), 'temp_package')\n        os.makedirs(temp_dir, exist_ok=True)\n        \n        # Simulate a migration file inside the package\n        migration_file_path = os.path.join(temp_dir, '0001_initial.py')\n        with open(migration_file_path, 'w') as f:\n            f.write('')\n        \n        # Add the temporary directory to sys.path to make it discoverable as a package\n        import sys\n        sys.path.append(temp_dir)\n        \n        try:\n            # Attempt to find commands (migrations) in the package\n            found_commands = find_commands(temp_dir)\n            \n            # Assert that the migration file is found\n            self.assertIn('0001_initial', found_commands)\n        finally:\n            # Clean up the temporary directory\n            sys.path.remove(temp_dir)\n            os.remove(migration_file_path)\n            os.rmdir(temp_dir)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "iter_modules",
+        "find_commands",
+        "join",
+        "makedirs",
+        "dirname",
+        "remove",
+        "rmdir"
+      ],
+      "classes": [],
+      "files": [
+        "__init__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/apps/default_config_app/__init__.py",
+      "target_source_file": "django/conf/__init__.py",
+      "test_visible_functions": [
+        "iter_modules",
+        "find_commands",
+        "join",
+        "makedirs",
+        "dirname",
+        "remove",
+        "rmdir"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

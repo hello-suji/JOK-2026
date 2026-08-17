@@ -1,0 +1,351 @@
+{
+  "instance_id": "pylint-dev__pylint-8898",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "1f8c4d9eb185c16a2c1d881c054f015e1c2eb334",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/__init__.py",
+      "score": 42,
+      "matched_identifiers": [
+        "10/site-packages/pylint/__init__.py",
+        "argument",
+        "arguments",
+        "command",
+        "config",
+        "run_pylint"
+      ],
+      "reasons": [
+        "function_match:run_pylint",
+        "explicit_file_path_hint:10/site-packages/pylint/__init__.py",
+        "stem_in_issue_text:__init__",
+        "source_content_tokens:argument,arguments,command,config,lint"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "run_pylint": "def run_pylint(argv: Sequence[str] | None = None) -> None:\n    \"\"\"Run pylint.\n\n    argv can be a sequence of strings normally supplied as arguments on the command line\n    \"\"\"\n    from pylint.lint import Run as PylintRun\n\n    try:\n        PylintRun(argv or sys.argv[1:])\n    except KeyboardInterrupt:\n        sys.exit(1)\n\n\ndef _run_pylint_config(argv: Sequence[str] | None = None) -> None:\n    \"\"\"Run pylint-config."
+      },
+      "top_level_functions": [
+        "run_pylint",
+        "run_pyreverse",
+        "run_symilar",
+        "modify_sys_path"
+      ]
+    },
+    {
+      "path": "pylint/config/arguments_manager.py",
+      "score": 42,
+      "matched_identifiers": [
+        "10/site-packages/pylint/config/arguments_manager.py",
+        "__init__",
+        "_parse_configuration_file",
+        "argparse",
+        "argument",
+        "arguments"
+      ],
+      "reasons": [
+        "function_match:_parse_configuration_file",
+        "explicit_file_path_hint:10/site-packages/pylint/config/arguments_manager.py",
+        "stem_in_issue_text:arguments_manager",
+        "source_content_tokens:__init__,argparse,argument,arguments,command"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(\n        self, prog: str, usage: str | None = None, description: str | None = None\n    ) -> None:\n        self._config = argparse.Namespace()\n        \"\"\"Namespace for all options.\"\"\"\n\n        self._base_config = self._config\n        \"\"\"Fall back Namespace object created during initialization.\n\n        This is necessary for the per-directory configuration support. Whenever we\n        fail to match a file with a directory we fall back to the Namespace object\n        created during initialization.\n        \"\"\"\n\n        self._arg_parser = argparse.ArgumentParser(",
+        "_parse_configuration_file": "    def _parse_configuration_file(self, arguments: list[str]) -> None:\n        \"\"\"Parse the arguments found in a configuration file into the namespace.\"\"\"\n        try:\n            self.config, parsed_args = self._arg_parser.parse_known_args(\n                arguments, self.config\n            )\n        except SystemExit:\n            sys.exit(32)\n        unrecognized_options: list[str] = []\n        for opt in parsed_args:\n            if opt.startswith(\"--\"):\n                unrecognized_options.append(opt[2:])\n        if unrecognized_options:\n            raise _UnrecognizedOptionError(options=unrecognized_options)\n"
+      },
+      "top_level_functions": [
+        "_ArgumentsManager.config",
+        "_ArgumentsManager.help",
+        "_ArgumentsManager.set_option"
+      ]
+    },
+    {
+      "path": "pylint/config/config_initialization.py",
+      "score": 42,
+      "matched_identifiers": [
+        "10/site-packages/pylint/config/config_initialization.py",
+        "_config_initialization",
+        "argument",
+        "arguments",
+        "command",
+        "config"
+      ],
+      "reasons": [
+        "function_match:_config_initialization",
+        "explicit_file_path_hint:10/site-packages/pylint/config/config_initialization.py",
+        "stem_in_issue_text:config_initialization",
+        "source_content_tokens:argument,arguments,command,config,init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_config_initialization": "def _config_initialization(\n    linter: PyLinter,\n    args_list: list[str],\n    reporter: reporters.BaseReporter | reporters.MultiReporter | None = None,\n    config_file: None | str | Path = None,\n    verbose_mode: bool = False,\n) -> list[str]:\n    \"\"\"Parse all available options, read config files and command line arguments and\n    set options accordingly.\n    \"\"\"\n    config_file = Path(config_file) if config_file else None\n\n    # Set the current module to the configuration file\n    # to allow raising messages on the configuration file.\n    linter.set_current_module(str(config_file) if config_file else \"\")"
+      },
+      "top_level_functions": []
+    },
+    {
+      "path": "pylint/config/argument.py",
+      "score": 37,
+      "matched_identifiers": [
+        "10/site-packages/pylint/config/argument.py",
+        "__init__",
+        "argparse",
+        "argument",
+        "arguments"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:10/site-packages/pylint/config/argument.py",
+        "stem_in_issue_text:argument",
+        "source_content_tokens:__init__,argparse,argument,arguments,command"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(\n        self,\n        *,\n        flags: list[str],\n        action: type[_CallbackAction],\n        arg_help: str,\n        kwargs: dict[str, Any],\n        hide_help: bool,\n        section: str | None,\n        metavar: str,\n    ) -> None:\n        super().__init__(\n            flags=flags, arg_help=arg_help, hide_help=hide_help, section=section\n        )\n"
+      },
+      "top_level_functions": []
+    },
+    {
+      "path": "pylint/lint/run.py",
+      "score": 36,
+      "matched_identifiers": [
+        "10/site-packages/pylint/lint/run.py",
+        "__init__",
+        "argument",
+        "command",
+        "config"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:10/site-packages/pylint/lint/run.py",
+        "source_content_tokens:__init__,argument,command,config,init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(\n        self,\n        args: Sequence[str],\n        reporter: BaseReporter | None = None,\n        exit: bool = True,  # pylint: disable=redefined-builtin\n    ) -> None:\n        # Immediately exit if user asks for version\n        if \"--version\" in args:\n            print(full_version)\n            sys.exit(0)\n\n        self._rcfile: str | None = None\n        self._output: str | None = None\n        self._plugins: list[str] = []\n        self.verbose: bool = False"
+      },
+      "top_level_functions": []
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/config/pylint_config/test_run_pylint_config.py",
+      "score": 34,
+      "matched_identifiers": [
+        "PylintRun",
+        "run_pylint"
+      ],
+      "reasons": [
+        "test_path_contains_function:run_pylint",
+        "test_path_related_to_class:PylintRun",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/config",
+        "test_name_matches_source_stem:run",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:lint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/lint/test_run_pylint.py",
+      "score": 34,
+      "matched_identifiers": [
+        "PylintRun",
+        "run_pylint"
+      ],
+      "reasons": [
+        "test_path_contains_function:run_pylint",
+        "test_path_related_to_class:PylintRun",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/lint",
+        "test_name_matches_source_stem:run",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:lint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/config/pylint_config/test_pylint_config_generate.py",
+      "score": 24,
+      "matched_identifiers": [
+        "PylintRun"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PylintRun",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/config",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:exit",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/config/pylint_config/test_pylint_config_help.py",
+      "score": 24,
+      "matched_identifiers": [
+        "PylintRun"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PylintRun",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/config",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:lint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/lint/test_pylinter.py",
+      "score": 24,
+      "matched_identifiers": [
+        "PylintRun"
+      ],
+      "reasons": [
+        "test_path_related_to_class:PylintRun",
+        "same_module_area:pylint",
+        "same_module_area:pylint",
+        "inferred_test_dir_match:tests/lint",
+        "token_overlap:lint,pylint",
+        "internal_name_overlap:lint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/lint/test_pylinter.py:pytest_import_or_conftest",
+      "tests/lint/test_pylinter.py:unittest_or_django_test_import",
+      "tests/lint/test_pylinter.py:top_level_test_functions",
+      "tests/lint/test_run_pylint.py:pytest_import_or_conftest",
+      "tests/lint/test_run_pylint.py:top_level_test_functions",
+      "tests/config/pylint_config/test_run_pylint_config.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_run_pylint_config.py:top_level_test_functions",
+      "tests/config/pylint_config/test_pylint_config_generate.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_pylint_config_generate.py:top_level_test_functions",
+      "tests/config/pylint_config/test_pylint_config_help.py:pytest_import_or_conftest",
+      "tests/config/pylint_config/test_pylint_config_help.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 2189,
+  "indexed_test_file_count": 1181,
+  "available_imports": {
+    "pylint": [
+      "ArgumentPreprocessingError",
+      "NoReturn",
+      "PyLinter",
+      "Run",
+      "Sequence",
+      "__version__",
+      "_augment_sys_path",
+      "_run_pylint_config",
+      "annotations",
+      "augmented_sys_path",
+      "check_parallel",
+      "discover_package_path",
+      "find_default_config_files",
+      "load_results",
+      "modify_sys_path",
+      "report_messages_by_module_stats",
+      "report_messages_stats",
+      "report_total_messages_stats",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "save_results",
+      "version"
+    ],
+    "tests.lint.test_pylinter": [
+      "raise_exception",
+      "test_crash_during_linting",
+      "test_crash_in_file"
+    ],
+    "tests.lint.test_run_pylint": [
+      "test_run_pylint_with_invalid_argument",
+      "test_run_pylint_with_invalid_argument_in_config"
+    ],
+    "tests.config.pylint_config.test_run_pylint_config": [
+      "test_invocation_of_pylint_config"
+    ],
+    "tests.config.pylint_config.test_pylint_config_generate": [
+      "test_format_of_output",
+      "test_generate_interactive_exitcode",
+      "test_writing_minimal_file",
+      "test_writing_to_output_file"
+    ],
+    "tests.config.pylint_config.test_pylint_config_help": [
+      "test_pylint_config_main_messages"
+    ],
+    "pylint.config.argument": [
+      "_Argument",
+      "_BaseStoreArgument",
+      "_CallableArgument",
+      "_DeprecationArgument",
+      "_ExtendArgument",
+      "_StoreArgument",
+      "_StoreNewNamesArgument",
+      "_StoreOldNamesArgument",
+      "_StoreTrueArgument",
+      "_confidence_transformer",
+      "_csv_transformer",
+      "_glob_paths_csv_transformer",
+      "_non_empty_string_transformer",
+      "_path_transformer",
+      "_py_version_transformer",
+      "_regex_transformer",
+      "_regexp_csv_transfomer",
+      "_regexp_paths_csv_transfomer",
+      "_yn_transformer"
+    ],
+    "pylint.config.config_initialization": [
+      "_config_initialization",
+      "_order_all_first"
+    ],
+    "pylint.config.arguments_manager": [
+      "_ArgumentsManager"
+    ],
+    "pylint.lint.run": [
+      "Run",
+      "_PylintConfigRun",
+      "_cpu_count",
+      "_query_cpu"
+    ]
+  },
+  "test_example_snippet": "def test_invocation_of_pylint_config(capsys: CaptureFixture[str]) -> None:\n    \"\"\"Check that the help messages are displayed correctly.\"\"\"\n    with warnings.catch_warnings():\n        warnings.filterwarnings(\"ignore\", message=\"NOTE:.*\", category=UserWarning)\n        with pytest.raises(SystemExit) as ex:\n            _run_pylint_config([\"\"])\n        captured = capsys.readouterr()\n        assert captured.err.startswith(\"usage: pylint-config [options]\")\n        assert ex.value.code == 2",
+  "conftest_fixtures": {
+    "tests/config/conftest.py": [
+      "file_to_lint_path"
+    ],
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

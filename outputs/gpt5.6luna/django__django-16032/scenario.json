@@ -1,0 +1,102 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "annotate",
+      "related_classes": [
+        "QuerySet",
+        "Value",
+        "User"
+      ],
+      "candidate_test_file": "tests/queries/test_query.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where annotate can be called.",
+      "Use the generated reproduction path that calls create, values, filter, alias.",
+      "Use the generated reproduction path that calls alias, annotate, assertCountEqual, values."
+    ],
+    "execution_stimulus": [
+      "Call annotate with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: create, values, filter, alias.",
+      "Execute the focused target API path: alias, annotate, assertCountEqual, values."
+    ],
+    "expected_failure": "You should get this error:",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/contrib/admin/tests.py",
+      "django/contrib/admin/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/async_queryset/tests.py",
+      "tests/expressions/test_queryset_values.py",
+      "tests/queries/test_query.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.db.models import Value\nfrom django.test import TestCase\nfrom django.contrib.auth.models import User\n\nclass TestAnnotationAndAliasFilterInSubquery(TestCase):\n    def test_annotation_and_alias_filter_in_subquery_repro(self):\n        User.objects.create(username='testuser1')\n        User.objects.create(username='testuser2')\n        qs = (\n            User.objects.annotate(user_annotate=Value(1))\n            .alias(user_alias=Value(1))\n            .filter(user_annotate=1)\n            .values('user_alias')\n        )\n        self.assertCountEqual(qs, [{'user_alias': 1}, {'user_alias': 1}])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OperationalError"
+    ],
+    "identifiers": {
+      "functions": [
+        "alias",
+        "annotate",
+        "assertCountEqual",
+        "create",
+        "filter"
+      ],
+      "classes": [
+        "QuerySet",
+        "Value",
+        "User"
+      ],
+      "files": [
+        "tests/annotations/tests.py"
+      ],
+      "exceptions": [
+        "OperationalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_query.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "alias",
+        "annotate",
+        "assertCountEqual",
+        "values",
+        "create",
+        "filter"
+      ],
+      "test_visible_classes": [
+        "Value",
+        "User"
+      ]
+    }
+  }
+]

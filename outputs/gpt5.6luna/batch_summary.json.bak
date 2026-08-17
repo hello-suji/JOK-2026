@@ -1,0 +1,7402 @@
+{
+  "total": 449,
+  "aligned": 360,
+  "resolved": 261,
+  "final_eval_count": 360,
+  "not_failed": 54,
+  "error": 23,
+  "no_coverage": 3,
+  "weak_alignment": 3,
+  "skipped": 0,
+  "aligned_rate": "80.1%",
+  "resolve_rate": "63.2%",
+  "avg_iterations": 1.72,
+  "avg_prompt_tokens": 28922,
+  "avg_completion_tokens": 1702,
+  "avg_total_tokens": 35624,
+  "avg_patch_line_coverage_percent": 0,
+  "failure_type_counts": {
+    "iteration 1": 153,
+    "iteration 2": 54,
+    "iteration 3": 32,
+    "iteration 4": 15,
+    "iteration 5": 7,
+    "NOT_FAILED": 54,
+    "ALIGNED": 360,
+    "ERROR": 23,
+    "NOT_VALID": 6,
+    "NO_COVERAGE": 3,
+    "WEAK_ALIGNMENT": 3
+  },
+  "artifact_extra_instance_count": 0,
+  "started_at": null,
+  "finished_at": null,
+  "per_instance": [
+    {
+      "instance_id": "astropy__astropy-12907",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 855.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16743,
+        "completion_tokens": 460,
+        "total_tokens": 17203
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 0.43,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "astropy__astropy-13033",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 961.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28294,
+        "completion_tokens": 3359,
+        "total_tokens": 31653
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.683,
+      "issue_alignment_score": 0.748
+    },
+    {
+      "instance_id": "astropy__astropy-13236",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 392.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6424,
+        "completion_tokens": 296,
+        "total_tokens": 6720
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 0.688,
+      "issue_alignment_score": 0.7
+    },
+    {
+      "instance_id": "astropy__astropy-13453",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 837.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16743,
+        "completion_tokens": 1024,
+        "total_tokens": 17767
+      },
+      "bug_fail_score": 0.9773,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9444
+    },
+    {
+      "instance_id": "astropy__astropy-13579",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 986.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20313,
+        "completion_tokens": 3137,
+        "total_tokens": 23450
+      },
+      "bug_fail_score": 0.85,
+      "coverage_score": 0.698,
+      "issue_alignment_score": 0.663
+    },
+    {
+      "instance_id": "astropy__astropy-14096",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 90.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.708,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6875
+    },
+    {
+      "instance_id": "astropy__astropy-14182",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 184.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3089,
+        "completion_tokens": 126,
+        "total_tokens": 3215
+      },
+      "bug_fail_score": 0.963,
+      "coverage_score": 0.6977,
+      "issue_alignment_score": 0.654
+    },
+    {
+      "instance_id": "astropy__astropy-14309",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 173.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4140,
+        "completion_tokens": 154,
+        "total_tokens": 4294
+      },
+      "bug_fail_score": 0.96,
+      "coverage_score": 0.69,
+      "issue_alignment_score": 0.675
+    },
+    {
+      "instance_id": "astropy__astropy-14365",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 139.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3218,
+        "completion_tokens": 125,
+        "total_tokens": 3343
+      },
+      "bug_fail_score": 0.9148,
+      "coverage_score": 0.692,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "astropy__astropy-14369",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 162.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3276,
+        "completion_tokens": 336,
+        "total_tokens": 3612
+      },
+      "bug_fail_score": 0.9616,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9697
+    },
+    {
+      "instance_id": "astropy__astropy-14508",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 152.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 5206,
+        "completion_tokens": 321,
+        "total_tokens": 5527
+      },
+      "bug_fail_score": 0.9849,
+      "coverage_score": 0.691,
+      "issue_alignment_score": 0.9375
+    },
+    {
+      "instance_id": "astropy__astropy-14539",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 337.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 10825,
+        "completion_tokens": 1144,
+        "total_tokens": 11969
+      }
+    },
+    {
+      "instance_id": "astropy__astropy-14598",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 171.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2948,
+        "completion_tokens": 123,
+        "total_tokens": 3071
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.8667
+    },
+    {
+      "instance_id": "astropy__astropy-14995",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 123.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.716,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7917
+    },
+    {
+      "instance_id": "astropy__astropy-7166",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 57.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2393,
+        "completion_tokens": 141,
+        "total_tokens": 2534
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.645,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "astropy__astropy-7336",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 55.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2928,
+        "completion_tokens": 92,
+        "total_tokens": 3020
+      },
+      "bug_fail_score": 0.9821,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "astropy__astropy-7606",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 49.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2986,
+        "completion_tokens": 63,
+        "total_tokens": 3049
+      },
+      "bug_fail_score": 0.9286,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.709
+    },
+    {
+      "instance_id": "astropy__astropy-7671",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 190.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15468,
+        "completion_tokens": 358,
+        "total_tokens": 15826
+      },
+      "bug_fail_score": 0.8962,
+      "coverage_score": 0.75,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "django__django-10880",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 233.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20546,
+        "completion_tokens": 1088,
+        "total_tokens": 21634
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.8125,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-10914",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 113.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2770,
+        "completion_tokens": 178,
+        "total_tokens": 2948
+      },
+      "bug_fail_score": 0.925,
+      "coverage_score": 0.672,
+      "issue_alignment_score": 0.7
+    },
+    {
+      "instance_id": "django__django-10973",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 76.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-10999",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 235.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15491,
+        "completion_tokens": 451,
+        "total_tokens": 15942
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 0.8462,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11066",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 102.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.706,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "django__django-11087",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 289.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 10012,
+        "completion_tokens": 627,
+        "total_tokens": 10639
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.674,
+      "issue_alignment_score": 0.682
+    },
+    {
+      "instance_id": "django__django-11095",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 54.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2973,
+        "completion_tokens": 224,
+        "total_tokens": 3197
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.673,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11099",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 165.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3745,
+        "completion_tokens": 172,
+        "total_tokens": 3917
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "django__django-11119",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 187.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15416,
+        "completion_tokens": 430,
+        "total_tokens": 15846
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.5,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11133",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 220.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14921,
+        "completion_tokens": 816,
+        "total_tokens": 15737
+      },
+      "bug_fail_score": 0.2188,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.5833
+    },
+    {
+      "instance_id": "django__django-11138",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 297.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17673,
+        "completion_tokens": 1595,
+        "total_tokens": 19268
+      }
+    },
+    {
+      "instance_id": "django__django-11141",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 68.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2542,
+        "completion_tokens": 297,
+        "total_tokens": 2839
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11149",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 250.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3108,
+        "completion_tokens": 285,
+        "total_tokens": 3393
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 0.673,
+      "issue_alignment_score": 0.875
+    },
+    {
+      "instance_id": "django__django-11163",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 166.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 12622,
+        "completion_tokens": 529,
+        "total_tokens": 13151
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.669,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11179",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 187.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13832,
+        "completion_tokens": 441,
+        "total_tokens": 14273
+      },
+      "bug_fail_score": 0.7143,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11206",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 92.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2959,
+        "completion_tokens": 87,
+        "total_tokens": 3046
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.667,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11211",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 230.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16606,
+        "completion_tokens": 866,
+        "total_tokens": 17472
+      }
+    },
+    {
+      "instance_id": "django__django-11239",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 111.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3331,
+        "completion_tokens": 283,
+        "total_tokens": 3614
+      }
+    },
+    {
+      "instance_id": "django__django-11265",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 66.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.707,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8056
+    },
+    {
+      "instance_id": "django__django-11276",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 198.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15111,
+        "completion_tokens": 492,
+        "total_tokens": 15603
+      },
+      "bug_fail_score": 0.9286,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "django__django-11292",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 80.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-11299",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 416.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28674,
+        "completion_tokens": 3948,
+        "total_tokens": 32622
+      },
+      "bug_fail_score": 0.714,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.687
+    },
+    {
+      "instance_id": "django__django-11333",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 248.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15597,
+        "completion_tokens": 788,
+        "total_tokens": 16385
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11400",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 230.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6653,
+        "completion_tokens": 1110,
+        "total_tokens": 7763
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11433",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 302.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20256,
+        "completion_tokens": 1584,
+        "total_tokens": 21840
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.669,
+      "issue_alignment_score": 0.677
+    },
+    {
+      "instance_id": "django__django-11477",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 234.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13980,
+        "completion_tokens": 456,
+        "total_tokens": 14436
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.677,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11490",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 213.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15847,
+        "completion_tokens": 712,
+        "total_tokens": 16559
+      },
+      "bug_fail_score": 0.7273,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11532",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 102.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.704,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.677
+    },
+    {
+      "instance_id": "django__django-11551",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 295.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 29516,
+        "completion_tokens": 2052,
+        "total_tokens": 31568
+      },
+      "bug_fail_score": 0.8677,
+      "coverage_score": 0.67,
+      "issue_alignment_score": 0.678
+    },
+    {
+      "instance_id": "django__django-11555",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 213.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19471,
+        "completion_tokens": 703,
+        "total_tokens": 20174
+      }
+    },
+    {
+      "instance_id": "django__django-11603",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 250.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16760,
+        "completion_tokens": 1498,
+        "total_tokens": 18258
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-11728",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 245.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17280,
+        "completion_tokens": 1251,
+        "total_tokens": 18531
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.676,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-11734",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 105.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-11740",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 115.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.705,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.678
+    },
+    {
+      "instance_id": "django__django-11749",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 114.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4031,
+        "completion_tokens": 341,
+        "total_tokens": 4372
+      },
+      "bug_fail_score": 0.925,
+      "coverage_score": 0.679,
+      "issue_alignment_score": 0.8
+    },
+    {
+      "instance_id": "django__django-11790",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 92.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2676,
+        "completion_tokens": 93,
+        "total_tokens": 2769
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.675,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11815",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 158.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3988,
+        "completion_tokens": 410,
+        "total_tokens": 4398
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 0.673,
+      "issue_alignment_score": 0.681
+    },
+    {
+      "instance_id": "django__django-11820",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 148.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2770,
+        "completion_tokens": 163,
+        "total_tokens": 2933
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.72,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11848",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 259.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15066,
+        "completion_tokens": 842,
+        "total_tokens": 15908
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.16,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-11880",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17812,
+        "completion_tokens": 755,
+        "total_tokens": 18567
+      },
+      "bug_fail_score": 0.9286,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.683
+    },
+    {
+      "instance_id": "django__django-11885",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 112.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3049,
+        "completion_tokens": 258,
+        "total_tokens": 3307
+      }
+    },
+    {
+      "instance_id": "django__django-11951",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 343.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 22658,
+        "completion_tokens": 2239,
+        "total_tokens": 24897
+      }
+    },
+    {
+      "instance_id": "django__django-11964",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4785,
+        "completion_tokens": 515,
+        "total_tokens": 5300
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.686
+    },
+    {
+      "instance_id": "django__django-11999",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 67.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.721,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.671
+    },
+    {
+      "instance_id": "django__django-12039",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 287.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20650,
+        "completion_tokens": 1374,
+        "total_tokens": 22024
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.64,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-12050",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 67.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.7,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.673
+    },
+    {
+      "instance_id": "django__django-12125",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 354.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21231,
+        "completion_tokens": 2516,
+        "total_tokens": 23747
+      },
+      "bug_fail_score": 0.225,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.375
+    },
+    {
+      "instance_id": "django__django-12143",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 99.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3005,
+        "completion_tokens": 114,
+        "total_tokens": 3119
+      }
+    },
+    {
+      "instance_id": "django__django-12155",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 228.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20036,
+        "completion_tokens": 1105,
+        "total_tokens": 21141
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.28,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-12193",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 226.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14446,
+        "completion_tokens": 999,
+        "total_tokens": 15445
+      }
+    },
+    {
+      "instance_id": "django__django-12209",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 84.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-12262",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 272.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17288,
+        "completion_tokens": 1176,
+        "total_tokens": 18464
+      }
+    },
+    {
+      "instance_id": "django__django-12273",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 160.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4401,
+        "completion_tokens": 405,
+        "total_tokens": 4806
+      },
+      "bug_fail_score": 0.1945,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.625
+    },
+    {
+      "instance_id": "django__django-12276",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 97.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3027,
+        "completion_tokens": 80,
+        "total_tokens": 3107
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.675,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "django__django-12304",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 204.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2937,
+        "completion_tokens": 169,
+        "total_tokens": 3106
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.23,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-12308",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 257.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18190,
+        "completion_tokens": 1452,
+        "total_tokens": 19642
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.671,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-12325",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 110.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-12406",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 118.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-12419",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 240.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14920,
+        "completion_tokens": 620,
+        "total_tokens": 15540
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.28,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-12663",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 226.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15657,
+        "completion_tokens": 819,
+        "total_tokens": 16476
+      },
+      "bug_fail_score": 0.1087,
+      "coverage_score": 0.9062,
+      "issue_alignment_score": 0.4314
+    },
+    {
+      "instance_id": "django__django-12708",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 81.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-12713",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 292.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3184,
+        "completion_tokens": 132,
+        "total_tokens": 3316
+      }
+    },
+    {
+      "instance_id": "django__django-12741",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 145.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 9948,
+        "completion_tokens": 581,
+        "total_tokens": 10529
+      }
+    },
+    {
+      "instance_id": "django__django-12754",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 126.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4159,
+        "completion_tokens": 518,
+        "total_tokens": 4677
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "django__django-12774",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 114.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3943,
+        "completion_tokens": 228,
+        "total_tokens": 4171
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.5263,
+      "issue_alignment_score": 0.625
+    },
+    {
+      "instance_id": "django__django-12858",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 345.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4862,
+        "completion_tokens": 398,
+        "total_tokens": 5260
+      },
+      "bug_fail_score": 0.1945,
+      "coverage_score": 0.5714,
+      "issue_alignment_score": 0.5833
+    },
+    {
+      "instance_id": "django__django-12965",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 207.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15353,
+        "completion_tokens": 624,
+        "total_tokens": 15977
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.2195,
+      "issue_alignment_score": 0.45
+    },
+    {
+      "instance_id": "django__django-13012",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 271.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16658,
+        "completion_tokens": 1023,
+        "total_tokens": 17681
+      },
+      "bug_fail_score": 0.7046,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.5556
+    },
+    {
+      "instance_id": "django__django-13023",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 261.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18475,
+        "completion_tokens": 959,
+        "total_tokens": 19434
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-13028",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 105.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13033",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 69.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13109",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 237.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16397,
+        "completion_tokens": 1134,
+        "total_tokens": 17531
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.7273,
+      "issue_alignment_score": 0.5682
+    },
+    {
+      "instance_id": "django__django-13112",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 71.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13121",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 239.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7131,
+        "completion_tokens": 833,
+        "total_tokens": 7964
+      },
+      "bug_fail_score": 0.1177,
+      "coverage_score": 0.7857,
+      "issue_alignment_score": 0.0909
+    },
+    {
+      "instance_id": "django__django-13128",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 95.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13158",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 402.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 26460,
+        "completion_tokens": 3158,
+        "total_tokens": 29618
+      },
+      "bug_fail_score": 0.3571,
+      "coverage_score": 0.6,
+      "issue_alignment_score": 0.3611
+    },
+    {
+      "instance_id": "django__django-13195",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 246.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17761,
+        "completion_tokens": 614,
+        "total_tokens": 18375
+      },
+      "bug_fail_score": 0.9318,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7857
+    },
+    {
+      "instance_id": "django__django-13212",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 84.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13297",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 282.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16626,
+        "completion_tokens": 1222,
+        "total_tokens": 17848
+      }
+    },
+    {
+      "instance_id": "django__django-13315",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 97.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3068,
+        "completion_tokens": 222,
+        "total_tokens": 3290
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.37,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-13343",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 85.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3115,
+        "completion_tokens": 131,
+        "total_tokens": 3246
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-13344",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 282.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17810,
+        "completion_tokens": 1293,
+        "total_tokens": 19103
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 0.2,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "django__django-13346",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 77.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13363",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 514.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7363,
+        "completion_tokens": 1500,
+        "total_tokens": 8863
+      },
+      "bug_fail_score": 0.1447,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4808
+    },
+    {
+      "instance_id": "django__django-13401",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 110.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-13406",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 111.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13410",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 248.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3329,
+        "completion_tokens": 134,
+        "total_tokens": 3463
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4667
+    },
+    {
+      "instance_id": "django__django-13417",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 195.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14995,
+        "completion_tokens": 447,
+        "total_tokens": 15442
+      },
+      "bug_fail_score": 0.2188,
+      "coverage_score": 0.4483,
+      "issue_alignment_score": 0.5833
+    },
+    {
+      "instance_id": "django__django-13449",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 88.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6972,
+        "completion_tokens": 851,
+        "total_tokens": 7823
+      },
+      "bug_fail_score": 0.0625,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.05
+    },
+    {
+      "instance_id": "django__django-13512",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 161.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 8607,
+        "completion_tokens": 327,
+        "total_tokens": 8934
+      },
+      "bug_fail_score": 0.9062,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-13513",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 495.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 36333,
+        "completion_tokens": 5321,
+        "total_tokens": 41654
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 0.0526,
+      "issue_alignment_score": 0.7778
+    },
+    {
+      "instance_id": "django__django-13516",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 64.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2624,
+        "completion_tokens": 127,
+        "total_tokens": 2751
+      }
+    },
+    {
+      "instance_id": "django__django-13551",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 208.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15512,
+        "completion_tokens": 588,
+        "total_tokens": 16100
+      },
+      "bug_fail_score": 0.9167,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.68
+    },
+    {
+      "instance_id": "django__django-13568",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 117.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3245,
+        "completion_tokens": 101,
+        "total_tokens": 3346
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.0833
+    },
+    {
+      "instance_id": "django__django-13569",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 73.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13590",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 244.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14741,
+        "completion_tokens": 667,
+        "total_tokens": 15408
+      },
+      "bug_fail_score": 0.2143,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13658",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 243.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15492,
+        "completion_tokens": 553,
+        "total_tokens": 16045
+      },
+      "bug_fail_score": 0.6562,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.375
+    },
+    {
+      "instance_id": "django__django-13670",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 98.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3045,
+        "completion_tokens": 103,
+        "total_tokens": 3148
+      },
+      "bug_fail_score": 0.9062,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8
+    },
+    {
+      "instance_id": "django__django-13741",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 99.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3084,
+        "completion_tokens": 123,
+        "total_tokens": 3207
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-13786",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 307.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18018,
+        "completion_tokens": 1576,
+        "total_tokens": 19594
+      },
+      "bug_fail_score": 0.225,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.875
+    },
+    {
+      "instance_id": "django__django-13794",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 204.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13082,
+        "completion_tokens": 667,
+        "total_tokens": 13749
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13807",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 79.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6662,
+        "completion_tokens": 781,
+        "total_tokens": 7443
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7381
+    },
+    {
+      "instance_id": "django__django-13820",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 175.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 9309,
+        "completion_tokens": 464,
+        "total_tokens": 9773
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.671,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-13821",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 101.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-13837",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 192.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3025,
+        "completion_tokens": 162,
+        "total_tokens": 3187
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-13925",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 205.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3640,
+        "completion_tokens": 180,
+        "total_tokens": 3820
+      },
+      "bug_fail_score": 0.8438,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.685
+    },
+    {
+      "instance_id": "django__django-13933",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 252.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20430,
+        "completion_tokens": 1151,
+        "total_tokens": 21581
+      },
+      "bug_fail_score": 0.8846,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.4815
+    },
+    {
+      "instance_id": "django__django-13964",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 86.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14007",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 234.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16572,
+        "completion_tokens": 414,
+        "total_tokens": 16986
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.3611
+    },
+    {
+      "instance_id": "django__django-14017",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 234.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16908,
+        "completion_tokens": 556,
+        "total_tokens": 17464
+      },
+      "bug_fail_score": 0.6389,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14034",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 271.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16034,
+        "completion_tokens": 1141,
+        "total_tokens": 17175
+      }
+    },
+    {
+      "instance_id": "django__django-14089",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 193.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13979,
+        "completion_tokens": 461,
+        "total_tokens": 14440
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.3,
+      "issue_alignment_score": 0.25
+    },
+    {
+      "instance_id": "django__django-14122",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 255.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15012,
+        "completion_tokens": 913,
+        "total_tokens": 15925
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.9,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14140",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 192.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15101,
+        "completion_tokens": 529,
+        "total_tokens": 15630
+      },
+      "bug_fail_score": 0.1945,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4444
+    },
+    {
+      "instance_id": "django__django-14155",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 60.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2600,
+        "completion_tokens": 147,
+        "total_tokens": 2747
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.673,
+      "issue_alignment_score": 0.681
+    },
+    {
+      "instance_id": "django__django-14170",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 117.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14238",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 69.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14311",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 220.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14007,
+        "completion_tokens": 500,
+        "total_tokens": 14507
+      },
+      "bug_fail_score": 0.1667,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14315",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 180.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15565,
+        "completion_tokens": 423,
+        "total_tokens": 15988
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.31,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14349",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 53.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-14351",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 303.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 22941,
+        "completion_tokens": 1695,
+        "total_tokens": 24636
+      },
+      "bug_fail_score": 0.706,
+      "coverage_score": 0.671,
+      "issue_alignment_score": 0.679
+    },
+    {
+      "instance_id": "django__django-14373",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 302.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 32789,
+        "completion_tokens": 2462,
+        "total_tokens": 35251
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-14376",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 250.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16881,
+        "completion_tokens": 983,
+        "total_tokens": 17864
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.31,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-14404",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 240.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14714,
+        "completion_tokens": 702,
+        "total_tokens": 15416
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.3,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-14434",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 264.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16749,
+        "completion_tokens": 1126,
+        "total_tokens": 17875
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.71,
+      "issue_alignment_score": 0.681
+    },
+    {
+      "instance_id": "django__django-14493",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 215.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18022,
+        "completion_tokens": 912,
+        "total_tokens": 18934
+      },
+      "bug_fail_score": 0.475,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9333
+    },
+    {
+      "instance_id": "django__django-14500",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 272.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13729,
+        "completion_tokens": 1230,
+        "total_tokens": 14959
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.37,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14534",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 256.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16356,
+        "completion_tokens": 715,
+        "total_tokens": 17071
+      }
+    },
+    {
+      "instance_id": "django__django-14539",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 64.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2768,
+        "completion_tokens": 124,
+        "total_tokens": 2892
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 0.679,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14559",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 210.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15111,
+        "completion_tokens": 552,
+        "total_tokens": 15663
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.4474,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-14580",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16628,
+        "completion_tokens": 957,
+        "total_tokens": 17585
+      }
+    },
+    {
+      "instance_id": "django__django-14608",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 102.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2944,
+        "completion_tokens": 157,
+        "total_tokens": 3101
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.8,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14631",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 246.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17211,
+        "completion_tokens": 650,
+        "total_tokens": 17861
+      },
+      "bug_fail_score": 0.1136,
+      "coverage_score": 0.7333,
+      "issue_alignment_score": 0.6875
+    },
+    {
+      "instance_id": "django__django-14725",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 182.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 8047,
+        "completion_tokens": 929,
+        "total_tokens": 8976
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.676,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14752",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 215.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3228,
+        "completion_tokens": 285,
+        "total_tokens": 3513
+      },
+      "bug_fail_score": 0.711,
+      "coverage_score": 0.6,
+      "issue_alignment_score": 0.684
+    },
+    {
+      "instance_id": "django__django-14765",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 255.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18960,
+        "completion_tokens": 1015,
+        "total_tokens": 19975
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-14771",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 221.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13263,
+        "completion_tokens": 436,
+        "total_tokens": 13699
+      },
+      "bug_fail_score": 0.1945,
+      "coverage_score": 0.88,
+      "issue_alignment_score": 0.125
+    },
+    {
+      "instance_id": "django__django-14787",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 238.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16493,
+        "completion_tokens": 1114,
+        "total_tokens": 17607
+      },
+      "bug_fail_score": 0.4808,
+      "coverage_score": 0.5,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14792",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 311.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 27964,
+        "completion_tokens": 1800,
+        "total_tokens": 29764
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.8333,
+      "issue_alignment_score": 0.1429
+    },
+    {
+      "instance_id": "django__django-14855",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 304.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4068,
+        "completion_tokens": 485,
+        "total_tokens": 4553
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.21,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-14915",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 261.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20648,
+        "completion_tokens": 1033,
+        "total_tokens": 21681
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.3333
+    },
+    {
+      "instance_id": "django__django-14999",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 345.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21788,
+        "completion_tokens": 2597,
+        "total_tokens": 24385
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.43,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-15022",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 267.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4061,
+        "completion_tokens": 730,
+        "total_tokens": 4791
+      },
+      "bug_fail_score": 0.2292,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6786
+    },
+    {
+      "instance_id": "django__django-15037",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 223.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15630,
+        "completion_tokens": 1088,
+        "total_tokens": 16718
+      }
+    },
+    {
+      "instance_id": "django__django-15098",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 103.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2706,
+        "completion_tokens": 221,
+        "total_tokens": 2927
+      }
+    },
+    {
+      "instance_id": "django__django-15103",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 201.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3291,
+        "completion_tokens": 246,
+        "total_tokens": 3537
+      }
+    },
+    {
+      "instance_id": "django__django-15104",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 595.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7403,
+        "completion_tokens": 1317,
+        "total_tokens": 8720
+      },
+      "bug_fail_score": 0.4,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.15
+    },
+    {
+      "instance_id": "django__django-15128",
+      "failure_type": "WEAK_ALIGNMENT",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 323.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 29663,
+        "completion_tokens": 2617,
+        "total_tokens": 32280
+      }
+    },
+    {
+      "instance_id": "django__django-15161",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 221.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14711,
+        "completion_tokens": 508,
+        "total_tokens": 15219
+      },
+      "bug_fail_score": 0.75,
+      "coverage_score": 0.38,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-15252",
+      "failure_type": "NO_COVERAGE",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 271.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16401,
+        "completion_tokens": 1010,
+        "total_tokens": 17411
+      }
+    },
+    {
+      "instance_id": "django__django-15268",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 250.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15183,
+        "completion_tokens": 825,
+        "total_tokens": 16008
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4167
+    },
+    {
+      "instance_id": "django__django-15278",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 258.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3680,
+        "completion_tokens": 565,
+        "total_tokens": 4245
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.688
+    },
+    {
+      "instance_id": "django__django-15280",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 128.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3018,
+        "completion_tokens": 173,
+        "total_tokens": 3191
+      },
+      "bug_fail_score": 0.4583,
+      "coverage_score": 0.3,
+      "issue_alignment_score": 0.6154
+    },
+    {
+      "instance_id": "django__django-15315",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 226.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19069,
+        "completion_tokens": 1188,
+        "total_tokens": 20257
+      },
+      "bug_fail_score": 0.6945,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.1111
+    },
+    {
+      "instance_id": "django__django-15368",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 200.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16289,
+        "completion_tokens": 653,
+        "total_tokens": 16942
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.625
+    },
+    {
+      "instance_id": "django__django-15380",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 153.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-15382",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 57.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-15467",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 196.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7045,
+        "completion_tokens": 801,
+        "total_tokens": 7846
+      },
+      "bug_fail_score": 0.9445,
+      "coverage_score": 0.68,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-15499",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 111.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2486,
+        "completion_tokens": 229,
+        "total_tokens": 2715
+      }
+    },
+    {
+      "instance_id": "django__django-15503",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 65.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-15525",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 316.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 26837,
+        "completion_tokens": 2683,
+        "total_tokens": 29520
+      },
+      "bug_fail_score": 0.83,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.683
+    },
+    {
+      "instance_id": "django__django-15554",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 112.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-15561",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 117.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-15563",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 56.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-15569",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 294.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 23586,
+        "completion_tokens": 2234,
+        "total_tokens": 25820
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.6,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "django__django-15572",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 223.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16277,
+        "completion_tokens": 439,
+        "total_tokens": 16716
+      },
+      "bug_fail_score": 0.1786,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "django__django-15629",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 187.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3007,
+        "completion_tokens": 464,
+        "total_tokens": 3471
+      },
+      "bug_fail_score": 0.1458,
+      "coverage_score": 0.65,
+      "issue_alignment_score": 0.3929
+    },
+    {
+      "instance_id": "django__django-15695",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 309.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15963,
+        "completion_tokens": 1792,
+        "total_tokens": 17755
+      },
+      "bug_fail_score": 0.1528,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4444
+    },
+    {
+      "instance_id": "django__django-15731",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 142.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7135,
+        "completion_tokens": 398,
+        "total_tokens": 7533
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.9,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-15732",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 395.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 27004,
+        "completion_tokens": 3491,
+        "total_tokens": 30495
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.18,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-15741",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 192.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15109,
+        "completion_tokens": 529,
+        "total_tokens": 15638
+      }
+    },
+    {
+      "instance_id": "django__django-15814",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 59.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "django__django-15851",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 193.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14786,
+        "completion_tokens": 582,
+        "total_tokens": 15368
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-15916",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 286.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20585,
+        "completion_tokens": 2012,
+        "total_tokens": 22597
+      }
+    },
+    {
+      "instance_id": "django__django-15930",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 139.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2815,
+        "completion_tokens": 197,
+        "total_tokens": 3012
+      },
+      "bug_fail_score": 0.725,
+      "coverage_score": 0.675,
+      "issue_alignment_score": 0.66
+    },
+    {
+      "instance_id": "django__django-15957",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 57.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4288,
+        "completion_tokens": 408,
+        "total_tokens": 4696
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8889
+    },
+    {
+      "instance_id": "django__django-15973",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 123.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-15987",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 267.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18161,
+        "completion_tokens": 1797,
+        "total_tokens": 19958
+      }
+    },
+    {
+      "instance_id": "django__django-16032",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 81.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4789,
+        "completion_tokens": 487,
+        "total_tokens": 5276
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.669,
+      "issue_alignment_score": 0.677
+    },
+    {
+      "instance_id": "django__django-16082",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 264.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18146,
+        "completion_tokens": 1146,
+        "total_tokens": 19292
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16100",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 221.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15479,
+        "completion_tokens": 1018,
+        "total_tokens": 16497
+      },
+      "bug_fail_score": 0.2143,
+      "coverage_score": 0.2059,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16116",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 216.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15966,
+        "completion_tokens": 825,
+        "total_tokens": 16791
+      },
+      "bug_fail_score": 0.7143,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-16136",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 238.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20570,
+        "completion_tokens": 1377,
+        "total_tokens": 21947
+      },
+      "bug_fail_score": 0.4167,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.4444
+    },
+    {
+      "instance_id": "django__django-16139",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 249.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14947,
+        "completion_tokens": 819,
+        "total_tokens": 15766
+      },
+      "bug_fail_score": 0.1667,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.1875
+    },
+    {
+      "instance_id": "django__django-16145",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 198.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14942,
+        "completion_tokens": 661,
+        "total_tokens": 15603
+      },
+      "bug_fail_score": 0.2,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-16263",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 196.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15910,
+        "completion_tokens": 654,
+        "total_tokens": 16564
+      },
+      "bug_fail_score": 0.7188,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16315",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 116.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3730,
+        "completion_tokens": 374,
+        "total_tokens": 4104
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.1111,
+      "issue_alignment_score": 0.4722
+    },
+    {
+      "instance_id": "django__django-16333",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 73.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3027,
+        "completion_tokens": 201,
+        "total_tokens": 3228
+      },
+      "bug_fail_score": 0.9167,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7857
+    },
+    {
+      "instance_id": "django__django-16454",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 75.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-16485",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 177.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13826,
+        "completion_tokens": 389,
+        "total_tokens": 14215
+      },
+      "bug_fail_score": 0.2083,
+      "coverage_score": 0.4,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "django__django-16493",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 85.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3788,
+        "completion_tokens": 289,
+        "total_tokens": 4077
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7
+    },
+    {
+      "instance_id": "django__django-16502",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 209.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16137,
+        "completion_tokens": 434,
+        "total_tokens": 16571
+      },
+      "bug_fail_score": 0.1786,
+      "coverage_score": 0.29,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-16527",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 266.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15752,
+        "completion_tokens": 1317,
+        "total_tokens": 17069
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.24,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16560",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 214.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15317,
+        "completion_tokens": 445,
+        "total_tokens": 15762
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.56,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16569",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 210.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18405,
+        "completion_tokens": 847,
+        "total_tokens": 19252
+      }
+    },
+    {
+      "instance_id": "django__django-16595",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 150.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 9472,
+        "completion_tokens": 646,
+        "total_tokens": 10118
+      },
+      "bug_fail_score": 0.975,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9
+    },
+    {
+      "instance_id": "django__django-16612",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 211.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15448,
+        "completion_tokens": 767,
+        "total_tokens": 16215
+      },
+      "bug_fail_score": 0.25,
+      "coverage_score": 0.33,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16631",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 209.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16134,
+        "completion_tokens": 818,
+        "total_tokens": 16952
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.682
+    },
+    {
+      "instance_id": "django__django-16642",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 75.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2938,
+        "completion_tokens": 110,
+        "total_tokens": 3048
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "django__django-16661",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 138.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 5033,
+        "completion_tokens": 571,
+        "total_tokens": 5604
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.6333,
+      "issue_alignment_score": 0.7
+    },
+    {
+      "instance_id": "django__django-16662",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 145.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6203,
+        "completion_tokens": 532,
+        "total_tokens": 6735
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.678,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16667",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 81.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-16801",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 231.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16086,
+        "completion_tokens": 717,
+        "total_tokens": 16803
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.56,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-16819",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 333.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16832,
+        "completion_tokens": 2386,
+        "total_tokens": 19218
+      }
+    },
+    {
+      "instance_id": "django__django-16877",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 231.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13787,
+        "completion_tokens": 674,
+        "total_tokens": 14461
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.671
+    },
+    {
+      "instance_id": "django__django-16899",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 344.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 36082,
+        "completion_tokens": 3141,
+        "total_tokens": 39223
+      }
+    },
+    {
+      "instance_id": "django__django-16950",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 298.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20278,
+        "completion_tokens": 2308,
+        "total_tokens": 22586
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.89,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-17029",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 60.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2894,
+        "completion_tokens": 113,
+        "total_tokens": 3007
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "django__django-17084",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 105.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 5748,
+        "completion_tokens": 604,
+        "total_tokens": 6352
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.16,
+      "issue_alignment_score": 0.9444
+    },
+    {
+      "instance_id": "django__django-17087",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 241.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16265,
+        "completion_tokens": 1513,
+        "total_tokens": 17778
+      }
+    },
+    {
+      "instance_id": "django__django-7530",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 110.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "django__django-9296",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 198.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14131,
+        "completion_tokens": 611,
+        "total_tokens": 14742
+      },
+      "bug_fail_score": 0.2188,
+      "coverage_score": 0.3333,
+      "issue_alignment_score": 0.25
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-13989",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 265.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15682,
+        "completion_tokens": 641,
+        "total_tokens": 16323
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.5417,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-14623",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 118.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2916,
+        "completion_tokens": 151,
+        "total_tokens": 3067
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.73,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20676",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 118.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2845,
+        "completion_tokens": 179,
+        "total_tokens": 3024
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20826",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 90.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3290,
+        "completion_tokens": 199,
+        "total_tokens": 3489
+      },
+      "bug_fail_score": 0.9773,
+      "coverage_score": 0.8235,
+      "issue_alignment_score": 0.9444
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20859",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 79.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3772,
+        "completion_tokens": 272,
+        "total_tokens": 4044
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-21568",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 123.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3002,
+        "completion_tokens": 255,
+        "total_tokens": 3257
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22719",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 218.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3773,
+        "completion_tokens": 110,
+        "total_tokens": 3883
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6875
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22865",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 678.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 12914,
+        "completion_tokens": 1088,
+        "total_tokens": 14002
+      },
+      "bug_fail_score": 0.9423,
+      "coverage_score": 0.737,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22871",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 221.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3041,
+        "completion_tokens": 311,
+        "total_tokens": 3352
+      },
+      "bug_fail_score": 0.9412,
+      "coverage_score": 0.734,
+      "issue_alignment_score": 0.8974
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23299",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 516.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15015,
+        "completion_tokens": 901,
+        "total_tokens": 15916
+      },
+      "bug_fail_score": 0.8929,
+      "coverage_score": 0.739,
+      "issue_alignment_score": 0.653
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23314",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 764.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15444,
+        "completion_tokens": 825,
+        "total_tokens": 16269
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23412",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 230.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4158,
+        "completion_tokens": 606,
+        "total_tokens": 4764
+      },
+      "bug_fail_score": 0.875,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7778
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23476",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 903.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 41484,
+        "completion_tokens": 3673,
+        "total_tokens": 45157
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.19,
+      "issue_alignment_score": 0.5882
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24026",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 183.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3479,
+        "completion_tokens": 199,
+        "total_tokens": 3678
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 0.728,
+      "issue_alignment_score": 0.7788
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24149",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 57.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24177",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 811.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21466,
+        "completion_tokens": 1767,
+        "total_tokens": 23233
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24570",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 194.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3594,
+        "completion_tokens": 458,
+        "total_tokens": 4052
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9167
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24627",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 867.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 33647,
+        "completion_tokens": 2306,
+        "total_tokens": 35953
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24637",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 234.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3757,
+        "completion_tokens": 428,
+        "total_tokens": 4185
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24870",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 858.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14959,
+        "completion_tokens": 554,
+        "total_tokens": 15513
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24970",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 846.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17843,
+        "completion_tokens": 600,
+        "total_tokens": 18443
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25122",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 785.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15481,
+        "completion_tokens": 560,
+        "total_tokens": 16041
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.09,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25287",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 220.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3227,
+        "completion_tokens": 183,
+        "total_tokens": 3410
+      },
+      "bug_fail_score": 0.95,
+      "coverage_score": 0.738,
+      "issue_alignment_score": 0.8889
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25311",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 278.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6968,
+        "completion_tokens": 1256,
+        "total_tokens": 8224
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25479",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 243.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4614,
+        "completion_tokens": 267,
+        "total_tokens": 4881
+      },
+      "bug_fail_score": 0.994,
+      "coverage_score": 0.741,
+      "issue_alignment_score": 0.9405
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25775",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 910.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14007,
+        "completion_tokens": 848,
+        "total_tokens": 14855
+      },
+      "bug_fail_score": 0.8125,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25960",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 237.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3550,
+        "completion_tokens": 293,
+        "total_tokens": 3843
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 0.736,
+      "issue_alignment_score": 0.8889
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26113",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 954.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19563,
+        "completion_tokens": 1430,
+        "total_tokens": 20993
+      },
+      "bug_fail_score": 0.9039,
+      "coverage_score": 0.5449,
+      "issue_alignment_score": 0.625
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26208",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 242.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3499,
+        "completion_tokens": 352,
+        "total_tokens": 3851
+      },
+      "bug_fail_score": 0.975,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9444
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26291",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3039,
+        "completion_tokens": 101,
+        "total_tokens": 3140
+      },
+      "bug_fail_score": 0.8461,
+      "coverage_score": 0.734,
+      "issue_alignment_score": 0.8026
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26342",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 233.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2682,
+        "completion_tokens": 246,
+        "total_tokens": 2928
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.731,
+      "issue_alignment_score": 0.9167
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26466",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 252.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3906,
+        "completion_tokens": 601,
+        "total_tokens": 4507
+      }
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3069",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 100.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4002,
+        "completion_tokens": 409,
+        "total_tokens": 4411
+      },
+      "bug_fail_score": 0.9286,
+      "coverage_score": 0.6429,
+      "issue_alignment_score": 0.664
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3187",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 56.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3035,
+        "completion_tokens": 193,
+        "total_tokens": 3228
+      },
+      "bug_fail_score": 0.975,
+      "coverage_score": 0.736,
+      "issue_alignment_score": 0.7778
+    },
+    {
+      "instance_id": "pallets__flask-5014",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 41.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      }
+    },
+    {
+      "instance_id": "psf__requests-1142",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 154.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 11972,
+        "completion_tokens": 330,
+        "total_tokens": 12302
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.735,
+      "issue_alignment_score": 0.743
+    },
+    {
+      "instance_id": "psf__requests-1766",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 52.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2582,
+        "completion_tokens": 175,
+        "total_tokens": 2757
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.747,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "psf__requests-1921",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 75.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2419,
+        "completion_tokens": 88,
+        "total_tokens": 2507
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.74,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 74.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2665,
+        "completion_tokens": 62,
+        "total_tokens": 2727
+      },
+      "bug_fail_score": 0.95,
+      "coverage_score": 0.74,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "psf__requests-2931",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 48.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2974,
+        "completion_tokens": 200,
+        "total_tokens": 3174
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "pydata__xarray-2905",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 166.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13944,
+        "completion_tokens": 1285,
+        "total_tokens": 15229
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "pydata__xarray-3151",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 76.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3324,
+        "completion_tokens": 225,
+        "total_tokens": 3549
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.671,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "pydata__xarray-3305",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 59.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2634,
+        "completion_tokens": 95,
+        "total_tokens": 2729
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "pydata__xarray-3677",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 126.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7062,
+        "completion_tokens": 655,
+        "total_tokens": 7717
+      },
+      "bug_fail_score": 0.9412,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8194
+    },
+    {
+      "instance_id": "pydata__xarray-3993",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 105.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "pydata__xarray-4075",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 102.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2747,
+        "completion_tokens": 104,
+        "total_tokens": 2851
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 0.677,
+      "issue_alignment_score": 0.8667
+    },
+    {
+      "instance_id": "pydata__xarray-4094",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 102.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3049,
+        "completion_tokens": 138,
+        "total_tokens": 3187
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.678,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "pydata__xarray-4356",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 101.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2819,
+        "completion_tokens": 95,
+        "total_tokens": 2914
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 0.679,
+      "issue_alignment_score": 0.664
+    },
+    {
+      "instance_id": "pydata__xarray-4629",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 63.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3005,
+        "completion_tokens": 114,
+        "total_tokens": 3119
+      },
+      "bug_fail_score": 0.9062,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "pydata__xarray-4687",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 441.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 35771,
+        "completion_tokens": 3587,
+        "total_tokens": 39358
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-4695",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 72.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2985,
+        "completion_tokens": 120,
+        "total_tokens": 3105
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-4966",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 301.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 22831,
+        "completion_tokens": 1240,
+        "total_tokens": 24071
+      },
+      "bug_fail_score": 0.8958,
+      "coverage_score": 0.686,
+      "issue_alignment_score": 0.6852
+    },
+    {
+      "instance_id": "pydata__xarray-6461",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 116.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4786,
+        "completion_tokens": 371,
+        "total_tokens": 5157
+      },
+      "bug_fail_score": 0.5,
+      "coverage_score": 0.1591,
+      "issue_alignment_score": 0.825
+    },
+    {
+      "instance_id": "pydata__xarray-6721",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 3202.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 23232,
+        "completion_tokens": 625,
+        "total_tokens": 23857
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.55
+    },
+    {
+      "instance_id": "pydata__xarray-6744",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 232.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16880,
+        "completion_tokens": 784,
+        "total_tokens": 17664
+      },
+      "bug_fail_score": 0.975,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "pydata__xarray-6938",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 479.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 38752,
+        "completion_tokens": 4389,
+        "total_tokens": 43141
+      },
+      "bug_fail_score": 0.8636,
+      "coverage_score": 0.7647,
+      "issue_alignment_score": 0.4167
+    },
+    {
+      "instance_id": "pydata__xarray-6992",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 73.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3304,
+        "completion_tokens": 109,
+        "total_tokens": 3413
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9286
+    },
+    {
+      "instance_id": "pydata__xarray-7229",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 79.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3340,
+        "completion_tokens": 89,
+        "total_tokens": 3429
+      },
+      "bug_fail_score": 0.9853,
+      "coverage_score": 0.8824,
+      "issue_alignment_score": 0.7778
+    },
+    {
+      "instance_id": "pydata__xarray-7233",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 66.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2981,
+        "completion_tokens": 117,
+        "total_tokens": 3098
+      },
+      "bug_fail_score": 0.9286,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9333
+    },
+    {
+      "instance_id": "pydata__xarray-7393",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 64.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3262,
+        "completion_tokens": 76,
+        "total_tokens": 3338
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4551",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13679,
+        "completion_tokens": 913,
+        "total_tokens": 14592
+      },
+      "bug_fail_score": 0.4583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4604",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 155.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6452,
+        "completion_tokens": 559,
+        "total_tokens": 7011
+      },
+      "bug_fail_score": 0.925,
+      "coverage_score": 0.624,
+      "issue_alignment_score": 0.689
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4661",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 84.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2646,
+        "completion_tokens": 104,
+        "total_tokens": 2750
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4970",
+      "failure_type": "WEAK_ALIGNMENT",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 84.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2469,
+        "completion_tokens": 114,
+        "total_tokens": 2583
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6386",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 84.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2402,
+        "completion_tokens": 98,
+        "total_tokens": 2500
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6528",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 306.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17712,
+        "completion_tokens": 2707,
+        "total_tokens": 20419
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6903",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 102.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4789,
+        "completion_tokens": 311,
+        "total_tokens": 5100
+      }
+    },
+    {
+      "instance_id": "pylint-dev__pylint-7080",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 2.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "pylint-dev__pylint-7277",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 268.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17944,
+        "completion_tokens": 1167,
+        "total_tokens": 19111
+      },
+      "bug_fail_score": 0.4688,
+      "coverage_score": 0.37,
+      "issue_alignment_score": 0.7667
+    },
+    {
+      "instance_id": "pylint-dev__pylint-8898",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 116.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2934,
+        "completion_tokens": 198,
+        "total_tokens": 3132
+      },
+      "bug_fail_score": 0.85,
+      "coverage_score": 0.39,
+      "issue_alignment_score": 0.3833
+    },
+    {
+      "instance_id": "pytest-dev__pytest-10051",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 99.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2909,
+        "completion_tokens": 64,
+        "total_tokens": 2973
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "pytest-dev__pytest-10081",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 122.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3745,
+        "completion_tokens": 333,
+        "total_tokens": 4078
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.8611
+    },
+    {
+      "instance_id": "pytest-dev__pytest-10356",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 240.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3682,
+        "completion_tokens": 294,
+        "total_tokens": 3976
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5262",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 167.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18392,
+        "completion_tokens": 678,
+        "total_tokens": 19070
+      },
+      "bug_fail_score": 0.8625,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.708
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5631",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 64.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5787",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 286.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 22453,
+        "completion_tokens": 2123,
+        "total_tokens": 24576
+      },
+      "bug_fail_score": 0.3571,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.7917
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5809",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 335.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 29341,
+        "completion_tokens": 2891,
+        "total_tokens": 32232
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5556
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5840",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 194.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16019,
+        "completion_tokens": 596,
+        "total_tokens": 16615
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-6197",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 143.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3132,
+        "completion_tokens": 103,
+        "total_tokens": 3235
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-6202",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 226.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21225,
+        "completion_tokens": 1165,
+        "total_tokens": 22390
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5417
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7205",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 306.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18394,
+        "completion_tokens": 2192,
+        "total_tokens": 20586
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.4074
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7236",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 73.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7432",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 201.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19756,
+        "completion_tokens": 1354,
+        "total_tokens": 21110
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7521",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 187.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17689,
+        "completion_tokens": 335,
+        "total_tokens": 18024
+      },
+      "bug_fail_score": 0.8823,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.708
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7982",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 126.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3871,
+        "completion_tokens": 218,
+        "total_tokens": 4089
+      },
+      "bug_fail_score": 0.4375,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "pytest-dev__pytest-8399",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 229.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17056,
+        "completion_tokens": 1041,
+        "total_tokens": 18097
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10297",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 82.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4300,
+        "completion_tokens": 282,
+        "total_tokens": 4582
+      },
+      "bug_fail_score": 0.9792,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9583
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10844",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 257.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19686,
+        "completion_tokens": 1249,
+        "total_tokens": 20935
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10908",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 107.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3237,
+        "completion_tokens": 142,
+        "total_tokens": 3379
+      },
+      "bug_fail_score": 0.9265,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8636
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-11310",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 236.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14855,
+        "completion_tokens": 909,
+        "total_tokens": 15764
+      },
+      "bug_fail_score": 0.9445,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-11578",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 301.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17586,
+        "completion_tokens": 1436,
+        "total_tokens": 19022
+      },
+      "bug_fail_score": 0.85,
+      "coverage_score": 0.718,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12585",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 60.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2801,
+        "completion_tokens": 81,
+        "total_tokens": 2882
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.717,
+      "issue_alignment_score": 0.875
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12682",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 76.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12973",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 104.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6222,
+        "completion_tokens": 286,
+        "total_tokens": 6508
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 0.718,
+      "issue_alignment_score": 0.9048
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13124",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 91.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3156,
+        "completion_tokens": 381,
+        "total_tokens": 3537
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13135",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 107.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3637,
+        "completion_tokens": 141,
+        "total_tokens": 3778
+      },
+      "bug_fail_score": 0.9445,
+      "coverage_score": 0.709,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13142",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 78.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3431,
+        "completion_tokens": 118,
+        "total_tokens": 3549
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13328",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 70.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3609,
+        "completion_tokens": 146,
+        "total_tokens": 3755
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13439",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 89.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 5473,
+        "completion_tokens": 518,
+        "total_tokens": 5991
+      },
+      "bug_fail_score": 0.875,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.656
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13496",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 108.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2865,
+        "completion_tokens": 202,
+        "total_tokens": 3067
+      },
+      "bug_fail_score": 0.9,
+      "coverage_score": 0.719,
+      "issue_alignment_score": 0.659
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13779",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 202.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16451,
+        "completion_tokens": 871,
+        "total_tokens": 17322
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14053",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 178.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17590,
+        "completion_tokens": 590,
+        "total_tokens": 18180
+      },
+      "bug_fail_score": 0.9271,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.7604
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14087",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 187.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16792,
+        "completion_tokens": 788,
+        "total_tokens": 17580
+      },
+      "bug_fail_score": 0.9318,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.7628
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14141",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 190.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13100,
+        "completion_tokens": 410,
+        "total_tokens": 13510
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14496",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 171.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15603,
+        "completion_tokens": 524,
+        "total_tokens": 16127
+      },
+      "bug_fail_score": 0.9524,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.66
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14629",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 98.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14710",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 236.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21999,
+        "completion_tokens": 796,
+        "total_tokens": 22795
+      },
+      "bug_fail_score": 0.9297,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.6625
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14894",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 257.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20303,
+        "completion_tokens": 1232,
+        "total_tokens": 21535
+      },
+      "bug_fail_score": 0.4097,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5298
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-14983",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 217.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16837,
+        "completion_tokens": 684,
+        "total_tokens": 17521
+      },
+      "bug_fail_score": 0.9412,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.7875
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-15100",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 179.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19159,
+        "completion_tokens": 825,
+        "total_tokens": 19984
+      },
+      "bug_fail_score": 0.85,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 0.666
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-9288",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 257.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18847,
+        "completion_tokens": 1660,
+        "total_tokens": 20507
+      },
+      "bug_fail_score": 0.9773,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.7857
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10323",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 153.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3768,
+        "completion_tokens": 871,
+        "total_tokens": 4639
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10435",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 135.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4239,
+        "completion_tokens": 543,
+        "total_tokens": 4782
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.65,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10449",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 531.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20744,
+        "completion_tokens": 5083,
+        "total_tokens": 25827
+      },
+      "bug_fail_score": 0.8667,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.72
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10466",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 138.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4827,
+        "completion_tokens": 688,
+        "total_tokens": 5515
+      },
+      "bug_fail_score": 0.8864,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.719
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10614",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 313.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15849,
+        "completion_tokens": 1687,
+        "total_tokens": 17536
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10673",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 141.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3464,
+        "completion_tokens": 724,
+        "total_tokens": 4188
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.654,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-11445",
+      "failure_type": "WEAK_ALIGNMENT",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 154.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3286,
+        "completion_tokens": 651,
+        "total_tokens": 3937
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-11510",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 124.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6932,
+        "completion_tokens": 1110,
+        "total_tokens": 8042
+      },
+      "bug_fail_score": 0.8281,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.6111
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7440",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 265.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17372,
+        "completion_tokens": 2348,
+        "total_tokens": 19720
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7454",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 273.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17411,
+        "completion_tokens": 2278,
+        "total_tokens": 19689
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7462",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 162.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15581,
+        "completion_tokens": 538,
+        "total_tokens": 16119
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7590",
+      "failure_type": "NO_COVERAGE",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 48.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6748,
+        "completion_tokens": 716,
+        "total_tokens": 7464
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7748",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 131.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7757",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 346.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 33262,
+        "completion_tokens": 3679,
+        "total_tokens": 36941
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7889",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 200.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15957,
+        "completion_tokens": 1176,
+        "total_tokens": 17133
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7910",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 342.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15910,
+        "completion_tokens": 2978,
+        "total_tokens": 18888
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7985",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 325.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 21205,
+        "completion_tokens": 3260,
+        "total_tokens": 24465
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.8182
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8035",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 312.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15099,
+        "completion_tokens": 2572,
+        "total_tokens": 17671
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8056",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 255.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14915,
+        "completion_tokens": 1576,
+        "total_tokens": 16491
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8120",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 286.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14663,
+        "completion_tokens": 2708,
+        "total_tokens": 17371
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8265",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 207.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14661,
+        "completion_tokens": 1296,
+        "total_tokens": 15957
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8269",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 130.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2614,
+        "completion_tokens": 304,
+        "total_tokens": 2918
+      },
+      "bug_fail_score": 0.9167,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8459",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 283.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14299,
+        "completion_tokens": 1993,
+        "total_tokens": 16292
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.9583
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8475",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 121.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3299,
+        "completion_tokens": 353,
+        "total_tokens": 3652
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 0.613,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8548",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 384.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16500,
+        "completion_tokens": 3077,
+        "total_tokens": 19577
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8551",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 114.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2959,
+        "completion_tokens": 442,
+        "total_tokens": 3401
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8593",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 226.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 11169,
+        "completion_tokens": 1462,
+        "total_tokens": 12631
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.614,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8595",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 255.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14732,
+        "completion_tokens": 2128,
+        "total_tokens": 16860
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8638",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 377.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18460,
+        "completion_tokens": 2096,
+        "total_tokens": 20556
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.679
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 257.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 8832,
+        "completion_tokens": 1595,
+        "total_tokens": 10427
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9258",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 107.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2375,
+        "completion_tokens": 138,
+        "total_tokens": 2513
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9281",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 249.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15416,
+        "completion_tokens": 1409,
+        "total_tokens": 16825
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9320",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 160.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 8571,
+        "completion_tokens": 376,
+        "total_tokens": 8947
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9367",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 222.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7174,
+        "completion_tokens": 1538,
+        "total_tokens": 8712
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9461",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 356.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13205,
+        "completion_tokens": 1690,
+        "total_tokens": 14895
+      },
+      "bug_fail_score": 0.8333,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9591",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 228.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7740,
+        "completion_tokens": 1845,
+        "total_tokens": 9585
+      },
+      "bug_fail_score": 0.9773,
+      "coverage_score": 0.613,
+      "issue_alignment_score": 0.9524
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9602",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 101.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2735,
+        "completion_tokens": 89,
+        "total_tokens": 2824
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.606,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9658",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 403.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 18304,
+        "completion_tokens": 3930,
+        "total_tokens": 22234
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9673",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 167.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6612,
+        "completion_tokens": 947,
+        "total_tokens": 7559
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9698",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 140.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2241,
+        "completion_tokens": 326,
+        "total_tokens": 2567
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 163.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4070,
+        "completion_tokens": 343,
+        "total_tokens": 4413
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.672
+    },
+    {
+      "instance_id": "sympy__sympy-11618",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 62.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2856,
+        "completion_tokens": 88,
+        "total_tokens": 2944
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.6923,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-12096",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 79.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3169,
+        "completion_tokens": 114,
+        "total_tokens": 3283
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.654
+    },
+    {
+      "instance_id": "sympy__sympy-12419",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 87.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3040,
+        "completion_tokens": 206,
+        "total_tokens": 3246
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.74,
+      "issue_alignment_score": 0.7381
+    },
+    {
+      "instance_id": "sympy__sympy-12481",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 249.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14658,
+        "completion_tokens": 401,
+        "total_tokens": 15059
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.726,
+      "issue_alignment_score": 0.734
+    },
+    {
+      "instance_id": "sympy__sympy-12489",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 221.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15441,
+        "completion_tokens": 462,
+        "total_tokens": 15903
+      },
+      "bug_fail_score": 0.9375,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.5
+    },
+    {
+      "instance_id": "sympy__sympy-13031",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 268.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16484,
+        "completion_tokens": 654,
+        "total_tokens": 17138
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.8333,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sympy__sympy-13372",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 119.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3542,
+        "completion_tokens": 93,
+        "total_tokens": 3635
+      },
+      "bug_fail_score": 0.9945,
+      "coverage_score": 0.9,
+      "issue_alignment_score": 0.9143
+    },
+    {
+      "instance_id": "sympy__sympy-13480",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 411.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 34896,
+        "completion_tokens": 2529,
+        "total_tokens": 37425
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.2,
+      "issue_alignment_score": 0.2778
+    },
+    {
+      "instance_id": "sympy__sympy-13551",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 114.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2744,
+        "completion_tokens": 107,
+        "total_tokens": 2851
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.725,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sympy__sympy-13615",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 78.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2884,
+        "completion_tokens": 122,
+        "total_tokens": 3006
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.875
+    },
+    {
+      "instance_id": "sympy__sympy-13647",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 334.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17623,
+        "completion_tokens": 1308,
+        "total_tokens": 18931
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.5,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sympy__sympy-13798",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 100.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3362,
+        "completion_tokens": 133,
+        "total_tokens": 3495
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-13877",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 343.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20500,
+        "completion_tokens": 1218,
+        "total_tokens": 21718
+      },
+      "bug_fail_score": 0.8382,
+      "coverage_score": 0.17,
+      "issue_alignment_score": 0.0513
+    },
+    {
+      "instance_id": "sympy__sympy-13974",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 145.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3995,
+        "completion_tokens": 329,
+        "total_tokens": 4324
+      },
+      "bug_fail_score": 0.9773,
+      "coverage_score": 0.734,
+      "issue_alignment_score": 0.7857
+    },
+    {
+      "instance_id": "sympy__sympy-14711",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 274.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16673,
+        "completion_tokens": 362,
+        "total_tokens": 17035
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.775
+    },
+    {
+      "instance_id": "sympy__sympy-14976",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 177.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7706,
+        "completion_tokens": 519,
+        "total_tokens": 8225
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 0.737,
+      "issue_alignment_score": 0.85
+    },
+    {
+      "instance_id": "sympy__sympy-15017",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 260.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16397,
+        "completion_tokens": 335,
+        "total_tokens": 16732
+      },
+      "bug_fail_score": 0.9062,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.375
+    },
+    {
+      "instance_id": "sympy__sympy-15345",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 77.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2843,
+        "completion_tokens": 104,
+        "total_tokens": 2947
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-15349",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 83.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3299,
+        "completion_tokens": 117,
+        "total_tokens": 3416
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9583
+    },
+    {
+      "instance_id": "sympy__sympy-15809",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 299.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 15375,
+        "completion_tokens": 413,
+        "total_tokens": 15788
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-15875",
+      "failure_type": "NOT_VALID",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 124.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2899,
+        "completion_tokens": 79,
+        "total_tokens": 2978
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-15976",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 429.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 33297,
+        "completion_tokens": 2652,
+        "total_tokens": 35949
+      },
+      "bug_fail_score": 0.9062,
+      "coverage_score": 0.23,
+      "issue_alignment_score": 0.45
+    },
+    {
+      "instance_id": "sympy__sympy-16450",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 188.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14510,
+        "completion_tokens": 405,
+        "total_tokens": 14915
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-16597",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 183.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13810,
+        "completion_tokens": 305,
+        "total_tokens": 14115
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.7,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-16766",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 87.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3139,
+        "completion_tokens": 82,
+        "total_tokens": 3221
+      },
+      "bug_fail_score": 0.9091,
+      "coverage_score": 0.736,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "sympy__sympy-16792",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 281.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 19215,
+        "completion_tokens": 690,
+        "total_tokens": 19905
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-16886",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 150.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 8896,
+        "completion_tokens": 211,
+        "total_tokens": 9107
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.739,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-17139",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 116.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4056,
+        "completion_tokens": 77,
+        "total_tokens": 4133
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-17318",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 118.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4570,
+        "completion_tokens": 84,
+        "total_tokens": 4654
+      },
+      "bug_fail_score": 0.9792,
+      "coverage_score": 0.73,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-17630",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 160.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 7562,
+        "completion_tokens": 727,
+        "total_tokens": 8289
+      },
+      "bug_fail_score": 0.9917,
+      "coverage_score": 0.75,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-17655",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 126.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3254,
+        "completion_tokens": 98,
+        "total_tokens": 3352
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-18189",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 102.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3380,
+        "completion_tokens": 249,
+        "total_tokens": 3629
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.737,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-18199",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 89.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2993,
+        "completion_tokens": 81,
+        "total_tokens": 3074
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.738,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sympy__sympy-18211",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 122.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2966,
+        "completion_tokens": 125,
+        "total_tokens": 3091
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 0.723,
+      "issue_alignment_score": 0.6786
+    },
+    {
+      "instance_id": "sympy__sympy-18698",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 113.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3275,
+        "completion_tokens": 138,
+        "total_tokens": 3413
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sympy__sympy-18763",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 168.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2770,
+        "completion_tokens": 123,
+        "total_tokens": 2893
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.8333
+    },
+    {
+      "instance_id": "sympy__sympy-19040",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 118.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2859,
+        "completion_tokens": 98,
+        "total_tokens": 2957
+      },
+      "bug_fail_score": 0.9643,
+      "coverage_score": 0.724,
+      "issue_alignment_score": 0.7222
+    },
+    {
+      "instance_id": "sympy__sympy-19346",
+      "failure_type": "ERROR",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 144.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2961,
+        "completion_tokens": 96,
+        "total_tokens": 3057
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-19495",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 249.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 11790,
+        "completion_tokens": 1231,
+        "total_tokens": 13021
+      },
+      "bug_fail_score": 0.9531,
+      "coverage_score": 0.738,
+      "issue_alignment_score": 0.7308
+    },
+    {
+      "instance_id": "sympy__sympy-19637",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 79.6,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2971,
+        "completion_tokens": 92,
+        "total_tokens": 3063
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.9649,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-19783",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 127.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2778,
+        "completion_tokens": 109,
+        "total_tokens": 2887
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-19954",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 160.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 6250,
+        "completion_tokens": 190,
+        "total_tokens": 6440
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.738,
+      "issue_alignment_score": 0.7667
+    },
+    {
+      "instance_id": "sympy__sympy-20154",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 135.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2880,
+        "completion_tokens": 80,
+        "total_tokens": 2960
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.6154,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sympy__sympy-20428",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 174.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 4919,
+        "completion_tokens": 689,
+        "total_tokens": 5608
+      },
+      "bug_fail_score": 0.8952,
+      "coverage_score": 0.6667,
+      "issue_alignment_score": 0.7643
+    },
+    {
+      "instance_id": "sympy__sympy-20438",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 139.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3823,
+        "completion_tokens": 172,
+        "total_tokens": 3995
+      },
+      "bug_fail_score": 0.9711,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.9808
+    },
+    {
+      "instance_id": "sympy__sympy-20590",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 234.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16846,
+        "completion_tokens": 365,
+        "total_tokens": 17211
+      },
+      "bug_fail_score": 0.9881,
+      "coverage_score": 0.44,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-20801",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 284.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 16552,
+        "completion_tokens": 313,
+        "total_tokens": 16865
+      },
+      "bug_fail_score": 0.9583,
+      "coverage_score": 0.13,
+      "issue_alignment_score": 0.6667
+    },
+    {
+      "instance_id": "sympy__sympy-20916",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 307.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 14095,
+        "completion_tokens": 1032,
+        "total_tokens": 15127
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.728,
+      "issue_alignment_score": 0.736
+    },
+    {
+      "instance_id": "sympy__sympy-21596",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 119.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 2987,
+        "completion_tokens": 96,
+        "total_tokens": 3083
+      },
+      "bug_fail_score": 0.9722,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.7778
+    },
+    {
+      "instance_id": "sympy__sympy-21612",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 4,
+      "error": null,
+      "elapsed_sec": 303.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13965,
+        "completion_tokens": 682,
+        "total_tokens": 14647
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.75
+    },
+    {
+      "instance_id": "sympy__sympy-21847",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 98.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3523,
+        "completion_tokens": 231,
+        "total_tokens": 3754
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.732,
+      "issue_alignment_score": 0.9167
+    },
+    {
+      "instance_id": "sympy__sympy-21930",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 368.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 24501,
+        "completion_tokens": 1739,
+        "total_tokens": 26240
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.45,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-22080",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 79.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3415,
+        "completion_tokens": 106,
+        "total_tokens": 3521
+      },
+      "bug_fail_score": 0.9546,
+      "coverage_score": 0.722,
+      "issue_alignment_score": 0.8393
+    },
+    {
+      "instance_id": "sympy__sympy-22456",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 325.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 24868,
+        "completion_tokens": 1760,
+        "total_tokens": 26628
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.729,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-22714",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 121.3,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3348,
+        "completion_tokens": 81,
+        "total_tokens": 3429
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 0.726,
+      "issue_alignment_score": 0.9722
+    },
+    {
+      "instance_id": "sympy__sympy-22914",
+      "failure_type": "NO_COVERAGE",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 120.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3126,
+        "completion_tokens": 122,
+        "total_tokens": 3248
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-23262",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 114.8,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3265,
+        "completion_tokens": 89,
+        "total_tokens": 3354
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.725,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-23413",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 123.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3216,
+        "completion_tokens": 227,
+        "total_tokens": 3443
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.723,
+      "issue_alignment_score": 0.731
+    },
+    {
+      "instance_id": "sympy__sympy-23534",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 5,
+      "error": null,
+      "elapsed_sec": 122.2,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3084,
+        "completion_tokens": 86,
+        "total_tokens": 3170
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-23824",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 286.1,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20407,
+        "completion_tokens": 922,
+        "total_tokens": 21329
+      },
+      "bug_fail_score": 0.9423,
+      "coverage_score": 0.729,
+      "issue_alignment_score": 0.6944
+    },
+    {
+      "instance_id": "sympy__sympy-23950",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 291.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 20383,
+        "completion_tokens": 858,
+        "total_tokens": 21241
+      },
+      "bug_fail_score": 0.9911,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 1.0
+    },
+    {
+      "instance_id": "sympy__sympy-24066",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 102.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 5130,
+        "completion_tokens": 318,
+        "total_tokens": 5448
+      },
+      "bug_fail_score": 0.9318,
+      "coverage_score": 0.728,
+      "issue_alignment_score": 0.7917
+    },
+    {
+      "instance_id": "sympy__sympy-24213",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 1,
+      "error": null,
+      "elapsed_sec": 119.9,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 28922,
+        "completion_tokens": 1702,
+        "total_tokens": 35624
+      },
+      "bug_fail_score": 0.0,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "sympy__sympy-24443",
+      "failure_type": "NOT_FAILED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 123.5,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3486,
+        "completion_tokens": 86,
+        "total_tokens": 3572
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-24539",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 293.7,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 17652,
+        "completion_tokens": 725,
+        "total_tokens": 18377
+      },
+      "bug_fail_score": 0.9688,
+      "coverage_score": 1.0,
+      "issue_alignment_score": 0.875
+    },
+    {
+      "instance_id": "sympy__sympy-24562",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 2,
+      "error": null,
+      "elapsed_sec": 267.4,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 13716,
+        "completion_tokens": 383,
+        "total_tokens": 14099
+      },
+      "bug_fail_score": 0.875,
+      "coverage_score": 0.0,
+      "issue_alignment_score": 0.0
+    },
+    {
+      "instance_id": "sympy__sympy-24661",
+      "failure_type": "ALIGNED",
+      "failure_type_detail": "",
+      "iterations": 3,
+      "error": null,
+      "elapsed_sec": 67.0,
+      "skipped": false,
+      "token_usage": {
+        "prompt_tokens": 3004,
+        "completion_tokens": 79,
+        "total_tokens": 3083
+      },
+      "bug_fail_score": 1.0,
+      "coverage_score": 0.6053,
+      "issue_alignment_score": 0.8333
+    }
+  ]
+}

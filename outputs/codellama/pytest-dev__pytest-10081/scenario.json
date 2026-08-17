@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/debugging.py",
+      "target_function": "post_mortem",
+      "related_classes": [
+        "MyTestCase",
+        "Pdb",
+        "OutcomeException"
+      ],
+      "candidate_test_file": "testing/test_setuponly.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import unittest and pytest",
+      "Define a unittest.TestCase subclass MyTestCase with setUp and tearDown methods containing undefined variable 'undefined_var'",
+      "Decorate MyTestCase with @unittest.skip('hello')",
+      "Use the generated reproduction path that calls py, post_mortem, write_text, setattr."
+    ],
+    "execution_stimulus": [
+      "Run pytest with --pdb on the test file containing MyTestCase",
+      "Execute the focused target API path: py, post_mortem, write_text, setattr."
+    ],
+    "expected_failure": "The tearDown method is executed despite the class being skipped, leading to a NameError due to the undefined variable 'undefined_var'",
+    "relevant_source_files": [
+      "src/_pytest/debugging.py",
+      "src/_pytest/outcomes.py",
+      "src/_pytest/setuponly.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_skipping.py",
+      "testing/example_scripts/unittest/test_setup_skip.py",
+      "testing/test_setuponly.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import pytest\nfrom _pytest.debugging import post_mortem\nfrom _pytest.outcomes import OutcomeException\n\ndef test_post_mortem_with_undefined_variable_repro(tmp_path, monkeypatch):\n    test_file = tmp_path / 'test_example.py'\n    test_file.write_text('''\ndef test_one_repro():\n    undefined_var\n''')\n    monkeypatch.setattr('pdb.Pdb.post_mortem', lambda *args: None)\n    result = pytester.runpytest(test_file)\n    assert result.ret == 1\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != \"NameError: name 'undefined_var' is not defined\""
+      },
+      {
+        "language": "python",
+        "code": "import unittest\nimport pytest\n\n@unittest.skip('hello')\nclass MyTestCase(unittest.TestCase):\n    def setUp(self):\n        undefined_var\n    def test_one(self):\n        pass\n    def tearDown(self):\n        undefined_var\n\ndef test_tear_down_executed_on_skipped_class_with_pdb():\n    result = pytest.main(['--pdb', 'test_setup_skip_class.py'])\n    assert result == pytest.ExitCode.INTERNAL_ERROR"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "NameError: name 'undefined_var' is not defined"
+    ],
+    "error_keywords": [
+      "NameError",
+      "undefined_var"
+    ],
+    "identifiers": {
+      "functions": [
+        "post_mortem",
+        "py",
+        "write_text",
+        "setattr",
+        "runpytest"
+      ],
+      "classes": [
+        "MyTestCase",
+        "Pdb",
+        "OutcomeException"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_setuponly.py",
+      "target_source_file": "src/_pytest/debugging.py",
+      "test_visible_functions": [
+        "py",
+        "post_mortem",
+        "write_text",
+        "setattr",
+        "runpytest"
+      ],
+      "test_visible_classes": [
+        "Pdb",
+        "OutcomeException"
+      ]
+    }
+  }
+]

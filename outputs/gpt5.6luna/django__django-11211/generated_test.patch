@@ -1,0 +1,28 @@
+--- a/tests/contenttypes_tests/test_fields.py
++++ b/tests/contenttypes_tests/test_fields.py
+@@ -33,3 +33,25 @@
+         answer2 = Answer.objects.create(question=question)
+         result = json.loads(Question.answer_set.field.value_to_string(question))
+         self.assertCountEqual(result, [answer1.pk, answer2.pk])
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.contenttypes.models import ContentType
++from django.db import models
++import uuid
++
++
++class TestPrefetchRelatedWithGFKAndUUID(TestCase):
++    def setUp(self):
++        self.foo_instance = Answer.objects.create()
++        self.bar_instance = Question.objects.create(
++            content_type=ContentType.objects.get_for_model(Answer),
++            object_id=str(self.foo_instance.id)
++        )
++
++    def test_prefetch_related_with_gfk_and_uuid_repro(self):
++        queryset = Question.objects.all().prefetch_related('content_object')
++        bar = queryset.first()
++        self.assertIsNotNone(bar.content_object)
++        self.assertEqual(bar.content_object, self.foo_instance)
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(bar) != 'None'

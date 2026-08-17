@@ -1,0 +1,18 @@
+--- a/xarray/tests/test_merge.py
++++ b/xarray/tests/test_merge.py
+@@ -253,3 +253,15 @@
+         with pytest.raises(xr.MergeError):
+             ds3 = xr.Dataset({"a": ("y", [2, 3]), "y": [1, 2]})
+             ds1.merge(ds3, compat="no_conflicts")
++
++def test_merge_with_coerce_pandas_values_repro():
++    import pandas as pd
++    ds = xr.Dataset({'a': ('x', [0, 1])})
++    df = pd.DataFrame({'b': [2, 3]}, index=[0, 1])
++
++    merged = xr.merge([ds, df], combine_attrs='drop', coerce_pandas_values=True)
++
++    assert 'b' in merged
++    assert merged['b'].values.tolist() == [2, 3]
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(merged) != "AttributeError: 'DataArray' object has no attribute 'items'"

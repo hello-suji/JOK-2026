@@ -1,0 +1,139 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S3",
+      "score": 0.56,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:setup",
+        "target_function 'setup' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions",
+        "force-selected as best available (score 0.56, below threshold 0.65)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S3",
+        "target_location": {
+          "source_file": "sphinx/builders/latex/transforms.py",
+          "target_function": "setup",
+          "related_classes": [],
+          "candidate_test_file": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+          "confidence": "low"
+        },
+        "setup_steps": [
+          "Import Sphinx modules",
+          "Define classes mod.A and mod.submod.A",
+          "Set current module to mod.submod"
+        ],
+        "execution_stimulus": [
+          "Create function f with parameters and return types using unqualified names"
+        ],
+        "expected_failure": "Links to mod.A instead of mod.submod.A for parameter 'a'",
+        "relevant_source_files": [
+          "doc/conf.py",
+          "sphinx/builders/latex/transforms.py",
+          "sphinx/builders/texinfo.py"
+        ],
+        "relevant_test_files": [
+          "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+          "tests/roots/test-ext-autodoc/conf.py",
+          "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unknown"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_latex_transform_lookup():\n    from sphinx.builders.latex.transforms import LaTeXFootnoteTransform\n    from sphinx.testing.util import SphinxTestApp\n    app = SphinxTestApp(buildername='latex')\n    app.setup_extension('sphinx.ext.autodoc')\n    app.build()\n    assert 'BUG: links to mod.A instead of mod.submod.A' in app.warnings.getvalue()"
+          }
+        ],
+        "expected_outputs": [
+          "mod.submod.A"
+        ],
+        "actual_outputs": [
+          "mod.A"
+        ],
+        "error_keywords": [
+          "latex transform",
+          "incorrect reference"
+        ],
+        "identifiers": {
+          "functions": [
+            "setup"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": true
+    }
+  ],
+  "rejected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.53,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:setup",
+        "target_function 'setup' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions",
+        "duplicate of higher-ranked scenario S3"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    },
+    {
+      "scenario_id": "S2",
+      "score": 0.53,
+      "decision": "reject",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus is too abstract",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:setup",
+        "target_function 'setup' NOT found in source_file — may be hallucinated",
+        "target_function confirmed in AST top_level_functions",
+        "duplicate of higher-ranked scenario S3"
+      ],
+      "normalized_scenario": null,
+      "force_selected": false
+    }
+  ]
+}

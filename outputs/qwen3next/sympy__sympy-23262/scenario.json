@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/utilities/lambdify.py",
+      "target_function": "_lambdifygenerated",
+      "related_classes": [
+        "SymPy"
+      ],
+      "candidate_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where _lambdifygenerated can be called.",
+      "Use the generated reproduction path that calls inspect, lambdify, getsource.",
+      "Use the generated reproduction path that calls _lambdifygenerated, getsource, lambdify, inspect."
+    ],
+    "execution_stimulus": [
+      "Call _lambdifygenerated with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: inspect, lambdify, getsource.",
+      "Execute the focused target API path: _lambdifygenerated, getsource, lambdify, inspect."
+    ],
+    "expected_failure": "Note the missing comma after `1` that causes an integer to be returned instead of a tuple.",
+    "relevant_source_files": [
+      "sympy/utilities/lambdify.py",
+      "sympy/plotting/experimental_lambdify.py",
+      "sympy/assumptions/assume.py"
+    ],
+    "relevant_test_files": [
+      "sympy/utilities/tests/test_lambdify.py",
+      "sympy/plotting/tests/test_experimental_lambdify.py",
+      "sympy/ntheory/tests/test_generate.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_lambdify_tuple_return_repro():\n    import inspect\n    from sympy import lambdify\n\n    source = inspect.getsource(lambdify([], tuple([1])))\n    assert source == 'def _lambdifygenerated():\\n    return (1,)\\n'"
+      },
+      {
+        "language": "python",
+        "code": "import inspect\nfrom sympy import lambdify\n\ninspect.getsource(lambdify([], tuple([1])))"
+      },
+      {
+        "language": "python",
+        "code": "'def _lambdifygenerated():\\n    return (1,)\\n'"
+      },
+      {
+        "language": "python",
+        "code": "'def _lambdifygenerated():\\n    return (1)\\n'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_lambdifygenerated",
+        "getsource",
+        "lambdify",
+        "inspect"
+      ],
+      "classes": [
+        "SymPy"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/utilities/tests/test_lambdify.py",
+      "target_source_file": "sympy/utilities/lambdify.py",
+      "test_visible_functions": [
+        "_lambdifygenerated",
+        "getsource",
+        "lambdify",
+        "inspect"
+      ],
+      "test_visible_classes": [
+        "SymPy"
+      ]
+    }
+  }
+]

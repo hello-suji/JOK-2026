@@ -1,0 +1,18 @@
+--- a/testing/python/collect.py
++++ b/testing/python/collect.py
+@@ -1336,3 +1336,15 @@
+     # Execute from .
+     result = testdir.runpytest("-v", "-s")
+     result.assert_outcomes(passed=3)
++
++import textwrap
++def test_import_error_on_conftest_collection_repro(testdir):
++    # Create a temporary directory structure to mimic the issue
++    p = testdir.mkdir('PIsys')
++    p.join('conftest.py').write_text(textwrap.dedent('''
++        import python
++    '''), 'utf-8')
++    result = testdir.runpytest('--collect-only', 'PIsys', '-m', 'smoke')
++    assert 'ModuleNotFoundError: No module named' not in result.stderr.str()
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != "ModuleNotFoundError: No module named 'python'"

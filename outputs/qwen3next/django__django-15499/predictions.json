@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-15499",
+    "model_patch": "--- a/tests/bulk_create/models.py\n+++ b/tests/bulk_create/models.py\n@@ -136,3 +136,29 @@\n     name = models.CharField(max_length=15, null=True)\n     country = models.OneToOneField(Country, models.CASCADE, primary_key=True)\n     big_auto_fields = models.ManyToManyField(BigAutoFieldModel)\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.migrations.operations.models import CreateModel, AlterModelManagers\n+\n+\n+class TestMigrationOptimization(TestCase):\n+    def test_create_model_with_managers_optimization_repro(self):\n+        create_model = CreateModel(\n+            name='MyModel',\n+            fields=[\n+                ('id', models.AutoField(primary_key=True)),\n+            ],\n+            managers=[\n+                ('objects', models.Manager()),\n+            ],\n+        )\n+        alter_managers = AlterModelManagers(\n+            name='MyModel',\n+            managers=[\n+                ('custom_manager', models.Manager()),\n+            ],\n+        )\n+        optimized_operations = MigrationAutodetector([], []).optimize_operations([create_model, alter_managers])\n+        self.assertEqual(len(optimized_operations), 1)\n+        self.assertIsInstance(optimized_operations[0], CreateModel)\n+        self.assertIn('custom_manager', optimized_operations[0].managers)\n",
+    "patch_sha256": "8765bd6e4b34c45ac2b7d9f8d6d8d5b5aa0505a127f1c226d86cf5c2ed8251dc"
+  }
+]

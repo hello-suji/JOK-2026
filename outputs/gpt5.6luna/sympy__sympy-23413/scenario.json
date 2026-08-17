@@ -1,0 +1,81 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/matrices/expressions/blockmatrix.py",
+      "target_function": "hermite_normal_form",
+      "related_classes": [
+        "Matrix"
+      ],
+      "candidate_test_file": "sympy/matrices/expressions/tests/test_blockmatrix.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls hermite_normal_form, tolist."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: hermite_normal_form, tolist."
+    ],
+    "expected_failure": "but instead I get",
+    "relevant_source_files": [
+      "sympy/matrices/expressions/blockmatrix.py",
+      "sympy/categories/diagram_drawing.py",
+      "sympy/codegen/ast.py"
+    ],
+    "relevant_test_files": [
+      "sympy/matrices/expressions/tests/test_blockmatrix.py",
+      "sympy/matrices/expressions/tests/test_funcmatrix.py",
+      "sympy/matrices/expressions/tests/test_applyfunc.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import Matrix\n\ndef test_hnf_row_removal_bug_repro():\n    matrix = Matrix([[5, 8, 12], [0, 0, 1]])\n    result = matrix.T.hermite_normal_form().T\n    assert result.tolist() == [[1, 0, 0], [0, 1, 0]]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "hermite_normal_form",
+        "tolist"
+      ],
+      "classes": [
+        "Matrix"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/matrices/expressions/tests/test_blockmatrix.py",
+      "target_source_file": "sympy/matrices/expressions/blockmatrix.py",
+      "test_visible_functions": [
+        "hermite_normal_form",
+        "tolist"
+      ],
+      "test_visible_classes": [
+        "Matrix"
+      ]
+    }
+  }
+]

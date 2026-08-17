@@ -1,0 +1,85 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/solvers/diophantine.py",
+      "target_function": "diophantine",
+      "related_classes": [],
+      "candidate_test_file": "sympy/solvers/tests/test_diophantine.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where diophantine can be called.",
+      "Use the generated reproduction path that calls symbols, diophantine.",
+      "Use the generated reproduction path that calls diophantine, symbols."
+    ],
+    "execution_stimulus": [
+      "Call diophantine with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: symbols, diophantine.",
+      "Execute the focused target API path: diophantine, symbols."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/solvers/diophantine.py",
+      "sympy/combinatorics/coset_table.py",
+      "sympy/combinatorics/perm_groups.py"
+    ],
+    "relevant_test_files": [
+      "sympy/solvers/tests/test_diophantine.py",
+      "sympy/matrices/tests/test_matrices.py",
+      "sympy/solvers/tests/test_solvers.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "In [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}"
+      },
+      {
+        "language": "python",
+        "code": "In [10]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m,n), permute=True)\nOut[10]: {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n\nIn [11]: diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n,m), permute=True)\nOut[11]: {(3, 2)}"
+      },
+      {
+        "language": "python",
+        "code": "from sympy import symbols, diophantine\n\ndef test_diophantine_permute_order_repro():\n    # Regression focus: diophantine: incomplete results depending on syms order with permute=True\n    n, m = symbols('n m')\n    result_mn = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(m, n), permute=True)\n    result_nm = diophantine(n**4 + m**4 - 2**4 - 3**4, syms=(n, m), permute=True)\n    assert result_mn == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n    assert result_nm == {(-3, -2), (-3, 2), (-2, -3), (-2, 3), (2, -3), (2, 3), (3, -2), (3, 2)}\n"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "diophantine",
+        "symbols"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/solvers/tests/test_diophantine.py",
+      "target_source_file": "sympy/solvers/diophantine.py",
+      "test_visible_functions": [
+        "diophantine",
+        "symbols"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

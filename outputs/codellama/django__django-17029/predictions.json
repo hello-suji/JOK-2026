@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-17029",
+    "model_patch": "--- a/tests/template_backends/test_django.py\n+++ b/tests/template_backends/test_django.py\n@@ -206,3 +206,13 @@\n         )\n         template = engine.get_template(\"hello.html\")\n         self.assertEqual(template.render({\"name\": \"Joe\"}), \"Hello Joe!\\n\")\n+\n+from django.apps.registry import Apps\n+\n+class TestClearCacheBehavior(TemplateStringsTests):\n+    def test_get_swappable_settings_name_cache_cleared_repro(self):\n+        apps = Apps()\n+        original_cache = apps.get_swappable_settings_name('auth.User')\n+        apps.clear_cache()\n+        cleared_cache = apps.get_swappable_settings_name('auth.User')\n+        self.assertNotEqual(original_cache, cleared_cache)\n",
+    "patch_sha256": "f4ebb69acd88a0ffd4ecbd38b4c701c6a04ba3d21573551f65294e7c7d61008f"
+  }
+]

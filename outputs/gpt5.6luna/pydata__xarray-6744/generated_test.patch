@@ -1,0 +1,14 @@
+--- a/xarray/tests/test_rolling.py
++++ b/xarray/tests/test_rolling.py
+@@ -801,3 +801,11 @@
+             match="Passing ``keep_attrs`` to ``rolling_exp`` has no effect.",
+         ):
+             ds.rolling_exp(time=10, keep_attrs=True)
++
++class TestDataArrayRolling:
++    def test_center_kwarg_manual_iteration_repro(self) -> None:
++        my_data = xr.DataArray(np.arange(1, 10), dims="x")
++        expected_result = np.array([np.nan, 2., 3., 4., 5., 6., 7., 8., np.nan])
++        rolling_obj = my_data.rolling(x=3, center=True)
++        manual_result = np.array([rolling_obj.mean().isel(x=i).values for i in range(len(my_data))])
++        assert np.allclose(manual_result, expected_result, equal_nan=True)

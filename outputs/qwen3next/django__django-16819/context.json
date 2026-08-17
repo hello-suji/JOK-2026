@@ -1,0 +1,493 @@
+{
+  "instance_id": "django__django-16819",
+  "repo": "django/django",
+  "base_commit": "0b0998dc151feb77068e2387c34cc50ef6b356ae",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/migrations/operations/models.py",
+      "score": 18,
+      "matched_identifiers": [
+        "AddIndex",
+        "RemoveIndex",
+        "addindex",
+        "migration",
+        "operations",
+        "reduce"
+      ],
+      "reasons": [
+        "class_match:RemoveIndex",
+        "class_match:AddIndex",
+        "source_content_tokens:addindex,migration,operations,reduce,removeindex"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "AddIndex": "class AddIndex(IndexOperation):\n    \"\"\"Add an index on a model.\"\"\"\n\n    def __init__(self, model_name, index):\n        self.model_name = model_name\n        if not index.name:\n            raise ValueError(\n                \"Indexes passed to AddIndex operations require a name \"\n                \"argument. %r doesn't have one.\" % index\n            )\n        self.index = index\n\n    def state_forwards(self, app_label, state):\n        state.add_index(app_label, self.model_name_lower, self.index)\n",
+        "RemoveIndex": "class RemoveIndex(IndexOperation):\n    \"\"\"Remove an index from a model.\"\"\"\n\n    def __init__(self, model_name, name):\n        self.model_name = model_name\n        self.name = name\n\n    def state_forwards(self, app_label, state):\n        state.remove_index(app_label, self.model_name_lower, self.name)\n\n    def database_forwards(self, app_label, schema_editor, from_state, to_state):\n        model = from_state.apps.get_model(app_label, self.model_name)\n        if self.allow_migrate_model(schema_editor.connection.alias, model):\n            from_model_state = from_state.models[app_label, self.model_name_lower]\n            index = from_model_state.get_index_by_name(self.name)",
+        "reduce": "    def reduce(self, operation, app_label):\n        if (\n            isinstance(operation, RenameIndex)\n            and self.model_name_lower == operation.model_name_lower\n            and operation.old_name\n            and self.new_name_lower == operation.old_name_lower\n        ):\n            return [\n                RenameIndex(\n                    self.model_name,\n                    new_name=operation.new_name,\n                    old_name=self.old_name,\n                    old_fields=self.old_fields,\n                )\n            ]"
+      },
+      "top_level_functions": [
+        "ModelOperation.name_lower",
+        "ModelOperation.references_model",
+        "ModelOperation.reduce",
+        "ModelOperation.can_reduce_through",
+        "CreateModel.deconstruct",
+        "CreateModel.state_forwards",
+        "CreateModel.database_forwards",
+        "CreateModel.database_backwards",
+        "CreateModel.describe",
+        "CreateModel.migration_name_fragment",
+        "CreateModel.references_model",
+        "CreateModel.reduce",
+        "DeleteModel.deconstruct",
+        "DeleteModel.state_forwards",
+        "DeleteModel.database_forwards",
+        "DeleteModel.database_backwards",
+        "DeleteModel.references_model",
+        "DeleteModel.describe",
+        "DeleteModel.migration_name_fragment",
+        "RenameModel.old_name_lower",
+        "RenameModel.new_name_lower",
+        "RenameModel.deconstruct",
+        "RenameModel.state_forwards",
+        "RenameModel.database_forwards",
+        "RenameModel.database_backwards",
+        "RenameModel.references_model",
+        "RenameModel.describe",
+        "RenameModel.migration_name_fragment",
+        "RenameModel.reduce",
+        "ModelOptionOperation.reduce",
+        "AlterModelTable.deconstruct",
+        "AlterModelTable.state_forwards",
+        "AlterModelTable.database_forwards",
+        "AlterModelTable.database_backwards",
+        "AlterModelTable.describe",
+        "AlterModelTable.migration_name_fragment",
+        "AlterModelTableComment.deconstruct",
+        "AlterModelTableComment.state_forwards",
+        "AlterModelTableComment.database_forwards",
+        "AlterModelTableComment.database_backwards"
+      ]
+    },
+    {
+      "path": "django/contrib/postgres/operations.py",
+      "score": 9,
+      "matched_identifiers": [
+        "addindex",
+        "migration",
+        "operations",
+        "removeindex"
+      ],
+      "reasons": [
+        "stem_in_issue_text:operations",
+        "source_content_tokens:addindex,migration,operations,removeindex"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CreateExtension.state_forwards",
+        "CreateExtension.database_forwards",
+        "CreateExtension.database_backwards",
+        "CreateExtension.extension_exists",
+        "CreateExtension.describe",
+        "CreateExtension.migration_name_fragment",
+        "AddIndexConcurrently.describe",
+        "AddIndexConcurrently.database_forwards",
+        "AddIndexConcurrently.database_backwards",
+        "RemoveIndexConcurrently.describe",
+        "RemoveIndexConcurrently.database_forwards",
+        "RemoveIndexConcurrently.database_backwards",
+        "CollationOperation.state_forwards",
+        "CollationOperation.deconstruct",
+        "CollationOperation.create_collation",
+        "CollationOperation.remove_collation",
+        "CreateCollation.database_forwards",
+        "CreateCollation.database_backwards",
+        "CreateCollation.describe",
+        "CreateCollation.migration_name_fragment",
+        "RemoveCollation.database_forwards",
+        "RemoveCollation.database_backwards",
+        "RemoveCollation.describe",
+        "RemoveCollation.migration_name_fragment",
+        "AddConstraintNotValid.describe",
+        "AddConstraintNotValid.database_forwards",
+        "AddConstraintNotValid.migration_name_fragment",
+        "ValidateConstraint.describe",
+        "ValidateConstraint.database_forwards",
+        "ValidateConstraint.database_backwards",
+        "ValidateConstraint.state_forwards",
+        "ValidateConstraint.migration_name_fragment",
+        "ValidateConstraint.deconstruct"
+      ]
+    },
+    {
+      "path": "django/db/migrations/autodetector.py",
+      "score": 8,
+      "matched_identifiers": [
+        "addindex",
+        "migration",
+        "operations",
+        "removeindex"
+      ],
+      "reasons": [
+        "source_content_tokens:addindex,migration,operations,removeindex"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MigrationAutodetector.changes",
+        "MigrationAutodetector.deep_deconstruct",
+        "MigrationAutodetector.only_relation_agnostic_fields",
+        "MigrationAutodetector.check_dependency",
+        "MigrationAutodetector.add_operation",
+        "MigrationAutodetector.swappable_first_key",
+        "MigrationAutodetector.generate_renamed_models",
+        "MigrationAutodetector.generate_created_models",
+        "MigrationAutodetector.generate_created_proxies",
+        "MigrationAutodetector.generate_deleted_models",
+        "MigrationAutodetector.generate_deleted_proxies",
+        "MigrationAutodetector.create_renamed_fields",
+        "MigrationAutodetector.generate_renamed_fields",
+        "MigrationAutodetector.generate_added_fields",
+        "MigrationAutodetector.generate_removed_fields",
+        "MigrationAutodetector.generate_altered_fields",
+        "MigrationAutodetector.create_altered_indexes",
+        "MigrationAutodetector.generate_added_indexes",
+        "MigrationAutodetector.generate_removed_indexes",
+        "MigrationAutodetector.generate_renamed_indexes",
+        "MigrationAutodetector.create_altered_constraints",
+        "MigrationAutodetector.generate_added_constraints",
+        "MigrationAutodetector.generate_removed_constraints",
+        "MigrationAutodetector.generate_removed_altered_unique_together",
+        "MigrationAutodetector.generate_removed_altered_index_together",
+        "MigrationAutodetector.generate_altered_unique_together",
+        "MigrationAutodetector.generate_altered_index_together",
+        "MigrationAutodetector.generate_altered_db_table",
+        "MigrationAutodetector.generate_altered_db_table_comment",
+        "MigrationAutodetector.generate_altered_options",
+        "MigrationAutodetector.generate_altered_order_with_respect_to",
+        "MigrationAutodetector.generate_altered_managers",
+        "MigrationAutodetector.arrange_for_graph",
+        "MigrationAutodetector.parse_number"
+      ]
+    },
+    {
+      "path": "django/db/migrations/migration.py",
+      "score": 7,
+      "matched_identifiers": [
+        "migration",
+        "operations",
+        "reduce"
+      ],
+      "reasons": [
+        "stem_in_issue_text:migration",
+        "source_content_tokens:migration,operations,reduce"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Migration.mutate_state",
+        "Migration.apply",
+        "Migration.unapply",
+        "Migration.suggest_name",
+        "swappable_dependency"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/optimizemigration.py",
+      "score": 6,
+      "matched_identifiers": [
+        "migration",
+        "operations",
+        "optimizing"
+      ],
+      "reasons": [
+        "source_content_tokens:migration,operations,optimizing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/indexes/models.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AddIndex",
+        "RemoveIndex"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RemoveIndex",
+        "test_path_related_to_class:AddIndex",
+        "test_name_matches_source_stem:models",
+        "token_overlap:index",
+        "internal_name_overlap:index",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/postgres_tests/array_index_migrations/0001_initial.py",
+      "score": 13,
+      "matched_identifiers": [
+        "AddIndex",
+        "RemoveIndex"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RemoveIndex",
+        "test_path_related_to_class:AddIndex",
+        "token_overlap:index,migration,migrations,postgres",
+        "internal_name_overlap:migration",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_autodetector.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:autodetector",
+        "token_overlap:autodetector,migration,migrations",
+        "internal_name_overlap:index",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_operations.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:operations",
+        "token_overlap:migration,migrations,operations",
+        "internal_name_overlap:index",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/model_indexes/models.py",
+      "score": 11,
+      "matched_identifiers": [
+        "AddIndex",
+        "RemoveIndex"
+      ],
+      "reasons": [
+        "test_path_related_to_class:RemoveIndex",
+        "test_path_related_to_class:AddIndex",
+        "test_name_matches_source_stem:models",
+        "token_overlap:index",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/migrations/test_operations.py:unittest_or_django_test_import",
+      "tests/migrations/test_operations.py:testcase_class:TestCreateModel",
+      "tests/migrations/test_autodetector.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2749,
+  "indexed_test_file_count": 1876,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.indexes.models": [
+      "Article",
+      "ArticleTranslation",
+      "CurrentTranslation",
+      "IndexedArticle",
+      "IndexedArticle2"
+    ],
+    "tests.migrations.test_operations": [
+      "FieldOperationTests",
+      "Mixin",
+      "OperationTests",
+      "SwappableOperationTests",
+      "TestCreateModel"
+    ],
+    "tests.migrations.test_autodetector": [
+      "AutodetectorIndexTogetherTests",
+      "AutodetectorTests",
+      "BaseAutodetectorTests",
+      "DeconstructibleObject",
+      "MigrationSuggestNameTests"
+    ],
+    "tests.model_indexes.models": [
+      "AbstractModel",
+      "Book",
+      "ChildModel1",
+      "ChildModel2"
+    ],
+    "tests.postgres_tests": [
+      "PostgreSQLSimpleTestCase",
+      "PostgreSQLTestCase",
+      "PostgreSQLWidgetTestCase"
+    ],
+    "tests": [
+      "SimpleTestCase",
+      "TestCase",
+      "WidgetTest",
+      "cached_property",
+      "connection",
+      "modify_settings"
+    ],
+    "tests.postgres_tests.array_index_migrations.0001_initial": [
+      "Migration"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.contrib.postgres.operations": [
+      "AddConstraintNotValid",
+      "AddIndexConcurrently",
+      "BloomExtension",
+      "BtreeGinExtension",
+      "BtreeGistExtension",
+      "CITextExtension",
+      "CollationOperation",
+      "CreateCollation",
+      "CreateExtension",
+      "CryptoExtension",
+      "HStoreExtension",
+      "NotInTransactionMixin",
+      "RemoveCollation",
+      "RemoveIndexConcurrently",
+      "TrigramExtension",
+      "UnaccentExtension",
+      "ValidateConstraint"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.optimizemigration": [
+      "Command"
+    ],
+    "django.db.migrations.autodetector": [
+      "MigrationAutodetector"
+    ],
+    "django.db.migrations.migration": [
+      "Migration",
+      "SwappableTuple",
+      "swappable_dependency"
+    ],
+    "django.db.migrations": [
+      "AddConstraint",
+      "AddField",
+      "AddIndex",
+      "AlterField",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterModelTableComment",
+      "AlterOrderWithRespectTo",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "RemoveConstraint",
+      "RemoveField",
+      "RemoveIndex",
+      "RenameField",
+      "RenameIndex",
+      "RenameModel",
+      "RunPython",
+      "RunSQL",
+      "SeparateDatabaseAndState"
+    ],
+    "django.db.migrations.operations.models": [
+      "AddConstraint",
+      "AddIndex",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterModelTableComment",
+      "AlterOrderWithRespectTo",
+      "AlterTogetherOptionOperation",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "IndexOperation",
+      "ModelOperation",
+      "ModelOptionOperation",
+      "RemoveConstraint",
+      "RemoveIndex",
+      "RenameIndex",
+      "RenameModel",
+      "_check_for_duplicates"
+    ]
+  },
+  "test_example_snippet": "    def test_arrange_for_graph(self):\n        \"\"\"Tests auto-naming of migrations for graph matching.\"\"\"\n        # Make a fake graph\n        graph = MigrationGraph()\n        graph.add_node((\"testapp\", \"0001_initial\"), None)\n        graph.add_node((\"testapp\", \"0002_foobar\"), None)\n        graph.add_node((\"otherapp\", \"0001_initial\"), None)\n        graph.add_dependency(\n            \"testapp.0002_foobar\",\n            (\"testapp\", \"0002_foobar\"),\n            (\"testapp\", \"0001_initial\"),\n        )\n        graph.add_dependency(\n            \"testapp.0002_foobar\",\n            (\"testapp\", \"0002_foobar\"),\n            (\"otherapp\", \"0001_initial\"),\n        )\n        # Use project state to make a new migration change set\n        before = self.make_project_state([self.publisher, self.other_pony])\n        after = self.make_project_state(\n            [\n                self.author_empty,\n                self.publisher,\n                self.other_pony,\n                self.other_stable,\n            ]\n        )\n        autodetector = MigrationAutodetector(before, after)\n        changes = autodetector._detect_changes()\n        # Run through arrange_for_graph\n        changes = autodetector.arrange_for_graph(changes, graph)\n        # Make sure there's a new name, deps match, etc.\n        self.assertEqual(changes[\"testapp\"][0].name, \"0003_author\")\n        self.assertEqual(\n            changes[\"testapp\"][0].dependencies, [(\"testapp\", \"0002_foobar\")]",
+  "conftest_fixtures": {}
+}

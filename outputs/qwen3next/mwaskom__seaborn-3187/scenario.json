@@ -1,0 +1,109 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "seaborn/_core/scales.py",
+      "target_function": "add",
+      "related_classes": [
+        "Dot",
+        "Penguins",
+        "Plot"
+      ],
+      "candidate_test_file": "tests/_core/test_plot.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where add can be called.",
+      "Use the generated reproduction path that calls sns, so, load_dataset, add.",
+      "Use the generated reproduction path that calls add, load_dataset, sns, so."
+    ],
+    "execution_stimulus": [
+      "Call add with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sns, so, load_dataset, add.",
+      "Execute the focused target API path: add, load_dataset, sns, so."
+    ],
+    "expected_failure": "Wrong legend values of large ranges",
+    "relevant_source_files": [
+      "seaborn/_core/scales.py",
+      "seaborn/_core/plot.py",
+      "seaborn/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/_core/test_plot.py",
+      "tests/_core/test_scales.py",
+      "tests/_core/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import seaborn as sns\nimport seaborn.objects as so\n\npenguins = sns.load_dataset(\"Penguins\")\npenguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"]*1000\n(\n    so.Plot(\n        penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\",\n        color=\"species\", pointsize=\"body_mass_mg\",\n    )\n    .add(so.Dot())\n)"
+      },
+      {
+        "language": "python",
+        "code": "import seaborn as sns\nimport seaborn.objects as so\n\ndef test_legend_large_range_values_repro():\n    penguins = sns.load_dataset(\"penguins\")\n    penguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"] * 1000\n    plot = (\n        so.Plot(\n            penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\",\n            color=\"species\", pointsize=\"body_mass_mg\",\n        )\n        .add(so.Dot())\n    )\n    ax = plot.plot()\n    legend = ax.get_legend()\n    # Check if the legend labels contain the correct offset\n    assert any('1e6' in label.get_text() for label in legend.get_texts())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add",
+        "load_dataset",
+        "sns",
+        "so",
+        "plot",
+        "get_legend",
+        "get_text",
+        "get_texts"
+      ],
+      "classes": [
+        "Dot",
+        "Penguins",
+        "Plot",
+        "ScalarFormatter"
+      ],
+      "files": [
+        "seaborn/_core/scales.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/_core/test_plot.py",
+      "target_source_file": "seaborn/_core/scales.py",
+      "test_visible_functions": [
+        "add",
+        "load_dataset",
+        "sns",
+        "so",
+        "plot",
+        "get_legend",
+        "get_text",
+        "get_texts"
+      ],
+      "test_visible_classes": [
+        "Dot",
+        "Penguins",
+        "Plot"
+      ]
+    }
+  }
+]

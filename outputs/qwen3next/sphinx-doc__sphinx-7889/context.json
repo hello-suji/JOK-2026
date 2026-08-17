@@ -1,0 +1,443 @@
+{
+  "instance_id": "sphinx-doc__sphinx-7889",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "ec9af606c6cfa515f946d74da9b51574f2f9b16f",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "doc/conf.py",
+      "score": 17,
+      "matched_identifiers": [
+        "additional",
+        "autodoc",
+        "extension",
+        "make"
+      ],
+      "reasons": [
+        "stem_in_issue_text:conf",
+        "source_content_tokens:autodoc,extension,make,additional,extensions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "parse_event",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/cmd/build.py",
+      "score": 17,
+      "matched_identifiers": [
+        "building",
+        "make",
+        "please",
+        "typeerror"
+      ],
+      "reasons": [
+        "stem_in_issue_text:build",
+        "source_content_tokens:make,please,typeerror,building,built"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "handle_exception",
+        "jobs_argument",
+        "get_parser",
+        "make_main",
+        "build_main",
+        "main"
+      ]
+    },
+    {
+      "path": "sphinx/config.py",
+      "score": 17,
+      "matched_identifiers": [
+        "extension",
+        "know",
+        "make",
+        "please"
+      ],
+      "reasons": [
+        "stem_in_issue_text:config",
+        "source_content_tokens:extension,know,make,please,typeerror"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "is_serializable",
+        "ENUM.match",
+        "Config.read",
+        "Config.convert_overrides",
+        "Config.pre_init_values",
+        "Config.init_values",
+        "Config.add",
+        "Config.filter",
+        "eval_config_file",
+        "convert_source_suffix",
+        "init_numfig_format",
+        "correct_copyright_year",
+        "check_confval_types",
+        "check_unicode",
+        "check_primary_domain",
+        "check_master_doc",
+        "setup"
+      ]
+    },
+    {
+      "path": "sphinx/domains/python.py",
+      "score": 17,
+      "matched_identifiers": [
+        "case",
+        "extension",
+        "make",
+        "please"
+      ],
+      "reasons": [
+        "stem_in_issue_text:python",
+        "source_content_tokens:case,extension,make,please,subclass"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "type_to_xref",
+        "PyXrefMixin.make_xref",
+        "PyXrefMixin.make_xrefs",
+        "PyField.make_xref",
+        "PyTypedField.make_xref",
+        "PyObject.get_signature_prefix",
+        "PyObject.needs_arglist",
+        "PyObject.handle_signature",
+        "PyObject.get_index_text",
+        "PyObject.add_target_and_index",
+        "PyObject.before_content",
+        "PyObject.after_content",
+        "PyModulelevel.run",
+        "PyModulelevel.needs_arglist",
+        "PyModulelevel.get_index_text",
+        "PyFunction.get_signature_prefix",
+        "PyFunction.needs_arglist",
+        "PyFunction.add_target_and_index",
+        "PyFunction.get_index_text",
+        "PyDecoratorFunction.run",
+        "PyDecoratorFunction.handle_signature",
+        "PyDecoratorFunction.needs_arglist",
+        "PyVariable.handle_signature",
+        "PyVariable.get_index_text",
+        "PyClasslike.get_signature_prefix",
+        "PyClasslike.get_index_text",
+        "PyClassmember.run",
+        "PyClassmember.needs_arglist",
+        "PyClassmember.get_signature_prefix",
+        "PyClassmember.get_index_text",
+        "PyMethod.needs_arglist",
+        "PyMethod.get_signature_prefix",
+        "PyMethod.get_index_text",
+        "PyClassMethod.run",
+        "PyStaticMethod.run",
+        "PyDecoratorMethod.run",
+        "PyDecoratorMethod.handle_signature",
+        "PyDecoratorMethod.needs_arglist",
+        "PyAttribute.handle_signature",
+        "PyAttribute.get_index_text"
+      ]
+    },
+    {
+      "path": "sphinx/ext/autodoc/mock.py",
+      "score": 17,
+      "matched_identifiers": [
+        "_make_subclass",
+        "autodoc",
+        "make",
+        "mock"
+      ],
+      "reasons": [
+        "stem_in_issue_text:mock",
+        "source_content_tokens:_make_subclass,autodoc,make,mock,subclass"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "_make_subclass": "def _make_subclass(name: str, module: str, superclass: Any = _MockObject,\n                   attributes: Any = None) -> Any:\n    attrs = {'__module__': module, '__display_name__': module + '.' + name}\n    attrs.update(attributes or {})\n\n    return type(name, (superclass,), attrs)\n\n\nclass _MockModule(ModuleType):\n    \"\"\"Used by autodoc_mock_imports.\"\"\"\n    __file__ = os.devnull\n    __sphinx_mock__ = True\n\n    def __init__(self, name: str) -> None:\n        super().__init__(name)",
+        "mock": "def mock(modnames: List[str]) -> Generator[None, None, None]:\n    \"\"\"Insert mock modules during context::\n\n        with mock(['target.module.name']):\n            # mock modules are enabled here\n            ...\n    \"\"\"\n    try:\n        finder = MockFinder(modnames)\n        sys.meta_path.insert(0, finder)\n        yield\n    finally:\n        sys.meta_path.remove(finder)\n        finder.invalidate_caches()"
+      },
+      "top_level_functions": [
+        "MockLoader.create_module",
+        "MockLoader.exec_module",
+        "MockFinder.find_spec",
+        "MockFinder.invalidate_caches",
+        "mock"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 18,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "same_module_area:sphinx",
+        "test_name_matches_source_stem:conf",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-autodoc/conf.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:autodoc",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-ext-doctest-with-autodoc/conf.py",
+      "score": 14,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "token_overlap:autodoc",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/roots/test-setup/doc/conf.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:conf",
+        "explicit_source_area_match:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_ext_autodoc_mock.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:mock",
+        "token_overlap:autodoc,mock",
+        "internal_name_overlap:mock",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:doc/conf.py"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/test_ext_autodoc_mock.py:pytest_import_or_conftest",
+      "tests/test_ext_autodoc_mock.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 504,
+  "indexed_test_file_count": 310,
+  "available_imports": {
+    "doc.conf": [
+      "parse_event",
+      "setup"
+    ],
+    "tests.test_ext_autodoc_mock": [
+      "test_MockModule",
+      "test_MockObject",
+      "test_abc_MockObject",
+      "test_mock",
+      "test_mock_decorator",
+      "test_mock_does_not_follow_upper_modules"
+    ],
+    "sphinx.config": [
+      "Config",
+      "ENUM",
+      "check_confval_types",
+      "check_master_doc",
+      "check_primary_domain",
+      "check_unicode",
+      "convert_source_suffix",
+      "correct_copyright_year",
+      "eval_config_file",
+      "init_numfig_format",
+      "is_serializable",
+      "setup"
+    ],
+    "sphinx": [
+      "Any",
+      "Callable",
+      "Dict",
+      "Element",
+      "Inliner",
+      "Iterable",
+      "List",
+      "NamedTuple",
+      "Node",
+      "PIPE",
+      "RemovedInNextVersionWarning",
+      "RoleFunction",
+      "SphinxError",
+      "Tuple",
+      "Union",
+      "XRefRole",
+      "_",
+      "cast",
+      "nodes",
+      "path",
+      "pending_xref",
+      "system_message"
+    ],
+    "sphinx.cmd.build": [
+      "build_main",
+      "get_parser",
+      "handle_exception",
+      "jobs_argument",
+      "main",
+      "make_main"
+    ],
+    "sphinx.domains.python": [
+      "PyAttribute",
+      "PyClassMethod",
+      "PyClasslike",
+      "PyClassmember",
+      "PyCurrentModule",
+      "PyDecoratorFunction",
+      "PyDecoratorMethod",
+      "PyDecoratorMixin",
+      "PyField",
+      "PyFunction",
+      "PyGroupedField",
+      "PyMethod",
+      "PyModule",
+      "PyModulelevel",
+      "PyObject",
+      "PyStaticMethod",
+      "PyTypedField",
+      "PyVariable",
+      "PyXRefRole",
+      "PyXrefMixin",
+      "PythonDomain",
+      "PythonModuleIndex",
+      "_parse_annotation",
+      "_parse_arglist",
+      "_pseudo_parse_arglist",
+      "builtin_resolver",
+      "filter_meta_fields",
+      "setup",
+      "type_to_xref"
+    ],
+    "sphinx.domains": [
+      "Domain",
+      "Index",
+      "ObjType"
+    ],
+    "sphinx.ext.autodoc.mock": [
+      "MockFinder",
+      "MockLoader",
+      "_MockModule",
+      "_MockObject",
+      "_make_subclass",
+      "mock"
+    ],
+    "sphinx.ext.autodoc": [
+      "AttributeDocumenter",
+      "ClassDocumenter",
+      "ClassLevelDocumenter",
+      "DataDeclarationDocumenter",
+      "DataDocumenter",
+      "DecoratorDocumenter",
+      "DocstringSignatureMixin",
+      "DocstringStripSignatureMixin",
+      "Documenter",
+      "ExceptionDocumenter",
+      "FunctionDocumenter",
+      "GenericAliasDocumenter",
+      "InstanceAttributeDocumenter",
+      "MethodDocumenter",
+      "ModuleDocumenter",
+      "ModuleLevelDocumenter",
+      "Options",
+      "PropertyDocumenter",
+      "SingledispatchFunctionDocumenter",
+      "SingledispatchMethodDocumenter",
+      "SlotsAttributeDocumenter",
+      "TypeVarDocumenter",
+      "annotation_option",
+      "autodoc_attrgetter",
+      "between",
+      "bool_option",
+      "cut_lines",
+      "get_documenters",
+      "identity",
+      "inherited_members_option",
+      "member_order_option",
+      "members_option",
+      "members_set_option",
+      "merge_special_members_option",
+      "migrate_autodoc_member_order",
+      "setup"
+    ],
+    "sphinx.ext": [
+      "Any",
+      "BuildEnvironment",
+      "Callable",
+      "Config",
+      "Dict",
+      "ENUM",
+      "Iterator",
+      "List",
+      "ModuleAnalyzer",
+      "ModuleType",
+      "Optional",
+      "Parameter",
+      "PycodeError",
+      "RemovedInSphinx40Warning",
+      "RemovedInSphinx50Warning",
+      "Sequence",
+      "Set",
+      "Signature",
+      "Sphinx",
+      "StringList",
+      "Tuple",
+      "Type",
+      "TypeVar",
+      "Union",
+      "_",
+      "__",
+      "extract_metadata",
+      "get_module_members",
+      "get_object_members",
+      "getdoc",
+      "import_object",
+      "inspect",
+      "logging",
+      "mock",
+      "object_description",
+      "prepare_docstring",
+      "safe_getattr",
+      "split_full_qualified_name",
+      "stringify_signature",
+      "stringify_typehint"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  }
+}

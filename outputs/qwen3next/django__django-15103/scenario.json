@@ -1,0 +1,74 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/conf/__init__.py",
+      "target_function": "render_to_string",
+      "related_classes": [],
+      "candidate_test_file": "tests/apps/one_config_app/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls render_to_string."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: render_to_string."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/conf/__init__.py",
+      "django/conf/global_settings.py",
+      "django/contrib/admin/helpers.py"
+    ],
+    "relevant_test_files": [
+      "tests/apps/no_config_app/__init__.py",
+      "tests/apps/one_config_app/__init__.py",
+      "tests/apps/two_configs_app/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.template.loader import render_to_string\n\nclass TestJsonScriptOptionalElementId(TestCase):\n    def test_json_script_without_element_id_repro(self):\n        context = {'data': {'key': 'value'}}\n        rendered = render_to_string('template_with_json_script.html', context)\n        self.assertTrue(rendered.strip().startswith('<script type=\"application/json\">'))\n        self.assertFalse(' id=\"' in rendered)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "render_to_string"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/apps/one_config_app/__init__.py",
+      "target_source_file": "django/conf/__init__.py",
+      "test_visible_functions": [
+        "render_to_string"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

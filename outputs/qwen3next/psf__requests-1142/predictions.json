@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-1142",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -282,3 +282,8 @@\n\n if __name__ == '__main__':\n     unittest.main()\n+\n+def test_get_request_without_content_length_header_repro():\n+    req = requests.Request('GET', 'http://example.com')\n+    prepared = req.prepare()\n+    assert 'Content-Length' not in prepared.headers\n",
+    "patch_sha256": "ff841d4b786455a5382b2a4e8627382f944cc04cd1345df87985893ffb744524"
+  }
+]

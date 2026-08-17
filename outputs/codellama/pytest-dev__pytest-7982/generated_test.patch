@@ -1,0 +1,12 @@
+--- a/doc/en/example/assertion/global_testmodule_config/conftest.py
++++ b/doc/en/example/assertion/global_testmodule_config/conftest.py
+@@ -12,3 +12,9 @@
+         mod = item.getparent(pytest.Module).obj
+         if hasattr(mod, "hello"):
+             print(f"mod.hello {mod.hello!r}")
++
++def test_set_session_repro(pytester):
++    config = pytester.parseconfig()
++    session = pytester.Session(config)
++    session.set_session()
++    assert session.config == config

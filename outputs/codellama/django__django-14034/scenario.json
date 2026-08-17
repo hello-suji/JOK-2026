@@ -1,0 +1,100 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/fields.py",
+      "target_function": "__init__",
+      "related_classes": [
+        "CharField",
+        "MultiValueField",
+        "MultiWidget",
+        "Form",
+        "MF"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/test_multivaluefield.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where is_valid can be called.",
+      "Use the generated reproduction path that calls widget, __init__, super.",
+      "Use the generated reproduction path that calls __init__, is_valid, widget, super."
+    ],
+    "execution_stimulus": [
+      "Call is_valid with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: widget, __init__, super.",
+      "Execute the focused target API path: __init__, is_valid, widget, super."
+    ],
+    "expected_failure": "But I expected is_valid() returns False, because one of the sub fields is set as required.",
+    "relevant_source_files": [
+      "django/forms/fields.py",
+      "django/db/models/fields/__init__.py",
+      "django/forms/widgets.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/test_multivaluefield.py",
+      "tests/forms_tests/widget_tests/test_multiwidget.py",
+      "tests/forms_tests/field_tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms import Form, CharField, MultiValueField, MultiWidget\n\nclass MF(MultiValueField):\n    widget = MultiWidget\n    def __init__(self):\n        fields = [\n            CharField(required=False),\n            CharField(required=True),\n        ]\n        widget = self.widget(widgets=[\n            f.widget\n            for f in fields\n        ], attrs={})\n        super(MF, self).__init__(\n            fields=fields,\n            widget=widget,\n        )\n\nclass TestMultiValueFieldRequiredSubField(TestCase):\n    def test_required_sub_field_validation_repro(self):\n        class TestForm(Form):\n            multi_field = MF()\n        \n        form = TestForm(data={'multi_field_0': '', 'multi_field_1': ''})\n        self.assertFalse(form.is_valid())\n        form = TestForm(data={'multi_field_0': 'value1', 'multi_field_1': ''})\n        self.assertFalse(form.is_valid())\n        form = TestForm(data={'multi_field_0': '', 'multi_field_1': 'value2'})\n        self.assertTrue(form.is_valid())"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__init__",
+        "compress",
+        "widget",
+        "super"
+      ],
+      "classes": [
+        "CharField",
+        "MultiValueField",
+        "MultiWidget",
+        "Form",
+        "MF"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/test_multivaluefield.py",
+      "target_source_file": "django/forms/fields.py",
+      "test_visible_functions": [
+        "__init__",
+        "is_valid",
+        "widget",
+        "super"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "MultiValueField",
+        "MultiWidget",
+        "Form",
+        "MF"
+      ]
+    }
+  }
+]

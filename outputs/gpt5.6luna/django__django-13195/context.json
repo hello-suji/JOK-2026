@@ -1,0 +1,457 @@
+{
+  "instance_id": "django__django-13195",
+  "repo": "django/django",
+  "base_commit": "156a2138db20abc89933121e4ff2ee2ce56a173a",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/http/response.py",
+      "score": 35,
+      "matched_identifiers": [
+        "HttpResponse",
+        "HttpResponseBase",
+        "__host-",
+        "__secure-",
+        "cookie",
+        "delete",
+        "delete_cookie",
+        "set_cookie"
+      ],
+      "reasons": [
+        "function_match:set_cookie",
+        "function_match:delete_cookie",
+        "class_match:HttpResponse",
+        "class_match:HttpResponseBase",
+        "stem_in_issue_text:response",
+        "source_content_tokens:__host-,__secure-,cookie,delete,delete_cookie"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "HttpResponseBase": "class HttpResponseBase:\n    \"\"\"\n    An HTTP response base class with dictionary-accessed headers.\n\n    This class doesn't handle content. It should not be used directly.\n    Use the HttpResponse and StreamingHttpResponse subclasses instead.\n    \"\"\"\n\n    status_code = 200\n\n    def __init__(self, content_type=None, status=None, reason=None, charset=None):\n        # _headers is a mapping of the lowercase name to the original case of\n        # the header (required for working with legacy systems) and the header\n        # value. Both the name of the header and its value are ASCII strings.\n        self._headers = {}",
+        "HttpResponse": "class HttpResponse(HttpResponseBase):\n    \"\"\"\n    An HTTP response class with a string as content.\n\n    This content that can be read, appended to, or replaced.\n    \"\"\"\n\n    streaming = False\n\n    def __init__(self, content=b'', *args, **kwargs):\n        super().__init__(*args, **kwargs)\n        # Content is a bytestring. See the `content` property methods.\n        self.content = content\n\n    def __repr__(self):",
+        "set_cookie": "    def set_cookie(self, key, value='', max_age=None, expires=None, path='/',\n                   domain=None, secure=False, httponly=False, samesite=None):\n        \"\"\"\n        Set a cookie.\n\n        ``expires`` can be:\n        - a string in the correct format,\n        - a naive ``datetime.datetime`` object in UTC,\n        - an aware ``datetime.datetime`` object in any time zone.\n        If it is a ``datetime.datetime`` object then calculate ``max_age``.\n        \"\"\"\n        self.cookies[key] = value\n        if expires is not None:\n            if isinstance(expires, datetime.datetime):\n                if timezone.is_aware(expires):",
+        "delete_cookie": "    def delete_cookie(self, key, path='/', domain=None):\n        # Most browsers ignore the Set-Cookie header if the cookie name starts\n        # with __Host- or __Secure- and the cookie doesn't use the secure flag.\n        secure = key.startswith(('__Secure-', '__Host-'))\n        self.set_cookie(\n            key, max_age=0, path=path, domain=domain, secure=secure,\n            expires='Thu, 01 Jan 1970 00:00:00 GMT',\n        )\n\n    # Common methods used by subclasses\n\n    def make_bytes(self, value):\n        \"\"\"Turn a value into a bytestring encoded in the output charset.\"\"\"\n        # Per PEP 3333, this response body must be bytes. To avoid returning\n        # an instance of a subclass, this function returns `bytes(value)`."
+      },
+      "top_level_functions": [
+        "HttpResponseBase.reason_phrase",
+        "HttpResponseBase.charset",
+        "HttpResponseBase.serialize_headers",
+        "HttpResponseBase.has_header",
+        "HttpResponseBase.items",
+        "HttpResponseBase.get",
+        "HttpResponseBase.set_cookie",
+        "HttpResponseBase.setdefault",
+        "HttpResponseBase.set_signed_cookie",
+        "HttpResponseBase.delete_cookie",
+        "HttpResponseBase.make_bytes",
+        "HttpResponseBase.close",
+        "HttpResponseBase.write",
+        "HttpResponseBase.flush",
+        "HttpResponseBase.tell",
+        "HttpResponseBase.readable",
+        "HttpResponseBase.seekable",
+        "HttpResponseBase.writable",
+        "HttpResponseBase.writelines",
+        "HttpResponse.serialize",
+        "HttpResponse.content",
+        "HttpResponse.write",
+        "HttpResponse.tell",
+        "HttpResponse.getvalue",
+        "HttpResponse.writable",
+        "HttpResponse.writelines",
+        "StreamingHttpResponse.content",
+        "StreamingHttpResponse.streaming_content",
+        "StreamingHttpResponse.getvalue",
+        "FileResponse.set_headers",
+        "HttpResponseNotModified.content"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/views/main.py",
+      "score": 17,
+      "matched_identifiers": [
+        "does",
+        "doesn",
+        "messages",
+        "method"
+      ],
+      "reasons": [
+        "stem_in_issue_text:main",
+        "source_content_tokens:does,doesn,messages,method,preserve"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "ChangeList.get_filters_params",
+        "ChangeList.get_filters",
+        "ChangeList.get_query_string",
+        "ChangeList.get_results",
+        "ChangeList.get_ordering_field",
+        "ChangeList.get_ordering",
+        "ChangeList.get_ordering_field_columns",
+        "ChangeList.get_queryset",
+        "ChangeList.apply_select_related",
+        "ChangeList.has_related_field_in_list_display",
+        "ChangeList.url_for_result"
+      ]
+    },
+    {
+      "path": "django/contrib/messages/storage/cookie.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cookie",
+        "delete",
+        "delete_cookie",
+        "header"
+      ],
+      "reasons": [
+        "stem_in_issue_text:cookie",
+        "source_content_tokens:cookie,delete,delete_cookie,header,messages"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MessageEncoder.default",
+        "MessageDecoder.process_messages",
+        "MessageDecoder.decode"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cookie",
+        "delete",
+        "does",
+        "invalid value"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:invalid value,cookie,delete,does,method"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "delete": "    def delete(self, session_key=None):\n        \"\"\"\n        Delete the session data under this key. If the key is None, use the\n        current session key value.\n        \"\"\"\n        raise NotImplementedError('subclasses of SessionBase must provide a delete() method')\n\n    def load(self):\n        \"\"\"\n        Load the session data and return a dictionary.\n        \"\"\"\n        raise NotImplementedError('subclasses of SessionBase must provide a load() method')\n\n    @classmethod\n    def clear_expired(cls):"
+      },
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/checks/messages.py",
+      "score": 17,
+      "matched_identifiers": [
+        "does",
+        "doesn",
+        "method",
+        "system"
+      ],
+      "reasons": [
+        "stem_in_issue_text:messages",
+        "source_content_tokens:does,doesn,method,system"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CheckMessage.is_serious",
+        "CheckMessage.is_silenced"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/sitemaps_tests/test_http.py",
+      "score": 19,
+      "matched_identifiers": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HttpOnly",
+        "test_path_related_to_class:HttpResponse",
+        "test_path_related_to_class:HttpResponseBase",
+        "test_path_related_to_class:SameSite",
+        "token_overlap:http,site",
+        "internal_name_overlap:site",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/test_https.py",
+      "score": 19,
+      "matched_identifiers": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HttpOnly",
+        "test_path_related_to_class:HttpResponse",
+        "test_path_related_to_class:HttpResponseBase",
+        "test_path_related_to_class:SameSite",
+        "token_overlap:http,site",
+        "internal_name_overlap:site",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/urls/http.py",
+      "score": 19,
+      "matched_identifiers": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HttpOnly",
+        "test_path_related_to_class:HttpResponse",
+        "test_path_related_to_class:HttpResponseBase",
+        "test_path_related_to_class:SameSite",
+        "token_overlap:http,site",
+        "internal_name_overlap:site",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/sitemaps_tests/urls/https.py",
+      "score": 18,
+      "matched_identifiers": [
+        "HttpOnly",
+        "HttpResponse",
+        "HttpResponseBase",
+        "SameSite"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HttpOnly",
+        "test_path_related_to_class:HttpResponse",
+        "test_path_related_to_class:HttpResponseBase",
+        "test_path_related_to_class:SameSite",
+        "token_overlap:http,site",
+        "internal_name_overlap:site"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/responses/test_cookie.py",
+      "score": 16,
+      "matched_identifiers": [
+        "HttpResponse",
+        "HttpResponseBase"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HttpResponse",
+        "test_path_related_to_class:HttpResponseBase",
+        "test_name_matches_source_stem:cookie",
+        "token_overlap:cookie,response",
+        "internal_name_overlap:cookie",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/http"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/sitemaps_tests/test_http.py:unittest_or_django_test_import",
+      "tests/sitemaps_tests/test_https.py:unittest_or_django_test_import",
+      "tests/responses/test_cookie.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2651,
+  "indexed_test_file_count": 1793,
+  "available_imports": {
+    "django": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpRequest",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "QueryDict",
+      "RawPostDataException",
+      "SimpleCookie",
+      "StreamingHttpResponse",
+      "UnreadablePostError",
+      "get_version",
+      "parse_cookie",
+      "setup"
+    ],
+    "tests.sitemaps_tests.test_http": [
+      "HTTPSitemapTests"
+    ],
+    "tests.sitemaps_tests.test_https": [
+      "HTTPSDetectionSitemapTests",
+      "HTTPSSitemapTests"
+    ],
+    "tests.responses.test_cookie": [
+      "DeleteCookieTests",
+      "SetCookieTests"
+    ],
+    "tests.sitemaps_tests.urls.https": [
+      "HTTPSSitemap"
+    ],
+    "tests.sitemaps_tests.urls.http": [
+      "DateSiteMap",
+      "EmptySitemap",
+      "FixedLastmodMixedSitemap",
+      "FixedLastmodSitemap",
+      "FixedNewerLastmodSitemap",
+      "SimpleI18nSitemap",
+      "SimplePagedSitemap",
+      "SimpleSitemap",
+      "TimezoneSiteMap",
+      "testmodelview"
+    ],
+    "django.http.response": [
+      "BadHeaderError",
+      "FileResponse",
+      "Http404",
+      "HttpResponse",
+      "HttpResponseBadRequest",
+      "HttpResponseBase",
+      "HttpResponseForbidden",
+      "HttpResponseGone",
+      "HttpResponseNotAllowed",
+      "HttpResponseNotFound",
+      "HttpResponseNotModified",
+      "HttpResponsePermanentRedirect",
+      "HttpResponseRedirect",
+      "HttpResponseRedirectBase",
+      "HttpResponseServerError",
+      "JsonResponse",
+      "StreamingHttpResponse"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.views.main": [
+      "ChangeList",
+      "ChangeListSearchForm"
+    ],
+    "django.contrib.messages.storage.cookie": [
+      "CookieStorage",
+      "MessageDecoder",
+      "MessageEncoder"
+    ],
+    "django.contrib.messages.storage": [
+      "default_storage"
+    ],
+    "django.contrib.messages": [
+      "import_string",
+      "settings"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.core": [
+      "CRITICAL",
+      "CheckMessage",
+      "Critical",
+      "DEBUG",
+      "Debug",
+      "ERROR",
+      "Error",
+      "INFO",
+      "Info",
+      "Tags",
+      "WARNING",
+      "Warning",
+      "register",
+      "run_checks",
+      "tag_exists"
+    ],
+    "django.core.checks.messages": [
+      "CheckMessage",
+      "Critical",
+      "Debug",
+      "Error",
+      "Info",
+      "Warning"
+    ]
+  },
+  "test_example_snippet": "    def test_simple_sitemap_index(self):\n        \"A simple sitemap index can be rendered\"\n        response = self.client.get('/simple/index.xml')\n        expected_content = \"\"\"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<sitemap><loc>%s/simple/sitemap-simple.xml</loc></sitemap>\n</sitemapindex>\n\"\"\" % self.base_url\n        self.assertXMLEqual(response.content.decode(), expected_content)\n\n    def test_sitemap_not_callable(self):\n        \"\"\"A sitemap may not be callable.\"\"\"\n        response = self.client.get('/simple-not-callable/index.xml')\n        expected_content = \"\"\"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<sitemap><loc>%s/simple/sitemap-simple.xml</loc></sitemap>\n</sitemapindex>\n\"\"\" % self.base_url\n        self.assertXMLEqual(response.content.decode(), expected_content)\n\n    def test_paged_sitemap(self):\n        \"\"\"A sitemap may have multiple pages.\"\"\"\n        response = self.client.get('/simple-paged/index.xml')\n        expected_content = \"\"\"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<sitemap><loc>{0}/simple/sitemap-simple.xml</loc></sitemap><sitemap><loc>{0}/simple/sitemap-simple.xml?p=2</loc></sitemap>\n</sitemapindex>\n\"\"\".format(self.base_url)\n        self.assertXMLEqual(response.content.decode(), expected_content)\n\n    @override_settings(TEMPLATES=[{\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [os.path.join(os.path.dirname(__file__), 'templates')],\n    }])\n    def test_simple_sitemap_custom_index(self):",
+  "conftest_fixtures": {}
+}

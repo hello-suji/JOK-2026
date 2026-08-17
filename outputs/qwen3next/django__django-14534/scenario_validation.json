@@ -1,0 +1,97 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/forms/boundfield.py",
+          "target_function": "subwidgets",
+          "related_classes": [
+            "BoundField",
+            "BoundWidget",
+            "CheckboxSelectMultiple"
+          ],
+          "candidate_test_file": "tests/forms_tests/tests/test_widgets.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where subwidgets can be called."
+        ],
+        "execution_stimulus": [
+          "Call subwidgets with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "one sees that self.field.widget.subwidgets(self.html_name, self.value(), attrs=attrs) returns a dict and assigns it to widget. Now widget['attrs']['id'] contains the \"id\" we would like to use when rendering the label of our CheckboxSelectMultiple.",
+        "relevant_source_files": [
+          "django/forms/boundfield.py",
+          "django/forms/widgets.py",
+          "django/contrib/admin/widgets.py"
+        ],
+        "relevant_test_files": [
+          "tests/forms_tests/tests/test_widgets.py",
+          "tests/forms_tests/widget_tests/test_checkboxselectmultiple.py",
+          "tests/forms_tests/widget_tests/test_selectmultiple.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "build_widget_attrs",
+            "get",
+            "id_for_label",
+            "subwidgets",
+            "value"
+          ],
+          "classes": [
+            "BoundField",
+            "BoundWidget",
+            "CheckboxSelectMultiple",
+            "ChoiceWidget"
+          ],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

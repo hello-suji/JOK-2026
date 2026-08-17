@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-4661",
+    "model_patch": "--- a/tests/checkers/unittest_base.py\n+++ b/tests/checkers/unittest_base.py\n@@ -678,3 +678,13 @@\n             has_six = False\n\n         self.assertFalse(has_six, \"pylint must be able to run without six\")\n+\n+import os\n+import tempfile\n+from pylint import __init__\n+\n+def test_xdg_data_home_compliance_repro():\n+    temp_dir = tempfile.mkdtemp()\n+    os.environ['XDG_DATA_HOME'] = temp_dir\n+    __init__.open('test_file')\n+    assert not os.path.exists(os.path.expanduser('~/.pylint.d'))\n",
+    "patch_sha256": "9b94c28f4dd7e762cbdf1f6f8db4d6d2d0f745447ea507fc4195a6525fbad235"
+  }
+]

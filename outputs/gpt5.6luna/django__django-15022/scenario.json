@@ -1,0 +1,119 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "_",
+      "related_classes": [
+        "CharField",
+        "ClientAdmin",
+        "ClientOffice",
+        "ForeignKey",
+        "ModelAdmin",
+        "ContentType",
+        "User",
+        "RequestFactory",
+        "AdminSite"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where _ can be called.",
+      "Use the generated reproduction path that calls _, override_settings, admin, reverse."
+    ],
+    "execution_stimulus": [
+      "Call _ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _, override_settings, admin, reverse."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/db/models/query.py",
+      "django/contrib/admin/options.py"
+    ],
+    "relevant_test_files": [
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_ordinary_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.admin.options import ModelAdmin\nfrom django.db.models import CharField, ForeignKey\nfrom django.test import TestCase\nfrom django.test.utils import override_settings\nfrom django.contrib.contenttypes.models import ContentType\n\n\nclass ClientOffice:\n    pass\n\nclass ClientAdmin(ModelAdmin):\n    search_fields = ['name']\n\n\nclass TestClientAdminSearch(TestCase):\n    @override_settings(ROOT_URLCONF='django.contrib.admin.tests.urls')\n    def test_search_with_multiple_words_repro(self):\n        from django.contrib.auth.models import User\n        from django.contrib import admin\n        from django.urls import reverse\n        from django.test.client import RequestFactory\n\n        # Register the model admin\n        site = admin.AdminSite()\n        site.register(ClientOffice, ClientAdmin)\n\n        # Create some test data\n        office1 = ClientOffice(name='Test Office One')\n        office1.save()\n        office2 = ClientOffice(name='Another Test Office')\n        office2.save()\n\n        # Setup client and request\n        factory = RequestFactory()\n        user = User.objects.create_superuser(username='super', email='super@example.com', password='secret')\n        self.client.force_login(user)\n        request = factory.get('/admin/test_app/clientoffice/?q=test+office')\n        request.user = user\n\n        # Get the changelist view\n        response = site.index(request)\n\n        # Check if both offices are in the response context\n        self.assertIn(office1, response.context['app_list'][0]['models'][0]['results'])\n        self.assertIn(office2, response.context['app_list'][0]['models'][0]['results'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_",
+        "count",
+        "override_settings",
+        "admin",
+        "reverse",
+        "register",
+        "save",
+        "create_superuser",
+        "force_login",
+        "index"
+      ],
+      "classes": [
+        "CharField",
+        "ClientAdmin",
+        "ClientOffice",
+        "ForeignKey",
+        "ModelAdmin",
+        "ContentType",
+        "User",
+        "RequestFactory",
+        "AdminSite"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "_",
+        "override_settings",
+        "admin",
+        "reverse",
+        "register",
+        "save",
+        "create_superuser",
+        "force_login"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "ClientAdmin",
+        "ClientOffice",
+        "ForeignKey",
+        "ModelAdmin",
+        "ContentType",
+        "User",
+        "RequestFactory"
+      ]
+    }
+  }
+]

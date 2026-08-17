@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4356",
+    "model_patch": "--- a/xarray/tests/test_dataarray.py\n+++ b/xarray/tests/test_dataarray.py\n@@ -6813,3 +6813,8 @@\n     assert a1.dims == (\"y\", \"x\")\n     assert set(a0.coords.keys()) == {\"x\", \"y\"}\n     assert set(a1.coords.keys()) == {\"x\"}\n+\n+def test_sum_with_min_count_multiple_dims_repro():\n+    da = xr.DataArray([[1., 2, 3], [4, 5, 6]])\n+    result = da.sum([\"dim_0\", \"dim_1\"], min_count=1)\n+    assert result == 21.0\n",
+    "patch_sha256": "e1a33e27dbc8aaa12acc377a71c041d35afad1d50611216eded058466fb5f639"
+  }
+]

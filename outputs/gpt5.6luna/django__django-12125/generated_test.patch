@@ -1,0 +1,32 @@
+--- a/tests/invalid_models_tests/test_ordinary_fields.py
++++ b/tests/invalid_models_tests/test_ordinary_fields.py
+@@ -769,3 +769,29 @@
+                 id='fields.W162',
+             )
+         ])
++
++from django.db import models
++from django.test import SimpleTestCase
++from django.db.migrations.operations.models import CreateModel
++from django.db.models.fields import AutoField, CharField
++
++
++class TestFieldPath(SimpleTestCase):
++    def test_enum_field_in_model_repro(self):
++        operation = CreateModel(
++            name='MyModel',
++            fields=[
++                ('id', AutoField(primary_key=True)),
++                ('name', CharField(max_length=100)),
++            ],
++        )
++
++        from django.db.migrations.state import ModelState
++        from django.db.migrations.writer import MigrationWriter
++
++        model_state = ModelState.from_model(operation.to_model('app_label'))
++        writer = MigrationWriter(model_state)
++        output = writer.as_string()
++
++        self.assertIn('AutoField', output)
++        self.assertIn('CharField', output)

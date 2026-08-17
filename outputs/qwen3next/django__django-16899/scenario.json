@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/admin/checks.py",
+      "target_function": "check_model_admin",
+      "related_classes": [
+        "CityInline",
+        "ModelAdmin"
+      ],
+      "candidate_test_file": "tests/modeladmin/test_checks.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.contrib.admin.options import ModelAdmin",
+      "from django.contrib.admin.checks import ModelAdminChecks",
+      "class CityInline(ModelAdmin):",
+      "    readonly_fields = ('non_existent_field',)",
+      "Use the generated reproduction path that calls check_model_admin."
+    ],
+    "execution_stimulus": [
+      "checker = ModelAdminChecks()",
+      "errors = checker.check(CityInline)",
+      "Execute the focused target API path: check_model_admin."
+    ],
+    "expected_failure": "The error message indicates the index of the value at fault but does not include the field's name.",
+    "relevant_source_files": [
+      "django/contrib/admin/options.py",
+      "django/contrib/admin/checks.py",
+      "django/contrib/auth/admin.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_inlines/admin.py",
+      "tests/generic_inline_admin/admin.py",
+      "tests/modeladmin/test_checks.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.admin.options import ModelAdmin\nfrom django.contrib.admin.checks import check_model_admin\n\n\ndef test_readonly_fields_error_message_repro():\n    class CityInline(ModelAdmin):\n        readonly_fields = ('non_existent_field',)\n    errors = check_model_admin(CityInline)\n    assert not any('readonly_fields[0]' in error.msg and 'non_existent_field' not in error.msg for error in errors)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(errors) != \"The value of 'readonly_fields[0]' is not a callable, an attribute of 'CityInline', or an attribute of 'admin_checks.City'. Other fields like list_editable, raw_id_fields, list_display, etc. would also include this value:\""
+      },
+      {
+        "language": "python",
+        "code": "def test_readonly_fields_error_message():\n    from django.contrib.admin.options import ModelAdmin\n    from django.contrib.admin.checks import ModelAdminChecks\n    class CityInline(ModelAdmin):\n        readonly_fields = ('non_existent_field',)\n    checker = ModelAdminChecks()\n    errors = checker.check(CityInline)\n    assert any('readonly_fields[0]' in str(e) and 'non_existent_field' not in str(e) for e in errors)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "The value of 'readonly_fields[0]' is not a callable, an attribute of 'CityInline', or an attribute of 'admin_checks.City'. Other fields like list_editable, raw_id_fields, list_display, etc. would also include this value:"
+    ],
+    "error_keywords": [
+      "readonly_fields[0]",
+      "non_existent_field"
+    ],
+    "identifiers": {
+      "functions": [
+        "ModelAdminChecks.check",
+        "check_model_admin"
+      ],
+      "classes": [
+        "CityInline",
+        "ModelAdmin"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "tests/modeladmin/test_checks.py",
+      "target_source_file": "django/contrib/admin/checks.py",
+      "test_visible_functions": [
+        "check_model_admin"
+      ],
+      "test_visible_classes": [
+        "CityInline",
+        "ModelAdmin"
+      ]
+    }
+  }
+]

@@ -1,0 +1,16 @@
+--- a/tests/modeladmin/tests.py
++++ b/tests/modeladmin/tests.py
+@@ -940,3 +940,13 @@
+             self.assertFalse(ma.has_module_permission(request))
+         finally:
+             ma.opts.app_label = original_app_label
++
++from django.contrib.admin.options import ModelAdmin
++from django.contrib.admin.exceptions import DisallowedModelAdminLookup
++from django.test import TestCase
++
++class TestLookupAllowedForeignPrimary(TestCase):
++    def test_lookup_allowed_foreign_primary_repro(self):
++        ma = ModelAdmin(Restaurant, None)
++        result = ma.lookup_allowed('place__country__name', 'some-value')
++        self.assertFalse(result)

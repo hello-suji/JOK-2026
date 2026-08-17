@@ -1,0 +1,547 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-10844",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "97523985b39ecde369d83352d7c3baf403b60a22",
+  "repo_path": "data/repos/scikit-learn__scikit-learn",
+  "candidate_source_files": [
+    {
+      "path": "sklearn/metrics/cluster/supervised.py",
+      "score": 37,
+      "matched_identifiers": [
+        "actual",
+        "calculate",
+        "help",
+        "learn",
+        "sklearn/metrics/cluster/supervised.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:sklearn/metrics/cluster/supervised.py",
+        "stem_in_issue_text:supervised",
+        "source_content_tokens:help,learn,actual,calculate,cluster"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "comb2",
+        "check_clusterings",
+        "contingency_matrix",
+        "adjusted_rand_score",
+        "homogeneity_completeness_v_measure",
+        "homogeneity_score",
+        "completeness_score",
+        "v_measure_score",
+        "mutual_info_score",
+        "adjusted_mutual_info_score",
+        "normalized_mutual_info_score",
+        "fowlkes_mallows_score",
+        "entropy"
+      ]
+    },
+    {
+      "path": "sklearn/feature_extraction/text.py",
+      "score": 27,
+      "matched_identifiers": [
+        "analyzer",
+        "calculate",
+        "fit",
+        "fit_transform",
+        "learn",
+        "word"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:fit_transform",
+        "stem_in_issue_text:text",
+        "source_content_tokens:learn,word,analyzer,calculate,countvectorizer"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, raw_documents, y=None):\n        \"\"\"Learn vocabulary and idf from training set.\n\n        Parameters\n        ----------\n        raw_documents : iterable\n            an iterable which yields either str, unicode or file objects\n\n        Returns\n        -------\n        self : TfidfVectorizer\n        \"\"\"\n        X = super(TfidfVectorizer, self).fit_transform(raw_documents)\n        self._tfidf.fit(X)\n        return self",
+        "fit_transform": "    def fit_transform(self, raw_documents, y=None):\n        \"\"\"Learn vocabulary and idf, return term-document matrix.\n\n        This is equivalent to fit followed by transform, but more efficiently\n        implemented.\n\n        Parameters\n        ----------\n        raw_documents : iterable\n            an iterable which yields either str, unicode or file objects\n\n        Returns\n        -------\n        X : sparse matrix, [n_samples, n_features]\n            Tf-idf-weighted document-term matrix."
+      },
+      "top_level_functions": [
+        "strip_accents_unicode",
+        "strip_accents_ascii",
+        "strip_tags",
+        "VectorizerMixin.decode",
+        "VectorizerMixin.build_preprocessor",
+        "VectorizerMixin.build_tokenizer",
+        "VectorizerMixin.get_stop_words",
+        "VectorizerMixin.build_analyzer",
+        "HashingVectorizer.partial_fit",
+        "HashingVectorizer.fit",
+        "HashingVectorizer.transform",
+        "CountVectorizer.fit",
+        "CountVectorizer.fit_transform",
+        "CountVectorizer.transform",
+        "CountVectorizer.inverse_transform",
+        "CountVectorizer.get_feature_names",
+        "TfidfTransformer.fit",
+        "TfidfTransformer.transform",
+        "TfidfTransformer.idf_",
+        "TfidfVectorizer.norm",
+        "TfidfVectorizer.use_idf",
+        "TfidfVectorizer.smooth_idf",
+        "TfidfVectorizer.sublinear_tf",
+        "TfidfVectorizer.idf_",
+        "TfidfVectorizer.fit",
+        "TfidfVectorizer.fit_transform",
+        "TfidfVectorizer.transform"
+      ]
+    },
+    {
+      "path": "benchmarks/bench_plot_nmf.py",
+      "score": 26,
+      "matched_identifiers": [
+        "fit",
+        "fit_transform",
+        "learn",
+        "scikit",
+        "scikit-learn",
+        "word"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:fit_transform",
+        "source_content_tokens:learn,scikit,scikit-learn,word,decomposition"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None, **params):\n        self.fit_transform(X, **params)\n        return self\n\n    def transform(self, X):\n        check_is_fitted(self, 'components_')\n        H = self.components_\n        W, _, self.n_iter_ = self._fit_transform(X, H=H, update_H=False)\n        return W\n\n    def inverse_transform(self, W):\n        check_is_fitted(self, 'components_')\n        return np.dot(W, self.components_)\n\n    def fit_transform(self, X, y=None, W=None, H=None):",
+        "fit_transform": "    def fit_transform(self, X, y=None, W=None, H=None):\n        W, H, self.n_iter = self._fit_transform(X, W=W, H=H, update_H=True)\n        self.components_ = H\n        return W\n\n    def _fit_transform(self, X, y=None, W=None, H=None, update_H=True):\n        X = check_array(X, accept_sparse=('csr', 'csc'))\n        check_non_negative(X, \"NMF (input X)\")\n\n        n_samples, n_features = X.shape\n        n_components = self.n_components\n        if n_components is None:\n            n_components = n_features\n\n        if (not isinstance(n_components, INTEGER_TYPES) or"
+      },
+      "top_level_functions": [
+        "_PGNMF.fit",
+        "_PGNMF.transform",
+        "_PGNMF.inverse_transform",
+        "_PGNMF.fit_transform",
+        "plot_results",
+        "bench_one",
+        "run_bench",
+        "load_20news",
+        "load_faces",
+        "build_clfs"
+      ]
+    },
+    {
+      "path": "sklearn/cluster/k_means_.py",
+      "score": 26,
+      "matched_identifiers": [
+        "fit",
+        "fit_transform",
+        "help",
+        "learn",
+        "online",
+        "runtimewarning"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:fit_transform",
+        "source_content_tokens:runtimewarning,help,learn,online,scikit"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, y=None):\n        \"\"\"Compute the centroids on X by chunking it into mini-batches.\n\n        Parameters\n        ----------\n        X : array-like or sparse matrix, shape=(n_samples, n_features)\n            Training instances to cluster. It must be noted that the data\n            will be converted to C ordering, which will cause a memory copy\n            if the given data is not C-contiguous.\n\n        y : Ignored\n\n        \"\"\"\n        random_state = check_random_state(self.random_state)\n        X = check_array(X, accept_sparse=\"csr\", order='C',",
+        "fit_transform": "    def fit_transform(self, X, y=None):\n        \"\"\"Compute clustering and transform X to cluster-distance space.\n\n        Equivalent to fit(X).transform(X), but more efficiently implemented.\n\n        Parameters\n        ----------\n        X : {array-like, sparse matrix}, shape = [n_samples, n_features]\n            New data to transform.\n\n        y : Ignored\n\n        Returns\n        -------\n        X_new : array, shape [n_samples, k]"
+      },
+      "top_level_functions": [
+        "k_means",
+        "KMeans.fit",
+        "KMeans.fit_predict",
+        "KMeans.fit_transform",
+        "KMeans.transform",
+        "KMeans.predict",
+        "KMeans.score",
+        "MiniBatchKMeans.fit",
+        "MiniBatchKMeans.partial_fit",
+        "MiniBatchKMeans.predict"
+      ]
+    },
+    {
+      "path": "sklearn/cross_decomposition/pls_.py",
+      "score": 26,
+      "matched_identifiers": [
+        "decomposition",
+        "example",
+        "feature",
+        "fit",
+        "fit_transform",
+        "learn"
+      ],
+      "reasons": [
+        "function_match:fit",
+        "function_match:fit_transform",
+        "source_content_tokens:learn,decomposition,example,feature,features"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "fit": "    def fit(self, X, Y):\n        \"\"\"Fit model to data.\n\n        Parameters\n        ----------\n        X : array-like, shape = [n_samples, n_features]\n            Training vectors, where n_samples is the number of samples and\n            n_features is the number of predictors.\n\n        Y : array-like, shape = [n_samples, n_targets]\n            Target vectors, where n_samples is the number of samples and\n            n_targets is the number of response variables.\n        \"\"\"\n        # copy since this will contains the centered data\n        check_consistent_length(X, Y)",
+        "fit_transform": "    def fit_transform(self, X, y=None):\n        \"\"\"Learn and apply the dimension reduction on the train data.\n\n        Parameters\n        ----------\n        X : array-like, shape = [n_samples, n_features]\n            Training vectors, where n_samples is the number of samples and\n            n_features is the number of predictors.\n\n        y : array-like, shape = [n_samples, n_targets]\n            Target vectors, where n_samples is the number of samples and\n            n_targets is the number of response variables.\n\n        Returns\n        -------"
+      },
+      "top_level_functions": [
+        "_PLS.fit",
+        "_PLS.transform",
+        "_PLS.predict",
+        "_PLS.fit_transform",
+        "PLSSVD.fit",
+        "PLSSVD.transform",
+        "PLSSVD.fit_transform"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "sklearn/metrics/cluster/tests/test_supervised.py",
+      "score": 45,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn/metrics",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/metrics/cluster/tests",
+        "test_name_matches_source_stem:supervised",
+        "token_overlap:cluster,metrics,sklearn,supervised",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/metrics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/metrics/cluster/tests/test_unsupervised.py",
+      "score": 41,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn/metrics",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/metrics/cluster/tests",
+        "token_overlap:cluster,metrics,sklearn,supervised",
+        "internal_name_overlap:cluster",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/metrics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/metrics/tests/test_score_objects.py",
+      "score": 38,
+      "matched_identifiers": [
+        "fit"
+      ],
+      "reasons": [
+        "test_function_match:fit",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn/metrics",
+        "same_module_area:sklearn",
+        "token_overlap:metrics,sklearn",
+        "internal_name_overlap:cluster",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/metrics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/metrics/cluster/tests/test_bicluster.py",
+      "score": 37,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn/metrics",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/metrics/cluster/tests",
+        "token_overlap:cluster,metrics,sklearn",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/metrics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "sklearn/metrics/cluster/tests/test_common.py",
+      "score": 37,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sklearn",
+        "same_module_area:sklearn",
+        "same_module_area:sklearn/metrics",
+        "same_module_area:sklearn",
+        "inferred_test_dir_match:sklearn/metrics/cluster/tests",
+        "token_overlap:cluster,metrics,sklearn",
+        "has_test_functions",
+        "explicit_source_area_match:sklearn/metrics"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "sklearn/metrics/tests/test_score_objects.py:top_level_test_functions",
+      "sklearn/metrics/cluster/tests/test_unsupervised.py:top_level_test_functions",
+      "sklearn/metrics/cluster/tests/test_common.py:pytest_import_or_conftest",
+      "sklearn/metrics/cluster/tests/test_common.py:top_level_test_functions",
+      "sklearn/metrics/cluster/tests/test_supervised.py:top_level_test_functions",
+      "sklearn/metrics/cluster/tests/test_bicluster.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 693,
+  "indexed_test_file_count": 194,
+  "available_imports": {
+    "sklearn": [
+      "AffinityPropagation",
+      "AgglomerativeClustering",
+      "Birch",
+      "DBSCAN",
+      "DictVectorizer",
+      "FeatureAgglomeration",
+      "FeatureHasher",
+      "KMeans",
+      "MeanShift",
+      "MiniBatchKMeans",
+      "SCORERS",
+      "SpectralBiclustering",
+      "SpectralClustering",
+      "SpectralCoclustering",
+      "accuracy_score",
+      "adjusted_mutual_info_score",
+      "adjusted_rand_score",
+      "affinity_propagation",
+      "auc",
+      "average_precision_score",
+      "balanced_accuracy_score",
+      "brier_score_loss",
+      "calinski_harabaz_score",
+      "check_scoring",
+      "classification_report",
+      "cluster",
+      "cohen_kappa_score",
+      "completeness_score",
+      "config_context",
+      "confusion_matrix",
+      "consensus_score",
+      "coverage_error",
+      "dbscan",
+      "estimate_bandwidth",
+      "euclidean_distances",
+      "explained_variance_score",
+      "f1_score",
+      "fbeta_score",
+      "fowlkes_mallows_score",
+      "get_bin_seeds",
+      "get_config",
+      "get_scorer",
+      "grid_to_graph",
+      "hamming_loss",
+      "hinge_loss",
+      "homogeneity_completeness_v_measure",
+      "homogeneity_score",
+      "image",
+      "img_to_graph",
+      "jaccard_similarity_score",
+      "k_means",
+      "label_ranking_average_precision_score",
+      "label_ranking_loss",
+      "linkage_tree",
+      "log_loss",
+      "make_scorer",
+      "matthews_corrcoef",
+      "mean_absolute_error",
+      "mean_shift",
+      "mean_squared_error",
+      "mean_squared_log_error",
+      "median_absolute_error",
+      "mutual_info_score",
+      "normalized_mutual_info_score",
+      "pairwise_distances",
+      "pairwise_distances_argmin",
+      "pairwise_distances_argmin_min",
+      "pairwise_kernels",
+      "precision_recall_curve",
+      "precision_recall_fscore_support",
+      "precision_score",
+      "r2_score",
+      "recall_score",
+      "roc_auc_score",
+      "roc_curve",
+      "set_config",
+      "setup_module",
+      "silhouette_samples",
+      "silhouette_score",
+      "spectral_clustering",
+      "text",
+      "v_measure_score",
+      "ward_tree",
+      "zero_one_loss"
+    ],
+    "benchmarks.bench_plot_nmf": [
+      "_PGNMF",
+      "_fit_projected_gradient",
+      "_nls_subproblem",
+      "_norm",
+      "bench_one",
+      "build_clfs",
+      "load_20news",
+      "load_faces",
+      "plot_results",
+      "run_bench"
+    ],
+    "sklearn.cluster.k_means_": [
+      "KMeans",
+      "MiniBatchKMeans",
+      "_init_centroids",
+      "_k_init",
+      "_kmeans_single_elkan",
+      "_kmeans_single_lloyd",
+      "_labels_inertia",
+      "_labels_inertia_precompute_dense",
+      "_mini_batch_convergence",
+      "_mini_batch_step",
+      "_tolerance",
+      "_validate_center_shape",
+      "k_means"
+    ],
+    "sklearn.cross_decomposition.pls_": [
+      "PLSCanonical",
+      "PLSRegression",
+      "PLSSVD",
+      "_PLS",
+      "_center_scale_xy",
+      "_nipals_twoblocks_inner_loop",
+      "_svd_cross_product"
+    ],
+    "sklearn.feature_extraction.text": [
+      "CountVectorizer",
+      "HashingVectorizer",
+      "TfidfTransformer",
+      "TfidfVectorizer",
+      "VectorizerMixin",
+      "_check_stop_list",
+      "_document_frequency",
+      "_make_int_array",
+      "strip_accents_ascii",
+      "strip_accents_unicode",
+      "strip_tags"
+    ],
+    "sklearn.metrics.cluster.supervised": [
+      "adjusted_mutual_info_score",
+      "adjusted_rand_score",
+      "check_clusterings",
+      "comb2",
+      "completeness_score",
+      "contingency_matrix",
+      "entropy",
+      "fowlkes_mallows_score",
+      "homogeneity_completeness_v_measure",
+      "homogeneity_score",
+      "mutual_info_score",
+      "normalized_mutual_info_score",
+      "v_measure_score"
+    ],
+    "sklearn.metrics": [
+      "adjusted_mutual_info_score",
+      "adjusted_rand_score",
+      "calinski_harabaz_score",
+      "completeness_score",
+      "consensus_score",
+      "contingency_matrix",
+      "entropy",
+      "expected_mutual_information",
+      "fowlkes_mallows_score",
+      "homogeneity_completeness_v_measure",
+      "homogeneity_score",
+      "mutual_info_score",
+      "normalized_mutual_info_score",
+      "silhouette_samples",
+      "silhouette_score",
+      "v_measure_score"
+    ],
+    "sklearn.metrics.tests.test_score_objects": [
+      "DummyScorer",
+      "EstimatorWithFit",
+      "EstimatorWithFitAndPredict",
+      "EstimatorWithFitAndScore",
+      "EstimatorWithoutFit",
+      "_make_estimators",
+      "check_multimetric_scoring_single_metric_wrapper",
+      "check_scorer_memmap",
+      "check_scoring_validator_for_single_metric_usecases",
+      "setup_module",
+      "teardown_module",
+      "test_all_scorers_repr",
+      "test_check_scoring_and_check_multimetric_scoring",
+      "test_check_scoring_gridsearchcv",
+      "test_classification_scores",
+      "test_deprecated_names",
+      "test_make_scorer",
+      "test_raises_on_score_list",
+      "test_regression_scorers",
+      "test_scorer_memmap_input",
+      "test_scorer_sample_weight",
+      "test_scoring_is_not_metric",
+      "test_supervised_cluster_scorers",
+      "test_thresholded_scorers",
+      "test_thresholded_scorers_multilabel_indicator_data"
+    ],
+    "sklearn.metrics.cluster.tests.test_unsupervised": [
+      "test_calinski_harabaz_score",
+      "test_cluster_size_1",
+      "test_correct_labelsize",
+      "test_non_encoded_labels",
+      "test_non_numpy_labels",
+      "test_silhouette",
+      "test_silhouette_paper_example"
+    ],
+    "sklearn.metrics.cluster.tests.test_common": [
+      "test_format_invariance",
+      "test_non_symmetry",
+      "test_normalized_output",
+      "test_permute_labels",
+      "test_symmetric_non_symmetric_union",
+      "test_symmetry"
+    ],
+    "sklearn.metrics.cluster.tests.test_supervised": [
+      "test_adjusted_mutual_info_score",
+      "test_adjustment_for_chance",
+      "test_complete_but_not_homogeneous_labeling",
+      "test_contingency_matrix",
+      "test_contingency_matrix_sparse",
+      "test_entropy",
+      "test_error_messages_on_wrong_input",
+      "test_exactly_zero_info_score",
+      "test_expected_mutual_info_overflow",
+      "test_fowlkes_mallows_score",
+      "test_fowlkes_mallows_score_properties",
+      "test_homogeneous_but_not_complete_labeling",
+      "test_int_overflow_mutual_info_score",
+      "test_non_consicutive_labels",
+      "test_not_complete_and_not_homogeneous_labeling",
+      "test_perfect_matches",
+      "test_v_measure_and_mutual_information",
+      "uniform_labelings_scores"
+    ],
+    "sklearn.metrics.cluster.tests.test_bicluster": [
+      "test_consensus_score",
+      "test_consensus_score_issue2445",
+      "test_jaccard"
+    ]
+  },
+  "test_example_snippet": "def test_error_messages_on_wrong_input():\n    for score_func in score_funcs:\n        expected = ('labels_true and labels_pred must have same size,'\n                    ' got 2 and 3')\n        assert_raise_message(ValueError, expected, score_func,\n                             [0, 1], [1, 1, 1])\n\n        expected = \"labels_true must be 1D: shape is (2\"\n        assert_raise_message(ValueError, expected, score_func,\n                             [[0, 1], [1, 0]], [1, 1, 1])\n\n        expected = \"labels_pred must be 1D: shape is (2\"\n        assert_raise_message(ValueError, expected, score_func,\n                             [0, 1, 0], [[1, 1], [0, 0]])\n\n\ndef test_perfect_matches():\n    for score_func in score_funcs:\n        assert_equal(score_func([], []), 1.0)\n        assert_equal(score_func([0], [1]), 1.0)\n        assert_equal(score_func([0, 0, 0], [0, 0, 0]), 1.0)\n        assert_equal(score_func([0, 1, 0], [42, 7, 42]), 1.0)\n        assert_equal(score_func([0., 1., 0.], [42., 7., 42.]), 1.0)\n        assert_equal(score_func([0., 1., 2.], [42., 7., 2.]), 1.0)\n        assert_equal(score_func([0, 1, 2], [42, 7, 2]), 1.0)\n\n\ndef test_homogeneous_but_not_complete_labeling():\n    # homogeneous but not complete clustering\n    h, c, v = homogeneity_completeness_v_measure(\n        [0, 0, 0, 1, 1, 1],\n        [0, 0, 0, 1, 2, 2])\n    assert_almost_equal(h, 1.00, 2)\n    assert_almost_equal(c, 0.69, 2)\n    assert_almost_equal(v, 0.81, 2)",
+  "conftest_fixtures": {}
+}

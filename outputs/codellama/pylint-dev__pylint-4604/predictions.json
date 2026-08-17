@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-4604",
+    "model_patch": "--- a/pylint/testutils/lint_module_test.py\n+++ b/pylint/testutils/lint_module_test.py\n@@ -234,3 +234,15 @@\n         assert expected_output == actual_output, self.error_msg_for_unequal_output(\n             expected_output, actual_output\n         )\n+\n+import os\n+def test_unused_import_in_assign_false_positive_repro(linter):\n+    import astroid\n+    from pylint.checkers.base import BasicErrorChecker\n+    node = astroid.parse('import os\\nX = os.path').body[1]\n+    checker = BasicErrorChecker(linter)\n+    checker.visit_assign(node)\n+    messages = linter.reporter.messages\n+    assert not any(msg.msg_id == 'unused-import' for msg in messages)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(checker) != 'W0611: Unused import abc (unused-import)'\n",
+    "patch_sha256": "7c2585f89f46a0c66a5e2462f327551abf5dbf36ae08b4cd9a1e5fdbd3ddffd6"
+  }
+]

@@ -1,0 +1,13 @@
+--- a/sklearn/model_selection/tests/test_split.py
++++ b/sklearn/model_selection/tests/test_split.py
+@@ -1571,3 +1571,10 @@
+             ValueError,
+             match='p=2 must be strictly less than the number of samples=2'):
+         next(cv.split(X, y, groups=[1, 2]))
++
++@ignore_warnings
++def test_repeated_kfold_and_repeated_stratified_kfold_repr_repro():
++    from sklearn.model_selection import RepeatedKFold, RepeatedStratifiedKFold
++
++    assert repr(RepeatedKFold()) == 'RepeatedKFold(n_splits=5, n_repeats=10, random_state=None)'
++    assert repr(RepeatedStratifiedKFold()) == 'RepeatedStratifiedKFold(n_splits=5, n_repeats=10, random_state=None)'

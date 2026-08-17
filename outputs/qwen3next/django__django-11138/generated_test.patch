@@ -1,0 +1,28 @@
+--- a/tests/model_fields/test_datetimefield.py
++++ b/tests/model_fields/test_datetimefield.py
+@@ -74,3 +74,25 @@
+     def test_datefield_cleans_date_gate(self):
+         f = models.DateField()
+         self.assertEqual(datetime.date(2008, 10, 10), f.clean('2008-10-10', None))
++
++import datetime
++from django.conf import settings
++from django.utils import timezone
++from django.db.backends.mysql.operations import DatabaseOperations
++from django.utils.timezone import make_aware
++from django.utils.dateparse import parse_datetime
++from django.test import TestCase
++
++
++class TestMySQLDateConversion(TestCase):
++    def test_mysql_date_conversion_repro(self):
++        original_time_zone = settings.TIME_ZONE
++        settings.TIME_ZONE = 'Europe/Paris'
++        try:
++            db_ops = DatabaseOperations(connection=None)
++            naive_datetime = parse_datetime('2023-01-01 12:00:00')
++            aware_datetime = make_aware(naive_datetime, timezone.get_current_timezone())
++            converted_datetime = db_ops.date(aware_datetime)
++            self.assertEqual(converted_datetime.tzinfo, timezone.get_current_timezone())
++        finally:
++            settings.TIME_ZONE = original_time_zone

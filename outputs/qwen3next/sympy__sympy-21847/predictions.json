@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-21847",
+    "model_patch": "--- a/sympy/polys/tests/test_monomials.py\n+++ b/sympy/polys/tests/test_monomials.py\n@@ -252,3 +252,17 @@\n     raises(ValueError, lambda: m**-1)\n     raises(TypeError, lambda: m.gcd(3))\n     raises(TypeError, lambda: m.lcm(3))\n+\n+from sympy import symbols\n+from sympy.polys.orderings import monomial_key\n+from sympy.polys.monomials import itermonomials\n+\n+def test_itermonomials_incorrect_output_repro():\n+    x1, x2, x3 = symbols('x1 x2 x3')\n+    states = [x1, x2, x3]\n+    max_degrees = 3\n+    min_degrees = 3\n+    monomials = sorted(itermonomials(states, max_degrees, min_degrees=min_degrees), key=monomial_key('grlex', states))\n+    assert monomials == [x1**3, x1**2*x2, x1**2*x3, x1*x2**2, x1*x2*x3, x1*x3**2, x2**3, x2**2*x3, x2*x3**2, x3**3]\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(monomials) != 'x3**3'\n",
+    "patch_sha256": "1d0206bc79e55134a73a7263e3c739babafd19993f1677c88d3756910a4548b7"
+  }
+]

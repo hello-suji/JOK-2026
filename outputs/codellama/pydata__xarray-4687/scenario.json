@@ -1,0 +1,95 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataarray.py",
+      "target_function": "xr",
+      "related_classes": [
+        "DataArray"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataarray.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where apply_ufunc can be called.",
+      "Use the generated reproduction path that calls xr, ones_like, where, ones.",
+      "Use the generated reproduction path that calls ones, where, xr, ones_like."
+    ],
+    "execution_stimulus": [
+      "Call apply_ufunc with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: xr, ones_like, where, ones.",
+      "Execute the focused target API path: ones, where, xr, ones_like."
+    ],
+    "expected_failure": "Apart from loosing attributes the dtype is not conserved. In the example the resulting DataArray has dtype np.int64 instead of np.int8. As far as I can see this might not be an xarray but a numpy problem.",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/common.py",
+      "xarray/core/computation.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_computation.py",
+      "xarray/tests/test_groupby.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nimport xarray as xr\n\ndata = xr.DataArray(np.ones([10,10], dtype=np.int8))\ndata.attrs[\"attr_1\"] = \"test1\"\ndata.attrs[\"attr_2\"] = \"test2\"\n\ndata2 = xr.where(data == 1, 5, 0)"
+      },
+      {
+        "language": "python",
+        "code": "import xarray as xr\n\nda = xr.DataArray(1)\nda.attrs['foo'] = 'bar'\nxr.where(da==0, -1, da).attrs\n# shows: {}"
+      },
+      {
+        "language": "python",
+        "code": "def test_where_preserves_attributes_and_dtype_repro(self) -> None:\n        import numpy as np\n        import xarray as xr\n        data = xr.DataArray(np.ones([10, 10], dtype=np.int8), attrs={'attr_1': 'test1', 'attr_2': 'test2'})\n        condition = xr.ones_like(data, dtype=bool)\n        result = data.where(condition)\n\n        assert result.attrs == data.attrs\n        assert result.dtype == data.dtype"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "ones",
+        "where",
+        "xr",
+        "ones_like"
+      ],
+      "classes": [
+        "DataArray"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataarray.py",
+      "target_source_file": "xarray/core/dataarray.py",
+      "test_visible_functions": [
+        "ones",
+        "where",
+        "xr",
+        "ones_like"
+      ],
+      "test_visible_classes": [
+        "DataArray"
+      ]
+    }
+  }
+]

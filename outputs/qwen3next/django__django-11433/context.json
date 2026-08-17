@@ -1,0 +1,471 @@
+{
+  "instance_id": "django__django-11433",
+  "repo": "django/django",
+  "base_commit": "21b1d239125f1228e579b1ce8d94d4d5feadd2a6",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/contrib/contenttypes/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "data",
+        "field",
+        "self",
+        "some"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:data,field,self,some,another"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GenericForeignKey.contribute_to_class",
+        "GenericForeignKey.get_filter_kwargs_for_object",
+        "GenericForeignKey.get_forward_related_filter",
+        "GenericForeignKey.check",
+        "GenericForeignKey.get_cache_name",
+        "GenericForeignKey.get_content_type",
+        "GenericForeignKey.get_prefetch_queryset",
+        "GenericRelation.check",
+        "GenericRelation.resolve_related_fields",
+        "GenericRelation.get_path_info",
+        "GenericRelation.get_reverse_path_info",
+        "GenericRelation.value_to_string",
+        "GenericRelation.contribute_to_class",
+        "GenericRelation.set_attributes_from_rel",
+        "GenericRelation.get_internal_type",
+        "GenericRelation.get_content_type",
+        "GenericRelation.get_extra_restriction",
+        "GenericRelation.bulk_related_objects",
+        "ReverseGenericManyToOneDescriptor.related_manager_cls",
+        "create_generic_related_manager"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/db/models/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allow",
+        "data",
+        "field",
+        "self"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:data,field,self,allow,cannot"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_srid_info",
+        "BaseSpatialField.deconstruct",
+        "BaseSpatialField.db_type",
+        "BaseSpatialField.spheroid",
+        "BaseSpatialField.units",
+        "BaseSpatialField.units_name",
+        "BaseSpatialField.geodetic",
+        "BaseSpatialField.get_placeholder",
+        "BaseSpatialField.get_srid",
+        "BaseSpatialField.get_db_prep_value",
+        "BaseSpatialField.get_raster_prep_value",
+        "BaseSpatialField.get_prep_value",
+        "GeometryField.deconstruct",
+        "GeometryField.contribute_to_class",
+        "GeometryField.formfield",
+        "GeometryField.select_format",
+        "ExtentField.get_internal_type",
+        "ExtentField.select_format",
+        "RasterField.db_type",
+        "RasterField.from_db_value",
+        "RasterField.contribute_to_class",
+        "RasterField.get_transform"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/forms/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cannot",
+        "data",
+        "field",
+        "self"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:data,field,self,cannot,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "GeometryField.to_python",
+        "GeometryField.clean",
+        "GeometryField.has_changed"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/gdal/field.py",
+      "score": 17,
+      "matched_identifiers": [
+        "cannot",
+        "default",
+        "field",
+        "self"
+      ],
+      "reasons": [
+        "stem_in_issue_text:field",
+        "source_content_tokens:field,self,cannot,default,fields"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Field.as_double",
+        "Field.as_int",
+        "Field.as_string",
+        "Field.as_datetime",
+        "Field.is_set",
+        "Field.name",
+        "Field.precision",
+        "Field.type",
+        "Field.type_name",
+        "Field.value",
+        "Field.width",
+        "OFTInteger.value",
+        "OFTInteger.type",
+        "OFTReal.value",
+        "OFTDate.value",
+        "OFTDateTime.value",
+        "OFTTime.value"
+      ]
+    },
+    {
+      "path": "django/db/migrations/operations/fields.py",
+      "score": 17,
+      "matched_identifiers": [
+        "allow",
+        "data",
+        "field",
+        "self"
+      ],
+      "reasons": [
+        "stem_in_issue_text:fields",
+        "source_content_tokens:data,field,self,allow,default"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "FieldOperation.model_name_lower",
+        "FieldOperation.name_lower",
+        "FieldOperation.is_same_model_operation",
+        "FieldOperation.is_same_field_operation",
+        "FieldOperation.references_model",
+        "FieldOperation.references_field",
+        "FieldOperation.reduce",
+        "AddField.deconstruct",
+        "AddField.state_forwards",
+        "AddField.database_forwards",
+        "AddField.database_backwards",
+        "AddField.describe",
+        "AddField.reduce",
+        "RemoveField.deconstruct",
+        "RemoveField.state_forwards",
+        "RemoveField.database_forwards",
+        "RemoveField.database_backwards",
+        "RemoveField.describe",
+        "RemoveField.reduce",
+        "AlterField.deconstruct",
+        "AlterField.state_forwards",
+        "AlterField.database_forwards",
+        "AlterField.database_backwards",
+        "AlterField.describe",
+        "AlterField.reduce",
+        "RenameField.old_name_lower",
+        "RenameField.new_name_lower",
+        "RenameField.deconstruct",
+        "RenameField.state_forwards",
+        "RenameField.database_forwards",
+        "RenameField.database_backwards",
+        "RenameField.describe",
+        "RenameField.references_field",
+        "RenameField.reduce"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/contenttypes_tests/test_fields.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:fields",
+        "token_overlap:contenttypes,field,fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_custom_fields.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:fields",
+        "token_overlap:field,fields",
+        "internal_name_overlap:field",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_deprecated_fields.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:fields",
+        "token_overlap:field,fields",
+        "internal_name_overlap:fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:fields",
+        "token_overlap:field,fields",
+        "internal_name_overlap:field",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/invalid_models_tests/test_relative_fields.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:fields",
+        "token_overlap:field,fields",
+        "internal_name_overlap:fields",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/contrib"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/contenttypes_tests/test_fields.py:unittest_or_django_test_import",
+      "tests/invalid_models_tests/test_relative_fields.py:unittest_or_django_test_import",
+      "tests/invalid_models_tests/test_ordinary_fields.py:unittest_or_django_test_import",
+      "tests/invalid_models_tests/test_deprecated_fields.py:unittest_or_django_test_import",
+      "tests/invalid_models_tests/test_custom_fields.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2548,
+  "indexed_test_file_count": 1720,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.contenttypes_tests.test_fields": [
+      "GenericForeignKeyTests",
+      "GenericRelationTests"
+    ],
+    "tests.invalid_models_tests.test_relative_fields": [
+      "AccessorClashTests",
+      "ComplexClashTests",
+      "ExplicitRelatedNameClashTests",
+      "ExplicitRelatedQueryNameClashTests",
+      "M2mThroughFieldsTests",
+      "RelativeFieldTests",
+      "ReverseQueryNameClashTests",
+      "SelfReferentialFKClashTests",
+      "SelfReferentialM2MClashTests"
+    ],
+    "tests.invalid_models_tests.test_ordinary_fields": [
+      "AutoFieldTests",
+      "BinaryFieldTests",
+      "CharFieldTests",
+      "DateFieldTests",
+      "DateTimeFieldTests",
+      "DecimalFieldTests",
+      "FileFieldTests",
+      "FilePathFieldTests",
+      "GenericIPAddressFieldTests",
+      "ImageFieldTests",
+      "IntegerFieldTests",
+      "TextFieldTests",
+      "TimeFieldTests"
+    ],
+    "tests.invalid_models_tests.test_deprecated_fields": [
+      "DeprecatedFieldsTests"
+    ],
+    "tests.invalid_models_tests.test_custom_fields": [
+      "CustomFieldTest"
+    ],
+    "django.db": [
+      "DefaultConnectionProxy",
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.contrib.contenttypes.fields": [
+      "GenericForeignKey",
+      "GenericRel",
+      "GenericRelation",
+      "ReverseGenericManyToOneDescriptor",
+      "create_generic_related_manager"
+    ],
+    "django.contrib.gis.forms.fields": [
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "PointField",
+      "PolygonField"
+    ],
+    "django.contrib.gis": [
+      "BaseGeometryWidget",
+      "CoordTransform",
+      "DataSource",
+      "Driver",
+      "Envelope",
+      "GDALException",
+      "GDALRaster",
+      "GDAL_VERSION",
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "OGRGeomType",
+      "OGRGeometry",
+      "OSMWidget",
+      "OpenLayersWidget",
+      "PointField",
+      "PolygonField",
+      "SRSException",
+      "SpatialReference",
+      "check_err",
+      "gdal_full_version",
+      "gdal_version"
+    ],
+    "django.contrib.gis.gdal.field": [
+      "Field",
+      "OFTBinary",
+      "OFTDate",
+      "OFTDateTime",
+      "OFTInteger",
+      "OFTInteger64",
+      "OFTInteger64List",
+      "OFTIntegerList",
+      "OFTReal",
+      "OFTRealList",
+      "OFTString",
+      "OFTStringList",
+      "OFTTime",
+      "OFTWideString",
+      "OFTWideStringList"
+    ],
+    "django.contrib.gis.db.models.fields": [
+      "BaseSpatialField",
+      "ExtentField",
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "PointField",
+      "PolygonField",
+      "RasterField",
+      "get_srid_info"
+    ],
+    "django.contrib.gis.db": [
+      "GeometryCollectionField",
+      "GeometryField",
+      "LineStringField",
+      "MultiLineStringField",
+      "MultiPointField",
+      "MultiPolygonField",
+      "PointField",
+      "PolygonField",
+      "RasterField",
+      "aggregates_all",
+      "models_all"
+    ],
+    "django.db.migrations.operations.fields": [
+      "AddField",
+      "AlterField",
+      "FieldOperation",
+      "RemoveField",
+      "RenameField"
+    ],
+    "django.db.migrations": [
+      "AddConstraint",
+      "AddField",
+      "AddIndex",
+      "AlterField",
+      "AlterIndexTogether",
+      "AlterModelManagers",
+      "AlterModelOptions",
+      "AlterModelTable",
+      "AlterOrderWithRespectTo",
+      "AlterUniqueTogether",
+      "CreateModel",
+      "DeleteModel",
+      "RemoveConstraint",
+      "RemoveField",
+      "RemoveIndex",
+      "RenameField",
+      "RenameModel",
+      "RunPython",
+      "RunSQL",
+      "SeparateDatabaseAndState"
+    ]
+  },
+  "test_example_snippet": "    def test_str(self):\n        class Model(models.Model):\n            field = GenericForeignKey()\n        self.assertEqual(str(Model.field), 'contenttypes_tests.Model.field')\n\n    def test_get_content_type_no_arguments(self):\n        with self.assertRaisesMessage(Exception, 'Impossible arguments to GFK.get_content_type!'):\n            Answer.question.get_content_type()\n\n    def test_incorrect_get_prefetch_queryset_arguments(self):\n        with self.assertRaisesMessage(ValueError, \"Custom queryset can't be used for this lookup.\"):\n            Answer.question.get_prefetch_queryset(Answer.objects.all(), Answer.objects.all())\n\n\nclass GenericRelationTests(TestCase):\n\n    def test_value_to_string(self):\n        question = Question.objects.create(text='test')\n        answer1 = Answer.objects.create(question=question)\n        answer2 = Answer.objects.create(question=question)\n        result = json.loads(Question.answer_set.field.value_to_string(question))\n        self.assertCountEqual(result, [answer1.pk, answer2.pk])",
+  "conftest_fixtures": {}
+}

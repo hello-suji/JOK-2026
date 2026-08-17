@@ -1,0 +1,19 @@
+{
+  "instance_id": "sympy__sympy-16886",
+  "observed_behavior": [],
+  "expected_behavior": [],
+  "repro_conditions": [],
+  "environment": [],
+  "identifiers": {
+    "functions": [],
+    "classes": [],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Morse encoding for \"1\" is not correct\nThe current Morse mapping in simpy.crypto.crypto contains an incorrect mapping of \n`\"----\": \"1\"`   \n\nThe correct mapping is `\".----\": \"1\"`.",
+  "code_examples": [],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

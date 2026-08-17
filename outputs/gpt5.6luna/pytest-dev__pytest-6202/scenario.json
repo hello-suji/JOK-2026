@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/python.py",
+      "target_function": "getmodpath",
+      "related_classes": [],
+      "candidate_test_file": "testing/test_doctest.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where getmodpath can be called.",
+      "Use the generated reproduction path that calls getmodpath."
+    ],
+    "execution_stimulus": [
+      "Call getmodpath with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: getmodpath."
+    ],
+    "expected_failure": "=================================== FAILURES ===================================",
+    "relevant_source_files": [
+      "src/_pytest/python.py",
+      "src/_pytest/nodes.py",
+      "src/_pytest/reports.py"
+    ],
+    "relevant_test_files": [
+      "testing/code/test_code.py",
+      "testing/test_doctest.py",
+      "testing/test_nodes.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from _pytest.python import getmodpath\n\n\ndef test_getmodpath_bug_repro():\n    result = getmodpath('..[')\n    assert result != '..['"
+      },
+      {
+        "language": "python",
+        "code": "bug.py F                                                                 [100%]\n\n=================================== FAILURES ===================================\n_________________________________ test_boo[.[] _________________________________\n\na = '..['\n\n    @pytest.mark.parametrize(\"a\",[\"..[\"])\n    def test_boo(a):\n>       assert 0\nE       assert 0\n\nbug.py:6: AssertionError\n============================== 1 failed in 0.06s ==============================="
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "getmodpath",
+        "parametrize",
+        "replace",
+        "reportinfo"
+      ],
+      "classes": [],
+      "files": [
+        "bug.py",
+        "src/_pytest/nodes.py",
+        "src/_pytest/python.py",
+        "src/_pytest/reports.py"
+      ],
+      "exceptions": [
+        "AssertionError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_doctest.py",
+      "target_source_file": "src/_pytest/python.py",
+      "test_visible_functions": [
+        "getmodpath"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

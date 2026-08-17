@@ -1,0 +1,106 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/compat.py",
+      "target_function": "from_iterable",
+      "related_classes": [
+        "Bar",
+        "Base",
+        "BaseMeta",
+        "Foo"
+      ],
+      "candidate_test_file": "testing/test_terminal.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where from_iterable can be called.",
+      "Use the generated reproduction path that calls from_iterable, pytestmark, itertools, makepyfile."
+    ],
+    "execution_stimulus": [
+      "Call from_iterable with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: from_iterable, pytestmark, itertools, makepyfile."
+    ],
+    "expected_failure": "I'd expect `foo` and `bar` to be markers for `test_dings`, but this only actually is the case with this metaclass.",
+    "relevant_source_files": [
+      "src/_pytest/compat.py",
+      "src/_pytest/main.py",
+      "src/_pytest/python.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_terminal.py",
+      "doc/en/example/nonpython/conftest.py",
+      "testing/test_compat.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import itertools\nclass TestMarkerInheritance:\n    def test_marker_inheritance_repro(self, pytester: Pytester) -> None:\n        pytester.makepyfile(\n            '''\n            import pytest\n\n            class BaseMeta(type):\n                @property\n                def pytestmark(self):\n                    return (\n                        getattr(self, \"_pytestmark\", []) +\n                        list(itertools.chain.from_iterable(getattr(x, \"_pytestmark\", []) for x in self.__mro__))\n                    )\n\n                @pytestmark.setter\n                def pytestmark(self, value):\n                    # [removed: private attribute assignment — use public API instead]\n\n            class Foo(metaclass=BaseMeta):\n                pytestmark = pytest.mark.foo\n\n            class Bar(metaclass=BaseMeta):\n                pytestmark = pytest.mark.bar\n\n            class TestDings(Foo, Bar):\n                def test_dings_repro(self):\n                    pass\n            '''\n        )\n        result = pytester.runpytest()\n        result.stdout.fnmatch_lines([\n            '*::test_dings PASSED*',\n        ])\n        result.assert_outcomes(passed=1)\n        assert 'foo' in result.stdout.str()\n        assert 'bar' in result.stdout.str()"
+      },
+      {
+        "language": "python",
+        "code": "import itertools\nimport pytest\n\nclass BaseMeta(type):\n    @property\n    def pytestmark(self):\n        return (\n            getattr(self, \"_pytestmark\", []) +\n            list(itertools.chain.from_iterable(getattr(x, \"_pytestmark\", []) for x in self.__mro__))\n        )\n\n    @pytestmark.setter\n    def pytestmark(self, value):\n        self._pytestmark = value\n\n\nclass Base(object):\n    # Without this metaclass, foo and bar markers override each other, and test_dings\n    # will only have one marker\n    # With the metaclass, test_dings will have both\n    __metaclass__ = BaseMeta\n\n@pytest.mark.foo\nclass Foo(Base):\n    pass\n\n\n@pytest.mark.bar\nclass Bar(Base):\n    pass\n\nclass TestDings(Foo, Bar):\n    def test_dings(self):\n        # This test should have both markers, foo and bar.\n        # In practice markers are resolved using MRO (so foo wins), unless the\n        # metaclass is applied\n        pass"
+      },
+      {
+        "language": "python",
+        "code": "import itertools\nimport pytest\n\nclass BaseMeta(type):\n    @property\n    def pytestmark(self):\n        return (\n            getattr(self, \"_pytestmark\", []) +\n            list(itertools.chain.from_iterable(getattr(x, \"_pytestmark\", []) for x in self.__mro__))\n        )\n\n    @pytestmark.setter\n    def pytestmark(self, value):\n        self._pytestmark = value\n\n\nclass Base(object):\n    # Without this metaclass, foo and bar markers override each other, and test_dings\n    # will only have one marker\n    # With the metaclass, test_dings will have both\n    __metaclass__ = BaseMeta\n\n@pytest.mark.foo\nclass Foo(Base):\n    pass\n\n\n@pytest.mark.bar\nclass Bar(Base):\n    pass\n\nclass TestDings(Foo, Bar):\n    def test_dings(self):\n        # This test should have both markers, foo and bar.\n        # In practice markers are resolved using MRO (so foo wins), unless the\n        # metaclass is applied\n        pass"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "from_iterable",
+        "pytestmark",
+        "itertools",
+        "makepyfile",
+        "runpytest",
+        "fnmatch_lines"
+      ],
+      "classes": [
+        "Bar",
+        "Base",
+        "BaseMeta",
+        "Foo"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "testing/test_terminal.py",
+      "target_source_file": "src/_pytest/compat.py",
+      "test_visible_functions": [
+        "from_iterable",
+        "pytestmark",
+        "itertools",
+        "makepyfile",
+        "runpytest",
+        "fnmatch_lines"
+      ],
+      "test_visible_classes": [
+        "Bar",
+        "Base",
+        "BaseMeta",
+        "Foo"
+      ]
+    }
+  }
+]

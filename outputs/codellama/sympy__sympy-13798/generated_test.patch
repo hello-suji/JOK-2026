@@ -1,0 +1,17 @@
+--- a/sympy/printing/tests/test_latex.py
++++ b/sympy/printing/tests/test_latex.py
+@@ -1693,3 +1693,14 @@
+     from sympy.diffgeom import WedgeProduct
+     wp = WedgeProduct(R2.dx, R2.dy)
+     assert latex(wp) == r"\mathrm{d}x \wedge \mathrm{d}y"
++
++from sympy import symbols, Integral, latex
++
++def test_custom_mul_symbol_repro():
++    x, y = symbols('x y')
++    expr = 3 * x**2 * y
++    integral_expr = Integral(2 * x**2 * y, x)
++    assert latex(expr, mul_symbol='\,') == '3 \, x^{2} \, y'
++    assert latex(integral_expr) == '\int 2 x^{2} y\, dx'
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(integral_expr) != "'\\\\int 2 x^{2} y\\\\, dx' # This thin space is sympy's current behavior"

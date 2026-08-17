@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/physics/quantum/operator.py",
+      "target_function": "",
+      "related_classes": [
+        "Dagger",
+        "Identity",
+        "IdentityOperator",
+        "Operator"
+      ],
+      "candidate_test_file": "sympy/physics/quantum/tests/test_operator.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "As discussed on the mailing list the following does not work.",
+    "relevant_source_files": [
+      "sympy/physics/quantum/operator.py",
+      "sympy/physics/secondquant.py",
+      "sympy/physics/quantum/dagger.py"
+    ],
+    "relevant_test_files": [
+      "sympy/physics/quantum/tests/test_operator.py",
+      "sympy/physics/quantum/tests/test_dagger.py",
+      "sympy/physics/quantum/tests/test_operatorset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.physics.quantum.dagger import Dagger\nfrom sympy.physics.quantum.operator import Operator\nfrom sympy.physics.quantum import IdentityOperator\nA = Operators('A')\nIdentity = IdentityOperator()\nA * Identity #This gives A, correctly\nB = Dagger(A)\nB * Identity #This returns A^\\dagger I"
+      },
+      {
+        "language": "python",
+        "code": "from sympy.physics.quantum.dagger import Dagger\nfrom sympy.physics.quantum.operator import Operator\nfrom sympy.physics.quantum import IdentityOperator\n\ndef test_dagger_identity_simplification_repro():\n    A = Operator('A')\n    Identity = IdentityOperator()\n    B = Dagger(A)\n    result = B * Identity\n    assert result == Dagger(A)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "Dagger",
+        "Identity",
+        "IdentityOperator",
+        "Operator",
+        "Operators"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/physics/quantum/tests/test_operator.py",
+      "target_source_file": "sympy/physics/quantum/operator.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "Dagger",
+        "Identity",
+        "IdentityOperator",
+        "Operator"
+      ]
+    }
+  }
+]

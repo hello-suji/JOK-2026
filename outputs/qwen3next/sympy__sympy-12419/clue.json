@@ -1,0 +1,48 @@
+{
+  "instance_id": "sympy__sympy-12419",
+  "observed_behavior": [],
+  "expected_behavior": [
+    "I created a matrix by M.T * M under an assumption that M is orthogonal.  SymPy successfully recognized that the result is an identity matrix.  I tested its identity-ness by element-wise, queries, and sum of the diagonal elements and received expected results.",
+    "However, when I attempt to evaluate the total sum of the elements the result was 0 while 'n' is expected.",
+    "# Total sum of the elements is expected to be 'n' but the answer is 0!"
+  ],
+  "repro_conditions": [
+    "However, when I attempt to evaluate the total sum of the elements the result was 0 while 'n' is expected."
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "ask",
+      "assuming",
+      "diagonal",
+      "doit",
+      "integer_elements",
+      "orthogonal",
+      "refine",
+      "symbols"
+    ],
+    "classes": [
+      "MatrixSymbol",
+      "Query",
+      "Sum",
+      "SymPy",
+      "Symbol",
+      "Total"
+    ],
+    "files": [],
+    "exceptions": []
+  },
+  "raw_issue_text": "Sum of the elements of an identity matrix is zero\nI think this is a bug.\n\nI created a matrix by M.T * M under an assumption that M is orthogonal.  SymPy successfully recognized that the result is an identity matrix.  I tested its identity-ness by element-wise, queries, and sum of the diagonal elements and received expected results.\n\nHowever, when I attempt to evaluate the total sum of the elements the result was 0 while 'n' is expected.\n\n```\nfrom sympy import *\nfrom sympy import Q as Query\n\nn = Symbol('n', integer=True, positive=True)\ni, j = symbols('i j', integer=True)\nM = MatrixSymbol('M', n, n)\n\ne = None\nwith assuming(Query.orthogonal(M)):\n    e = refine((M.T * M).doit())\n\n# Correct: M.T * M is an identity matrix.\nprint(e, e[0, 0], e[0, 1], e[1, 0], e[1, 1])\n\n# Correct: The output is True True\nprint(ask(Query.diagonal(e)), ask(Query.integer_elements(e)))\n\n# Correct: The sum of the diagonal elements is n\nprint(Sum(e[i, i], (i, 0, n-1)).doit())\n\n# So far so good\n# Total sum of the elements is expected to be 'n' but the answer is 0!\nprint(Sum(Sum(e[i, j], (i, 0, n-1)), (j, 0, n-1)).doit())\n```",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "from sympy import *\nfrom sympy import Q as Query\n\nn = Symbol('n', integer=True, positive=True)\ni, j = symbols('i j', integer=True)\nM = MatrixSymbol('M', n, n)\n\ne = None\nwith assuming(Query.orthogonal(M)):\n    e = refine((M.T * M).doit())\n\n# Correct: M.T * M is an identity matrix.\nprint(e, e[0, 0], e[0, 1], e[1, 0], e[1, 1])\n\n# Correct: The output is True True\nprint(ask(Query.diagonal(e)), ask(Query.integer_elements(e)))\n\n# Correct: The sum of the diagonal elements is n\nprint(Sum(e[i, i], (i, 0, n-1)).doit())\n\n# So far so good\n# Total sum of the elements is expected to be 'n' but the answer is 0!\nprint(Sum(Sum(e[i, j], (i, 0, n-1)), (j, 0, n-1)).doit())",
+      "context_before": "However, when I attempt to evaluate the total sum of the elements the result was 0 while 'n' is expected.",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [],
+  "error_keywords": [],
+  "fault_locations": []
+}

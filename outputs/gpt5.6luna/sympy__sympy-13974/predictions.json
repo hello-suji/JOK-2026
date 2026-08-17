@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-13974",
+    "model_patch": "--- a/sympy/physics/quantum/tests/test_tensorproduct.py\n+++ b/sympy/physics/quantum/tests/test_tensorproduct.py\n@@ -105,3 +105,17 @@\n                         1.0*A*Dagger(C)*Tr(B*Dagger(D)) +\n                         1.0*C*Dagger(A)*Tr(D*Dagger(B)) +\n                         1.0*C*Dagger(C)*Tr(D*Dagger(D)))\n+\n+import re\n+def test_tensor_product_power_evaluation_repro():\n+    from sympy.physics.paulialgebra import Pauli\n+    from sympy.core.symbol import Symbol\n+    from sympy.physics.quantum.tensorproduct import TensorProduct as TP\n+\n+    a = Symbol('a', commutative=False)\n+    t1 = TP(Pauli(1), Pauli(1))\n+    t2 = t1**2\n+\n+    # Expected behavior after the bug is fixed\n+    assert t2.expand() == TP(Pauli(1), Pauli(1)).expand()\n+    assert t2.subs(a, 1).expand() == TP(Pauli(1), Pauli(1)).subs(a, 1).expand()\n",
+    "patch_sha256": "40e226367e597c77de88619253d2e946610bfdfbcea69338b3025c3872c5d279"
+  }
+]

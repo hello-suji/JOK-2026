@@ -1,0 +1,110 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/pyplot.py",
+      "target_function": "plot",
+      "related_classes": [
+        "Line2D",
+        "MacOSX",
+        "Rectangle"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where plot can be called.",
+      "Use the generated reproduction path that calls add_patch, figure, plot, plt."
+    ],
+    "execution_stimulus": [
+      "Call plot with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_patch, figure, plot, plt."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/backends/backend_macosx.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_lines.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import numpy as np\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Rectangle\n\n@check_figures_equal(extensions=[\"png\"])\ndef test_patch_offset_dash_repro(fig_test, fig_ref):\n    ax_test = fig_test.add_subplot()\n    ax_ref = fig_ref.add_subplot()\n\n    rect_test = Rectangle((0.5, 0.5), 1, 1, alpha=0.5, edgecolor='r', linewidth=4, linestyle=(0, (10, 10)))\n    rect_ref = Rectangle((0.5, 0.5), 1, 1, alpha=0.5, edgecolor='b', linewidth=4, linestyle=(10, (10, 10)))\n\n    ax_test.add_patch(rect_test)\n    ax_ref.add_patch(rect_ref)\n\n    assert rect_test.get_edgecolor() == 'r'\n    assert rect_ref.get_edgecolor() == 'b'"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nimport matplotlib as mpl\n\nplt.figure(figsize=(10,10))\nax = plt.gca()\nax.add_patch(mpl.patches.Rectangle((0.5,0.5),1,1, alpha=0.5, edgecolor = 'r', linewidth=4, ls=(0,(10,10))))\nax.add_patch(mpl.patches.Rectangle((0.5,0.5),1,1, alpha=0.5, edgecolor = 'b', linewidth=4, ls=(10,(10,10))))\nplt.ylim([0,2])\nplt.xlim([0,2])\nplt.show()"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nimport matplotlib as mpl\nimport numpy as np\n\nax_g = plt.gca()\n\nx = np.linspace(0, np.pi*4, 100)\ny = np.sin(x+np.pi/2)\nz = np.sin(x+np.pi/4)\nw = np.sin(x)\n\nplt.plot(x, y, ls=(0, (10, 10)), color='b')\nplt.plot(x, y, ls=(10, (10, 10)), color='r')\nplt.show()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add_patch",
+        "figure",
+        "gca",
+        "linspace",
+        "plot",
+        "show",
+        "sin",
+        "xlim",
+        "ylim",
+        "plt",
+        "check_figures_equal",
+        "add_subplot",
+        "get_edgecolor"
+      ],
+      "classes": [
+        "Line2D",
+        "MacOSX",
+        "Rectangle"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_figure.py",
+      "target_source_file": "lib/matplotlib/pyplot.py",
+      "test_visible_functions": [
+        "add_patch",
+        "figure",
+        "plot",
+        "plt",
+        "check_figures_equal",
+        "add_subplot",
+        "get_edgecolor"
+      ],
+      "test_visible_classes": [
+        "Rectangle"
+      ]
+    }
+  }
+]

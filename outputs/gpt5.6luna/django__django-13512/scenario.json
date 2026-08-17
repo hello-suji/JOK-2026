@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/core/signing.py",
+      "target_function": "dumps",
+      "related_classes": [
+        "JSONFields",
+        "JsonField",
+        "ZhaoQi99"
+      ],
+      "candidate_test_file": "tests/admin_scripts/test_django_admin_py.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where dumps can be called.",
+      "Use the generated reproduction path that calls dumps."
+    ],
+    "execution_stimulus": [
+      "Call dumps with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: dumps."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/core/signing.py",
+      "django/contrib/gis/db/models/fields.py",
+      "django/db/models/fields/json.py"
+    ],
+    "relevant_test_files": [
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nimport re\nfrom django.core.signing import dumps\n\nclass TestJSONFieldUnicodeDisplay(SimpleTestCase):\n    def test_jsonfield_unicode_display_repro(self):\n        original_data = {'country': '中国'}\n        serialized_data = dumps(original_data)\n        self.assertNotIn('\\u4e2d\\u56fd', serialized_data)\n        self.assertIn('中国', serialized_data)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "dumps"
+      ],
+      "classes": [
+        "JSONFields",
+        "JsonField",
+        "ZhaoQi99"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/admin_scripts/test_django_admin_py.py",
+      "target_source_file": "django/core/signing.py",
+      "test_visible_functions": [
+        "dumps"
+      ],
+      "test_visible_classes": [
+        "JsonField"
+      ]
+    }
+  }
+]

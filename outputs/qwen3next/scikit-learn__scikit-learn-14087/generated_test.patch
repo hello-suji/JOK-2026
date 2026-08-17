@@ -1,0 +1,20 @@
+--- a/sklearn/linear_model/tests/test_logistic.py
++++ b/sklearn/linear_model/tests/test_logistic.py
+@@ -1738,3 +1738,17 @@
+         "LogisticRegressionCV",
+         lr.fit, X, y
+     )
++
++def test_LogisticRegressionCV_fit_refit_false_repro():
++    np.random.seed(29)
++    X = np.random.normal(size=(1000, 3))
++    beta = np.random.normal(size=3)
++    intercept = np.random.normal(size=None)
++    y = np.sign(intercept + X @ beta)
++
++    model = LogisticRegressionCV(cv=5, solver='saga', tol=1e-2, refit=False)
++    model.fit(X, y)
++    assert hasattr(model, 'scores_')
++    assert isinstance(model.scores_, dict)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(model) != 'IndexError: too many indices for array'

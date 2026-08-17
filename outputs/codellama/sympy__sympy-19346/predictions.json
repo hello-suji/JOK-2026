@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-19346",
+    "model_patch": "--- a/sympy/core/tests/test_symbol.py\n+++ b/sympy/core/tests/test_symbol.py\n@@ -381,3 +381,10 @@\n     assert disambiguate(*t7) == (y*y_1, y_1)\n     assert disambiguate(Dummy('x_1'), Dummy('x_1')\n         ) == (x_1, Symbol('x_1_1'))\n+\n+from sympy import srepr\n+from sympy.abc import x, y\n+\n+def test_srepr_dict_set_repro():\n+    assert srepr({x, y}) == \"FiniteSet(Symbol('x'), Symbol('y'))\"\n+    assert srepr({x: y}) == \"{Symbol('x'): Symbol('y')}\"\n",
+    "patch_sha256": "28e55585486e03cb9fd02f47f48e2da4739312548d4702783651ee2f95f20961"
+  }
+]

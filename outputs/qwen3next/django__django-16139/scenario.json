@@ -1,0 +1,96 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/contrib/auth/forms.py",
+      "target_function": "_",
+      "related_classes": [
+        "ModelForm",
+        "PasswordResetForm",
+        "ReadOnlyPasswordHashField",
+        "UserAdmin",
+        "User"
+      ],
+      "candidate_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls _, get, create_user, get_form."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _, get, create_user, get_form."
+    ],
+    "expected_failure": "This results in the link to the PasswordResetForm being wrong and thus ending up in a 404. If we drop the assumption that UserAdmin is always accessed via its pk, then we're good to go. It's as simple as replacing password.help_text = password.help_text.format(\"../password/\") with password.help_text = password.help_text.format(f\"../../{self.instance.pk}/password/\")",
+    "relevant_source_files": [
+      "django/contrib/auth/forms.py",
+      "django/utils/translation/trans_real.py",
+      "django/conf/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/__init__.py",
+      "tests/forms_tests/field_tests/filepathfield_test_dir/c/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.contrib.auth.admin import UserAdmin\nfrom django.contrib.auth.models import User\nfrom django.test import TestCase\n\n\nclass TestUserAdminPasswordLink(TestCase):\n    def test_password_reset_link_with_to_field_repro(self):\n        user = User.objects.create_user(username='testuser', password='testpass')\n        user_admin = UserAdmin(User, None)\n        form = user_admin.get_form(None, obj=user)()\n        password_field = form.fields['password']\n        self.assertNotIn('../password/', password_field.help_text)\n        self.assertIn(f'../../{user.pk}/password/', password_field.help_text)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "_",
+        "__init__",
+        "create_user",
+        "get_form"
+      ],
+      "classes": [
+        "ModelForm",
+        "PasswordResetForm",
+        "ReadOnlyPasswordHashField",
+        "UserAdmin",
+        "UserChangeForm",
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/forms_tests/field_tests/__init__.py",
+      "target_source_file": "django/contrib/auth/forms.py",
+      "test_visible_functions": [
+        "_",
+        "get",
+        "create_user",
+        "get_form"
+      ],
+      "test_visible_classes": [
+        "UserAdmin",
+        "User"
+      ]
+    }
+  }
+]

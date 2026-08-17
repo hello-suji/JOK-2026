@@ -1,0 +1,101 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/backends/sqlite3/base.py",
+      "target_function": "execute",
+      "related_classes": [
+        "SQLite",
+        "DatabaseWrapper"
+      ],
+      "candidate_test_file": "tests/backends/sqlite/test_introspection.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where convert_query can be called.",
+      "Use the generated reproduction path that calls execute, fetchall, foreign_key_check, cursor."
+    ],
+    "execution_stimulus": [
+      "Call convert_query with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: execute, fetchall, foreign_key_check, cursor."
+    ],
+    "expected_failure": "Notice that it fails with the following error. This is because the table name order is not quoted properly",
+    "relevant_source_files": [
+      "django/db/backends/sqlite3/base.py",
+      "django/db/backends/utils.py",
+      "django/core/management/base.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/sqlite/test_introspection.py",
+      "tests/backends/sqlite/test_operations.py",
+      "tests/backends/sqlite/tests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_foreign_key_check_raises_operational_error_repro():\n    from django.db.backends.sqlite3.base import DatabaseWrapper\n    db_wrapper = DatabaseWrapper({})\n    cursor = db_wrapper.cursor()\n    try:\n        cursor.execute('PRAGMA foreign_key_check')\n        result = cursor.fetchall()\n    except db_wrapper.connection.OperationalError as e:\n        assert isinstance(e, db_wrapper.connection.OperationalError)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "OperationalError"
+    ],
+    "identifiers": {
+      "functions": [
+        "execute",
+        "fetchall",
+        "foreign_key_check",
+        "foreign_key_list",
+        "from_iterable",
+        "cursor",
+        "isinstance"
+      ],
+      "classes": [
+        "SQLite",
+        "DatabaseWrapper"
+      ],
+      "files": [
+        "7/site-packages/django/db/backends/sqlite3/base.py",
+        "7/site-packages/django/db/backends/utils.py",
+        "manage.py"
+      ],
+      "exceptions": [
+        "OperationalError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/sqlite/test_introspection.py",
+      "target_source_file": "django/db/backends/sqlite3/base.py",
+      "test_visible_functions": [
+        "execute",
+        "fetchall",
+        "foreign_key_check",
+        "cursor",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "SQLite",
+        "DatabaseWrapper"
+      ]
+    }
+  }
+]

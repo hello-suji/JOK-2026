@@ -1,0 +1,393 @@
+{
+  "instance_id": "django__django-15252",
+  "repo": "django/django",
+  "base_commit": "361bb8f786f112ee275be136795c0b1ecefff928",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/migrations/recorder.py",
+      "score": 46,
+      "matched_identifiers": [
+        "MigrationRecorder",
+        "applied",
+        "applied_migrations",
+        "connection",
+        "default",
+        "django/db/migrations/recorder.py",
+        "ensure_schema"
+      ],
+      "reasons": [
+        "function_match:ensure_schema",
+        "class_match:MigrationRecorder",
+        "explicit_file_path_hint:django/db/migrations/recorder.py",
+        "stem_in_issue_text:recorder",
+        "source_content_tokens:default,applied,applied_migrations,connection,create"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "MigrationRecorder": "class MigrationRecorder:\n    \"\"\"\n    Deal with storing migration records in the database.\n\n    Because this table is actually itself used for dealing with model\n    creation, it's the one thing we can't do normally via migrations.\n    We manually handle table creation/schema updating (using schema backend)\n    and then have a floating model to do queries with.\n\n    If a migration is unapplied its row is removed from the table. Having\n    a row in the table always means a migration is applied.\n    \"\"\"\n    _migration_class = None\n\n    @classproperty",
+        "ensure_schema": "    def ensure_schema(self):\n        \"\"\"Ensure the table exists and has the correct schema.\"\"\"\n        # If the table's there, that's fine - we've never changed its schema\n        # in the codebase.\n        if self.has_table():\n            return\n        # Make the table\n        try:\n            with self.connection.schema_editor() as editor:\n                editor.create_model(self.Migration)\n        except DatabaseError as exc:\n            raise MigrationSchemaMissing(\"Unable to create the django_migrations table (%s)\" % exc)\n\n    def applied_migrations(self):\n        \"\"\"",
+        "applied_migrations": "    def applied_migrations(self):\n        \"\"\"\n        Return a dict mapping (app_name, migration_name) to Migration instances\n        for all applied migrations.\n        \"\"\"\n        if self.has_table():\n            return {(migration.app, migration.name): migration for migration in self.migration_qs}\n        else:\n            # If the django_migrations table doesn't exist, then no migrations\n            # are applied.\n            return {}\n\n    def record_applied(self, app, name):\n        \"\"\"Record that a migration was applied.\"\"\"\n        self.ensure_schema()"
+      },
+      "top_level_functions": [
+        "MigrationRecorder.Migration",
+        "MigrationRecorder.migration_qs",
+        "MigrationRecorder.has_table",
+        "MigrationRecorder.ensure_schema",
+        "MigrationRecorder.applied_migrations",
+        "MigrationRecorder.record_applied",
+        "MigrationRecorder.record_unapplied",
+        "MigrationRecorder.flush"
+      ]
+    },
+    {
+      "path": "django/db/migrations/executor.py",
+      "score": 37,
+      "matched_identifiers": [
+        "allow",
+        "allow_migrate",
+        "applied",
+        "applied_migrations",
+        "django/db/migrations/executor.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:django/db/migrations/executor.py",
+        "stem_in_issue_text:executor",
+        "source_content_tokens:allow,allow_migrate,applied,applied_migrations,apply"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "MigrationExecutor.migration_plan",
+        "MigrationExecutor.migrate",
+        "MigrationExecutor.apply_migration",
+        "MigrationExecutor.record_migration",
+        "MigrationExecutor.unapply_migration",
+        "MigrationExecutor.check_replacements",
+        "MigrationExecutor.detect_soft_applied"
+      ]
+    },
+    {
+      "path": "django/test/runner.py",
+      "score": 37,
+      "matched_identifiers": [
+        "above",
+        "allow",
+        "applied",
+        "default",
+        "django/test/runner.py"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:django/test/runner.py",
+        "stem_in_issue_text:runner",
+        "source_content_tokens:default,above,allow,applied,backends"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DebugSQLTextTestResult.startTest",
+        "DebugSQLTextTestResult.stopTest",
+        "DebugSQLTextTestResult.addError",
+        "DebugSQLTextTestResult.addFailure",
+        "DebugSQLTextTestResult.addSubTest",
+        "DebugSQLTextTestResult.printErrorList",
+        "PDBDebugResult.addError",
+        "PDBDebugResult.addFailure",
+        "PDBDebugResult.addSubTest",
+        "PDBDebugResult.debug",
+        "DummyList.append",
+        "RemoteTestResult.test_index",
+        "RemoteTestResult.check_picklable",
+        "RemoteTestResult.check_subtest_picklable",
+        "RemoteTestResult.startTestRun",
+        "RemoteTestResult.stopTestRun",
+        "RemoteTestResult.startTest",
+        "RemoteTestResult.stopTest",
+        "RemoteTestResult.addError",
+        "RemoteTestResult.addFailure",
+        "RemoteTestResult.addSubTest",
+        "RemoteTestResult.addSuccess",
+        "RemoteTestResult.addSkip",
+        "RemoteTestResult.addExpectedFailure",
+        "RemoteTestResult.addUnexpectedSuccess",
+        "RemoteTestResult.wasSuccessful",
+        "RemoteTestRunner.run",
+        "get_max_test_processes",
+        "parallel_type",
+        "ParallelTestSuite.run",
+        "Shuffler.seed_display",
+        "Shuffler.shuffle",
+        "DiscoverRunner.add_arguments",
+        "DiscoverRunner.shuffle_seed",
+        "DiscoverRunner.log",
+        "DiscoverRunner.setup_test_environment",
+        "DiscoverRunner.setup_shuffler",
+        "DiscoverRunner.load_with_patterns",
+        "DiscoverRunner.load_tests_for_label",
+        "DiscoverRunner.build_suite"
+      ]
+    },
+    {
+      "path": "django/db/backends/base/creation.py",
+      "score": 27,
+      "matched_identifiers": [
+        "allow",
+        "allow_migrate",
+        "called",
+        "default",
+        "django/db/backends/creation.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/creation.py",
+        "stem_in_issue_text:creation",
+        "source_content_tokens:default,allow,allow_migrate,called,checks"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "BaseDatabaseCreation.log",
+        "BaseDatabaseCreation.create_test_db",
+        "BaseDatabaseCreation.set_as_test_mirror",
+        "BaseDatabaseCreation.serialize_db_to_string",
+        "BaseDatabaseCreation.deserialize_db_from_string",
+        "BaseDatabaseCreation.clone_test_db",
+        "BaseDatabaseCreation.get_test_db_clone_settings",
+        "BaseDatabaseCreation.destroy_test_db",
+        "BaseDatabaseCreation.mark_expected_failures_and_skips",
+        "BaseDatabaseCreation.sql_table_creation_suffix",
+        "BaseDatabaseCreation.test_db_signature"
+      ]
+    },
+    {
+      "path": "django/db/backends/oracle/creation.py",
+      "score": 27,
+      "matched_identifiers": [
+        "allow",
+        "backends",
+        "connection",
+        "default",
+        "django/db/backends/creation.py"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/creation.py",
+        "stem_in_issue_text:creation",
+        "source_content_tokens:default,allow,backends,connection,create"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseCreation.set_as_test_mirror",
+        "DatabaseCreation.test_db_signature"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/migrations/test_executor.py",
+      "score": 15,
+      "matched_identifiers": [
+        "MigrationRecorder"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationRecorder",
+        "test_name_matches_source_stem:executor",
+        "token_overlap:executor,migration,migrations",
+        "internal_name_overlap:migration",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/oracle/test_creation.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:creation",
+        "token_overlap:backends,creation,oracle",
+        "internal_name_overlap:creation",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/test_multidb.py",
+      "score": 12,
+      "matched_identifiers": [
+        "MigrationRecorder",
+        "allow_migrate"
+      ],
+      "reasons": [
+        "test_function_match:allow_migrate",
+        "test_path_related_to_class:MigrationRecorder",
+        "token_overlap:migration,migrations",
+        "internal_name_overlap:migrate",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/migrations/routers.py",
+      "score": 11,
+      "matched_identifiers": [
+        "MigrationRecorder",
+        "allow_migrate"
+      ],
+      "reasons": [
+        "test_function_match:allow_migrate",
+        "test_path_related_to_class:MigrationRecorder",
+        "token_overlap:migration,migrations",
+        "internal_name_overlap:migrate",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/app_unmigrated/migrations/0001_initial.py",
+      "score": 10,
+      "matched_identifiers": [
+        "MigrationRecorder"
+      ],
+      "reasons": [
+        "test_path_related_to_class:MigrationRecorder",
+        "token_overlap:backends,migrate,migration,migrations",
+        "internal_name_overlap:migration",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/migrations/routers.py:testcase_class:TestRouter",
+      "tests/migrations/test_executor.py:unittest_or_django_test_import",
+      "tests/migrations/test_multidb.py:unittest_or_django_test_import",
+      "tests/backends/oracle/test_creation.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2729,
+  "indexed_test_file_count": 1863,
+  "available_imports": {
+    "django": [
+      "AsyncClient",
+      "AsyncRequestFactory",
+      "Client",
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "LiveServerTestCase",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "RequestFactory",
+      "SimpleTestCase",
+      "TestCase",
+      "TransactionTestCase",
+      "connection",
+      "connections",
+      "get_version",
+      "ignore_warnings",
+      "modify_settings",
+      "override_settings",
+      "override_system_checks",
+      "router",
+      "setup",
+      "signals",
+      "skipIfDBFeature",
+      "skipUnlessAnyDBFeature",
+      "skipUnlessDBFeature",
+      "tag"
+    ],
+    "tests.migrations.routers": [
+      "DefaultOtherRouter",
+      "TestRouter"
+    ],
+    "tests.migrations.test_executor": [
+      "ExecutorTests",
+      "ExecutorUnitTests",
+      "FakeLoader",
+      "FakeMigration"
+    ],
+    "tests.migrations.test_multidb": [
+      "AgnosticRouter",
+      "MigrateEverythingRouter",
+      "MigrateNothingRouter",
+      "MigrateWhenFooRouter",
+      "MultiDBOperationTests"
+    ],
+    "tests.backends.oracle.test_creation": [
+      "DatabaseCreationTests"
+    ],
+    "tests.backends.base.app_unmigrated.migrations.0001_initial": [
+      "Migration"
+    ],
+    "django.test.runner": [
+      "DebugSQLTextTestResult",
+      "DiscoverRunner",
+      "DummyList",
+      "PDBDebugResult",
+      "ParallelTestSuite",
+      "RemoteTestResult",
+      "RemoteTestRunner",
+      "Shuffler",
+      "_class_shuffle_key",
+      "_init_worker",
+      "_run_subsuite",
+      "filter_tests_by_tags",
+      "find_top_level",
+      "get_max_test_processes",
+      "parallel_type",
+      "partition_suite_by_case",
+      "reorder_test_bin",
+      "reorder_tests",
+      "shuffle_tests",
+      "test_match_tags",
+      "try_importing"
+    ],
+    "django.db": [
+      "Migration",
+      "close_old_connections",
+      "reset_queries",
+      "swappable_dependency"
+    ],
+    "django.db.migrations.recorder": [
+      "MigrationRecorder"
+    ],
+    "django.db.migrations.executor": [
+      "MigrationExecutor"
+    ],
+    "django.db.backends.oracle.creation": [
+      "DatabaseCreation"
+    ],
+    "django.db.backends.base.creation": [
+      "BaseDatabaseCreation"
+    ]
+  },
+  "test_example_snippet": "    def test_run(self):\n        \"\"\"\n        Tests running a simple set of migrations.\n        \"\"\"\n        executor = MigrationExecutor(connection)\n        # Let's look at the plan first and make sure it's up to scratch\n        plan = executor.migration_plan([(\"migrations\", \"0002_second\")])\n        self.assertEqual(\n            plan,\n            [\n                (executor.loader.graph.nodes[\"migrations\", \"0001_initial\"], False),\n                (executor.loader.graph.nodes[\"migrations\", \"0002_second\"], False),\n            ],\n        )\n        # Were the tables there before?\n        self.assertTableNotExists(\"migrations_author\")\n        self.assertTableNotExists(\"migrations_book\")\n        # Alright, let's try running it\n        executor.migrate([(\"migrations\", \"0002_second\")])\n        # Are the tables there now?\n        self.assertTableExists(\"migrations_author\")\n        self.assertTableExists(\"migrations_book\")\n        # Rebuild the graph to reflect the new DB state\n        executor.loader.build_graph()\n        # Alright, let's undo what we did\n        plan = executor.migration_plan([(\"migrations\", None)])\n        self.assertEqual(\n            plan,\n            [\n                (executor.loader.graph.nodes[\"migrations\", \"0002_second\"], True),\n                (executor.loader.graph.nodes[\"migrations\", \"0001_initial\"], True),\n            ],\n        )\n        executor.migrate([(\"migrations\", None)])\n        # Are the tables gone?",
+  "conftest_fixtures": {}
+}

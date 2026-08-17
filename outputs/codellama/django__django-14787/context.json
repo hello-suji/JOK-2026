@@ -1,0 +1,528 @@
+{
+  "instance_id": "django__django-14787",
+  "repo": "django/django",
+  "base_commit": "004b4620f6f4ad87261e149898940f2dcd5757ef",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/functional.py",
+      "score": 23,
+      "matched_identifiers": [
+        "__name__",
+        "attribute",
+        "func",
+        "functools",
+        "name"
+      ],
+      "reasons": [
+        "function_match:func",
+        "path_contains_function:func",
+        "source_content_tokens:__name__,functools,name,attribute,called"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "func": "    def func(instance):\n        raise TypeError(\n            'Cannot use cached_property instance without calling '\n            '__set_name__() on it.'\n        )\n\n    def __init__(self, func, name=None):\n        self.real_func = func\n        self.__doc__ = getattr(func, '__doc__')\n\n    def __set_name__(self, owner, name):\n        if self.name is None:\n            self.name = name\n            self.func = self.real_func\n        elif name != self.name:"
+      },
+      "top_level_functions": [
+        "cached_property.func",
+        "classproperty.getter",
+        "lazy",
+        "lazystr",
+        "keep_lazy",
+        "keep_lazy_text",
+        "new_method_proxy",
+        "unpickle_lazyobject",
+        "partition"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/geos/libgeos.py",
+      "score": 21,
+      "matched_identifiers": [
+        "attribute",
+        "attributeerror",
+        "called",
+        "func",
+        "name"
+      ],
+      "reasons": [
+        "function_match:func",
+        "source_content_tokens:attributeerror,name,attribute,called,except"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "func": "    def func(self):\n        from django.contrib.gis.geos.prototypes.threadsafe import GEOSFunc\n        func = GEOSFunc(self.func_name)\n        func.argtypes = self.argtypes or []\n        func.restype = self.restype\n        if self.errcheck:\n            func.errcheck = self.errcheck\n        return func\n\n\ndef geos_version():\n    \"\"\"Return the string version of the GEOS library.\"\"\"\n    return lgeos.GEOSversion()\n\n"
+      },
+      "top_level_functions": [
+        "load_geos",
+        "notice_h",
+        "error_h",
+        "GEOSFuncFactory.func",
+        "geos_version",
+        "geos_version_tuple"
+      ]
+    },
+    {
+      "path": "django/contrib/messages/api.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__name__",
+        "attribute",
+        "attributeerror",
+        "debug",
+        "name"
+      ],
+      "reasons": [
+        "function_match:debug",
+        "source_content_tokens:__name__,attributeerror,name,attribute,debug"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "debug": "def debug(request, message, extra_tags='', fail_silently=False):\n    \"\"\"Add a message with the ``DEBUG`` level.\"\"\"\n    add_message(request, constants.DEBUG, message, extra_tags=extra_tags,\n                fail_silently=fail_silently)\n\n\ndef info(request, message, extra_tags='', fail_silently=False):\n    \"\"\"Add a message with the ``INFO`` level.\"\"\"\n    add_message(request, constants.INFO, message, extra_tags=extra_tags,\n                fail_silently=fail_silently)\n\n\ndef success(request, message, extra_tags='', fail_silently=False):\n    \"\"\"Add a message with the ``SUCCESS`` level.\"\"\"\n    add_message(request, constants.SUCCESS, message, extra_tags=extra_tags,"
+      },
+      "top_level_functions": [
+        "add_message",
+        "get_messages",
+        "get_level",
+        "set_level",
+        "debug",
+        "info",
+        "success",
+        "warning",
+        "error"
+      ]
+    },
+    {
+      "path": "django/template/defaulttags.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__name__",
+        "attributeerror",
+        "debug",
+        "hello",
+        "name"
+      ],
+      "reasons": [
+        "function_match:debug",
+        "source_content_tokens:__name__,attributeerror,hello,name,attribute"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "debug": "def debug(parser, token):\n    \"\"\"\n    Output a whole load of debugging information, including the current\n    context and imported modules.\n\n    Sample usage::\n\n        <pre>\n            {% debug %}\n        </pre>\n    \"\"\"\n    return DebugNode()\n\n\n@register.tag('filter')"
+      },
+      "top_level_functions": [
+        "AutoEscapeControlNode.render",
+        "CommentNode.render",
+        "CsrfTokenNode.render",
+        "CycleNode.render",
+        "CycleNode.reset",
+        "DebugNode.render",
+        "FilterNode.render",
+        "FirstOfNode.render",
+        "ForNode.render",
+        "IfChangedNode.render",
+        "IfNode.nodelist",
+        "IfNode.render",
+        "LoremNode.render",
+        "RegroupNode.resolve_expression",
+        "RegroupNode.render",
+        "LoadNode.render",
+        "NowNode.render",
+        "ResetCycleNode.render",
+        "SpacelessNode.render",
+        "TemplateTagNode.render",
+        "URLNode.render",
+        "VerbatimNode.render",
+        "WidthRatioNode.render",
+        "WithNode.render",
+        "autoescape",
+        "comment",
+        "cycle",
+        "csrf_token",
+        "debug",
+        "do_filter",
+        "firstof",
+        "do_for",
+        "TemplateLiteral.display",
+        "TemplateLiteral.eval",
+        "TemplateIfParser.create_var",
+        "do_if",
+        "ifchanged",
+        "find_library",
+        "load_from_library",
+        "load"
+      ]
+    },
+    {
+      "path": "django/test/runner.py",
+      "score": 21,
+      "matched_identifiers": [
+        "__module__",
+        "attribute",
+        "attributeerror",
+        "debug",
+        "name"
+      ],
+      "reasons": [
+        "function_match:debug",
+        "source_content_tokens:attributeerror,name,__module__,attribute,attributes"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "debug": "    def debug(self, error):\n        self._restoreStdout()\n        self.buffer = False\n        exc_type, exc_value, traceback = error\n        print(\"\\nOpening PDB: %r\" % exc_value)\n        pdb.post_mortem(traceback)\n\n\nclass DummyList:\n    \"\"\"\n    Dummy list class for faking storage of results in unittest.TestResult.\n    \"\"\"\n    __slots__ = ()\n\n    def append(self, item):"
+      },
+      "top_level_functions": [
+        "DebugSQLTextTestResult.startTest",
+        "DebugSQLTextTestResult.stopTest",
+        "DebugSQLTextTestResult.addError",
+        "DebugSQLTextTestResult.addFailure",
+        "DebugSQLTextTestResult.addSubTest",
+        "DebugSQLTextTestResult.printErrorList",
+        "PDBDebugResult.addError",
+        "PDBDebugResult.addFailure",
+        "PDBDebugResult.addSubTest",
+        "PDBDebugResult.debug",
+        "DummyList.append",
+        "RemoteTestResult.test_index",
+        "RemoteTestResult.check_picklable",
+        "RemoteTestResult.check_subtest_picklable",
+        "RemoteTestResult.startTestRun",
+        "RemoteTestResult.stopTestRun",
+        "RemoteTestResult.startTest",
+        "RemoteTestResult.stopTest",
+        "RemoteTestResult.addError",
+        "RemoteTestResult.addFailure",
+        "RemoteTestResult.addSubTest",
+        "RemoteTestResult.addSuccess",
+        "RemoteTestResult.addSkip",
+        "RemoteTestResult.addExpectedFailure",
+        "RemoteTestResult.addUnexpectedSuccess",
+        "RemoteTestResult.wasSuccessful",
+        "RemoteTestRunner.run",
+        "get_max_test_processes",
+        "parallel_type",
+        "ParallelTestSuite.run",
+        "Shuffler.seed_display",
+        "Shuffler.shuffle",
+        "DiscoverRunner.add_arguments",
+        "DiscoverRunner.shuffle_seed",
+        "DiscoverRunner.log",
+        "DiscoverRunner.setup_test_environment",
+        "DiscoverRunner.setup_shuffler",
+        "DiscoverRunner.load_with_patterns",
+        "DiscoverRunner.load_tests_for_label",
+        "DiscoverRunner.build_suite"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 20,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "same_module_area:django",
+        "token_overlap:template",
+        "internal_name_overlap:debug",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/utils_tests/test_functional.py",
+      "score": 17,
+      "matched_identifiers": [
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "test_name_matches_source_stem:functional",
+        "token_overlap:func,functional",
+        "internal_name_overlap:functional",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_runner/test_debug_sql.py",
+      "score": 8,
+      "matched_identifiers": [
+        "debug"
+      ],
+      "reasons": [
+        "test_path_contains_function:debug",
+        "token_overlap:debug,runner",
+        "internal_name_overlap:debug",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_runner/test_discover_runner.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:runner",
+        "token_overlap:runner",
+        "internal_name_overlap:logger",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_tests/annotated_tag_function.py",
+      "score": 7,
+      "matched_identifiers": [
+        "func"
+      ],
+      "reasons": [
+        "test_path_contains_function:func",
+        "token_overlap:func,template",
+        "internal_name_overlap:func",
+        "unrelated_to_explicit_source_area:django/utils"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/test_runner/test_debug_sql.py:unittest_or_django_test_import",
+      "tests/test_runner/test_debug_sql.py:testcase_class:TestDebugSQL",
+      "tests/test_runner/test_discover_runner.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_functional.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2715,
+  "indexed_test_file_count": 1852,
+  "available_imports": {
+    "django": [
+      "AsyncClient",
+      "AsyncRequestFactory",
+      "Client",
+      "Context",
+      "ContextPopException",
+      "Engine",
+      "EngineHandler",
+      "Library",
+      "LiveServerTestCase",
+      "Node",
+      "NodeList",
+      "Origin",
+      "RequestContext",
+      "RequestFactory",
+      "SimpleTestCase",
+      "Template",
+      "TemplateDoesNotExist",
+      "TemplateSyntaxError",
+      "TestCase",
+      "TransactionTestCase",
+      "Variable",
+      "VariableDoesNotExist",
+      "autoreload",
+      "engines",
+      "get_version",
+      "ignore_warnings",
+      "modify_settings",
+      "override_settings",
+      "override_system_checks",
+      "setup",
+      "skipIfDBFeature",
+      "skipUnlessAnyDBFeature",
+      "skipUnlessDBFeature",
+      "tag"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.test_runner.test_debug_sql": [
+      "TestDebugSQL"
+    ],
+    "tests.test_runner.test_discover_runner": [
+      "DiscoverRunnerGetDatabasesTests",
+      "DiscoverRunnerParallelArgumentTests",
+      "DiscoverRunnerTests",
+      "change_cwd",
+      "change_loader_patterns"
+    ],
+    "tests.utils_tests.test_functional": [
+      "FunctionalTests"
+    ],
+    "tests.template_tests.annotated_tag_function": [
+      "annotated_tag_function"
+    ],
+    "django.test.runner": [
+      "DebugSQLTextTestResult",
+      "DiscoverRunner",
+      "DummyList",
+      "PDBDebugResult",
+      "ParallelTestSuite",
+      "RemoteTestResult",
+      "RemoteTestRunner",
+      "Shuffler",
+      "_class_shuffle_key",
+      "_init_worker",
+      "_run_subsuite",
+      "filter_tests_by_tags",
+      "find_top_level",
+      "get_max_test_processes",
+      "parallel_type",
+      "partition_suite_by_case",
+      "reorder_test_bin",
+      "reorder_tests",
+      "shuffle_tests",
+      "test_match_tags",
+      "try_importing"
+    ],
+    "django.utils.functional": [
+      "LazyObject",
+      "Promise",
+      "SimpleLazyObject",
+      "_lazy_proxy_unpickle",
+      "cached_property",
+      "classproperty",
+      "keep_lazy",
+      "keep_lazy_text",
+      "lazy",
+      "lazystr",
+      "new_method_proxy",
+      "partition",
+      "unpickle_lazyobject"
+    ],
+    "django.utils.decorators": [
+      "_multi_decorate",
+      "_update_method_wrapper",
+      "async_only_middleware",
+      "classonlymethod",
+      "decorator_from_middleware",
+      "decorator_from_middleware_with_args",
+      "make_middleware_decorator",
+      "method_decorator",
+      "sync_and_async_middleware",
+      "sync_only_middleware"
+    ],
+    "django.template.defaulttags": [
+      "AutoEscapeControlNode",
+      "CommentNode",
+      "CsrfTokenNode",
+      "CycleNode",
+      "DebugNode",
+      "FilterNode",
+      "FirstOfNode",
+      "ForNode",
+      "IfChangedNode",
+      "IfNode",
+      "LoadNode",
+      "LoremNode",
+      "NowNode",
+      "RegroupNode",
+      "ResetCycleNode",
+      "SpacelessNode",
+      "TemplateIfParser",
+      "TemplateLiteral",
+      "TemplateTagNode",
+      "URLNode",
+      "VerbatimNode",
+      "WidthRatioNode",
+      "WithNode",
+      "autoescape",
+      "comment",
+      "csrf_token",
+      "cycle",
+      "debug",
+      "do_filter",
+      "do_for",
+      "do_if",
+      "do_with",
+      "find_library",
+      "firstof",
+      "ifchanged",
+      "load",
+      "load_from_library",
+      "lorem",
+      "now",
+      "regroup",
+      "resetcycle",
+      "spaceless",
+      "templatetag",
+      "url",
+      "verbatim",
+      "widthratio"
+    ],
+    "django.template.context_processors": [
+      "csrf",
+      "debug",
+      "i18n",
+      "media",
+      "request",
+      "static",
+      "tz"
+    ],
+    "django.contrib.messages.api": [
+      "MessageFailure",
+      "add_message",
+      "debug",
+      "error",
+      "get_level",
+      "get_messages",
+      "info",
+      "set_level",
+      "success",
+      "warning"
+    ],
+    "django.contrib.gis.geos.libgeos": [
+      "GEOSContextHandle_t",
+      "GEOSCoordSeq_t",
+      "GEOSFuncFactory",
+      "GEOSGeom_t",
+      "GEOSPrepGeom_t",
+      "error_h",
+      "geos_version",
+      "geos_version_tuple",
+      "load_geos",
+      "notice_h"
+    ],
+    "django.contrib.gis": [
+      "GEOSException",
+      "GEOSGeometry",
+      "GeometryCollection",
+      "LineString",
+      "LinearRing",
+      "MultiLineString",
+      "MultiPoint",
+      "MultiPolygon",
+      "Point",
+      "Polygon",
+      "WKBReader",
+      "WKBWriter",
+      "WKTReader",
+      "WKTWriter",
+      "fromfile",
+      "fromstr",
+      "geos_version",
+      "hex_regex",
+      "wkt_regex"
+    ]
+  },
+  "test_example_snippet": "    def test_context_has_priority_over_template_context_processors(self):\n        # See ticket #23789.\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {\n                'context_processors': [test_processor_name],\n            },\n        })\n\n        template = engine.from_string('{{ processors }}')\n        request = self.request_factory.get('/')\n\n        # Context processors run\n        content = template.render({}, request)\n        self.assertEqual(content, 'yes')\n\n        # Context overrides context processors\n        content = template.render({'processors': 'no'}, request)\n        self.assertEqual(content, 'no')\n\n    def test_render_requires_dict(self):\n        \"\"\"django.Template.render() requires a dict.\"\"\"\n        engine = DjangoTemplates({\n            'DIRS': [],\n            'APP_DIRS': False,\n            'NAME': 'django',\n            'OPTIONS': {},\n        })\n        template = engine.from_string('')\n        context = Context()\n        request_context = RequestContext(self.request_factory.get('/'), {})\n        msg = 'context must be a dict rather than Context.'\n        with self.assertRaisesMessage(TypeError, msg):",
+  "conftest_fixtures": {}
+}

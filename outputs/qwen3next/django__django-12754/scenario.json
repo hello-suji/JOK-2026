@@ -1,0 +1,108 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "migrations",
+      "related_classes": [
+        "CharField",
+        "CreateModel",
+        "RemoveField",
+        "FieldError",
+        "AddField",
+        "TextField",
+        "AutoField"
+      ],
+      "candidate_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __init__ can be called.",
+      "Use the generated reproduction path that calls migrations, models, noop, fail."
+    ],
+    "execution_stimulus": [
+      "Call __init__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: migrations, models, noop, fail."
+    ],
+    "expected_failure": "FieldError when migrating field to new model subclass.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/db/migrations/operations/fields.py",
+      "django/db/models/fields/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/invalid_models_tests/test_custom_fields.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py",
+      "tests/invalid_models_tests/test_ordinary_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.db import migrations, models\nfrom django.test import TestCase\nfrom django.core.exceptions import FieldError\n\nclass TestMigrationFieldClash(TestCase):\n    def test_field_clash_in_migration_repro(self):\n        migration_operations = [\n            migrations.CreateModel(\n                name='Book',\n                fields=[\n                    ('id', models.AutoField(primary_key=True)),\n                    ('title', models.CharField(max_length=200)),\n                ],\n            ),\n            migrations.CreateModel(\n                name='Readable',\n                fields=[\n                    ('id', models.AutoField(primary_key=True)),\n                    ('title', models.CharField(max_length=200)),\n                ],\n            ),\n            migrations.RemoveField(\n                model_name='book',\n                name='title',\n            ),\n            migrations.AddField(\n                model_name='book',\n                name='title',\n                field=models.TextField(),\n            ),\n        ]\n        try:\n            migrations.RunPython.noop()\n            migrations.RunPython.noop()\n            self.assertEqual(migration_operations[3].field.__class__, models.TextField)\n            # [Tier 2: probe-verified buggy repr — must differ after fix]\n            assert repr(field) != \"django.core.exceptions.FieldError: Local field 'title' in class 'Book' clashes with field of the same name from base class 'Readable'.\"\n        except FieldError as e:\n            self.fail(f'FieldError raised unexpectedly: {e}')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "FieldError"
+    ],
+    "identifiers": {
+      "functions": [
+        "migrations",
+        "models",
+        "noop",
+        "fail"
+      ],
+      "classes": [
+        "CharField",
+        "CreateModel",
+        "RemoveField",
+        "FieldError",
+        "AddField",
+        "TextField",
+        "AutoField"
+      ],
+      "files": [],
+      "exceptions": [
+        "FieldError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/invalid_models_tests/test_ordinary_fields.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [
+        "migrations",
+        "models",
+        "noop",
+        "fail"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "CreateModel",
+        "RemoveField",
+        "FieldError",
+        "AddField",
+        "TextField",
+        "AutoField"
+      ]
+    }
+  }
+]

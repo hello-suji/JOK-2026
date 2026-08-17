@@ -1,0 +1,29 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,26 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import os
++import tempfile
++from sphinx.application import Sphinx
++from sphinx.builders.linkcheck import CheckExternalLinksBuilder
++
++def test_linkcheck_handles_newconnectionerror_repro():
++    with tempfile.TemporaryDirectory() as tmpdir:
++        srcdir = os.path.join(tmpdir, 'src')
++        os.makedirs(srcdir)
++        conf_path = os.path.join(srcdir, 'conf.py')
++        index_path = os.path.join(srcdir, 'index.rst')
++
++        with open(conf_path, 'w') as f:
++            f.write('extensions = ["sphinx.ext.intersphinx"]\nintersphinx_mapping = {"example": ("http://nonexistent.example.com", None)}')
++        with open(index_path, 'w') as f:
++            f.write(':mod:`example`')
++
++        app = Sphinx(srcdir=srcdir, confdir=srcdir, outdir=os.path.join(tmpdir, 'out'), doctreedir=os.path.join(tmpdir, 'doctrees'), buildername='linkcheck')
++        app.build()
++
++        # Assert that the build completes without crashing due to NewConnectionError
++        assert len(app.warnings) == 1

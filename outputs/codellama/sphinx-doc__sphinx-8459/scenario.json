@@ -1,0 +1,132 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "sphinx_doc",
+      "related_classes": [
+        "Args",
+        "Dict",
+        "Does",
+        "JSONObject",
+        "Return",
+        "Returns",
+        "Any",
+        "Sphinx",
+        "DocumenterBridge",
+        "AutodocDirective",
+        "TemporaryDirectory"
+      ],
+      "candidate_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Set up an environment where sphinx_doc can be called.",
+      "Use the generated reproduction path that calls sphinx_doc, annotations, tempfile, join."
+    ],
+    "execution_stimulus": [
+      "Call sphinx_doc with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sphinx_doc, annotations, tempfile, join."
+    ],
+    "expected_failure": "Returns:",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "sphinx/locale/__init__.py",
+      "doc/development/tutorials/examples/todo.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "tests/roots/test-ext-autodoc/conf.py",
+      "tests/roots/test-ext-doctest-with-autodoc/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from __future__ import annotations\n\nfrom typing import Any, Dict\nfrom sphinx.application import Sphinx\nfrom sphinx.ext.autodoc import DocumenterBridge\nfrom sphinx.ext.autodoc.directive import AutodocDirective\nimport tempfile\nimport os\n\nJSONObject = Dict[str, Any]\n\ndef sphinx_doc(data: JSONObject) -> JSONObject:\n    \"\"\"Does it work.\n\n    Args:\n        data: Does it args.\n\n    Returns:\n        Does it work in return.\n    \"\"\"\n    return {}\n\ndef test_autodoc_type_aliases_with_description_repro():\n    with tempfile.TemporaryDirectory() as tmpdir:\n        srcdir = os.path.join(tmpdir, 'src')\n        confdir = srcdir\n        outdir = os.path.join(tmpdir, 'out')\n        doctreedir = os.path.join(tmpdir, 'doctree')\n        buildername = 'html'\n        os.makedirs(srcdir)\n        with open(os.path.join(srcdir, 'conf.py'), 'w') as f:\n            f.write(\"\"\"\nautodoc_typehints = 'description'\nautodoc_type_aliases = {\n    'JSONObject': 'types.JSONObject',\n}\n\"\"\")\n        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:\n            f.write(\"\"\"\n.. autofunction:: sphinx_doc\n\"\"\")\n        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n        app.build()\n        with open(os.path.join(outdir, 'index.html'), 'r') as f:\n            content = f.read()\n        assert 'Dict[str, Any]' in content\n        assert 'types.JSONObject' not in content"
+      },
+      {
+        "language": "python",
+        "code": "from __future__ import annotations\n\nfrom typing import Any, Dict\n\nJSONObject = Dict[str, Any]\n\n\ndef sphinx_doc(data: JSONObject) -> JSONObject:\n    \"\"\"Does it work.\n\n    Args:\n        data: Does it args.\n\n    Returns:\n        Does it work in return.\n    \"\"\"\n    return {}"
+      },
+      {
+        "language": "python",
+        "code": "autodoc_typehints = 'description'\nautodoc_type_aliases = {\n    'JSONObject': 'types.JSONObject',\n}"
+      },
+      {
+        "language": "python",
+        "code": "types.sphinx_doc(data)\nDoes it work.\n\nParameters\ndata (Dict[str, Any]) – Does it args.\n\nReturns\nDoes it work in return.\n\nReturn type\nDict[str, Any]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "sphinx_doc",
+        "annotations",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "classes": [
+        "Args",
+        "Dict",
+        "Does",
+        "JSONObject",
+        "Parameters",
+        "Return",
+        "Returns",
+        "Any",
+        "Sphinx",
+        "DocumenterBridge",
+        "AutodocDirective",
+        "TemporaryDirectory"
+      ],
+      "files": [
+        "conf.py",
+        "types.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/roots/test-ext-autodoc/conf.py",
+      "target_source_file": "doc/conf.py",
+      "test_visible_functions": [
+        "sphinx_doc",
+        "annotations",
+        "tempfile",
+        "join",
+        "makedirs",
+        "build"
+      ],
+      "test_visible_classes": [
+        "Args",
+        "Dict",
+        "Does",
+        "JSONObject",
+        "Return",
+        "Returns",
+        "Any",
+        "Sphinx"
+      ]
+    }
+  }
+]

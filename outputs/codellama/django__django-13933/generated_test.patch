@@ -1,0 +1,17 @@
+--- a/tests/forms_tests/field_tests/test_multiplechoicefield.py
++++ b/tests/forms_tests/field_tests/test_multiplechoicefield.py
+@@ -73,3 +73,14 @@
+     def test_disabled_has_changed_gate(self):
+         f = MultipleChoiceField(choices=[('1', 'One'), ('2', 'Two')], disabled=True)
+         self.assertIs(f.has_changed('x', 'y'), False)
++
++from django.test import TestCase, SimpleTestCase
++import re
++from django.forms import MultipleChoiceField
++from django.core.exceptions import ValidationError
++
++class TestMultipleChoiceField(TestCase):
++    def test_valid_choices_repro(self):
++        field = MultipleChoiceField(choices=[('1', 'Option 1'), ('2', 'Option 2')])
++        cleaned_value = field.clean(['1', '2'])
++        self.assertEqual(cleaned_value, ['1', '2'])

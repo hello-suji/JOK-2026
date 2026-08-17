@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-24637",
+    "model_patch": "--- a/lib/matplotlib/tests/test_offsetbox.py\n+++ b/lib/matplotlib/tests/test_offsetbox.py\n@@ -388,3 +388,24 @@\n     pb = PaddedBox(at, patch_attrs={'facecolor': 'r'}, draw_frame=True)\n     ax.add_artist(pb)\n     fig.draw_without_rendering()\n+\n+import matplotlib\n+matplotlib.use('Agg')\n+import matplotlib.pyplot as plt\n+from matplotlib.offsetbox import OffsetImage, AnnotationBbox\n+\n+def test_annotationbbox_gid_repro():\n+    fig, ax = plt.subplots()\n+\n+    arr_img = plt.imread(\"undraw_flowers_vx06.png\")\n+\n+    xy = [0.3, 0.55]\n+\n+    imagebox = OffsetImage(arr_img, zoom=0.1)\n+    imagebox.image.axes = ax\n+    imagebox.set_gid('image_gid')\n+\n+    ab = AnnotationBbox(imagebox, xy)\n+    ax.add_artist(ab)\n+\n+    assert ab.get_gid() == 'image_gid'\n",
+    "patch_sha256": "04a5a4356155d00f1d6d884d9c50142f56b7b094913b76d901a400fbbb1c2cbe"
+  }
+]

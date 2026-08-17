@@ -1,0 +1,17 @@
+--- a/tests/foreign_object/test_forms.py
++++ b/tests/foreign_object/test_forms.py
+@@ -27,3 +27,14 @@
+         a2 = form.save()
+         self.assertEqual(a.pk, a2.pk)
+         self.assertEqual(a2.pub_date, datetime.date(2013, 1, 1))
++
++from django.test import TestCase
++from django.contrib.contenttypes.models import ContentType
++from django.contrib.auth.models import User
++
++class TestOrderingWithForeignKey(TestCase):
++    def test_ordering_with_non_transform_lookup_repro(self):
++        ct = ContentType.objects.first()
++        user = User.objects.create_user(username='testuser')
++        books = ct.model_class().objects.order_by('user__username').values_list('id', flat=True)
++        self.assertQuerysetEqual(books, [])

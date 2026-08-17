@@ -1,0 +1,99 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/offsetbox.py",
+      "target_function": "add_artist",
+      "related_classes": [
+        "AnchoredOffsetbox",
+        "DrawingArea",
+        "HPacker",
+        "Rectangle"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_offsetbox.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where add_artist can be called.",
+      "Use the generated reproduction path that calls add_artist, subplots, plt."
+    ],
+    "execution_stimulus": [
+      "Call add_artist with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: add_artist, subplots, plt."
+    ],
+    "expected_failure": "### Actual outcome",
+    "relevant_source_files": [
+      "lib/matplotlib/offsetbox.py",
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/pyplot.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_offsetbox.py",
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_patches.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib.offsetbox import AnchoredOffsetbox, HPacker, DrawingArea\nfrom matplotlib.patches import Rectangle\n\ndef test_hpacker_align_reversed_repro():\n    da1 = DrawingArea(10, 20)\n    rect1 = Rectangle((0, 0), 10, 20)\n    da1.add_artist(rect1)\n\n    da2 = DrawingArea(10, 30)\n    rect2 = Rectangle((0, 0), 10, 30)\n    da2.add_artist(rect2)\n\n    hpacker = HPacker(children=[da1, da2], align='top')\n    anchored_box = AnchoredOffsetbox(child=hpacker, loc='upper left')\n\n    fig, ax = plt.subplots()\n    ax.add_artist(anchored_box)\n\n    # Asserting the number of children in HPacker to ensure correct setup\n    assert len(hpacker.children) == 2"
+      },
+      {
+        "language": "python",
+        "code": "import matplotlib.pyplot as plt\nfrom matplotlib.offsetbox import DrawingArea, HPacker, VPacker, AnchoredOffsetbox, TextArea\nfrom matplotlib.patches import Rectangle\n\nda1 = DrawingArea(10, 20)\nrect1 = Rectangle((0, 0), 10, 20)\nda1.add_artist(rect1)\n\nda2 = DrawingArea(10, 30)\nrect2 = Rectangle((0, 0), 10, 30)\nda2.add_artist(rect2)\n\nalign = \"bottom\"\n\npack = HPacker(children=[da1, da2], pad=10, sep=10, align=align)\ntitle = TextArea(f\"align='{align}'\")\npack = VPacker(children=[title, pack], sep=10, pad=10, align=\"center\")\n\nbox = AnchoredOffsetbox(child=pack, loc=\"center\")\n\n_, ax = plt.subplots()\nax.add_artist(box)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add_artist",
+        "subplots",
+        "plt"
+      ],
+      "classes": [
+        "AnchoredOffsetbox",
+        "DrawingArea",
+        "HPacker",
+        "Rectangle",
+        "TextArea",
+        "VPacker"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "lib/matplotlib/tests/test_offsetbox.py",
+      "target_source_file": "lib/matplotlib/offsetbox.py",
+      "test_visible_functions": [
+        "add_artist",
+        "subplots",
+        "plt"
+      ],
+      "test_visible_classes": [
+        "AnchoredOffsetbox",
+        "DrawingArea",
+        "HPacker",
+        "Rectangle"
+      ]
+    }
+  }
+]

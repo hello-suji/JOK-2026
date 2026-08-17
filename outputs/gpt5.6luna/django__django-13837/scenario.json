@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/__main__.py",
+      "target_function": "get_child_arguments",
+      "related_classes": [
+        "ModuleType",
+        "ModuleSpec"
+      ],
+      "candidate_test_file": "tests/backends/base/test_base.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls get_child_arguments, types."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_child_arguments, types."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/__main__.py",
+      "django/contrib/admin/utils.py",
+      "django/contrib/admin/views/main.py"
+    ],
+    "relevant_test_files": [
+      "tests/backends/base/test_base.py",
+      "tests/backends/test_utils.py",
+      "tests/template_backends/test_utils.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.utils.autoreload import get_child_arguments\n\nclass TestAutoreloadGetChildArguments(SimpleTestCase):\n    def test_get_child_arguments_with_m_pkg_repro(self):\n        # Simulate the environment where Python is run as 'python -m pkg'\n        import sys\n        import types\n        sys.modules['__main__'] = types.ModuleType('__main__')\n        sys.modules['__main__'].__spec__ = types.ModuleSpec(name='pkg.submodule', loader=None)\n        sys.modules['__main__'].__spec__.parent = 'pkg'\n\n        args = get_child_arguments()\n        self.assertIn('pkg', args)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_child_arguments",
+        "types"
+      ],
+      "classes": [
+        "ModuleType",
+        "ModuleSpec"
+      ],
+      "files": [
+        "__main__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/backends/base/test_base.py",
+      "target_source_file": "django/__main__.py",
+      "test_visible_functions": [
+        "get_child_arguments",
+        "types"
+      ],
+      "test_visible_classes": [
+        "ModuleType",
+        "ModuleSpec"
+      ]
+    }
+  }
+]

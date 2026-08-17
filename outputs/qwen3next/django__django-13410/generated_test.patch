@@ -1,0 +1,22 @@
+--- a/tests/template_backends/test_django.py
++++ b/tests/template_backends/test_django.py
+@@ -176,3 +176,19 @@
+         })
+         template = engine.get_template('hello.html')
+         self.assertEqual(template.render({'name': 'Joe'}), 'Hello Joe!\n')
++
++import re
++import os
++import tempfile
++from django.core.files.locks import _fd, LOCK_EX, LOCK_NB
++
++class TestFileLocking(TemplateStringsTests):
++    def test_fd_lock_success_repro(self):
++        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
++            fd = _fd(temp_file)
++            try:
++                result = _fd.lock(fd, LOCK_EX | LOCK_NB)
++                self.assertTrue(result)
++            finally:
++                os.close(fd)
++                os.unlink(temp_file.name)

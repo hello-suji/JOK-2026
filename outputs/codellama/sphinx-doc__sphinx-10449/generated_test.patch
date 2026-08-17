@@ -1,0 +1,24 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -561,3 +561,21 @@
+
+     # explicit title
+     assert html.format('index.html#foons') in content
++
++import unittest
++import tempfile
++import os
++from sphinx.application import Sphinx
++from sphinx.util.osutil import abspath
++
++class TestSphinxInitialization(unittest.TestCase):
++    def test_sphinx_initialization_repro(self):
++        """Test basic initialization of Sphinx."""
++        srcdir = tempfile.mkdtemp()
++        confdir = srcdir
++        outdir = tempfile.mkdtemp()
++        doctreedir = tempfile.mkdtemp()
++        buildername = 'html'
++
++        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++        self.assertIsNotNone(app)

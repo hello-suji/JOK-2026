@@ -1,0 +1,23 @@
+--- a/sklearn/svm/tests/test_sparse.py
++++ b/sklearn/svm/tests/test_sparse.py
+@@ -360,3 +360,20 @@
+     with ignore_warnings(category=ConvergenceWarning):
+         proba_2 = a.fit(X, Y).predict_proba(X)
+     assert_array_almost_equal(proba_1, proba_2)
++
++import numpy as np
++from sklearn.svm import SVR
++
++def test_sparse_fit_empty_support_vectors_repro():
++    x_train = np.array([[0, 1, 0, 0],
++                        [0, 0, 0, 1],
++                        [0, 0, 1, 0],
++                        [0, 0, 0, 1]])
++    y_train = np.array([0.04, 0.04, 0.10, 0.16])
++    model = SVR(C=316.227766017, cache_size=200, coef0=0.0, degree=3, epsilon=0.1,
++                gamma=1.0, kernel='linear', max_iter=15000)
++    model.fit(x_train, y_train)
++    assert model.support_vectors_.shape[0] == 0
++    assert model.dual_coef_.size == 0
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(model) != 'ZeroDivisionError: float division by zero'

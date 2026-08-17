@@ -1,0 +1,14 @@
+--- a/sympy/core/tests/test_symbol.py
++++ b/sympy/core/tests/test_symbol.py
+@@ -387,3 +387,11 @@
+     assert disambiguate(*t7) == (y*y_1, y_1)
+     assert disambiguate(Dummy('x_1'), Dummy('x_1')
+         ) == (x_1, Symbol('x_1_1'))
++
++def test_symbol_dict_attribute_repro():
++    s = Symbol('s')
++    assert hasattr(s, '__dict__')
++    assert isinstance(s.__dict__, dict)
++    assert s.__dict__ == {}
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(s) != "---------------------------------------------------------------------------\nAttributeError                            Traceback (most recent call last)\n<ipython-input-3-e2060d5eec73> in <module>\n----> 1 sympy.Symbol('s').__dict__\n\nAttributeError: 'Symbol' object has no attribute '__dict__'\n('name',)"

@@ -1,0 +1,17 @@
+--- a/sympy/physics/quantum/tests/test_commutator_gate.py
++++ b/sympy/physics/quantum/tests/test_commutator_gate.py
+@@ -78,3 +78,14 @@
+     assert Comm(F, T**2).expand(commutator=True).doit() == -2*T
+     assert Comm(T**2, F).expand(commutator=True).doit() == 2*T
+     assert Comm(T**2, F**3).expand(commutator=True).doit() == 2*F*T*F + 2*F**2*T + 2*T*F**2
++
++from sympy.physics.quantum import Bd, Commutator
++from sympy import Symbol
++from sympy.interactive.printing import init_printing
++
++def test_commutator_gate_representation_repro():
++    init_printing()
++    a = Symbol('a')
++    comm = Commutator(Bd(a)**2, Bd(a))
++    str_output = str(comm)
++    assert 'Comm(Bd(a)**2, Bd(a))' == str_output

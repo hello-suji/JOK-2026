@@ -1,0 +1,46 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -453,3 +453,43 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++class TestMetaPublicVariables(unittest.TestCase):
++    def test_meta_public_variable_shown_repro(self):
++        """:meta public: should affect visibility of variables"""
++        import tempfile
++        import os
++        from sphinx.application import Sphinx
++        from sphinx.ext.autodoc import DocumenterBridge
++
++        # Create temporary directory and files
++        with tempfile.TemporaryDirectory() as tmpdir:
++            srcdir = os.path.join(tmpdir, 'src')
++            outdir = os.path.join(tmpdir, 'out')
++            doctreedir = os.path.join(tmpdir, 'doctrees')
++            confdir = srcdir
++            buildername = 'text'
++
++            os.makedirs(srcdir)
++            example_py_path = os.path.join(srcdir, 'example.py')
++            index_rst_path = os.path.join(srcdir, 'index.rst')
++
++            # Write example.py
++            with open(example_py_path, 'w') as f:
++                f.write("_foo = None  #: :meta public:\n")
++
++            # Write index.rst
++            with open(index_rst_path, 'w') as f:
++                f.write(".. automodule:: example\n   :members:\n")
++
++            # Create Sphinx app
++            app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++            app.build()
++
++            # Read the output file
++            with open(os.path.join(outdir, 'index.txt'), 'r') as f:
++                output = f.read()
++
++            # Assert that '_foo' is in the output
++            self.assertIn('_foo', output)

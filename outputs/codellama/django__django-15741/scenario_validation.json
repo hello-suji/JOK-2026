@@ -1,0 +1,90 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.58,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file not found in candidate source files",
+        "source file retrieval evidence is weak",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "reproduction_code references target_function:get_format",
+        "force-selected as best available (score 0.58, below threshold 0.65)"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/utils/formats.py",
+          "target_function": "get_format",
+          "related_classes": [],
+          "candidate_test_file": "tests/user_commands/management/__init__.py",
+          "confidence": "high"
+        },
+        "setup_steps": [
+          "from django.utils.formats import get_format",
+          "from django.utils.translation import gettext_lazy as _"
+        ],
+        "execution_stimulus": [
+          "lazy_string = _('Y-m-d')",
+          "result = get_format('DATE_FORMAT', lazy_string)"
+        ],
+        "expected_failure": "TypeError: getattr(): attribute name must be string",
+        "relevant_source_files": [
+          "django/conf/__init__.py",
+          "django/conf/global_settings.py",
+          "django/contrib/auth/base_user.py"
+        ],
+        "relevant_test_files": [
+          "tests/user_commands/management/__init__.py",
+          "tests/user_commands/management/commands/__init__.py",
+          "tests/apps/no_config_app/__init__.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_get_format_with_lazy_string():\n    from django.utils.formats import get_format\n    from django.utils.translation import gettext_lazy as _\n    lazy_string = _('Y-m-d')\n    try:\n        result = get_format('DATE_FORMAT', lazy_string)\n    except TypeError as e:\n        assert str(e) == \"getattr(): attribute name must be string\""
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "TypeError: getattr(): attribute name must be string"
+        ],
+        "error_keywords": [
+          "TypeError",
+          "getattr()",
+          "attribute name must be string"
+        ],
+        "identifiers": {
+          "functions": [
+            "get_format"
+          ],
+          "classes": []
+        },
+        "oracle_hints": [
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": true
+    }
+  ],
+  "rejected_scenarios": []
+}

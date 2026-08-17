@@ -1,0 +1,20 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -453,3 +453,17 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import unittest
++class TestTupleHandling(unittest.TestCase):
++    def test_tuple_representation_repro(self):
++        """Ensure Tuple is correctly represented."""
++        from sphinx.addnodes import desc_signature
++        from sphinx.application import Sphinx
++        app = Sphinx(srcdir='tests/roots/test-domain-c-intersphinx', confdir=None, outdir='_build', doctreedir='_doctrees', buildername='html')
++        env = app.env
++        node = desc_signature()
++        node += desc_signature(names=['example'], signode=node)
++        node += desc_signature(addnames=['.method'], signode=node)
++        node += desc_signature(args=[('(', ')', [('x', 1), (',', 2), ('y', 3)])], signode=node)
++        self.assertIn('x, y', node.astext())

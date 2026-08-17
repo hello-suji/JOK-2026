@@ -1,0 +1,98 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.84,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function 'bangiah' NOT found in source_file — may be hallucinated",
+        "target_function 'bangiah' not in AST top_level_functions for django/core/checks/urls.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "django/core/checks/urls.py",
+          "target_function": "bangiah",
+          "related_classes": [
+            "HttpResponse",
+            "LocaleMiddleware"
+          ],
+          "candidate_test_file": "tests/urlpatterns/path_base64_urls.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module.",
+          "Set up an environment where bangiah can be called."
+        ],
+        "execution_stimulus": [
+          "Call bangiah with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "Expect to happen instead",
+        "relevant_source_files": [
+          "django/core/checks/urls.py",
+          "django/contrib/admindocs/urls.py",
+          "django/contrib/auth/urls.py"
+        ],
+        "relevant_test_files": [
+          "tests/urlpatterns/path_base64_urls.py",
+          "tests/urlpatterns/path_dynamic_urls.py",
+          "tests/urlpatterns/path_same_name_urls.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "django-test"
+        },
+        "reproduction_code": [],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "bangiah",
+            "i18n_patterns",
+            "path"
+          ],
+          "classes": [
+            "HttpResponse",
+            "LocaleMiddleware"
+          ],
+          "files": [
+            "manage.py",
+            "settings.py",
+            "tshi/settings.py",
+            "tshi/urls.py",
+            "urls.py"
+          ],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+          "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+        "oracle_contract": {
+          "oracle_type": "last_resort_structural",
+          "oracle_source": "inferred_semantic",
+          "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

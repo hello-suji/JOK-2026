@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/matrices/common.py",
+      "target_function": "col_insert",
+      "related_classes": [
+        "Matrix"
+      ],
+      "candidate_test_file": "sympy/matrices/tests/test_commonmatrix.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where col_insert can be called.",
+      "Use the generated reproduction path that calls col_insert, eye, ones."
+    ],
+    "execution_stimulus": [
+      "Call col_insert with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: col_insert, eye, ones."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "sympy/matrices/common.py",
+      "sympy/matrices/dense.py",
+      "release/fabfile.py"
+    ],
+    "relevant_test_files": [
+      "sympy/matrices/tests/test_commonmatrix.py",
+      "sympy/matrices/tests/test_densearith.py",
+      "sympy/matrices/tests/test_densesolve.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.matrices.densetools import eye, ones\n\ndef test_col_insert_issue_13647_repro():\n    M = eye(6)\n    V = 2 * ones(6, 2)\n    result = M.col_insert(0, V)\n    expected = Matrix([[2, 2, 1, 0, 0, 0, 0, 0],\n                       [2, 2, 0, 1, 0, 0, 0, 0],\n                       [2, 2, 0, 0, 1, 0, 0, 0],\n                       [2, 2, 0, 0, 0, 1, 0, 0],\n                       [2, 2, 0, 0, 0, 0, 1, 0],\n                       [2, 2, 0, 0, 0, 0, 0, 1]])\n    assert result == expected"
+      },
+      {
+        "language": "python",
+        "code": "In [28]: import sympy as sm\n\nIn [29]: M = sm.eye(6)\n\nIn [30]: M\nOut[30]: \n⎡1  0  0  0  0  0⎤\n⎢                ⎥\n⎢0  1  0  0  0  0⎥\n⎢                ⎥\n⎢0  0  1  0  0  0⎥\n⎢                ⎥\n⎢0  0  0  1  0  0⎥\n⎢                ⎥\n⎢0  0  0  0  1  0⎥\n⎢                ⎥\n⎣0  0  0  0  0  1⎦\n\nIn [31]: V = 2 * sm.ones(6, 2)\n\nIn [32]: V\nOut[32]: \n⎡2  2⎤\n⎢    ⎥\n⎢2  2⎥\n⎢    ⎥\n⎢2  2⎥\n⎢    ⎥\n⎢2  2⎥\n⎢    ⎥\n⎢2  2⎥\n⎢    ⎥\n⎣2  2⎦\n\nIn [33]: M.col_insert(3, V)\nOut[33]: \n⎡1  0  0  2  2  1  0  0⎤\n⎢                      ⎥\n⎢0  1  0  2  2  0  1  0⎥\n⎢                      ⎥\n⎢0  0  1  2  2  0  0  1⎥\n⎢                      ⎥\n⎢0  0  0  2  2  0  0  0⎥\n⎢                      ⎥\n⎢0  0  0  2  2  0  0  0⎥\n⎢                      ⎥\n⎣0  0  0  2  2  0  0  0⎦\nIn [34]: sm.__version__\nOut[34]: '1.1.1'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "col_insert",
+        "eye",
+        "ones"
+      ],
+      "classes": [
+        "Matrix"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/matrices/tests/test_commonmatrix.py",
+      "target_source_file": "sympy/matrices/common.py",
+      "test_visible_functions": [
+        "col_insert",
+        "eye",
+        "ones"
+      ],
+      "test_visible_classes": [
+        "Matrix"
+      ]
+    }
+  }
+]

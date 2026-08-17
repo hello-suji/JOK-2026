@@ -1,0 +1,19 @@
+--- a/tests/contenttypes_tests/test_fields.py
++++ b/tests/contenttypes_tests/test_fields.py
+@@ -33,3 +33,16 @@
+         answer2 = Answer.objects.create(question=question)
+         result = json.loads(Question.answer_set.field.value_to_string(question))
+         self.assertCountEqual(result, [answer1.pk, answer2.pk])
++
++from django.test import TestCase, SimpleTestCase
++from django.contrib.admin.options import BaseModelAdmin
++from django.db import models
++
++
++class TestFormfieldForManyToManyWidget(TestCase):
++    def test_formfield_for_manytomany_widget_ignored_repro(self):
++        class TestAdmin(BaseModelAdmin): pass
++        db_field = models.ManyToManyField(Answer)
++        request = None
++        form_field = TestAdmin().formfield_for_manytomany(db_field, request, widget=models.CheckboxSelectMultiple)
++        self.assertIsInstance(form_field.widget, models.CheckboxSelectMultiple)

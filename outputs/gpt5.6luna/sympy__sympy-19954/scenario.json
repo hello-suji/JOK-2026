@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/combinatorics/perm_groups.py",
+      "target_function": "sylow_subgroup",
+      "related_classes": [
+        "DihedralGroup",
+        "PermutationGroup"
+      ],
+      "candidate_test_file": "sympy/combinatorics/tests/test_perm_groups.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where sylow_subgroup can be called.",
+      "Use the generated reproduction path that calls sylow_subgroup, isinstance."
+    ],
+    "execution_stimulus": [
+      "Call sylow_subgroup with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sylow_subgroup, isinstance."
+    ],
+    "expected_failure": "sylow_subgroup() IndexError",
+    "relevant_source_files": [
+      "sympy/combinatorics/perm_groups.py",
+      "sympy/core/trace.py",
+      "sympy/geometry/line.py"
+    ],
+    "relevant_test_files": [
+      "sympy/combinatorics/tests/test_perm_groups.py",
+      "sympy/matrices/expressions/tests/test_permutation.py",
+      "sympy/combinatorics/tests/test_fp_groups.py",
+      "sympy/combinatorics/tests/test_free_groups.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy.combinatorics.named_groups import DihedralGroup\n\ndef test_sylow_subgroup_indexerror_repro():\n    G = DihedralGroup(18)\n    S2 = G.sylow_subgroup(p=2)\n    assert isinstance(S2, PermutationGroup)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "IndexError"
+    ],
+    "identifiers": {
+      "functions": [
+        "minimal_blocks",
+        "sylow_subgroup",
+        "isinstance"
+      ],
+      "classes": [
+        "DihedralGroup",
+        "PermutationGroup"
+      ],
+      "files": [
+        "anaconda38/envs/default/lib/site-packages/sympy/combinatorics/perm_groups.py"
+      ],
+      "exceptions": [
+        "IndexError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "sympy/combinatorics/tests/test_perm_groups.py",
+      "target_source_file": "sympy/combinatorics/perm_groups.py",
+      "test_visible_functions": [
+        "sylow_subgroup",
+        "isinstance"
+      ],
+      "test_visible_classes": [
+        "DihedralGroup",
+        "PermutationGroup"
+      ]
+    }
+  }
+]

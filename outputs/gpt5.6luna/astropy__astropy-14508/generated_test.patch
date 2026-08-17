@@ -1,0 +1,16 @@
+--- a/astropy/io/fits/tests/test_convenience.py
++++ b/astropy/io/fits/tests/test_convenience.py
+@@ -494,3 +494,13 @@
+             IndexError, match="No data in Primary HDU and no extension HDU found."
+         ):
+             fits.getdata(buf)
++
++def test_card_format_float_issue_14508_repro():
++    from astropy.io import fits
++    hdr = fits.Header()
++    hdr['ESO IFM CL RADIUS'] = (0.009125, '[m] radius around actuator to avoid')
++    c = hdr.cards['ESO IFM CL RADIUS']
++    new_c = fits.Card(f'HIERARCH {c.keyword}', c.value, c.comment)
++    assert new_c.value == 0.009125
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(new_c) != "from astropy.io import fits\nhdr = fits.getheader('test.fits')\nc = hdr.cards['ESO IFM CL RADIUS']\n\n('ESO IFM CL RADIUS', 0.009125, '[m] radius arround actuator to avoid')\n\n'HIERARCH ESO IFM CL RADIUS = 0.009125 / [m] radius arround actuator to avoid    '"

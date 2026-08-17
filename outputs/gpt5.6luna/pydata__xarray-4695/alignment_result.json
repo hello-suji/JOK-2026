@@ -1,0 +1,9 @@
+{
+  "instance_id": "pydata__xarray-4695",
+  "failure_type": "WEAK_ALIGNMENT",
+  "iterations": 1,
+  "payload": {
+    "instance_id": "pydata__xarray-4695",
+    "failure_type": "WEAK_ALIGNMENT"
+  }
+}

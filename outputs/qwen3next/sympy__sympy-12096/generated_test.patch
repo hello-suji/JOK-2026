@@ -1,0 +1,15 @@
+--- a/sympy/core/tests/test_function.py
++++ b/sympy/core/tests/test_function.py
+@@ -828,3 +828,12 @@
+     e5 = Subs(Derivative(f(x), x), (y, z), (y, z))
+     assert e5.diff(x) == Derivative(f(x), x, x)
+     assert f(g(x)).diff(g(x), g(x)) == Subs(Derivative(f(y), y, y), (y,), (g(x),))
++
++from sympy.utilities.lambdify import implemented_function
++def test_evalf_recursive_call_repro():
++    f = implemented_function('f', lambda x: x ** 2)
++    g = implemented_function('g', lambda x: 2 * x)
++    result = f(g(2)).evalf()
++    assert result == 16.0000000000000
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != 'f(g(2))'

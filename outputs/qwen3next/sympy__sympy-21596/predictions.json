@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-21596",
+    "model_patch": "--- a/sympy/sets/tests/test_sets.py\n+++ b/sympy/sets/tests/test_sets.py\n@@ -1621,3 +1621,12 @@\n def test_finiteset_simplify_gate():\n     S = FiniteSet(1, cos(1)**2 + sin(1)**2)\n     assert S.simplify() == {1}\n+\n+from sympy import S, imageset, Lambda, I\n+\n+def test_is_subset_bug_repro():\n+    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n+    result = S1.is_subset(S.Reals)\n+    assert result == False\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(result) != 'True'\n",
+    "patch_sha256": "c342518d15503e19812f2cff11c71f7bc5239aba5e8899e5c23324df29762d9e"
+  }
+]

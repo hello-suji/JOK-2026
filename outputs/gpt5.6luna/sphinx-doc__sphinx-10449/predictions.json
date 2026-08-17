@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sphinx-doc__sphinx-10449",
+    "model_patch": "--- a/tests/test_ext_intersphinx.py\n+++ b/tests/test_ext_intersphinx.py\n@@ -561,3 +561,21 @@\n\n     # explicit title\n     assert html.format('index.html#foons') in content\n+\n+import unittest\n+import tempfile\n+import os\n+from sphinx.application import Sphinx\n+from sphinx.util.osutil import abspath\n+\n+class TestSphinxInitialization(unittest.TestCase):\n+    def test_sphinx_initialization_repro(self):\n+        \"\"\"Test basic initialization of Sphinx.\"\"\"\n+        srcdir = tempfile.mkdtemp()\n+        confdir = srcdir\n+        outdir = tempfile.mkdtemp()\n+        doctreedir = tempfile.mkdtemp()\n+        buildername = 'html'\n+\n+        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)\n+        self.assertIsNotNone(app)\n",
+    "patch_sha256": "8c315b99cd70ff48289642d9e73678caaf742868b417024e7821549746210eeb"
+  }
+]

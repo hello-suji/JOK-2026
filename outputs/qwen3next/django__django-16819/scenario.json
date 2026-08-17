@@ -1,0 +1,80 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "",
+      "related_classes": [
+        "AddIndex",
+        "RemoveIndex",
+        "Index"
+      ],
+      "candidate_test_file": "tests/indexes/models.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/contrib/postgres/operations.py",
+      "django/db/migrations/autodetector.py"
+    ],
+    "relevant_test_files": [
+      "tests/indexes/models.py",
+      "tests/postgres_tests/array_index_migrations/0001_initial.py",
+      "tests/migrations/test_autodetector.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.db.migrations.operations.models import AddIndex, RemoveIndex\n\n\nclass TestIndexOptimization(TestCase):\n    def test_reduce_add_remove_index_operations_repro(self):\n        # Simulate a scenario where AddIndex and RemoveIndex operations are generated\n        add_index_op = AddIndex('my_model', models.Index(fields=['field_name']))\n        remove_index_op = RemoveIndex('my_model', 'index_name')\n\n        # Assuming the autodetector or optimizer should reduce these operations\n        optimized_operations = [add_index_op, remove_index_op]\n\n        # The expected behavior is that the optimized operations list should be empty\n        # after optimization, indicating that AddIndex and RemoveIndex were reduced\n        self.assertEqual([], optimized_operations)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "AddIndex",
+        "RemoveIndex",
+        "Index"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/indexes/models.py",
+      "target_source_file": "django/db/migrations/operations/models.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "AddIndex",
+        "RemoveIndex",
+        "Index"
+      ]
+    }
+  }
+]

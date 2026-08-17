@@ -1,0 +1,119 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/sql/query.py",
+      "target_function": "test_bug",
+      "related_classes": [
+        "BugTestCase",
+        "ForeignKey",
+        "OuterRef",
+        "SimpleLazyObject",
+        "Subquery",
+        "User",
+        "F"
+      ],
+      "candidate_test_file": "tests/foreign_object/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where test_bug can be called.",
+      "Use the generated reproduction path that calls annotate, create, filter."
+    ],
+    "execution_stimulus": [
+      "Call test_bug with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: annotate, create, filter."
+    ],
+    "expected_failure": "Using SimpleLazyObject with a nested subquery annotation fails.",
+    "relevant_source_files": [
+      "django/db/models/sql/query.py",
+      "django/db/models/query.py",
+      "django/db/models/fields/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/foreign_object/__init__.py",
+      "tests/foreign_object/models/__init__.py",
+      "tests/admin_scripts/simple_app/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.db.models import OuterRef, Subquery\nfrom django.utils.functional import SimpleLazyObject\nfrom django.contrib.auth.models import User\nfrom django.db.models import F\n\nclass TestSimpleLazyObjectWithSubquery(TestCase):\n    def test_bug_repro(self):\n        user = User.objects.create(username='testuser')\n        simple_lazy_user = SimpleLazyObject(lambda: user)\n        subquery = User.objects.filter(pk=OuterRef('pk')).values('username')\n        result = User.objects.annotate(sub_username=Subquery(subquery)).filter(pk=simple_lazy_user.pk).first()\n        self.assertIsNotNone(result)\n        self.assertEqual(result.username, 'testuser')"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "TypeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_add_q",
+        "_filter_or_exclude",
+        "add_q",
+        "annotate",
+        "build_lookup",
+        "create_user",
+        "get_prep_lookup",
+        "get_prep_value",
+        "lookup_class",
+        "create",
+        "filter"
+      ],
+      "classes": [
+        "BugTestCase",
+        "ForeignKey",
+        "OuterRef",
+        "PycharmProjects",
+        "SimpleLazyObject",
+        "Subquery",
+        "User",
+        "F"
+      ],
+      "files": [
+        "Users/u/PycharmProjects/django_debug/foo/tests/test_bug.py",
+        "virtualenvs/django_debug/src/django/django/db/models/fields/__init__.py",
+        "virtualenvs/django_debug/src/django/django/db/models/lookups.py",
+        "virtualenvs/django_debug/src/django/django/db/models/query.py",
+        "virtualenvs/django_debug/src/django/django/db/models/sql/query.py"
+      ],
+      "exceptions": [
+        "TypeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/foreign_object/__init__.py",
+      "target_source_file": "django/db/models/sql/query.py",
+      "test_visible_functions": [
+        "annotate",
+        "create",
+        "filter"
+      ],
+      "test_visible_classes": [
+        "OuterRef",
+        "SimpleLazyObject",
+        "Subquery",
+        "User",
+        "F"
+      ]
+    }
+  }
+]

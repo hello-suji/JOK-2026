@@ -1,0 +1,32 @@
+--- a/tests/bulk_create/models.py
++++ b/tests/bulk_create/models.py
+@@ -136,3 +136,29 @@
+     name = models.CharField(max_length=15, null=True)
+     country = models.OneToOneField(Country, models.CASCADE, primary_key=True)
+     big_auto_fields = models.ManyToManyField(BigAutoFieldModel)
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.operations.models import CreateModel, AlterModelManagers
++
++
++class TestMigrationOptimization(TestCase):
++    def test_create_model_with_managers_optimization_repro(self):
++        create_model = CreateModel(
++            name='MyModel',
++            fields=[
++                ('id', models.AutoField(primary_key=True)),
++            ],
++            managers=[
++                ('objects', models.Manager()),
++            ],
++        )
++        alter_managers = AlterModelManagers(
++            name='MyModel',
++            managers=[
++                ('custom_manager', models.Manager()),
++            ],
++        )
++        optimized_operations = MigrationAutodetector([], []).optimize_operations([create_model, alter_managers])
++        self.assertEqual(len(optimized_operations), 1)
++        self.assertIsInstance(optimized_operations[0], CreateModel)
++        self.assertIn('custom_manager', optimized_operations[0].managers)

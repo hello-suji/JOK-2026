@@ -1,0 +1,31 @@
+--- a/sklearn/model_selection/tests/test_split.py
++++ b/sklearn/model_selection/tests/test_split.py
+@@ -1477,3 +1477,28 @@
+             return _build_repr(self)
+
+     assert_equal(repr(MockSplitter(5, 6)), "MockSplitter(a=5, b=6, c=None)")
++
++@ignore_warnings
++def test_stratified_kfold_shuffle_behavior_repro():
++    X = np.array([[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]])
++    y = np.array([1, 1, 1, 1, 1, 2, 2, 2, 2, 2])
++
++    k_fold_no_shuffle = StratifiedKFold(n_splits=5, shuffle=False)
++    splits_no_shuffle = list(k_fold_no_shuffle.split(X, y))
++
++    k_fold_shuffle_seed_1 = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
++    splits_shuffle_seed_1 = list(k_fold_shuffle_seed_1.split(X, y))
++
++    k_fold_shuffle_seed_2 = StratifiedKFold(n_splits=5, shuffle=True, random_state=2)
++    splits_shuffle_seed_2 = list(k_fold_shuffle_seed_2.split(X, y))
++
++    # In the buggy version, shuffling does not affect the internal stratification order
++    # Thus, splits_shuffle_seed_1 and splits_shuffle_seed_2 would be the same
++    assert splits_shuffle_seed_1 != splits_shuffle_seed_2
++
++    # Ensure that without shuffle, the splits are consistent
++    assert splits_no_shuffle == splits_no_shuffle
++
++    # Ensure that with shuffle, the splits are different for different random states
++    assert splits_shuffle_seed_1 != splits_no_shuffle
++    assert splits_shuffle_seed_2 != splits_no_shuffle

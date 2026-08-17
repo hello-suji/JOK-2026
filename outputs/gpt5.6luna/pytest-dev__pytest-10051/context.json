@@ -1,0 +1,641 @@
+{
+  "instance_id": "pytest-dev__pytest-10051",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "aa55975c7d3f6c9f6d7f68accc41bb7cadf0eb9a",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/logging.py",
+      "score": 49,
+      "matched_identifiers": [
+        "arch",
+        "call",
+        "caplog",
+        "clear",
+        "get_records",
+        "src/_pytest/logging.py"
+      ],
+      "reasons": [
+        "function_match:clear",
+        "function_match:get_records",
+        "explicit_file_path_hint:src/_pytest/logging.py",
+        "path_contains_function:test",
+        "stem_in_issue_text:logging",
+        "source_content_tokens:arch,call,caplog,clear,details"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "caplog": "def caplog(request: FixtureRequest) -> Generator[LogCaptureFixture, None, None]:\n    \"\"\"Access and control log capturing.\n\n    Captured logs are available through the following properties/methods::\n\n    * caplog.messages        -> list of format-interpolated log messages\n    * caplog.text            -> string containing formatted log output\n    * caplog.records         -> list of logging.LogRecord instances\n    * caplog.record_tuples   -> list of (logger_name, level, message) tuples\n    * caplog.clear()         -> clear captured records and formatted log output string\n    \"\"\"\n    result = LogCaptureFixture(request.node, _ispytest=True)\n    yield result\n    result._finalize()\n",
+        "get_records": "    def get_records(self, when: str) -> List[logging.LogRecord]:\n        \"\"\"Get the logging records for one of the possible test phases.\n\n        :param str when:\n            Which test phase to obtain the records from. Valid values are: \"setup\", \"call\" and \"teardown\".\n\n        :returns: The list of captured records at the given stage.\n        :rtype: List[logging.LogRecord]\n\n        .. versionadded:: 3.4\n        \"\"\"\n        return self._item.stash[caplog_records_key].get(when, [])\n\n    @property\n    def text(self) -> str:",
+        "clear": "    def clear(self) -> None:\n        \"\"\"Reset the list of log records and the captured log text.\"\"\"\n        self.handler.reset()\n\n    def set_level(self, level: Union[int, str], logger: Optional[str] = None) -> None:\n        \"\"\"Set the level of a logger for the duration of a test.\n\n        .. versionchanged:: 3.4\n            The levels of the loggers changed by this function will be\n            restored to their initial values at the end of the test.\n\n        :param int level: The level.\n        :param str logger: The logger to update. If not given, the root logger.\n        \"\"\"\n        logger_obj = logging.getLogger(logger)"
+      },
+      "top_level_functions": [
+        "ColoredLevelFormatter.add_color_level",
+        "ColoredLevelFormatter.format",
+        "PercentStyleMultiline.format",
+        "get_option_ini",
+        "pytest_addoption",
+        "LogCaptureHandler.emit",
+        "LogCaptureHandler.reset",
+        "LogCaptureHandler.handleError",
+        "LogCaptureFixture.handler",
+        "LogCaptureFixture.get_records",
+        "LogCaptureFixture.text",
+        "LogCaptureFixture.records",
+        "LogCaptureFixture.record_tuples",
+        "LogCaptureFixture.messages",
+        "LogCaptureFixture.clear",
+        "LogCaptureFixture.set_level",
+        "LogCaptureFixture.at_level",
+        "caplog",
+        "get_log_level_for_setting",
+        "pytest_configure",
+        "LoggingPlugin.set_log_path",
+        "LoggingPlugin.pytest_sessionstart",
+        "LoggingPlugin.pytest_collection",
+        "LoggingPlugin.pytest_runtestloop",
+        "LoggingPlugin.pytest_runtest_logstart",
+        "LoggingPlugin.pytest_runtest_logreport",
+        "LoggingPlugin.pytest_runtest_setup",
+        "LoggingPlugin.pytest_runtest_call",
+        "LoggingPlugin.pytest_runtest_teardown",
+        "LoggingPlugin.pytest_runtest_logfinish",
+        "LoggingPlugin.pytest_sessionfinish",
+        "LoggingPlugin.pytest_unconfigure",
+        "_FileHandler.handleError",
+        "_LiveLoggingStreamHandler.reset",
+        "_LiveLoggingStreamHandler.set_when",
+        "_LiveLoggingStreamHandler.emit",
+        "_LiveLoggingStreamHandler.handleError",
+        "_LiveLoggingNullHandler.reset",
+        "_LiveLoggingNullHandler.set_when",
+        "_LiveLoggingNullHandler.handleError"
+      ]
+    },
+    {
+      "path": "src/_pytest/pytester.py",
+      "score": 23,
+      "matched_identifiers": [
+        "arch",
+        "call",
+        "clear",
+        "details"
+      ],
+      "reasons": [
+        "function_match:clear",
+        "path_contains_function:test",
+        "source_content_tokens:arch,call,clear,details,environment"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "clear": "    def clear(self) -> None:\n        self.calls[:] = []\n\n\n@fixture\ndef linecomp() -> \"LineComp\":\n    \"\"\"A :class: `LineComp` instance for checking that an input linearly\n    contains a sequence of strings.\"\"\"\n    return LineComp()\n\n\n@fixture(name=\"LineMatcher\")\ndef LineMatcher_fixture(request: FixtureRequest) -> Type[\"LineMatcher\"]:\n    \"\"\"A reference to the :class: `LineMatcher`.\n"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "LsofFdLeakChecker.get_open_files",
+        "LsofFdLeakChecker.matching_platform",
+        "LsofFdLeakChecker.pytest_runtest_protocol",
+        "PytestArg.gethookrecorder",
+        "get_public_names",
+        "HookRecorder.finish_recording",
+        "HookRecorder.getcalls",
+        "HookRecorder.assert_contains",
+        "HookRecorder.popcall",
+        "HookRecorder.getcall",
+        "HookRecorder.getreports",
+        "HookRecorder.matchreport",
+        "HookRecorder.getfailures",
+        "HookRecorder.getfailedcollections",
+        "HookRecorder.listoutcomes",
+        "HookRecorder.countoutcomes",
+        "HookRecorder.assertoutcome",
+        "HookRecorder.clear",
+        "linecomp",
+        "LineMatcher_fixture",
+        "pytester",
+        "RunResult.parseoutcomes",
+        "RunResult.parse_summary_nouns",
+        "RunResult.assert_outcomes",
+        "CwdSnapshot.restore",
+        "SysModulesSnapshot.restore",
+        "SysPathsSnapshot.restore",
+        "Pytester.path",
+        "Pytester.make_hook_recorder",
+        "Pytester.chdir",
+        "Pytester.makefile",
+        "Pytester.makeconftest",
+        "Pytester.makeini",
+        "Pytester.getinicfg",
+        "Pytester.makepyprojecttoml",
+        "Pytester.makepyfile",
+        "Pytester.maketxtfile",
+        "Pytester.syspathinsert"
+      ]
+    },
+    {
+      "path": "src/_pytest/recwarn.py",
+      "score": 23,
+      "matched_identifiers": [
+        "arch",
+        "call",
+        "clear",
+        "records"
+      ],
+      "reasons": [
+        "function_match:clear",
+        "path_contains_function:test",
+        "source_content_tokens:arch,call,clear,records,_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "clear": "    def clear(self) -> None:\n        \"\"\"Clear the list of recorded warnings.\"\"\"\n        self._list[:] = []\n\n    # Type ignored because it doesn't exactly warnings.catch_warnings.__enter__\n    # -- it returns a List but we only emulate one.\n    def __enter__(self) -> \"WarningsRecorder\":  # type: ignore\n        if self._entered:\n            __tracebackhide__ = True\n            raise RuntimeError(f\"Cannot enter {self!r} twice\")\n        _list = super().__enter__()\n        # record=True means it's None.\n        assert _list is not None\n        self._list = _list\n        warnings.simplefilter(\"always\")"
+      },
+      "top_level_functions": [
+        "recwarn",
+        "deprecated_call",
+        "warns",
+        "WarningsRecorder.list",
+        "WarningsRecorder.pop",
+        "WarningsRecorder.clear"
+      ]
+    },
+    {
+      "path": "src/_pytest/python.py",
+      "score": 19,
+      "matched_identifiers": [
+        "_pytest",
+        "arch",
+        "call",
+        "clear"
+      ],
+      "reasons": [
+        "path_contains_function:test",
+        "stem_in_issue_text:python",
+        "source_content_tokens:arch,call,clear,_pytest,actual"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_generate_tests",
+        "pytest_configure",
+        "async_warn_and_skip",
+        "pytest_pyfunc_call",
+        "pytest_collect_file",
+        "path_matches_patterns",
+        "pytest_pycollect_makemodule",
+        "pytest_pycollect_makeitem",
+        "PyobjMixin.module",
+        "PyobjMixin.cls",
+        "PyobjMixin.instance",
+        "PyobjMixin.obj",
+        "PyobjMixin.getmodpath",
+        "PyobjMixin.reportinfo",
+        "PyCollector.funcnamefilter",
+        "PyCollector.isnosetest",
+        "PyCollector.classnamefilter",
+        "PyCollector.istestfunction",
+        "PyCollector.istestclass",
+        "PyCollector.collect",
+        "Module.collect",
+        "Package.setup",
+        "Package.gethookproxy",
+        "Package.isinitpath",
+        "Package.collect",
+        "Class.from_parent",
+        "Class.newinstance",
+        "Class.collect",
+        "hasinit",
+        "hasnew",
+        "IdMaker.make_unique_parameterset_ids",
+        "CallSpec2.setmulti",
+        "CallSpec2.getparam",
+        "CallSpec2.id",
+        "Metafunc.parametrize",
+        "show_fixtures_per_test",
+        "showfixtures",
+        "write_docstring"
+      ]
+    },
+    {
+      "path": "src/_pytest/_code/code.py",
+      "score": 18,
+      "matched_identifiers": [
+        "_pytest",
+        "arch",
+        "call",
+        "details"
+      ],
+      "reasons": [
+        "path_contains_function:test",
+        "source_content_tokens:arch,call,details,_pytest,actual"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Code.from_function",
+        "Code.firstlineno",
+        "Code.name",
+        "Code.path",
+        "Code.fullsource",
+        "Code.source",
+        "Code.getargs",
+        "Frame.lineno",
+        "Frame.f_globals",
+        "Frame.f_locals",
+        "Frame.code",
+        "Frame.statement",
+        "Frame.eval",
+        "Frame.repr",
+        "Frame.getargs",
+        "TracebackEntry.lineno",
+        "TracebackEntry.set_repr_style",
+        "TracebackEntry.frame",
+        "TracebackEntry.relline",
+        "TracebackEntry.statement",
+        "TracebackEntry.path",
+        "TracebackEntry.locals",
+        "TracebackEntry.getfirstlinesource",
+        "TracebackEntry.getsource",
+        "TracebackEntry.ishidden",
+        "TracebackEntry.name",
+        "Traceback.cut",
+        "Traceback.filter",
+        "Traceback.getcrashentry",
+        "Traceback.recursionindex",
+        "ExceptionInfo.from_exc_info",
+        "ExceptionInfo.from_current",
+        "ExceptionInfo.for_later",
+        "ExceptionInfo.fill_unfilled",
+        "ExceptionInfo.type",
+        "ExceptionInfo.value",
+        "ExceptionInfo.tb",
+        "ExceptionInfo.typename",
+        "ExceptionInfo.traceback",
+        "ExceptionInfo.exconly"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/test_pytester.py",
+      "score": 17,
+      "matched_identifiers": [
+        "test"
+      ],
+      "reasons": [
+        "test_path_contains_function:test",
+        "test_name_matches_source_stem:pytester",
+        "token_overlap:pytest,pytester",
+        "internal_name_overlap:pytest",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/code/test_code.py",
+      "score": 12,
+      "matched_identifiers": [
+        "test"
+      ],
+      "reasons": [
+        "test_path_contains_function:test",
+        "test_name_matches_source_stem:code",
+        "token_overlap:code",
+        "internal_name_overlap:code",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_recwarn.py",
+      "score": 12,
+      "matched_identifiers": [
+        "test"
+      ],
+      "reasons": [
+        "test_path_contains_function:test",
+        "test_name_matches_source_stem:recwarn",
+        "token_overlap:recwarn",
+        "internal_name_overlap:record",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_python_path.py",
+      "score": 10,
+      "matched_identifiers": [
+        "test"
+      ],
+      "reasons": [
+        "test_path_contains_function:test",
+        "test_name_matches_source_stem:python",
+        "token_overlap:python",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_warning_types.py",
+      "score": 10,
+      "matched_identifiers": [
+        "test",
+        "warning"
+      ],
+      "reasons": [
+        "test_path_contains_function:warning",
+        "test_path_contains_function:test",
+        "token_overlap:warning",
+        "internal_name_overlap:pytest",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "testing/test_recwarn.py:pytest_import_or_conftest",
+      "testing/test_recwarn.py:top_level_test_functions",
+      "testing/test_recwarn.py:testcase_class:TestDeprecatedCall",
+      "testing/test_recwarn.py:testcase_class:TestWarningsRecorderChecker",
+      "testing/test_recwarn.py:testcase_class:TestWarns",
+      "testing/test_pytester.py:pytest_import_or_conftest",
+      "testing/test_pytester.py:top_level_test_functions",
+      "testing/test_pytester.py:testcase_class:TestInlineRunModulesCleanup",
+      "testing/test_pytester.py:testcase_class:TestSysModulesSnapshot",
+      "testing/test_pytester.py:testcase_class:TestSysPathsSnapshot",
+      "testing/test_warning_types.py:pytest_import_or_conftest",
+      "testing/test_warning_types.py:top_level_test_functions",
+      "testing/test_python_path.py:pytest_import_or_conftest",
+      "testing/test_python_path.py:top_level_test_functions",
+      "testing/code/test_code.py:pytest_import_or_conftest",
+      "testing/code/test_code.py:unittest_or_django_test_import",
+      "testing/code/test_code.py:top_level_test_functions",
+      "testing/code/test_code.py:testcase_class:TestExceptionInfo",
+      "testing/code/test_code.py:testcase_class:TestReprFuncArgs",
+      "testing/code/test_code.py:testcase_class:TestTracebackEntry"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 245,
+  "indexed_test_file_count": 130,
+  "available_imports": {
+    "testing.test_recwarn": [
+      "TestDeprecatedCall",
+      "TestWarningsRecorderChecker",
+      "TestWarns",
+      "test_recwarn_captures_deprecation_warning",
+      "test_recwarn_functional",
+      "test_recwarn_stacklevel"
+    ],
+    "testing.test_pytester": [
+      "TestInlineRunModulesCleanup",
+      "TestSysModulesSnapshot",
+      "TestSysPathsSnapshot",
+      "make_holder",
+      "test_assert_outcomes_after_pytest_error",
+      "test_cwd_snapshot",
+      "test_hookrecorder_basic",
+      "test_linematcher_consecutive",
+      "test_linematcher_match_failure",
+      "test_linematcher_no_matching",
+      "test_linematcher_no_matching_after_match",
+      "test_linematcher_string_api",
+      "test_linematcher_with_nonlist",
+      "test_make_hook_recorder",
+      "test_makefile_joins_absolute_path",
+      "test_makepyfile_unicode",
+      "test_makepyfile_utf8",
+      "test_parse_summary_line_always_plural",
+      "test_parseconfig",
+      "test_popen_default_stdin_stderr_and_stdin_None",
+      "test_popen_stdin_bytes",
+      "test_popen_stdin_pipe",
+      "test_pytest_addopts_before_pytester",
+      "test_pytester_assert_outcomes_warnings",
+      "test_pytester_makefile_dot_prefixes_extension_with_warning",
+      "test_pytester_outcomes_deselected",
+      "test_pytester_outcomes_with_multiple_errors",
+      "test_pytester_run_no_timeout",
+      "test_pytester_run_timeout_expires",
+      "test_pytester_run_with_timeout",
+      "test_pytester_runs_with_plugin",
+      "test_pytester_subprocess",
+      "test_pytester_subprocess_via_runpytest_arg",
+      "test_pytester_with_doctest",
+      "test_run_result_repr",
+      "test_run_stdin",
+      "test_runresult_assertion_on_xfail",
+      "test_runresult_assertion_on_xpassed",
+      "test_spawn_uses_tmphome",
+      "test_unicode_args",
+      "test_xpassed_with_strict_is_considered_a_failure"
+    ],
+    "testing.test_warning_types": [
+      "test_pytest_warnings_repr_integration_test",
+      "test_warning_types"
+    ],
+    "testing.test_python_path": [
+      "file_structure",
+      "test_clean_up",
+      "test_module_not_found",
+      "test_no_ini",
+      "test_one_dir",
+      "test_two_dirs"
+    ],
+    "src._pytest.recwarn": [
+      "WarningsChecker",
+      "WarningsRecorder",
+      "deprecated_call",
+      "recwarn",
+      "warns"
+    ],
+    "src._pytest.python": [
+      "CallSpec2",
+      "Class",
+      "Function",
+      "FunctionDefinition",
+      "IdMaker",
+      "InstanceDummy",
+      "Metafunc",
+      "Module",
+      "Package",
+      "PyCollector",
+      "PyobjMixin",
+      "_EmptyClass",
+      "__getattr__",
+      "_ascii_escaped_by_config",
+      "_call_with_optional_argument",
+      "_find_parametrized_scope",
+      "_get_first_non_fixture_func",
+      "_pretty_fixture_path",
+      "_show_fixtures_per_test",
+      "_showfixtures_main",
+      "async_warn_and_skip",
+      "hasinit",
+      "hasnew",
+      "path_matches_patterns",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_collect_file",
+      "pytest_configure",
+      "pytest_generate_tests",
+      "pytest_pycollect_makeitem",
+      "pytest_pycollect_makemodule",
+      "pytest_pyfunc_call",
+      "show_fixtures_per_test",
+      "showfixtures",
+      "write_docstring"
+    ],
+    "src._pytest.logging": [
+      "ColoredLevelFormatter",
+      "LogCaptureFixture",
+      "LogCaptureHandler",
+      "LoggingPlugin",
+      "PercentStyleMultiline",
+      "_FileHandler",
+      "_LiveLoggingNullHandler",
+      "_LiveLoggingStreamHandler",
+      "_remove_ansi_escape_sequences",
+      "caplog",
+      "catching_logs",
+      "get_log_level_for_setting",
+      "get_option_ini",
+      "pytest_addoption",
+      "pytest_configure"
+    ],
+    "src": [
+      "__version__",
+      "version_tuple"
+    ],
+    "src._pytest.pytester": [
+      "CwdSnapshot",
+      "HookRecorder",
+      "LineComp",
+      "LineMatcher",
+      "LineMatcher_fixture",
+      "LsofFdLeakChecker",
+      "PytestArg",
+      "Pytester",
+      "RecordedHookCall",
+      "RunResult",
+      "SysModulesSnapshot",
+      "SysPathsSnapshot",
+      "_config_for_test",
+      "_pytest",
+      "_sys_snapshot",
+      "get_public_names",
+      "linecomp",
+      "pytest_addoption",
+      "pytest_configure",
+      "pytester"
+    ],
+    "src._pytest._code.code": [
+      "Code",
+      "ExceptionChainRepr",
+      "ExceptionInfo",
+      "ExceptionRepr",
+      "FormattedExcinfo",
+      "Frame",
+      "ReprEntry",
+      "ReprEntryNative",
+      "ReprExceptionInfo",
+      "ReprFileLocation",
+      "ReprFuncArgs",
+      "ReprLocals",
+      "ReprTraceback",
+      "ReprTracebackNative",
+      "TerminalRepr",
+      "Traceback",
+      "TracebackEntry",
+      "filter_traceback",
+      "getfslineno"
+    ],
+    "src._pytest": [
+      "Code",
+      "ExceptionInfo",
+      "Frame",
+      "Source",
+      "Traceback",
+      "TracebackEntry",
+      "filter_traceback",
+      "getfslineno",
+      "getrawcode"
+    ],
+    "testing.code.test_code": [
+      "TestExceptionInfo",
+      "TestReprFuncArgs",
+      "TestTracebackEntry",
+      "test_ExceptionChainRepr",
+      "test_code_from_func",
+      "test_code_from_function_with_class",
+      "test_code_fullsource",
+      "test_code_getargs",
+      "test_code_gives_back_name_for_not_existing_file",
+      "test_code_source",
+      "test_frame_getargs",
+      "test_frame_getsourcelineno_myself",
+      "test_getstatement_empty_fullsource",
+      "test_ne",
+      "test_unicode_handling",
+      "x"
+    ],
+    "testing.example_scripts.fixtures.test_fixture_named_request": [
+      "request",
+      "test"
+    ],
+    "testing.example_scripts.fixtures.test_getfixturevalue_dynamic": [
+      "a",
+      "b",
+      "dynamic",
+      "test"
+    ],
+    "testing.example_scripts.collect.package_init_given_as_arg.pkg.test_foo": [
+      "test"
+    ],
+    "testing.example_scripts.collect.package_infinite_recursion.tests.test_basic": [
+      "test"
+    ],
+    "testing.example_scripts.fixtures.fill_fixtures.test_detect_recursive_dependency_error": [
+      "fix1",
+      "fix2",
+      "test"
+    ],
+    "testing.example_scripts.fixtures.custom_item.foo.test_foo": [
+      "test"
+    ]
+  },
+  "test_example_snippet": "class TestInlineRunModulesCleanup:\n    def test_inline_run_test_module_not_cleaned_up(self, pytester: Pytester) -> None:\n        test_mod = pytester.makepyfile(\"def test_foo(): assert True\")\n        result = pytester.inline_run(str(test_mod))\n        assert result.ret == ExitCode.OK\n        # rewrite module, now test should fail if module was re-imported\n        test_mod.write_text(\"def test_foo(): assert False\")\n        result2 = pytester.inline_run(str(test_mod))\n        assert result2.ret == ExitCode.TESTS_FAILED\n\n    def spy_factory(self):\n        class SysModulesSnapshotSpy:\n            instances: List[\"SysModulesSnapshotSpy\"] = []  # noqa: F821\n\n            def __init__(self, preserve=None) -> None:\n                SysModulesSnapshotSpy.instances.append(self)\n                self._spy_restore_count = 0\n                self._spy_preserve = preserve\n                self.__snapshot = SysModulesSnapshot(preserve=preserve)\n\n            def restore(self):\n                self._spy_restore_count += 1\n                return self.__snapshot.restore()\n\n        return SysModulesSnapshotSpy\n\n    def test_inline_run_taking_and_restoring_a_sys_modules_snapshot(\n        self, pytester: Pytester, monkeypatch: MonkeyPatch\n    ) -> None:\n        spy_factory = self.spy_factory()\n        monkeypatch.setattr(pytester_mod, \"SysModulesSnapshot\", spy_factory)\n        pytester.syspathinsert()\n        original = dict(sys.modules)\n        pytester.makepyfile(import1=\"# you son of a silly person\")\n        pytester.makepyfile(import2=\"# my hovercraft is full of eels\")",
+  "conftest_fixtures": {
+    "testing/conftest.py": [
+      "tw_mock",
+      "dummy_yaml_custom_test",
+      "pytester",
+      "color_mapping",
+      "mock_timing",
+      "restore_tracing"
+    ]
+  }
+}

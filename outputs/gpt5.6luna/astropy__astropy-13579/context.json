@@ -1,0 +1,553 @@
+{
+  "instance_id": "astropy__astropy-13579",
+  "repo": "astropy/astropy",
+  "base_commit": "0df94ff7097961e92fd7812036a24b145bc13ca8",
+  "repo_path": "data/repos/astropy__astropy",
+  "candidate_source_files": [
+    {
+      "path": "astropy/wcs/utils.py",
+      "score": 22,
+      "matched_identifiers": [
+        "array",
+        "cdelt1",
+        "cdelt2",
+        "crpix1",
+        "wcs_to_celestial_frame"
+      ],
+      "reasons": [
+        "function_match:wcs_to_celestial_frame",
+        "stem_in_issue_text:utils",
+        "source_content_tokens:array,cdelt1,cdelt2,crpix1,crpix2"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "wcs_to_celestial_frame": "def wcs_to_celestial_frame(wcs):\n    \"\"\"\n    For a given WCS, return the coordinate frame that matches the celestial\n    component of the WCS.\n\n    Parameters\n    ----------\n    wcs : :class:`~astropy.wcs.WCS` instance\n        The WCS to find the frame for\n\n    Returns\n    -------\n    frame : :class:`~astropy.coordinates.baseframe.BaseCoordinateFrame` subclass instance\n        An instance of a :class:`~astropy.coordinates.baseframe.BaseCoordinateFrame`\n        subclass instance that best matches the specified WCS."
+      },
+      "top_level_functions": [
+        "add_stokes_axis_to_wcs",
+        "wcs_to_celestial_frame",
+        "celestial_frame_to_wcs",
+        "proj_plane_pixel_scales",
+        "proj_plane_pixel_area",
+        "is_proj_plane_distorted",
+        "non_celestial_pixel_scales",
+        "skycoord_to_pixel",
+        "pixel_to_skycoord",
+        "pixel_to_pixel",
+        "local_partial_pixel_derivatives",
+        "fit_wcs_from_points",
+        "obsgeo_to_frame"
+      ]
+    },
+    {
+      "path": "astropy/wcs/wcsapi/high_level_api.py",
+      "score": 22,
+      "matched_identifiers": [
+        "array",
+        "following",
+        "pixel",
+        "pixel_to_world",
+        "world_to_pixel"
+      ],
+      "reasons": [
+        "function_match:pixel_to_world",
+        "function_match:world_to_pixel",
+        "source_content_tokens:array,following,pixel"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "pixel_to_world": "    def pixel_to_world(self, *pixel_arrays):\n        # Compute the world coordinate values\n        world_values = self.low_level_wcs.pixel_to_world_values(*pixel_arrays)\n\n        if self.world_n_dim == 1:\n            world_values = (world_values,)\n\n        pixel_values = values_to_high_level_objects(\n            *world_values, low_level_wcs=self.low_level_wcs\n        )\n\n        if len(pixel_values) == 1:\n            return pixel_values[0]\n        else:\n            return pixel_values",
+        "world_to_pixel": "    def world_to_pixel(self, *world_objects):\n        world_values = high_level_objects_to_values(\n            *world_objects, low_level_wcs=self.low_level_wcs\n        )\n\n        # Finally we convert to pixel coordinates\n        pixel_values = self.low_level_wcs.world_to_pixel_values(*world_values)\n\n        return pixel_values\n\n    def pixel_to_world(self, *pixel_arrays):\n        # Compute the world coordinate values\n        world_values = self.low_level_wcs.pixel_to_world_values(*pixel_arrays)\n\n        if self.world_n_dim == 1:"
+      },
+      "top_level_functions": [
+        "rec_getattr",
+        "default_order",
+        "BaseHighLevelWCS.low_level_wcs",
+        "BaseHighLevelWCS.pixel_to_world",
+        "BaseHighLevelWCS.array_index_to_world",
+        "BaseHighLevelWCS.world_to_pixel",
+        "BaseHighLevelWCS.world_to_array_index",
+        "high_level_objects_to_values",
+        "values_to_high_level_objects",
+        "HighLevelWCSMixin.low_level_wcs",
+        "HighLevelWCSMixin.world_to_pixel",
+        "HighLevelWCSMixin.pixel_to_world"
+      ]
+    },
+    {
+      "path": "astropy/coordinates/sky_coordinate.py",
+      "score": 20,
+      "matched_identifiers": [
+        "SkyCoord",
+        "arcsec",
+        "array",
+        "doing",
+        "following"
+      ],
+      "reasons": [
+        "class_match:SkyCoord",
+        "source_content_tokens:arcsec,array,doing,following,observer"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "SkyCoord": "class SkyCoord(ShapedLikeNDArray):\n    \"\"\"High-level object providing a flexible interface for celestial coordinate\n    representation, manipulation, and transformation between systems.\n\n    The `SkyCoord` class accepts a wide variety of inputs for initialization. At\n    a minimum these must provide one or more celestial coordinate values with\n    unambiguous units.  Inputs may be scalars or lists/tuples/arrays, yielding\n    scalar or array coordinates (can be checked via ``SkyCoord.isscalar``).\n    Typically one also specifies the coordinate frame, though this is not\n    required. The general pattern for spherical representations is::\n\n      SkyCoord(COORD, [FRAME], keyword_args ...)\n      SkyCoord(LON, LAT, [FRAME], keyword_args ...)\n      SkyCoord(LON, LAT, [DISTANCE], frame=FRAME, unit=UNIT, keyword_args ...)\n      SkyCoord([FRAME], <lon_attr>=LON, <lat_attr>=LAT, keyword_args ...)"
+      },
+      "top_level_functions": [
+        "SkyCoordInfo.default_format",
+        "SkyCoordInfo.unit",
+        "SkyCoordInfo.new_like",
+        "SkyCoord.frame",
+        "SkyCoord.representation_type",
+        "SkyCoord.representation",
+        "SkyCoord.shape",
+        "SkyCoord.insert",
+        "SkyCoord.is_transformable_to",
+        "SkyCoord.transform_to",
+        "SkyCoord.apply_space_motion",
+        "SkyCoord.to_string",
+        "SkyCoord.to_table",
+        "SkyCoord.is_equivalent_frame",
+        "SkyCoord.separation",
+        "SkyCoord.separation_3d",
+        "SkyCoord.spherical_offsets_to",
+        "SkyCoord.spherical_offsets_by",
+        "SkyCoord.directional_offset_by",
+        "SkyCoord.match_to_catalog_sky",
+        "SkyCoord.match_to_catalog_3d",
+        "SkyCoord.search_around_sky",
+        "SkyCoord.search_around_3d",
+        "SkyCoord.position_angle",
+        "SkyCoord.skyoffset_frame",
+        "SkyCoord.get_constellation",
+        "SkyCoord.to_pixel",
+        "SkyCoord.from_pixel",
+        "SkyCoord.contained_by",
+        "SkyCoord.radial_velocity_correction",
+        "SkyCoord.guess_from_table",
+        "SkyCoord.from_name"
+      ]
+    },
+    {
+      "path": "astropy/convolution/kernels.py",
+      "score": 17,
+      "matched_identifiers": [
+        "array",
+        "following",
+        "pixel"
+      ],
+      "reasons": [
+        "function_match:array",
+        "source_content_tokens:array,following,pixel"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "array": "    def array(self, array):\n        \"\"\"\n        Filter kernel array setter\n        \"\"\"\n        if isinstance(array, np.ndarray):\n            self._array = array.astype(np.float64)\n        elif isinstance(array, list):\n            self._array = np.array(array, dtype=np.float64)\n        else:\n            raise TypeError(\"Must be list or array.\")\n\n        # Check if array is odd in all axes\n        if has_even_axis(self):\n            raise_even_kernel_exception()\n"
+      },
+      "top_level_functions": [
+        "CustomKernel.array"
+      ]
+    },
+    {
+      "path": "astropy/coordinates/builtin_frames/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "arcsec",
+        "array",
+        "e-10",
+        "observer"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:arcsec,array,e-10,observer,obstime"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_polar_motion",
+        "get_dut1utc",
+        "get_jd12",
+        "norm",
+        "pav2pv",
+        "get_cip",
+        "aticq",
+        "atciqz",
+        "prepare_earth_position_vel",
+        "get_offset_sun_from_barycenter"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "astropy/wcs/wcsapi/tests/test_high_level_wcs_wrapper.py",
+      "score": 47,
+      "matched_identifiers": [
+        "HighLevelWCSWrapper",
+        "SlicedLowLevelWCS"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HighLevelWCSWrapper",
+        "test_path_related_to_class:SlicedLowLevelWCS",
+        "same_module_area:astropy",
+        "same_module_area:astropy/wcs",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/wcs/wcsapi/tests",
+        "token_overlap:high,level,wcsapi,wrapper",
+        "internal_name_overlap:wrapper",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/wcs"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_arrays.py",
+      "score": 45,
+      "matched_identifiers": [
+        "SkyCoord",
+        "SpectralCoord",
+        "array"
+      ],
+      "reasons": [
+        "test_path_contains_function:array",
+        "test_path_related_to_class:SpectralCoord",
+        "test_path_related_to_class:SkyCoord",
+        "same_module_area:astropy",
+        "same_module_area:astropy/coordinates",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "token_overlap:array,coord,coordinate,coordinates",
+        "internal_name_overlap:coordinates",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/wcs/wcsapi/tests/test_high_level_api.py",
+      "score": 45,
+      "matched_identifiers": [
+        "HighLevelWCSWrapper",
+        "SlicedLowLevelWCS"
+      ],
+      "reasons": [
+        "test_path_related_to_class:HighLevelWCSWrapper",
+        "test_path_related_to_class:SlicedLowLevelWCS",
+        "same_module_area:astropy",
+        "same_module_area:astropy/wcs",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/wcs/wcsapi/tests",
+        "token_overlap:high,level,wcsapi",
+        "internal_name_overlap:level",
+        "has_test_functions",
+        "explicit_source_area_match:astropy/wcs"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_utils.py",
+      "score": 43,
+      "matched_identifiers": [
+        "SkyCoord",
+        "SpectralCoord"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SpectralCoord",
+        "test_path_related_to_class:SkyCoord",
+        "same_module_area:astropy",
+        "same_module_area:astropy/coordinates",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "test_name_matches_source_stem:utils",
+        "token_overlap:coord,coordinate,coordinates",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "astropy/coordinates/tests/test_celestial_transformations.py",
+      "score": 41,
+      "matched_identifiers": [
+        "SkyCoord",
+        "SpectralCoord"
+      ],
+      "reasons": [
+        "test_path_related_to_class:SpectralCoord",
+        "test_path_related_to_class:SkyCoord",
+        "same_module_area:astropy",
+        "same_module_area:astropy/coordinates",
+        "same_module_area:astropy",
+        "same_module_area:astropy",
+        "inferred_test_dir_match:astropy/coordinates/tests",
+        "token_overlap:celestial,coord,coordinate,coordinates",
+        "internal_name_overlap:coord",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "astropy/wcs/wcsapi/tests/test_high_level_wcs_wrapper.py:pytest_import_or_conftest",
+      "astropy/wcs/wcsapi/tests/test_high_level_wcs_wrapper.py:top_level_test_functions",
+      "astropy/wcs/wcsapi/tests/test_high_level_api.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_celestial_transformations.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_celestial_transformations.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_celestial_transformations.py:testcase_class:TestHCRS",
+      "astropy/coordinates/tests/test_celestial_transformations.py:testcase_class:TestHelioBaryCentric",
+      "astropy/coordinates/tests/test_arrays.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_arrays.py:top_level_test_functions",
+      "astropy/coordinates/tests/test_utils.py:pytest_import_or_conftest",
+      "astropy/coordinates/tests/test_utils.py:top_level_test_functions"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 931,
+  "indexed_test_file_count": 426,
+  "available_imports": {
+    "astropy": [
+      "Conf",
+      "InvalidTabularParametersError",
+      "ScienceState",
+      "TestRunner",
+      "__module_type__",
+      "__version__",
+      "_config",
+      "_get_bibtex",
+      "_init_log",
+      "_initialize_astropy",
+      "_is_astropy_source",
+      "_teardown_log",
+      "astronomical_constants",
+      "base_constants_version",
+      "convolve",
+      "convolve_fft",
+      "convolve_models",
+      "convolve_models_fft",
+      "find_api_page",
+      "interpolate_replace_nans",
+      "online_help",
+      "physical_constants",
+      "utils"
+    ],
+    "astropy.convolution.kernels": [
+      "AiryDisk2DKernel",
+      "Box1DKernel",
+      "Box2DKernel",
+      "CustomKernel",
+      "Gaussian1DKernel",
+      "Gaussian2DKernel",
+      "Model1DKernel",
+      "Model2DKernel",
+      "Moffat2DKernel",
+      "RickerWavelet1DKernel",
+      "RickerWavelet2DKernel",
+      "Ring2DKernel",
+      "Tophat2DKernel",
+      "Trapezoid1DKernel",
+      "TrapezoidDisk2DKernel",
+      "_round_up_to_odd_integer"
+    ],
+    "astropy.coordinates.spectral_coordinate": [
+      "NoDistanceWarning",
+      "NoVelocityWarning",
+      "SpectralCoord",
+      "_apply_relativistic_doppler_shift",
+      "_get_velocities",
+      "attach_zero_velocities",
+      "update_differentials_to_match"
+    ],
+    "astropy.coordinates.sky_coordinate": [
+      "SkyCoord",
+      "SkyCoordInfo"
+    ],
+    "astropy.wcs.utils": [
+      "_celestial_frame_to_wcs_builtin",
+      "_has_distortion",
+      "_is_cd_orthogonal",
+      "_linear_wcs_fit",
+      "_pixel_to_pixel_correlation_matrix",
+      "_pixel_to_world_correlation_matrix",
+      "_sip_fit",
+      "_split_matrix",
+      "_unique_with_order_preserved",
+      "_wcs_to_celestial_frame_builtin",
+      "add_stokes_axis_to_wcs",
+      "celestial_frame_to_wcs",
+      "custom_frame_to_wcs_mappings",
+      "custom_wcs_to_frame_mappings",
+      "fit_wcs_from_points",
+      "is_proj_plane_distorted",
+      "local_partial_pixel_derivatives",
+      "non_celestial_pixel_scales",
+      "obsgeo_to_frame",
+      "pixel_to_pixel",
+      "pixel_to_skycoord",
+      "proj_plane_pixel_area",
+      "proj_plane_pixel_scales",
+      "skycoord_to_pixel",
+      "wcs_to_celestial_frame"
+    ],
+    "astropy.wcs": [
+      "get_include"
+    ],
+    "astropy.wcs.wcsapi.high_level_api": [
+      "BaseHighLevelWCS",
+      "HighLevelWCSMixin",
+      "_toindex",
+      "default_order",
+      "high_level_objects_to_values",
+      "rec_getattr",
+      "values_to_high_level_objects"
+    ],
+    "astropy.wcs.wcsapi.high_level_wcs_wrapper": [
+      "HighLevelWCSWrapper"
+    ],
+    "astropy.wcs.wcsapi.wrappers.sliced_wcs": [
+      "SlicedLowLevelWCS",
+      "combine_slices",
+      "sanitize_slices"
+    ],
+    "astropy.wcs.wcsapi.tests.test_high_level_wcs_wrapper": [
+      "CustomLowLevelWCS",
+      "test_wrapper",
+      "test_wrapper_invalid"
+    ],
+    "astropy.wcs.wcsapi.tests.test_high_level_api": [
+      "DoubleLowLevelWCS",
+      "SerializedWCS",
+      "SimpleDuplicateWCS",
+      "SkyCoordDuplicateWCS",
+      "test_objects_to_values",
+      "test_serialized_classes",
+      "test_simple_duplicate",
+      "test_skycoord_duplicate",
+      "test_values_to_objects"
+    ],
+    "astropy.coordinates.tests.test_celestial_transformations": [
+      "TestHCRS",
+      "TestHelioBaryCentric",
+      "test_cirs_icrs",
+      "test_fk5_galactic",
+      "test_galactocentric",
+      "test_galactocentric_loopback",
+      "test_hcrs_icrs_differentials",
+      "test_lsr_loopback",
+      "test_lsr_sanity",
+      "test_m31_coord_transforms",
+      "test_precession",
+      "test_supergalactic"
+    ],
+    "astropy.coordinates.tests.test_arrays": [
+      "test_angle_arrays",
+      "test_array_coordinates_creation",
+      "test_array_coordinates_distances",
+      "test_array_coordinates_transformations",
+      "test_array_eq",
+      "test_array_indexing",
+      "test_array_len",
+      "test_array_precession",
+      "test_array_separation",
+      "test_dms",
+      "test_hms"
+    ],
+    "astropy.coordinates.tests.test_utils": [
+      "test_polar_motion_unsupported_dates",
+      "test_sun_from_barycenter_offset"
+    ],
+    "astropy.coordinates.builtin_frames.utils": [
+      "_warn_iers",
+      "atciqz",
+      "aticq",
+      "get_cip",
+      "get_dut1utc",
+      "get_jd12",
+      "get_offset_sun_from_barycenter",
+      "get_polar_motion",
+      "norm",
+      "pav2pv",
+      "prepare_earth_position_vel"
+    ],
+    "astropy.coordinates.builtin_frames": [
+      "make_transform_graph_docs"
+    ],
+    "astropy.coordinates": [
+      "AltAz",
+      "BarycentricMeanEcliptic",
+      "BarycentricTrueEcliptic",
+      "BaseEclipticFrame",
+      "BaseRADecFrame",
+      "CIRS",
+      "CustomBarycentricEcliptic",
+      "FK4",
+      "FK4NoETerms",
+      "FK5",
+      "GCRS",
+      "Galactic",
+      "GalacticLSR",
+      "Galactocentric",
+      "GeocentricMeanEcliptic",
+      "GeocentricTrueEcliptic",
+      "HADec",
+      "HCRS",
+      "HeliocentricEclipticIAU76",
+      "HeliocentricMeanEcliptic",
+      "HeliocentricTrueEcliptic",
+      "ICRS",
+      "ITRS",
+      "LSR",
+      "LSRD",
+      "LSRK",
+      "PrecessedGeocentric",
+      "SkyOffsetFrame",
+      "Supergalactic",
+      "TEME",
+      "TETE",
+      "cirs_observed_transforms",
+      "ecliptic_transforms",
+      "fk4_fk5_transforms",
+      "frame_transform_graph",
+      "galactic_transforms",
+      "galactocentric_frame_defaults",
+      "icrs_cirs_transforms",
+      "icrs_fk5_transforms",
+      "icrs_observed_transforms",
+      "intermediate_rotation_transforms",
+      "itrs_observed_transforms",
+      "make_transform_graph_docs",
+      "supergalactic_transforms"
+    ]
+  },
+  "test_example_snippet": "def test_wrapper():\n    wcs = CustomLowLevelWCS()\n\n    wrapper = HighLevelWCSWrapper(wcs)\n\n    coord = wrapper.pixel_to_world(1, 2)\n\n    assert isinstance(coord, SkyCoord)\n    assert coord.isscalar\n\n    x, y = wrapper.world_to_pixel(coord)\n\n    assert_allclose(x, 1)\n    assert_allclose(y, 2)\n\n    assert wrapper.low_level_wcs is wcs\n    assert wrapper.pixel_n_dim == 2\n    assert wrapper.world_n_dim == 2\n    assert wrapper.world_axis_physical_types == [\"pos.eq.ra\", \"pos.eq.dec\"]\n    assert wrapper.world_axis_units == [\"deg\", \"deg\"]\n    assert wrapper.array_shape is None\n    assert wrapper.pixel_bounds is None\n    assert np.all(wrapper.axis_correlation_matrix)\n\n\ndef test_wrapper_invalid():\n    class InvalidCustomLowLevelWCS(CustomLowLevelWCS):\n        @property\n        def world_axis_object_classes(self):\n            return {}\n\n    wcs = InvalidCustomLowLevelWCS()\n\n    wrapper = HighLevelWCSWrapper(wcs)\n",
+  "conftest_fixtures": {
+    "astropy/wcs/wcsapi/conftest.py": [
+      "spectral_1d_fitswcs",
+      "time_1d_fitswcs",
+      "celestial_2d_fitswcs",
+      "spectral_cube_3d_fitswcs",
+      "cube_4d_fitswcs",
+      "spectral_1d_ape14_wcs",
+      "celestial_2d_ape14_wcs"
+    ],
+    "astropy/conftest.py": [
+      "ignore_matplotlibrc",
+      "fast_thread_switching"
+    ]
+  }
+}

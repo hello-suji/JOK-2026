@@ -1,0 +1,89 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/unittest.py",
+      "target_function": "setUpClass",
+      "related_classes": [],
+      "candidate_test_file": "testing/python/show_fixtures_per_test.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where setUpClass can be called.",
+      "Use the generated reproduction path that calls setUpClass, makepyfile, runpytest."
+    ],
+    "execution_stimulus": [
+      "Call setUpClass with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: setUpClass, makepyfile, runpytest."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "src/_pytest/unittest.py",
+      "src/_pytest/_code/code.py",
+      "src/_pytest/fixtures.py"
+    ],
+    "relevant_test_files": [
+      "testing/python/show_fixtures_per_test.py",
+      "testing/code/test_code.py",
+      "testing/test_unittest.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_setupclass_fixture_visibility_repro(pytester: Pytester) -> None:\n    pytester.makepyfile(\n        \"\"\"\n        import unittest\n\n        class Tests(unittest.TestCase):\n            @classmethod\n            def setUpClass(cls):\n                pass\n\n            def test_1_repro(self):\n                pass\n        \"\"\"\n    )\n    result = pytester.runpytest('--fixtures')\n    assert 'unittest_setUpClass_fixture_Tests' not in result.stdout.str()\n    result = pytester.runpytest('--fixtures', '-v')\n    assert 'unittest_setUpClass_fixture_Tests' in result.stdout.str()"
+      },
+      {
+        "language": "python",
+        "code": "import unittest\n\nclass Tests(unittest.TestCase):\n    @classmethod\n    def setUpClass(cls):\n        pass\n\n    def test_1(self):\n        pass"
+      },
+      {
+        "language": "python",
+        "code": "~$  pytest --fixtures\n...\nunittest_setUpClass_fixture_Tests [class scope] -- ../Platform/.venv/lib/python3.6/site-packages/_pytest/unittest.py:145\n    /home/ubuntu/src/Platform/.venv/lib/python3.6/site-packages/_pytest/unittest.py:145: no docstring available"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "setUpClass",
+        "makepyfile",
+        "runpytest"
+      ],
+      "classes": [],
+      "files": [
+        "/Platform/.venv/lib/python3.6/site-packages/_pytest/unittest.py",
+        "/home/ubuntu/src/Platform/.venv/lib/python3.6/site-packages/_pytest/unittest.py",
+        "6/site-packages/_pytest/unittest.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "testing/python/show_fixtures_per_test.py",
+      "target_source_file": "src/_pytest/unittest.py",
+      "test_visible_functions": [
+        "setUpClass",
+        "makepyfile",
+        "runpytest"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

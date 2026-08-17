@@ -1,0 +1,29 @@
+--- a/tests/test_ext_intersphinx.py
++++ b/tests/test_ext_intersphinx.py
+@@ -455,3 +455,26 @@
+     stdout, stderr = capsys.readouterr()
+     assert stdout.startswith("c:function\n")
+     assert stderr == ""
++
++import tempfile
++import os
++from sphinx.application import Sphinx
++import unittest
++
++
++class TestMySQLClass(unittest.TestCase):
++    def test_mysql_class_behavior_repro(self):
++        srcdir = tempfile.mkdtemp()
++        confdir = srcdir
++        outdir = tempfile.mkdtemp()
++        doctreedir = tempfile.mkdtemp()
++        buildername = 'html'
++
++        with open(os.path.join(srcdir, 'conf.py'), 'w') as f:
++            f.write('extensions = ["sphinx.ext.autodoc"]\n')
++
++        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++        app.build()
++
++        # Assuming the expected behavior is that the build completes without errors
++        self.assertEqual(app.statuscode, 0)

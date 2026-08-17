@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11239",
+    "model_patch": "--- a/tests/auth_tests/client.py\n+++ b/tests/auth_tests/client.py\n@@ -39,3 +39,12 @@\n     def post(self, path, *args, **kwargs):\n         redirect_url = self._get_password_reset_confirm_redirect_url(path)\n         return super().post(redirect_url, *args, **kwargs)\n+\n+from django.test import TestCase\n+from django.test.client import Client\n+\n+class TestSessionGetRequest(TestCase):\n+    def test_session_get_request_repro(self):\n+        client = Client()\n+        response = client.get('/some-url/')\n+        self.assertEqual(response.status_code, 200)\n",
+    "patch_sha256": "d8f3ebfd5ab1b6e686d5d28866ca36ce45d7a1bd5918464ebbf89f393ada6ea9"
+  }
+]

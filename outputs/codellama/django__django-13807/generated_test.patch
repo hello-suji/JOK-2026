@@ -1,0 +1,16 @@
+--- a/tests/backends/sqlite/test_introspection.py
++++ b/tests/backends/sqlite/test_introspection.py
+@@ -140,3 +140,13 @@
+                 self.assertIsNone(constraint)
+                 self.assertConstraint(details, columns, unique=True)
+                 self.assertConstraint(check, columns, check=True)
++
++def test_foreign_key_check_raises_operational_error_repro():
++    from django.db.backends.sqlite3.base import DatabaseWrapper
++    db_wrapper = DatabaseWrapper({})
++    cursor = db_wrapper.cursor()
++    try:
++        cursor.execute('PRAGMA foreign_key_check')
++        result = cursor.fetchall()
++    except db_wrapper.connection.OperationalError as e:
++        assert isinstance(e, db_wrapper.connection.OperationalError)

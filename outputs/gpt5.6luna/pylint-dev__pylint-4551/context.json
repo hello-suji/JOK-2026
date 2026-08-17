@@ -1,0 +1,389 @@
+{
+  "instance_id": "pylint-dev__pylint-4551",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "99589b08de8c5a2c6cc61e13a37420a868c80599",
+  "repo_path": "data/repos/pylint-dev__pylint",
+  "candidate_source_files": [
+    {
+      "path": "pylint/pyreverse/diagrams.py",
+      "score": 35,
+      "matched_identifiers": [
+        "__init__",
+        "init",
+        "pyreverse",
+        "self"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:pyreverse,__init__,init,self,astroid",
+        "pyreverse_issue_area",
+        "uml_diagram_file"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, title, mode):\n        FilterMixIn.__init__(self, mode)\n        Figure.__init__(self)\n        self.title = title\n        self.objects = []\n        self.relationships = {}\n        self._nodes = {}\n        self.depends = []\n\n    def get_relationships(self, role):\n        # sorted to get predictable (hence testable) results\n        return sorted(\n            self.relationships.get(role, ()),\n            key=lambda x: (x.from_object.fig_id, x.to_object.fig_id),\n        )"
+      },
+      "top_level_functions": [
+        "ClassDiagram.get_relationships",
+        "ClassDiagram.add_relationship",
+        "ClassDiagram.get_relationship",
+        "ClassDiagram.get_attrs",
+        "ClassDiagram.get_methods",
+        "ClassDiagram.add_object",
+        "ClassDiagram.class_names",
+        "ClassDiagram.nodes",
+        "ClassDiagram.has_node",
+        "ClassDiagram.object_from_node",
+        "ClassDiagram.classes",
+        "ClassDiagram.classe",
+        "ClassDiagram.extract_relationships",
+        "PackageDiagram.modules",
+        "PackageDiagram.module",
+        "PackageDiagram.get_module",
+        "PackageDiagram.add_from_depend",
+        "PackageDiagram.extract_relationships"
+      ]
+    },
+    {
+      "path": "pylint/pyreverse/diadefslib.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__",
+        "init",
+        "pyreverse",
+        "self"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:pyreverse,__init__,init,self,astroid",
+        "pyreverse_issue_area"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, config):\n        self.config = config\n\n    def get_diadefs(self, project, linker):\n        \"\"\"Get the diagrams configuration data\n\n        :param project:The pyreverse project\n        :type project: pyreverse.utils.Project\n        :param linker: The linker\n        :type linker: pyreverse.inspector.Linker(IdGeneratorMixIn, LocalsVisitor)\n\n        :returns: The list of diagram definitions\n        :rtype: list(:class:`pylint.pyreverse.diagrams.ClassDiagram`)\n        \"\"\"\n"
+      },
+      "top_level_functions": [
+        "DiaDefGenerator.get_title",
+        "DiaDefGenerator.show_node",
+        "DiaDefGenerator.add_class",
+        "DiaDefGenerator.get_ancestors",
+        "DiaDefGenerator.get_associated",
+        "DiaDefGenerator.extract_classes",
+        "DefaultDiadefGenerator.visit_project",
+        "DefaultDiadefGenerator.leave_project",
+        "DefaultDiadefGenerator.visit_module",
+        "DefaultDiadefGenerator.visit_classdef",
+        "DefaultDiadefGenerator.visit_importfrom",
+        "ClassDiadefGenerator.class_diagram",
+        "DiadefsHandler.get_diadefs"
+      ]
+    },
+    {
+      "path": "pylint/pyreverse/inspector.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__",
+        "init",
+        "pyreverse",
+        "self"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:pyreverse,__init__,init,self,string",
+        "pyreverse_issue_area"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, name=\"\"):\n        self.name = name\n        self.path = None\n        self.modules = []\n        self.locals = {}\n        self.__getitem__ = self.locals.__getitem__\n        self.__iter__ = self.locals.__iter__\n        self.values = self.locals.values\n        self.keys = self.locals.keys\n        self.items = self.locals.items\n\n    def add_module(self, node):\n        self.locals[node.name] = node\n        self.modules.append(node)\n"
+      },
+      "top_level_functions": [
+        "interfaces",
+        "IdGeneratorMixIn.init_counter",
+        "IdGeneratorMixIn.generate_id",
+        "Linker.visit_project",
+        "Linker.visit_package",
+        "Linker.visit_module",
+        "Linker.visit_classdef",
+        "Linker.visit_functiondef",
+        "Linker.visit_assignname",
+        "Linker.handle_assignattr_type",
+        "Linker.visit_import",
+        "Linker.visit_importfrom",
+        "Linker.compute_module",
+        "Project.add_module",
+        "Project.get_module",
+        "Project.get_children",
+        "project_from_files"
+      ]
+    },
+    {
+      "path": "pylint/pyreverse/main.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__",
+        "init",
+        "pyreverse",
+        "self"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:pyreverse,__init__,init,self,string",
+        "pyreverse_issue_area"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self, args):\n        ConfigurationMixIn.__init__(self, usage=__doc__)\n        insert_default_options()\n        args = self.load_command_line_configuration()\n        if self.config.output_format not in (\"dot\", \"vcg\"):\n            _check_graphviz_available(self.config.output_format)\n\n        sys.exit(self.run(args))\n\n    def run(self, args):\n        \"\"\"checking arguments and run project\"\"\"\n        if not args:\n            print(self.help())\n            return 1\n        # insert current working directory to the python path to recognize"
+      },
+      "top_level_functions": [
+        "Run.run"
+      ]
+    },
+    {
+      "path": "pylint/pyreverse/utils.py",
+      "score": 31,
+      "matched_identifiers": [
+        "__init__",
+        "init",
+        "pyreverse",
+        "self"
+      ],
+      "reasons": [
+        "function_match:__init__",
+        "source_content_tokens:pyreverse,__init__,init,self,astroid",
+        "pyreverse_issue_area"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "__init__": "    def __init__(self):\n        ASTWalker.__init__(self, self)\n        self._visited = set()\n\n    def visit(self, node):\n        \"\"\"launch the visit starting from the given node\"\"\"\n        if node in self._visited:\n            return None\n\n        self._visited.add(node)\n        methods = self.get_callbacks(node)\n        if methods[0] is not None:\n            methods[0](node)\n        if hasattr(node, \"locals\"):  # skip Instance and other proxy\n            for local_node in node.values():"
+      },
+      "top_level_functions": [
+        "get_default_options",
+        "insert_default_options",
+        "get_visibility",
+        "is_abstract",
+        "is_final",
+        "is_interface",
+        "is_exception",
+        "FilterMixIn.show_attr",
+        "ASTWalker.walk",
+        "ASTWalker.get_callbacks",
+        "ASTWalker.visit",
+        "ASTWalker.leave",
+        "LocalsVisitor.visit"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "pylint/testutils/lint_module_test.py",
+      "score": 14,
+      "matched_identifiers": [
+        "__init__"
+      ],
+      "reasons": [
+        "test_function_match:__init__",
+        "same_module_area:pylint",
+        "token_overlap:pylint",
+        "internal_name_overlap:init"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/unittest_pyreverse_inspector.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:inspector",
+        "token_overlap:inspector,pyreverse",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/functional/m/missing/missing_docstring.py",
+      "score": 10,
+      "matched_identifiers": [
+        "String",
+        "__init__"
+      ],
+      "reasons": [
+        "test_function_match:__init__",
+        "test_path_related_to_class:String",
+        "token_overlap:string",
+        "internal_name_overlap:init",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:pylint/pyreverse"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_epylint.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:pylint",
+        "token_overlap:pylint",
+        "internal_name_overlap:pylint",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/unittest_pyreverse_writer.py",
+      "score": 10,
+      "matched_identifiers": [
+        "__init__"
+      ],
+      "reasons": [
+        "test_function_match:__init__",
+        "token_overlap:pyreverse",
+        "internal_name_overlap:init",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "pytest",
+    "evidence": [
+      "tests/unittest_pyreverse_writer.py:pytest_import_or_conftest",
+      "tests/unittest_pyreverse_writer.py:top_level_test_functions",
+      "tests/unittest_pyreverse_inspector.py:pytest_import_or_conftest",
+      "tests/unittest_pyreverse_inspector.py:unittest_or_django_test_import",
+      "tests/unittest_pyreverse_inspector.py:top_level_test_functions",
+      "tests/test_epylint.py:pytest_import_or_conftest",
+      "tests/test_epylint.py:top_level_test_functions",
+      "pylint/testutils/lint_module_test.py:pytest_import_or_conftest"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 819,
+  "indexed_test_file_count": 701,
+  "available_imports": {
+    "pylint": [
+      "CheckerTestCase",
+      "FunctionalTestFile",
+      "GenericTestReporter",
+      "LintModuleTest",
+      "Message",
+      "MinimalTestReporter",
+      "UPDATE_FILE",
+      "UPDATE_OPTION",
+      "UnittestLinter",
+      "__version__",
+      "_get_tests_info",
+      "_tokenize_str",
+      "linter",
+      "modify_sys_path",
+      "run_epylint",
+      "run_pylint",
+      "run_pyreverse",
+      "run_symilar",
+      "set_config",
+      "version"
+    ],
+    "tests.unittest_pyreverse_writer": [
+      "Config",
+      "_file_lines",
+      "get_project",
+      "setup",
+      "test_dot_files",
+      "test_get_visibility"
+    ],
+    "tests.unittest_pyreverse_inspector": [
+      "project",
+      "test_class_implements",
+      "test_class_implements_specialization",
+      "test_concat_interfaces",
+      "test_from_directory",
+      "test_instance_attrs_resolution",
+      "test_interfaces",
+      "test_locals_assignment_resolution",
+      "test_project_node"
+    ],
+    "tests.test_epylint": [
+      "example_path",
+      "test_epylint_good_command",
+      "test_epylint_strange_command"
+    ],
+    "tests.functional.m.missing.missing_docstring": [
+      "ClassDocumented",
+      "ClassUndocumented",
+      "DocumentedViaDunderDoc",
+      "Property",
+      "__mangled",
+      "__sizeof__",
+      "_private_documented",
+      "_private_undocumented",
+      "public_documented",
+      "public_undocumented"
+    ],
+    "pylint.pyreverse.diagrams": [
+      "ClassDiagram",
+      "DiagramEntity",
+      "Figure",
+      "PackageDiagram",
+      "Relationship"
+    ],
+    "pylint.pyreverse.diadefslib": [
+      "ClassDiadefGenerator",
+      "DefaultDiadefGenerator",
+      "DiaDefGenerator",
+      "DiadefsHandler"
+    ],
+    "pylint.pyreverse.inspector": [
+      "IdGeneratorMixIn",
+      "Linker",
+      "Project",
+      "_astroid_wrapper",
+      "_iface_hdlr",
+      "interfaces",
+      "project_from_files"
+    ],
+    "pylint.pyreverse.utils": [
+      "ASTWalker",
+      "FilterMixIn",
+      "LocalsVisitor",
+      "get_default_options",
+      "get_visibility",
+      "insert_default_options",
+      "is_abstract",
+      "is_exception",
+      "is_final",
+      "is_interface"
+    ],
+    "pylint.pyreverse.main": [
+      "Run",
+      "_check_graphviz_available"
+    ],
+    "pylint.testutils.lint_module_test": [
+      "LintModuleTest"
+    ]
+  },
+  "test_example_snippet": "def test_class_implements(project):\n    klass = project.get_module(\"data.clientmodule_test\")[\"Ancestor\"]\n    assert hasattr(klass, \"implements\")\n    assert len(klass.implements) == 1\n    assert isinstance(klass.implements[0], astroid.nodes.ClassDef)\n    assert klass.implements[0].name == \"Interface\"\n\n\ndef test_class_implements_specialization(project):\n    klass = project.get_module(\"data.clientmodule_test\")[\"Specialization\"]\n    assert hasattr(klass, \"implements\")\n    assert len(klass.implements) == 0\n\n\ndef test_locals_assignment_resolution(project):\n    klass = project.get_module(\"data.clientmodule_test\")[\"Specialization\"]\n    assert hasattr(klass, \"locals_type\")\n    type_dict = klass.locals_type\n    assert len(type_dict) == 2\n    keys = sorted(type_dict.keys())\n    assert keys == [\"TYPE\", \"top\"]\n    assert len(type_dict[\"TYPE\"]) == 1\n    assert type_dict[\"TYPE\"][0].value == \"final class\"\n    assert len(type_dict[\"top\"]) == 1\n    assert type_dict[\"top\"][0].value == \"class\"\n\n\ndef test_instance_attrs_resolution(project):\n    klass = project.get_module(\"data.clientmodule_test\")[\"Specialization\"]\n    assert hasattr(klass, \"instance_attrs_type\")\n    type_dict = klass.instance_attrs_type\n    assert len(type_dict) == 2\n    keys = sorted(type_dict.keys())\n    assert keys == [\"_id\", \"relation\"]\n    assert isinstance(type_dict[\"relation\"][0], astroid.bases.Instance), type_dict[",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "tests_directory",
+      "linter",
+      "checker",
+      "register",
+      "enable",
+      "disable",
+      "reporter"
+    ]
+  }
+}

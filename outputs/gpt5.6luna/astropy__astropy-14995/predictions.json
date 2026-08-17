@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "astropy__astropy-14995",
+    "model_patch": "--- a/astropy/nddata/tests/test_nddata_base.py\n+++ b/astropy/nddata/tests/test_nddata_base.py\n@@ -0,0 +1,12 @@\n+import numpy as np\n+from astropy.nddata import NDDataRef\n+\n+def test_nddata_masked_operand_with_unmasked_operand_preserves_mask_repro():\n+    array = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])\n+    mask = np.array([[0, 1, 64], [8, 0, 1], [2, 1, 0]])\n+    nref_nomask = NDDataRef(array)\n+    nref_mask = NDDataRef(array, mask=mask)\n+\n+    np.testing.assert_array_equal(nref_mask.multiply(1., handle_mask=np.bitwise_or).mask, mask)\n+    np.testing.assert_array_equal(nref_mask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask, mask)\n+    assert nref_nomask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask is None\n",
+    "patch_sha256": "ffe227f5c9950decdff37fd173d2a615e9486a402990201cc9fda5c37e6acd2f"
+  }
+]

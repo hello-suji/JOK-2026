@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "matplotlib__matplotlib-23299",
+    "model_patch": "--- a/lib/matplotlib/tests/test_figure.py\n+++ b/lib/matplotlib/tests/test_figure.py\n@@ -1380,3 +1380,14 @@\n\n     assert ax.get_xlim() == (1e-1, 1e2)\n     assert fig2.axes[0].get_xlim() == (0, 1)\n+\n+import matplotlib.pyplot as plt\n+from matplotlib._pylab_helpers import Gcf\n+\n+def test_destroy_fig_clears_gcf_repro():\n+    fig = plt.figure()\n+    fig_number = fig.number\n+    Gcf.destroy_fig(fig)\n+    assert Gcf.get_fig(fig_number) is None\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(fig) != 'AssertionError:'\n",
+    "patch_sha256": "afe6b16c014e3db6a8a674b5162fb31ef5823ce97b38b3dbd287f575fbf8f49b"
+  }
+]

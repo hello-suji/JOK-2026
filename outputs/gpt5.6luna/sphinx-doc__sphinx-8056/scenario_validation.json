@@ -1,0 +1,94 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.83,
+      "decision": "accept",
+      "reasons": [
+        "missing required fields",
+        "target function is weakly aligned with issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "source file name contains target function",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "sphinx/domains/python.py",
+          "target_function": "",
+          "related_classes": [],
+          "candidate_test_file": "tests/test_ext_intersphinx.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Reproduce the input conditions described in the issue."
+        ],
+        "execution_stimulus": [
+          "Execute the reproduction code from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "Render error when combining multiple input parameters in docstring",
+        "relevant_source_files": [
+          "sphinx/domains/python.py",
+          "sphinx/ext/doctest.py",
+          "sphinx/ext/extlinks.py"
+        ],
+        "relevant_test_files": [
+          "tests/test_ext_intersphinx.py",
+          "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+          "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "x1, x2 : array_like\n    Input arrays, description of `x1`, `x2`."
+          },
+          {
+            "language": "python",
+            "code": "x1, x2 : array_like, optional\n    Input arrays, description of `x1`, `x2`."
+          },
+          {
+            "language": "python",
+            "code": "extensions = [\n    \"sphinx.ext.autodoc\",\n    \"sphinx.ext.todo\",\n    \"sphinx.ext.coverage\",\n    \"sphinx.ext.extlinks\",\n    \"sphinx.ext.intersphinx\",\n    \"sphinx.ext.mathjax\",\n    \"sphinx.ext.viewcode\",\n    \"sphinx.ext.napoleon\",\n    \"nbsphinx\",\n    \"sphinx.ext.mathjax\",\n    \"sphinxcontrib.bibtex\",\n    \"sphinx.ext.doctest\",\n]"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [],
+          "classes": [],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

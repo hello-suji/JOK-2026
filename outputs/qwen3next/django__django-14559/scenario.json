@@ -1,0 +1,77 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "bulk_update",
+      "related_classes": [],
+      "candidate_test_file": "tests/queries/test_bulk_update.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where bulk_update can be called.",
+      "Use the generated reproduction path that calls bulk_update, update."
+    ],
+    "execution_stimulus": [
+      "Call bulk_update with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: bulk_update, update."
+    ],
+    "expected_failure": "Currently, bulk_update() returns None, unlike update(), which returns ​the number of rows matched.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/sql/query.py",
+      "django/db/migrations/state.py"
+    ],
+    "relevant_test_files": [
+      "tests/postgres_tests/test_bulk_update.py",
+      "tests/queries/test_bulk_update.py",
+      "tests/migrations/test_state.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "class TestBulkUpdateReturnValue(BulkUpdateTests):\n    def test_bulk_update_return_value_repro(self):\n        for note in self.notes:\n            note.note = 'test-%s' % note.id\n        updated_count = Note.objects.bulk_update(self.notes, ['note'])\n        self.assertIsNotNone(updated_count)\n        self.assertEqual(updated_count, len(self.notes))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "bulk_update"
+      ],
+      "classes": [],
+      "files": [
+        "django/db/models/query.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/queries/test_bulk_update.py",
+      "target_source_file": "django/db/models/query.py",
+      "test_visible_functions": [
+        "bulk_update",
+        "update"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

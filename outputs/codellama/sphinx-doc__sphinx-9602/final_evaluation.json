@@ -1,0 +1,14 @@
+{
+  "instance_id": "sphinx-doc__sphinx-9602",
+  "final_score": 0.0,
+  "before_patch": {
+    "sphinx-doc__sphinx-9602::qwen_external_sync": "FAILED"
+  },
+  "after_patch": {
+    "sphinx-doc__sphinx-9602::qwen_external_sync": "FAILED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "fe4db518da9509404b8ba1c506f357fe54e85a6b9318f916d7f8e37bd9b9f708",
+  "resolved": false
+}

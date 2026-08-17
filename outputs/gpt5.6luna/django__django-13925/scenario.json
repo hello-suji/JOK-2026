@@ -1,0 +1,102 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "get_validation_errors",
+      "related_classes": [
+        "AppConfig",
+        "AutoField",
+        "BigAutoField",
+        "AbstractUser",
+        "Entity",
+        "User"
+      ],
+      "candidate_test_file": "tests/apps/explicit_default_config_app/__init__.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls get_validation_errors, models."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: get_validation_errors, models."
+    ],
+    "expected_failure": "models.W042 is raised on inherited manually specified primary key.",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/apps/config.py",
+      "django/contrib/auth/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/forms_tests/field_tests/__init__.py",
+      "tests/apps/explicit_default_config_app/__init__.py",
+      "tests/apps/explicit_default_config_empty_apps/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import re\nfrom django.test import TestCase\nfrom django.core.management.validation import get_validation_errors\nfrom io import StringIO\nfrom django.contrib.auth.models import AbstractUser\nfrom django.db import models\n\nclass TestInheritedPrimaryKey(TestCase):\n    def test_inherited_primary_key_repro(self):\n        class Entity(AbstractUser):\n            pass\n\n        class User(Entity):\n            pass\n\n        # Redirect stdout to capture validation errors\n        output = StringIO()\n        get_validation_errors(output)\n        validation_output = output.getvalue()\n\n        # Pre-patch, this should contain W042 warnings\n        # Post-patch, this should not contain W042 warnings\n        self.assertNotIn('W042', validation_output)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "get_validation_errors",
+        "models"
+      ],
+      "classes": [
+        "AppConfig",
+        "AutoField",
+        "BigAutoField",
+        "FriendshipRequest",
+        "ReadMark",
+        "ReservedUsername",
+        "SpeedyCoreAccountsConfig",
+        "SpeedyCoreContactByFormConfig",
+        "SpeedyCoreMessagesConfig",
+        "UserLike",
+        "AbstractUser",
+        "Entity",
+        "User"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/apps/explicit_default_config_app/__init__.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "get_validation_errors",
+        "models"
+      ],
+      "test_visible_classes": [
+        "AbstractUser",
+        "Entity",
+        "User"
+      ]
+    }
+  }
+]

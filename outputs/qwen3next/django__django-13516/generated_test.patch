@@ -1,0 +1,20 @@
+--- a/tests/backends/mysql/test_operations.py
++++ b/tests/backends/mysql/test_operations.py
+@@ -45,3 +45,17 @@
+                         'SET FOREIGN_KEY_CHECKS = 1;',
+                     ],
+                 )
++
++import re
++from django.core.management import call_command
++from django.core.management.base import CommandError
++from django.test import TestCase
++from io import StringIO
++
++class TestFlushCommand(TestCase):
++    def test_flush_command_output_repro(self):
++        out = StringIO()
++        err = StringIO()
++        call_command('flush', stdout=out, stderr=err, interactive=False)
++        self.assertIn('Applying', out.getvalue())
++        self.assertNotIn('Applying', err.getvalue())

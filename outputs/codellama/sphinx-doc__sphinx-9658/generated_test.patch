@@ -1,0 +1,35 @@
+--- a/tests/roots/test-domain-c-intersphinx/conf.py
++++ b/tests/roots/test-domain-c-intersphinx/conf.py
+@@ -2,3 +2,32 @@
+ extensions = [
+ 	'sphinx.ext.intersphinx',
+ ]
++
++import tempfile
++import os
++from sphinx.application import Sphinx
++from sphinx.ext.autodoc import DocumenterBridge
++from sphinx.ext.autodoc.directive import AutodocDirective
++from sphinx.util.docstrings import prepare_docstring
++
++
++def test_documentation_of_mocked_base_class_repro():
++    srcdir = tempfile.mkdtemp()
++    confdir = srcdir
++    outdir = tempfile.mkdtemp()
++    doctreedir = tempfile.mkdtemp()
++    buildername = 'html'
++
++    with open(os.path.join(srcdir, 'conf.py'), 'w') as f:
++        f.write('extensions = [\'sphinx.ext.autodoc\']\n')
++
++    with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
++        f.write('.. autoclass:: Bases\n   :members:\n')
++        f.write('.. autoclass:: DeepKernel\n   :members:\n')
++        f.write('.. autoclass:: SeldonIO\n   :members:\n')
++
++    app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++    app.build(force_all=True)
++
++    # Check if the build was successful
++    assert not app.statuscode

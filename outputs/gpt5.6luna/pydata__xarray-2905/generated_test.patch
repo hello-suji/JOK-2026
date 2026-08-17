@@ -1,0 +1,23 @@
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -7119,3 +7119,20 @@
+     x0 = DataArray(np.array([object()]))
+     x1 = deepcopy(x0)
+     assert x0.values[0] is not x1.values[0]
++
++def test_dataarray_loc_assignment_coercion_repro():
++    import numpy as np
++    import xarray as xr
++
++    class HasValues:
++        def __init__(self):
++            self.values = 5
++
++    data_array = xr.DataArray(np.array([None]), dims=['dim_0'])
++    has_values_instance = HasValues()
++    data_array.loc[0] = has_values_instance
++
++    assert isinstance(data_array.values[0], HasValues)
++    assert data_array.values[0].values == 5
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(has_values_instance) != 'array([array(5)], dtype=object)'

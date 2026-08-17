@@ -1,0 +1,18 @@
+--- a/tests/migrations/test_optimizer.py
++++ b/tests/migrations/test_optimizer.py
+@@ -1152,3 +1152,15 @@
+                 ),
+             ]
+         )
++
++class TestMigrationOptimizer(OptimizerTests):
++    def test_optimizer_does_not_reduce_multiple_alterfield_repro(self):
++        operations = [
++            migrations.AddField(model_name='book', name='title', field=models.CharField(max_length=256, null=True)),
++            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True)),
++            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help')),
++            migrations.AlterField(model_name='book', name='title', field=models.CharField(max_length=128, null=True, help_text='help', default=None))
++        ]
++        optimizer = MigrationOptimizer()
++        optimized_operations = optimizer.optimize(operations, 'app_label')
++        self.assertEqual(len(optimized_operations), 4)

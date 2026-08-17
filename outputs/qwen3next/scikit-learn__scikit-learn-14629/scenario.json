@@ -1,0 +1,88 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/model_selection/_validation.py",
+      "target_function": "MultiOutputClassifier",
+      "related_classes": [
+        "LinearDiscriminantAnalysis",
+        "MultiOuputClassifier",
+        "MultiOutputClassifer"
+      ],
+      "candidate_test_file": "sklearn/tests/test_multioutput.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where MultiOutputClassifier can be called."
+    ],
+    "execution_stimulus": [
+      "Call MultiOutputClassifier with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "AttributeError with cross_val_predict(method='predict_proba') when using MultiOuputClassifier",
+    "relevant_source_files": [
+      "sklearn/model_selection/_validation.py",
+      "sklearn/datasets/samples_generator.py",
+      "sklearn/discriminant_analysis.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/tests/test_multioutput.py",
+      "sklearn/tests/test_multiclass.py",
+      "sklearn/model_selection/tests/test_validation.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sklearn.datasets import make_multilabel_classification\nfrom sklearn.multioutput import MultiOutputClassifier\nfrom sklearn.discriminant_analysis import LinearDiscriminantAnalysis\nfrom sklearn.model_selection import cross_val_predict\n\nX, Y = make_multilabel_classification()\n\nmo_lda = MultiOutputClassifier(LinearDiscriminantAnalysis())\npred = cross_val_predict(mo_lda, X, Y, cv=5) # Works fine\npred_proba =  cross_val_predict(mo_lda, X, Y, cv=5, method='predict_proba') # Returns error"
+      },
+      {
+        "language": "python",
+        "code": "AttributeError: 'MultiOutputClassifier' object has no attribute 'classes_'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'MultiOutputClassifier' object has no attribute 'classes_'"
+    ],
+    "error_keywords": [
+      "AttributeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "cross_val_predict",
+        "make_multilabel_classification"
+      ],
+      "classes": [
+        "LinearDiscriminantAnalysis",
+        "MultiOuputClassifier",
+        "MultiOutputClassifer",
+        "MultiOutputClassifier",
+        "Returns",
+        "Works"
+      ],
+      "files": [
+        "sklearn/model_selection/_validation.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  }
+]

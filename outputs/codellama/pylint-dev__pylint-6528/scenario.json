@@ -1,0 +1,119 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/checkers/base/docstring_checker.py",
+      "target_function": "tempfile",
+      "related_classes": [
+        "Add",
+        "Disallowed",
+        "Files",
+        "TextReporter",
+        "CheckerTestCase",
+        "TemporaryDirectory",
+        "Run"
+      ],
+      "candidate_test_file": "tests/checkers/unittest_format.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue.",
+      "Use the generated reproduction path that calls tempfile, lint, makedirs, join."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: tempfile, lint, makedirs, join."
+    ],
+    "expected_failure": "Pylint does not respect ignores in `--recursive=y` mode",
+    "relevant_source_files": [
+      "pylint/checkers/base/docstring_checker.py",
+      "doc/conf.py",
+      "pylint/checkers/format.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_format.py",
+      "tests/functional/m/missing/missing_docstring.py",
+      "tests/functional/m/missing/missing_class_docstring.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import tempfile\nimport os\nfrom pylint import lint\nfrom pylint.reporters import TextReporter\nfrom pylint.testutils import CheckerTestCase\n\nclass TestIgnorePatterns(CheckerTestCase):\n    def test_ignore_patterns_recursive_mode_repro(self) -> None:\n        \"\"\"Ensure that Pylint respects the --ignore-patterns setting in recursive mode.\"\"\"\n        with tempfile.TemporaryDirectory() as temp_dir:\n            # Create .a/foo.py and bar.py\n            os.makedirs(os.path.join(temp_dir, '.a'), exist_ok=True)\n            foo_path = os.path.join(temp_dir, '.a', 'foo.py')\n            bar_path = os.path.join(temp_dir, 'bar.py')\n            with open(foo_path, 'w') as f:\n                f.write('pass\\n')\n            with open(bar_path, 'w') as f:\n                f.write('pass\\n')\n            # Run pylint with ignore patterns\n            run = lint.Run([temp_dir, '--ignore-patterns=.a/*'], reporter=TextReporter(), exit=False)\n            # Check that only bar.py is checked\n            self.assertIn('bar.py', run.linter.stats['by_module'])\n            self.assertNotIn('.a/foo.py', run.linter.stats['by_module'])"
+      },
+      {
+        "language": "shell",
+        "code": "### .a/foo.py\n# import re\n\n### bar.py\n# import re\n\npylint --recursive=y .\npylint --recursive=y --ignore=.a .\npylint --recursive=y --ignore-paths=.a .\npylint --recursive=y --ignore-patterns=\"^\\.a\" ."
+      },
+      {
+        "language": "python",
+        "code": "************* Module bar\nbar.py:1:0: C0104: Disallowed name \"bar\" (disallowed-name)\nbar.py:1:0: C0114: Missing module docstring (missing-module-docstring)\nbar.py:1:0: W0611: Unused import re (unused-import)\n************* Module foo\n.a/foo.py:1:0: C0104: Disallowed name \"foo\" (disallowed-name)\n.a/foo.py:1:0: C0114: Missing module docstring (missing-module-docstring)\n.a/foo.py:1:0: W0611: Unused import re (unused-import)"
+      },
+      {
+        "language": "python",
+        "code": "--ignore=<file>[,<file>...]\n                        Files or directories to be skipped. They should be\n                        base names, not paths. [current: CVS]\n    --ignore-patterns=<pattern>[,<pattern>...]\n                        Files or directories matching the regex patterns are\n                        skipped. The regex matches against base names, not\n                        paths. The default value ignores emacs file locks\n                        [current: ^\\.#]\n    --ignore-paths=<pattern>[,<pattern>...]\n                        Add files or directories matching the regex patterns\n                        to the ignore-list. The regex matches against paths\n                        and can be in Posix or Windows format. [current: none]"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "tempfile",
+        "lint",
+        "makedirs",
+        "join"
+      ],
+      "classes": [
+        "Add",
+        "Disallowed",
+        "Files",
+        "Missing",
+        "Posix",
+        "They",
+        "Unused",
+        "TextReporter",
+        "CheckerTestCase",
+        "TemporaryDirectory",
+        "Run"
+      ],
+      "files": [
+        "bar.py",
+        "foo.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/checkers/unittest_format.py",
+      "target_source_file": "pylint/checkers/base/docstring_checker.py",
+      "test_visible_functions": [
+        "tempfile",
+        "lint",
+        "makedirs",
+        "join"
+      ],
+      "test_visible_classes": [
+        "TextReporter",
+        "CheckerTestCase",
+        "TemporaryDirectory",
+        "Run"
+      ]
+    }
+  }
+]

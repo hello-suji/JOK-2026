@@ -1,0 +1,543 @@
+{
+  "instance_id": "pytest-dev__pytest-5262",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "58e6a09db49f34886ff13f3b7520dd0bcd7063cd",
+  "repo_path": "data/repos/pytest-dev__pytest",
+  "candidate_source_files": [
+    {
+      "path": "src/_pytest/capture.py",
+      "score": 46,
+      "matched_identifiers": [
+        "7/site-packages/_pytest/capture.py",
+        "EncodedFile",
+        "_pytest",
+        "argument",
+        "bytes",
+        "capture",
+        "pytest-issue-ve3/lib/python3.7/site-packages/_pytest/capture.py",
+        "write"
+      ],
+      "reasons": [
+        "function_match:write",
+        "class_match:EncodedFile",
+        "file_hint_match:pytest-issue-ve3/lib/python3.7/site-packages/_pytest/capture.py",
+        "file_hint_match:7/site-packages/_pytest/capture.py",
+        "stem_in_issue_text:capture",
+        "source_content_tokens:_pytest,argument,bytes,capture,encodedfile"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "EncodedFile": "class EncodedFile(object):\n    errors = \"strict\"  # possibly needed by py3 code (issue555)\n\n    def __init__(self, buffer, encoding):\n        self.buffer = buffer\n        self.encoding = encoding\n\n    def write(self, obj):\n        if isinstance(obj, six.text_type):\n            obj = obj.encode(self.encoding, \"replace\")\n        elif _PY3:\n            raise TypeError(\n                \"write() argument must be str, not {}\".format(type(obj).__name__)\n            )\n        self.buffer.write(obj)",
+        "write": "    def write(self, obj):\n        if isinstance(obj, six.text_type):\n            obj = obj.encode(self.encoding, \"replace\")\n        elif _PY3:\n            raise TypeError(\n                \"write() argument must be str, not {}\".format(type(obj).__name__)\n            )\n        self.buffer.write(obj)\n\n    def writelines(self, linelist):\n        data = \"\".join(linelist)\n        self.write(data)\n\n    @property\n    def name(self):"
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_load_initial_conftests",
+        "CaptureManager.is_capturing",
+        "CaptureManager.is_globally_capturing",
+        "CaptureManager.start_global_capturing",
+        "CaptureManager.stop_global_capturing",
+        "CaptureManager.resume_global_capture",
+        "CaptureManager.suspend_global_capture",
+        "CaptureManager.suspend",
+        "CaptureManager.resume",
+        "CaptureManager.read_global_capture",
+        "CaptureManager.activate_fixture",
+        "CaptureManager.deactivate_fixture",
+        "CaptureManager.suspend_fixture",
+        "CaptureManager.resume_fixture",
+        "CaptureManager.global_and_fixture_disabled",
+        "CaptureManager.item_capture",
+        "CaptureManager.pytest_make_collect_report",
+        "CaptureManager.pytest_runtest_protocol",
+        "CaptureManager.pytest_runtest_setup",
+        "CaptureManager.pytest_runtest_call",
+        "CaptureManager.pytest_runtest_teardown",
+        "CaptureManager.pytest_keyboard_interrupt",
+        "CaptureManager.pytest_internalerror",
+        "capsys",
+        "capsysbinary",
+        "capfd",
+        "capfdbinary",
+        "CaptureFixture.close",
+        "CaptureFixture.readouterr",
+        "CaptureFixture.disabled",
+        "safe_text_dupfile",
+        "EncodedFile.write",
+        "EncodedFile.writelines",
+        "EncodedFile.name",
+        "MultiCapture.start_capturing",
+        "MultiCapture.pop_outerr_to_orig",
+        "MultiCapture.suspend_capturing",
+        "MultiCapture.resume_capturing",
+        "MultiCapture.stop_capturing"
+      ]
+    },
+    {
+      "path": "src/pytest.py",
+      "score": 27,
+      "matched_identifiers": [
+        "7/site-packages/pytest.py",
+        "_pytest",
+        "pytest",
+        "system",
+        "write"
+      ],
+      "reasons": [
+        "file_hint_match:7/site-packages/pytest.py",
+        "stem_in_issue_text:pytest",
+        "source_content_tokens:_pytest,pytest,system,write"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": []
+    },
+    {
+      "path": "src/_pytest/cacheprovider.py",
+      "score": 21,
+      "matched_identifiers": [
+        "_pytest",
+        "argument",
+        "bytes",
+        "capture",
+        "get"
+      ],
+      "reasons": [
+        "function_match:get",
+        "source_content_tokens:_pytest,argument,bytes,capture,encoding"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get": "    def get(self, key, default):\n        \"\"\" return cached value for the given key.  If no value\n        was yet cached or the value cannot be read, the specified\n        default is returned.\n\n        :param key: must be a ``/`` separated value. Usually the first\n             name is the name of your plugin or your application.\n        :param default: must be provided in case of a cache-miss or\n             invalid cache values.\n\n        \"\"\"\n        path = self._getvaluepath(key)\n        try:\n            with path.open(\"r\") as f:\n                return json.load(f)"
+      },
+      "top_level_functions": [
+        "Cache.for_config",
+        "Cache.cache_dir_from_config",
+        "Cache.warn",
+        "Cache.makedir",
+        "Cache.get",
+        "Cache.set",
+        "LFPlugin.last_failed_paths",
+        "LFPlugin.pytest_ignore_collect",
+        "LFPlugin.pytest_report_collectionfinish",
+        "LFPlugin.pytest_runtest_logreport",
+        "LFPlugin.pytest_collectreport",
+        "LFPlugin.pytest_collection_modifyitems",
+        "LFPlugin.pytest_sessionfinish",
+        "NFPlugin.pytest_collection_modifyitems",
+        "NFPlugin.pytest_sessionfinish",
+        "pytest_addoption",
+        "pytest_cmdline_main",
+        "pytest_configure",
+        "cache",
+        "pytest_report_header",
+        "cacheshow"
+      ]
+    },
+    {
+      "path": "src/_pytest/logging.py",
+      "score": 21,
+      "matched_identifiers": [
+        "_pytest",
+        "argument",
+        "capture",
+        "encoding",
+        "format"
+      ],
+      "reasons": [
+        "function_match:format",
+        "source_content_tokens:_pytest,argument,capture,encoding,list"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "format": "    def format(self, record):\n        fmt = self._level_to_fmt_mapping.get(record.levelno, self._original_fmt)\n        if six.PY2:\n            self._fmt = fmt\n        else:\n            self._style._fmt = fmt\n        return super(ColoredLevelFormatter, self).format(record)\n\n\ndef get_option_ini(config, *names):\n    for name in names:\n        ret = config.getoption(name)  # 'default' arg won't work as expected\n        if ret is None:\n            ret = config.getini(name)\n        if ret:"
+      },
+      "top_level_functions": [
+        "ColoredLevelFormatter.format",
+        "get_option_ini",
+        "pytest_addoption",
+        "catching_logs",
+        "LogCaptureHandler.emit",
+        "LogCaptureHandler.reset",
+        "LogCaptureFixture.handler",
+        "LogCaptureFixture.get_records",
+        "LogCaptureFixture.text",
+        "LogCaptureFixture.records",
+        "LogCaptureFixture.record_tuples",
+        "LogCaptureFixture.messages",
+        "LogCaptureFixture.clear",
+        "LogCaptureFixture.set_level",
+        "LogCaptureFixture.at_level",
+        "caplog",
+        "get_actual_log_level",
+        "pytest_configure",
+        "LoggingPlugin.set_log_path",
+        "LoggingPlugin.pytest_collection",
+        "LoggingPlugin.pytest_runtest_setup",
+        "LoggingPlugin.pytest_runtest_call",
+        "LoggingPlugin.pytest_runtest_teardown",
+        "LoggingPlugin.pytest_runtest_logstart",
+        "LoggingPlugin.pytest_runtest_logfinish",
+        "LoggingPlugin.pytest_runtest_logreport",
+        "LoggingPlugin.pytest_sessionfinish",
+        "LoggingPlugin.pytest_sessionstart",
+        "LoggingPlugin.pytest_runtestloop",
+        "_LiveLoggingStreamHandler.reset",
+        "_LiveLoggingStreamHandler.set_when",
+        "_LiveLoggingStreamHandler.emit"
+      ]
+    },
+    {
+      "path": "src/_pytest/terminal.py",
+      "score": 21,
+      "matched_identifiers": [
+        "_pytest",
+        "argument",
+        "capture",
+        "decide",
+        "write"
+      ],
+      "reasons": [
+        "function_match:write",
+        "source_content_tokens:_pytest,argument,capture,decide,encoding"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "write": "    def write(self, content, **markup):\n        self._tw.write(content, **markup)\n\n    def write_line(self, line, **markup):\n        if not isinstance(line, six.text_type):\n            line = six.text_type(line, errors=\"replace\")\n        self.ensure_newline()\n        self._tw.line(line, **markup)\n\n    def rewrite(self, line, **markup):\n        \"\"\"\n        Rewinds the terminal cursor to the beginning and writes the given line.\n\n        :kwarg erase: if True, will also add spaces until the full terminal width to ensure\n            previous lines are properly erased."
+      },
+      "top_level_functions": [
+        "pytest_addoption",
+        "pytest_configure",
+        "getreportopt",
+        "pytest_report_teststatus",
+        "WarningReport.get_location",
+        "TerminalReporter.verbosity",
+        "TerminalReporter.showheader",
+        "TerminalReporter.showfspath",
+        "TerminalReporter.showlongtestinfo",
+        "TerminalReporter.hasopt",
+        "TerminalReporter.write_fspath_result",
+        "TerminalReporter.write_ensure_prefix",
+        "TerminalReporter.ensure_newline",
+        "TerminalReporter.write",
+        "TerminalReporter.write_line",
+        "TerminalReporter.rewrite",
+        "TerminalReporter.write_sep",
+        "TerminalReporter.section",
+        "TerminalReporter.line",
+        "TerminalReporter.pytest_internalerror",
+        "TerminalReporter.pytest_warning_captured",
+        "TerminalReporter.pytest_plugin_registered",
+        "TerminalReporter.pytest_deselected",
+        "TerminalReporter.pytest_runtest_logstart",
+        "TerminalReporter.pytest_runtest_logreport",
+        "TerminalReporter.pytest_runtest_logfinish",
+        "TerminalReporter.pytest_collection",
+        "TerminalReporter.pytest_collectreport",
+        "TerminalReporter.report_collect",
+        "TerminalReporter.pytest_sessionstart",
+        "TerminalReporter.pytest_report_header",
+        "TerminalReporter.pytest_collection_finish",
+        "TerminalReporter.pytest_sessionfinish",
+        "TerminalReporter.pytest_terminal_summary",
+        "TerminalReporter.pytest_keyboard_interrupt",
+        "TerminalReporter.pytest_unconfigure",
+        "TerminalReporter.getreports",
+        "TerminalReporter.summary_warnings",
+        "TerminalReporter.summary_passes",
+        "TerminalReporter.print_teardown_sections"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "testing/example_scripts/config/collect_pytest_prefix/test_foo.py",
+      "score": 12,
+      "matched_identifiers": [
+        "test_foo"
+      ],
+      "reasons": [
+        "test_function_match:test_foo",
+        "test_path_contains_function:test_foo",
+        "token_overlap:pytest",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/logging/test_formatter.py",
+      "score": 8,
+      "matched_identifiers": [
+        "format"
+      ],
+      "reasons": [
+        "test_path_contains_function:format",
+        "token_overlap:format,logging",
+        "internal_name_overlap:format",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_cacheprovider.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:cacheprovider",
+        "token_overlap:cacheprovider",
+        "internal_name_overlap:write",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_capture.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:capture",
+        "token_overlap:capture",
+        "internal_name_overlap:write",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "testing/test_terminal.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:terminal",
+        "token_overlap:terminal",
+        "internal_name_overlap:write",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/_pytest"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "testing/test_terminal.py:pytest_import_or_conftest",
+      "testing/test_terminal.py:top_level_test_functions",
+      "testing/test_terminal.py:testcase_class:TestClassicOutputStyle",
+      "testing/test_terminal.py:testcase_class:TestCollectonly",
+      "testing/test_terminal.py:testcase_class:TestFixtureReporting",
+      "testing/test_terminal.py:testcase_class:TestGenericReporting",
+      "testing/test_terminal.py:testcase_class:TestProgressOutputStyle",
+      "testing/test_terminal.py:testcase_class:TestProgressWithTeardown",
+      "testing/test_terminal.py:testcase_class:TestTerminal",
+      "testing/test_terminal.py:testcase_class:TestTerminalFunctional",
+      "testing/test_cacheprovider.py:pytest_import_or_conftest",
+      "testing/test_cacheprovider.py:top_level_test_functions",
+      "testing/test_cacheprovider.py:testcase_class:TestLastFailed",
+      "testing/test_cacheprovider.py:testcase_class:TestNewAPI",
+      "testing/test_cacheprovider.py:testcase_class:TestNewFirst",
+      "testing/test_cacheprovider.py:testcase_class:TestReadme",
+      "testing/test_capture.py:pytest_import_or_conftest",
+      "testing/test_capture.py:top_level_test_functions",
+      "testing/test_capture.py:testcase_class:TestCaptureFixture",
+      "testing/test_capture.py:testcase_class:TestCaptureIO"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "unittest"
+  },
+  "indexed_file_count": 198,
+  "indexed_test_file_count": 104,
+  "available_imports": {
+    "testing.test_terminal": [
+      "Option",
+      "TestClassicOutputStyle",
+      "TestCollectonly",
+      "TestFixtureReporting",
+      "TestGenericReporting",
+      "TestProgressOutputStyle",
+      "TestProgressWithTeardown",
+      "TestTerminal",
+      "TestTerminalFunctional",
+      "option",
+      "test_color_no",
+      "test_color_yes",
+      "test_color_yes_collection_on_non_atty",
+      "test_fail_extra_reporting",
+      "test_fail_reporting_on_pass",
+      "test_fdopen_kept_alive_issue124",
+      "test_getreportopt",
+      "test_line_with_reprcrash",
+      "test_pass_extra_reporting",
+      "test_pass_output_reporting",
+      "test_pass_reporting_on_fail",
+      "test_plugin_nameversion",
+      "test_skip_counting_towards_summary",
+      "test_skip_reasons_folding",
+      "test_summary_stats",
+      "test_tbstyle_native_setup_error",
+      "test_tbstyle_short",
+      "test_terminal_summary",
+      "test_terminal_summary_warnings_are_displayed",
+      "test_terminal_summary_warnings_header_once",
+      "test_terminalreporter_reportopt_addopts",
+      "test_traceconfig"
+    ],
+    "testing.test_cacheprovider": [
+      "TestLastFailed",
+      "TestNewAPI",
+      "TestNewFirst",
+      "TestReadme",
+      "test_cache_reportheader",
+      "test_cache_reportheader_external_abspath",
+      "test_cache_show",
+      "test_cachedir_tag",
+      "test_does_not_create_boilerplate_in_existing_dirs",
+      "test_gitignore"
+    ],
+    "testing.test_capture": [
+      "StdCapture",
+      "StdCaptureFD",
+      "TestCaptureFixture",
+      "TestCaptureIO",
+      "TestCaptureManager",
+      "TestFDCapture",
+      "TestLoggingInteraction",
+      "TestPerTestCapturing",
+      "TestStdCapture",
+      "TestStdCaptureFD",
+      "TestStdCaptureFDinvalidFD",
+      "lsof_check",
+      "saved_fd",
+      "test_capsys_results_accessible_by_attribute",
+      "test_capture_badoutput_issue412",
+      "test_capture_binary_output",
+      "test_capture_conftest_runtest_setup",
+      "test_capture_early_option_parsing",
+      "test_capture_not_started_but_reset",
+      "test_capture_with_live_logging",
+      "test_capturing_and_logging_fundamentals",
+      "test_capturing_bytes_in_utf8_encoding",
+      "test_capturing_unicode",
+      "test_close_and_capture_again",
+      "test_collect_capturing",
+      "test_crash_on_closing_tmpfile_py27",
+      "test_dontreadfrominput",
+      "test_dontreadfrominput_buffer_python2",
+      "test_dontreadfrominput_buffer_python3",
+      "test_dontreadfrominput_has_encoding",
+      "test_dupfile",
+      "test_dupfile_on_bytesio",
+      "test_dupfile_on_textio",
+      "test_error_attribute_issue555",
+      "test_error_during_readouterr",
+      "test_fdcapture_tmpfile_remains_the_same",
+      "test_fdfuncarg_skips_on_no_osdup",
+      "test_global_capture_with_live_logging",
+      "test_pickling_and_unpickling_encoded_file",
+      "test_py36_windowsconsoleio_workaround_non_standard_streams",
+      "test_setup_failure_does_not_kill_capturing",
+      "test_typeerror_encodedfile_write",
+      "test_using_capsys_fixture_works_with_sys_stdout_encoding",
+      "tmpfile"
+    ],
+    "bench.skip": [
+      "test_foo"
+    ],
+    "src._pytest.terminal": [
+      "MoreQuietAction",
+      "TerminalReporter",
+      "WarningReport",
+      "_folded_skips",
+      "_get_line_with_reprcrash_message",
+      "_get_pos",
+      "_plugin_nameversions",
+      "build_summary_stats_line",
+      "getreportopt",
+      "pytest_addoption",
+      "pytest_configure",
+      "pytest_report_teststatus"
+    ],
+    "src._pytest.capture": [
+      "CaptureFixture",
+      "CaptureManager",
+      "DontReadFromInput",
+      "EncodedFile",
+      "FDCapture",
+      "FDCaptureBinary",
+      "MultiCapture",
+      "NoCapture",
+      "SysCapture",
+      "SysCaptureBinary",
+      "_attempt_to_close_capture_file",
+      "_colorama_workaround",
+      "_ensure_only_one_capture_fixture",
+      "_install_capture_fixture_on_item",
+      "_py36_windowsconsoleio_workaround",
+      "_readline_workaround",
+      "capfd",
+      "capfdbinary",
+      "capsys",
+      "capsysbinary",
+      "pytest_addoption",
+      "pytest_load_initial_conftests",
+      "safe_text_dupfile"
+    ],
+    "src._pytest.cacheprovider": [
+      "Cache",
+      "LFPlugin",
+      "NFPlugin",
+      "cache",
+      "cacheshow",
+      "pytest_addoption",
+      "pytest_cmdline_main",
+      "pytest_configure",
+      "pytest_report_header"
+    ],
+    "src._pytest.logging": [
+      "ColoredLevelFormatter",
+      "LogCaptureFixture",
+      "LogCaptureHandler",
+      "LoggingPlugin",
+      "_LiveLoggingStreamHandler",
+      "caplog",
+      "catching_logs",
+      "get_actual_log_level",
+      "get_option_ini",
+      "pytest_addoption",
+      "pytest_configure"
+    ],
+    "src": [
+      "__version__"
+    ],
+    "testing.logging.test_formatter": [
+      "test_coloredlogformatter"
+    ],
+    "testing.example_scripts.warnings.test_group_warnings_by_message": [
+      "func",
+      "test_bar",
+      "test_foo"
+    ],
+    "testing.example_scripts.collect.collect_init_tests.tests.test_foo": [
+      "test_foo"
+    ],
+    "testing.example_scripts.config.collect_pytest_prefix.test_foo": [
+      "test_foo"
+    ]
+  },
+  "test_example_snippet": "def test_foo():\n    pass",
+  "conftest_fixtures": {}
+}

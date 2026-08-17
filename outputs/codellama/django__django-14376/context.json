@@ -1,0 +1,388 @@
+{
+  "instance_id": "django__django-14376",
+  "repo": "django/django",
+  "base_commit": "d06c5b358149c02a62da8a5469264d05f29ac659",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/backends/mysql/base.py",
+      "score": 39,
+      "matched_identifiers": [
+        "added",
+        "database",
+        "django/db/backends/mysql/base.py",
+        "kwargs",
+        "password"
+      ],
+      "reasons": [
+        "explicit_file_path_hint:django/db/backends/mysql/base.py",
+        "path_contains_class:MySQL",
+        "stem_in_issue_text:base",
+        "source_content_tokens:database,kwargs,password,added,backend"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CursorWrapper.execute",
+        "CursorWrapper.executemany",
+        "DatabaseWrapper.get_connection_params",
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.init_connection_state",
+        "DatabaseWrapper.create_cursor",
+        "DatabaseWrapper.disable_constraint_checking",
+        "DatabaseWrapper.enable_constraint_checking",
+        "DatabaseWrapper.check_constraints",
+        "DatabaseWrapper.is_usable",
+        "DatabaseWrapper.display_name",
+        "DatabaseWrapper.data_type_check_constraints",
+        "DatabaseWrapper.mysql_server_data",
+        "DatabaseWrapper.mysql_server_info",
+        "DatabaseWrapper.mysql_version",
+        "DatabaseWrapper.mysql_is_mariadb",
+        "DatabaseWrapper.sql_mode"
+      ]
+    },
+    {
+      "path": "django/contrib/gis/db/backends/spatialite/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "backend",
+        "backends",
+        "database",
+        "django/db/backends/mysql/base.py",
+        "kwargs"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/mysql/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:database,kwargs,backend,backends,require"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "DatabaseWrapper.get_new_connection",
+        "DatabaseWrapper.prepare_database"
+      ]
+    },
+    {
+      "path": "django/contrib/messages/storage/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "added",
+        "backend",
+        "could",
+        "django/db/backends/mysql/base.py",
+        "kwargs"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/mysql/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:kwargs,added,backend,could,minimum"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Message.tags",
+        "Message.level_tag",
+        "BaseStorage.update",
+        "BaseStorage.add"
+      ]
+    },
+    {
+      "path": "django/contrib/sessions/backends/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "backend",
+        "backends",
+        "database",
+        "django/db/backends/mysql/base.py",
+        "kwargs"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/mysql/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:database,kwargs,backend,backends,support"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "SessionBase.key_salt",
+        "SessionBase.get",
+        "SessionBase.pop",
+        "SessionBase.setdefault",
+        "SessionBase.set_test_cookie",
+        "SessionBase.test_cookie_worked",
+        "SessionBase.delete_test_cookie",
+        "SessionBase.encode",
+        "SessionBase.decode",
+        "SessionBase.update",
+        "SessionBase.has_key",
+        "SessionBase.keys",
+        "SessionBase.values",
+        "SessionBase.items",
+        "SessionBase.clear",
+        "SessionBase.is_empty",
+        "SessionBase.get_session_cookie_age",
+        "SessionBase.get_expiry_age",
+        "SessionBase.get_expiry_date",
+        "SessionBase.set_expiry",
+        "SessionBase.get_expire_at_browser_close",
+        "SessionBase.flush",
+        "SessionBase.cycle_key",
+        "SessionBase.exists",
+        "SessionBase.create",
+        "SessionBase.save",
+        "SessionBase.delete",
+        "SessionBase.load",
+        "SessionBase.clear_expired"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 27,
+      "matched_identifiers": [
+        "commit",
+        "database",
+        "description",
+        "django/db/backends/mysql/base.py",
+        "kwargs"
+      ],
+      "reasons": [
+        "file_hint_match:django/db/backends/mysql/base.py",
+        "stem_in_issue_text:base",
+        "source_content_tokens:database,description,kwargs,commit,deprecated"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.flush",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/messages_tests/base.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:messages",
+        "internal_name_overlap:messages",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/base/test_base.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:backends",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_scripts/management/commands/base_command.py",
+      "score": 5,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "token_overlap:management",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/mysql/test_operations.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "token_overlap:backends,mysql",
+        "internal_name_overlap:mysql",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/field_tests/test_base.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:base",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/messages_tests/base.py:unittest_or_django_test_import",
+      "tests/backends/base/test_base.py:unittest_or_django_test_import",
+      "tests/backends/mysql/test_operations.py:unittest_or_django_test_import",
+      "tests/forms_tests/field_tests/test_base.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2691,
+  "indexed_test_file_count": 1829,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionProxy",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.messages_tests.base": [
+      "BaseTests",
+      "add_level_messages",
+      "override_settings_tags"
+    ],
+    "tests.backends.base.test_base": [
+      "DatabaseWrapperTests",
+      "ExecuteWrapperTests"
+    ],
+    "tests.backends.mysql.test_operations": [
+      "MySQLOperationsTests"
+    ],
+    "tests.admin_scripts.management.commands.base_command": [
+      "Command"
+    ],
+    "tests.forms_tests.field_tests.test_base": [
+      "BasicFieldsTests",
+      "DisabledFieldTests"
+    ],
+    "tests.forms_tests.field_tests": [
+      "FormFieldAssertionsMixin"
+    ],
+    "tests.forms_tests": [
+      "forms"
+    ],
+    "django.db": [
+      "close_old_connections",
+      "reset_queries"
+    ],
+    "django.contrib.messages.storage.base": [
+      "BaseStorage",
+      "Message"
+    ],
+    "django.contrib.messages.storage": [
+      "default_storage"
+    ],
+    "django.contrib.messages": [
+      "import_string",
+      "settings"
+    ],
+    "django.contrib.gis.db.backends.spatialite.base": [
+      "DatabaseWrapper"
+    ],
+    "django.contrib.sessions.backends.base": [
+      "CreateError",
+      "SessionBase",
+      "UpdateError"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.db.backends.mysql.base": [
+      "CursorWrapper",
+      "DatabaseWrapper"
+    ]
+  },
+  "test_example_snippet": "    def test_add(self):\n        storage = self.get_storage()\n        self.assertFalse(storage.added_new)\n        storage.add(constants.INFO, 'Test message 1')\n        self.assertTrue(storage.added_new)\n        storage.add(constants.INFO, 'Test message 2', extra_tags='tag')\n        self.assertEqual(len(storage), 2)\n\n    def test_add_lazy_translation(self):\n        storage = self.get_storage()\n        response = self.get_response()\n\n        storage.add(constants.INFO, gettext_lazy('lazy message'))\n        storage.update(response)\n\n        storing = self.stored_messages_count(storage, response)\n        self.assertEqual(storing, 1)\n\n    def test_no_update(self):\n        storage = self.get_storage()\n        response = self.get_response()\n        storage.update(response)\n        storing = self.stored_messages_count(storage, response)\n        self.assertEqual(storing, 0)\n\n    def test_add_update(self):\n        storage = self.get_storage()\n        response = self.get_response()\n\n        storage.add(constants.INFO, 'Test message 1')\n        storage.add(constants.INFO, 'Test message 1', extra_tags='tag')\n        storage.update(response)\n\n        storing = self.stored_messages_count(storage, response)\n        self.assertEqual(storing, 2)",
+  "conftest_fixtures": {}
+}

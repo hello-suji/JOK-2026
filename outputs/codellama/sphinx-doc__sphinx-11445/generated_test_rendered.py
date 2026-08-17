@@ -1,0 +1,26 @@
+exclude_patterns = ['_build']
+extensions = [
+	'sphinx.ext.intersphinx',
+]
+
+import tempfile
+import os
+from sphinx.application import Sphinx
+from sphinx.builders.text import TextBuilder
+
+def test_heading_with_domain_directive_repro():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        srcdir = os.path.join(tmpdir, 'docs')
+        confdir = srcdir
+        outdir = os.path.join(tmpdir, '_build', 'text')
+        doctreedir = os.path.join(tmpdir, '_build', 'doctrees')
+        buildername = 'text'
+        os.makedirs(srcdir)
+        with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
+            f.write('Welcome\n=======\n\n.. c:function:: int add(int x, int y)\n\n   Adds two numbers.')
+        app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
+        app.build()
+        with open(os.path.join(outdir, 'index.txt')) as f:
+            content = f.read()
+        assert 'Welcome' in content
+        assert 'int add(int x, int y)' in content

@@ -1,0 +1,32 @@
+--- a/astropy/io/votable/tests/tree_test.py
++++ b/astropy/io/votable/tests/tree_test.py
+@@ -168,3 +168,29 @@
+     assert 'xmlns="http://www.ivoa.net/xml/VOTable/v1.3"' in xml
+     assert 'xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 '
+     assert 'http://www.ivoa.net/xml/VOTable/VOTable-1.4.xsd"' in xml
++
++import io
++from astropy.table import Table
++
++def test_cds_composite_units_parsing_repro():
++    data = """
++Title:
++Authors:
++Table:
++================================================================================
++Byte-by-byte Description of file: tab.txt
++--------------------------------------------------------------------------------
++   Bytes Format Units          		Label      Explanations
++--------- ---- --------------- ---------- ------------------------------------------
++     1-  5 A5  ---            ID         ---
++     7- 15 E9.3 1e+3 J s / (kpc2 m) SBCONT     ---
++    17- 25 E9.3 1e-7 J kpc2 / s SBLINE     ---
++================================================================================
++ID0001  70.992  38.5104
++ID0001  13.0512  28.1924
++ID0001   3.8361  28.1924
++    """
++    with io.StringIO(data) as f:
++        dat = Table.read(f, format='ascii.cds')
++    assert dat['SBCONT'].unit == '1e+3 J s / (kpc2 m)'
++    assert dat['SBLINE'].unit == '1e-7 J kpc2 / s'

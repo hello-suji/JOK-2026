@@ -1,0 +1,433 @@
+{
+  "instance_id": "django__django-11333",
+  "repo": "django/django",
+  "base_commit": "55b68de643b5c2d5f0a8ea7587ab3b2966021ccc",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/handlers/base.py",
+      "score": 21,
+      "matched_identifiers": [
+        "BaseHandler",
+        "basehandler",
+        "get_resolver",
+        "get_response",
+        "populate"
+      ],
+      "reasons": [
+        "class_match:BaseHandler",
+        "stem_in_issue_text:base",
+        "source_content_tokens:basehandler,get_resolver,get_response,populate,resolver"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "BaseHandler": "class BaseHandler:\n    _view_middleware = None\n    _template_response_middleware = None\n    _exception_middleware = None\n    _middleware_chain = None\n\n    def load_middleware(self):\n        \"\"\"\n        Populate middleware lists from settings.MIDDLEWARE.\n\n        Must be called after the environment is fixed (see __call__ in subclasses).\n        \"\"\"\n        self._view_middleware = []\n        self._template_response_middleware = []\n        self._exception_middleware = []",
+        "get_response": "    def get_response(self, request):\n        \"\"\"Return an HttpResponse object for the given HttpRequest.\"\"\"\n        # Setup default url resolver for this thread\n        set_urlconf(settings.ROOT_URLCONF)\n        response = self._middleware_chain(request)\n        response._closable_objects.append(request)\n        if response.status_code >= 400:\n            log_response(\n                '%s: %s', response.reason_phrase, request.path,\n                response=response,\n                request=request,\n            )\n        return response\n\n    def _get_response(self, request):"
+      },
+      "top_level_functions": [
+        "BaseHandler.load_middleware",
+        "BaseHandler.make_view_atomic",
+        "BaseHandler.get_response",
+        "BaseHandler.process_exception_by_middleware",
+        "reset_urlconf"
+      ]
+    },
+    {
+      "path": "django/urls/resolvers.py",
+      "score": 21,
+      "matched_identifiers": [
+        "URLResolver",
+        "_populate",
+        "get_resolver",
+        "populate",
+        "resolver"
+      ],
+      "reasons": [
+        "class_match:URLResolver",
+        "stem_in_issue_text:resolvers",
+        "source_content_tokens:_populate,get_resolver,populate,resolver,reverse"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "get_resolver": "def get_resolver(urlconf=None):\n    if urlconf is None:\n        urlconf = settings.ROOT_URLCONF\n    return URLResolver(RegexPattern(r'^/'), urlconf)\n\n\n@functools.lru_cache(maxsize=None)\ndef get_ns_resolver(ns_pattern, resolver, converters):\n    # Build a namespaced resolver for the given parent URLconf pattern.\n    # This makes it possible to have captured parameters in the parent\n    # URLconf pattern.\n    pattern = RegexPattern(ns_pattern)\n    pattern.converters = dict(converters)\n    ns_resolver = URLResolver(pattern, resolver.url_patterns)\n    return URLResolver(RegexPattern(r'^/'), [ns_resolver])",
+        "URLResolver": "class URLResolver:\n    def __init__(self, pattern, urlconf_name, default_kwargs=None, app_name=None, namespace=None):\n        self.pattern = pattern\n        # urlconf_name is the dotted Python path to the module defining\n        # urlpatterns. It may also be an object with an urlpatterns attribute\n        # or urlpatterns itself.\n        self.urlconf_name = urlconf_name\n        self.callback = None\n        self.default_kwargs = default_kwargs or {}\n        self.namespace = namespace\n        self.app_name = app_name\n        self._reverse_dict = {}\n        self._namespace_dict = {}\n        self._app_dict = {}\n        # set of dotted paths to all functions and classes that are used in",
+        "_populate": "    def _populate(self):\n        # Short-circuit if called recursively in this thread to prevent\n        # infinite recursion. Concurrent threads may call this at the same\n        # time and will need to continue, so set 'populating' on a\n        # thread-local variable.\n        if getattr(self._local, 'populating', False):\n            return\n        try:\n            self._local.populating = True\n            lookups = MultiValueDict()\n            namespaces = {}\n            apps = {}\n            language_code = get_language()\n            for url_pattern in reversed(self.url_patterns):\n                p_pattern = url_pattern.pattern.regex.pattern"
+      },
+      "top_level_functions": [
+        "get_resolver",
+        "get_ns_resolver",
+        "CheckURLMixin.describe",
+        "RegexPattern.match",
+        "RegexPattern.check",
+        "RoutePattern.match",
+        "RoutePattern.check",
+        "LocalePrefixPattern.regex",
+        "LocalePrefixPattern.language_prefix",
+        "LocalePrefixPattern.match",
+        "LocalePrefixPattern.check",
+        "LocalePrefixPattern.describe",
+        "URLPattern.check",
+        "URLPattern.resolve",
+        "URLPattern.lookup_str",
+        "URLResolver.check",
+        "URLResolver.reverse_dict",
+        "URLResolver.namespace_dict",
+        "URLResolver.app_dict",
+        "URLResolver.resolve",
+        "URLResolver.urlconf_module",
+        "URLResolver.url_patterns",
+        "URLResolver.resolve_error_handler",
+        "URLResolver.reverse"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/sites.py",
+      "score": 17,
+      "matched_identifiers": [
+        "response",
+        "reverse",
+        "urlconf",
+        "urls"
+      ],
+      "reasons": [
+        "stem_in_issue_text:sites",
+        "source_content_tokens:response,reverse,urlconf,urls,application"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "urls": "    def urls(self):\n        return self.get_urls(), 'admin', self.name\n\n    def each_context(self, request):\n        \"\"\"\n        Return a dictionary of variables to put in the template context for\n        *every* page in the admin site.\n\n        For sites running on a subpath, use the SCRIPT_NAME value if site_url\n        hasn't been customized.\n        \"\"\"\n        script_name = request.META['SCRIPT_NAME']\n        site_url = script_name if self.site_url == '/' and script_name else self.site_url\n        return {\n            'site_title': self.site_title,"
+      },
+      "top_level_functions": [
+        "AdminSite.check",
+        "AdminSite.register",
+        "AdminSite.unregister",
+        "AdminSite.is_registered",
+        "AdminSite.add_action",
+        "AdminSite.disable_action",
+        "AdminSite.get_action",
+        "AdminSite.actions",
+        "AdminSite.empty_value_display",
+        "AdminSite.has_permission",
+        "AdminSite.admin_view",
+        "AdminSite.get_urls",
+        "AdminSite.urls",
+        "AdminSite.each_context",
+        "AdminSite.password_change",
+        "AdminSite.password_change_done",
+        "AdminSite.i18n_javascript",
+        "AdminSite.logout",
+        "AdminSite.login",
+        "AdminSite.get_app_list",
+        "AdminSite.index",
+        "AdminSite.app_index"
+      ]
+    },
+    {
+      "path": "django/core/checks/urls.py",
+      "score": 17,
+      "matched_identifiers": [
+        "get_resolver",
+        "resolver",
+        "reverse",
+        "urlconf"
+      ],
+      "reasons": [
+        "stem_in_issue_text:urls",
+        "source_content_tokens:get_resolver,resolver,reverse,urlconf,urls"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "check_url_config",
+        "check_resolver",
+        "check_url_namespaces_unique",
+        "get_warning_for_invalid_pattern",
+        "check_url_settings",
+        "E006"
+      ]
+    },
+    {
+      "path": "django/core/management/base.py",
+      "score": 17,
+      "matched_identifiers": [
+        "application",
+        "called",
+        "calling",
+        "response"
+      ],
+      "reasons": [
+        "stem_in_issue_text:base",
+        "source_content_tokens:response,application,called,calling,calls"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "CommandParser.parse_args",
+        "CommandParser.error",
+        "handle_default_options",
+        "no_translations",
+        "DjangoHelpFormatter.add_usage",
+        "DjangoHelpFormatter.add_arguments",
+        "OutputWrapper.style_func",
+        "OutputWrapper.isatty",
+        "OutputWrapper.write",
+        "BaseCommand.get_version",
+        "BaseCommand.create_parser",
+        "BaseCommand.add_arguments",
+        "BaseCommand.print_help",
+        "BaseCommand.run_from_argv",
+        "BaseCommand.execute",
+        "BaseCommand.check",
+        "BaseCommand.check_migrations",
+        "BaseCommand.handle",
+        "AppCommand.add_arguments",
+        "AppCommand.handle",
+        "AppCommand.handle_app_config",
+        "LabelCommand.add_arguments",
+        "LabelCommand.handle",
+        "LabelCommand.handle_label"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/urlpatterns/test_resolvers.py",
+      "score": 14,
+      "matched_identifiers": [
+        "URLResolver",
+        "URLResolvers"
+      ],
+      "reasons": [
+        "test_path_related_to_class:URLResolver",
+        "test_path_related_to_class:URLResolvers",
+        "test_name_matches_source_stem:resolvers",
+        "token_overlap:resolver,resolvers",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/handlers/urls.py",
+      "score": 10,
+      "matched_identifiers": [
+        "BaseHandler"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseHandler",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:handler,handlers",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns_reverse/urls_error_handlers.py",
+      "score": 10,
+      "matched_identifiers": [
+        "BaseHandler"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseHandler",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:handler,handlers",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns_reverse/urls_error_handlers_callables.py",
+      "score": 10,
+      "matched_identifiers": [
+        "BaseHandler"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseHandler",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:handler,handlers",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/urlpatterns_reverse/urls_without_handlers.py",
+      "score": 10,
+      "matched_identifiers": [
+        "BaseHandler"
+      ],
+      "reasons": [
+        "test_path_related_to_class:BaseHandler",
+        "test_name_matches_source_stem:urls",
+        "token_overlap:handler,handlers",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/urlpatterns/test_resolvers.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2565,
+  "indexed_test_file_count": 1734,
+  "available_imports": {
+    "django": [
+      "LocalePrefixPattern",
+      "NoReverseMatch",
+      "Resolver404",
+      "ResolverMatch",
+      "URLPattern",
+      "URLResolver",
+      "clear_script_prefix",
+      "clear_url_caches",
+      "get_callable",
+      "get_mod_func",
+      "get_ns_resolver",
+      "get_resolver",
+      "get_script_prefix",
+      "get_urlconf",
+      "get_version",
+      "include",
+      "is_valid_path",
+      "path",
+      "re_path",
+      "register_converter",
+      "resolve",
+      "reverse",
+      "reverse_lazy",
+      "set_script_prefix",
+      "set_urlconf",
+      "setup",
+      "translate_url"
+    ],
+    "tests.urlpatterns.test_resolvers": [
+      "RegexPatternTests",
+      "RoutePatternTests"
+    ],
+    "django.urls.resolvers": [
+      "CheckURLMixin",
+      "LocalePrefixPattern",
+      "LocaleRegexDescriptor",
+      "RegexPattern",
+      "ResolverMatch",
+      "RoutePattern",
+      "URLPattern",
+      "URLResolver",
+      "_route_to_regex",
+      "get_ns_resolver",
+      "get_resolver"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.sites": [
+      "AdminSite",
+      "AlreadyRegistered",
+      "DefaultAdminSite",
+      "NotRegistered"
+    ],
+    "django.core.checks.urls": [
+      "E006",
+      "_load_all_namespaces",
+      "check_resolver",
+      "check_url_config",
+      "check_url_namespaces_unique",
+      "check_url_settings",
+      "get_warning_for_invalid_pattern"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CRITICAL",
+      "CheckMessage",
+      "CommandError",
+      "CommandParser",
+      "Critical",
+      "DEBUG",
+      "Debug",
+      "ERROR",
+      "Error",
+      "INFO",
+      "ImproperlyConfigured",
+      "Info",
+      "Tags",
+      "WARNING",
+      "Warning",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "register",
+      "run_checks",
+      "settings",
+      "tag_exists"
+    ],
+    "django.core.management.base": [
+      "AppCommand",
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "DjangoHelpFormatter",
+      "LabelCommand",
+      "OutputWrapper",
+      "SystemCheckError",
+      "handle_default_options",
+      "no_translations"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core.handlers.base": [
+      "BaseHandler",
+      "reset_urlconf"
+    ]
+  },
+  "test_example_snippet": "    def test_str(self):\n        self.assertEqual(str(RegexPattern(_('^translated/$'))), '^translated/$')\n\n\nclass RoutePatternTests(SimpleTestCase):\n\n    def test_str(self):\n        self.assertEqual(str(RoutePattern(_('translated/'))), 'translated/')",
+  "conftest_fixtures": {}
+}

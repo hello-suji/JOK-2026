@@ -1,0 +1,15 @@
+--- a/sympy/physics/vector/tests/test_point.py
++++ b/sympy/physics/vector/tests/test_point.py
+@@ -309,3 +309,12 @@
+     P1.set_pos(P, A.x+N.x)
+     P1.set_vel(A, 10*A.x)
+     assert P1.vel(N) == 5*N.x + 10*A.x
++
++from sympy import S, Integer
++
++def test_parse_expr_with_evaluate_false_repro():
++    with S.evaluate(False):
++        point_expr = S('Point2D(Integer(1),Integer(2))')
++        assert point_expr != None
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(point_expr) != 'ValueError: Imaginary coordinates are not permitted.'

@@ -1,0 +1,93 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 0.79,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "target source file is also included in relevant source files",
+        "reproduction_code references target_function:date_range",
+        "target_function 'date_range' NOT found in source_file — may be hallucinated",
+        "target_function 'date_range' not in AST top_level_functions for lib/matplotlib/pyplot.py"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "lib/matplotlib/pyplot.py",
+          "target_function": "date_range",
+          "related_classes": [],
+          "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: pytest).",
+          "Set up an environment where date_range can be called."
+        ],
+        "execution_stimulus": [
+          "Call date_range with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "### Actual outcome",
+        "relevant_source_files": [
+          "lib/matplotlib/pyplot.py",
+          "lib/matplotlib/figure.py",
+          "lib/matplotlib/axes/_axes.py"
+        ],
+        "relevant_test_files": [
+          "lib/matplotlib/tests/test_figure.py",
+          "lib/matplotlib/tests/test_pyplot.py",
+          "lib/matplotlib/tests/test_subplots.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "import matplotlib\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\n\nnp.random.seed(1)\nmatplotlib.rcParams[\"text.usetex\"] = True\n\ndates = pd.date_range(\"2020-01-01 00:00:00\", end=\"2020-01-01 00:10:00\", periods=100)\ndata = np.random.rand(100)\n\nfig, ax = plt.subplots(constrained_layout=True)\nax.plot(dates, data)\nplt.savefig(matplotlib.__version__ + \".png\")"
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "date_range",
+            "plot",
+            "savefig",
+            "subplots"
+          ],
+          "classes": [],
+          "files": [],
+          "exceptions": []
+        },
+        "oracle_hints": [
+          "Call the target API and assert public state/value behavior, not local constants.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "inferred_semantic",
+          "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "inferred_semantic"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

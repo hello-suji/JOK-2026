@@ -1,0 +1,22 @@
+--- a/tests/backends/postgresql/test_operations.py
++++ b/tests/backends/postgresql/test_operations.py
+@@ -48,3 +48,19 @@
+             ),
+             ['TRUNCATE "backends_person", "backends_tag" RESTART IDENTITY CASCADE;'],
+         )
++
++from django.db import connection
++from django.db.backends.postgresql.schema import DatabaseSchemaEditor
++from django.test import TestCase
++
++class TestRemoveConstraint(TestCase):
++    def test_remove_unique_constraint_repro(self):
++        schema_editor = DatabaseSchemaEditor(connection)
++        table_name = 'my_table'
++        constraint_name = 'my_unique_constraint'
++        with connection.cursor() as cursor:
++            cursor.execute(f'CREATE TABLE {table_name} (id SERIAL PRIMARY KEY, name VARCHAR(100) UNIQUE CONSTRAINT {constraint_name} UNIQUE)')
++        schema_editor.remove_constraint(table_name, constraint_name)
++        with connection.cursor() as cursor:
++            cursor.execute(f'SELECT conname FROM pg_constraint WHERE conname = %s', [constraint_name])
++            self.assertFalse(cursor.fetchone(), 'The constraint should have been removed.')

@@ -1,0 +1,84 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/widgets.py",
+      "target_function": "use_required_attribute",
+      "related_classes": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "candidate_test_file": "tests/staticfiles_tests/test_forms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where use_required_attribute can be called.",
+      "Use the generated reproduction path that calls use_required_attribute."
+    ],
+    "execution_stimulus": [
+      "Call use_required_attribute with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: use_required_attribute."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "django/forms/widgets.py",
+      "django/contrib/admin/widgets.py",
+      "django/contrib/gis/admin/widgets.py"
+    ],
+    "relevant_test_files": [
+      "tests/staticfiles_tests/test_forms.py",
+      "tests/forms_tests/widget_tests/test_clearablefileinput.py",
+      "tests/forms_tests/tests/test_input_formats.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.forms.widgets import FileInput\n\nclass TestFileInputRequiredAttribute(SimpleTestCase):\n    def test_use_required_attribute_with_initial_data_repro(self):\n        widget = FileInput()\n        self.assertFalse(widget.use_required_attribute(initial='somefile.txt'))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "use_required_attribute"
+      ],
+      "classes": [
+        "ClearableFileInput",
+        "FileInput"
+      ],
+      "files": [
+        "django/forms/widgets.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/staticfiles_tests/test_forms.py",
+      "target_source_file": "django/forms/widgets.py",
+      "test_visible_functions": [
+        "use_required_attribute"
+      ],
+      "test_visible_classes": [
+        "FileInput"
+      ]
+    }
+  }
+]

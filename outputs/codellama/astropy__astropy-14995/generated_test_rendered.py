@@ -1,0 +1,12 @@
+import numpy as np
+from astropy.nddata import NDDataRef
+
+def test_nddata_masked_operand_with_unmasked_operand_preserves_mask_repro():
+    array = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
+    mask = np.array([[0, 1, 64], [8, 0, 1], [2, 1, 0]])
+    nref_nomask = NDDataRef(array)
+    nref_mask = NDDataRef(array, mask=mask)
+
+    np.testing.assert_array_equal(nref_mask.multiply(1., handle_mask=np.bitwise_or).mask, mask)
+    np.testing.assert_array_equal(nref_mask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask, mask)
+    assert nref_nomask.multiply(nref_nomask, handle_mask=np.bitwise_or).mask is None

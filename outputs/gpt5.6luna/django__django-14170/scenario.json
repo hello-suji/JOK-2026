@@ -1,0 +1,68 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/query.py",
+      "target_function": "as_sql",
+      "related_classes": [
+        "DTModel",
+        "ExtractIsoYear",
+        "YearLookup"
+      ],
+      "candidate_test_file": "tests/lookup/test_lookups.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where as_sql can be called."
+    ],
+    "execution_stimulus": [
+      "Call as_sql with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The optimization to use BETWEEN instead of the EXTRACT operation in ​YearLookup is also registered for the ​\"__iso_year\" lookup, which breaks the functionality provided by ​ExtractIsoYear when used via the lookup.",
+    "relevant_source_files": [
+      "django/db/models/query.py",
+      "django/db/models/functions/datetime.py",
+      "django/db/models/lookups.py"
+    ],
+    "relevant_test_files": [
+      "tests/lookup/test_lookups.py",
+      "tests/queries/test_query.py",
+      "tests/template_tests/syntax_tests/i18n/test_filters.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "annotate",
+        "only"
+      ],
+      "classes": [
+        "DTModel",
+        "ExtractIsoYear",
+        "YearLookup"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

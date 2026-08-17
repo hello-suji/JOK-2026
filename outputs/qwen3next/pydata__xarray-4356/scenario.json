@@ -1,0 +1,85 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/nanops.py",
+      "target_function": "sum",
+      "related_classes": [
+        "DataArray"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataarray.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where sum can be called.",
+      "Use the generated reproduction path that calls sum."
+    ],
+    "execution_stimulus": [
+      "Call sum with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: sum."
+    ],
+    "expected_failure": "`sum` with `min_count` errors when passing more than one dim:",
+    "relevant_source_files": [
+      "xarray/core/nanops.py",
+      "xarray/core/dataarray.py",
+      "xarray/core/weighted.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_weighted.py",
+      "xarray/tests/test_backends_api.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import xarray as xr\nda = xr.DataArray([[1., 2, 3], [4, 5, 6]])\nda.sum([\"dim_0\", \"dim_1\"], min_count=1)"
+      },
+      {
+        "language": "python",
+        "code": "def test_sum_with_min_count_multiple_dims_repro():\n    da = xr.DataArray([[1., 2, 3], [4, 5, 6]])\n    result = da.sum([\"dim_0\", \"dim_1\"], min_count=1)\n    assert result == 21.0"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "prod",
+        "take"
+      ],
+      "classes": [
+        "DataArray"
+      ],
+      "files": [
+        "xarray/core/nanops.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataarray.py",
+      "target_source_file": "xarray/core/nanops.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "DataArray"
+      ]
+    }
+  }
+]

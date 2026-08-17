@@ -1,0 +1,94 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function matches issue clue",
+        "class evidence is weak",
+        "source file is aligned with candidate source files",
+        "source file has strong retrieval score",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is too abstract",
+        "reproduction_code references target_function:where",
+        "target_function verified to exist in source_file",
+        "target_function confirmed in AST top_level_functions"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "xarray/core/computation.py",
+          "target_function": "where",
+          "related_classes": [
+            "Variable"
+          ],
+          "candidate_test_file": "xarray/tests/test_computation.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import xarray as xr",
+          "Load the 'air_temperature' dataset using xr.tutorial.load_dataset",
+          "Select the 'air' variable from the dataset"
+        ],
+        "execution_stimulus": [
+          "Apply xr.where with True condition, the 'air' variable as both true and false values, and keep_attrs=True"
+        ],
+        "expected_failure": "The coordinate attributes of the 'time' dimension are overwritten by variable attributes instead of being preserved",
+        "relevant_source_files": [
+          "xarray/core/variable.py",
+          "xarray/tutorial.py",
+          "xarray/backends/api.py"
+        ],
+        "relevant_test_files": [
+          "xarray/tests/test_backends_api.py",
+          "xarray/tests/test_backends_common.py",
+          "xarray/tests/test_computation.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "pytest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "def test_where_overwrites_coordinate_attributes():\n    import xarray as xr\n    ds = xr.tutorial.load_dataset('air_temperature')\n    result = xr.where(True, ds.air, ds.air, keep_attrs=True)\n    assert result.time.attrs == {'long_name': '4xDaily Air temperature at sigma level 995', 'units': 'degK', 'precision': 2, 'GRIB_id': 11, 'GRIB_name': 'TMP', 'var_desc': 'Air temperature', 'dataset': 'NMC Reanalysis', 'level_desc': 'Surface', 'statistic': 'Individual Obs', 'parent_stat': 'Other', 'actual_range': array([185.16, 322.1], dtype=float32)}"
+          }
+        ],
+        "expected_outputs": [
+          "{'standard_name': 'time', 'long_name': 'Time'}"
+        ],
+        "actual_outputs": [
+          "{'long_name': '4xDaily Air temperature at sigma level 995', 'units': 'degK', 'precision': 2, 'GRIB_id': 11, 'GRIB_name': 'TMP', 'var_desc': 'Air temperature', 'dataset': 'NMC Reanalysis', 'level_desc': 'Surface', 'statistic': 'Individual Obs', 'parent_stat': 'Other', 'actual_range': array([185.16, 322.1], dtype=float32)}"
+        ],
+        "error_keywords": [],
+        "identifiers": {
+          "functions": [
+            "where"
+          ],
+          "classes": [
+            "Variable"
+          ]
+        },
+        "oracle_hints": [
+          "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+          "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+        ],
+        "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+        "oracle_contract": {
+          "oracle_type": "positive_value",
+          "oracle_source": "issue_expected",
+          "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+        },
+        "oracle_type": "positive_value",
+        "oracle_source": "issue_expected"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

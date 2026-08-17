@@ -1,0 +1,16 @@
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -6710,3 +6710,13 @@
+         da = DataArray([[1, 2], [1, 2]], dims=("x", "y"))
+         with pytest.raises(ValueError):
+             da.stack(flat=...)
++
++def test_where_preserves_attributes_and_dtype_repro(self) -> None:
++        import numpy as np
++        import xarray as xr
++        data = xr.DataArray(np.ones([10, 10], dtype=np.int8), attrs={'attr_1': 'test1', 'attr_2': 'test2'})
++        condition = xr.ones_like(data, dtype=bool)
++        result = data.where(condition)
++
++        assert result.attrs == data.attrs
++        assert result.dtype == data.dtype

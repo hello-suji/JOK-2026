@@ -1,0 +1,13 @@
+--- a/lib/matplotlib/tests/test_axes.py
++++ b/lib/matplotlib/tests/test_axes.py
+@@ -8382,3 +8382,10 @@
+         c = 'red\n'
+         mpl.axes.Axes._parse_scatter_color_args(
+             c, None, kwargs={}, xsize=2, get_next_color_func=get_next_color)
++
++def test_cla_unset_axes_repro():
++    import matplotlib.pyplot as plt
++    fig, ax = plt.subplots()
++    ax.plot([1, 2])
++    ax.cla()
++    assert len(ax.lines) == 0

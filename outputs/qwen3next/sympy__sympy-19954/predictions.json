@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "sympy__sympy-19954",
+    "model_patch": "--- a/sympy/combinatorics/tests/test_perm_groups.py\n+++ b/sympy/combinatorics/tests/test_perm_groups.py\n@@ -1159,3 +1159,10 @@\n     assert a.degree == 5\n     assert a.order() == 120\n     assert a.identity() == Permutation(4)\n+\n+from sympy.combinatorics.named_groups import DihedralGroup\n+\n+def test_sylow_subgroup_indexerror_repro():\n+    G = DihedralGroup(18)\n+    S2 = G.sylow_subgroup(p=2)\n+    assert isinstance(S2, PermutationGroup)\n",
+    "patch_sha256": "508b20159911d12693d6a367c956b16b4baa042bd3a1bdb7172b8544a215b876"
+  }
+]

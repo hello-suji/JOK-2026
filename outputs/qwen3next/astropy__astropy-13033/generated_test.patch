@@ -1,0 +1,17 @@
+--- a/astropy/timeseries/tests/test_sampled.py
++++ b/astropy/timeseries/tests/test_sampled.py
+@@ -418,3 +418,14 @@
+
+     p3 = cls.from_timeseries(ts, 'a', uncertainty=0.1)
+     assert_allclose(p3.dy, 0.1)
++
++from astropy.time import Time
++from astropy.timeseries import TimeSeries
++
++
++def test_remove_required_column_updates_columns_repro():
++    time = Time([55197., 55198., 55199.], format='mjd')
++    ts = TimeSeries(time=time, data={'flux': [99.9, 99.8, 99.7]})
++    ts.add_required_column('flux')
++    ts.remove_column('flux')
++    assert 'flux' not in ts.colnames

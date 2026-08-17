@@ -1,0 +1,111 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/models/fields/__init__.py",
+      "target_function": "test_created_object_is_str",
+      "related_classes": [
+        "CharField",
+        "EnumTest",
+        "IntegerChoices",
+        "TextChoices",
+        "MyChoice",
+        "MyObject"
+      ],
+      "candidate_test_file": "tests/custom_pk/fields.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where test_created_object_is_str can be called.",
+      "Use the generated reproduction path that calls _, assertEqual, assertIsInstance, create."
+    ],
+    "execution_stimulus": [
+      "Call test_created_object_is_str with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: _, assertEqual, assertIsInstance, create."
+    ],
+    "expected_failure": "Traceback (most recent call last):",
+    "relevant_source_files": [
+      "django/db/models/fields/__init__.py",
+      "django/contrib/admin/tests.py",
+      "django/db/models/query.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_pk/fields.py",
+      "tests/bulk_create/tests.py",
+      "tests/forms_tests/field_tests/__init__.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase\nfrom django.db.models import CharField, TextChoices\n\n\nclass MyChoice(TextChoices):\n    FIRST_CHOICE = 'first', 'First Choice'\n    SECOND_CHOICE = 'second', 'Second Choice'\n\nclass MyObject:\n    choice_field = CharField(max_length=10, choices=MyChoice.choices)\n\nclass TestMyObjectChoices(TestCase):\n    def setUp(self):\n        self.obj = MyObject()\n        self.obj.choice_field = MyChoice.FIRST_CHOICE\n\n    def test_created_object_is_str_repro(self):\n        self.assertIsInstance(self.obj.choice_field, str)\n        self.assertEqual(self.obj.choice_field, MyChoice.FIRST_CHOICE)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "AssertionError"
+    ],
+    "identifiers": {
+      "functions": [
+        "_",
+        "__str__",
+        "assertIsInstance",
+        "create",
+        "setUp"
+      ],
+      "classes": [
+        "CharField",
+        "EnumTest",
+        "IntegerChoices",
+        "IntegerField",
+        "MyChoice",
+        "MyEnum",
+        "MyObject",
+        "MyValue",
+        "TextChoices"
+      ],
+      "files": [
+        "Users/mikailkocak/Development/django30/testing/tests.py",
+        "manage.py"
+      ],
+      "exceptions": [
+        "AssertionError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/custom_pk/fields.py",
+      "target_source_file": "django/db/models/fields/__init__.py",
+      "test_visible_functions": [
+        "_",
+        "assertEqual",
+        "assertIsInstance",
+        "create",
+        "setUp"
+      ],
+      "test_visible_classes": [
+        "CharField",
+        "MyChoice",
+        "MyObject",
+        "TextChoices"
+      ]
+    }
+  }
+]

@@ -1,0 +1,16 @@
+--- a/sympy/sets/tests/test_sets.py
++++ b/sympy/sets/tests/test_sets.py
+@@ -1058,3 +1058,13 @@
+
+     soln = Intersection(S.Reals, FiniteSet(x), evaluate=False)
+     assert Intersection(FiniteSet(x), S.Reals) == soln
++
++from sympy import FiniteSet, Interval, Complement
++from sympy.abc import x, y
++def test_complement_mixture_of_symbols_and_numbers_repro():
++    a = FiniteSet(x, y, 2)
++    b = Interval(-10, 10)
++    result = Complement(a, b)
++    assert result == Complement(FiniteSet(x, y, 2), Interval(-10, 10))
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(result) != '{x, y}'

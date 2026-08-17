@@ -1,0 +1,93 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/expr.py",
+      "target_function": "factor",
+      "related_classes": [
+        "PRs"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_expr.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import symbols, expand, factor",
+      "x, y = symbols('x y')",
+      "z = expand((x-1)*(y-1))",
+      "Use the generated reproduction path that calls symbols, expand, factor.",
+      "Use the generated reproduction path that calls expand, factor, symbols."
+    ],
+    "execution_stimulus": [
+      "result = factor(z, extension=[I])",
+      "Execute the focused target API path: symbols, expand, factor.",
+      "Execute the focused target API path: expand, factor, symbols."
+    ],
+    "expected_failure": "The factor function with extension=True incorrectly drops a factor of y-1, returning x - 1 instead of (x - 1)*(y - 1)",
+    "relevant_source_files": [
+      "sympy/core/expr.py",
+      "sympy/core/function.py",
+      "sympy/core/relational.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_expr.py",
+      "sympy/core/tests/test_relational.py",
+      "sympy/core/tests/test_expand.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_factor_extension_bug():\n    from sympy import symbols, expand, factor\n    x, y = symbols('x y')\n    z = expand((x-1)*(y-1))\n    result = factor(z, extension=[I])\n    assert result == (x - 1)*(y - 1)"
+      },
+      {
+        "language": "python",
+        "code": "def test_factor_extension_bug_repro():\n    from sympy import symbols, expand, factor\n    x, y = symbols('x y')\n    z = expand((x-1)*(y-1))\n    result = factor(z, extension=[I])\n    assert result == (x - 1)*(y - 1)\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'x - 1'"
+      }
+    ],
+    "expected_outputs": [
+      "(x - 1)*(y - 1)"
+    ],
+    "actual_outputs": [
+      "x - 1"
+    ],
+    "error_keywords": [
+      "incorrectly drops a factor"
+    ],
+    "identifiers": {
+      "functions": [
+        "factor",
+        "symbols",
+        "expand"
+      ],
+      "classes": [
+        "PRs"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/core/tests/test_expr.py",
+      "target_source_file": "sympy/core/expr.py",
+      "test_visible_functions": [
+        "expand",
+        "factor",
+        "symbols"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]

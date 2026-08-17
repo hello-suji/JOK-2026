@@ -1,0 +1,458 @@
+{
+  "instance_id": "pallets__flask-5014",
+  "repo": "pallets/flask",
+  "base_commit": "7ee9ceb71e868944a46e1ff00b506772a53a4f1d",
+  "repo_path": "data/repos/pallets__flask",
+  "candidate_source_files": [
+    {
+      "path": "src/flask/app.py",
+      "score": 16,
+      "matched_identifiers": [
+        "blueprint",
+        "blueprints",
+        "given",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:valueerror,blueprint,blueprints,given,helpful"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Flask.name",
+        "Flask.logger",
+        "Flask.jinja_env",
+        "Flask.got_first_request",
+        "Flask.make_config",
+        "Flask.make_aborter",
+        "Flask.auto_find_instance_path",
+        "Flask.open_instance_resource",
+        "Flask.create_jinja_environment",
+        "Flask.create_global_jinja_loader",
+        "Flask.select_jinja_autoescape",
+        "Flask.update_template_context",
+        "Flask.make_shell_context",
+        "Flask.debug",
+        "Flask.run",
+        "Flask.test_client",
+        "Flask.test_cli_runner",
+        "Flask.register_blueprint",
+        "Flask.iter_blueprints",
+        "Flask.add_url_rule",
+        "Flask.template_filter",
+        "Flask.add_template_filter",
+        "Flask.template_test",
+        "Flask.add_template_test",
+        "Flask.template_global",
+        "Flask.add_template_global",
+        "Flask.teardown_appcontext",
+        "Flask.shell_context_processor",
+        "Flask.handle_http_exception",
+        "Flask.trap_http_exception",
+        "Flask.handle_user_exception",
+        "Flask.handle_exception",
+        "Flask.log_exception",
+        "Flask.raise_routing_exception",
+        "Flask.dispatch_request",
+        "Flask.full_dispatch_request",
+        "Flask.finalize_request",
+        "Flask.make_default_options_response",
+        "Flask.should_ignore_error",
+        "Flask.ensure_sync"
+      ]
+    },
+    {
+      "path": "src/flask/helpers.py",
+      "score": 16,
+      "matched_identifiers": [
+        "blueprint",
+        "empty",
+        "given",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:valueerror,blueprint,empty,given,helpful"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_debug_flag",
+        "get_load_dotenv",
+        "stream_with_context",
+        "make_response",
+        "url_for",
+        "redirect",
+        "abort",
+        "get_template_attribute",
+        "flash",
+        "get_flashed_messages",
+        "send_file",
+        "send_from_directory",
+        "get_root_path",
+        "is_ip"
+      ]
+    },
+    {
+      "path": "src/flask/scaffold.py",
+      "score": 16,
+      "matched_identifiers": [
+        "blueprint",
+        "blueprints",
+        "given",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:valueerror,blueprint,blueprints,given,raised"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "setupmethod",
+        "Scaffold.static_folder",
+        "Scaffold.has_static_folder",
+        "Scaffold.static_url_path",
+        "Scaffold.get_send_file_max_age",
+        "Scaffold.send_static_file",
+        "Scaffold.jinja_loader",
+        "Scaffold.open_resource",
+        "Scaffold.get",
+        "Scaffold.post",
+        "Scaffold.put",
+        "Scaffold.delete",
+        "Scaffold.patch",
+        "Scaffold.route",
+        "Scaffold.add_url_rule",
+        "Scaffold.endpoint",
+        "Scaffold.before_request",
+        "Scaffold.after_request",
+        "Scaffold.teardown_request",
+        "Scaffold.context_processor",
+        "Scaffold.url_value_preprocessor",
+        "Scaffold.url_defaults",
+        "Scaffold.errorhandler",
+        "Scaffold.register_error_handler",
+        "find_package"
+      ]
+    },
+    {
+      "path": "src/flask/cli.py",
+      "score": 14,
+      "matched_identifiers": [
+        "blueprint",
+        "given",
+        "raised",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:valueerror,blueprint,given,raised,require"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "find_best_app",
+        "find_app_by_string",
+        "prepare_import",
+        "locate_app",
+        "get_version",
+        "ScriptInfo.load_app",
+        "with_appcontext",
+        "AppGroup.command",
+        "AppGroup.group",
+        "FlaskGroup.get_command",
+        "FlaskGroup.list_commands",
+        "FlaskGroup.make_context",
+        "FlaskGroup.parse_args",
+        "load_dotenv",
+        "show_server_banner",
+        "CertParamType.convert",
+        "SeparatedPathType.convert",
+        "run_command",
+        "shell_command",
+        "routes_command",
+        "main"
+      ]
+    },
+    {
+      "path": "src/flask/wrappers.py",
+      "score": 12,
+      "matched_identifiers": [
+        "blueprint",
+        "blueprints",
+        "empty",
+        "valueerror"
+      ],
+      "reasons": [
+        "source_content_tokens:valueerror,blueprint,blueprints,empty,raised"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "blueprint": "    def blueprint(self) -> t.Optional[str]:\n        \"\"\"The registered name of the current blueprint.\n\n        This will be ``None`` if the endpoint is not part of a\n        blueprint, or if URL matching failed or has not been performed\n        yet.\n\n        This does not necessarily match the name the blueprint was\n        created with. It may have been nested, or registered with a\n        different name.\n        \"\"\"\n        endpoint = self.endpoint\n\n        if endpoint is not None and \".\" in endpoint:\n            return endpoint.rpartition(\".\")[0]",
+        "blueprints": "    def blueprints(self) -> t.List[str]:\n        \"\"\"The registered names of the current blueprint upwards through\n        parent blueprints.\n\n        This will be an empty list if there is no current blueprint, or\n        if URL matching failed.\n\n        .. versionadded:: 2.0.1\n        \"\"\"\n        name = self.blueprint\n\n        if name is None:\n            return []\n\n        return _split_blueprint_path(name)"
+      },
+      "top_level_functions": [
+        "Request.max_content_length",
+        "Request.endpoint",
+        "Request.blueprint",
+        "Request.blueprints",
+        "Request.on_json_loading_failed",
+        "Response.max_cookie_size"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/test_cli.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:cli",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/flask"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_helpers.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:helpers",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:src/flask"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/test_apps/cliapp/app.py",
+      "score": 3,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:app",
+        "unrelated_to_explicit_source_area:src/flask"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/typing/typing_app_decorators.py",
+      "score": 3,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:app",
+        "unrelated_to_explicit_source_area:src/flask"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "mixed",
+    "evidence": [
+      "tests/test_helpers.py:pytest_import_or_conftest",
+      "tests/test_helpers.py:top_level_test_functions",
+      "tests/test_helpers.py:testcase_class:TestHelpers",
+      "tests/test_helpers.py:testcase_class:TestNoImports",
+      "tests/test_helpers.py:testcase_class:TestSendfile",
+      "tests/test_helpers.py:testcase_class:TestStreaming",
+      "tests/test_helpers.py:testcase_class:TestUrlFor",
+      "tests/test_cli.py:pytest_import_or_conftest",
+      "tests/test_cli.py:top_level_test_functions",
+      "tests/test_cli.py:testcase_class:TestRoutes"
+    ],
+    "assert_style": [
+      "plain assert",
+      "self.assert*"
+    ],
+    "runner": "pytest"
+  },
+  "indexed_file_count": 80,
+  "indexed_test_file_count": 47,
+  "available_imports": {
+    "tests.test_helpers": [
+      "FakePath",
+      "PyBytesIO",
+      "TestHelpers",
+      "TestNoImports",
+      "TestSendfile",
+      "TestStreaming",
+      "TestUrlFor",
+      "test_abort_no_app",
+      "test_abort_with_app",
+      "test_app_aborter_class",
+      "test_redirect_no_app",
+      "test_redirect_with_app"
+    ],
+    "tests.test_cli": [
+      "TestRoutes",
+      "dotenv_not_available",
+      "runner",
+      "test_app_cli_has_app_context",
+      "test_appgroup_app_context",
+      "test_cli_blueprints",
+      "test_cli_empty",
+      "test_cli_name",
+      "test_disable_dotenv_from_env",
+      "test_dotenv_optional",
+      "test_dotenv_path",
+      "test_find_best_app",
+      "test_flaskgroup_app_context",
+      "test_flaskgroup_debug",
+      "test_flaskgroup_nested",
+      "test_get_version",
+      "test_help_echo_exception",
+      "test_help_echo_loading_error",
+      "test_load_dotenv",
+      "test_locate_app",
+      "test_locate_app_raises",
+      "test_locate_app_suppress_raise",
+      "test_no_command_echo_loading_error",
+      "test_prepare_import",
+      "test_run_cert_adhoc",
+      "test_run_cert_import",
+      "test_run_cert_no_ssl",
+      "test_run_cert_path",
+      "test_scriptinfo",
+      "test_with_appcontext"
+    ],
+    "src.flask.wrappers": [
+      "Request",
+      "Response"
+    ],
+    "src.flask.scaffold": [
+      "Scaffold",
+      "_endpoint_from_view_func",
+      "_find_package_path",
+      "_matching_loader_thinks_module_is_package",
+      "_path_is_relative_to",
+      "find_package",
+      "setupmethod"
+    ],
+    "src.flask.helpers": [
+      "_prepare_send_file_kwargs",
+      "_split_blueprint_path",
+      "abort",
+      "flash",
+      "get_debug_flag",
+      "get_flashed_messages",
+      "get_load_dotenv",
+      "get_root_path",
+      "get_template_attribute",
+      "is_ip",
+      "locked_cached_property",
+      "make_response",
+      "redirect",
+      "send_file",
+      "send_from_directory",
+      "stream_with_context",
+      "url_for"
+    ],
+    "src.flask": [
+      "__getattr__"
+    ],
+    "src": [
+      "Blueprint",
+      "Config",
+      "Flask",
+      "Request",
+      "Response",
+      "abort",
+      "after_this_request",
+      "appcontext_popped",
+      "appcontext_pushed",
+      "appcontext_tearing_down",
+      "before_render_template",
+      "copy_current_request_context",
+      "current_app",
+      "flash",
+      "g",
+      "get_flashed_messages",
+      "get_template_attribute",
+      "got_request_exception",
+      "has_app_context",
+      "has_request_context",
+      "json",
+      "jsonify",
+      "make_response",
+      "message_flashed",
+      "redirect",
+      "render_template",
+      "render_template_string",
+      "request",
+      "request_finished",
+      "request_started",
+      "request_tearing_down",
+      "send_file",
+      "send_from_directory",
+      "session",
+      "signals_available",
+      "stream_template",
+      "stream_template_string",
+      "stream_with_context",
+      "template_rendered",
+      "url_for"
+    ],
+    "src.flask.app": [
+      "Flask",
+      "_make_timedelta"
+    ],
+    "src.flask.cli": [
+      "AppGroup",
+      "CertParamType",
+      "FlaskGroup",
+      "NoAppException",
+      "ScriptInfo",
+      "SeparatedPathType",
+      "_called_with_wrong_args",
+      "_env_file_callback",
+      "_path_is_ancestor",
+      "_set_app",
+      "_set_debug",
+      "_validate_key",
+      "find_app_by_string",
+      "find_best_app",
+      "get_version",
+      "load_dotenv",
+      "locate_app",
+      "main",
+      "prepare_import",
+      "routes_command",
+      "run_command",
+      "shell_command",
+      "show_server_banner",
+      "with_appcontext"
+    ],
+    "tests.typing.typing_app_decorators": [
+      "after_async",
+      "after_sync",
+      "before_async",
+      "before_sync",
+      "teardown_async",
+      "teardown_sync"
+    ]
+  },
+  "test_example_snippet": "class TestRoutes:\n    @pytest.fixture\n    def app(self):\n        app = Flask(__name__)\n        app.testing = True\n\n        @app.route(\"/get_post/<int:x>/<int:y>\", methods=[\"GET\", \"POST\"])\n        def yyy_get_post(x, y):\n            pass\n\n        @app.route(\"/zzz_post\", methods=[\"POST\"])\n        def aaa_post():\n            pass\n\n        return app\n\n    @pytest.fixture\n    def invoke(self, app, runner):\n        cli = FlaskGroup(create_app=lambda: app)\n        return partial(runner.invoke, cli)\n\n    @pytest.fixture\n    def invoke_no_routes(self, runner):\n        def create_app():\n            app = Flask(__name__, static_folder=None)\n            app.testing = True\n\n            return app\n\n        cli = FlaskGroup(create_app=create_app)\n        return partial(runner.invoke, cli)\n\n    def expect_order(self, order, output):\n        # skip the header and match the start of each row\n        for expect, line in zip(order, output.splitlines()[2:]):",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "_standard_os_environ",
+      "_reset_os_environ",
+      "app",
+      "app_ctx",
+      "req_ctx",
+      "client",
+      "test_apps",
+      "leak_detector",
+      "limit_loader",
+      "modules_tmpdir",
+      "modules_tmpdir_prefix",
+      "site_packages",
+      "install_egg",
+      "purge_module"
+    ]
+  }
+}

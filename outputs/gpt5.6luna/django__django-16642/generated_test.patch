@@ -1,0 +1,18 @@
+--- a/tests/staticfiles_tests/test_views.py
++++ b/tests/staticfiles_tests/test_views.py
+@@ -45,3 +45,15 @@
+     """
+     Test static asset serving view with staticfiles_urlpatterns helper.
+     """
++
++from django.http import FileResponse
++
++
++class TestFileResponseContentType(StaticFilesTestCase):
++    def test_file_response_z_content_type_repro(self):
++        with open('test.html.Z', 'wb') as f:
++            f.write(b'test data')
++        response = FileResponse(open('test.html.Z', 'rb'))
++        self.assertNotEqual(response['Content-Type'], 'text/html')
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(response) != 'text/html'

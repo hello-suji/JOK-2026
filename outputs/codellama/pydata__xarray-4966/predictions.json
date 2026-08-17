@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pydata__xarray-4966",
+    "model_patch": "--- a/xarray/tests/test_dataset.py\n+++ b/xarray/tests/test_dataset.py\n@@ -6713,3 +6713,15 @@\n     x0 = Dataset(dict(foo=DataArray(np.array([object()]))))\n     x1 = deepcopy(x0)\n     assert x0[\"foo\"].values[0] is not x1[\"foo\"].values[0]\n+\n+from xarray.backends.api import open_dataset\n+from xarray.coding.variables import decode_cf_variable\n+from xarray import Dataset\n+import numpy as np\n+\n+\n+def test_opendap_signed_bytes_handling_repro() -> None:\n+    url = \"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\"\n+    ds = open_dataset(url, engine=\"pydap\")\n+    expected_values = np.array([-128, -1, 0, 1, 2, np.nan, 127], dtype=np.float32)\n+    assert np.allclose(ds['test'].values, expected_values, equal_nan=True)\n",
+    "patch_sha256": "5bddfa1535ab8bbc527ccbf43025cdff743202903bbd5ae4a1831352fae47f48"
+  }
+]

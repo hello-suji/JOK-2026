@@ -1,0 +1,13 @@
+--- a/sympy/core/tests/test_symbol.py
++++ b/sympy/core/tests/test_symbol.py
+@@ -381,3 +381,10 @@
+     assert disambiguate(*t7) == (y*y_1, y_1)
+     assert disambiguate(Dummy('x_1'), Dummy('x_1')
+         ) == (x_1, Symbol('x_1_1'))
++
++from sympy import srepr
++from sympy.abc import x, y
++
++def test_srepr_dict_set_repro():
++    assert srepr({x, y}) == "FiniteSet(Symbol('x'), Symbol('y'))"
++    assert srepr({x: y}) == "{Symbol('x'): Symbol('y')}"

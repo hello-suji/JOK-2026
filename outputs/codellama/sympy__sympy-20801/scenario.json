@@ -1,0 +1,86 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/series/order.py",
+      "target_function": "",
+      "related_classes": [
+        "S"
+      ],
+      "candidate_test_file": "sympy/series/tests/test_order.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "S(0.0) == S.false returns True",
+    "relevant_source_files": [
+      "sympy/series/order.py",
+      "bin/authors_update.py",
+      "bin/coverage_doctest.py"
+    ],
+    "relevant_test_files": [
+      "sympy/series/tests/test_order.py",
+      "sympy/series/tests/test_fourier.py",
+      "sympy/series/tests/test_gruntz.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_false_zero_comparison_repro():\n    assert S(0.0) == S.false\n    assert not (S.false == S(0.0))"
+      },
+      {
+        "language": "pycon",
+        "code": ">>> from sympy import *\n>>> S(0.0) == S.false\nTrue\n>>> S.false == S(0.0)\nFalse"
+      },
+      {
+        "language": "pycon",
+        "code": ">>> S(0) == S.false\nFalse\n>>> S.false == S(0)\nFalse"
+      }
+    ],
+    "expected_outputs": [
+      "True\nFalse"
+    ],
+    "actual_outputs": [
+      "False\nFalse"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [
+        "S"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Assert the fixed behavior stated in expected_outputs.",
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Assert the fixed behavior stated in expected_outputs. Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/series/tests/test_order.py",
+      "target_source_file": "sympy/series/order.py",
+      "test_visible_functions": [],
+      "test_visible_classes": [
+        "S"
+      ]
+    }
+  }
+]

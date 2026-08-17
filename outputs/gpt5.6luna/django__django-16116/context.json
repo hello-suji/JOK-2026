@@ -1,0 +1,367 @@
+{
+  "instance_id": "django__django-16116",
+  "repo": "django/django",
+  "base_commit": "5d36a8266c7d5d1994d7a7eeb4016f80d9cb0401",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/core/management/commands/makemigrations.py",
+      "score": 17,
+      "matched_identifiers": [
+        "actually",
+        "check",
+        "create",
+        "dry-run"
+      ],
+      "reasons": [
+        "stem_in_issue_text:makemigrations",
+        "source_content_tokens:actually,check,create,dry-run,makemigrations"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.log_output",
+        "Command.log",
+        "Command.handle",
+        "Command.write_to_last_migration_files",
+        "Command.write_migration_files",
+        "Command.get_relative_path",
+        "Command.handle_merge"
+      ]
+    },
+    {
+      "path": "django/core/management/commands/migrate.py",
+      "score": 17,
+      "matched_identifiers": [
+        "actually",
+        "check",
+        "create",
+        "makemigrations"
+      ],
+      "reasons": [
+        "stem_in_issue_text:migrate",
+        "source_content_tokens:actually,check,create,makemigrations,migrate"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "Command.add_arguments",
+        "Command.handle",
+        "Command.migration_progress_callback",
+        "Command.sync_apps",
+        "Command.describe_operation"
+      ]
+    },
+    {
+      "path": "django/conf/global_settings.py",
+      "score": 16,
+      "matched_identifiers": [
+        "check",
+        "choice",
+        "create",
+        "https"
+      ],
+      "reasons": [
+        "source_content_tokens:check,choice,create,https,logging"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "gettext_noop"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/checks.py",
+      "score": 16,
+      "matched_identifiers": [
+        "actually",
+        "check",
+        "choice",
+        "create"
+      ],
+      "reasons": [
+        "source_content_tokens:actually,check,choice,create,missing"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "check": "    def check(self, inline_obj, **kwargs):\n        parent_model = inline_obj.parent_model\n        return [\n            *super().check(inline_obj),\n            *self._check_relation(inline_obj, parent_model),\n            *self._check_exclude_of_parent_model(inline_obj, parent_model),\n            *self._check_extra(inline_obj),\n            *self._check_max_num(inline_obj),\n            *self._check_min_num(inline_obj),\n            *self._check_formset(inline_obj),\n        ]\n\n    def _check_exclude_of_parent_model(self, obj, parent_model):\n        # Do not perform more specific checks if the base checks result in an\n        # error."
+      },
+      "top_level_functions": [
+        "check_admin_app",
+        "check_dependencies",
+        "BaseModelAdminChecks.check",
+        "ModelAdminChecks.check",
+        "InlineModelAdminChecks.check",
+        "must_be",
+        "must_inherit_from",
+        "refer_to_missing_field"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/options.py",
+      "score": 16,
+      "matched_identifiers": [
+        "anyway",
+        "check",
+        "choice",
+        "create"
+      ],
+      "reasons": [
+        "source_content_tokens:anyway,check,choice,create,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "check": "    def check(self, **kwargs):\n        return self.checks_class().check(self, **kwargs)\n\n    def __init__(self):\n        # Merge FORMFIELD_FOR_DBFIELD_DEFAULTS with the formfield_overrides\n        # rather than simply overwriting.\n        overrides = copy.deepcopy(FORMFIELD_FOR_DBFIELD_DEFAULTS)\n        for k, v in self.formfield_overrides.items():\n            overrides.setdefault(k, {}).update(v)\n        self.formfield_overrides = overrides\n\n    def formfield_for_dbfield(self, db_field, request, **kwargs):\n        \"\"\"\n        Hook for specifying the form Field instance for a given database Field\n        instance."
+      },
+      "top_level_functions": [
+        "get_content_type_for_model",
+        "get_ul_class",
+        "BaseModelAdmin.check",
+        "BaseModelAdmin.formfield_for_dbfield",
+        "BaseModelAdmin.formfield_for_choice_field",
+        "BaseModelAdmin.get_field_queryset",
+        "BaseModelAdmin.formfield_for_foreignkey",
+        "BaseModelAdmin.formfield_for_manytomany",
+        "BaseModelAdmin.get_autocomplete_fields",
+        "BaseModelAdmin.get_view_on_site_url",
+        "BaseModelAdmin.get_empty_value_display",
+        "BaseModelAdmin.get_exclude",
+        "BaseModelAdmin.get_fields",
+        "BaseModelAdmin.get_fieldsets",
+        "BaseModelAdmin.get_inlines",
+        "BaseModelAdmin.get_ordering",
+        "BaseModelAdmin.get_readonly_fields",
+        "BaseModelAdmin.get_prepopulated_fields",
+        "BaseModelAdmin.get_queryset",
+        "BaseModelAdmin.get_sortable_by",
+        "BaseModelAdmin.lookup_allowed",
+        "BaseModelAdmin.to_field_allowed",
+        "BaseModelAdmin.has_add_permission",
+        "BaseModelAdmin.has_change_permission",
+        "BaseModelAdmin.has_delete_permission",
+        "BaseModelAdmin.has_view_permission",
+        "BaseModelAdmin.has_view_or_change_permission",
+        "BaseModelAdmin.has_module_permission",
+        "ModelAdmin.get_inline_instances",
+        "ModelAdmin.get_urls",
+        "ModelAdmin.urls",
+        "ModelAdmin.media",
+        "ModelAdmin.get_model_perms",
+        "ModelAdmin.get_form",
+        "ModelAdmin.get_changelist",
+        "ModelAdmin.get_changelist_instance",
+        "ModelAdmin.get_object",
+        "ModelAdmin.get_changelist_form",
+        "ModelAdmin.get_changelist_formset",
+        "ModelAdmin.get_formsets_with_inlines"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/admin_scripts/management/commands/suppress_base_options_command.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:options",
+        "token_overlap:commands,management,options",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/no_system_checks.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks,commands,management",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/user_commands/management/commands/specific_system_checks.py",
+      "score": 9,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks,commands,management",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/auth_tests/test_checks.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/contenttypes_tests/test_checks.py",
+      "score": 8,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:checks",
+        "token_overlap:checks",
+        "internal_name_overlap:checks",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/core"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/contenttypes_tests/test_checks.py:unittest_or_django_test_import",
+      "tests/auth_tests/test_checks.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2752,
+  "indexed_test_file_count": 1883,
+  "available_imports": {
+    "django": [
+      "ImproperlyConfigured",
+      "LazyObject",
+      "Path",
+      "RemovedInDjango50Warning",
+      "empty",
+      "get_version",
+      "global_settings",
+      "setup"
+    ],
+    "tests.contenttypes_tests.test_checks": [
+      "GenericForeignKeyTests",
+      "GenericRelationTests",
+      "ModelCheckTests"
+    ],
+    "tests.auth_tests.test_checks": [
+      "ModelsPermissionsChecksTests",
+      "UserModelChecksTests"
+    ],
+    "tests.admin_scripts.management.commands.suppress_base_options_command": [
+      "Command"
+    ],
+    "tests.user_commands.management.commands.no_system_checks": [
+      "Command"
+    ],
+    "tests.user_commands.management.commands.specific_system_checks": [
+      "Command"
+    ],
+    "django.conf.global_settings": [
+      "gettext_noop"
+    ],
+    "django.conf": [
+      "LazySettings",
+      "Settings",
+      "SettingsReference",
+      "UserSettingsHolder"
+    ],
+    "django.contrib.admin.checks": [
+      "BaseModelAdminChecks",
+      "InlineModelAdminChecks",
+      "ModelAdminChecks",
+      "_contains_subclass",
+      "_issubclass",
+      "check_admin_app",
+      "check_dependencies",
+      "must_be",
+      "must_inherit_from",
+      "refer_to_missing_field"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "EmptyFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "action",
+      "autodiscover",
+      "autodiscover_modules",
+      "display",
+      "register",
+      "site"
+    ],
+    "django.contrib.admin.options": [
+      "BaseModelAdmin",
+      "IncorrectLookupParameters",
+      "InlineModelAdmin",
+      "ModelAdmin",
+      "StackedInline",
+      "TabularInline",
+      "get_content_type_for_model",
+      "get_ul_class"
+    ],
+    "django.core.management": [
+      "ManagementUtility",
+      "call_command",
+      "execute_from_command_line",
+      "find_commands",
+      "get_commands",
+      "load_command_class"
+    ],
+    "django.core": [
+      "BaseCommand",
+      "CommandError",
+      "CommandParser",
+      "ImproperlyConfigured",
+      "_AppendConstAction",
+      "_CountAction",
+      "_StoreConstAction",
+      "_SubParsersAction",
+      "apps",
+      "autoreload",
+      "color_style",
+      "defaultdict",
+      "get_close_matches",
+      "handle_default_options",
+      "import_module",
+      "settings"
+    ],
+    "django.core.management.commands.makemigrations": [
+      "Command"
+    ],
+    "django.core.management.commands.migrate": [
+      "Command"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {}
+}

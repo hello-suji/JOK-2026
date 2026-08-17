@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-11066",
+    "model_patch": "--- a/tests/contenttypes_tests/operations_migrations/0002_rename_foo.py\n+++ b/tests/contenttypes_tests/operations_migrations/0002_rename_foo.py\n@@ -27,3 +27,18 @@\n         migrations.RenameModel('Foo', 'RenamedFoo'),\n         migrations.RunPython(assert_foo_contenttype_not_cached, migrations.RunPython.noop)\n     ]\n+\n+import re\n+from django.test import TestCase\n+from django.core.management import call_command\n+from django.contrib.contenttypes.models import ContentType\n+\n+class TestRenameModel(TestCase):\n+    def test_rename_model_success_repro(self):\n+        # Run the migrate command to trigger the rename operation.\n+        call_command('migrate')\n+        # Check that the ContentType has been renamed successfully.\n+        content_type_exists = ContentType.objects.filter(model='new_model_name').exists()\n+        self.assertTrue(content_type_exists)\n+        # [Tier 2: probe-verified buggy repr — must differ after fix]\n+        assert repr(content_type_exists) != 'OperationalError: no such table: django_content_types'\n",
+    "patch_sha256": "bb621830e3997d3a9949ec76b8d3a3567a7b3ede8afa9e555d64c8fffde9e665"
+  }
+]

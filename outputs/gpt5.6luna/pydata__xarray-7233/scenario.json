@@ -1,0 +1,107 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataset.py",
+      "target_function": "coarsen",
+      "related_classes": [
+        "Dataset",
+        "DatasetCoarsen",
+        "Coarsen",
+        "Coordinates",
+        "Data",
+        "DataArray"
+      ],
+      "candidate_test_file": "xarray/tests/test_coarsen.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "import numpy as np",
+      "import xarray as xr",
+      "da = xr.DataArray(np.arange(24), dims=[\"time\"])",
+      "da = da.assign_coords(day=365 * da)",
+      "ds = da.to_dataset(name=\"T\")",
+      "Use the generated reproduction path that calls assign_coords, coarsen, construct, to_dataset."
+    ],
+    "execution_stimulus": [
+      "result = ds.coarsen(time=12).construct(time=(\"year\", \"month\"))",
+      "Execute the focused target API path: assign_coords, coarsen, construct, to_dataset."
+    ],
+    "expected_failure": "The 'day' coordinate is incorrectly demoted to a variable instead of remaining a coordinate.",
+    "relevant_source_files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py",
+      "xarray/core/coordinates.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_coarsen.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_coarsen_construct_demotes_coordinates_repro():\n    da = xr.DataArray(np.arange(24), dims=[\"time\"])\n    da = da.assign_coords(day=365 * da)\n    ds = da.to_dataset(name=\"T\")\n    result = ds.coarsen(time=12).construct(time=(\"year\", \"month\"))\n    assert 'day' in result.coords"
+      },
+      {
+        "language": "python",
+        "code": "def test_coarsen_construct_demotes_coordinates():\n    import numpy as np\n    import xarray as xr\n    da = xr.DataArray(np.arange(24), dims=[\"time\"])\n    da = da.assign_coords(day=365 * da)\n    ds = da.to_dataset(name=\"T\")\n    result = ds.coarsen(time=12).construct(time=(\"year\", \"month\"))\n    assert 'day' in result.coords"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "coarsen",
+        "construct",
+        "assign_coords",
+        "to_dataset",
+        "arange"
+      ],
+      "classes": [
+        "Dataset",
+        "DatasetCoarsen",
+        "Coarsen",
+        "Coordinates",
+        "Data",
+        "DataArray"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_coarsen.py",
+      "target_source_file": "xarray/core/dataset.py",
+      "test_visible_functions": [
+        "assign_coords",
+        "coarsen",
+        "construct",
+        "to_dataset",
+        "arange"
+      ],
+      "test_visible_classes": [
+        "Coarsen",
+        "Coordinates",
+        "Data",
+        "DataArray",
+        "Dataset"
+      ]
+    }
+  }
+]

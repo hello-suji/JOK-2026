@@ -1,0 +1,117 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/core/dataset.py",
+      "target_function": "coerce_pandas_values",
+      "related_classes": [
+        "Data",
+        "DataArray",
+        "Dataset",
+        "DataFrame"
+      ],
+      "candidate_test_file": "xarray/tests/test_merge.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where <module> can be called.",
+      "Use the generated reproduction path that calls coerce_pandas_values, items, merge, pd."
+    ],
+    "execution_stimulus": [
+      "Call <module> with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: coerce_pandas_values, items, merge, pd."
+    ],
+    "expected_failure": "Merging dataArray into dataset using dataset method fails",
+    "relevant_source_files": [
+      "xarray/core/dataset.py",
+      "xarray/core/merge.py",
+      "xarray/core/common.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py",
+      "xarray/tests/test_merge.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_merge_with_coerce_pandas_values_repro():\n    import pandas as pd\n    ds = xr.Dataset({'a': ('x', [0, 1])})\n    df = pd.DataFrame({'b': [2, 3]}, index=[0, 1])\n\n    merged = xr.merge([ds, df], combine_attrs='drop', coerce_pandas_values=True)\n\n    assert 'b' in merged\n    assert merged['b'].values.tolist() == [2, 3]\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(merged) != \"AttributeError: 'DataArray' object has no attribute 'items'\""
+      },
+      {
+        "language": "python",
+        "code": "import xarray as xr\n\nds = xr.Dataset({'a': 0})\nda = xr.DataArray(1, name='b')\n\nexpected = xr.merge([ds, da])  # works fine\nprint(expected)\n\nds.merge(da)  # fails"
+      },
+      {
+        "language": "python",
+        "code": "<xarray.Dataset>\nDimensions:  ()\nData variables:\n    a        int64 0\n    b        int64 1\n\nTraceback (most recent call last):\n  File \"mwe.py\", line 6, in <module>\n    actual = ds.merge(da)\n  File \"/home/tegn500/Documents/Work/Code/xarray/xarray/core/dataset.py\", line 3591, in merge\n    fill_value=fill_value,\n  File \"/home/tegn500/Documents/Work/Code/xarray/xarray/core/merge.py\", line 835, in dataset_merge_method\n    objs, compat, join, priority_arg=priority_arg, fill_value=fill_value\n  File \"/home/tegn500/Documents/Work/Code/xarray/xarray/core/merge.py\", line 548, in merge_core\n    coerced = coerce_pandas_values(objects)\n  File \"/home/tegn500/Documents/Work/Code/xarray/xarray/core/merge.py\", line 394, in coerce_pandas_values\n    for k, v in obj.items():\n  File \"/home/tegn500/Documents/Work/Code/xarray/xarray/core/common.py\", line 233, in __getattr__\n    \"{!r} object has no attribute {!r}\".format(type(self).__name__, name)\nAttributeError: 'DataArray' object has no attribute 'items'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "AttributeError: 'DataArray' object has no attribute 'items'"
+    ],
+    "error_keywords": [
+      "AttributeError"
+    ],
+    "identifiers": {
+      "functions": [
+        "coerce_pandas_values",
+        "merge",
+        "pd",
+        "tolist"
+      ],
+      "classes": [
+        "Data",
+        "DataArray",
+        "Dataset",
+        "Dimensions",
+        "Work",
+        "DataFrame"
+      ],
+      "files": [
+        "home/tegn500/Documents/Work/Code/xarray/xarray/core/common.py",
+        "home/tegn500/Documents/Work/Code/xarray/xarray/core/dataset.py",
+        "home/tegn500/Documents/Work/Code/xarray/xarray/core/merge.py",
+        "mwe.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_merge.py",
+      "target_source_file": "xarray/core/dataset.py",
+      "test_visible_functions": [
+        "coerce_pandas_values",
+        "items",
+        "merge",
+        "pd",
+        "tolist"
+      ],
+      "test_visible_classes": [
+        "Data",
+        "DataArray",
+        "Dataset",
+        "DataFrame"
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-15100",
+    "model_patch": "--- a/sklearn/feature_extraction/tests/test_text.py\n+++ b/sklearn/feature_extraction/tests/test_text.py\n@@ -1343,3 +1343,17 @@\n            )\n     with pytest.warns(UserWarning, match=msg):\n         vect.fit(train_data)\n+\n+def test_strip_accents_unicode_nfd_form_repro():\n+    # This string contains one code point, \"LATIN SMALL LETTER N WITH TILDE\"\n+    s1 = chr(241)\n+\n+    # This string contains two code points, \"LATIN SMALL LETTER N\" followed by \"COMBINING TILDE\"\n+    s2 = chr(110) + chr(771)\n+\n+    # Expected result after stripping accents\n+    expected = 'n'\n+\n+    # Assert that both strings are normalized to the same string 'n'\n+    assert strip_accents_unicode(s1) == expected\n+    assert strip_accents_unicode(s2) == expected\n",
+    "patch_sha256": "ac547dc1bbaf7713eb8b802a94dedb1467543d6801bfbcb66fea3491ff8e1773"
+  }
+]

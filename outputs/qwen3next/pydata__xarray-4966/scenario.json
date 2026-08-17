@@ -1,0 +1,112 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "xarray/conventions.py",
+      "target_function": "decode_cf_variable",
+      "related_classes": [
+        "Coordinates",
+        "Data",
+        "Dataset",
+        "OPeNDAP"
+      ],
+      "candidate_test_file": "xarray/tests/test_dataset.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Set up an environment where decode_cf_variable can be called.",
+      "Use the generated reproduction path that calls open_dataset, decode_cf_variable, array, allclose.",
+      "Use the generated reproduction path that calls decode_cf_variable, open_dataset, array, allclose."
+    ],
+    "execution_stimulus": [
+      "Call decode_cf_variable with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: open_dataset, decode_cf_variable, array, allclose.",
+      "Execute the focused target API path: decode_cf_variable, open_dataset, array, allclose."
+    ],
+    "expected_failure": "As descibed in the \"hack\", netCDF-c handles this internally, but pydap doesn't. This is why the `engine=\"netcdf4\"` variant returns (correctly according to the hack) negative values and the `engine=\"pydap\"` variant doesn't. However, as `xarray` returns a warning at exactly the location referenced above, I think that this is the place where it should be fixed.",
+    "relevant_source_files": [
+      "xarray/conventions.py",
+      "xarray/coding/variables.py",
+      "xarray/core/dataset.py"
+    ],
+    "relevant_test_files": [
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_conventions.py",
+      "xarray/tests/test_backends_api.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "In [1]: import xarray as xr\n\nIn [2]: xr.open_dataset(\"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\", engine=\"netcdf4\")\nOut[2]: \n<xarray.Dataset>\nDimensions:  (test: 7)\nCoordinates:\n  * test     (test) float32 -128.0 -1.0 0.0 1.0 2.0 nan 127.0\nData variables:\n    *empty*\n\nIn [3]: xr.open_dataset(\"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\", engine=\"pydap\")\n/usr/local/lib/python3.9/site-packages/xarray/conventions.py:492: SerializationWarning: variable 'test' has _Unsigned attribute but is not of integer type. Ignoring attribute.\n  new_vars[k] = decode_cf_variable(\nOut[3]: \n<xarray.Dataset>\nDimensions:  (test: 7)\nCoordinates:\n  * test     (test) float32 128.0 255.0 0.0 1.0 2.0 nan 127.0\nData variables:\n    *empty*"
+      },
+      {
+        "language": "python",
+        "code": "In [1]: import xarray as xr\n\nIn [2]: xr.open_dataset(\"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\", engine=\"netcdf4\")\nOut[2]: \n<xarray.Dataset>\nDimensions:  (test: 7)\nCoordinates:\n  * test     (test) float32 -128.0 -1.0 0.0 1.0 2.0 nan 127.0\nData variables:\n    *empty*\n\nIn [3]: xr.open_dataset(\"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\", engine=\"pydap\")\n/usr/local/lib/python3.9/site-packages/xarray/conventions.py:492: SerializationWarning: variable 'test' has _Unsigned attribute but is not of integer type. Ignoring attribute.\n  new_vars[k] = decode_cf_variable(\nOut[3]: \n<xarray.Dataset>\nDimensions:  (test: 7)\nCoordinates:\n  * test     (test) float32 128.0 255.0 0.0 1.0 2.0 nan 127.0\nData variables:\n    *empty*"
+      },
+      {
+        "language": "python",
+        "code": "from xarray.backends.api import open_dataset\nfrom xarray.coding.variables import decode_cf_variable\nfrom xarray import Dataset\nimport numpy as np\n\n\ndef test_opendap_signed_bytes_handling_repro() -> None:\n    url = \"https://observations.ipsl.fr/thredds/dodsC/EUREC4A/PRODUCTS/testdata/netcdf_testfiles/test_NC_BYTE_neg.nc\"\n    ds = open_dataset(url, engine=\"pydap\")\n    expected_values = np.array([-128, -1, 0, 1, 2, np.nan, 127], dtype=np.float32)\n    assert np.allclose(ds['test'].values, expected_values, equal_nan=True)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "decode_cf_variable",
+        "open_dataset",
+        "array",
+        "allclose"
+      ],
+      "classes": [
+        "Coordinates",
+        "Data",
+        "Dataset",
+        "Dimensions",
+        "Ignoring",
+        "OPeNDAP",
+        "SerializationWarning"
+      ],
+      "files": [
+        "/usr/local/lib/python3.9/site-packages/xarray/conventions.py",
+        "9/site-packages/xarray/conventions.py",
+        "xarray/coding/variables.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "xarray/tests/test_dataset.py",
+      "target_source_file": "xarray/conventions.py",
+      "test_visible_functions": [
+        "decode_cf_variable",
+        "open_dataset",
+        "array",
+        "allclose"
+      ],
+      "test_visible_classes": [
+        "Data",
+        "Dataset",
+        "OPeNDAP"
+      ]
+    }
+  }
+]

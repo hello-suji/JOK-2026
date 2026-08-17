@@ -1,0 +1,19 @@
+--- a/tests/admin_scripts/management/commands/suppress_base_options_command.py
++++ b/tests/admin_scripts/management/commands/suppress_base_options_command.py
+@@ -22,3 +22,16 @@
+
+     def handle(self, *labels, **options):
+         print("EXECUTE:SuppressBaseOptionsCommand options=%s" % sorted(options.items()))
++
++from django.test import TestCase, SimpleTestCase
++import re
++from pathlib import Path
++from django.core.management.commands.loaddata import Command
++
++class TestLoadDataCommand(TestCase):
++    def test_duplicate_path_instances_not_detected_repro(self):
++        command = Command()
++        fixture_dir = Path('/path/to/fixtures')
++        command.fixture_dirs = [fixture_dir, fixture_dir]
++        unique_dirs = set(command.fixture_dirs)
++        self.assertEqual(len(unique_dirs), len(command.fixture_dirs))

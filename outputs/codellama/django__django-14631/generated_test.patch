@@ -1,0 +1,19 @@
+--- a/tests/forms_tests/tests/test_form_gates.py
++++ b/tests/forms_tests/tests/test_form_gates.py
+@@ -3791,3 +3791,16 @@
+         custom = CustomRenderer()
+         form = CustomForm(renderer=custom)
+         self.assertEqual(form.renderer, custom)
++
++from django.test import TestCase, SimpleTestCase
++from django.forms import Form, CharField
++
++class TestBaseFormCleanFields(TestCase):
++    def test_clean_fields_access_via_bound_field_repro(self):
++        class TestForm(Form):
++            name = CharField(initial='Initial Name')
++
++        form = TestForm(data={'name': 'Changed Name'})
++        form.full_clean()
++        self.assertNotEqual(form.cleaned_data['name'], form['name'].initial)
++        self.assertIn('name', form.changed_data)

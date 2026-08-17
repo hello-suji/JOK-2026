@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-12276",
+    "model_patch": "--- a/tests/staticfiles_tests/test_forms.py\n+++ b/tests/staticfiles_tests/test_forms.py\n@@ -36,3 +36,11 @@\n <script src=\"https://secure.other.com/path/to/js3\"></script>\n <script src=\"https://example.com/assets/relative/path/to/js4\"></script>\"\"\"\n         )\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.forms.widgets import FileInput\n+\n+class TestFileInputRequiredAttribute(SimpleTestCase):\n+    def test_use_required_attribute_with_initial_data_repro(self):\n+        widget = FileInput()\n+        self.assertFalse(widget.use_required_attribute(initial='somefile.txt'))\n",
+    "patch_sha256": "5ffe503405e8c7b52e6e87bcfe188ff4df7e388c96ae9b0302bdfa4beea2e069"
+  }
+]

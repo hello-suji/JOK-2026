@@ -1,0 +1,87 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/forms/fields.py",
+      "target_function": "__deepcopy__",
+      "related_classes": [
+        "ModelForms",
+        "ProfileForm",
+        "CharField"
+      ],
+      "candidate_test_file": "tests/auth_tests/test_forms.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where __deepcopy__ can be called.",
+      "Use the generated reproduction path that calls __deepcopy__."
+    ],
+    "execution_stimulus": [
+      "Call __deepcopy__ with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: __deepcopy__."
+    ],
+    "expected_failure": "Form Field’s __deepcopy__ does not (deep)copy the error messages.",
+    "relevant_source_files": [
+      "django/forms/fields.py",
+      "django/forms/forms.py",
+      "django/contrib/auth/forms.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_forms.py",
+      "tests/admin_views/test_forms.py",
+      "tests/flatpages_tests/test_forms.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nclass TestFormFieldDeepCopy(TestCase):\n    def test_deepcopy_error_messages_repro(self):\n        original_field = forms.CharField(error_messages={'invalid': 'Original error'})\n        copied_field = original_field.__deepcopy__(memo={})\n\n        # Modify the error messages in the copied field\n        copied_field.error_messages['invalid'] = 'Modified error'\n\n        # Assert that the original field's error messages are not affected\n        self.assertNotEqual(original_field.error_messages['invalid'], copied_field.error_messages['invalid'])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "__deepcopy__"
+      ],
+      "classes": [
+        "ModelForms",
+        "ProfileForm",
+        "CharField"
+      ],
+      "files": [
+        "django/forms/fields.py",
+        "django/forms/forms.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/auth_tests/test_forms.py",
+      "target_source_file": "django/forms/fields.py",
+      "test_visible_functions": [
+        "__deepcopy__"
+      ],
+      "test_visible_classes": [
+        "CharField"
+      ]
+    }
+  }
+]

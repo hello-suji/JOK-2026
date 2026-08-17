@@ -1,0 +1,85 @@
+{
+  "instance_id": "sympy__sympy-17655",
+  "observed_behavior": [
+    "TypeError                                 Traceback (most recent call last)",
+    "221         except TypeError:",
+    "TypeError:",
+    "GeometryError                             Traceback (most recent call last)",
+    "--> 222             raise GeometryError(\"Don't know how to add {} and a Point object\".format(other))",
+    "GeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object"
+  ],
+  "expected_behavior": [
+    "Unexpected exception when multiplying geometry.Point and number",
+    "The expected behaviour is, that both lines give the same result"
+  ],
+  "repro_conditions": [
+    "Unexpected exception when multiplying geometry.Point and number",
+    "point1 + point2 * sympy.sympify(2.0)",
+    "But when I write the same this way it raises an exception",
+    "point1 + sympy.sympify(2.0) * point2",
+    "130         # A point where only `dim` is specified is initialized",
+    "----> 1 point1 + sympy.sympify(2.0)* point2",
+    "224         coords = [simplify(a + b) for a, b in zip(s, o)]"
+  ],
+  "environment": [],
+  "identifiers": {
+    "functions": [
+      "__add__",
+      "__new__",
+      "_normalize_dimension",
+      "func_name",
+      "simplify",
+      "sympify"
+    ],
+    "classes": [
+      "Don",
+      "Expecting",
+      "Mul",
+      "Point",
+      "Point2D"
+    ],
+    "files": [
+      "6/site-packages/sympy/geometry/point.py"
+    ],
+    "exceptions": [
+      "GeometryError",
+      "TypeError"
+    ]
+  },
+  "raw_issue_text": "Unexpected exception when multiplying geometry.Point and number\n```python\nfrom sympy import geometry as ge\nimport sympy\n\npoint1 = ge.Point(0,0)\npoint2 = ge.Point(1,1)\n```\n\nThis line works fine\n```python\npoint1 + point2 * sympy.sympify(2.0)\n```\n\nBut when I write the same this way it raises an exception\n```python\npoint1 + sympy.sympify(2.0) * point2\n```\n\n```\n---------------------------------------------------------------------------\nTypeError                                 Traceback (most recent call last)\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __add__(self, other)\n    219         try:\n--> 220             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))\n    221         except TypeError:\n\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __new__(cls, *args, **kwargs)\n    128                 Expecting sequence of coordinates, not `{}`'''\n--> 129                                        .format(func_name(coords))))\n    130         # A point where only `dim` is specified is initialized\n\nTypeError: \nExpecting sequence of coordinates, not `Mul`\n\nDuring handling of the above exception, another exception occurred:\n\nGeometryError                             Traceback (most recent call last)\n<ipython-input-20-6dcbddac1ee2> in <module>\n----> 1 point1 + sympy.sympify(2.0)* point2\n\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __add__(self, other)\n    220             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))\n    221         except TypeError:\n--> 222             raise GeometryError(\"Don't know how to add {} and a Point object\".format(other))\n    223 \n    224         coords = [simplify(a + b) for a, b in zip(s, o)]\n\nGeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object\n```\n\nThe expected behaviour is, that both lines give the same result",
+  "code_examples": [
+    {
+      "language": "python",
+      "code": "from sympy import geometry as ge\nimport sympy\n\npoint1 = ge.Point(0,0)\npoint2 = ge.Point(1,1)",
+      "context_before": "Unexpected exception when multiplying geometry.Point and number",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "point1 + point2 * sympy.sympify(2.0)",
+      "context_before": "This line works fine",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "point1 + sympy.sympify(2.0) * point2",
+      "context_before": "But when I write the same this way it raises an exception",
+      "is_system_or_output": false
+    },
+    {
+      "language": "python",
+      "code": "---------------------------------------------------------------------------\nTypeError                                 Traceback (most recent call last)\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __add__(self, other)\n    219         try:\n--> 220             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))\n    221         except TypeError:\n\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __new__(cls, *args, **kwargs)\n    128                 Expecting sequence of coordinates, not `{}`'''\n--> 129                                        .format(func_name(coords))))\n    130         # A point where only `dim` is specified is initialized\n\nTypeError: \nExpecting sequence of coordinates, not `Mul`\n\nDuring handling of the above exception, another exception occurred:\n\nGeometryError                             Traceback (most recent call last)\n<ipython-input-20-6dcbddac1ee2> in <module>\n----> 1 point1 + sympy.sympify(2.0)* point2\n\n~/.virtualenvs/test/lib/python3.6/site-packages/sympy/geometry/point.py in __add__(self, other)\n    220             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))\n    221         except TypeError:\n--> 222             raise GeometryError(\"Don't know how to add {} and a Point object\".format(other))\n    223 \n    224         coords = [simplify(a + b) for a, b in zip(s, o)]\n\nGeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object",
+      "context_before": "```",
+      "is_system_or_output": false
+    }
+  ],
+  "expected_outputs": [],
+  "actual_outputs": [
+    "GeometryError: Don't know how to add 2.0*Point2D(1, 1) and a Point object"
+  ],
+  "error_keywords": [
+    "GeometryError",
+    "TypeError"
+  ],
+  "fault_locations": []
+}

@@ -1,0 +1,514 @@
+{
+  "instance_id": "django__django-10999",
+  "repo": "django/django",
+  "base_commit": "36300ef336e3f130a0dadc1143163ff3d23dc843",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/db/models/sql/compiler.py",
+      "score": 23,
+      "matched_identifiers": [
+        "compile",
+        "doesn",
+        "following",
+        "will",
+        "work"
+      ],
+      "reasons": [
+        "function_match:compile",
+        "path_contains_function:compile",
+        "source_content_tokens:doesn,following,will,work,compile"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "compile": "    def compile(self, node, select_format=False):\n        vendor_impl = getattr(node, 'as_' + self.connection.vendor, None)\n        if vendor_impl:\n            sql, params = vendor_impl(self, self.connection)\n        else:\n            sql, params = node.as_sql(self, self.connection)\n        if select_format is FORCE or (select_format and not self.query.subquery):\n            return node.output_field.select_format(self, sql, params)\n        return sql, params\n\n    def get_combinator_sql(self, combinator, all):\n        features = self.connection.features\n        compilers = [\n            query.get_compiler(self.using, self.connection)\n            for query in self.query.combined_queries if not query.is_empty()"
+      },
+      "top_level_functions": [
+        "SQLCompiler.setup_query",
+        "SQLCompiler.pre_sql_setup",
+        "SQLCompiler.get_group_by",
+        "SQLCompiler.collapse_group_by",
+        "SQLCompiler.get_select",
+        "SQLCompiler.get_order_by",
+        "SQLCompiler.get_extra_select",
+        "SQLCompiler.quote_name_unless_alias",
+        "SQLCompiler.compile",
+        "SQLCompiler.get_combinator_sql",
+        "SQLCompiler.as_sql",
+        "SQLCompiler.get_default_columns",
+        "SQLCompiler.get_distinct",
+        "SQLCompiler.find_ordering_name",
+        "SQLCompiler.get_from_clause",
+        "SQLCompiler.get_related_selections",
+        "SQLCompiler.get_select_for_update_of_arguments",
+        "SQLCompiler.deferred_to_columns",
+        "SQLCompiler.get_converters",
+        "SQLCompiler.apply_converters",
+        "SQLCompiler.results_iter",
+        "SQLCompiler.has_results",
+        "SQLCompiler.execute_sql",
+        "SQLCompiler.as_subquery_condition",
+        "SQLCompiler.explain_query",
+        "SQLInsertCompiler.field_as_sql",
+        "SQLInsertCompiler.prepare_value",
+        "SQLInsertCompiler.pre_save_val",
+        "SQLInsertCompiler.assemble_as_sql",
+        "SQLInsertCompiler.as_sql",
+        "SQLInsertCompiler.execute_sql",
+        "SQLDeleteCompiler.as_sql",
+        "SQLUpdateCompiler.as_sql",
+        "SQLUpdateCompiler.execute_sql",
+        "SQLUpdateCompiler.pre_sql_setup",
+        "SQLAggregateCompiler.as_sql",
+        "cursor_iter"
+      ]
+    },
+    {
+      "path": "django/utils/dateparse.py",
+      "score": 22,
+      "matched_identifiers": [
+        "compile",
+        "doesn",
+        "duration",
+        "durations",
+        "parse_duration"
+      ],
+      "reasons": [
+        "function_match:parse_duration",
+        "stem_in_issue_text:dateparse",
+        "source_content_tokens:doesn,compile,duration,durations,hours"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "parse_duration": "def parse_duration(value):\n    \"\"\"Parse a duration string and return a datetime.timedelta.\n\n    The preferred format for durations in Django is '%d %H:%M:%S.%f'.\n\n    Also supports ISO 8601 representation and PostgreSQL's day-time interval\n    format.\n    \"\"\"\n    match = (\n        standard_duration_re.match(value) or\n        iso8601_duration_re.match(value) or\n        postgres_interval_re.match(value)\n    )\n    if match:\n        kw = match.groupdict()"
+      },
+      "top_level_functions": [
+        "parse_date",
+        "parse_time",
+        "parse_datetime",
+        "parse_duration"
+      ]
+    },
+    {
+      "path": "django/db/models/expressions.py",
+      "score": 21,
+      "matched_identifiers": [
+        "compile",
+        "doesn",
+        "following",
+        "will"
+      ],
+      "reasons": [
+        "function_match:compile",
+        "source_content_tokens:doesn,following,will,compile,duration"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {
+        "compile": "    def compile(self, side, compiler, connection):\n        if not isinstance(side, DurationValue):\n            try:\n                output = side.output_field\n            except FieldError:\n                pass\n            else:\n                if output.get_internal_type() == 'DurationField':\n                    sql, params = compiler.compile(side)\n                    return connection.ops.format_for_duration_arithmetic(sql), params\n        return compiler.compile(side)\n\n    def as_sql(self, compiler, connection):\n        connection.ops.check_expression_support(self)\n        expressions = []"
+      },
+      "top_level_functions": [
+        "SQLiteNumericMixin.as_sqlite",
+        "Combinable.bitand",
+        "Combinable.bitleftshift",
+        "Combinable.bitrightshift",
+        "Combinable.bitor",
+        "BaseExpression.get_db_converters",
+        "BaseExpression.get_source_expressions",
+        "BaseExpression.set_source_expressions",
+        "BaseExpression.as_sql",
+        "BaseExpression.contains_aggregate",
+        "BaseExpression.contains_over_clause",
+        "BaseExpression.contains_column_references",
+        "BaseExpression.resolve_expression",
+        "BaseExpression.field",
+        "BaseExpression.output_field",
+        "BaseExpression.convert_value",
+        "BaseExpression.get_lookup",
+        "BaseExpression.get_transform",
+        "BaseExpression.relabeled_clone",
+        "BaseExpression.copy",
+        "BaseExpression.get_group_by_cols",
+        "BaseExpression.get_source_fields",
+        "BaseExpression.asc",
+        "BaseExpression.desc",
+        "BaseExpression.reverse_ordering",
+        "BaseExpression.flatten",
+        "BaseExpression.identity",
+        "CombinedExpression.get_source_expressions",
+        "CombinedExpression.set_source_expressions",
+        "CombinedExpression.as_sql",
+        "CombinedExpression.resolve_expression",
+        "DurationExpression.compile",
+        "DurationExpression.as_sql",
+        "TemporalSubtraction.as_sql",
+        "F.resolve_expression",
+        "F.asc",
+        "F.desc",
+        "ResolvedOuterRef.as_sql",
+        "ResolvedOuterRef.relabeled_clone",
+        "OuterRef.resolve_expression"
+      ]
+    },
+    {
+      "path": "django/contrib/admin/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "compile",
+        "doesn",
+        "following",
+        "will"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:doesn,following,will,compile,description"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "lookup_needs_distinct",
+        "prepare_lookup_value",
+        "quote",
+        "unquote",
+        "flatten",
+        "flatten_fieldsets",
+        "get_deleted_objects",
+        "NestedObjects.add_edge",
+        "NestedObjects.collect",
+        "NestedObjects.related_objects",
+        "NestedObjects.nested",
+        "NestedObjects.can_fast_delete",
+        "model_format_dict",
+        "model_ngettext",
+        "lookup_field",
+        "label_for_field",
+        "help_text_for_field",
+        "display_for_field",
+        "display_for_value",
+        "get_model_from_relation",
+        "reverse_field_path",
+        "get_fields_from_path",
+        "construct_change_message"
+      ]
+    },
+    {
+      "path": "django/contrib/admindocs/utils.py",
+      "score": 17,
+      "matched_identifiers": [
+        "compile",
+        "final",
+        "https",
+        "will"
+      ],
+      "reasons": [
+        "stem_in_issue_text:utils",
+        "source_content_tokens:will,compile,final,https,match"
+      ],
+      "has_module_skip": false,
+      "code_snippets": {},
+      "top_level_functions": [
+        "get_view_name",
+        "trim_docstring",
+        "parse_docstring",
+        "parse_rst",
+        "create_reference_role",
+        "default_reference_role",
+        "replace_named_groups",
+        "replace_unnamed_groups"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/utils_tests/test_dateparse.py",
+      "score": 10,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:dateparse",
+        "token_overlap:dateparse,parse",
+        "internal_name_overlap:parse",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/admin_docs/test_utils.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "internal_name_overlap:parse",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 6,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/backends/test_utils.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    },
+    {
+      "path": "tests/forms_tests/tests/test_utils.py",
+      "score": 4,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:utils",
+        "has_test_functions",
+        "unrelated_to_explicit_source_area:django/db"
+      ],
+      "has_module_skip": false,
+      "code_snippets": null,
+      "top_level_functions": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/admin_docs/test_utils.py:unittest_or_django_test_import",
+      "tests/admin_docs/test_utils.py:testcase_class:TestUtils",
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_dateparse.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:unittest_or_django_test_import",
+      "tests/backends/test_utils.py:testcase_class:TestUtils",
+      "tests/forms_tests/tests/test_utils.py:unittest_or_django_test_import",
+      "tests/forms_tests/tests/test_utils.py:testcase_class:FormsUtilsTestCase"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2535,
+  "indexed_test_file_count": 1707,
+  "available_imports": {
+    "django": [
+      "ConnectionHandler",
+      "ConnectionRouter",
+      "DEFAULT_DB_ALIAS",
+      "DJANGO_VERSION_PICKLE_KEY",
+      "DataError",
+      "DatabaseError",
+      "Error",
+      "IntegrityError",
+      "InterfaceError",
+      "InternalError",
+      "NotSupportedError",
+      "OperationalError",
+      "ProgrammingError",
+      "connection",
+      "connections",
+      "get_version",
+      "router",
+      "setup",
+      "signals"
+    ],
+    "tests.admin_docs.test_utils": [
+      "TestUtils"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_dateparse": [
+      "DateParseTests",
+      "DurationParseTests"
+    ],
+    "tests.backends.test_utils": [
+      "CursorWrapperTests",
+      "TestUtils"
+    ],
+    "tests.forms_tests.tests.test_utils": [
+      "FormsUtilsTestCase"
+    ],
+    "django.db": [
+      "CASCADE",
+      "Case",
+      "DEFERRED",
+      "DO_NOTHING",
+      "DefaultConnectionProxy",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "FileField",
+      "FilteredRelation",
+      "ForeignKey",
+      "ForeignObject",
+      "Func",
+      "ImageField",
+      "Lookup",
+      "Manager",
+      "ManyToManyField",
+      "ManyToManyRel",
+      "ManyToOneRel",
+      "Model",
+      "ObjectDoesNotExist",
+      "OneToOneField",
+      "OneToOneRel",
+      "OrderWrt",
+      "OuterRef",
+      "PROTECT",
+      "Prefetch",
+      "ProtectedError",
+      "Q",
+      "QuerySet",
+      "RowRange",
+      "SET",
+      "SET_DEFAULT",
+      "SET_NULL",
+      "Subquery",
+      "Transform",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame",
+      "aggregates_all",
+      "close_old_connections",
+      "constraints_all",
+      "fields_all",
+      "indexes_all",
+      "prefetch_related_objects",
+      "reset_queries",
+      "signals"
+    ],
+    "django.utils.dateparse": [
+      "parse_date",
+      "parse_datetime",
+      "parse_duration",
+      "parse_time"
+    ],
+    "django.contrib.admindocs.utils": [
+      "create_reference_role",
+      "default_reference_role",
+      "get_view_name",
+      "parse_docstring",
+      "parse_rst",
+      "replace_named_groups",
+      "replace_unnamed_groups",
+      "trim_docstring"
+    ],
+    "django.contrib.admin.utils": [
+      "FieldIsAForeignKeyColumnName",
+      "NestedObjects",
+      "NotRelationField",
+      "_get_non_gfk_field",
+      "construct_change_message",
+      "display_for_field",
+      "display_for_value",
+      "flatten",
+      "flatten_fieldsets",
+      "get_deleted_objects",
+      "get_fields_from_path",
+      "get_model_from_relation",
+      "help_text_for_field",
+      "label_for_field",
+      "lookup_field",
+      "lookup_needs_distinct",
+      "model_format_dict",
+      "model_ngettext",
+      "prepare_lookup_value",
+      "quote",
+      "reverse_field_path",
+      "unquote"
+    ],
+    "django.contrib.admin": [
+      "autodiscover"
+    ],
+    "django.contrib": [
+      "ACTION_CHECKBOX_NAME",
+      "AdminSite",
+      "AllValuesFieldListFilter",
+      "BooleanFieldListFilter",
+      "ChoicesFieldListFilter",
+      "DateFieldListFilter",
+      "FieldListFilter",
+      "HORIZONTAL",
+      "ListFilter",
+      "ModelAdmin",
+      "RelatedFieldListFilter",
+      "RelatedOnlyFieldListFilter",
+      "SimpleListFilter",
+      "StackedInline",
+      "TabularInline",
+      "VERTICAL",
+      "autodiscover",
+      "autodiscover_modules",
+      "register",
+      "site"
+    ],
+    "django.db.models.expressions": [
+      "BaseExpression",
+      "Case",
+      "Col",
+      "Combinable",
+      "CombinedExpression",
+      "DurationExpression",
+      "DurationValue",
+      "Exists",
+      "Expression",
+      "ExpressionList",
+      "ExpressionWrapper",
+      "F",
+      "Func",
+      "OrderBy",
+      "OuterRef",
+      "Random",
+      "RawSQL",
+      "Ref",
+      "ResolvedOuterRef",
+      "RowRange",
+      "SQLiteNumericMixin",
+      "SimpleCol",
+      "Star",
+      "Subquery",
+      "TemporalSubtraction",
+      "Value",
+      "ValueRange",
+      "When",
+      "Window",
+      "WindowFrame"
+    ],
+    "django.db.models.sql.compiler": [
+      "SQLAggregateCompiler",
+      "SQLCompiler",
+      "SQLDeleteCompiler",
+      "SQLInsertCompiler",
+      "SQLUpdateCompiler",
+      "cursor_iter"
+    ],
+    "django.db.models": [
+      "AND",
+      "EmptyResultSet",
+      "OR",
+      "Query"
+    ]
+  },
+  "test_example_snippet": "    def test_parse_date(self):\n        # Valid inputs\n        self.assertEqual(parse_date('2012-04-23'), date(2012, 4, 23))\n        self.assertEqual(parse_date('2012-4-9'), date(2012, 4, 9))\n        # Invalid inputs\n        self.assertIsNone(parse_date('20120423'))\n        with self.assertRaises(ValueError):\n            parse_date('2012-04-56')\n\n    def test_parse_time(self):\n        # Valid inputs\n        self.assertEqual(parse_time('09:15:00'), time(9, 15))\n        self.assertEqual(parse_time('10:10'), time(10, 10))\n        self.assertEqual(parse_time('10:20:30.400'), time(10, 20, 30, 400000))\n        self.assertEqual(parse_time('4:8:16'), time(4, 8, 16))\n        # Invalid inputs\n        self.assertIsNone(parse_time('091500'))\n        with self.assertRaises(ValueError):\n            parse_time('09:15:90')\n\n    def test_parse_datetime(self):\n        valid_inputs = (\n            ('2012-04-23T09:15:00', datetime(2012, 4, 23, 9, 15)),\n            ('2012-4-9 4:8:16', datetime(2012, 4, 9, 4, 8, 16)),\n            ('2012-04-23T09:15:00Z', datetime(2012, 4, 23, 9, 15, 0, 0, get_fixed_timezone(0))),\n            ('2012-4-9 4:8:16-0320', datetime(2012, 4, 9, 4, 8, 16, 0, get_fixed_timezone(-200))),\n            ('2012-04-23T10:20:30.400+02:30', datetime(2012, 4, 23, 10, 20, 30, 400000, get_fixed_timezone(150))),\n            ('2012-04-23T10:20:30.400+02', datetime(2012, 4, 23, 10, 20, 30, 400000, get_fixed_timezone(120))),\n            ('2012-04-23T10:20:30.400-02', datetime(2012, 4, 23, 10, 20, 30, 400000, get_fixed_timezone(-120))),\n        )\n        for source, expected in valid_inputs:\n            with self.subTest(source=source):\n                self.assertEqual(parse_datetime(source), expected)\n\n        # Invalid inputs",
+  "conftest_fixtures": {}
+}

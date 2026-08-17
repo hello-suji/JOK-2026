@@ -1,0 +1,18 @@
+--- a/astropy/coordinates/tests/test_celestial_transformations.py
++++ b/astropy/coordinates/tests/test_celestial_transformations.py
+@@ -0,0 +1,15 @@
++import pytest
++import astropy.coordinates as coord
++
++class CustomCoord(coord.SkyCoord):
++    @property
++    def prop(self):
++        return self.random_attr
++
++def test_skycoord_subclass_property_reports_inner_missing_attribute_repro():
++    c = CustomCoord('00h42m30s', '+41d12m00s', frame='icrs')
++    with pytest.raises(AttributeError) as excinfo:
++        c.prop
++    message = str(excinfo.value)
++    assert 'random_attr' in message
++    assert 'prop' not in message

@@ -1,0 +1,294 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/sets/sets.py",
+      "target_function": "is_subset",
+      "related_classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "candidate_test_file": "sympy/sets/tests/test_sets.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import S, imageset, Lambda, I",
+      "S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)",
+      "Use the generated reproduction path that calls imageset, is_subset."
+    ],
+    "execution_stimulus": [
+      "result = S1.is_subset(S.Reals)",
+      "Execute the focused target API path: imageset, is_subset."
+    ],
+    "expected_failure": "The method incorrectly returns True instead of False.",
+    "relevant_source_files": [
+      "sympy/sets/sets.py",
+      "sympy/sets/fancysets.py",
+      "sympy/calculus/util.py"
+    ],
+    "relevant_test_files": [
+      "sympy/sets/tests/test_fancysets.py",
+      "sympy/sets/tests/test_sets.py",
+      "sympy/sets/tests/test_conditionset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import S, imageset, Lambda, I\n\ndef test_is_subset_bug_repro():\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.is_subset(S.Reals)\n    assert result == False\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      },
+      {
+        "language": "python",
+        "code": "def test_is_subset_bug():\n    from sympy import S, imageset, Lambda, I\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.is_subset(S.Reals)\n    assert result == True"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "True"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "is_subset",
+        "imageset"
+      ],
+      "classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/sets/tests/test_sets.py",
+      "target_source_file": "sympy/sets/sets.py",
+      "test_visible_functions": [
+        "imageset",
+        "is_subset"
+      ],
+      "test_visible_classes": [
+        "Integers",
+        "Lambda",
+        "Reals",
+        "S",
+        "I"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/sets/sets.py",
+      "target_function": "imageset",
+      "related_classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "candidate_test_file": "sympy/sets/tests/test_sets.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from sympy import S, imageset, Lambda, I",
+      "S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)",
+      "Use the generated reproduction path that calls imageset, is_subset."
+    ],
+    "execution_stimulus": [
+      "result = S1.intersect(S.Reals)",
+      "Execute the focused target API path: imageset, is_subset."
+    ],
+    "expected_failure": "The intersection incorrectly includes 2, which should not be part of the intersection with Reals.",
+    "relevant_source_files": [
+      "sympy/sets/sets.py",
+      "sympy/sets/fancysets.py",
+      "sympy/calculus/util.py"
+    ],
+    "relevant_test_files": [
+      "sympy/sets/tests/test_fancysets.py",
+      "sympy/sets/tests/test_sets.py",
+      "sympy/sets/tests/test_conditionset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import S, imageset, Lambda, I\n\ndef test_is_subset_bug_repro():\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.is_subset(S.Reals)\n    assert result == False\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      },
+      {
+        "language": "python",
+        "code": "def test_intersect_bug():\n    from sympy import S, imageset, Lambda, I\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.intersect(S.Reals)\n    assert 2 in result"
+      }
+    ],
+    "expected_outputs": [
+      "[-1, 1]"
+    ],
+    "actual_outputs": [
+      "[2]"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "intersect",
+        "imageset",
+        "is_subset"
+      ],
+      "classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/sets/tests/test_sets.py",
+      "target_source_file": "sympy/sets/sets.py",
+      "test_visible_functions": [
+        "imageset",
+        "is_subset"
+      ],
+      "test_visible_classes": [
+        "Integers",
+        "Lambda",
+        "Reals",
+        "S",
+        "I"
+      ]
+    }
+  },
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/sets/sets.py",
+      "target_function": "imageset",
+      "related_classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "candidate_test_file": "sympy/sets/tests/test_sets.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy import S, imageset, Lambda, I",
+      "S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)",
+      "Use the generated reproduction path that calls imageset, is_subset."
+    ],
+    "execution_stimulus": [
+      "result = 2 in S1.intersect(S.Reals)",
+      "Execute the focused target API path: imageset, is_subset."
+    ],
+    "expected_failure": "The method incorrectly returns True instead of False.",
+    "relevant_source_files": [
+      "sympy/sets/sets.py",
+      "sympy/sets/fancysets.py",
+      "sympy/calculus/util.py"
+    ],
+    "relevant_test_files": [
+      "sympy/sets/tests/test_fancysets.py",
+      "sympy/sets/tests/test_sets.py",
+      "sympy/sets/tests/test_conditionset.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from sympy import S, imageset, Lambda, I\n\ndef test_is_subset_bug_repro():\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = S1.is_subset(S.Reals)\n    assert result == False\n    # [Tier 2: probe-verified buggy repr — must differ after fix]\n    assert repr(result) != 'True'"
+      },
+      {
+        "language": "python",
+        "code": "def test_contains_bug():\n    from sympy import S, imageset, Lambda, I\n    S1 = imageset(Lambda(n, n + (n - 1)*(n + 1)*I), S.Integers)\n    result = 2 in S1.intersect(S.Reals)\n    assert result == True"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "True"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "contains",
+        "imageset",
+        "is_subset"
+      ],
+      "classes": [
+        "Reals",
+        "Integers",
+        "Lambda",
+        "S",
+        "I"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "alignment_evidence": {
+      "target_test_file": "sympy/sets/tests/test_sets.py",
+      "target_source_file": "sympy/sets/sets.py",
+      "test_visible_functions": [
+        "imageset",
+        "is_subset"
+      ],
+      "test_visible_classes": [
+        "Integers",
+        "Lambda",
+        "Reals",
+        "S",
+        "I"
+      ]
+    }
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/template/autoreload.py",
+      "target_function": "template_changed",
+      "related_classes": [],
+      "candidate_test_file": "tests/auth_tests/test_templates.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where template_changed can be called.",
+      "Use the generated reproduction path that calls template_changed."
+    ],
+    "execution_stimulus": [
+      "Call template_changed with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "Execute the focused target API path: template_changed."
+    ],
+    "expected_failure": "\"DIRS\": os.getenv(\"TEMPLATES_DIRS\", \"\").split(\",\") # wrong, should be filter(None, os.getenv(\"TEMPLATES_DIRS\", \"\").split(\",\"))",
+    "relevant_source_files": [
+      "django/template/autoreload.py",
+      "django/utils/autoreload.py",
+      "django/contrib/admin/views/main.py"
+    ],
+    "relevant_test_files": [
+      "tests/auth_tests/test_templates.py",
+      "tests/template_backends/test_django.py",
+      "tests/admin_inlines/test_templates.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from django.test import TestCase, SimpleTestCase\nfrom django.template.autoreload import template_changed\n\nclass TestTemplateAutoreload(TestCase):\n    def test_template_changed_with_empty_dirs_repro(self):\n        result = template_changed(sender=None, filepath='path/to/file')\n        self.assertFalse(result)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "getenv",
+        "split",
+        "template_changed"
+      ],
+      "classes": [],
+      "files": [
+        "django/template/autoreload.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For NaN/warning behavior, do not compare with float('nan'); use np.isnan, np.isfinite, or pytest.warns/no-warning checks. For Django, do not define inline models; reuse existing test models/imports from the target test file. The oracle is the generated test assertion that fails before the fix and passes after the fix.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "alignment_evidence": {
+      "target_test_file": "tests/auth_tests/test_templates.py",
+      "target_source_file": "django/template/autoreload.py",
+      "test_visible_functions": [
+        "template_changed"
+      ],
+      "test_visible_classes": []
+    }
+  }
+]
